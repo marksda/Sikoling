@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
 
+@Provider
 public class GeneralExceptionHandler implements ExceptionMapper<Exception> {
 	
 	private final Logger logger = Logger.getLogger(GeneralExceptionHandler.class.getName());
