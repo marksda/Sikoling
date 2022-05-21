@@ -41,7 +41,6 @@ public class PenggunaEksternal extends User implements Serializable {
 	public String getNo_telepon() {
 		return no_telepon;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -51,7 +50,6 @@ public class PenggunaEksternal extends User implements Serializable {
 		return hash;
 	}
 	
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -74,7 +72,6 @@ public class PenggunaEksternal extends User implements Serializable {
         
         return true;
 	}
-
 	
 	@Override
 	public String toString() {
