@@ -30,6 +30,13 @@
     	<version>9.1.0</version>
     	<scope>provided</scope>
     </dependency>
+    <dependency>
+    	<groupId>com.cso</groupId>
+    	<artifactId>Sikoling-ejb</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    	<type>ejb</type>
+    	<scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
