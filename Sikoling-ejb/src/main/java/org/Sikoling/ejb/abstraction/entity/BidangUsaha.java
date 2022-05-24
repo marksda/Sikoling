@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class BidangUsaha implements Serializable {
 
@@ -36,22 +37,42 @@ public class BidangUsaha implements Serializable {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+		int hash = 7;
+		hash = 13 * hash + Objects.hashCode(this.keterangan);
+		return hash;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final BidangUsaha other = (BidangUsaha) obj;        
+
+        
+        if ( !(this.id == other.id)) {
+            return false;
+        }
+        
+        if (!this.keterangan.equals(other.keterangan)) {
+            return false;
+        }
+        
+        return true;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "BidangUsaha{" + "id=" + Integer.toString(id) + ", keterangan=" + keterangan + "}";
 	}
-	
-	
 
 }
