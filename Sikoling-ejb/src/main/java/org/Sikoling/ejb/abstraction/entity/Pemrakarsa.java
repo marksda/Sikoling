@@ -162,6 +162,7 @@ public class Pemrakarsa implements Serializable {
         
         return true;
 	}
+	
 
 	@Override
 	public String toString() {
