@@ -23,45 +23,59 @@ public class PenanggungJawab implements Serializable {
 		this.noIdentitas = noIdentitas;
 		this.noHandphone = noHandphone;
 	}
+	
 	public String getNama() {
 		return nama;
 	}
+	
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
+	
 	public Alamat getAlamat() {
 		return alamat;
 	}
+	
 	public void setAlamat(Alamat alamat) {
 		this.alamat = alamat;
 	}
+	
 	public String getJabatan() {
 		return jabatan;
 	}
+	
 	public void setJabatan(String jabatan) {
 		this.jabatan = jabatan;
 	}
+	
 	public String getJenisKelamin() {
 		return jenisKelamin;
 	}
+	
 	public void setJenisKelamin(String jenisKelamin) {
 		this.jenisKelamin = jenisKelamin;
 	}
+	
 	public String getNoIdentitas() {
 		return noIdentitas;
 	}
+	
 	public void setNoIdentitas(String noIdentitas) {
 		this.noIdentitas = noIdentitas;
 	}
+	
 	public String getNoHandphone() {
 		return noHandphone;
 	}
+	
 	public void setNoHandphone(String noHandphone) {
 		this.noHandphone = noHandphone;
 	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 7;
@@ -73,6 +87,7 @@ public class PenanggungJawab implements Serializable {
 		hash = 13 * hash + Objects.hashCode(this.noHandphone);
 		return hash;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -110,6 +125,7 @@ public class PenanggungJawab implements Serializable {
         
         return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "PenanggungJawab{" + "nama=" + nama + ", alamat=" + alamat.toString() + ", jabatan=" 
