@@ -73,23 +73,23 @@ public class Alamat implements Serializable {
         
         final Alamat other = (Alamat) obj;
         
-        if (!this.propinsi.equalsIgnoreCase(other.propinsi)) {
+        if (!this.propinsi.equals(other.propinsi)) {
             return false;
         }
         
-        if (!this.kabupaten.equalsIgnoreCase(other.kabupaten)) {
+        if (!this.kabupaten.equals(other.kabupaten)) {
             return false;
         }
         
-        if (!this.kecamatan.equalsIgnoreCase(other.kecamatan)) {
+        if (!this.kecamatan.equals(other.kecamatan)) {
             return false;
         }
         
-        if (!this.desa.equalsIgnoreCase(other.desa)) {
+        if (!this.desa.equals(other.desa)) {
             return false;
         }
         
-        if (!this.keterangan.equalsIgnoreCase(other.keterangan)) {
+        if (!this.keterangan.equals(other.keterangan)) {
             return false;
         }
         

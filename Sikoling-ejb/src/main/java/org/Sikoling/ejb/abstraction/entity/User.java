@@ -57,11 +57,11 @@ public class User implements Serializable {
         
         final User other = (User) obj;
         
-        if (!Objects.equals(this.email, other.email)) {
+        if (!this.email.equals(other.email)) {
             return false;
         }
         
-        if (!Objects.equals(this.password, other.password)) {
+        if (!this.password.equals(other.password)) {
             return false;
         }
         

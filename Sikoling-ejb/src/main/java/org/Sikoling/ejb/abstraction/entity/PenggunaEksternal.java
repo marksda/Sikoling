@@ -66,7 +66,7 @@ public class PenggunaEksternal extends User implements Serializable {
         
         final PenggunaEksternal other = (PenggunaEksternal) obj;
         
-        if (!Objects.equals(this.nama_lengkap, other.nama_lengkap) || !Objects.equals(this.nik, other.nik)) {
+        if (!this.nama_lengkap.equals(other.nama_lengkap) || !this.nik.equals(other.nik)) {
             return false;
         }
         
