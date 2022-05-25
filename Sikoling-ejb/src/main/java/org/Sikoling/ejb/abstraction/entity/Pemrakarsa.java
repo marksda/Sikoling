@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Pemrakarsa implements Serializable {
 
 	private static final long serialVersionUID = 1008634190691153214L;
+	private String id;
 	private BentukUsaha bentukUsaha;
 	private String nama;
 	private Alamat alamat;
@@ -15,9 +16,10 @@ public class Pemrakarsa implements Serializable {
 	private String email;
 	private PenanggungJawab penanggungJawab;
 	
-	public Pemrakarsa(BentukUsaha bentukUsaha, String nama, Alamat alamat, String telepone, String fax, String npwp,
+	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nama, Alamat alamat, String telepone, String fax, String npwp,
 			String email, PenanggungJawab penanggungJawab) {
 		super();
+		this.id = id;
 		this.bentukUsaha = bentukUsaha;
 		this.nama = nama;
 		this.alamat = alamat;
@@ -26,6 +28,14 @@ public class Pemrakarsa implements Serializable {
 		this.npwp = npwp;
 		this.email = email;
 		this.penanggungJawab = penanggungJawab;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public BentukUsaha getBentukUsaha() {

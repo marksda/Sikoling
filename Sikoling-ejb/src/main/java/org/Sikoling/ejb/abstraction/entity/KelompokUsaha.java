@@ -6,11 +6,21 @@ import java.util.Objects;
 public class KelompokUsaha implements Serializable {
 
 	private static final long serialVersionUID = -7606706066333265936L;
+	private String id;
 	private String nama;
 	
-	public KelompokUsaha(String nama) {
+	public KelompokUsaha(String id, String nama) {
 		super();
+		this.id = id;
 		this.nama = nama;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getNama() {
@@ -59,6 +69,5 @@ public class KelompokUsaha implements Serializable {
 	public String toString() {
 		return "KelompokUsaha{" + "nama=" + nama + "}";
 	}
-
 	
 }

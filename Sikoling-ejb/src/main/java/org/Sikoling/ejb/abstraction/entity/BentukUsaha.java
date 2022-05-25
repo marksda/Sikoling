@@ -6,13 +6,23 @@ import java.util.Objects;
 public class BentukUsaha implements Serializable{
 
 	private static final long serialVersionUID = -5160872827538954162L;
+	private String id;
 	private KelompokUsaha kelompokUsaha;
 	private String nama;
 	
-	public BentukUsaha(KelompokUsaha kelompokUsaha, String nama) {
+	public BentukUsaha(String id, KelompokUsaha kelompokUsaha, String nama) {
 		super();
+		this.id = id;
 		this.kelompokUsaha = kelompokUsaha;
 		this.nama = nama;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public KelompokUsaha getKelompokUsaha() {
