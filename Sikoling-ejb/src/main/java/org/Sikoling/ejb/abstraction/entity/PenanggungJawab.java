@@ -141,7 +141,5 @@ public class PenanggungJawab implements Serializable {
 		return "PenanggungJawab{" + "nama=" + nama + ", alamat=" + alamat.toString() + ", jabatan=" 
 				+ jabatan + ", sex=" + jenisKelamin + ", noIdentitas=" + noIdentitas + ", noHandphone=" + noHandphone + "}";
 	}
-	
-	
-
+		
 }

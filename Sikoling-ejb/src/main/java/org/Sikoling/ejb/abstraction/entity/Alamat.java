@@ -7,13 +7,13 @@ public class Alamat implements Serializable {
 
 	private static final long serialVersionUID = 8115464344624994983L;
 	
-	private final String propinsi;
-	private final String kabupaten;
-	private final String kecamatan;
-	private final String desa;
+	private final Propinsi propinsi;
+	private final Kabupaten kabupaten;
+	private final Kecamatan kecamatan;
+	private final Desa desa;
 	private final String keterangan;
 	
-	public Alamat(String propinsi, String kabupaten, String kecamatan, String desa, String keterangan) {
+	public Alamat(Propinsi propinsi, Kabupaten kabupaten, Kecamatan kecamatan, Desa desa, String keterangan) {
 		super();
 		this.propinsi = propinsi;
 		this.kabupaten = kabupaten;
@@ -26,19 +26,19 @@ public class Alamat implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getPropinsi() {
+	public Propinsi getPropinsi() {
 		return propinsi;
 	}
 
-	public String getKabupaten() {
+	public Kabupaten getKabupaten() {
 		return kabupaten;
 	}
 
-	public String getKecamatan() {
+	public Kecamatan getKecamatan() {
 		return kecamatan;
 	}
 
-	public String getDesa() {
+	public Desa getDesa() {
 		return desa;
 	}
 
@@ -49,10 +49,10 @@ public class Alamat implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.propinsi);
-		hash = 13 * hash + Objects.hashCode(this.kabupaten);
-		hash = 13 * hash + Objects.hashCode(this.kecamatan);
-		hash = 13 * hash + Objects.hashCode(this.desa);
+		hash = 13 * hash + Objects.hashCode(this.propinsi.getNama());
+		hash = 13 * hash + Objects.hashCode(this.kabupaten.getNama());
+		hash = 13 * hash + Objects.hashCode(this.kecamatan.getNama());
+		hash = 13 * hash + Objects.hashCode(this.desa.getNama());
 		hash = 13 * hash + Objects.hashCode(this.keterangan);
 		return hash;
 	}
@@ -98,8 +98,8 @@ public class Alamat implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Alamat{" + "propinsi=" + propinsi + "kabupaten=" + kabupaten + "propinsi=" + propinsi 
-				+ "kecamatan=" + kecamatan + "desa=" + desa + ", keterangan=" + keterangan + "}";
+		return "Alamat{" + "propinsi=" + propinsi.getNama() + "kabupaten=" + kabupaten.getNama() 
+				+ "kecamatan=" + kecamatan.getNama() + "desa=" + desa.getNama() + ", keterangan=" + keterangan + "}";
 	}
 
 }
