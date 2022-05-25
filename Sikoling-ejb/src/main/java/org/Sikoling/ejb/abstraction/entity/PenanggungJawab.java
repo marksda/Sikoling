@@ -10,11 +10,11 @@ public class PenanggungJawab implements Serializable {
 	private String nama;
 	private Alamat alamat;
 	private Jabatan jabatan;
-	private String jenisKelamin;
+	private JenisKelamin jenisKelamin;
 	private String noIdentitas;
 	private String noHandphone;
 	
-	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, String jenisKelamin, String noIdentitas,
+	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, String noIdentitas,
 			String noHandphone) {
 		super();
 		this.id = id;
@@ -58,11 +58,11 @@ public class PenanggungJawab implements Serializable {
 		this.jabatan = jabatan;
 	}
 	
-	public String getJenisKelamin() {
+	public JenisKelamin getJenisKelamin() {
 		return jenisKelamin;
 	}
 	
-	public void setJenisKelamin(String jenisKelamin) {
+	public void setJenisKelamin(JenisKelamin jenisKelamin) {
 		this.jenisKelamin = jenisKelamin;
 	}
 	
