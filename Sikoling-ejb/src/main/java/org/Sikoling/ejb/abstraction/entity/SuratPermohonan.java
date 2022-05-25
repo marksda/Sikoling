@@ -11,6 +11,7 @@ public class SuratPermohonan implements Serializable {
 	private PenanggungJawab penanggungJawab;
 	private Pemrakarsa pemrakarsa;
 	private Alamat alamatKegiatan;
+	private String jenisKegiatan;
 	
 	public SuratPermohonan(Date tanggal, String nomor) {
 		super();

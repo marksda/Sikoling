@@ -12,8 +12,6 @@ public class WaliPemohon implements Serializable {
 		super();
 		this.wali = wali;
 		this.status = status;
-	}
-	
-	
+	}	
 
 }
