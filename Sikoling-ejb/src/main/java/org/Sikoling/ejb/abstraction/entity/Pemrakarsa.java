@@ -14,10 +14,9 @@ public class Pemrakarsa implements Serializable {
 	private String fax;
 	private String npwp;
 	private String email;
-	private PenanggungJawab penanggungJawab;
 	
 	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nama, Alamat alamat, String telepone, String fax, String npwp,
-			String email, PenanggungJawab penanggungJawab) {
+			String email) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
@@ -27,7 +26,6 @@ public class Pemrakarsa implements Serializable {
 		this.fax = fax;
 		this.npwp = npwp;
 		this.email = email;
-		this.penanggungJawab = penanggungJawab;
 	}
 
 	public String getId() {
@@ -94,14 +92,6 @@ public class Pemrakarsa implements Serializable {
 		this.email = email;
 	}
 
-	public PenanggungJawab getPenanggungJawab() {
-		return penanggungJawab;
-	}
-
-	public void setPenanggungJawab(PenanggungJawab penanggungJawab) {
-		this.penanggungJawab = penanggungJawab;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -117,7 +107,6 @@ public class Pemrakarsa implements Serializable {
 		hash = 13 * hash + Objects.hashCode(this.fax);
 		hash = 13 * hash + Objects.hashCode(this.npwp);
 		hash = 13 * hash + Objects.hashCode(this.email);
-		hash = 13 * hash + Objects.hashCode(this.penanggungJawab.toString());
 		return hash;
 	}
 
@@ -166,10 +155,6 @@ public class Pemrakarsa implements Serializable {
             return false;
         }
         
-        if (!Objects.equals(this.penanggungJawab, other.penanggungJawab)) {
-            return false;
-        }
-        
         return true;
 	}
 	
@@ -178,7 +163,7 @@ public class Pemrakarsa implements Serializable {
 	public String toString() {
 		return "PenanggungJawab{" + "bentukUsaha=" + bentukUsaha.toString() + ", nama=" + nama
 				+ ", alamat=" + alamat.toString() + ", telepone=" + telepone + ", fax=" + fax
-				+ ", npwp=" + npwp + ", email=" + email + ", penanggungJawab=" + penanggungJawab.toString() + "}";
+				+ ", npwp=" + npwp + ", email=" + email + "}";
 	}
 	
 	

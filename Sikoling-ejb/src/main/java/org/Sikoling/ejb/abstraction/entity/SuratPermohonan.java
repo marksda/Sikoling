@@ -8,6 +8,9 @@ public class SuratPermohonan implements Serializable {
 	private static final long serialVersionUID = 3360094098987919834L;
 	private Date tanggal;
 	private String nomor;
+	private PenanggungJawab penanggungJawab;
+	private Pemrakarsa pemrakarsa;
+	private Alamat alamatKegiatan;
 	
 	public SuratPermohonan(Date tanggal, String nomor) {
 		super();
