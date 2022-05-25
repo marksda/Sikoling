@@ -3,18 +3,16 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Kabupaten implements Serializable {
+public class Jabatan implements Serializable {
 
-	private static final long serialVersionUID = -1725097099726145918L;
+	private static final long serialVersionUID = 702489998264182010L;
 	private String id;
 	private String nama;
-	private Propinsi propinsi;
 	
-	public Kabupaten(String id, String nama, Propinsi propinsi) {
+	public Jabatan(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
-		this.propinsi = propinsi;
 	}
 
 	public String getId() {
@@ -33,14 +31,6 @@ public class Kabupaten implements Serializable {
 		this.nama = nama;
 	}
 
-	public Propinsi getPropinsi() {
-		return propinsi;
-	}
-
-	public void setPropinsi(Propinsi propinsi) {
-		this.propinsi = propinsi;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -51,11 +41,10 @@ public class Kabupaten implements Serializable {
 		int hash = 7;
 		hash = 13 * hash + Objects.hashCode(this.id);
 		hash = 13 * hash + Objects.hashCode(this.nama);
-		hash = 13 * hash + Objects.hashCode(this.propinsi.getNama());
 		return hash;
 	}
-
 	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -70,7 +59,7 @@ public class Kabupaten implements Serializable {
             return false;
         }
         
-        final Kabupaten other = (Kabupaten) obj;
+        final Jabatan other = (Jabatan) obj;
         
         if (!this.id.equals(other.id)) {
             return false;
@@ -82,13 +71,11 @@ public class Kabupaten implements Serializable {
         
         return true;
 	}
-
 	
+
 	@Override
 	public String toString() {
-		return "Kabupaten{" + "id=" + id + "nama=" + nama + "}";
+		return "Jabatan{" + "id=" + id + "nama=" + nama + "}";
 	}
-	
-	
 
 }
