@@ -12,7 +12,6 @@ public class Permohonan implements Serializable {
 	private BidangUsaha bidangUsaha;
 	private WaliPemohon wali;
 	private Produk produk;
-	//dasdasd
 	
 	public Permohonan(String noPendaftaran, Date tanggalPendaftaran, SuratPermohonan suratPermohonan,
 			BidangUsaha bidangUsaha, WaliPemohon wali, Produk produk) {
