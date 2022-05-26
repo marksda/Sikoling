@@ -163,13 +163,11 @@ public class Pemrakarsa implements Serializable {
 				+ ", alamat=" + alamat.toString() + ", telepone=" + telepone + ", fax=" + fax
 				+ ", npwp=" + npwp + ", email=" + email + "}";
 	}
-
 	
 	public String getNomorIndukBerusaha() {
 		return nomorIndukBerusaha;
 	}
 	
-
 	public void setNomorIndukBerusaha(String nomorIndukBerusaha) {
 		this.nomorIndukBerusaha = nomorIndukBerusaha;
 	}
