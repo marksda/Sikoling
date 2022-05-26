@@ -8,6 +8,7 @@ public class Pemrakarsa implements Serializable {
 	private static final long serialVersionUID = 1008634190691153214L;
 	private String id;
 	private BentukUsaha bentukUsaha;
+	private String nomorIndukBerusaha;
 	private String nama;
 	private Alamat alamat;
 	private String telepone;
@@ -95,7 +96,6 @@ public class Pemrakarsa implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -109,7 +109,6 @@ public class Pemrakarsa implements Serializable {
 		hash = 13 * hash + Objects.hashCode(this.email);
 		return hash;
 	}
-
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -158,12 +157,21 @@ public class Pemrakarsa implements Serializable {
         return true;
 	}
 	
-
 	@Override
 	public String toString() {
-		return "PenanggungJawab{" + "bentukUsaha=" + bentukUsaha.toString() + ", nama=" + nama
+		return "PenanggungJawab{" + "bentukUsaha=" + bentukUsaha.toString() + ", NIB=" + nomorIndukBerusaha  + ", nama=" + nama
 				+ ", alamat=" + alamat.toString() + ", telepone=" + telepone + ", fax=" + fax
 				+ ", npwp=" + npwp + ", email=" + email + "}";
+	}
+
+	
+	public String getNomorIndukBerusaha() {
+		return nomorIndukBerusaha;
+	}
+	
+
+	public void setNomorIndukBerusaha(String nomorIndukBerusaha) {
+		this.nomorIndukBerusaha = nomorIndukBerusaha;
 	}
 	
 	
