@@ -25,26 +25,21 @@ public class SuratPermohonan implements Serializable {
 		this.jenisKegiatan = jenisKegiatan;
 	}
 
-
 	public Date getTanggal() {
 		return tanggal;
 	}
-
 	
 	public void setTanggal(Date tanggal) {
 		this.tanggal = tanggal;
 	}
-
 	
 	public String getNomor() {
 		return nomor;
 	}
-
 	
 	public void setNomor(String nomor) {
 		this.nomor = nomor;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -54,49 +49,33 @@ public class SuratPermohonan implements Serializable {
 		return penanggungJawab;
 	}
 	
-
-
 	public void setPenanggungJawab(PenanggungJawab penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 	
-
-
 	public Pemrakarsa getPemrakarsa() {
 		return pemrakarsa;
 	}
-	
-
 
 	public void setPemrakarsa(Pemrakarsa pemrakarsa) {
 		this.pemrakarsa = pemrakarsa;
 	}
-	
-
 
 	public Alamat getAlamatKegiatan() {
 		return alamatKegiatan;
 	}
-	
-
 
 	public void setAlamatKegiatan(Alamat alamatKegiatan) {
 		this.alamatKegiatan = alamatKegiatan;
 	}
-	
-
 
 	public String getJenisKegiatan() {
 		return jenisKegiatan;
 	}
-	
-
 
 	public void setJenisKegiatan(String jenisKegiatan) {
 		this.jenisKegiatan = jenisKegiatan;
 	}
-	
-
 
 	@Override
 	public int hashCode() {
@@ -110,7 +89,6 @@ public class SuratPermohonan implements Serializable {
 		
 		return hash;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -155,12 +133,9 @@ public class SuratPermohonan implements Serializable {
         return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "SuratPermohonan{" + "tanggal=" + tanggal.toString() + ", nomor=" + nomor + "}";
 	}
-	
-	
 
 }
