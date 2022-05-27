@@ -34,7 +34,6 @@ public class Jabatan implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -44,7 +43,6 @@ public class Jabatan implements Serializable {
 		return hash;
 	}
 	
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -72,7 +70,6 @@ public class Jabatan implements Serializable {
         return true;
 	}
 	
-
 	@Override
 	public String toString() {
 		return "Jabatan{" + "id=" + id + "nama=" + nama + "}";
