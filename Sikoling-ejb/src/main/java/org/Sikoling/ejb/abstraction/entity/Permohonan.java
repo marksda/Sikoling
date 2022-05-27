@@ -76,6 +76,4 @@ public class Permohonan implements Serializable {
 		return serialVersionUID;
 	}
 	
-	
-
 }
