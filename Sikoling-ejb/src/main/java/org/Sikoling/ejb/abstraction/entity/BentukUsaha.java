@@ -7,10 +7,10 @@ public class BentukUsaha implements Serializable{
 
 	private static final long serialVersionUID = -5160872827538954162L;
 	private String id;
-	private KelompokUsaha kelompokUsaha;
+	private KelompokBentukUsaha kelompokUsaha;
 	private String nama;
 	
-	public BentukUsaha(String id, KelompokUsaha kelompokUsaha, String nama) {
+	public BentukUsaha(String id, KelompokBentukUsaha kelompokUsaha, String nama) {
 		super();
 		this.id = id;
 		this.kelompokUsaha = kelompokUsaha;
@@ -25,11 +25,11 @@ public class BentukUsaha implements Serializable{
 		this.id = id;
 	}
 
-	public KelompokUsaha getKelompokUsaha() {
+	public KelompokBentukUsaha getKelompokUsaha() {
 		return kelompokUsaha;
 	}
 
-	public void setKelompokUsaha(KelompokUsaha kelompokUsaha) {
+	public void setKelompokUsaha(KelompokBentukUsaha kelompokUsaha) {
 		this.kelompokUsaha = kelompokUsaha;
 	}
 
