@@ -54,7 +54,6 @@ public class Produk implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -63,7 +62,6 @@ public class Produk implements Serializable {
 		hash = 13 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
-
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -91,7 +89,6 @@ public class Produk implements Serializable {
         
         return true;
 	}
-
 	
 	@Override
 	public String toString() {
