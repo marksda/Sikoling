@@ -33,6 +33,4 @@ public class DiskStorageService implements StorageService {
 		return Files.newInputStream(pathLocation);
 	}
 	
-	
-
 }
