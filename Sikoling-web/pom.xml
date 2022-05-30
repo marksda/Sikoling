@@ -37,6 +37,18 @@
     	<type>ejb</type>
     	<scope>provided</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.glassfish.jersey.core</groupId>
+    	<artifactId>jersey-server</artifactId>
+    	<version>3.0.4</version>
+    	<scope>provided</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.glassfish.jersey.media</groupId>
+    	<artifactId>jersey-media-multipart</artifactId>
+    	<version>3.0.4</version>
+    	<scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
