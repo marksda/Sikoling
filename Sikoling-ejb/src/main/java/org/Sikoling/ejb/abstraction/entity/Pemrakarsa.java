@@ -15,7 +15,16 @@ public class Pemrakarsa implements Serializable {
 	private String fax;
 	private String npwp;
 	private String email;
+	private PenanggungJawab penanggungJawab;
 	
+	public PenanggungJawab getPenanggungJawab() {
+		return penanggungJawab;
+	}
+
+	public void setPenanggungJawab(PenanggungJawab penanggungJawab) {
+		this.penanggungJawab = penanggungJawab;
+	}
+
 	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nama, Alamat alamat, String telepone, String fax, String npwp,
 			String email) {
 		super();
