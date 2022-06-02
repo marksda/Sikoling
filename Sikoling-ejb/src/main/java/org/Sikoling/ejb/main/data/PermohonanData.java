@@ -27,7 +27,10 @@ public class PermohonanData implements Serializable {
 	@Column(name="nomor_pendaftaran")
 	private String nomorPendaftaran;
 
-	private String pemrakarsa;
+	@Column(name="pemrakarsa")
+	@JoinColumn(name = "pemrakarsa", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private PemrakarsaData pemrakarsa;
 
 	private String produk;
 
@@ -70,11 +73,11 @@ public class PermohonanData implements Serializable {
 		this.nomorPendaftaran = nomorPendaftaran;
 	}
 
-	public String getPemrakarsa() {
+	public PemrakarsaData getPemrakarsa() {
 		return this.pemrakarsa;
 	}
 
-	public void setPemrakarsa(String pemrakarsa) {
+	public void setPemrakarsa(PemrakarsaData pemrakarsa) {
 		this.pemrakarsa = pemrakarsa;
 	}
 
