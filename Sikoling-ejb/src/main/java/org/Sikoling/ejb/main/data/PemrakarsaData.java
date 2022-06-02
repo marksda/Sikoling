@@ -22,7 +22,9 @@ public class PemrakarsaData implements Serializable {
 	private String alamatEmail;
 
 	@Column(name="bentuk_usaha")
-	private String bentukUsaha;
+	@JoinColumn(name = "bentuk_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private BentukUsahaData bentukUsaha;
 
 	private String nama;
 
@@ -65,11 +67,11 @@ public class PemrakarsaData implements Serializable {
 		this.alamatEmail = alamatEmail;
 	}
 
-	public String getBentukUsaha() {
+	public BentukUsahaData getBentukUsaha() {
 		return this.bentukUsaha;
 	}
 
-	public void setBentukUsaha(String bentukUsaha) {
+	public void setBentukUsaha(BentukUsahaData bentukUsaha) {
 		this.bentukUsaha = bentukUsaha;
 	}
 
