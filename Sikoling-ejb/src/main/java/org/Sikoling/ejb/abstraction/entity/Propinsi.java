@@ -34,7 +34,6 @@ public class Propinsi implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -43,7 +42,6 @@ public class Propinsi implements Serializable {
 		hash = 13 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
-
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -71,7 +69,6 @@ public class Propinsi implements Serializable {
         
         return true;
 	}
-
 	
 	@Override
 	public String toString() {

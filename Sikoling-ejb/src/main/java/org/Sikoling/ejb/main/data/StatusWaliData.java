@@ -17,7 +17,7 @@ public class StatusWaliData implements Serializable {
 	@Id
 	private String id;
 
-	private String keterangan;
+	private String nama;
 
 	public StatusWaliData() {
 	}
@@ -30,12 +30,12 @@ public class StatusWaliData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKeterangan() {
-		return this.keterangan;
+	public String getNama() {
+		return this.nama;
 	}
 
-	public void setKeterangan(String keterangan) {
-		this.keterangan = keterangan;
+	public void setKeterangan(String nama) {
+		this.nama = nama;
 	}
 
 }
