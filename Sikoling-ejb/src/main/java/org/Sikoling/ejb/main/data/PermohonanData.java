@@ -14,13 +14,15 @@ import java.sql.Timestamp;
 @Table(name="tbl_permohonan")
 @NamedQuery(name="TblPermohonan.findAll", query="SELECT t FROM TblPermohonan t")
 public class PermohonanData implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8440556805186981704L;
 
 	@Id
 	private String id;
 
 	@Column(name="bidang_usaha")
-	private Integer bidangUsaha;
+	@JoinColumn(name = "bidang_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private BidangUsahaData bidangUsaha;
 
 	@Column(name="nomor_pendaftaran")
 	private String nomorPendaftaran;
@@ -52,11 +54,11 @@ public class PermohonanData implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getBidangUsaha() {
+	public BidangUsahaData getBidangUsaha() {
 		return this.bidangUsaha;
 	}
 
-	public void setBidangUsaha(Integer bidangUsaha) {
+	public void setBidangUsaha(BidangUsahaData bidangUsaha) {
 		this.bidangUsaha = bidangUsaha;
 	}
 
