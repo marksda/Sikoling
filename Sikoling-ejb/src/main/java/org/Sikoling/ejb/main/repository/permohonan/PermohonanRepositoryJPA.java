@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriProduk;
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
@@ -8,6 +9,9 @@ import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.PermohonanRepository;
+import org.Sikoling.ejb.main.data.PermohonanData;
+import org.Sikoling.ejb.main.data.converter.ConverterPermohonan;
+
 import jakarta.persistence.EntityManager;
 
 public class PermohonanRepositoryJPA implements PermohonanRepository {
@@ -19,16 +23,15 @@ public class PermohonanRepositoryJPA implements PermohonanRepository {
 
 	@Override
 	public List<Permohonan> getAll() {		
-//		return entityManager.createNamedQuery("PermohonanData.findAll", PermohonanData.class)
-//				.getResultList()
-//				.stream()
-		return null;
-	}
-				
+		return entityManager.createNamedQuery("PermohonanData.findAll", PermohonanData.class)
+				.getResultList()
+				.stream()
+				.map(t -> ConverterPermohonan.toClass(t))
+				.collect(Collectors.toList());
+	}			
 
 	@Override
 	public Permohonan save(Permohonan t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
