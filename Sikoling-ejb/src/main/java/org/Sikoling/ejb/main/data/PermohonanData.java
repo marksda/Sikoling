@@ -32,7 +32,10 @@ public class PermohonanData implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private PemrakarsaData pemrakarsa;
 
-	private String produk;
+	@Column(name="produk")
+	@JoinColumn(name = "produk", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private ProdukData produk;
 
 	@Column(name="status_wali")
 	@JoinColumn(name = "status_wali", referencedColumnName = "id", insertable = false, updatable = false)
@@ -81,11 +84,11 @@ public class PermohonanData implements Serializable {
 		this.pemrakarsa = pemrakarsa;
 	}
 
-	public String getProduk() {
+	public ProdukData getProduk() {
 		return this.produk;
 	}
 
-	public void setProduk(String produk) {
+	public void setProduk(ProdukData produk) {
 		this.produk = produk;
 	}
 
