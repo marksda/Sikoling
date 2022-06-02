@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="tbl_permohonan")
-@NamedQuery(name="TblPermohonan.findAll", query="SELECT t FROM TblPermohonan t")
+@NamedQuery(name="PermohonanData.findAll", query="SELECT t FROM PermohonanData t")
 public class PermohonanData implements Serializable {
 	private static final long serialVersionUID = -8440556805186981704L;
 
