@@ -33,7 +33,9 @@ public class PermohonanData implements Serializable {
 
 	private Timestamp tanggal;
 
-	private String wali;
+	@JoinColumn(name = "wali", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private UserData wali;
 
 	public PermohonanData() {
 	}
@@ -94,11 +96,11 @@ public class PermohonanData implements Serializable {
 		this.tanggal = tanggal;
 	}
 
-	public String getWali() {
+	public UserData getWali() {
 		return this.wali;
 	}
 
-	public void setWali(String wali) {
+	public void setWali(UserData wali) {
 		this.wali = wali;
 	}
 
