@@ -26,7 +26,7 @@ public class PermohonanRepositoryJPA implements PermohonanRepository {
 		return entityManager.createNamedQuery("PermohonanData.findAll", PermohonanData.class)
 				.getResultList()
 				.stream()
-				.map(t -> ConverterPermohonan.toClass(t))
+				.map(t -> ConverterPermohonan.toClassObject(t))
 				.collect(Collectors.toList());
 	}			
 
