@@ -31,8 +31,8 @@ public class PemrakarsaData implements Serializable {
 	@Column(name="nama_notaris")
 	private String namaNotaris;
 
-	@Column(name="no_kitas")
-	private String noKitas;
+	@Column(name="pj_pemrakarsa")
+	private String penanggungJawab;
 
 	@Column(name="no_nib_oss")
 	private String noNibOss;
@@ -49,6 +49,21 @@ public class PemrakarsaData implements Serializable {
 	private Date tanggalOss;
 
 	public PemrakarsaData() {
+	}		
+
+	public PemrakarsaData(String id, String alamatEmail, BentukUsahaData bentukUsaha, String nama, String namaNotaris,
+			String penanggungJawab, String noNibOss, String noNpwp, Date tanggalNotaris, Date tanggalOss) {
+		super();
+		this.id = id;
+		this.alamatEmail = alamatEmail;
+		this.bentukUsaha = bentukUsaha;
+		this.nama = nama;
+		this.namaNotaris = namaNotaris;
+		this.penanggungJawab = penanggungJawab;
+		this.noNibOss = noNibOss;
+		this.noNpwp = noNpwp;
+		this.tanggalNotaris = tanggalNotaris;
+		this.tanggalOss = tanggalOss;
 	}
 
 	public String getId() {
@@ -91,12 +106,12 @@ public class PemrakarsaData implements Serializable {
 		this.namaNotaris = namaNotaris;
 	}
 
-	public String getNoKitas() {
-		return this.noKitas;
+	public String getPenanggungJawab() {
+		return this.penanggungJawab;
 	}
 
-	public void setNoKitas(String noKitas) {
-		this.noKitas = noKitas;
+	public void setPenanggungJawab(String penanggungJawab) {
+		this.penanggungJawab = penanggungJawab;
 	}
 
 	public String getNoNibOss() {

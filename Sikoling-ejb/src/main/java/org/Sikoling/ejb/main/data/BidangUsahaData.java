@@ -22,6 +22,12 @@ public class BidangUsahaData implements Serializable {
 	public BidangUsahaData() {
 	}
 
+	public BidangUsahaData(Integer id, String keterangan) {
+		super();
+		this.id = id;
+		this.keterangan = keterangan;
+	}
+
 	public Integer getId() {
 		return this.id;
 	}

@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 public class Pemrakarsa implements Serializable {
@@ -10,12 +11,15 @@ public class Pemrakarsa implements Serializable {
 	private BentukUsaha bentukUsaha;
 	private String nomorIndukBerusaha;
 	private String nama;
+	public String namaNotaris;	
 	private Alamat alamat;
 	private String telepone;
 	private String fax;
 	private String npwp;
 	private String email;
 	private PenanggungJawab penanggungJawab;
+	private Date tanggalNotaris;
+	private Date tanggalOSS;
 	
 	public PenanggungJawab getPenanggungJawab() {
 		return penanggungJawab;
@@ -25,17 +29,23 @@ public class Pemrakarsa implements Serializable {
 		this.penanggungJawab = penanggungJawab;
 	}
 
-	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nama, Alamat alamat, String telepone, String fax, String npwp,
-			String email) {
+	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nomorIndukBerusaha, String nama, String namaNotaris,
+			Alamat alamat, String telepone, String fax, String npwp, String email, PenanggungJawab penanggungJawab,
+			Date tanggalNotaris, Date tanggalOSS) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
+		this.nomorIndukBerusaha = nomorIndukBerusaha;
 		this.nama = nama;
+		this.namaNotaris = namaNotaris;
 		this.alamat = alamat;
 		this.telepone = telepone;
 		this.fax = fax;
 		this.npwp = npwp;
 		this.email = email;
+		this.penanggungJawab = penanggungJawab;
+		this.tanggalNotaris = tanggalNotaris;
+		this.tanggalOSS = tanggalOSS;
 	}
 
 	public String getId() {
@@ -100,6 +110,30 @@ public class Pemrakarsa implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNamaNotaris() {
+		return namaNotaris;
+	}
+
+	public void setNamaNotaris(String namaNotaris) {
+		this.namaNotaris = namaNotaris;
+	}	
+
+	public Date getTanggalNotaris() {
+		return tanggalNotaris;
+	}
+
+	public void setTanggalNotaris(Date tanggalNotaris) {
+		this.tanggalNotaris = tanggalNotaris;
+	}
+
+	public Date getTanggalOSS() {
+		return tanggalOSS;
+	}
+
+	public void setTanggalOSS(Date tanggalOSS) {
+		this.tanggalOSS = tanggalOSS;
 	}
 
 	public static long getSerialversionuid() {

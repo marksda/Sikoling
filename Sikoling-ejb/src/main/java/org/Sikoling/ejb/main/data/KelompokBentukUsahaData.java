@@ -22,6 +22,12 @@ public class KelompokBentukUsahaData implements Serializable {
 	public KelompokBentukUsahaData() {
 	}
 
+	public KelompokBentukUsahaData(String id, String keterangan) {
+		super();
+		this.id = id;
+		this.keterangan = keterangan;
+	}
+
 	public String getId() {
 		return this.id;
 	}
