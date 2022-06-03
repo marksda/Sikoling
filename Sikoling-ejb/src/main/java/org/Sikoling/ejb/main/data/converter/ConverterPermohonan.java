@@ -5,11 +5,13 @@ import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KelompokBentukUsaha;
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
+import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.main.data.BentukUsahaData;
 import org.Sikoling.ejb.main.data.BidangUsahaData;
 import org.Sikoling.ejb.main.data.KelompokBentukUsahaData;
 import org.Sikoling.ejb.main.data.PemrakarsaData;
 import org.Sikoling.ejb.main.data.PermohonanData;
+import org.Sikoling.ejb.main.data.ProdukData;
 
 public class ConverterPermohonan {
 	
@@ -21,6 +23,8 @@ public class ConverterPermohonan {
 		BidangUsaha bidangUsaha = permohonan.getBidangUsaha();
 		BidangUsahaData bidangUsahaData = new BidangUsahaData(bidangUsaha.getId(), bidangUsaha.getKeterangan());
 		permohonanData.setBidangUsaha(bidangUsahaData);
+
+		permohonanData.setNomorPendaftaran(permohonan.getNoPendaftaran());
 		
 		Pemrakarsa pemrakarsa = permohonan.getSuratPermohonan().getPemrakarsa();
 		BentukUsaha bentukUsaha = pemrakarsa.getBentukUsaha();
@@ -33,8 +37,8 @@ public class ConverterPermohonan {
 				pemrakarsa.getTanggalOSS());
 		permohonanData.setPemrakarsa(pemrakarsaData);
 		
-		permohonanData.setNomorPendaftaran(permohonan.getNoPendaftaran());
-		
+		Produk produk = permohonan.getProduk();
+		ProdukData produkData = new ProdukData();
 		
 		
 		return permohonanData;

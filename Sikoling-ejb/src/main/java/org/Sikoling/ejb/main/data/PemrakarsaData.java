@@ -32,6 +32,8 @@ public class PemrakarsaData implements Serializable {
 	private String namaNotaris;
 
 	@Column(name="pj_pemrakarsa")
+	@JoinColumn(name = "pj_pemrakarsa", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private String penanggungJawab;
 
 	@Column(name="no_nib_oss")
@@ -47,6 +49,12 @@ public class PemrakarsaData implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="tanggal_oss")
 	private Date tanggalOss;
+	
+	@Column(name="telepone")
+	private String telepone;
+	
+	@Column(name="fax")
+	private String fax;
 
 	public PemrakarsaData() {
 	}		
@@ -146,4 +154,20 @@ public class PemrakarsaData implements Serializable {
 		this.tanggalOss = tanggalOss;
 	}
 
+	public String getTelepone() {
+		return telepone;
+	}
+
+	public void setTelepone(String telepone) {
+		this.telepone = telepone;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+	
 }
