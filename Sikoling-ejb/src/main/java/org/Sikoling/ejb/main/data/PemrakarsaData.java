@@ -34,7 +34,7 @@ public class PemrakarsaData implements Serializable {
 	@Column(name="pj_pemrakarsa")
 	@JoinColumn(name = "pj_pemrakarsa", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, cascade = CascadeType.ALL)
-	private String penanggungJawab;
+	private PenanggungJawabPemrakarsaData penanggungJawab;
 
 	@Column(name="no_nib_oss")
 	private String noNibOss;
@@ -60,7 +60,7 @@ public class PemrakarsaData implements Serializable {
 	}		
 
 	public PemrakarsaData(String id, String alamatEmail, BentukUsahaData bentukUsaha, String nama, String namaNotaris,
-			String penanggungJawab, String noNibOss, String noNpwp, Date tanggalNotaris, Date tanggalOss) {
+			PenanggungJawabPemrakarsaData penanggungJawab, String noNibOss, String noNpwp, Date tanggalNotaris, Date tanggalOss) {
 		super();
 		this.id = id;
 		this.alamatEmail = alamatEmail;
@@ -114,11 +114,11 @@ public class PemrakarsaData implements Serializable {
 		this.namaNotaris = namaNotaris;
 	}
 
-	public String getPenanggungJawab() {
+	public PenanggungJawabPemrakarsaData getPenanggungJawab() {
 		return this.penanggungJawab;
 	}
 
-	public void setPenanggungJawab(String penanggungJawab) {
+	public void setPenanggungJawab(PenanggungJawabPemrakarsaData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 
