@@ -22,6 +22,12 @@ public class StatusWaliData implements Serializable {
 	public StatusWaliData() {
 	}
 
+	public StatusWaliData(String id, String nama) {
+		super();
+		this.id = id;
+		this.nama = nama;
+	}
+
 	public String getId() {
 		return this.id;
 	}

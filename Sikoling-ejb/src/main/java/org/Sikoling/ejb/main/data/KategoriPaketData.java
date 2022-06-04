@@ -22,6 +22,12 @@ public class KategoriPaketData implements Serializable {
 	public KategoriPaketData() {
 	}
 
+	public KategoriPaketData(String id, String nama) {
+		super();
+		this.id = id;
+		this.nama = nama;
+	}
+
 	public String getId() {
 		return this.id;
 	}

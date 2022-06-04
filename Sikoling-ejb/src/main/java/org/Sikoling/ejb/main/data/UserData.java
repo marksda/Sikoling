@@ -18,9 +18,13 @@ public class UserData implements Serializable {
 	@Id
 	private String id;
 
-	private String jenis;
-
 	private String password;
+
+	@Column(name="status_internal")
+	private Boolean statusInternal;
+
+	@Column(name="status_login")
+	private Boolean statusLogin;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="tanggal_registrasi")
@@ -31,6 +35,17 @@ public class UserData implements Serializable {
 	public UserData() {
 	}
 
+	public UserData(String id, String password, Boolean statusInternal, Boolean statusLogin, Date tanggalRegistrasi,
+			String user) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.statusInternal = statusInternal;
+		this.statusLogin = statusLogin;
+		this.tanggalRegistrasi = tanggalRegistrasi;
+		this.user = user;
+	}
+
 	public String getId() {
 		return this.id;
 	}
@@ -39,20 +54,28 @@ public class UserData implements Serializable {
 		this.id = id;
 	}
 
-	public String getJenis() {
-		return this.jenis;
-	}
-
-	public void setJenis(String jenis) {
-		this.jenis = jenis;
-	}
-
 	public String getPassword() {
 		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getStatusInternal() {
+		return this.statusInternal;
+	}
+
+	public void setStatusInternal(Boolean statusInternal) {
+		this.statusInternal = statusInternal;
+	}
+
+	public Boolean getStatusLogin() {
+		return this.statusLogin;
+	}
+
+	public void setStatusLogin(Boolean statusLogin) {
+		this.statusLogin = statusLogin;
 	}
 
 	public Date getTanggalRegistrasi() {

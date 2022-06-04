@@ -32,6 +32,14 @@ public class ProdukData implements Serializable {
 	public ProdukData() {
 	}
 
+	public ProdukData(String id, KategoriPaketData kategoriPaket, KategoriProdukData kategoriProduk, String nama) {
+		super();
+		this.id = id;
+		this.kategoriPaket = kategoriPaket;
+		this.kategoriProduk = kategoriProduk;
+		this.nama = nama;
+	}
+
 	public String getId() {
 		return this.id;
 	}

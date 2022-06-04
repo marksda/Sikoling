@@ -8,21 +8,30 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = -9207509664824799299L;
 	
+	private final String id;
 	private final String email;
 	private final String password;
-	private final String loginStatus;
+	private final Boolean loginStatus;
 	private final Date registerDate;
-	
-	public User(String email, String password, String loginStatus, Date registerDate) {
+	private final Boolean statusInternal;
+
+	public User(String id, String email, String password, Boolean loginStatus, Date registerDate,
+			Boolean statusInternal) {
 		super();
+		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.loginStatus = loginStatus;
 		this.registerDate = registerDate;
+		this.statusInternal = statusInternal;
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getEmail() {
@@ -32,7 +41,15 @@ public class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
+	
+	public Boolean getLoginStatus() {
+		return loginStatus;
+	}
 
+	public Boolean getStatusInternal() {
+		return statusInternal;
+	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 7;
@@ -71,10 +88,6 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User{" + "email=" + email + ", password=" + password + "}";
-	}
-
-	public String getLoginStatus() {
-		return loginStatus;
 	}
 
 	public Date getRegisterDate() {
