@@ -22,6 +22,12 @@ public class JenisKelaminData implements Serializable {
 	public JenisKelaminData() {
 	}
 
+	public JenisKelaminData(String id, String nama) {
+		super();
+		this.id = id;
+		this.nama = nama;
+	}
+
 	public String getId() {
 		return this.id;
 	}

@@ -28,6 +28,13 @@ public class KabupatenData implements Serializable {
 	public KabupatenData() {
 	}
 
+	public KabupatenData(String id, String nama, PropinsiData propinsi) {
+		super();
+		this.id = id;
+		this.nama = nama;
+		this.propinsi = propinsi;
+	}
+
 	public String getId() {
 		return this.id;
 	}

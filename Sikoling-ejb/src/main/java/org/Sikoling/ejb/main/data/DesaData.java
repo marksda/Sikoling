@@ -28,6 +28,13 @@ public class DesaData implements Serializable {
 	public DesaData() {
 	}
 
+	public DesaData(String id, KecamatanData kecamatan, String nama) {
+		super();
+		this.id = id;
+		this.kecamatan = kecamatan;
+		this.nama = nama;
+	}
+
 	public String getId() {
 		return this.id;
 	}

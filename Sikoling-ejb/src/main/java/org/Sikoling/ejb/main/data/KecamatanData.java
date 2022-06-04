@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name="tbl_kecamatan")
 @NamedQuery(name="KecamatanData.findAll", query="SELECT k FROM KecamatanData k")
 public class KecamatanData implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5701915325336067933L;
 
 	@Id
 	private String id;
@@ -26,6 +26,13 @@ public class KecamatanData implements Serializable {
 	private String nama;
 
 	public KecamatanData() {
+	}
+
+	public KecamatanData(String id, KabupatenData kabupaten, String nama) {
+		super();
+		this.id = id;
+		this.kabupaten = kabupaten;
+		this.nama = nama;
 	}
 
 	public String getId() {
