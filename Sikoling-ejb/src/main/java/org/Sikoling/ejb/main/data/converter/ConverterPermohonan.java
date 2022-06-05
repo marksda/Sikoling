@@ -32,7 +32,7 @@ import org.Sikoling.ejb.main.data.KategoriProdukData;
 import org.Sikoling.ejb.main.data.KecamatanData;
 import org.Sikoling.ejb.main.data.KelompokBentukUsahaData;
 import org.Sikoling.ejb.main.data.PemrakarsaData;
-import org.Sikoling.ejb.main.data.PenanggungJawabPemrakarsaData;
+import org.Sikoling.ejb.main.data.PenanggungJawabData;
 import org.Sikoling.ejb.main.data.PermohonanData;
 import org.Sikoling.ejb.main.data.ProdukData;
 import org.Sikoling.ejb.main.data.PropinsiData;
@@ -70,7 +70,7 @@ public class ConverterPermohonan {
 		DesaData desaData = new DesaData(desa.getId(), kecamatanData, desa.getNama());
 		JabatanData jabatanData = new JabatanData(jabatan.getId(), jabatan.getNama());
 		JenisKelaminData jenisKelaminData = new JenisKelaminData(jenisKelamin.getId(), jenisKelamin.getNama());		
-		PenanggungJawabPemrakarsaData penanggungJawabPemrakarsaData = new PenanggungJawabPemrakarsaData(
+		PenanggungJawabData penanggungJawabPemrakarsaData = new PenanggungJawabData(
 				penanggungJawab.getId(), desaData, alamat.getKeterangan(), jabatanData, kabupatenData, kecamatanData,
 				penanggungJawab.getNama(), penanggungJawab.getNoHandphone(), penanggungJawab.getNoIdentitas(),
 				propinsiData, jenisKelaminData);		

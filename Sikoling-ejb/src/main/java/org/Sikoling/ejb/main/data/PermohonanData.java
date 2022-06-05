@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -48,6 +49,29 @@ public class PermohonanData implements Serializable {
 	@JoinColumn(name = "wali", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private UserData wali;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="tanggal_surat_permohonan")
+	private Date tangalSuratPermohonan;
+	
+	@Column(name="nomor_surat_permohonan")
+	private String nomorSuratPermohonan;
+
+	public Date getTangalSuratPermohonan() {
+		return tangalSuratPermohonan;
+	}
+
+	public void setTangalSuratPermohonan(Date tangalSuratPermohonan) {
+		this.tangalSuratPermohonan = tangalSuratPermohonan;
+	}
+
+	public String getNomorSuratPermohonan() {
+		return nomorSuratPermohonan;
+	}
+
+	public void setNomorSuratPermohonan(String nomorSuratPermohonan) {
+		this.nomorSuratPermohonan = nomorSuratPermohonan;
+	}
 
 	public PermohonanData() {
 	}

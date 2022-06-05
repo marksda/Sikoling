@@ -9,9 +9,9 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="tbl_pj_pemrakarsa")
+@Table(name="tbl_penanggung_jawab")
 @NamedQuery(name="PenanggungJawabPemrakarsaData.findAll", query="SELECT p FROM PenanggungJawabPemrakarsaData p")
-public class PenanggungJawabPemrakarsaData implements Serializable {
+public class PenanggungJawabData implements Serializable {
 	private static final long serialVersionUID = 6630651928270252860L;
 
 	@Id
@@ -58,11 +58,16 @@ public class PenanggungJawabPemrakarsaData implements Serializable {
 	@JoinColumn(name = "sex", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private JenisKelaminData sex;
+	
+	@Column(name="pemilik")
+	@JoinColumn(name = "pemilik", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private PemrakarsaData pemilik;
 
-	public PenanggungJawabPemrakarsaData() {
+	public PenanggungJawabData() {
 	}	
 
-	public PenanggungJawabPemrakarsaData(String id, DesaData desa, String detailAlamat, JabatanData jabatan,
+	public PenanggungJawabData(String id, DesaData desa, String detailAlamat, JabatanData jabatan,
 			KabupatenData kabupaten, KecamatanData kecamatan, String nama, String nomorHandphone, String nomorIdentitas,
 			PropinsiData propinsi, JenisKelaminData sex) {
 		super();
@@ -78,7 +83,6 @@ public class PenanggungJawabPemrakarsaData implements Serializable {
 		this.propinsi = propinsi;
 		this.sex = sex;
 	}
-
 
 	public String getId() {
 		return this.id;
@@ -168,4 +172,12 @@ public class PenanggungJawabPemrakarsaData implements Serializable {
 		this.sex = sex;
 	}
 
+
+	public PemrakarsaData getPemilik() {
+		return pemilik;
+	}
+
+	public void setPemilik(PemrakarsaData pemilik) {
+		this.pemilik = pemilik;
+	}
 }
