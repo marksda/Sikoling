@@ -13,9 +13,9 @@ public class PenggunaEksternal extends User implements Serializable {
 	private final String nik;
 	private final String no_telepon;
 	
-	public PenggunaEksternal(String email, String password, String loginStatus, Date registerDate, String nama_lengkap,
-			Alamat alamat, String nik, String no_telepon) {
-		super(email, password, loginStatus, registerDate);
+	public PenggunaEksternal(String id, String email, String password, Boolean loginStatus, Date registerDate, String nama_lengkap,
+			Alamat alamat, String nik, String no_telepon, Boolean statusInternal) {
+		super(id, email, password, loginStatus, registerDate, statusInternal);
 		this.nama_lengkap = nama_lengkap;
 		this.alamat = alamat;
 		this.nik = nik;

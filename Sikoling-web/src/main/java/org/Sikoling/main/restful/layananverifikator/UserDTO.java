@@ -27,7 +27,7 @@ public class UserDTO implements Serializable {
     }
     
     public User toUser(){
-        return new User(this.email, this.password, null, null);
+        return new User(null, this.email, this.password, null, null, null);
     }
 
 }
