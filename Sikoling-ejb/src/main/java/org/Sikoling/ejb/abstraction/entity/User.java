@@ -15,6 +15,16 @@ public class User implements Serializable {
 	private final Date registerDate;
 	private final Boolean statusInternal;
 
+	public User(String id) {
+		super();
+		this.id = id;
+		this.email = null;
+		this.password = null;
+		this.loginStatus = null;
+		this.registerDate = null;
+		this.statusInternal = null;
+	}
+
 	public User(String id, String email, String password, Boolean loginStatus, Date registerDate,
 			Boolean statusInternal) {
 		super();

@@ -43,6 +43,7 @@ public class PermohonanData implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private StatusWaliData statusWali;
 
+	@Column(name="tanggal")
 	private Timestamp tanggal;
 
 	@Column(name="wali")
