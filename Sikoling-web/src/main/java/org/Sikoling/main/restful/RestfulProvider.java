@@ -18,4 +18,5 @@ public class RestfulProvider {
 			@Infrastructure PermohonanRepository permohonanRepository) {
 		return new LayananDasarPermohonan(permohonanRepository);
 	}
+	
 }

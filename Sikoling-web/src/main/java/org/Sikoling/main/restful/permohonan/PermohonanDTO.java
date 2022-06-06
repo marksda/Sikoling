@@ -89,6 +89,9 @@ public class PermohonanDTO implements Serializable {
 		return serialVersionUID;
 	}
 	
-	
+	public Permohonan toPermohonan() {
+		return new Permohonan(this.noPendaftaran, this.tanggalPendaftaran, this.suratPermohonan.toSuratPermohonan(), 
+				this.bidangUsaha.toBidangUsaha(), this.wali.toWali(), this.produk.toProduk());
+	}
 
 }
