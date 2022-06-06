@@ -6,9 +6,9 @@ import java.util.Objects;
 public class Kecamatan implements Serializable {
 
 	private static final long serialVersionUID = 4983912261984260673L;
-	private String id;
-	private String nama;
-	private Kabupaten kabupaten;
+	private final String id;
+	private final String nama;
+	private final Kabupaten kabupaten;
 	
 	public Kecamatan(String id, String nama, Kabupaten kabupaten) {
 		super();
@@ -21,24 +21,12 @@ public class Kecamatan implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
 	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-
 	public Kabupaten getKabupaten() {
 		return kabupaten;
-	}
-
-	public void setKabupaten(Kabupaten kabupaten) {
-		this.kabupaten = kabupaten;
 	}
 
 	public static long getSerialversionuid() {

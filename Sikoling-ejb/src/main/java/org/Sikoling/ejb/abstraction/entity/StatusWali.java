@@ -6,8 +6,8 @@ import java.util.Objects;
 public class StatusWali implements Serializable {
 
 	private static final long serialVersionUID = 7290219535631898387L;	
-	private String id;
-	private String nama;
+	private final String id;
+	private final String nama;
 	
 	public StatusWali(String id, String nama) {
 		super();
@@ -19,23 +19,14 @@ public class StatusWali implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		int hash = 7;
@@ -44,7 +35,6 @@ public class StatusWali implements Serializable {
 		return hash;
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -72,7 +62,6 @@ public class StatusWali implements Serializable {
         return true;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "StatusWali{" + "id=" + id + "nama=" + nama + "}";

@@ -6,10 +6,10 @@ import java.util.Objects;
 public class Produk implements Serializable {
 
 	private static final long serialVersionUID = 1719488297810116974L;
-	private String id;
-	private String nama;
-	private KategoriPaket kategoriPaket;
-	private KategoriProduk kategoriProduk;
+	private final String id;
+	private final String nama;
+	private final KategoriPaket kategoriPaket;
+	private final KategoriProduk kategoriProduk;
 	
 	public Produk(String id, String nama, KategoriPaket kategoriPaket, KategoriProduk kategoriProduk) {
 		super();
@@ -23,32 +23,16 @@ public class Produk implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 
 	public KategoriPaket getKategoriPaket() {
 		return kategoriPaket;
 	}
 
-	public void setKategoriPaket(KategoriPaket kategoriPaket) {
-		this.kategoriPaket = kategoriPaket;
-	}
-
 	public KategoriProduk getKategoriProduk() {
 		return kategoriProduk;
-	}
-
-	public void setKategoriProduk(KategoriProduk kategoriProduk) {
-		this.kategoriProduk = kategoriProduk;
 	}
 
 	public static long getSerialversionuid() {

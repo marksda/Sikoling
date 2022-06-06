@@ -7,12 +7,12 @@ import java.util.Objects;
 public class SuratPermohonan implements Serializable {
 
 	private static final long serialVersionUID = 3360094098987919834L;
-	private Date tanggal;
-	private String nomor;
-	private PenanggungJawab penanggungJawab;
-	private Pemrakarsa pemrakarsa;
-	private Alamat alamatKegiatan;
-	private String jenisKegiatan;
+	private final Date tanggal;
+	private final String nomor;
+	private final PenanggungJawab penanggungJawab;
+	private final Pemrakarsa pemrakarsa;
+	private final Alamat alamatKegiatan;
+	private final String jenisKegiatan;
 	
 	public SuratPermohonan(Date tanggal, String nomor, PenanggungJawab penanggungJawab, Pemrakarsa pemrakarsa,
 			Alamat alamatKegiatan, String jenisKegiatan) {
@@ -29,16 +29,8 @@ public class SuratPermohonan implements Serializable {
 		return tanggal;
 	}
 	
-	public void setTanggal(Date tanggal) {
-		this.tanggal = tanggal;
-	}
-	
 	public String getNomor() {
 		return nomor;
-	}
-	
-	public void setNomor(String nomor) {
-		this.nomor = nomor;
 	}
 	
 	public static long getSerialversionuid() {
@@ -49,32 +41,16 @@ public class SuratPermohonan implements Serializable {
 		return penanggungJawab;
 	}
 	
-	public void setPenanggungJawab(PenanggungJawab penanggungJawab) {
-		this.penanggungJawab = penanggungJawab;
-	}
-	
 	public Pemrakarsa getPemrakarsa() {
 		return pemrakarsa;
-	}
-
-	public void setPemrakarsa(Pemrakarsa pemrakarsa) {
-		this.pemrakarsa = pemrakarsa;
 	}
 
 	public Alamat getAlamatKegiatan() {
 		return alamatKegiatan;
 	}
 
-	public void setAlamatKegiatan(Alamat alamatKegiatan) {
-		this.alamatKegiatan = alamatKegiatan;
-	}
-
 	public String getJenisKegiatan() {
 		return jenisKegiatan;
-	}
-
-	public void setJenisKegiatan(String jenisKegiatan) {
-		this.jenisKegiatan = jenisKegiatan;
 	}
 
 	@Override

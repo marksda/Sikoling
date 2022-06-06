@@ -6,8 +6,8 @@ import java.util.Objects;
 public class KategoriPaket implements Serializable {
 
 	private static final long serialVersionUID = -915951649073415669L;
-	private String id;
-	private String nama;
+	private final String id;
+	private final String nama;
 	
 	public KategoriPaket(String id, String nama) {
 		super();
@@ -19,16 +19,8 @@ public class KategoriPaket implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {

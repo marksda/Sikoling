@@ -6,8 +6,8 @@ import java.util.Objects;
 public class BidangUsaha implements Serializable {
 
 	private static final long serialVersionUID = -5728047210096243435L;
-	private int id;
-	private String keterangan;
+	private final int id;
+	private final String keterangan;
 	
 	public BidangUsaha(int id, String keterangan) {
 		super();
@@ -19,16 +19,8 @@ public class BidangUsaha implements Serializable {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getKeterangan() {
 		return keterangan;
-	}
-
-	public void setKeterangan(String keterangan) {
-		this.keterangan = keterangan;
 	}
 
 	public static long getSerialversionuid() {

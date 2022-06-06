@@ -6,9 +6,9 @@ import java.util.Objects;
 public class BentukUsaha implements Serializable{
 
 	private static final long serialVersionUID = -5160872827538954162L;
-	private String id;
-	private KelompokBentukUsaha kelompokUsaha;
-	private String nama;
+	private final String id;
+	private final KelompokBentukUsaha kelompokUsaha;
+	private final String nama;
 	
 	public BentukUsaha(String id, KelompokBentukUsaha kelompokUsaha, String nama) {
 		super();
@@ -21,24 +21,12 @@ public class BentukUsaha implements Serializable{
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public KelompokBentukUsaha getKelompokUsaha() {
 		return kelompokUsaha;
 	}
 
-	public void setKelompokUsaha(KelompokBentukUsaha kelompokUsaha) {
-		this.kelompokUsaha = kelompokUsaha;
-	}
-
 	public String getNama() {
 		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {

@@ -6,9 +6,9 @@ import java.util.Objects;
 public class Kabupaten implements Serializable {
 
 	private static final long serialVersionUID = -1725097099726145918L;
-	private String id;
-	private String nama;
-	private Propinsi propinsi;
+	private final String id;
+	private final String nama;
+	private final Propinsi propinsi;
 	
 	public Kabupaten(String id, String nama, Propinsi propinsi) {
 		super();
@@ -21,30 +21,17 @@ public class Kabupaten implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 
 	public Propinsi getPropinsi() {
 		return propinsi;
 	}
 
-	public void setPropinsi(Propinsi propinsi) {
-		this.propinsi = propinsi;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -54,7 +41,6 @@ public class Kabupaten implements Serializable {
 		hash = 13 * hash + Objects.hashCode(this.propinsi.getNama());
 		return hash;
 	}
-
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -82,13 +68,10 @@ public class Kabupaten implements Serializable {
         
         return true;
 	}
-
 	
 	@Override
 	public String toString() {
 		return "Kabupaten{" + "id=" + id + "nama=" + nama + "}";
 	}
 	
-	
-
 }

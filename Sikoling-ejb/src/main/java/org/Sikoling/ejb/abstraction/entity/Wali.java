@@ -3,13 +3,13 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class WaliPemohon implements Serializable {
+public class Wali implements Serializable {
 
 	private static final long serialVersionUID = 2775584601268906714L;
-	private User wali;
-	private StatusWali status;
+	private final User wali;
+	private final StatusWali status;
 	
-	public WaliPemohon(User wali, StatusWali status) {
+	public Wali(User wali, StatusWali status) {
 		super();
 		this.wali = wali;
 		this.status = status;
@@ -19,16 +19,8 @@ public class WaliPemohon implements Serializable {
 		return wali;
 	}
 
-	public void setWali(User wali) {
-		this.wali = wali;
-	}
-
 	public StatusWali getStatus() {
 		return status;
-	}
-
-	public void setStatus(StatusWali status) {
-		this.status = status;
 	}
 
 	public static long getSerialversionuid() {
@@ -56,7 +48,7 @@ public class WaliPemohon implements Serializable {
             return false;
         }
         
-        final WaliPemohon other = (WaliPemohon) obj;
+        final Wali other = (Wali) obj;
         
         if (!Objects.equals(this.wali, other.wali)) {
             return false;

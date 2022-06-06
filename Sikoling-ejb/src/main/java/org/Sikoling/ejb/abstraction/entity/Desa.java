@@ -6,9 +6,9 @@ import java.util.Objects;
 public class Desa implements Serializable {
 
 	private static final long serialVersionUID = -7665467179125915846L;
-	private String id;
-	private String nama;
-	private Kecamatan kecamatan;
+	private final String id;
+	private final String nama;
+	private final Kecamatan kecamatan;
 	
 	public Desa(String id, String nama, Kecamatan kecamatan) {
 		super();
@@ -21,24 +21,12 @@ public class Desa implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
 	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-
 	public Kecamatan getKecamatan() {
 		return kecamatan;
-	}
-
-	public void setKecamatan(Kecamatan kecamatan) {
-		this.kecamatan = kecamatan;
 	}
 
 	public static long getSerialversionuid() {

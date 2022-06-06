@@ -6,13 +6,13 @@ import java.util.Objects;
 public class PenanggungJawab implements Serializable {
 
 	private static final long serialVersionUID = -9008266978579909965L;
-	private String id;
-	private String nama;
-	private Alamat alamat;
-	private Jabatan jabatan;
-	private JenisKelamin jenisKelamin;
-	private String noIdentitas;
-	private String noHandphone;
+	private final String id;
+	private final String nama;
+	private final Alamat alamat;
+	private final Jabatan jabatan;
+	private final JenisKelamin jenisKelamin;
+	private final String noIdentitas;
+	private final String noHandphone;
 	
 	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, String noIdentitas,
 			String noHandphone) {
@@ -30,56 +30,28 @@ public class PenanggungJawab implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getNama() {
 		return nama;
-	}
-	
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 	
 	public Alamat getAlamat() {
 		return alamat;
 	}
 	
-	public void setAlamat(Alamat alamat) {
-		this.alamat = alamat;
-	}
-	
 	public Jabatan getJabatan() {
 		return jabatan;
-	}
-	
-	public void setJabatan(Jabatan jabatan) {
-		this.jabatan = jabatan;
 	}
 	
 	public JenisKelamin getJenisKelamin() {
 		return jenisKelamin;
 	}
 	
-	public void setJenisKelamin(JenisKelamin jenisKelamin) {
-		this.jenisKelamin = jenisKelamin;
-	}
-	
 	public String getNoIdentitas() {
 		return noIdentitas;
 	}
 	
-	public void setNoIdentitas(String noIdentitas) {
-		this.noIdentitas = noIdentitas;
-	}
-	
 	public String getNoHandphone() {
 		return noHandphone;
-	}
-	
-	public void setNoHandphone(String noHandphone) {
-		this.noHandphone = noHandphone;
 	}
 	
 	public static long getSerialversionuid() {
