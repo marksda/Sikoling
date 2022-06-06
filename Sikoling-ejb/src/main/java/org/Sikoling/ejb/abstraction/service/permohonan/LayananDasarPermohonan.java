@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.service.layananpermohonan;
+package org.Sikoling.ejb.abstraction.service.permohonan;
 
 import java.util.List;
 
