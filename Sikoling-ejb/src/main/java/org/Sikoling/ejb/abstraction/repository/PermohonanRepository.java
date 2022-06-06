@@ -9,6 +9,7 @@ import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
 
 public interface PermohonanRepository extends Repository<Permohonan> {	
+	
 	List<Permohonan> getAll(Integer page, Integer pageSize);
 	List<Permohonan> getByUser(User user);
 	List<Permohonan> getByPemrakarsa(Pemrakarsa pemrakarsa);

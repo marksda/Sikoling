@@ -7,14 +7,18 @@ import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
+import org.Sikoling.ejb.abstraction.repository.PermohonanRepository;
 
 public class LayananDasarPermohonan implements LayananPermohonan {
-//	private final PermohonanRepository permohonanRepository;
+	private final PermohonanRepository permohonanRepository;
 
+	public LayananDasarPermohonan(PermohonanRepository permohonanRepository) {
+		this.permohonanRepository = permohonanRepository;
+	}
+	
 	@Override
 	public Permohonan save(Permohonan permohonan) {
-		// TODO Auto-generated method stub
-		return null;
+		return permohonanRepository.save(permohonan);
 	}
 
 	@Override
