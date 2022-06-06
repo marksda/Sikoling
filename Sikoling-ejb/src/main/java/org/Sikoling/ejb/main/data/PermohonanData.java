@@ -58,6 +58,11 @@ public class PermohonanData implements Serializable {
 	@Column(name="nomor_surat_permohonan")
 	private String nomorSuratPermohonan;
 
+	@Column(name="penanggung_jawab")
+	@JoinColumn(name = "penanggung_jawab", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private RelasiPenanggungJawabData penanggungJawab;
+	
 	public Date getTangalSuratPermohonan() {
 		return tangalSuratPermohonan;
 	}
@@ -139,6 +144,16 @@ public class PermohonanData implements Serializable {
 
 	public void setWali(UserData wali) {
 		this.wali = wali;
+	}
+
+	
+	public RelasiPenanggungJawabData getPenanggungJawab() {
+		return penanggungJawab;
+	}
+
+	
+	public void setPenanggungJawab(RelasiPenanggungJawabData penanggungJawab) {
+		this.penanggungJawab = penanggungJawab;
 	}
 
 }

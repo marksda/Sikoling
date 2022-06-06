@@ -18,10 +18,14 @@ public class RelasiPenanggungJawabData implements Serializable {
 	private String id;
 
 	@Column(name="kategori_penanggung_jawab")
-	private String kategoriPenanggungJawab;
+	@JoinColumn(name = "kategori_penanggung_jawab", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private KategoriPenanggungJawabData kategoriPenanggungJawab;
 
 	@Column(name="penanggung_jawab")
-	private String penanggungJawab;
+	@JoinColumn(name = "penanggung_jawab", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	private PenanggungJawabData penanggungJawab;
 
 	public RelasiPenanggungJawabData() {
 	}
@@ -34,19 +38,19 @@ public class RelasiPenanggungJawabData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKategoriPenanggungJawab() {
+	public KategoriPenanggungJawabData getKategoriPenanggungJawab() {
 		return this.kategoriPenanggungJawab;
 	}
 
-	public void setKategoriPenanggungJawab(String kategoriPenanggungJawab) {
+	public void setKategoriPenanggungJawab(KategoriPenanggungJawabData kategoriPenanggungJawab) {
 		this.kategoriPenanggungJawab = kategoriPenanggungJawab;
 	}
 
-	public String getPenanggungJawab() {
+	public PenanggungJawabData getPenanggungJawab() {
 		return this.penanggungJawab;
 	}
 
-	public void setPenanggungJawab(String penanggungJawab) {
+	public void setPenanggungJawab(PenanggungJawabData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 

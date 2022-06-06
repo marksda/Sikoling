@@ -36,6 +36,7 @@ import org.Sikoling.ejb.main.data.PenanggungJawabData;
 import org.Sikoling.ejb.main.data.PermohonanData;
 import org.Sikoling.ejb.main.data.ProdukData;
 import org.Sikoling.ejb.main.data.PropinsiData;
+import org.Sikoling.ejb.main.data.RelasiPenanggungJawabData;
 import org.Sikoling.ejb.main.data.StatusWaliData;
 import org.Sikoling.ejb.main.data.UserData;
 
@@ -84,6 +85,7 @@ public class ConverterPermohonan {
 		StatusWaliData statusWaliData = new StatusWaliData(statusWali.getId(), statusWali.getNama());
 		UserData userData = new UserData(user.getId(), user.getPassword(), user.getStatusInternal(), 
 				user.getLoginStatus(), user.getRegisterDate(), user.getEmail());
+		RelasiPenanggungJawabData relasiPenanggungJawabData = new RelasiPenanggungJawabData();
 		
 		PermohonanData permohonanData = new PermohonanData();
 		permohonanData.setNomorPendaftaran(permohonan.getNoPendaftaran());
@@ -94,6 +96,7 @@ public class ConverterPermohonan {
 		permohonanData.setStatusWali(statusWaliData);
 		permohonanData.setTanggal(new Timestamp(permohonan.getTanggalPendaftaran().getTime()));
 		permohonanData.setWali(userData);
+		permohonanData.setPenanggungJawab(relasiPenanggungJawabData);
 		
 		return permohonanData;
 	}
