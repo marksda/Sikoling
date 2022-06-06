@@ -8,7 +8,7 @@ import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
 
-public interface LayananPermohonan {
+public interface ServicePermohonan {
 	Permohonan save(Permohonan permohonan);
 	Permohonan update(Permohonan permohonan);
 	List<Permohonan> getAll(Integer page, Integer pageSize);
