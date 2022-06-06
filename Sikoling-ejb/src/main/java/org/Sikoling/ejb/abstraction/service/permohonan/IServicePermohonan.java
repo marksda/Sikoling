@@ -9,6 +9,7 @@ import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
 
 public interface IServicePermohonan {
+	
 	Permohonan save(Permohonan permohonan);
 	Permohonan update(Permohonan permohonan);
 	List<Permohonan> getAll(Integer page, Integer pageSize);
@@ -21,4 +22,5 @@ public interface IServicePermohonan {
 	List<Permohonan> getByUserAndPemrakarsa(User user, Pemrakarsa pemrakarsa);
 	List<Permohonan> getByUserAndProdukAndPemrakarsa(User user, Produk produk, Pemrakarsa pemrakarsa);
 	List<Permohonan> getByUserAndKategoriProdukAndPemrakarsa(User user, KategoriProduk kategoriProduk, Pemrakarsa pemrakarsa);	
+	
 }

@@ -9,10 +9,11 @@ import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IPermohonanRepository;
 
-public class ServiceBasicPermohonan implements IServicePermohonan {
+public class ServicePermohonan implements IServicePermohonan {
+	
 	private final IPermohonanRepository permohonanRepository;
 
-	public ServiceBasicPermohonan(IPermohonanRepository permohonanRepository) {
+	public ServicePermohonan(IPermohonanRepository permohonanRepository) {
 		this.permohonanRepository = permohonanRepository;
 	}
 	
