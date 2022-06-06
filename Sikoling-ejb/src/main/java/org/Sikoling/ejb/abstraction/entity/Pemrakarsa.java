@@ -7,26 +7,22 @@ import java.util.Objects;
 public class Pemrakarsa implements Serializable {
 
 	private static final long serialVersionUID = 1008634190691153214L;
-	private String id;
-	private BentukUsaha bentukUsaha;
-	private String nomorIndukBerusaha;
-	private String nama;
-	public String namaNotaris;	
-	private Alamat alamat;
-	private String telepone;
-	private String fax;
-	private String npwp;
-	private String email;
-	private PenanggungJawab penanggungJawab;
-	private Date tanggalNotaris;
-	private Date tanggalOSS;
+	private final String id;
+	private final BentukUsaha bentukUsaha;
+	private final String nomorIndukBerusaha;
+	private final String nama;
+	private final String namaNotaris;	
+	private final Alamat alamat;
+	private final String telepone;
+	private final String fax;
+	private final String npwp;
+	private final String email;
+	private final PenanggungJawab penanggungJawab;
+	private final Date tanggalNotaris;
+	private final Date tanggalOSS;
 	
 	public PenanggungJawab getPenanggungJawab() {
 		return penanggungJawab;
-	}
-
-	public void setPenanggungJawab(PenanggungJawab penanggungJawab) {
-		this.penanggungJawab = penanggungJawab;
 	}
 
 	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nomorIndukBerusaha, String nama, String namaNotaris,
@@ -52,90 +48,50 @@ public class Pemrakarsa implements Serializable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public BentukUsaha getBentukUsaha() {
 		return bentukUsaha;
-	}
-
-	public void setBentukUsaha(BentukUsaha bentukUsaha) {
-		this.bentukUsaha = bentukUsaha;
 	}
 
 	public String getNama() {
 		return nama;
 	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-
 	public Alamat getAlamat() {
 		return alamat;
-	}
-
-	public void setAlamat(Alamat alamat) {
-		this.alamat = alamat;
 	}
 
 	public String getTelepone() {
 		return telepone;
 	}
 
-	public void setTelepone(String telepone) {
-		this.telepone = telepone;
-	}
-
 	public String getFax() {
 		return fax;
-	}
-
-	public void setFax(String fax) {
-		this.fax = fax;
 	}
 
 	public String getNpwp() {
 		return npwp;
 	}
 
-	public void setNpwp(String npwp) {
-		this.npwp = npwp;
-	}
-
 	public String getEmail() {
 		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getNamaNotaris() {
 		return namaNotaris;
 	}
 
-	public void setNamaNotaris(String namaNotaris) {
-		this.namaNotaris = namaNotaris;
-	}	
-
 	public Date getTanggalNotaris() {
 		return tanggalNotaris;
-	}
-
-	public void setTanggalNotaris(Date tanggalNotaris) {
-		this.tanggalNotaris = tanggalNotaris;
 	}
 
 	public Date getTanggalOSS() {
 		return tanggalOSS;
 	}
 
-	public void setTanggalOSS(Date tanggalOSS) {
-		this.tanggalOSS = tanggalOSS;
+	public String getNomorIndukBerusaha() {
+		return nomorIndukBerusaha;
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -206,14 +162,5 @@ public class Pemrakarsa implements Serializable {
 				+ ", alamat=" + alamat.toString() + ", telepone=" + telepone + ", fax=" + fax
 				+ ", npwp=" + npwp + ", email=" + email + "}";
 	}
-	
-	public String getNomorIndukBerusaha() {
-		return nomorIndukBerusaha;
-	}
-	
-	public void setNomorIndukBerusaha(String nomorIndukBerusaha) {
-		this.nomorIndukBerusaha = nomorIndukBerusaha;
-	}
-	
 	
 }

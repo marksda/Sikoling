@@ -22,6 +22,12 @@ public class KategoriPenanggungJawabData implements Serializable {
 	public KategoriPenanggungJawabData() {
 	}
 
+	public KategoriPenanggungJawabData(String id, String nama) {
+		super();
+		this.id = id;
+		this.nama = nama;
+	}
+
 	public String getId() {
 		return this.id;
 	}
