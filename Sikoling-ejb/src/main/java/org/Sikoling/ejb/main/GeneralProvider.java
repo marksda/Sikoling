@@ -12,6 +12,7 @@ import jakarta.enterprise.inject.Produces;
 @Stateless
 @LocalBean
 public class GeneralProvider {	
+	
 	@Produces
 	public Properties getProperties() throws IOException {
 		Properties properties = new Properties();
@@ -24,4 +25,5 @@ public class GeneralProvider {
 		
 		return properties;
 	}
+	
 }
