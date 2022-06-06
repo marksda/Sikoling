@@ -7,9 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import org.Sikoling.ejb.abstraction.service.file.StorageService;
+import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 
-public class DiskStorageService implements StorageService {
+public class DiskStorageService implements IStorageService {
 	private final String rootPath;
 
 	public DiskStorageService(String rootPath) {

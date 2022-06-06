@@ -1,6 +1,6 @@
 package org.Sikoling.main.restful.permohonan;
 
-import org.Sikoling.ejb.abstraction.service.permohonan.ServicePermohonan;
+import org.Sikoling.ejb.abstraction.service.permohonan.IServicePermohonan;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 public class PermohonanController {
 	
 	@Inject
-	private ServicePermohonan layananPermohonan;
+	private IServicePermohonan layananPermohonan;
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})

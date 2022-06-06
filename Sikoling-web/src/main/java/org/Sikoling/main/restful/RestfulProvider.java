@@ -1,8 +1,8 @@
 package org.Sikoling.main.restful;
 
-import org.Sikoling.ejb.abstraction.repository.PermohonanRepository;
+import org.Sikoling.ejb.abstraction.repository.IPermohonanRepository;
 import org.Sikoling.ejb.abstraction.service.permohonan.ServiceBasicPermohonan;
-import org.Sikoling.ejb.abstraction.service.permohonan.ServicePermohonan;
+import org.Sikoling.ejb.abstraction.service.permohonan.IServicePermohonan;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.LocalBean;
@@ -14,8 +14,8 @@ import jakarta.enterprise.inject.Produces;
 public class RestfulProvider {
 	
 	@Produces
-	public ServicePermohonan getLayananPermohonan(
-			@Infrastructure PermohonanRepository permohonanRepository) {
+	public IServicePermohonan getLayananPermohonan(
+			@Infrastructure IPermohonanRepository permohonanRepository) {
 		return new ServiceBasicPermohonan(permohonanRepository);
 	}
 	

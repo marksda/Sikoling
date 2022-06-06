@@ -4,6 +4,6 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 
-public interface JenisKelaminRepository extends Repository<JenisKelamin> {
+public interface IJenisKelaminRepository extends IRepository<JenisKelamin> {
 	List<JenisKelamin> getAll(Integer page, Integer pageSize);
 }

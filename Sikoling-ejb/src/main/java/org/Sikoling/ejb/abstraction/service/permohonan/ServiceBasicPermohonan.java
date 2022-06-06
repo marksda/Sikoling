@@ -7,12 +7,12 @@ import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
-import org.Sikoling.ejb.abstraction.repository.PermohonanRepository;
+import org.Sikoling.ejb.abstraction.repository.IPermohonanRepository;
 
-public class ServiceBasicPermohonan implements ServicePermohonan {
-	private final PermohonanRepository permohonanRepository;
+public class ServiceBasicPermohonan implements IServicePermohonan {
+	private final IPermohonanRepository permohonanRepository;
 
-	public ServiceBasicPermohonan(PermohonanRepository permohonanRepository) {
+	public ServiceBasicPermohonan(IPermohonanRepository permohonanRepository) {
 		this.permohonanRepository = permohonanRepository;
 	}
 	

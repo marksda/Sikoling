@@ -8,13 +8,13 @@ import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
-import org.Sikoling.ejb.abstraction.repository.PermohonanRepository;
+import org.Sikoling.ejb.abstraction.repository.IPermohonanRepository;
 import org.Sikoling.ejb.main.data.PermohonanData;
 import org.Sikoling.ejb.main.data.converter.ConverterPermohonan;
 
 import jakarta.persistence.EntityManager;
 
-public class PermohonanRepositoryJPA implements PermohonanRepository {
+public class PermohonanRepositoryJPA implements IPermohonanRepository {
 	private final EntityManager entityManager;	
 
 	public PermohonanRepositoryJPA(EntityManager entityManager) {

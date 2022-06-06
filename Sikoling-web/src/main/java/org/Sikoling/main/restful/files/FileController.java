@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.files;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.Sikoling.ejb.abstraction.service.file.StorageService;
+import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -27,7 +27,7 @@ public class FileController {
 	@Context
 	private UriInfo uriInfo;
 	@Inject
-	private StorageService storageService;
+	private IStorageService storageService;
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
