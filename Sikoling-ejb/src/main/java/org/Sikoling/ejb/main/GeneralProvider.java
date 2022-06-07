@@ -26,4 +26,4 @@ public class GeneralProvider {
 		return properties;
 	}
 	
-}
+}  
