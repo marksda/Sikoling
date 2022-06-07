@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.kabupaten;
 
 import java.io.Serializable;
 import javax.persistence.*;

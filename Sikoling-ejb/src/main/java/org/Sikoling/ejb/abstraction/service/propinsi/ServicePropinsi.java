@@ -42,7 +42,7 @@ public class ServicePropinsi implements IServicePropinsi {
 	}
 
 	@Override
-	public List<Propinsi> getByPageAndQueryNama(String nama, Integer page, Integer pageSize) {
+	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return propinsiRepository.getByQueryNama(nama, page, pageSize);
 	}
 
