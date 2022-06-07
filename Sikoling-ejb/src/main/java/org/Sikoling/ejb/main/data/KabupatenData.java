@@ -3,6 +3,8 @@ package org.Sikoling.ejb.main.data;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+
 
 /**
  * The persistent class for the tbl_kabupaten database table.
