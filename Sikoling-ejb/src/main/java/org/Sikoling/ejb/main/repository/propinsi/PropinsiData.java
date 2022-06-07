@@ -9,8 +9,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="tbl_propinsi")
-@NamedQuery(name="PropinsiData.findAll", query="SELECT p FROM PropinsiData p")
+@Table(name="master.tbl_propinsi")
+@NamedQueries({
+@NamedQuery(name="PropinsiData.findAll", query="SELECT p FROM PropinsiData p"),
+@NamedQuery(name="PropinsiData.findAllByName", query="SELECT p FROM PropinsiData p WHERE p.nama ILIKE :nama")})
 public class PropinsiData implements Serializable {
 	private static final long serialVersionUID = -299594010656178333L;
 
