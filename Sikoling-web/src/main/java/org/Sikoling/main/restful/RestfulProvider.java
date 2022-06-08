@@ -1,11 +1,14 @@
 package org.Sikoling.main.restful;
 
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
+import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IServicePropinsi;
 import org.Sikoling.ejb.abstraction.service.propinsi.ServicePropinsi;
 import org.Sikoling.ejb.abstraction.service.kabupaten.IServiceKabupaten;
 import org.Sikoling.ejb.abstraction.service.kabupaten.ServiceKabupaten;
+import org.Sikoling.ejb.abstraction.service.kecamatan.IServiceKecamatan;
+import org.Sikoling.ejb.abstraction.service.kecamatan.ServiceKecamatan;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.LocalBean;
@@ -26,6 +29,12 @@ public class RestfulProvider {
 	public IServiceKabupaten getServiceKabupaten(
 			@Infrastructure IKabupatenRepository kabupatenRepository) {
 		return new ServiceKabupaten(kabupatenRepository);
+	}
+	
+	@Produces
+	public IServiceKecamatan getServiceKecamatan(
+			@Infrastructure IKecamatanRepository kecamatanRepository) {
+		return new ServiceKecamatan(kecamatanRepository);
 	}
 //	
 //	@Produces

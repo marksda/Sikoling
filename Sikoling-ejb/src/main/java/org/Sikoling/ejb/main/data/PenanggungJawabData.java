@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
+import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 
 

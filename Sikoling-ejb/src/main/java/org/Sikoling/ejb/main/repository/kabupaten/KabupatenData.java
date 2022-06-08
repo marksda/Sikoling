@@ -15,8 +15,8 @@ import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 @NamedQueries({
 @NamedQuery(name="KabupatenData.findAll", query="SELECT k FROM KabupatenData k"),
 @NamedQuery(name="KabupatenData.findAllByQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama"),
-@NamedQuery(name="KabupatenData.findAllByIdPropinsi", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :id"),
-@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :id")})
+@NamedQuery(name="KabupatenData.findAllByIdPropinsi", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :idPropinsi"),
+@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama AND k.propinsi.id = :idPropinsi")})
 public class KabupatenData implements Serializable {
 	private static final long serialVersionUID = -7026002892763939209L;
 

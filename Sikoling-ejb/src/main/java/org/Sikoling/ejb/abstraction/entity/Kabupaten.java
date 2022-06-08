@@ -10,8 +10,13 @@ public class Kabupaten implements Serializable {
 	private final String nama;
 	private final Propinsi propinsi;
 	
+	public Kabupaten(String id) {
+		this.id = id;
+		this.nama = null;
+		this.propinsi = null;
+	}
+	
 	public Kabupaten(String id, String nama, Propinsi propinsi) {
-		super();
 		this.id = id;
 		this.nama = nama;
 		this.propinsi = propinsi;

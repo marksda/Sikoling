@@ -3,6 +3,8 @@ package org.Sikoling.ejb.main.data;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
+
 
 /**
  * The persistent class for the tbl_desa database table.
