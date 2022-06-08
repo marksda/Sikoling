@@ -3,6 +3,7 @@ package org.Sikoling.main.restful.kabupaten;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
 public class KabupatenDTO implements Serializable {
@@ -13,6 +14,12 @@ public class KabupatenDTO implements Serializable {
 	private PropinsiDTO propinsi;
 	
 	public KabupatenDTO() {
+	}
+	
+	public KabupatenDTO(Kabupaten kabupaten) {
+		this.id = kabupaten.getId();
+		this.nama = kabupaten.getNama();
+		this.propinsi = new PropinsiDTO(kabupaten.getPropinsi());
 	}
 
 	public KabupatenDTO(String id, String nama, PropinsiDTO propinsi) {
@@ -94,6 +101,8 @@ public class KabupatenDTO implements Serializable {
 		return "KabupatenDTO{" + "id=" + id + ", nama=" + nama + '}';	  
 	}
 	
-	
+	public Kabupaten toKabupaten() {
+		return new Kabupaten(id, nama, propinsi.toPropinsi());
+	}
 
 }

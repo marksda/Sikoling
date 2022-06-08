@@ -25,7 +25,7 @@ public class PropinsiDTO implements Serializable {
 		this.nama = propinsi.getNama();
 	}
 
-	public Propinsi toPropinsi(){
+	public Propinsi toPropinsi() {
         return new Propinsi(this.id, this.nama);
     }
 	

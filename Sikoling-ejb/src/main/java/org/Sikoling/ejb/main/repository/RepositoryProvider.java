@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.main.repository;
 
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
-import org.Sikoling.ejb.main.repository.permohonan.PermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 
 import jakarta.ejb.LocalBean;
@@ -32,9 +31,9 @@ public class RepositoryProvider {
 		return new KabupatenRepositoryJPA(entityManager);
 	}
 	
-	@Produces
-	public PermohonanRepositoryJPA getPermohonanRepositoryJPA(EntityManager entityManager) {
-		return new PermohonanRepositoryJPA(entityManager);
-	}
+//	@Produces
+//	public PermohonanRepositoryJPA getPermohonanRepositoryJPA(EntityManager entityManager) {
+//		return new PermohonanRepositoryJPA(entityManager);
+//	}
 
 }

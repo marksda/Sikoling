@@ -28,8 +28,8 @@ public class PropinsiController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public PropinsiDTO save(PropinsiDTO propinsi) {
-        return new PropinsiDTO(servicePropinsi.save(propinsi.toPropinsi()));
+    public PropinsiDTO save(PropinsiDTO propinsiDTO) {
+        return new PropinsiDTO(servicePropinsi.save(propinsiDTO.toPropinsi()));
     }
 	
 	@PUT
@@ -49,6 +49,7 @@ public class PropinsiController {
                 .collect(Collectors.toList());
     }
 	
+	@Path("page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -59,6 +60,7 @@ public class PropinsiController {
                 .collect(Collectors.toList());
     }
 	
+	@Path("nama")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -69,7 +71,7 @@ public class PropinsiController {
                 .collect(Collectors.toList());
     }
 	
-	@Path("page/nama")
+	@Path("nama/page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
