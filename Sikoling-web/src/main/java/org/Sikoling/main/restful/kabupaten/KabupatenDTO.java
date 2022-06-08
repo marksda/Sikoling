@@ -1,34 +1,26 @@
-package org.Sikoling.main.restful.propinsi;
+package org.Sikoling.main.restful.kabupaten;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
-public class PropinsiDTO implements Serializable {
+public class KabupatenDTO implements Serializable {
 
-	private static final long serialVersionUID = 530670866344098801L;
+	private static final long serialVersionUID = -4317489216038458871L;
 	private String id;
 	private String nama;
+	private PropinsiDTO propinsi;
 	
-	public PropinsiDTO() {
-		
+	public KabupatenDTO() {
 	}
 
-	public PropinsiDTO(String id, String nama) {
+	public KabupatenDTO(String id, String nama, PropinsiDTO propinsi) {
 		this.id = id;
 		this.nama = nama;
-	}
-	
-	public PropinsiDTO(Propinsi propinsi) {
-		this.id = propinsi.getId();
-		this.nama = propinsi.getNama();
+		this.propinsi = propinsi;
 	}
 
-	public Propinsi toPropinsi(){
-        return new Propinsi(this.id, this.nama);
-    }
-	
 	public String getId() {
 		return id;
 	}
@@ -45,6 +37,14 @@ public class PropinsiDTO implements Serializable {
 		this.nama = nama;
 	}
 
+	public PropinsiDTO getPropinsi() {
+		return propinsi;
+	}
+
+	public void setPropinsi(PropinsiDTO propinsi) {
+		this.propinsi = propinsi;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -52,8 +52,9 @@ public class PropinsiDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.nama);
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.nama);
+        hash = 13 * hash + Objects.hashCode(this.propinsi.getId());
         return hash;
 	}
 
@@ -71,11 +72,17 @@ public class PropinsiDTO implements Serializable {
             return false;
         }
         
-        final PropinsiDTO other = (PropinsiDTO) obj;
+        final KabupatenDTO other = (KabupatenDTO) obj;
+        
         if (this.id != other.id) {
             return false;
         }
+        
         if (this.nama != other.nama) {
+            return false;
+        }
+        
+        if (this.propinsi.getId() != other.propinsi.getId()) {
             return false;
         }
 
@@ -84,7 +91,9 @@ public class PropinsiDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PropinsiDTO{" + "id=" + id + ", nama=" + nama + '}';	    
+		return "KabupatenDTO{" + "id=" + id + ", nama=" + nama + '}';	  
 	}
 	
+	
+
 }
