@@ -11,8 +11,12 @@ import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
  * 
  */
 @Entity
-@Table(name="tbl_kabupaten")
-@NamedQuery(name="KabupatenData.findAll", query="SELECT k FROM KabupatenData k")
+@Table(name="master.tbl_kabupaten")
+@NamedQueries({
+@NamedQuery(name="KabupatenData.findAll", query="SELECT k FROM KabupatenData k"),
+@NamedQuery(name="KabupatenData.findAllByQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama"),
+@NamedQuery(name="KabupatenData.findAllByIdPropinsi", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :id"),
+@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :id")})
 public class KabupatenData implements Serializable {
 	private static final long serialVersionUID = -7026002892763939209L;
 
@@ -22,7 +26,7 @@ public class KabupatenData implements Serializable {
 	@Column(name="nama")
 	private String nama;
 
-	@Column(name="produk")
+	@Column(name="propinsi")
 	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private PropinsiData propinsi;
@@ -55,10 +59,6 @@ public class KabupatenData implements Serializable {
 
 	public PropinsiData getPropinsi() {
 		return this.propinsi;
-	}
-
-	public void setPropinsi(PropinsiData propinsi) {
-		this.propinsi = propinsi;
 	}
 
 }

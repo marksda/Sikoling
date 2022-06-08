@@ -43,7 +43,7 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 	}
 
 	@Override
-	public List<Propinsi> getAll(Integer page, Integer pageSize) {		
+	public List<Propinsi> getAllByPage(Integer page, Integer pageSize) {		
 		return entityManager.createNamedQuery("PropinsiData.findAll", PropinsiData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -56,7 +56,7 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Propinsi> getByQueryNama(String nama) {
-		nama = "'%" + nama + "%'";
+		nama = "%" + nama + "%";
 		Query q = entityManager.createNativeQuery("PropinsiData.findAllByName", PropinsiData.class);		
 		List<PropinsiData> resultList = q.setParameter("nama", nama).getResultList();
 		
@@ -68,7 +68,7 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Propinsi> getByQueryNama(String nama, Integer page, Integer pageSize) {
+	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "'%" + nama + "%'";
 		Query q = entityManager.createNativeQuery("PropinsiData.findAllByName", PropinsiData.class);		
 		List<PropinsiData> resultList = q.setParameter("nama", nama)

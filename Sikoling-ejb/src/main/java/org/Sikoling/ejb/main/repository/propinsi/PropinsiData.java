@@ -19,13 +19,13 @@ public class PropinsiData implements Serializable {
 	@Id
 	private String id;
 
+	@Column(name="nama")
 	private String nama;
 
 	public PropinsiData() {
 	}
 
 	public PropinsiData(String id, String nama) {
-		super();
 		this.id = id;
 		this.nama = nama;
 	}

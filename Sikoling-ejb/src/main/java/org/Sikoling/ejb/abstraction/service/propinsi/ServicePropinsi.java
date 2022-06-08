@@ -33,7 +33,7 @@ public class ServicePropinsi implements IServicePropinsi {
 
 	@Override
 	public List<Propinsi> getAllByPage(Integer page, Integer pageSize) {
-		return propinsiRepository.getAll(page, pageSize);
+		return propinsiRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ServicePropinsi implements IServicePropinsi {
 
 	@Override
 	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return propinsiRepository.getByQueryNama(nama, page, pageSize);
+		return propinsiRepository.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
 }

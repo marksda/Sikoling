@@ -34,8 +34,8 @@ public class PropinsiRepositoryEJB implements IPropinsiRepository {
 	}
 
 	@Override
-	public List<Propinsi> getAll(Integer page, Integer pageSize) {
-		return propinsiRepositoryJPA.getAll(page, pageSize);
+	public List<Propinsi> getAllByPage(Integer page, Integer pageSize) {
+		return propinsiRepositoryJPA.getAllByPage(page, pageSize);
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class PropinsiRepositoryEJB implements IPropinsiRepository {
 	}
 
 	@Override
-	public List<Propinsi> getByQueryNama(String nama, Integer page, Integer pageSize) {
-		return propinsiRepositoryJPA.getByQueryNama(nama, page, pageSize);
+	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return propinsiRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
 }

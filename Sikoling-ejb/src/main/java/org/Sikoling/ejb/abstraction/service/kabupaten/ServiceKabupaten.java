@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
-
 import jakarta.inject.Inject;
 
 public class ServiceKabupaten implements IServiceKabupaten {
@@ -16,65 +15,54 @@ public class ServiceKabupaten implements IServiceKabupaten {
 		this.kabupatenRepository = kabupatenRepository;
 	}
 	
-
 	@Override
-	public Kabupaten save(Kabupaten propinsi) {
-		// TODO Auto-generated method stub
-		return null;
+	public Kabupaten save(Kabupaten kabupaten) {		
+		return kabupatenRepository.save(kabupaten);
 	}
 
 	@Override
-	public Kabupaten update(Kabupaten propinsi) {
-		// TODO Auto-generated method stub
-		return null;
+	public Kabupaten update(Kabupaten kabupaten) {
+		return kabupatenRepository.update(kabupaten);
 	}
 
 	@Override
 	public List<Kabupaten> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getAll();
 	}
 
 	@Override
 	public List<Kabupaten> getAllByPage(Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
 	public List<Kabupaten> getByQueryNama(String nama) {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getByQueryNama(nama);
 	}
 
 	@Override
 	public List<Kabupaten> getByQueryNamAndPage(String nama, Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
 	public List<Kabupaten> getByIdPropinsi(String idPropinsi) {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getByPropinsi(idPropinsi);
 	}
 
 	@Override
 	public List<Kabupaten> getByIdPropinsiAndPage(String idPropinsi, Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getByPropinsiAndPage(idPropinsi, page, pageSize);
 	}
 
 	@Override
 	public List<Kabupaten> getByIdPropinsiAndQueryNama(String idPropinsi, String nama) {
-		// TODO Auto-generated method stub
-		return null;
+		return kabupatenRepository.getByPropinsiAndQueryNama(idPropinsi, nama);
 	}
 
 	@Override
-	public List<Kabupaten> getByIdPropinsiAndQueryNamaAndPage(String idPropinsi, String nama) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Kabupaten> getByIdPropinsiAndQueryNamaAndPage(String idPropinsi, String nama, Integer page, Integer pageSize) {
+		return kabupatenRepository.getByPropinsiAndQueryNamaAndPage(idPropinsi, nama, page, pageSize);
 	}
 
 }
