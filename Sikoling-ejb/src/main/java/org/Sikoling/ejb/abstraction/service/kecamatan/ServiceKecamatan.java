@@ -5,11 +5,8 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 
-import jakarta.inject.Inject;
-
 public class ServiceKecamatan implements IServiceKecamatan {
 	
-	@Inject
 	private final IKecamatanRepository kecamatanRepository;	
 
 	public ServiceKecamatan(IKecamatanRepository kecamatanRepository) {
@@ -26,6 +23,11 @@ public class ServiceKecamatan implements IServiceKecamatan {
 		return kecamatanRepository.update(kecamatan);
 	}
 
+	@Override
+	public List<Kecamatan> getAll() {
+		return kecamatanRepository.getAll();
+	}
+	
 	@Override
 	public List<Kecamatan> getAllByPage(Integer page, Integer pageSize) {
 		return kecamatanRepository.getAllByPage(page, pageSize);
@@ -62,4 +64,5 @@ public class ServiceKecamatan implements IServiceKecamatan {
 		return kecamatanRepository.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize);
 	}
 
+	
 }

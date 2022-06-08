@@ -5,11 +5,8 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 
-import jakarta.inject.Inject;
-
 public class ServicePropinsi implements IServicePropinsi {
 	
-	@Inject
 	private final IPropinsiRepository propinsiRepository;
 
 	public ServicePropinsi(IPropinsiRepository propinsiRepository) {

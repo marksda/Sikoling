@@ -16,57 +16,57 @@ import jakarta.inject.Inject;
 public class KecamatanRepositoryEJB implements IKecamatanRepository {
 	
 	@Inject
-	private KecamatanRepositoryJPA kecamatanRepositoryJPA;
+	private KecamatanRepositoryJPA kecamatanRepository;
 
 	@Override
 	public List<Kecamatan> getAll() {
-		return kecamatanRepositoryJPA.getAll();
+		return kecamatanRepository.getAll();
 	}
 
 	@Override
 	public Kecamatan save(Kecamatan t) {
-		return kecamatanRepositoryJPA.save(t);
+		return kecamatanRepository.save(t);
 	}
 
 	@Override
 	public Kecamatan update(Kecamatan t) {
-		return kecamatanRepositoryJPA.update(t);
+		return kecamatanRepository.update(t);
 	}
 
 	@Override
 	public List<Kecamatan> getAllByPage(Integer page, Integer pageSize) {
-		return kecamatanRepositoryJPA.getAllByPage(page, pageSize);
+		return kecamatanRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
 	public List<Kecamatan> getByQueryNama(String nama) {
-		return kecamatanRepositoryJPA.getByQueryNama(nama);
+		return kecamatanRepository.getByQueryNama(nama);
 	}
 
 	@Override
 	public List<Kecamatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kecamatanRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+		return kecamatanRepository.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
 	public List<Kecamatan> getByKabupaten(String idKabupaten) {
-		return kecamatanRepositoryJPA.getByKabupaten(idKabupaten);
+		return kecamatanRepository.getByKabupaten(idKabupaten);
 	}
 
 	@Override
 	public List<Kecamatan> getByKabupatenAndPage(String idKabupaten, Integer page, Integer pageSize) {
-		return kecamatanRepositoryJPA.getByKabupatenAndPage(idKabupaten, page, pageSize);
+		return kecamatanRepository.getByKabupatenAndPage(idKabupaten, page, pageSize);
 	}
 
 	@Override
 	public List<Kecamatan> getByKabupatenAndQueryNama(String idKabupaten, String nama) {
-		return kecamatanRepositoryJPA.getByKabupatenAndQueryNama(idKabupaten, nama);
+		return kecamatanRepository.getByKabupatenAndQueryNama(idKabupaten, nama);
 	}
 
 	@Override
 	public List<Kecamatan> getByKabupatenAndQueryNamaAndPage(String idKabupaten, String nama, Integer page,
 			Integer pageSize) {
-		return kecamatanRepositoryJPA.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize);
+		return kecamatanRepository.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize);
 	}
 
 }

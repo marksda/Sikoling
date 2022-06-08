@@ -6,6 +6,7 @@ import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 public interface IServiceKecamatan {
 	Kecamatan save(Kecamatan kecamatan);
 	Kecamatan update(Kecamatan kecamatan);
+	List<Kecamatan> getAll();
 	List<Kecamatan> getAllByPage(Integer page, Integer pageSize);
 	List<Kecamatan> getByQueryNama(String nama);
 	List<Kecamatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);	
