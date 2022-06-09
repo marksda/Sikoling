@@ -83,4 +83,58 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 		return new BentukUsaha(bentukUsahaData.getId(), bentukUsahaData.getNama(), bentukUsahaData.getKelompokBentukUsaha());
 	}
 
+	
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsaha(String idKelompokBentukUsaha) {
+		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+				.setParameter("idKelompok", idKelompokBentukUsaha)
+				.getResultList()
+				.stream()
+				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsahaAndPage(String idKelompokBentukUsaha, Integer page,
+			Integer pageSize) {
+		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+				.setParameter("idKelompok", idKelompokBentukUsaha)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsahaAndNama(String idKelompokBentukUsaha, String nama) {
+		nama = "%" + nama +"%";
+		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+				.setParameter("nama", nama)
+				.setParameter("idKelompok", idKelompokBentukUsaha)
+				.getResultList()
+				.stream()
+				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
+			Integer page, Integer pageSize) {
+		nama = "%" + nama +"%";
+		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+				.setParameter("nama", nama)
+				.setParameter("idKelompok", idKelompokBentukUsaha)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
+				.collect(Collectors.toList());
+	}
+
 }
