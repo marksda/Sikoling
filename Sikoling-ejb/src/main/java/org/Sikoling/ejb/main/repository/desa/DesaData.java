@@ -17,16 +17,17 @@ public class DesaData implements Serializable {
 	@Id
 	private String id;
 
-	private String kecamatan;
+	@Column(name="kecamatan")
+	private String idKecamatan;
 
 	private String nama;
 
 	public DesaData() {
 	}
 
-	public DesaData(String id, String nama, String kecamatan) {
+	public DesaData(String id, String nama, String idKecamatan) {
 		this.id = id;
-		this.kecamatan = kecamatan;
+		this.idKecamatan = idKecamatan;
 		this.nama = nama;
 	}
 
@@ -38,12 +39,12 @@ public class DesaData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKecamatan() {
-		return this.kecamatan;
+	public String getIdKecamatan() {
+		return this.idKecamatan;
 	}
 
-	public void setKecamatan(String kecamatan) {
-		this.kecamatan = kecamatan;
+	public void setIdKecamatan(String idKecamatan) {
+		this.idKecamatan = idKecamatan;
 	}
 
 	public String getNama() {

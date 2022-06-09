@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.main.restful.kecamatan.KecamatanDTO;
 
 public class DesaDTO implements Serializable {
 
 	private static final long serialVersionUID = 6969506465322300113L;
 	private String id;
 	private String nama;
-	private KecamatanDTO kecamatan;
+	private String idKecamatan;
 	
 	public DesaDTO() {
 	}
@@ -19,45 +18,38 @@ public class DesaDTO implements Serializable {
 	public DesaDTO(Desa desa) {
 		this.id = desa.getId();
 		this.nama = desa.getNama();
-		this.kecamatan = new KecamatanDTO(desa.getKecamatan());
+		this.idKecamatan = desa.getIdKecamatan();
 	}
 	
-	public DesaDTO(String id, String nama, KecamatanDTO kecamatan) {
+	public DesaDTO(String id, String nama, String idKecamatan) {
 		this.id = id;
 		this.nama = nama;
-		this.kecamatan = kecamatan;
+		this.idKecamatan = idKecamatan;
 	}
-
 	
 	public String getId() {
 		return id;
 	}
-
 	
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	
 	public String getNama() {
 		return nama;
 	}
-
 	
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-
 	
-	public KecamatanDTO getKecamatan() {
-		return kecamatan;
+	public String getIdKecamatan() {
+		return idKecamatan;
 	}
-
 	
-	public void setKecamatan(KecamatanDTO kecamatan) {
-		this.kecamatan = kecamatan;
+	public void setIdKecamatan(String idKecamatan) {
+		this.idKecamatan = idKecamatan;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -67,7 +59,7 @@ public class DesaDTO implements Serializable {
 		int hash = 7;
         hash = 27 * hash + Objects.hashCode(this.id);
         hash = 27 * hash + Objects.hashCode(this.nama);
-        hash = 27 * hash + Objects.hashCode(this.kecamatan.getId());
+        hash = 27 * hash + Objects.hashCode(this.idKecamatan);
         return hash;
 	}
 
@@ -95,7 +87,7 @@ public class DesaDTO implements Serializable {
             return false;
         }
         
-        if (this.kecamatan.getId() != other.kecamatan.getId()) {
+        if (this.idKecamatan != other.idKecamatan) {
             return false;
         }
 
@@ -108,7 +100,7 @@ public class DesaDTO implements Serializable {
 	}
 
 	public Desa toDesa() {
-		return new Desa(id, nama, kecamatan.toKecamatan());
+		return new Desa(id, nama, idKecamatan);
 	}
 
 }

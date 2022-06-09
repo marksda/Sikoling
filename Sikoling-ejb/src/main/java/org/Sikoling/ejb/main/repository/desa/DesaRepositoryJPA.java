@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import jakarta.persistence.EntityManager;
 
@@ -19,25 +18,15 @@ public class DesaRepositoryJPA implements IDesaRepository {
 
 	@Override
 	public Desa save(Desa t) {
-		return null;
-	}
-	
-	@Override
-	public Desa update(Desa t) {
-		return null;
-	}
-	
-	@Override
-	public Desa save(Desa t, Kecamatan k) {
-		DesaData desaData = new DesaData(t.getId(), t.getNama(), k.getId());
+		DesaData desaData = convertDesaToDesaData(t);
 		entityManager.persist(desaData);
 		entityManager.flush();
 		return convertDesaDataToDesa(desaData);
 	}
-
+	
 	@Override
-	public Desa update(Desa desa, Kecamatan kecamatan) {
-		DesaData desaData = convertDesaToDesaData(desa, kecamatan);
+	public Desa update(Desa t) {
+		DesaData desaData = convertDesaToDesaData(t);
 		desaData = entityManager.merge(desaData);
 		return convertDesaDataToDesa(desaData);
 	}
@@ -135,12 +124,12 @@ public class DesaRepositoryJPA implements IDesaRepository {
 				.collect(Collectors.toList());
 	}
 
-	private DesaData convertDesaToDesaData(Desa desa, Kecamatan kecamatan) {
-		return new DesaData(desa.getId(), desa.getNama(), kecamatan.getId());
+	private DesaData convertDesaToDesaData(Desa desa) {
+		return new DesaData(desa.getId(), desa.getNama(), desa.getIdKecamatan());
 	}
 	
 	private Desa convertDesaDataToDesa(DesaData desaData) {
-		return new Desa(desaData.getId(), desaData.getNama());
+		return new Desa(desaData.getId(), desaData.getNama(), desaData.getIdKecamatan());
 	}
 	
 }

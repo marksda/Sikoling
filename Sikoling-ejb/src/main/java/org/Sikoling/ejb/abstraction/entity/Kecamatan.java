@@ -8,27 +8,27 @@ public class Kecamatan implements Serializable {
 	private static final long serialVersionUID = 4983912261984260673L;
 	private final String id;
 	private final String nama;
-	private final Kabupaten kabupaten;
+	private final String idKabupaten;
 	
 	public Kecamatan() {
 		super();
 		this.id = null;
 		this.nama = null;
-		this.kabupaten = null;
+		this.idKabupaten = null;
 	}
 	
 	public Kecamatan(String id) {
 		super();
 		this.id = id;
 		this.nama = null;
-		this.kabupaten = null;
+		this.idKabupaten = null;
 	}
 	
-	public Kecamatan(String id, String nama, Kabupaten kabupaten) {
+	public Kecamatan(String id, String nama, String idKabupaten) {
 		super();
 		this.id = id;
 		this.nama = nama;
-		this.kabupaten = kabupaten;
+		this.idKabupaten = idKabupaten;
 	}
 
 	public String getId() {
@@ -39,8 +39,8 @@ public class Kecamatan implements Serializable {
 		return nama;
 	}
 
-	public Kabupaten getKabupaten() {
-		return kabupaten;
+	public String getIdKabupaten() {
+		return idKabupaten;
 	}
 
 	public static long getSerialversionuid() {
@@ -52,7 +52,7 @@ public class Kecamatan implements Serializable {
 		int hash = 7;
 		hash = 13 * hash + Objects.hashCode(this.id);
 		hash = 13 * hash + Objects.hashCode(this.nama);
-		hash = 13 * hash + Objects.hashCode(this.kabupaten.getNama());
+		hash = 13 * hash + Objects.hashCode(this.idKabupaten);
 		return hash;
 	}
 

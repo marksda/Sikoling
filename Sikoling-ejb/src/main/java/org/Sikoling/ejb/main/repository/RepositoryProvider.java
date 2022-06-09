@@ -43,6 +43,4 @@ public class RepositoryProvider {
 		return new DesaRepositoryJPA(entityManager);
 	}
 	
-
-
 }
