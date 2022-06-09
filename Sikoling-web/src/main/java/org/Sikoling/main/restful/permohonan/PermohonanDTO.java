@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
-import org.Sikoling.main.restful.bidangUsaha.BidangUsahaDTO;
+import org.Sikoling.main.restful.bentukusaha.BentukUsahaDTO;
 import org.Sikoling.main.restful.produk.ProdukDTO;
 
 public class PermohonanDTO implements Serializable {
@@ -13,7 +13,7 @@ public class PermohonanDTO implements Serializable {
 	private String noPendaftaran;
 	private Date tanggalPendaftaran;
 	private SuratPermohonanDTO suratPermohonan;
-	private BidangUsahaDTO bidangUsaha;
+	private BentukUsahaDTO bidangUsaha;
 	private WaliDTO wali;
 	private ProdukDTO produk;
 	
@@ -22,7 +22,7 @@ public class PermohonanDTO implements Serializable {
 	}
 	
 	public PermohonanDTO(String noPendaftaran, Date tanggalPendaftaran, SuratPermohonanDTO suratPermohonan,
-			BidangUsahaDTO bidangUsaha, WaliDTO wali, ProdukDTO produk) {
+			BentukUsahaDTO bidangUsaha, WaliDTO wali, ProdukDTO produk) {
 		super();
 		this.noPendaftaran = noPendaftaran;
 		this.tanggalPendaftaran = tanggalPendaftaran;
@@ -61,11 +61,11 @@ public class PermohonanDTO implements Serializable {
 		this.suratPermohonan = suratPermohonan;
 	}
 
-	public BidangUsahaDTO getBidangUsaha() {
+	public BentukUsahaDTO getBidangUsaha() {
 		return bidangUsaha;
 	}
 
-	public void setBidangUsaha(BidangUsahaDTO bidangUsaha) {
+	public void setBidangUsaha(BentukUsahaDTO bidangUsaha) {
 		this.bidangUsaha = bidangUsaha;
 	}
 

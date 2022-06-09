@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.bidangUsaha;
+package org.Sikoling.main.restful.bentukusaha;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +18,8 @@ import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 @LocalBean
-@Path("bidang_usaha")
-public class BidangUsahaController {
+@Path("bentuk_usaha")
+public class BentukUsahaController {
 	
 	@Inject
 	private IBentukUsahaService bentukUsahaService;
@@ -27,24 +27,24 @@ public class BidangUsahaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public BidangUsahaDTO save(BidangUsahaDTO bidangUsahaDTO) {
-		return new BidangUsahaDTO(bentukUsahaService.save(bidangUsahaDTO.toBentukUsaha()));
+	public BentukUsahaDTO save(BentukUsahaDTO bidangUsahaDTO) {
+		return new BentukUsahaDTO(bentukUsahaService.save(bidangUsahaDTO.toBentukUsaha()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public BidangUsahaDTO update(BidangUsahaDTO bidangUsahaDTO) {
-		return new BidangUsahaDTO(bentukUsahaService.update(bidangUsahaDTO.toBentukUsaha()));
+	public BentukUsahaDTO update(BentukUsahaDTO bidangUsahaDTO) {
+		return new BentukUsahaDTO(bentukUsahaService.update(bidangUsahaDTO.toBentukUsaha()));
 	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<BidangUsahaDTO> getAll() {
+	public List<BentukUsahaDTO> getAll() {
 		return bentukUsahaService.getAll()
 				.stream()
-				.map(d -> new BidangUsahaDTO(d))
+				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
 	}
 	
@@ -52,10 +52,10 @@ public class BidangUsahaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<BidangUsahaDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+	public List<BentukUsahaDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return bentukUsahaService.getAllByPage(page, pageSize)
 				.stream()
-				.map(d -> new BidangUsahaDTO(d))
+				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
 	}
 	
@@ -63,10 +63,10 @@ public class BidangUsahaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<BidangUsahaDTO> getByQueryNama(@QueryParam("nama") String nama) {
+	public List<BentukUsahaDTO> getByQueryNama(@QueryParam("nama") String nama) {
 		return bentukUsahaService.getByQueryNama(nama)
 				.stream()
-				.map(d -> new BidangUsahaDTO(d))
+				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
 	}
 	
@@ -74,11 +74,11 @@ public class BidangUsahaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<BidangUsahaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
+	public List<BentukUsahaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return bentukUsahaService.getByQueryNamaAndPage(nama, page, pageSize)
 				.stream()
-				.map(d -> new BidangUsahaDTO(d))
+				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
 	}
 

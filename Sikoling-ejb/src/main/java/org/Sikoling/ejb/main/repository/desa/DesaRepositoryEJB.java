@@ -4,9 +4,15 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
+import org.Sikoling.ejb.main.Infrastructure;
 
+import jakarta.ejb.Local;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
+@Stateless
+@Local
+@Infrastructure
 public class DesaRepositoryEJB implements IDesaRepository {
 	
 	@Inject

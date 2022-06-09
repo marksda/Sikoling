@@ -7,20 +7,20 @@ public class BidangUsaha implements Serializable {
 
 	private static final long serialVersionUID = -5728047210096243435L;
 	private final int id;
-	private final String keterangan;
+	private final String nama;
 	
-	public BidangUsaha(int id, String keterangan) {
+	public BidangUsaha(int id, String nama) {
 		super();
 		this.id = id;
-		this.keterangan = keterangan;
+		this.nama = nama;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public String getKeterangan() {
-		return keterangan;
+	public String getNama() {
+		return nama;
 	}
 
 	public static long getSerialversionuid() {
@@ -30,7 +30,7 @@ public class BidangUsaha implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.keterangan);
+		hash = 13 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
 
@@ -55,7 +55,7 @@ public class BidangUsaha implements Serializable {
             return false;
         }
         
-        if (!this.keterangan.equals(other.keterangan)) {
+        if (!this.nama.equals(other.nama)) {
             return false;
         }
         
@@ -64,7 +64,7 @@ public class BidangUsaha implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BidangUsaha{" + "id=" + Integer.toString(id) + ", keterangan=" + keterangan + "}";
+		return "BidangUsaha{" + "id=" + Integer.toString(id) + ", nama=" + nama + "}";
 	}
 
 }

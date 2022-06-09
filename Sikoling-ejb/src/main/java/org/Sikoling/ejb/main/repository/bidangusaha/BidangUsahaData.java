@@ -1,31 +1,30 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.bidangusaha;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the tbl_bidang_usaha database table.
- * 
- */
 @Entity
-@Table(name="tbl_bidang_usaha")
-@NamedQuery(name="BidangUsahaData.findAll", query="SELECT b FROM BidangUsahaData b")
+@Table(name="master.tbl_bidang_usaha")
+@NamedQueries({
+@NamedQuery(name="BidangUsahaData.findAll", query="SELECT b FROM BidangUsahaData b"),
+@NamedQuery(name="BidangUsahaData.findAllByQueryNama", query="SELECT b FROM BidangUsahaData b WHERE b.nama ILIKE :nama")})
 public class BidangUsahaData implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = -8154322742494393038L;
 
 	@Id
 	private Integer id;
 
-	private String keterangan;
+	private String nama;
 
 	public BidangUsahaData() {
 	}
 
-	public BidangUsahaData(Integer id, String keterangan) {
+	public BidangUsahaData(Integer id, String nama) {
 		super();
 		this.id = id;
-		this.keterangan = keterangan;
+		this.nama = nama;
 	}
 
 	public Integer getId() {
@@ -36,12 +35,12 @@ public class BidangUsahaData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKeterangan() {
-		return this.keterangan;
+	public String getNama() {
+		return this.nama;
 	}
 
-	public void setKeterangan(String keterangan) {
-		this.keterangan = keterangan;
+	public void setNama(String nama) {
+		this.nama = nama;
 	}
 
 }

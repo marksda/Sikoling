@@ -4,9 +4,15 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
+import org.Sikoling.ejb.main.Infrastructure;
 
+import jakarta.ejb.Local;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
+@Stateless
+@Local
+@Infrastructure
 public class BentukUsahaRepositoryEJB implements IBentukUsahaRepository {
 	
 	@Inject

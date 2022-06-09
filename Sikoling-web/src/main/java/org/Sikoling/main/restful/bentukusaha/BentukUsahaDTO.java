@@ -1,28 +1,28 @@
-package org.Sikoling.main.restful.bidangUsaha;
+package org.Sikoling.main.restful.bentukusaha;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 
-public class BidangUsahaDTO implements Serializable {
+public class BentukUsahaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1259008356598578698L;
 	private String id;
 	private String idKelompokBentukUsaha;
 	private  String nama;
 	
-	public BidangUsahaDTO() {
+	public BentukUsahaDTO() {
 
 	}
 	
-	public BidangUsahaDTO(BentukUsaha bentukUsaha) {
+	public BentukUsahaDTO(BentukUsaha bentukUsaha) {
 		this.id = bentukUsaha.getId();
 		this.idKelompokBentukUsaha = bentukUsaha.getIdKelompokBentukUsaha();
 		this.nama = bentukUsaha.getNama();
 	}
 	
-	public BidangUsahaDTO(String id, String idKelompokBentukUsaha, String nama) {
+	public BentukUsahaDTO(String id, String idKelompokBentukUsaha, String nama) {
 		super();
 		this.id = id;
 		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
@@ -79,7 +79,7 @@ public class BidangUsahaDTO implements Serializable {
             return false;
         }
         
-        final BidangUsahaDTO other = (BidangUsahaDTO) obj;
+        final BentukUsahaDTO other = (BentukUsahaDTO) obj;
         
         if (this.id != other.id) {
             return false;
