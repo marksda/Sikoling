@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful;
 
+import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
@@ -7,6 +8,8 @@ import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
+import org.Sikoling.ejb.abstraction.service.bentukusaha.BentukUsahaService;
+import org.Sikoling.ejb.abstraction.service.bentukusaha.IBentukUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
 import org.Sikoling.ejb.abstraction.service.kabupaten.IKabupatenService;
 import org.Sikoling.ejb.abstraction.service.kabupaten.KabupatenService;
@@ -44,6 +47,12 @@ public class RestfulProvider {
 	public IDesaService getDesaService(
 			@Infrastructure IDesaRepository desaRepository) {
 		return new DesaService(desaRepository);
+	}
+	
+	@Produces
+	public IBentukUsahaService getBentukUsahaService(
+			@Infrastructure IBentukUsahaRepository bentukUsahaRepository) {
+		return new BentukUsahaService(bentukUsahaRepository);
 	}
 //	
 //	@Produces
