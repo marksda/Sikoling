@@ -43,4 +43,30 @@ public class BentukUsahaService implements IBentukUsahaService {
 		return bentukUsahaRepository.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
+	
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsaha(String idKelompokBentukUsaha) {
+		return bentukUsahaRepository.getByKelompokBentukUsaha(idKelompokBentukUsaha);
+	}
+	
+
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsahaAndPage(String idKelompokBentukUsaha, Integer page,
+			Integer pageSize) {
+		return bentukUsahaRepository.getByKelompokBentukUsahaAndPage(idKelompokBentukUsaha, page, pageSize);
+	}
+	
+
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsahaAndNama(String idKelompokBentukUsaha, String nama) {
+		return bentukUsahaRepository.getByKelompokBentukUsahaAndNama(idKelompokBentukUsaha, nama);
+	}
+	
+
+	@Override
+	public List<BentukUsaha> getByKelompokBentukUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
+			Integer page, Integer pageSize) {
+		return bentukUsahaRepository.getByKelompokBentukUsahaAndNamaAndPage(idKelompokBentukUsaha, nama, page, pageSize);
+	}
+
 }

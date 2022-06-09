@@ -10,5 +10,9 @@ public interface IBentukUsahaService {
 	List<BentukUsaha> getAll();
 	List<BentukUsaha> getAllByPage(Integer page, Integer pageSize);
 	List<BentukUsaha> getByQueryNama(String nama);
-	List<BentukUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);	
+	List<BentukUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<BentukUsaha> getByKelompokBentukUsaha(String idKelompokBentukUsaha);
+	List<BentukUsaha> getByKelompokBentukUsahaAndPage(String idKelompokBentukUsaha, Integer page, Integer pageSize);
+	List<BentukUsaha> getByKelompokBentukUsahaAndNama(String idKelompokBentukUsaha, String nama);
+	List<BentukUsaha> getByKelompokBentukUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama, Integer page, Integer pageSize);
 }

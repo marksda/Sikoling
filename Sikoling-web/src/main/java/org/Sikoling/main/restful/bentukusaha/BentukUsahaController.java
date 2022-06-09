@@ -70,13 +70,59 @@ public class BentukUsahaController {
 				.collect(Collectors.toList());
 	}
 	
-	@Path("nama")
+	@Path("nama/page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return bentukUsahaService.getByQueryNamaAndPage(nama, page, pageSize)
+				.stream()
+				.map(d -> new BentukUsahaDTO(d))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kelompok")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<BentukUsahaDTO> getByKelompokBentukUsaha(@QueryParam("idKelompok") String idKelompok) {
+		return bentukUsahaService.getByKelompokBentukUsaha(idKelompok)
+				.stream()
+				.map(d -> new BentukUsahaDTO(d))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kelompok/page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<BentukUsahaDTO> getByKelompokBentukUsahaAndPage(@QueryParam("idKelompok") String idKelompok,
+			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+		return bentukUsahaService.getByKelompokBentukUsahaAndPage(idKelompok, page, pageSize)
+				.stream()
+				.map(d -> new BentukUsahaDTO(d))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kelompok/nama")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<BentukUsahaDTO> getByKelompokBentukUsahaAndNama(@QueryParam("idKelompok") String idKelompok, @QueryParam("nama") String nama) {
+		return bentukUsahaService.getByKelompokBentukUsahaAndNama(idKelompok, nama)
+				.stream()
+				.map(d -> new BentukUsahaDTO(d))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kelompok/nama/page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<BentukUsahaDTO> getByKelompokBentukUsahaAndNamaAndPage(@QueryParam("idKelompok") String idKelompok,
+			@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+		return bentukUsahaService.getByKelompokBentukUsahaAndNamaAndPage(idKelompok, nama, page, pageSize)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
