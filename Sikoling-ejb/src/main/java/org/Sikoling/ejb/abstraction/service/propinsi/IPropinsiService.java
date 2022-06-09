@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 
-public interface IServicePropinsi {	
+public interface IPropinsiService {	
 	List<Propinsi> getAll();
 	Propinsi save(Propinsi propinsi);
 	Propinsi update(Propinsi propinsi);

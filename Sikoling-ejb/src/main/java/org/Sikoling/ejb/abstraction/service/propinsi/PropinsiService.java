@@ -5,11 +5,11 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 
-public class ServicePropinsi implements IServicePropinsi {
+public class PropinsiService implements IPropinsiService {
 	
 	private final IPropinsiRepository propinsiRepository;
 
-	public ServicePropinsi(IPropinsiRepository propinsiRepository) {
+	public PropinsiService(IPropinsiRepository propinsiRepository) {
 		this.propinsiRepository = propinsiRepository;
 	}
 

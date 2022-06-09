@@ -12,8 +12,7 @@ public class KecamatanDTO implements Serializable {
 	private String id;
 	private String nama;
 	private KabupatenDTO kabupaten;
-	
-	
+		
 	public KecamatanDTO() {
 		
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 
-public interface IServiceKabupaten {
+public interface IKabupatenService {
 	Kabupaten save(Kabupaten kabupaten);
 	Kabupaten update(Kabupaten kabupaten);	
 	List<Kabupaten> getAll();

@@ -1,16 +1,16 @@
-package org.Sikoling.ejb.abstraction.repository;
+package org.Sikoling.ejb.abstraction.service.desa;
 
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 
-public interface IDesaRepository extends IRepository<Desa> {
-	Desa save(Desa desa, Kecamatan kecamatan);
-	Desa update(Desa desa, Kecamatan kecamatan);
+public interface IDesaService {
+	Desa save(Desa desa);
+	Desa update(Desa desa);
+	List<Desa> getAll();
 	List<Desa> getAllByPage(Integer page, Integer pageSize);
 	List<Desa> getByQueryNama(String nama);
-	List<Desa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<Desa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);	
 	List<Desa> getByKecamatan(String idKecamatan);
 	List<Desa> getByKecamatanAndPage(String idKecamatan, Integer page, Integer pageSize);
 	List<Desa> getByKecamatanAndQueryNama(String idKecamatan, String nama);

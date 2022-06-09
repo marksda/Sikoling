@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.kecamatan;
 import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 
-public interface IServiceKecamatan {
+public interface IKecamatanService {
 	Kecamatan save(Kecamatan kecamatan);
 	Kecamatan update(Kecamatan kecamatan);
 	List<Kecamatan> getAll();

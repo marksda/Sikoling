@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.propinsi;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.propinsi.IServicePropinsi;
+import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -23,27 +23,27 @@ import jakarta.ws.rs.core.MediaType;
 public class PropinsiController {
 	
 	@Inject
-	private IServicePropinsi servicePropinsi;
+	private IPropinsiService propinsiService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public PropinsiDTO save(PropinsiDTO propinsiDTO) {
-        return new PropinsiDTO(servicePropinsi.save(propinsiDTO.toPropinsi()));
+        return new PropinsiDTO(propinsiService.save(propinsiDTO.toPropinsi()));
     }
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public PropinsiDTO update(PropinsiDTO propinsi) {
-        return new PropinsiDTO(servicePropinsi.update(propinsi.toPropinsi()));
+        return new PropinsiDTO(propinsiService.update(propinsi.toPropinsi()));
     }
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public List<PropinsiDTO> getAll() {
-        return servicePropinsi.getAll()
+        return propinsiService.getAll()
                 .stream()
                 .map(f -> new PropinsiDTO(f))
                 .collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public List<PropinsiDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-        return servicePropinsi.getAllByPage(page, pageSize)
+        return propinsiService.getAllByPage(page, pageSize)
                 .stream()
                 .map(f -> new PropinsiDTO(f))
                 .collect(Collectors.toList());
@@ -65,7 +65,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public List<PropinsiDTO> getByQueryNama(@QueryParam("nama") String nama) {
-        return servicePropinsi.getByQueryNama(nama)
+        return propinsiService.getByQueryNama(nama)
                 .stream()
                 .map(f -> new PropinsiDTO(f))
                 .collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class PropinsiController {
     @Produces({MediaType.APPLICATION_JSON})
     public List<PropinsiDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
     		@QueryParam("pageSize") Integer pageSize) {
-        return servicePropinsi.getByQueryNamaAndPage(nama, page, pageSize)
+        return propinsiService.getByQueryNamaAndPage(nama, page, pageSize)
                 .stream()
                 .map(f -> new PropinsiDTO(f))
                 .collect(Collectors.toList());

@@ -5,11 +5,11 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 
-public class ServiceKabupaten implements IServiceKabupaten {
+public class KabupatenService implements IKabupatenService {
 	
 	private final IKabupatenRepository kabupatenRepository;
 
-	public ServiceKabupaten(IKabupatenRepository kabupatenRepository) {
+	public KabupatenService(IKabupatenRepository kabupatenRepository) {
 		this.kabupatenRepository = kabupatenRepository;
 	}
 	

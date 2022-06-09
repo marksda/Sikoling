@@ -43,9 +43,6 @@ public class RepositoryProvider {
 		return new DesaRepositoryJPA(entityManager);
 	}
 	
-//	@Produces
-//	public PermohonanRepositoryJPA getPermohonanRepositoryJPA(EntityManager entityManager) {
-//		return new PermohonanRepositoryJPA(entityManager);
-//	}
+
 
 }
