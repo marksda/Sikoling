@@ -3,11 +3,8 @@ package org.Sikoling.ejb.main.repository.kecamatan;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
-import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-
 import jakarta.persistence.EntityManager;
 
 public class KecamatanRepositoryJPA implements IKecamatanRepository {
@@ -125,12 +122,10 @@ public class KecamatanRepositoryJPA implements IKecamatanRepository {
 	}
 
 	private KecamatanData convertKecamatanToKecamatanData(Kecamatan kecamatan) {
-		KabupatenData kabupatenData = new KabupatenData();
-		kabupatenData.setId(kecamatan.getKabupaten().getId());
-		return new KecamatanData(kecamatan.getId(), kabupatenData, kecamatan.getNama());
+		return new KecamatanData(kecamatan.getId(), kecamatan.getIdKabupaten(), kecamatan.getNama());
 	}
 	
 	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData kecamatanData) {
-		return new Kecamatan(kecamatanData.getId(), kecamatanData.getNama(),  new Kabupaten(kecamatanData.getKabupaten().getId()));
+		return new Kecamatan(kecamatanData.getId(), kecamatanData.getNama(), kecamatanData.getIdKabupaten());
 	}
 }

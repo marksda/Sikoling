@@ -3,16 +3,14 @@ package org.Sikoling.ejb.main.repository.kabupaten;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-
 
 @Entity
 @Table(name="master.tbl_kabupaten")
 @NamedQueries({
 @NamedQuery(name="KabupatenData.findAll", query="SELECT k FROM KabupatenData k"),
 @NamedQuery(name="KabupatenData.findAllByQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama"),
-@NamedQuery(name="KabupatenData.findAllByIdPropinsi", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :idPropinsi"),
-@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama AND k.propinsi.id = :idPropinsi")})
+@NamedQuery(name="KabupatenData.findAllByIdPropinsi", query="SELECT k FROM KabupatenData k WHERE k.idPropinsi = :idPropinsi"),
+@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama AND k.idPropinsi = :idPropinsi")})
 public class KabupatenData implements Serializable {
 	private static final long serialVersionUID = -7026002892763939209L;
 
@@ -23,18 +21,16 @@ public class KabupatenData implements Serializable {
 	private String nama;
 
 	@Column(name="propinsi")
-	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-	private PropinsiData propinsi;
+	private String idPropinsi;
 
 	public KabupatenData() {
 	}
 
-	public KabupatenData(String id, String nama, PropinsiData propinsi) {
+	public KabupatenData(String id, String nama, String idPropinsi) {
 		super();
 		this.id = id;
 		this.nama = nama;
-		this.propinsi = propinsi;
+		this.idPropinsi = idPropinsi;
 	}
 
 	public String getId() {
@@ -53,8 +49,8 @@ public class KabupatenData implements Serializable {
 		this.nama = nama;
 	}
 
-	public PropinsiData getPropinsi() {
-		return this.propinsi;
+	public String getIdPropinsi() {
+		return this.idPropinsi;
 	}
 
 }

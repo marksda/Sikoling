@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
 public class KabupatenDTO implements Serializable {
 
 	private static final long serialVersionUID = -4317489216038458871L;
 	private String id;
 	private String nama;
-	private PropinsiDTO propinsi;
+	private String idPropinsi;
 	
 	public KabupatenDTO() {
 	}
@@ -19,13 +18,13 @@ public class KabupatenDTO implements Serializable {
 	public KabupatenDTO(Kabupaten kabupaten) {
 		this.id = kabupaten.getId();
 		this.nama = kabupaten.getNama();
-		this.propinsi = new PropinsiDTO(kabupaten.getPropinsi());
+		this.idPropinsi = kabupaten.getIdPropinsi();
 	}
 
-	public KabupatenDTO(String id, String nama, PropinsiDTO propinsi) {
+	public KabupatenDTO(String id, String nama, String idPropinsi) {
 		this.id = id;
 		this.nama = nama;
-		this.propinsi = propinsi;
+		this.idPropinsi = idPropinsi;
 	}
 
 	public String getId() {
@@ -44,12 +43,12 @@ public class KabupatenDTO implements Serializable {
 		this.nama = nama;
 	}
 
-	public PropinsiDTO getPropinsi() {
-		return propinsi;
+	public String getIdPropinsi() {
+		return idPropinsi;
 	}
 
-	public void setPropinsi(PropinsiDTO propinsi) {
-		this.propinsi = propinsi;
+	public void setIdPropinsi(String idPropinsi) {
+		this.idPropinsi = idPropinsi;
 	}
 
 	public static long getSerialversionuid() {
@@ -61,7 +60,7 @@ public class KabupatenDTO implements Serializable {
 		int hash = 7;
         hash = 13 * hash + Objects.hashCode(this.id);
         hash = 13 * hash + Objects.hashCode(this.nama);
-        hash = 13 * hash + Objects.hashCode(this.propinsi.getId());
+        hash = 13 * hash + Objects.hashCode(this.idPropinsi);
         return hash;
 	}
 
@@ -89,7 +88,7 @@ public class KabupatenDTO implements Serializable {
             return false;
         }
         
-        if (this.propinsi.getId() != other.propinsi.getId()) {
+        if (this.idPropinsi != other.idPropinsi) {
             return false;
         }
 
@@ -102,7 +101,7 @@ public class KabupatenDTO implements Serializable {
 	}
 	
 	public Kabupaten toKabupaten() {
-		return new Kabupaten(id, nama, propinsi.toPropinsi());
+		return new Kabupaten(id, nama, idPropinsi);
 	}
 
 }

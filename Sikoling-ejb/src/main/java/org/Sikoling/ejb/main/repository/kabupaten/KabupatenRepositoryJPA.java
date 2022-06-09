@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-
 import jakarta.persistence.EntityManager;
 
 public class KabupatenRepositoryJPA implements IKabupatenRepository {
@@ -127,14 +124,11 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 	
 	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData kabupatenData) {
-		PropinsiData propinsiData = kabupatenData.getPropinsi();
-		return new Kabupaten(kabupatenData.getId(), kabupatenData.getNama(), new Propinsi(propinsiData.getId(), propinsiData.getNama()));
+		return new Kabupaten(kabupatenData.getId(), kabupatenData.getNama(), kabupatenData.getIdPropinsi());
 	}
 	
 	private KabupatenData convertKabupatenToKabupatenData(Kabupaten kabupaten) {
-		PropinsiData propinsiData = new PropinsiData();
-		propinsiData.setId(kabupaten.getPropinsi().getId());
-		return new KabupatenData(kabupaten.getId(), kabupaten.getNama(), propinsiData);
+		return new KabupatenData(kabupaten.getId(), kabupaten.getNama(), kabupaten.getIdPropinsi());
 	}
 
 	
