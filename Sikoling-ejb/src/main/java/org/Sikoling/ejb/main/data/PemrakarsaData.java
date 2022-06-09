@@ -2,6 +2,9 @@ package org.Sikoling.ejb.main.data;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
+
 import java.util.Date;
 
 

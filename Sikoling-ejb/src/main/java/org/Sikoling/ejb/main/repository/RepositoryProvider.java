@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.main.repository;
 
+import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
@@ -41,6 +42,11 @@ public class RepositoryProvider {
 	@Produces
 	public DesaRepositoryJPA getDesaRepositoryJPA(EntityManager entityManager) {
 		return new DesaRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public BentukUsahaRepositoryJPA getBentukUsahaRepositoryJPA(EntityManager entityManager) {
+		return new BentukUsahaRepositoryJPA(entityManager);
 	}
 	
 }

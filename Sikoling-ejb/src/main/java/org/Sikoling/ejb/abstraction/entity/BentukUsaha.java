@@ -7,13 +7,13 @@ public class BentukUsaha implements Serializable{
 
 	private static final long serialVersionUID = -5160872827538954162L;
 	private final String id;
-	private final KelompokBentukUsaha kelompokUsaha;
+	private final String idKelompokBentukUsaha;
 	private final String nama;
 	
-	public BentukUsaha(String id, KelompokBentukUsaha kelompokUsaha, String nama) {
+	public BentukUsaha(String id, String nama, String idKelompokBentukUsaha) {
 		super();
 		this.id = id;
-		this.kelompokUsaha = kelompokUsaha;
+		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
 		this.nama = nama;
 	}
 
@@ -21,8 +21,8 @@ public class BentukUsaha implements Serializable{
 		return id;
 	}
 
-	public KelompokBentukUsaha getKelompokUsaha() {
-		return kelompokUsaha;
+	public String getIdKelompokBentukUsaha() {
+		return idKelompokBentukUsaha;
 	}
 
 	public String getNama() {
@@ -36,8 +36,9 @@ public class BentukUsaha implements Serializable{
 	@Override
 	public int hashCode() {
 		int hash = 7;
+		hash = 13 * hash + Objects.hashCode(this.id);
 		hash = 13 * hash + Objects.hashCode(this.nama);
-		hash = 13 * hash + Objects.hashCode(this.kelompokUsaha.getNama());
+		hash = 13 * hash + Objects.hashCode(this.idKelompokBentukUsaha);
 		return hash;
 	}
 
@@ -66,7 +67,7 @@ public class BentukUsaha implements Serializable{
 
 	@Override
 	public String toString() {
-		return "BentukUsaha{" + "nama=" + nama + ", KelompokUsaha=" + this.kelompokUsaha.getNama() + "}";
+		return "BentukUsaha{" + "id=" + id + ", nama=" + nama + "}";
 	}
 	
 	
