@@ -58,5 +58,75 @@ public class KecamatanController {
 				.map(k -> new KecamatanDTO(k))
 				.collect(Collectors.toList());
 	}
+	
+	@Path("nama")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KecamatanDTO> getByQueryNama(@QueryParam("nama") String nama) {
+		return serviceKecamatan.getByQueryNama(nama)
+				.stream()
+				.map(k -> new KecamatanDTO(k))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("nama/page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KecamatanDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
+			@QueryParam("pageSize") Integer pageSize) {
+		return serviceKecamatan.getByQueryNamaAndPage(nama, page, pageSize)
+				.stream()
+				.map(k -> new KecamatanDTO(k))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kabupaten")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KecamatanDTO> getByKabupaten(@QueryParam("idKabupaten") String idKabupaten) {
+		return serviceKecamatan.getByKabupaten(idKabupaten)
+				.stream()
+				.map(k -> new KecamatanDTO(k))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kabupaten/page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KecamatanDTO> getByKabupatenAndPage(@QueryParam("idKabupaten") String idKabupaten, @QueryParam("page") Integer page, 
+			@QueryParam("pageSize") Integer pageSize) {
+		return serviceKecamatan.getByKabupatenAndPage(idKabupaten, page, pageSize)
+				.stream()
+				.map(k -> new KecamatanDTO(k))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kabupaten/nama")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KecamatanDTO> getByKabupatenAndQueryNama(@QueryParam("idKabupaten") String idKabupaten, 
+			@QueryParam("idKabupaten") String nama) {
+		return serviceKecamatan.getByKabupatenAndQueryNama(idKabupaten, nama)
+				.stream()
+				.map(k -> new KecamatanDTO(k))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kabupaten/nama/page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KecamatanDTO> getByKabupatenAndQueryNamaAndPage(@QueryParam("idKabupaten") String idKabupaten, 
+			@QueryParam("idKabupaten") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+		return serviceKecamatan.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize)
+				.stream()
+				.map(k -> new KecamatanDTO(k))
+				.collect(Collectors.toList());
+	}
 
 }

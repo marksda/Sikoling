@@ -10,6 +10,20 @@ public class Kecamatan implements Serializable {
 	private final String nama;
 	private final Kabupaten kabupaten;
 	
+	public Kecamatan() {
+		super();
+		this.id = null;
+		this.nama = null;
+		this.kabupaten = null;
+	}
+	
+	public Kecamatan(String id) {
+		super();
+		this.id = id;
+		this.nama = null;
+		this.kabupaten = null;
+	}
+	
 	public Kecamatan(String id, String nama, Kabupaten kabupaten) {
 		super();
 		this.id = id;

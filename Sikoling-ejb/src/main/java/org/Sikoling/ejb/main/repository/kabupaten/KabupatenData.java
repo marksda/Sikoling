@@ -6,10 +6,6 @@ import javax.persistence.*;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 
 
-/**
- * The persistent class for the tbl_kabupaten database table.
- * 
- */
 @Entity
 @Table(name="master.tbl_kabupaten")
 @NamedQueries({

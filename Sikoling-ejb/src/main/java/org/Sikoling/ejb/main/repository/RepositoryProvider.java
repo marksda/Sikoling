@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.main.repository;
 
+import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
@@ -15,11 +16,11 @@ import jakarta.persistence.PersistenceContext;
 public class RepositoryProvider {
 	
 	@PersistenceContext
-	private EntityManager em;
+	private EntityManager entityManager;
 
 	@Produces
-	public EntityManager getEm() {
-		return em;
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 	
 	@Produces
@@ -35,6 +36,11 @@ public class RepositoryProvider {
 	@Produces
 	public KecamatanRepositoryJPA getKecamatanRepositoryJPA(EntityManager entityManager) {
 		return new KecamatanRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public DesaRepositoryJPA getDesaRepositoryJPA(EntityManager entityManager) {
+		return new DesaRepositoryJPA(entityManager);
 	}
 	
 //	@Produces
