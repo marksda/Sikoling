@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import jakarta.persistence.EntityManager;
 
@@ -128,12 +129,13 @@ public class DesaRepositoryJPA implements IDesaRepository {
 		DesaData desaData = new DesaData();
 		desaData.setId(desa.getId());
 		desaData.setNama(desa.getNama());
-		desaData.setIdKecamatan(desa.getIdKecamatan());
+		desaData.setIdKecamatan(desa.getKecamatan().getId());
 		return desaData;
 	}
 	
 	private Desa convertDesaDataToDesa(DesaData desaData) {
-		return new Desa(desaData.getId(), desaData.getNama(), desaData.getIdKecamatan());
+		Kecamatan kecamatan = new Kecamatan(desaData.getIdKecamatan());
+		return new Desa(desaData.getId(), desaData.getNama(), kecamatan);
 	}
 	
 }
