@@ -1,36 +1,36 @@
-package org.Sikoling.main.restful.bidangusaha;
+package org.Sikoling.main.restful.sex;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
+import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 
-public class BidangUsahaDTO implements Serializable {
+public class JenisKelaminDTO implements Serializable {
 
-	private static final long serialVersionUID = 2926591911688484354L;
-	private int id;
+	private static final long serialVersionUID = -4894237329970283198L;
+	private String id;
 	private String nama;
 	
-	public BidangUsahaDTO() {
+	public JenisKelaminDTO() {
 	}
 	
-	public BidangUsahaDTO(BidangUsaha bidangUsaha) {
+	public JenisKelaminDTO(JenisKelamin jenisKelamin) {
 		super();
-		this.id = bidangUsaha.getId();
-		this.nama = bidangUsaha.getNama();
+		this.id = jenisKelamin.getId();
+		this.nama = jenisKelamin.getNama();
 	}
 	
-	public BidangUsahaDTO(int id, String nama) {
+	public JenisKelaminDTO(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -47,8 +47,8 @@ public class BidangUsahaDTO implements Serializable {
 	}
 	
 	public int hashCode() {
-		int hash = 7;
-        hash = 41 * hash + Objects.hashCode(Integer.toString(this.id));
+		int hash = 3;
+        hash = 41 * hash + Objects.hashCode(this.id);
         hash = 41 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
@@ -67,7 +67,7 @@ public class BidangUsahaDTO implements Serializable {
             return false;
         }
         
-        final BidangUsahaDTO other = (BidangUsahaDTO) obj;
+        final JenisKelaminDTO other = (JenisKelaminDTO) obj;
         
         if (this.id != other.id) {
             return false;
@@ -82,11 +82,12 @@ public class BidangUsahaDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BidangUsahaDTO{" + "id=" + Integer.toString(id) + ", nama=" + nama + '}';	  
+		return "JenisKelaminDTO{" + "id=" + id + ", nama=" + nama + '}';	  
 	}
 
-	public BidangUsaha toBidangUsaha() {
-		return new BidangUsaha(id, nama);
+	public JenisKelamin toJenisKelamin() {
+		return new JenisKelamin(id, nama);
 	}
+
 
 }

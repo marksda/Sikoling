@@ -1,9 +1,9 @@
-package org.Sikoling.main.restful.jabatan;
+package org.Sikoling.main.restful.sex;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
+import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -19,33 +19,33 @@ import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 @LocalBean
-@Path("jabatan")
-public class JabatanController {
+@Path("sex")
+public class JenisKelaminController {
 	
 	@Inject
-	private IJabatanService jabatanService;
+	private IJenisKelaminService jenisKelaminService;
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public JabatanDTO save(JabatanDTO jabatanDTO) {
-		return new JabatanDTO(jabatanService.save(jabatanDTO.toJabatan()));
+	public JenisKelaminDTO save(JenisKelaminDTO jenisKelaminDTO) {
+		return new JenisKelaminDTO(jenisKelaminService.save(jenisKelaminDTO.toJenisKelamin()));
 	}
 	
 	@PUT
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public JabatanDTO update(JabatanDTO jabatanDTO) {
-		return new JabatanDTO(jabatanService.update(jabatanDTO.toJabatan()));
+	public JenisKelaminDTO update(JenisKelaminDTO jenisKelaminDTO) {
+		return new JenisKelaminDTO(jenisKelaminService.update(jenisKelaminDTO.toJenisKelamin()));
 	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<JabatanDTO> getAll() {
-		return jabatanService.getAll()
+	public List<JenisKelaminDTO> getAll() {
+		return jenisKelaminService.getAll()
 				.stream()
-				.map(t -> new JabatanDTO(t))
+				.map(t -> new JenisKelaminDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -53,10 +53,10 @@ public class JabatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<JabatanDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return jabatanService.getAllByPage(page, pageSize)
+	public List<JenisKelaminDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+		return jenisKelaminService.getAllByPage(page, pageSize)
 				.stream()
-				.map(t -> new JabatanDTO(t))
+				.map(t -> new JenisKelaminDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -64,10 +64,10 @@ public class JabatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<JabatanDTO> getAllByPage(@QueryParam("nama") String nama) {
-		return jabatanService.getByQueryNama(nama)
+	public List<JenisKelaminDTO> getByQueryNama(@QueryParam("nama") String nama) {
+		return jenisKelaminService.getByQueryNama(nama)
 				.stream()
-				.map(t -> new JabatanDTO(t))
+				.map(t -> new JenisKelaminDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -75,11 +75,11 @@ public class JabatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<JabatanDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
+	public List<JenisKelaminDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return jabatanService.getByQueryNamaAndPage(nama, page, pageSize)
+		return jenisKelaminService.getByQueryNamaAndPage(nama, page, pageSize)
 				.stream()
-				.map(t -> new JabatanDTO(t))
+				.map(t -> new JenisKelaminDTO(t))
 				.collect(Collectors.toList());
 	}
 

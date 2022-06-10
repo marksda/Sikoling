@@ -4,11 +4,14 @@ import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
+import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
+import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
+import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
@@ -71,6 +74,12 @@ public class RestfulProvider {
 	public IJabatanService getJabatanService(
 			@Infrastructure IJabatanRepository jabatanRepository) {
 		return new JabatanService(jabatanRepository);
+	}
+	
+	@Produces
+	public IJenisKelaminService getJenisKelaminService(
+			@Infrastructure IJenisKelaminRepository jenisKelaminRepository) {
+		return new JenisKelaminService(jenisKelaminRepository);
 	}
 	
 }
