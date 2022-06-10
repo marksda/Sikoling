@@ -2,26 +2,29 @@ package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Permohonan implements Serializable {
 
 	private static final long serialVersionUID = -2507712010024456804L;	
+	private final PaketPermohonan jenisPaketPermohonan;
 	private final String noPendaftaran;
 	private final Date tanggalPendaftaran;
 	private final SuratPermohonan suratPermohonan;
 	private final BidangUsaha bidangUsaha;
 	private final Wali wali;
-	private final ProdukDLH produk;
+	private final List<ProdukDLH> daftarProdukDLH;
 	
 	public Permohonan(String noPendaftaran, Date tanggalPendaftaran, SuratPermohonan suratPermohonan,
-			BidangUsaha bidangUsaha, Wali wali, ProdukDLH produk) {
+			BidangUsaha bidangUsaha, Wali wali, List<ProdukDLH> daftarProdukDLH, PaketPermohonan jenisPaketPermohonan) {
 		super();
 		this.noPendaftaran = noPendaftaran;
 		this.tanggalPendaftaran = tanggalPendaftaran;
 		this.suratPermohonan = suratPermohonan;
 		this.bidangUsaha = bidangUsaha;
 		this.wali = wali;
-		this.produk = produk;
+		this.daftarProdukDLH = daftarProdukDLH;
+		this.jenisPaketPermohonan = jenisPaketPermohonan;
 	}
 
 	public String getNoPendaftaran() {
@@ -44,12 +47,17 @@ public class Permohonan implements Serializable {
 		return wali;
 	}
 
-	public ProdukDLH getProduk() {
-		return produk;
+	public List<ProdukDLH> getDaftarProdukDLH() {
+		return daftarProdukDLH;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	
+	public PaketPermohonan getJenisPaketPermohonan() {
+		return jenisPaketPermohonan;
 	}
 	
 }
