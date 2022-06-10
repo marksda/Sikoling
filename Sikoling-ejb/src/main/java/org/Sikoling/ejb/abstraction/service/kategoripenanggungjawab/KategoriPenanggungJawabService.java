@@ -15,36 +15,28 @@ public class KategoriPenanggungJawabService implements IKategoriPenanggungJawabS
 	}
 
 	@Override
-	public org.Sikoling.ejb.abstraction.entity.KategoriPenanggungJawab save(KategoriPenanggungJawab t) {
-		// TODO Auto-generated method stub
-		return null;
+	public KategoriPenanggungJawab save(KategoriPenanggungJawab t) {
+		return kategoriPenanggungJawabRepository.save(t);
 	}
 
 	@Override
-	public org.Sikoling.ejb.abstraction.entity.KategoriPenanggungJawab update(
-			org.Sikoling.ejb.abstraction.entity.KategoriPenanggungJawab t) {
-		// TODO Auto-generated method stub
-		return null;
+	public KategoriPenanggungJawab update(KategoriPenanggungJawab t) {
+		return kategoriPenanggungJawabRepository.update(t);
 	}
 
 	@Override
-	public List<KategoriPenanggungJawab> getAllByPage(Integer page,
-			Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<KategoriPenanggungJawab> getAllByPage(Integer page,	Integer pageSize) {
+		return kategoriPenanggungJawabRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
 	public List<KategoriPenanggungJawab> getByQueryNama(String nama) {
-		// TODO Auto-generated method stub
-		return null;
+		return kategoriPenanggungJawabRepository.getByQueryNama(nama);
 	}
 
 	@Override
-	public List<KategoriPenanggungJawab> getByQueryNamaAndPage(String nama,
-			Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<KategoriPenanggungJawab> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return kategoriPenanggungJawabRepository.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
 }
