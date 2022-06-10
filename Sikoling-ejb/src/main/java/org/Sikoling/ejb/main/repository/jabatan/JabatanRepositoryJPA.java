@@ -9,7 +9,7 @@ import jakarta.persistence.EntityManager;
 
 public class JabatanRepositoryJPA implements IJabatanRepository {
 	
-	private EntityManager entityManager;
+	private final EntityManager entityManager;
 
 	public JabatanRepositoryJPA(EntityManager entityManager) {
 		super();

@@ -10,7 +10,7 @@ import jakarta.persistence.EntityManager;
 
 public class JenisKelaminRepositoryJPA implements IJenisKelaminRepository {
 	
-	private EntityManager entityManager;
+	private final EntityManager entityManager;
 
 	public JenisKelaminRepositoryJPA(EntityManager entityManager) {
 		super();

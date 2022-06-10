@@ -39,4 +39,10 @@ public class KategoriPenanggungJawabService implements IKategoriPenanggungJawabS
 		return kategoriPenanggungJawabRepository.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
+	
+	@Override
+	public List<KategoriPenanggungJawab> getAll() {
+		return kategoriPenanggungJawabRepository.getAll();
+	}
+
 }
