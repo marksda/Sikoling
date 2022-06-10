@@ -8,14 +8,12 @@ public class Produk implements Serializable {
 	private static final long serialVersionUID = 1719488297810116974L;
 	private final String id;
 	private final String nama;
-	private final KategoriPaket kategoriPaket;
 	private final KategoriProduk kategoriProduk;
 	
-	public Produk(String id, String nama, KategoriPaket kategoriPaket, KategoriProduk kategoriProduk) {
+	public Produk(String id, String nama, KategoriProduk kategoriProduk) {
 		super();
 		this.id = id;
 		this.nama = nama;
-		this.kategoriPaket = kategoriPaket;
 		this.kategoriProduk = kategoriProduk;
 	}
 
@@ -25,10 +23,6 @@ public class Produk implements Serializable {
 
 	public String getNama() {
 		return nama;
-	}
-
-	public KategoriPaket getKategoriPaket() {
-		return kategoriPaket;
 	}
 
 	public KategoriProduk getKategoriProduk() {

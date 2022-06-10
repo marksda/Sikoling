@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 
 public class DesaDTO implements Serializable {
 
@@ -18,7 +19,7 @@ public class DesaDTO implements Serializable {
 	public DesaDTO(Desa desa) {
 		this.id = desa.getId();
 		this.nama = desa.getNama();
-		this.idKecamatan = desa.getIdKecamatan();
+		this.idKecamatan = desa.getKecamatan().getId();
 	}
 	
 	public DesaDTO(String id, String nama, String idKecamatan) {
@@ -100,7 +101,8 @@ public class DesaDTO implements Serializable {
 	}
 
 	public Desa toDesa() {
-		return new Desa(id, nama, idKecamatan);
+		Kecamatan kecamatan = new Kecamatan(getIdKecamatan());
+		return new Desa(id, nama, kecamatan);
 	}
 
 }

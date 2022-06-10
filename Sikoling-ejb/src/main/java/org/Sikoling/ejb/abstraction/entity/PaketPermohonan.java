@@ -3,13 +3,13 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class KategoriPaket implements Serializable {
+public class PaketPermohonan implements Serializable {
 
 	private static final long serialVersionUID = -915951649073415669L;
 	private final String id;
 	private final String nama;
 	
-	public KategoriPaket(String id, String nama) {
+	public PaketPermohonan(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -49,7 +49,7 @@ public class KategoriPaket implements Serializable {
             return false;
         }
         
-        final KategoriPaket other = (KategoriPaket) obj;
+        final PaketPermohonan other = (PaketPermohonan) obj;
         
         if (!this.id.equals(other.id)) {
             return false;
