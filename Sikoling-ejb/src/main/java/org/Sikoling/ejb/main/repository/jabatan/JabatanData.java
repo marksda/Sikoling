@@ -1,16 +1,14 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.jabatan;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the tbl_jabatan database table.
- * 
- */
 @Entity
-@Table(name="tbl_jabatan")
-@NamedQuery(name="JabatanData.findAll", query="SELECT j FROM JabatanData j")
+@Table(name="master.tbl_jabatan")
+@NamedQueries({
+@NamedQuery(name="JabatanData.findAll", query="SELECT j FROM JabatanData j"),
+@NamedQuery(name="JabatanData.findAllByQueryNama", query="SELECT j FROM JabatanData j WHERE j.nama ILIKE :nama")})
 public class JabatanData implements Serializable {
 	private static final long serialVersionUID = 3134858894526254188L;
 
