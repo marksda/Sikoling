@@ -5,7 +5,7 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.KategoriProduk;
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
-import org.Sikoling.ejb.abstraction.entity.Produk;
+import org.Sikoling.ejb.abstraction.entity.ProdukDLH;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IPermohonanRepository;
 
@@ -47,7 +47,7 @@ public class ServicePermohonan implements IServicePermohonan {
 	}
 
 	@Override
-	public List<Permohonan> getByProduk(Produk produk) {
+	public List<Permohonan> getByProduk(ProdukDLH produk) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,7 +59,7 @@ public class ServicePermohonan implements IServicePermohonan {
 	}
 
 	@Override
-	public List<Permohonan> getByUserAndProduk(User user, Produk produk) {
+	public List<Permohonan> getByUserAndProduk(User user, ProdukDLH produk) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -77,7 +77,7 @@ public class ServicePermohonan implements IServicePermohonan {
 	}
 
 	@Override
-	public List<Permohonan> getByUserAndProdukAndPemrakarsa(User user, Produk produk, Pemrakarsa pemrakarsa) {
+	public List<Permohonan> getByUserAndProdukAndPemrakarsa(User user, ProdukDLH produk, Pemrakarsa pemrakarsa) {
 		// TODO Auto-generated method stub
 		return null;
 	}

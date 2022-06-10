@@ -2,7 +2,7 @@ package org.Sikoling.ejb.abstraction.service.produk;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.Produk;
+import org.Sikoling.ejb.abstraction.entity.ProdukDLH;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 
 public class ServiceProduk implements IServiceProduk {
@@ -14,17 +14,17 @@ public class ServiceProduk implements IServiceProduk {
 	}
 
 	@Override
-	public Produk save(Produk produk) {
+	public ProdukDLH save(ProdukDLH produk) {
 		return this.produkRepository.save(produk);
 	}
 
 	@Override
-	public Produk update(Produk produk) {
+	public ProdukDLH update(ProdukDLH produk) {
 		return this.produkRepository.update(produk);
 	}
 
 	@Override
-	public List<Produk> getAll(Integer page, Integer pageSize) {
+	public List<ProdukDLH> getAll(Integer page, Integer pageSize) {
 		return null;
 	}
 
