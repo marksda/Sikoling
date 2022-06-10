@@ -26,13 +26,6 @@ public class KabupatenData implements Serializable {
 	public KabupatenData() {
 	}
 
-	public KabupatenData(String id, String nama, String idPropinsi) {
-		super();
-		this.id = id;
-		this.nama = nama;
-		this.idPropinsi = idPropinsi;
-	}
-
 	public String getId() {
 		return this.id;
 	}
@@ -53,4 +46,8 @@ public class KabupatenData implements Serializable {
 		return this.idPropinsi;
 	}
 
+	public void setIdPropinsi(String idPropinsi) {
+		this.idPropinsi = idPropinsi;
+	}
+	
 }

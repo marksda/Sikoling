@@ -20,12 +20,6 @@ public class JabatanData implements Serializable {
 	public JabatanData() {
 	}
 
-	public JabatanData(String id, String nama) {
-		super();
-		this.id = id;
-		this.nama = nama;
-	}
-
 	public String getId() {
 		return this.id;
 	}

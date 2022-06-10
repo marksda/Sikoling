@@ -77,7 +77,10 @@ public class JenisKelaminRepositoryJPA implements IJenisKelaminRepository {
 	}
 
 	private JenisKelaminData convertJenisKelaminToJenisKelaminData(JenisKelamin jenisKelamin) {
-		return new JenisKelaminData(jenisKelamin.getId(), jenisKelamin.getNama());
+		JenisKelaminData jenisKelaminData = new JenisKelaminData();
+		jenisKelaminData.setId(jenisKelamin.getId());
+		jenisKelaminData.setNama(jenisKelamin.getNama());
+		return jenisKelaminData;
 	}
 	
 	private JenisKelamin convertJenisKelaminDataToJenisKelamin(JenisKelaminData jenisKelaminData) {

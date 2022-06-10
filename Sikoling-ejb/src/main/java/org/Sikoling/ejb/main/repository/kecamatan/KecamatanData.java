@@ -27,12 +27,6 @@ public class KecamatanData implements Serializable {
 		
 	}
 
-	public KecamatanData(String id, String idKabupaten, String nama) {
-		this.id = id;
-		this.idKabupaten = idKabupaten;
-		this.nama = nama;
-	}
-
 	public String getId() {
 		return this.id;
 	}

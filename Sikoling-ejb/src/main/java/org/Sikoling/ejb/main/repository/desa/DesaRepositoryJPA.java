@@ -125,7 +125,11 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	}
 
 	private DesaData convertDesaToDesaData(Desa desa) {
-		return new DesaData(desa.getId(), desa.getNama(), desa.getIdKecamatan());
+		DesaData desaData = new DesaData();
+		desaData.setId(desa.getId());
+		desaData.setNama(desa.getNama());
+		desaData.setIdKecamatan(desa.getIdKecamatan());
+		return desaData;
 	}
 	
 	private Desa convertDesaDataToDesa(DesaData desaData) {

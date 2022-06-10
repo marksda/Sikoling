@@ -76,7 +76,10 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 	}
 
 	private JabatanData convertJabatanToJabatanData(Jabatan jabatan) {
-		return new JabatanData(jabatan.getId(), jabatan.getNama());
+		JabatanData jabatanData = new JabatanData();
+		jabatanData.setId(jabatan.getId());
+		jabatanData.setNama(jabatan.getNama());
+		return jabatanData;
 	}
 	
 	private Jabatan convertJabatanDataToJabatan(JabatanData jabatanData) {

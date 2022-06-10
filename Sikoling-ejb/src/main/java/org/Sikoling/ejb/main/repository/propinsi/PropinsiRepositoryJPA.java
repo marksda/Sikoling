@@ -86,6 +86,9 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 	}
 	
 	private PropinsiData convertPropinsiToPropinsiData(Propinsi propinsi) {
-		return new PropinsiData(propinsi.getId(), propinsi.getNama());
+		PropinsiData propinsiData = new PropinsiData();
+		propinsiData.setId(propinsi.getId());
+		propinsiData.setNama(propinsi.getNama());
+		return propinsiData;
 	}
 }

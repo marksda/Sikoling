@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 
 public class JabatanService implements IJabatanService {
 	
-	private IJabatanRepository jabatanRepository;
+	private final IJabatanRepository jabatanRepository;
 
 	public JabatanService(IJabatanRepository jabatanRepository) {
 		super();

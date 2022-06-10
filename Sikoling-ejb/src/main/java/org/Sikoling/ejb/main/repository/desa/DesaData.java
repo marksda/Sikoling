@@ -25,12 +25,6 @@ public class DesaData implements Serializable {
 	public DesaData() {
 	}
 
-	public DesaData(String id, String nama, String idKecamatan) {
-		this.id = id;
-		this.idKecamatan = idKecamatan;
-		this.nama = nama;
-	}
-
 	public String getId() {
 		return this.id;
 	}

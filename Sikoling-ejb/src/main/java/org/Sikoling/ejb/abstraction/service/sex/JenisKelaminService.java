@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 
 public class JenisKelaminService implements IJenisKelaminService {
 	
-	private IJenisKelaminRepository jenisKelaminRepository;
+	private final IJenisKelaminRepository jenisKelaminRepository;
 
 	public JenisKelaminService(IJenisKelaminRepository jenisKelaminRepository) {
 		super();

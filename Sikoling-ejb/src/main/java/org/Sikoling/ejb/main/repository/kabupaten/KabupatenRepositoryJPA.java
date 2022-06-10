@@ -128,7 +128,11 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 	
 	private KabupatenData convertKabupatenToKabupatenData(Kabupaten kabupaten) {
-		return new KabupatenData(kabupaten.getId(), kabupaten.getNama(), kabupaten.getIdPropinsi());
+		KabupatenData kabupatenData = new KabupatenData();
+		kabupatenData.setId(kabupaten.getId());
+		kabupatenData.setNama(kabupaten.getNama());
+		kabupatenData.setIdPropinsi(kabupaten.getIdPropinsi());
+		return kabupatenData;
 	}
 
 	

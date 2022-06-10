@@ -76,7 +76,10 @@ public class BidangUsahaRepositoryJPA implements IBidangUsahaRepository {
 	}
 
 	private BidangUsahaData convertBidangUsahaToBidangUsahaData(BidangUsaha bidangUsaha) {
-		return new BidangUsahaData(bidangUsaha.getId(), bidangUsaha.getNama());
+		BidangUsahaData bidangUsahaData = new BidangUsahaData();
+		bidangUsahaData.setId(bidangUsaha.getId());
+		bidangUsahaData.setNama(bidangUsaha.getNama());
+		return bidangUsahaData;
 	}
 	
 	private BidangUsaha convertBidangUsahaDataToBidangUsaha(BidangUsahaData bidangUsahaData) {

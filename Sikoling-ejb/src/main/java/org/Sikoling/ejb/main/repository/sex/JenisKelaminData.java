@@ -4,12 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the tbl_jenis_kelamin database table.
- * 
- */
 @Entity
-@Table(name="tbl_jenis_kelamin")
+@Table(name="master.tbl_jenis_kelamin")
 @NamedQueries({
 @NamedQuery(name="JenisKelaminData.findAll", query="SELECT j FROM JenisKelaminData j"),
 @NamedQuery(name="JenisKelaminData.findAllByQueryNama", query="SELECT j FROM JenisKelaminData j WHERE j.nama ILIKE :nama")
@@ -23,12 +19,6 @@ public class JenisKelaminData implements Serializable {
 	private String nama;
 
 	public JenisKelaminData() {
-	}
-
-	public JenisKelaminData(String id, String nama) {
-		super();
-		this.id = id;
-		this.nama = nama;
 	}
 
 	public String getId() {

@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 
 public class BidangUsahaService implements IBidangUsahaService {
 	
-	private IBidangUsahaRepository bidangUsahaRepository;
+	private final IBidangUsahaRepository bidangUsahaRepository;
 
 	public BidangUsahaService(IBidangUsahaRepository bidangUsahaRepository) {
 		super();

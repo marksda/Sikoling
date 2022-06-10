@@ -76,7 +76,11 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 
 	private BentukUsahaData convertBentukUsahaToBentukUsahaData(BentukUsaha bentukUsaha) {
-		return new BentukUsahaData(bentukUsaha.getId(), bentukUsaha.getNama(), bentukUsaha.getIdKelompokBentukUsaha());
+		BentukUsahaData bentukUsahaData = new BentukUsahaData();
+		bentukUsahaData.setId(bentukUsaha.getId());
+		bentukUsahaData.setNama(bentukUsaha.getNama());
+		bentukUsahaData.setIdKelompokBentukUsaha(bentukUsaha.getIdKelompokBentukUsaha());
+		return bentukUsahaData;
 	}
 	
 	private BentukUsaha convertBentukUsahaDataToBentukUsaha(BentukUsahaData bentukUsahaData) {

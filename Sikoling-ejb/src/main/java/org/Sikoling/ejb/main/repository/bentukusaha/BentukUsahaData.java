@@ -27,13 +27,6 @@ public class BentukUsahaData implements Serializable {
 	public BentukUsahaData() {
 	}
 
-	public BentukUsahaData(String id, String idKelompokBentukUsaha, String nama) {
-		super();
-		this.id = id;
-		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
-		this.nama = nama;
-	}
-
 	public String getId() {
 		return this.id;
 	}

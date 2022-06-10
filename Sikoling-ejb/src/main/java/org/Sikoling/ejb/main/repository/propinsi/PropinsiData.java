@@ -4,10 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the tbl_propinsi database table.
- * 
- */
 @Entity
 @Table(name="master.tbl_propinsi")
 @NamedQueries({
@@ -23,11 +19,6 @@ public class PropinsiData implements Serializable {
 	private String nama;
 
 	public PropinsiData() {
-	}
-
-	public PropinsiData(String id, String nama) {
-		this.id = id;
-		this.nama = nama;
 	}
 
 	public String getId() {

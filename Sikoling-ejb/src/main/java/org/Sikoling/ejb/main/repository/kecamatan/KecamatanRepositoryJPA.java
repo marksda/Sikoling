@@ -122,7 +122,11 @@ public class KecamatanRepositoryJPA implements IKecamatanRepository {
 	}
 
 	private KecamatanData convertKecamatanToKecamatanData(Kecamatan kecamatan) {
-		return new KecamatanData(kecamatan.getId(), kecamatan.getIdKabupaten(), kecamatan.getNama());
+		KecamatanData kecamatanData = new KecamatanData();
+		kecamatanData.setId(kecamatan.getId());
+		kecamatanData.setNama(kecamatan.getNama());
+		kecamatanData.setIdKabupaten(kecamatan.getIdKabupaten());
+		return kecamatanData;
 	}
 	
 	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData kecamatanData) {
