@@ -8,6 +8,7 @@ import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 
 
 /**

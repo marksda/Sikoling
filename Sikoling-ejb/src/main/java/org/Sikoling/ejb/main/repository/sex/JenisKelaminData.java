@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.sex;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -10,7 +10,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="tbl_jenis_kelamin")
-@NamedQuery(name="JenisKelaminData.findAll", query="SELECT j FROM JenisKelaminData j")
+@NamedQueries({
+@NamedQuery(name="JenisKelaminData.findAll", query="SELECT j FROM JenisKelaminData j"),
+@NamedQuery(name="JenisKelaminData.findAllByQueryNama", query="SELECT j FROM JenisKelaminData j WHERE j.nama ILIKE :nama")
+})
 public class JenisKelaminData implements Serializable {
 	private static final long serialVersionUID = -4654923742493315238L;
 

@@ -29,7 +29,7 @@ public class JenisKelamin implements Serializable {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
+		int hash = 11;
 		hash = 13 * hash + Objects.hashCode(this.id);
 		hash = 13 * hash + Objects.hashCode(this.nama);
 		return hash;
