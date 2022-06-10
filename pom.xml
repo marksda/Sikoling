@@ -13,11 +13,13 @@
   			<artifactId>arquillian-bom</artifactId>
   			<version>1.7.0.Alpha10</version>
   			<type>pom</type>
+  			<scope>import</scope>
   		</dependency>
   	</dependencies>
   </dependencyManagement>
   <modules>
     <module>Sikoling-ejb</module>
     <module>Sikoling-web</module>
+    <module>Sikoling-ear</module>
   </modules>
 </project>
