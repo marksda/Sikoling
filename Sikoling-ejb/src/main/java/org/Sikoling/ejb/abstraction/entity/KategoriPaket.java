@@ -29,9 +29,9 @@ public class KategoriPaket implements Serializable {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.id);
-		hash = 13 * hash + Objects.hashCode(this.nama);
+		int hash = 29;
+		hash = 41 * hash + Objects.hashCode(this.id);
+		hash = 41 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
 
