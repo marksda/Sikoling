@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="tbl_produk")
+@Table(name="master.tbl_produk")
 @NamedQuery(name="ProdukData.findAll", query="SELECT p FROM ProdukData p")
 public class ProdukData implements Serializable {
 	private static final long serialVersionUID = 8534122990459968013L;
