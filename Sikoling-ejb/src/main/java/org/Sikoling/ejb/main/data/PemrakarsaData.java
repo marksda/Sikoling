@@ -34,8 +34,8 @@ public class PemrakarsaData implements Serializable {
 	@Column(name="nama_notaris")
 	private String namaNotaris;
 
-	@Column(name="pj_pemrakarsa")
-	@JoinColumn(name = "pj_pemrakarsa", referencedColumnName = "id", insertable = false, updatable = false)
+	@Column(name="penanggung_jawab")
+	@JoinColumn(name = "penanggung_jawab", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private RelasiPenanggungJawabData penanggungJawab;
 
