@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.penanggungjawab;
 
 import java.io.Serializable;
 import javax.persistence.*;
