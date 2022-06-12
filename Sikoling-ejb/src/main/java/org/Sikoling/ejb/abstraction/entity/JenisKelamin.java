@@ -14,6 +14,12 @@ public class JenisKelamin implements Serializable {
 		this.id = id;
 		this.nama = nama;
 	}
+	
+	public JenisKelamin(String id) {
+		super();
+		this.id = id;
+		this.nama = "";
+	}
 
 	public String getId() {
 		return id;

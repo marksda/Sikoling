@@ -11,13 +11,14 @@ import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 
 
-/**
- * The persistent class for the tbl_pj_pemrakarsa database table.
- * 
- */
 @Entity
-@Table(name="tbl_penanggung_jawab")
-@NamedQuery(name="PenanggungJawabPemrakarsaData.findAll", query="SELECT p FROM PenanggungJawabPemrakarsaData p")
+@Table(name="master.tbl_penanggung_jawab")
+@NamedQueries({
+@NamedQuery(name="PenanggungJawabData.findAll", query="SELECT p FROM PenanggungJawabData p"),
+@NamedQuery(name="PenanggungJawabData.findAllByQueryNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama ILIKE :nama"),
+@NamedQuery(name="PenanggungJawabData.findAllByPemilik", query="SELECT p FROM PenanggungJawabData p WHERE p.pemilik = :idPemilik"),
+@NamedQuery(name="PenanggungJawabData.findAllByPemilikANDQueryNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama ILIKE :nama AND p.pemilik = :idPemilik")
+})
 public class PenanggungJawabData implements Serializable {
 	private static final long serialVersionUID = 6630651928270252860L;
 
@@ -67,28 +68,9 @@ public class PenanggungJawabData implements Serializable {
 	private JenisKelaminData sex;
 	
 	@Column(name="pemilik")
-	@JoinColumn(name = "pemilik", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-	private PemrakarsaData pemilik;
+	private String pemilik;
 
 	public PenanggungJawabData() {
-	}	
-
-	public PenanggungJawabData(String id, DesaData desa, String detailAlamat, JabatanData jabatan,
-			KabupatenData kabupaten, KecamatanData kecamatan, String nama, String nomorHandphone, String nomorIdentitas,
-			PropinsiData propinsi, JenisKelaminData sex) {
-		super();
-		this.id = id;
-		this.desa = desa;
-		this.detailAlamat = detailAlamat;
-		this.jabatan = jabatan;
-		this.kabupaten = kabupaten;
-		this.kecamatan = kecamatan;
-		this.nama = nama;
-		this.nomorHandphone = nomorHandphone;
-		this.nomorIdentitas = nomorIdentitas;
-		this.propinsi = propinsi;
-		this.sex = sex;
 	}
 
 	public String getId() {
@@ -180,11 +162,11 @@ public class PenanggungJawabData implements Serializable {
 	}
 
 
-	public PemrakarsaData getPemilik() {
+	public String getPemilik() {
 		return pemilik;
 	}
 
-	public void setPemilik(PemrakarsaData pemilik) {
+	public void setPemilik(String pemilik) {
 		this.pemilik = pemilik;
 	}
 }

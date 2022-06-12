@@ -13,9 +13,10 @@ public class PenanggungJawab implements Serializable {
 	private final JenisKelamin jenisKelamin;
 	private final String noIdentitas;
 	private final String noHandphone;
+	private final String idPemilik;
 	
-	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, String noIdentitas,
-			String noHandphone) {
+	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, 
+			String noIdentitas,	String noHandphone, String idPemilik) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -24,6 +25,7 @@ public class PenanggungJawab implements Serializable {
 		this.jenisKelamin = jenisKelamin;
 		this.noIdentitas = noIdentitas;
 		this.noHandphone = noHandphone;
+		this.idPemilik = idPemilik;
 	}
 	
 	public String getId() {
@@ -113,5 +115,9 @@ public class PenanggungJawab implements Serializable {
 		return "PenanggungJawab{" + "nama=" + nama + ", alamat=" + alamat.toString() + ", jabatan=" 
 				+ jabatan + ", sex=" + jenisKelamin + ", noIdentitas=" + noIdentitas + ", noHandphone=" + noHandphone + "}";
 	}
-		
+
+	public String getIdPemilik() {
+		return idPemilik;
+	}
+				
 }

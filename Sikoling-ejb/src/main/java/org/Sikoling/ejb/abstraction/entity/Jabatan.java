@@ -14,6 +14,12 @@ public class Jabatan implements Serializable {
 		this.id = id;
 		this.nama = nama;
 	}
+	
+	public Jabatan(String id) {
+		super();
+		this.id = id;
+		this.nama = "";
+	}
 
 	public String getId() {
 		return id;

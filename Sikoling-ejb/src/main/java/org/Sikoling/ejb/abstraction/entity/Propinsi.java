@@ -14,6 +14,12 @@ public class Propinsi implements Serializable {
 		this.id = id;
 		this.nama = nama;
 	}
+	
+	public Propinsi(String id) {
+		super();
+		this.id = id;
+		this.nama = "";
+	}
 
 	public String getId() {
 		return id;
