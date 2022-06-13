@@ -84,7 +84,7 @@ public class PropinsiDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PropinsiDTO{" + "id=" + id + ", nama=" + nama + '}';	    
+		return "PropinsiDTO{" + "id=" + id + ", nama=" + nama + "}";	    
 	}
 	
 }

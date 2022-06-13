@@ -7,6 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
+import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
@@ -24,6 +25,8 @@ import org.Sikoling.ejb.abstraction.service.kabupaten.IKabupatenService;
 import org.Sikoling.ejb.abstraction.service.kabupaten.KabupatenService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
+import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
+import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.LocalBean;
@@ -80,6 +83,12 @@ public class RestfulProvider {
 	public IJenisKelaminService getJenisKelaminService(
 			@Infrastructure IJenisKelaminRepository jenisKelaminRepository) {
 		return new JenisKelaminService(jenisKelaminRepository);
+	}
+	
+	@Produces 
+	public IPenanggungJawabService getPenanggungJawabService(
+			@Infrastructure IPenanggungJawabRepository penanggungJawabRepository) {
+		return new PenanggungJawabService(penanggungJawabRepository);
 	}
 	
 }
