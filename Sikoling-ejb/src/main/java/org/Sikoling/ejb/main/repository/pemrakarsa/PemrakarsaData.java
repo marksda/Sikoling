@@ -1,8 +1,9 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.pemrakarsa;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.Sikoling.ejb.main.data.RelasiPenanggungJawabData;
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 
 import java.util.Date;
@@ -14,7 +15,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name="tbl_pemrakarsa")
-@NamedQuery(name="PemrakarsaData.findAll", query="SELECT p FROM PemrakarsaData p")
+@NamedQueries({
+@NamedQuery(name="PemrakarsaData.findAll", query="SELECT p FROM PemrakarsaData p"),
+@NamedQuery(name="PemrakarsaData.findByQueryNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama ILIKE :nama"),
+@NamedQuery(name="PemrakarsaData.findByCreator", query="SELECT p FROM PemrakarsaData p WHERE p.idCreator = :idCreator")
+})
 public class PemrakarsaData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
 
@@ -59,22 +64,10 @@ public class PemrakarsaData implements Serializable {
 	@Column(name="fax")
 	private String fax;
 
+	@Column(name="creator")
+	private String idCreator;
+	
 	public PemrakarsaData() {
-	}		
-
-	public PemrakarsaData(String id, String alamatEmail, BentukUsahaData bentukUsaha, String nama, String namaNotaris,
-			RelasiPenanggungJawabData penanggungJawab, String noNibOss, String noNpwp, Date tanggalNotaris, Date tanggalOss) {
-		super();
-		this.id = id;
-		this.alamatEmail = alamatEmail;
-		this.bentukUsaha = bentukUsaha;
-		this.nama = nama;
-		this.namaNotaris = namaNotaris;
-		this.penanggungJawab = penanggungJawab;
-		this.noNibOss = noNibOss;
-		this.noNpwp = noNpwp;
-		this.tanggalNotaris = tanggalNotaris;
-		this.tanggalOss = tanggalOss;
 	}
 
 	public String getId() {
@@ -172,5 +165,16 @@ public class PemrakarsaData implements Serializable {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
+
+	
+	public String getIdCreator() {
+		return idCreator;
+	}
+
+	
+	public void setIdCreator(String idCreator) {
+		this.idCreator = idCreator;
+	}
+	
 	
 }

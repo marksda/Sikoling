@@ -20,6 +20,7 @@ public class Pemrakarsa implements Serializable {
 	private final PenanggungJawab penanggungJawab;
 	private final Date tanggalNotaris;
 	private final Date tanggalOSS;
+	private final String idCreator;
 	
 	public PenanggungJawab getPenanggungJawab() {
 		return penanggungJawab;
@@ -27,7 +28,7 @@ public class Pemrakarsa implements Serializable {
 
 	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nomorIndukBerusaha, String nama, String namaNotaris,
 			Alamat alamat, String telepone, String fax, String npwp, String email, PenanggungJawab penanggungJawab,
-			Date tanggalNotaris, Date tanggalOSS) {
+			Date tanggalNotaris, Date tanggalOSS, String idCreator) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
@@ -41,6 +42,7 @@ public class Pemrakarsa implements Serializable {
 		this.email = email;
 		this.penanggungJawab = penanggungJawab;
 		this.tanggalNotaris = tanggalNotaris;
+		this.idCreator = idCreator;
 		this.tanggalOSS = tanggalOSS;
 	}
 
@@ -162,5 +164,11 @@ public class Pemrakarsa implements Serializable {
 				+ ", alamat=" + alamat.toString() + ", telepone=" + telepone + ", fax=" + fax
 				+ ", npwp=" + npwp + ", email=" + email + "}";
 	}
+
+	
+	public String getIdCreator() {
+		return idCreator;
+	}
+	
 	
 }

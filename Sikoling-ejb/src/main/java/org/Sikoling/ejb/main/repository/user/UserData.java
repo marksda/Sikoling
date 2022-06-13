@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.user;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -11,7 +11,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="tbl_user")
-@NamedQuery(name="UserData.findAll", query="SELECT u FROM UserData u")
+@NamedQueries({
+@NamedQuery(name="UserData.findAll", query="SELECT u FROM UserData u"),
+@NamedQuery(name="UserData.findByQueryNama", query="SELECT u FROM UserData u WHERE u.user = :nama")
+})
 public class UserData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,17 +36,6 @@ public class UserData implements Serializable {
 	private String user;
 
 	public UserData() {
-	}
-
-	public UserData(String id, String password, Boolean statusInternal, Boolean statusLogin, Date tanggalRegistrasi,
-			String user) {
-		super();
-		this.id = id;
-		this.password = password;
-		this.statusInternal = statusInternal;
-		this.statusLogin = statusLogin;
-		this.tanggalRegistrasi = tanggalRegistrasi;
-		this.user = user;
 	}
 
 	public String getId() {
