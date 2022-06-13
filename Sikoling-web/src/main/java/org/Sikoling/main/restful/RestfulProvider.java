@@ -9,10 +9,13 @@ import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
+import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
 import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
+import org.Sikoling.ejb.abstraction.service.user.IUserService;
+import org.Sikoling.ejb.abstraction.service.user.UserService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
@@ -91,4 +94,9 @@ public class RestfulProvider {
 		return new PenanggungJawabService(penanggungJawabRepository);
 	}
 	
+	@Produces
+	public IUserService getUserService(
+			@Infrastructure IUserRepository userRepository) {
+		return new UserService(userRepository);
+	}
 }

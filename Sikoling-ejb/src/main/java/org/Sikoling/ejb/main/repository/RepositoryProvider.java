@@ -9,6 +9,7 @@ import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
+import org.Sikoling.ejb.main.repository.user.UserRepositoryJPA;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -71,6 +72,11 @@ public class RepositoryProvider {
 	@Produces
 	public PenanggungJawabRepositoryJPA getPenanggungJawabRepositoryJPA(EntityManager entityManager) {
 		return new PenanggungJawabRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public UserRepositoryJPA getUserRepositoryJPA(EntityManager entityManager) {
+		return new UserRepositoryJPA(entityManager);
 	}
 
 }
