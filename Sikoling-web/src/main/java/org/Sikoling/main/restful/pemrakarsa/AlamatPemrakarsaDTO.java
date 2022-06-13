@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.penanggungjawab;
+package org.Sikoling.main.restful.pemrakarsa;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,20 +9,20 @@ import org.Sikoling.main.restful.kabupaten.KabupatenDTO;
 import org.Sikoling.main.restful.kecamatan.KecamatanDTO;
 import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
-public class AlamatDTO implements Serializable {
-	
-	private static final long serialVersionUID = -3073992539638923482L;
+public class AlamatPemrakarsaDTO implements Serializable {
+
+	private static final long serialVersionUID = -5929733794216900470L;
 	private PropinsiDTO propinsi;
 	private KabupatenDTO kabupaten;
 	private KecamatanDTO kecamatan;
 	private DesaDTO desa;
 	private String keterangan;
 	
-	public AlamatDTO() {
+	public AlamatPemrakarsaDTO() {
 		
 	}
 	
-	public AlamatDTO(Alamat alamat) {
+	public AlamatPemrakarsaDTO(Alamat alamat) {
 		this.propinsi = new PropinsiDTO(alamat.getPropinsi());
 		this.kabupaten = new KabupatenDTO(alamat.getKabupaten());
 		this.kecamatan = new KecamatanDTO(alamat.getKecamatan());
@@ -30,7 +30,7 @@ public class AlamatDTO implements Serializable {
 		this.keterangan = alamat.getKeterangan();
 	}
 	
-	public AlamatDTO(PropinsiDTO propinsi, KabupatenDTO kabupaten, KecamatanDTO kecamatan, DesaDTO desa,
+	public AlamatPemrakarsaDTO(PropinsiDTO propinsi, KabupatenDTO kabupaten, KecamatanDTO kecamatan, DesaDTO desa,
 			String keterangan) {
 		super();
 		this.propinsi = propinsi;
@@ -85,7 +85,7 @@ public class AlamatDTO implements Serializable {
 	}
 	
 	public int hashCode() {
-		int hash = 11;
+		int hash = 91;
         hash = 59 * hash + Objects.hashCode(this.propinsi.toString());
         hash = 59 * hash + Objects.hashCode(this.kabupaten.toString());
         hash = 59 * hash + Objects.hashCode(this.kecamatan.toString());
@@ -108,7 +108,7 @@ public class AlamatDTO implements Serializable {
             return false;
         }
         
-        final AlamatDTO other = (AlamatDTO) obj;
+        final AlamatPemrakarsaDTO other = (AlamatPemrakarsaDTO) obj;
         
         if (this.propinsi.getId() != other.getPropinsi().getId()) {
             return false;
@@ -135,7 +135,7 @@ public class AlamatDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AlamatDTO{" + this.propinsi.toString() + ", " + this.kabupaten.toString()
+		return "AlamatPemrakarsaDTO{" + this.propinsi.toString() + ", " + this.kabupaten.toString()
 				+ ", " + this.kecamatan.toString() + this.desa.toString() + ", detail=" + this.keterangan + "}";	  
 	}
 	

@@ -11,7 +11,7 @@ public class PenanggungJawabDTO implements Serializable {
 	private static final long serialVersionUID = 3847984353247321174L;
 	private String id;
 	private String nama;
-	private AlamatDTO alamat;
+	private AlamatPenanggungJawabDTO alamat;
 	private JabatanDTO jabatan;
 	private JenisKelaminDTO jenisKelamin;
 	private String noIdentitas;
@@ -34,7 +34,7 @@ public class PenanggungJawabDTO implements Serializable {
 		this.idPemilik = penanggungJawab.getIdPemilik();
 	}
 	
-	public PenanggungJawabDTO(String id, String nama, AlamatDTO alamat, JabatanDTO jabatan,
+	public PenanggungJawabDTO(String id, String nama, AlamatPenanggungJawabDTO alamat, JabatanDTO jabatan,
 			JenisKelaminDTO jenisKelamin, String noIdentitas, String noHandphone, String idPemilik) {
 		super();
 		this.id = id;
@@ -63,11 +63,11 @@ public class PenanggungJawabDTO implements Serializable {
 		this.nama = nama;
 	}
 
-	public AlamatDTO getAlamat() {
+	public AlamatPenanggungJawabDTO getAlamat() {
 		return alamat;
 	}
 
-	public void setAlamat(AlamatDTO alamat) {
+	public void setAlamat(AlamatPenanggungJawabDTO alamat) {
 		this.alamat = alamat;
 	}
 

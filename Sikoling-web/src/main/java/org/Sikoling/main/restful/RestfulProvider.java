@@ -7,6 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
+import org.Sikoling.ejb.abstraction.repository.IPemrakarsaRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
@@ -28,6 +29,8 @@ import org.Sikoling.ejb.abstraction.service.kabupaten.IKabupatenService;
 import org.Sikoling.ejb.abstraction.service.kabupaten.KabupatenService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
+import org.Sikoling.ejb.abstraction.service.pemrakarsa.IPemrakarsaService;
+import org.Sikoling.ejb.abstraction.service.pemrakarsa.PemrakarsaService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -95,8 +98,12 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IUserService getUserService(
-			@Infrastructure IUserRepository userRepository) {
+	public IUserService getUserService(@Infrastructure IUserRepository userRepository) {
 		return new UserService(userRepository);
+	}
+	
+	@Produces
+	public IPemrakarsaService getPemrakarsaService(@Infrastructure IPemrakarsaRepository pemrakarsaRepository) {
+		return new PemrakarsaService(pemrakarsaRepository);		
 	}
 }
