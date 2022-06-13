@@ -16,6 +16,19 @@ public class PenanggungJawab implements Serializable {
 	private final String idPemilik;
 	
 	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, 
+			String noIdentitas,	String noHandphone) {
+		super();
+		this.id = id;
+		this.nama = nama;
+		this.alamat = alamat;
+		this.jabatan = jabatan;
+		this.jenisKelamin = jenisKelamin;
+		this.noIdentitas = noIdentitas;
+		this.noHandphone = noHandphone;
+		this.idPemilik = null;
+	}
+	
+	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, 
 			String noIdentitas,	String noHandphone, String idPemilik) {
 		super();
 		this.id = id;

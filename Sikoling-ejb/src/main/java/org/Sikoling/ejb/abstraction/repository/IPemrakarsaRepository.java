@@ -8,8 +8,8 @@ public interface IPemrakarsaRepository extends IRepository<Pemrakarsa> {
 	List<Pemrakarsa> getAllByPage(Integer page, Integer pageSize);
 	List<Pemrakarsa> getByQueryNama(String nama);
 	List<Pemrakarsa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
-//	List<Pemrakarsa> getByWali(String idWali);
-//	List<Pemrakarsa> getByWaliAndPage(String idWali, Integer page, Integer pageSize);
-//	List<Pemrakarsa> getByWaliAndNama(String idWali, String nama);
-//	List<Pemrakarsa> getByWaliAndNamaAndPage(String idWali, String nama, Integer page, Integer pageSize);	
+	List<Pemrakarsa> getByCreator(String idCreator);
+	List<Pemrakarsa> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize);
+	List<Pemrakarsa> getByCreatorAndNama(String idCreator, String nama);
+	List<Pemrakarsa> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize);	
 }

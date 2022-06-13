@@ -16,6 +16,12 @@ public class Kabupaten implements Serializable {
 		this.idPropinsi = null;
 	}
 	
+	public Kabupaten(String id, String nama) {
+		this.id = id;
+		this.nama = nama;
+		this.idPropinsi = "";
+	}
+	
 	public Kabupaten(String id, String nama, String idPropinsi) {
 		this.id = id;
 		this.nama = nama;

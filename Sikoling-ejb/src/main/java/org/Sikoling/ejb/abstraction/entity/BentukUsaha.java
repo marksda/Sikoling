@@ -10,6 +10,21 @@ public class BentukUsaha implements Serializable{
 	private final String idKelompokBentukUsaha;
 	private final String nama;
 	
+	
+	public BentukUsaha(String id) {
+		super();
+		this.id = id;
+		this.idKelompokBentukUsaha = null;
+		this.nama = "";
+	}
+	
+	public BentukUsaha(String id, String nama) {
+		super();
+		this.id = id;
+		this.idKelompokBentukUsaha = null;
+		this.nama = nama;
+	}
+	
 	public BentukUsaha(String id, String nama, String idKelompokBentukUsaha) {
 		super();
 		this.id = id;

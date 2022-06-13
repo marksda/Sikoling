@@ -24,6 +24,13 @@ public class Kecamatan implements Serializable {
 		this.idKabupaten = null;
 	}
 	
+	public Kecamatan(String id, String nama) {
+		super();
+		this.id = id;
+		this.nama = nama;
+		this.idKabupaten = "";
+	}
+	
 	public Kecamatan(String id, String nama, String idKabupaten) {
 		super();
 		this.id = id;

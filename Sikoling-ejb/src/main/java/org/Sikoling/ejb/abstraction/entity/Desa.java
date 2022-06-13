@@ -23,6 +23,13 @@ public class Desa implements Serializable {
 		this.nama = "";
 		this.kecamatan = null;
 	}
+	
+	public Desa(String id, String nama) {
+		super();
+		this.id = id;
+		this.nama = nama;
+		this.kecamatan = null;
+	}
 
 	public String getId() {
 		return id;
