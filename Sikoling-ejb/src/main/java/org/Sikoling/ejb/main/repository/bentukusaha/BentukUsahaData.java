@@ -23,6 +23,9 @@ public class BentukUsahaData implements Serializable {
 
 	@Column(name="nama")
 	private String nama;
+	
+	@Column(name="singkatan")
+	private String singkatan;
 
 	public BentukUsahaData() {
 	}
@@ -35,7 +38,7 @@ public class BentukUsahaData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKelompokBentukUsaha() {
+	public String getIdKelompokBentukUsaha() {
 		return this.idKelompokBentukUsaha;
 	}
 
@@ -50,5 +53,15 @@ public class BentukUsahaData implements Serializable {
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
+
+	public String getSingkatan() {
+		return singkatan;
+	}
+
+	public void setSingkatan(String singkatan) {
+		this.singkatan = singkatan;
+	}
+	
+	
 
 }
