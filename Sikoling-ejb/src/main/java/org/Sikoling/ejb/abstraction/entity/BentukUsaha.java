@@ -7,37 +7,41 @@ public class BentukUsaha implements Serializable{
 
 	private static final long serialVersionUID = -5160872827538954162L;
 	private final String id;
-	private final String idKelompokBentukUsaha;
 	private final String nama;
+	private final String singkatan;
+	private final String idKelompok;
 	
 	
 	public BentukUsaha(String id) {
 		super();
 		this.id = id;
-		this.idKelompokBentukUsaha = null;
-		this.nama = "";
+		this.nama = null;
+		this.singkatan = null;
+		this.idKelompok = null;
 	}
 	
 	public BentukUsaha(String id, String nama) {
 		super();
 		this.id = id;
-		this.idKelompokBentukUsaha = null;
 		this.nama = nama;
+		this.singkatan = null;
+		this.idKelompok = null;
 	}
 	
-	public BentukUsaha(String id, String nama, String idKelompokBentukUsaha) {
+	public BentukUsaha(String id, String nama, String singkatan, String idKelompok) {
 		super();
 		this.id = id;
-		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
 		this.nama = nama;
+		this.singkatan = singkatan;
+		this.idKelompok = idKelompok;
+	}
+	
+	public String getIdKelompok() {
+		return idKelompok;
 	}
 
 	public String getId() {
 		return id;
-	}
-
-	public String getIdKelompokBentukUsaha() {
-		return idKelompokBentukUsaha;
 	}
 
 	public String getNama() {
@@ -50,10 +54,9 @@ public class BentukUsaha implements Serializable{
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
+		int hash = 31;
 		hash = 13 * hash + Objects.hashCode(this.id);
 		hash = 13 * hash + Objects.hashCode(this.nama);
-		hash = 13 * hash + Objects.hashCode(this.idKelompokBentukUsaha);
 		return hash;
 	}
 
@@ -84,6 +87,9 @@ public class BentukUsaha implements Serializable{
 	public String toString() {
 		return "BentukUsaha{" + "id=" + id + ", nama=" + nama + "}";
 	}
-	
-	
+
+	public String getSingkatan() {
+		return singkatan;
+	}
+		
 }

@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
+import org.Sikoling.ejb.main.repository.kelompokbentukusaha.KelompokBentukUsahaData;
+
 import jakarta.persistence.EntityManager;
 
 public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
@@ -74,19 +76,6 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
 				.collect(Collectors.toList());
 	}
-
-	private BentukUsahaData convertBentukUsahaToBentukUsahaData(BentukUsaha bentukUsaha) {
-		BentukUsahaData bentukUsahaData = new BentukUsahaData();
-		bentukUsahaData.setId(bentukUsaha.getId());
-		bentukUsahaData.setNama(bentukUsaha.getNama());
-		bentukUsahaData.setIdKelompokBentukUsaha(bentukUsaha.getIdKelompokBentukUsaha());
-		return bentukUsahaData;
-	}
-	
-	private BentukUsaha convertBentukUsahaDataToBentukUsaha(BentukUsahaData bentukUsahaData) {
-		return new BentukUsaha(bentukUsahaData.getId(), bentukUsahaData.getNama(), bentukUsahaData.getKelompokBentukUsaha());
-	}
-
 	
 	@Override
 	public List<BentukUsaha> getByKelompokBentukUsaha(String idKelompokBentukUsaha) {
@@ -97,7 +86,6 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<BentukUsaha> getByKelompokBentukUsahaAndPage(String idKelompokBentukUsaha, Integer page,
@@ -111,7 +99,6 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<BentukUsaha> getByKelompokBentukUsahaAndNama(String idKelompokBentukUsaha, String nama) {
@@ -124,7 +111,6 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<BentukUsaha> getByKelompokBentukUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
@@ -139,6 +125,22 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 				.stream()
 				.map(t -> convertBentukUsahaDataToBentukUsaha(t))
 				.collect(Collectors.toList());
+	}
+
+	private BentukUsahaData convertBentukUsahaToBentukUsahaData(BentukUsaha t) {
+		BentukUsahaData bentukUsahaData = new BentukUsahaData();
+		bentukUsahaData.setId(t.getId());
+		bentukUsahaData.setNama(t.getNama());
+		bentukUsahaData.setSingkatan(t.getSingkatan());
+		KelompokBentukUsahaData kelompokBentukUsahaData = new KelompokBentukUsahaData();
+		kelompokBentukUsahaData.setId(t.getIdKelompok());
+		bentukUsahaData.setKelompokBentukUsaha(kelompokBentukUsahaData);
+		
+		return bentukUsahaData;
+	}
+	
+	private BentukUsaha convertBentukUsahaDataToBentukUsaha(BentukUsahaData d) {
+		return new BentukUsaha(d.getId(), d.getNama(), d.getSingkatan(), d.getKelompokBentukUsaha().getId());
 	}
 
 }

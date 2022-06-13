@@ -9,8 +9,9 @@ public class BentukUsahaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1259008356598578698L;
 	private String id;
-	private String idKelompokBentukUsaha;
-	private  String nama;
+	private String nama;
+	private String singkatan;
+	private String idKelompok;
 	
 	public BentukUsahaDTO() {
 
@@ -18,15 +19,16 @@ public class BentukUsahaDTO implements Serializable {
 	
 	public BentukUsahaDTO(BentukUsaha bentukUsaha) {
 		this.id = bentukUsaha.getId();
-		this.idKelompokBentukUsaha = bentukUsaha.getIdKelompokBentukUsaha();
 		this.nama = bentukUsaha.getNama();
-	}
-	
-	public BentukUsahaDTO(String id, String idKelompokBentukUsaha, String nama) {
-		super();
+		this.singkatan = bentukUsaha.getSingkatan();
+		this.idKelompok = bentukUsaha.getIdKelompok();
+	}	
+
+	public BentukUsahaDTO(String id, String nama, String singkatan, String idKelompok) {
 		this.id = id;
-		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
 		this.nama = nama;
+		this.singkatan = singkatan;
+		this.idKelompok = idKelompok;
 	}
 
 	public String getId() {
@@ -37,14 +39,6 @@ public class BentukUsahaDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdKelompokBentukUsaha() {
-		return idKelompokBentukUsaha;
-	}
-
-	public void setIdKelompokBentukUsaha(String idKelompokBentukUsaha) {
-		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
-	}
-
 	public String getNama() {
 		return nama;
 	}
@@ -52,16 +46,31 @@ public class BentukUsahaDTO implements Serializable {
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
+	
+	public String getSingkatan() {
+		return singkatan;
+	}
+
+	public void setSingkatan(String singkatan) {
+		this.singkatan = singkatan;
+	}
+
+	public String getIdKelompok() {
+		return idKelompok;
+	}
+
+	public void setIdKelompok(String idKelompok) {
+		this.idKelompok = idKelompok;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	public int hashCode() {
-		int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.nama);
-        hash = 23 * hash + Objects.hashCode(this.idKelompokBentukUsaha);
+		int hash = 13;
+        hash = 27 * hash + Objects.hashCode(this.id);
+        hash = 27 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -88,10 +97,6 @@ public class BentukUsahaDTO implements Serializable {
         if (this.nama != other.nama) {
             return false;
         }
-        
-        if (this.idKelompokBentukUsaha != other.idKelompokBentukUsaha) {
-            return false;
-        }
 
         return true;
 	}
@@ -102,6 +107,6 @@ public class BentukUsahaDTO implements Serializable {
 	}
 
 	public BentukUsaha toBentukUsaha() {
-		return new BentukUsaha(id, nama, idKelompokBentukUsaha);
+		return new BentukUsaha(id, nama, singkatan, idKelompok);
 	}
 }

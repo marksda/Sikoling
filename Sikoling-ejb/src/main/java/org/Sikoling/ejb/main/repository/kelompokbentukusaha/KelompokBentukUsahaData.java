@@ -1,7 +1,11 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.kelompokbentukusaha;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
+
+import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 
 
 /**
@@ -17,15 +21,13 @@ public class KelompokBentukUsahaData implements Serializable {
 	@Id
 	private String id;
 
-	private String keterangan;
+	@Column(name="nama")
+	private String nama;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kelompok_bentuk_usaha", fetch = FetchType.EAGER)
+	private List<BentukUsahaData> daftarBentukUsahaData;
 
 	public KelompokBentukUsahaData() {
-	}
-
-	public KelompokBentukUsahaData(String id, String keterangan) {
-		super();
-		this.id = id;
-		this.keterangan = keterangan;
 	}
 
 	public String getId() {
@@ -36,12 +38,12 @@ public class KelompokBentukUsahaData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKeterangan() {
-		return this.keterangan;
+	public String getNama() {
+		return this.nama;
 	}
 
-	public void setKeterangan(String keterangan) {
-		this.keterangan = keterangan;
+	public void setNama(String nama) {
+		this.nama = nama;
 	}
 
 }

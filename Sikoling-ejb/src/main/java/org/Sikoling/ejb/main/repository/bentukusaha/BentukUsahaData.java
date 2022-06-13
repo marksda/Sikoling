@@ -3,14 +3,16 @@ package org.Sikoling.ejb.main.repository.bentukusaha;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.Sikoling.ejb.main.repository.kelompokbentukusaha.KelompokBentukUsahaData;
+
 
 @Entity
 @Table(name="master.tbl_bentuk_usaha")
 @NamedQueries({
 @NamedQuery(name="BentukUsahaData.findAll", query="SELECT b FROM BentukUsahaData b"),
 @NamedQuery(name="BentukUsahaData.findAllByQueryNama", query="SELECT b FROM BentukUsahaData b WHERE b.nama ILIKE :nama"),
-@NamedQuery(name="BentukUsahaData.findAllByKelompokUsaha", query="SELECT b FROM BentukUsahaData b WHERE b.idKelompokBentukUsaha = :idKelompok"),
-@NamedQuery(name="BentukUsahaData.findAllByKelompokUsahaAndQueryNama", query="SELECT b FROM BentukUsahaData b WHERE b.nama ILIKE :nama AND b.idKelompokBentukUsaha = :idKelompok")})
+@NamedQuery(name="BentukUsahaData.findAllByKelompokUsaha", query="SELECT b FROM BentukUsahaData b WHERE b.kelompokBentukUsaha.id = :idKelompok"),
+@NamedQuery(name="BentukUsahaData.findAllByKelompokUsahaAndQueryNama", query="SELECT b FROM BentukUsahaData b WHERE b.nama ILIKE :nama AND b.kelompokBentukUsaha.id = :idKelompok")})
 public class BentukUsahaData implements Serializable {
 	
 	private static final long serialVersionUID = -1267904959928056172L;
@@ -19,7 +21,9 @@ public class BentukUsahaData implements Serializable {
 	private String id;
 
 	@Column(name="kelompok_bentuk_usaha")
-	private String idKelompokBentukUsaha;
+	@JoinColumn(name = "kelompok_bentuk_usaha", referencedColumnName = "id")
+	@ManyToOne(optional = false)
+	private KelompokBentukUsahaData kelompokBentukUsaha;
 
 	@Column(name="nama")
 	private String nama;
@@ -38,12 +42,12 @@ public class BentukUsahaData implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdKelompokBentukUsaha() {
-		return this.idKelompokBentukUsaha;
+	public KelompokBentukUsahaData getKelompokBentukUsaha() {
+		return this.kelompokBentukUsaha;
 	}
 
-	public void setIdKelompokBentukUsaha(String idKelompokBentukUsaha) {
-		this.idKelompokBentukUsaha = idKelompokBentukUsaha;
+	public void setKelompokBentukUsaha(KelompokBentukUsahaData kelompokBentukUsaha) {
+		this.kelompokBentukUsaha = kelompokBentukUsaha;
 	}
 
 	public String getNama() {

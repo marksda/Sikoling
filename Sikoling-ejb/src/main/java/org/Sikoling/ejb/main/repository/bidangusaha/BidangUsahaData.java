@@ -16,6 +16,7 @@ public class BidangUsahaData implements Serializable {
 	@Id
 	private Integer id;
 
+	@Column(name="nama")
 	private String nama;
 
 	public BidangUsahaData() {
