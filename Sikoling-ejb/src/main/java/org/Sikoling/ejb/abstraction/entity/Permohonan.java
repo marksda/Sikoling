@@ -13,10 +13,10 @@ public class Permohonan implements Serializable {
 	private final SuratPermohonan suratPermohonan;
 	private final BidangUsaha bidangUsaha;
 	private final Wali wali;
-	private final List<ProdukDLH> daftarProdukDLH;
+	private final List<Produk> daftarProdukDLH;
 	
 	public Permohonan(String noPendaftaran, Date tanggalPendaftaran, SuratPermohonan suratPermohonan,
-			BidangUsaha bidangUsaha, Wali wali, List<ProdukDLH> daftarProdukDLH, PaketPermohonan jenisPaketPermohonan) {
+			BidangUsaha bidangUsaha, Wali wali, List<Produk> daftarProdukDLH, PaketPermohonan jenisPaketPermohonan) {
 		super();
 		this.noPendaftaran = noPendaftaran;
 		this.tanggalPendaftaran = tanggalPendaftaran;
@@ -47,7 +47,7 @@ public class Permohonan implements Serializable {
 		return wali;
 	}
 
-	public List<ProdukDLH> getDaftarProdukDLH() {
+	public List<Produk> getDaftarProdukDLH() {
 		return daftarProdukDLH;
 	}
 

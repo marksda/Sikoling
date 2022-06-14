@@ -1,15 +1,14 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.produk;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.JoinColumn;
 
 import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukData;
 
+import jakarta.persistence.*;
 
-/**
- * The persistent class for the tbl_produk database table.
- * 
- */
+
 @Entity
 @Table(name="master.tbl_produk")
 @NamedQuery(name="ProdukData.findAll", query="SELECT p FROM ProdukData p")
@@ -19,27 +18,14 @@ public class ProdukData implements Serializable {
 	@Id
 	private String id;
 
-	@Column(name="kategori_paket")
-	@JoinColumn(name = "kategori_paket", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-	private KategoriPaketData kategoriPaket;
-
 	@Column(name="kategori_produk")
 	@JoinColumn(name = "kategori_produk", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
 	private KategoriProdukData kategoriProduk;
 
 	private String nama;
 
 	public ProdukData() {
-	}
-
-	public ProdukData(String id, KategoriPaketData kategoriPaket, KategoriProdukData kategoriProduk, String nama) {
-		super();
-		this.id = id;
-		this.kategoriPaket = kategoriPaket;
-		this.kategoriProduk = kategoriProduk;
-		this.nama = nama;
 	}
 
 	public String getId() {
@@ -48,14 +34,6 @@ public class ProdukData implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public KategoriPaketData getKategoriPaket() {
-		return this.kategoriPaket;
-	}
-
-	public void setKategoriPaket(KategoriPaketData kategoriPaket) {
-		this.kategoriPaket = kategoriPaket;
 	}
 
 	public KategoriProdukData getKategoriProduk() {

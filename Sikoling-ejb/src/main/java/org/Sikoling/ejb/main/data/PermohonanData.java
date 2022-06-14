@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaData;
 import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
+import org.Sikoling.ejb.main.repository.produk.ProdukData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 
 import java.sql.Timestamp;
