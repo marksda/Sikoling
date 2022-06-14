@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.main.repository.bentukusaha;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.kelompokbentukusaha.KelompokBentukUsahaData;
 

@@ -3,17 +3,13 @@ package org.Sikoling.ejb.main.repository.kelompokbentukusaha;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 
 
-/**
- * The persistent class for the tbl_kelompok_bentuk_usaha database table.
- * 
- */
 @Entity
-@Table(name="tbl_kelompok_bentuk_usaha")
+@Table(name="master.tbl_kelompok_bentuk_usaha")
 @NamedQuery(name="KelompokBentukUsahaData.findAll", query="SELECT k FROM KelompokBentukUsahaData k")
 public class KelompokBentukUsahaData implements Serializable {
 	private static final long serialVersionUID = -8189342523798654485L;

@@ -14,10 +14,6 @@ import org.Sikoling.ejb.main.repository.user.UserData;
 import java.util.Date;
 
 
-/**
- * The persistent class for the tbl_pemrakarsa database table.
- * 
- */
 @Entity
 @Table(name="master.tbl_pemrakarsa")
 @NamedQueries({

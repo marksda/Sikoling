@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.main.repository.kategoriproduk;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 /**

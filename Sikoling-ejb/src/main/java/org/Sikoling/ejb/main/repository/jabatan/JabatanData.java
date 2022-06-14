@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.main.repository.jabatan;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 @Entity

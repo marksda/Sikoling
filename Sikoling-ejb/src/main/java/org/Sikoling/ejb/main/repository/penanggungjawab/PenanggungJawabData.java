@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.main.repository.penanggungjawab;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;

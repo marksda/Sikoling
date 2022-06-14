@@ -1,16 +1,13 @@
 package org.Sikoling.ejb.main.repository.user;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 
-/**
- * The persistent class for the tbl_user database table.
- * 
- */
+
 @Entity
-@Table(name="tbl_user")
+@Table(name="master.tbl_user")
 @NamedQueries({
 @NamedQuery(name="UserData.findAll", query="SELECT u FROM UserData u"),
 @NamedQuery(name="UserData.findByQueryNama", query="SELECT u FROM UserData u WHERE u.user = :nama")

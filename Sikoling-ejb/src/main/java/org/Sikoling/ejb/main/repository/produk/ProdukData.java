@@ -1,12 +1,8 @@
 package org.Sikoling.ejb.main.repository.produk;
 
-import java.io.Serializable;
-
-import javax.persistence.JoinColumn;
-
-import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukData;
-
 import jakarta.persistence.*;
+import java.io.Serializable;
+import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukData;
 
 
 @Entity
