@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.kategoriproduk;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -9,8 +9,11 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="tbl_kategori_produk")
-@NamedQuery(name="KategoriProdukData.findAll", query="SELECT k FROM KategoriProdukData k")
+@Table(name="master.tbl_kategori_produk")
+@NamedQueries({
+@NamedQuery(name="KategoriProdukData.findAll", query="SELECT k FROM KategoriProdukData k"),
+@NamedQuery(name="KategoriProdukData.findByQueryNama", query="SELECT k FROM KategoriProdukData k WHERE k.nama ILIKE :nama")
+})
 public class KategoriProdukData implements Serializable {
 	private static final long serialVersionUID = -1689057030659783556L;
 
@@ -20,12 +23,6 @@ public class KategoriProdukData implements Serializable {
 	private String nama;
 
 	public KategoriProdukData() {
-	}
-
-	public KategoriProdukData(String id, String nama) {
-		super();
-		this.id = id;
-		this.nama = nama;
 	}
 
 	public String getId() {

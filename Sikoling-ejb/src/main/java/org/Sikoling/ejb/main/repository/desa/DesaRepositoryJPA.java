@@ -47,37 +47,37 @@ public class DesaRepositoryJPA implements IDesaRepository {
 			.setFirstResult((page-1)*pageSize)
 			.getResultList()
 			.stream()
-			.map(t -> convertDesaDataToDesa(t))
+			.map(d -> convertDesaDataToDesa(d))
 			.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Desa> getByQueryNama(String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findAllByQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByQueryNama", DesaData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertDesaDataToDesa(t))
+				.map(d -> convertDesaDataToDesa(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Desa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findAllByQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByQueryNama", DesaData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDesaDataToDesa(t))
+				.map(d -> convertDesaDataToDesa(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Desa> getByKecamatan(String idKecamatan) {
-		return entityManager.createNamedQuery("DesaData.findAllByIdKecamatan", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByKecamatan", DesaData.class)
 				.setParameter("idKecamatan", idKecamatan)
 				.getResultList()
 				.stream()
@@ -87,25 +87,25 @@ public class DesaRepositoryJPA implements IDesaRepository {
 
 	@Override
 	public List<Desa> getByKecamatanAndPage(String idKecamatan, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("DesaData.findAllByIdKecamatan", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByKecamatan", DesaData.class)
 				.setParameter("idKecamatan", idKecamatan)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDesaDataToDesa(t))
+				.map(d -> convertDesaDataToDesa(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Desa> getByKecamatanAndQueryNama(String idKecamatan, String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findAllByIdKecamatanAndQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByKecamatanAndQueryNama", DesaData.class)
 				.setParameter("nama", nama)
 				.setParameter("idKecamatan", idKecamatan)
 				.getResultList()
 				.stream()
-				.map(t -> convertDesaDataToDesa(t))
+				.map(d -> convertDesaDataToDesa(d))
 				.collect(Collectors.toList());
 	}
 
@@ -113,14 +113,14 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	public List<Desa> getByKecamatanAndQueryNamaAndPage(String idKecamatan, String nama, Integer page,
 			Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findAllByIdKecamatanAndQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByKecamatanAndQueryNama", DesaData.class)
 				.setParameter("nama", nama)
 				.setParameter("idKecamatan", idKecamatan)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDesaDataToDesa(t))
+				.map(d -> convertDesaDataToDesa(d))
 				.collect(Collectors.toList());
 	}
 
