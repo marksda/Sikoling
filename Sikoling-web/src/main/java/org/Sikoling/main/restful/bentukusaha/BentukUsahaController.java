@@ -64,7 +64,7 @@ public class BentukUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByQueryNama(@QueryParam("nama") String nama) {
-		return bentukUsahaService.getByQueryNama(nama)
+		return bentukUsahaService.getByNama(nama)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
@@ -76,7 +76,7 @@ public class BentukUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return bentukUsahaService.getByQueryNamaAndPage(nama, page, pageSize)
+		return bentukUsahaService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
@@ -87,7 +87,7 @@ public class BentukUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByKelompokBentukUsaha(@QueryParam("idKelompok") String idKelompok) {
-		return bentukUsahaService.getByKelompokBentukUsaha(idKelompok)
+		return bentukUsahaService.getByPelakuUsaha(idKelompok)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
@@ -99,7 +99,7 @@ public class BentukUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByKelompokBentukUsahaAndPage(@QueryParam("idKelompok") String idKelompok,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return bentukUsahaService.getByKelompokBentukUsahaAndPage(idKelompok, page, pageSize)
+		return bentukUsahaService.getByPelakuUsahaAndPage(idKelompok, page, pageSize)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
@@ -110,7 +110,7 @@ public class BentukUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByKelompokBentukUsahaAndNama(@QueryParam("idKelompok") String idKelompok, @QueryParam("nama") String nama) {
-		return bentukUsahaService.getByKelompokBentukUsahaAndNama(idKelompok, nama)
+		return bentukUsahaService.getByPelakuUsahaAndNama(idKelompok, nama)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());
@@ -122,7 +122,7 @@ public class BentukUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BentukUsahaDTO> getByKelompokBentukUsahaAndNamaAndPage(@QueryParam("idKelompok") String idKelompok,
 			@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return bentukUsahaService.getByKelompokBentukUsahaAndNamaAndPage(idKelompok, nama, page, pageSize)
+		return bentukUsahaService.getByPelakuUsahaAndNamaAndPage(idKelompok, nama, page, pageSize)
 				.stream()
 				.map(d -> new BentukUsahaDTO(d))
 				.collect(Collectors.toList());

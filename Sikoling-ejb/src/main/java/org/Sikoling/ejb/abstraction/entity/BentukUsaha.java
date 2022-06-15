@@ -9,7 +9,7 @@ public class BentukUsaha implements Serializable{
 	private final String id;
 	private final String nama;
 	private final String singkatan;
-	private final String idKelompok;
+	private final String idJenisPelakuUsaha;
 	
 	
 	public BentukUsaha(String id) {
@@ -17,7 +17,7 @@ public class BentukUsaha implements Serializable{
 		this.id = id;
 		this.nama = null;
 		this.singkatan = null;
-		this.idKelompok = null;
+		this.idJenisPelakuUsaha = null;
 	}
 	
 	public BentukUsaha(String id, String nama) {
@@ -25,19 +25,19 @@ public class BentukUsaha implements Serializable{
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = null;
-		this.idKelompok = null;
+		this.idJenisPelakuUsaha = null;
 	}
 	
-	public BentukUsaha(String id, String nama, String singkatan, String idKelompok) {
+	public BentukUsaha(String id, String nama, String singkatan, String idJenisPelakuUsaha) {
 		super();
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;
-		this.idKelompok = idKelompok;
+		this.idJenisPelakuUsaha = idJenisPelakuUsaha;
 	}
 	
-	public String getIdKelompok() {
-		return idKelompok;
+	public String getIdJenisPelakuUsaha() {
+		return idJenisPelakuUsaha;
 	}
 
 	public String getId() {

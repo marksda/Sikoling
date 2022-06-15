@@ -5,8 +5,6 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
-import org.Sikoling.ejb.main.repository.kelompokbentukusaha.JenisPelakuUsahaData;
-
 import jakarta.persistence.EntityManager;
 
 public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
@@ -54,7 +52,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 
 	@Override
-	public List<BentukUsaha> getByQueryNama(String nama) {
+	public List<BentukUsaha> getByNama(String nama) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("BentukUsahaData.findAllByQueryNama", BentukUsahaData.class)
 				.setParameter("nama", nama)
@@ -65,7 +63,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 
 	@Override
-	public List<BentukUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<BentukUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("BentukUsahaData.findAllByQueryNama", BentukUsahaData.class)
 				.setParameter("nama", nama)
@@ -78,7 +76,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 	
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsaha(String idKelompokBentukUsaha) {
+	public List<BentukUsaha> getByPelakuUsaha(String idKelompokBentukUsaha) {
 		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
 				.setParameter("idKelompok", idKelompokBentukUsaha)
 				.getResultList()
@@ -88,7 +86,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 	
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsahaAndPage(String idKelompokBentukUsaha, Integer page,
+	public List<BentukUsaha> getByPelakuUsahaAndPage(String idKelompokBentukUsaha, Integer page,
 			Integer pageSize) {
 		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
 				.setParameter("idKelompok", idKelompokBentukUsaha)
@@ -101,7 +99,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 	
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsahaAndNama(String idKelompokBentukUsaha, String nama) {
+	public List<BentukUsaha> getByPelakuUsahaAndNama(String idKelompokBentukUsaha, String nama) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
 				.setParameter("nama", nama)
@@ -113,7 +111,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	}
 	
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
+	public List<BentukUsaha> getByPelakuUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
 			Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
@@ -132,15 +130,13 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 		bentukUsahaData.setId(t.getId());
 		bentukUsahaData.setNama(t.getNama());
 		bentukUsahaData.setSingkatan(t.getSingkatan());
-		JenisPelakuUsahaData kelompokBentukUsahaData = new JenisPelakuUsahaData();
-		kelompokBentukUsahaData.setId(t.getIdKelompok());
-		bentukUsahaData.setKelompokBentukUsaha(kelompokBentukUsahaData);
+		bentukUsahaData.setIdPelakuUsaha(t.getIdJenisPelakuUsaha());
 		
 		return bentukUsahaData;
 	}
 	
 	private BentukUsaha convertBentukUsahaDataToBentukUsaha(BentukUsahaData d) {
-		return new BentukUsaha(d.getId(), d.getNama(), d.getSingkatan(), d.getKelompokBentukUsaha().getId());
+		return new BentukUsaha(d.getId(), d.getNama(), d.getSingkatan(), d.getIdPelakuUsaha());
 	}
 
 }

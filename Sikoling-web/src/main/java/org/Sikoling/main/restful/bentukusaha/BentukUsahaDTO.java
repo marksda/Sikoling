@@ -21,7 +21,7 @@ public class BentukUsahaDTO implements Serializable {
 		this.id = bentukUsaha.getId();
 		this.nama = bentukUsaha.getNama();
 		this.singkatan = bentukUsaha.getSingkatan();
-		this.idKelompok = bentukUsaha.getIdKelompok();
+		this.idKelompok = bentukUsaha.getIdJenisPelakuUsaha();
 	}	
 
 	public BentukUsahaDTO(String id, String nama, String singkatan, String idKelompok) {

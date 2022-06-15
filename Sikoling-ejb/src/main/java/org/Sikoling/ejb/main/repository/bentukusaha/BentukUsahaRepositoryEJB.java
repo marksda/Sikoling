@@ -39,39 +39,39 @@ public class BentukUsahaRepositoryEJB implements IBentukUsahaRepository {
 	}
 
 	@Override
-	public List<BentukUsaha> getByQueryNama(String nama) {
-		return bentukUsahaRepository.getByQueryNama(nama);
+	public List<BentukUsaha> getByNama(String nama) {
+		return bentukUsahaRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<BentukUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return bentukUsahaRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<BentukUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return bentukUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsaha(String idKelompokBentukUsaha) {
-		return bentukUsahaRepository.getByKelompokBentukUsaha(idKelompokBentukUsaha);
+	public List<BentukUsaha> getByPelakuUsaha(String idKelompokBentukUsaha) {
+		return bentukUsahaRepository.getByPelakuUsaha(idKelompokBentukUsaha);
 	}
 	
 
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsahaAndPage(String idKelompokBentukUsaha, Integer page,
+	public List<BentukUsaha> getByPelakuUsahaAndPage(String idKelompokBentukUsaha, Integer page,
 			Integer pageSize) {
-		return bentukUsahaRepository.getByKelompokBentukUsahaAndPage(idKelompokBentukUsaha, page, pageSize);
+		return bentukUsahaRepository.getByPelakuUsahaAndPage(idKelompokBentukUsaha, page, pageSize);
 	}
 	
 
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsahaAndNama(String idKelompokBentukUsaha, String nama) {
-		return bentukUsahaRepository.getByKelompokBentukUsahaAndNama(idKelompokBentukUsaha, nama);
+	public List<BentukUsaha> getByPelakuUsahaAndNama(String idKelompokBentukUsaha, String nama) {
+		return bentukUsahaRepository.getByPelakuUsahaAndNama(idKelompokBentukUsaha, nama);
 	}
 	
 
 	@Override
-	public List<BentukUsaha> getByKelompokBentukUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
+	public List<BentukUsaha> getByPelakuUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
 			Integer page, Integer pageSize) {
-		return bentukUsahaRepository.getByKelompokBentukUsahaAndNamaAndPage(idKelompokBentukUsaha, nama, page, pageSize);
+		return bentukUsahaRepository.getByPelakuUsahaAndNamaAndPage(idKelompokBentukUsaha, nama, page, pageSize);
 	}
 
 }
