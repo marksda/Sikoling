@@ -64,7 +64,7 @@ public class BidangUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BidangUsahaDTO> getByQueryNama(@QueryParam("nama") String nama) {
-		return bidangUsahaService.getByQueryNama(nama)
+		return bidangUsahaService.getByNama(nama)
 				.stream()
 				.map(d -> new BidangUsahaDTO(d))
 				.collect(Collectors.toList());
@@ -76,7 +76,7 @@ public class BidangUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<BidangUsahaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return bidangUsahaService.getByQueryNamaAndPage(nama, page, pageSize)
+		return bidangUsahaService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(d -> new BidangUsahaDTO(d))
 				.collect(Collectors.toList());

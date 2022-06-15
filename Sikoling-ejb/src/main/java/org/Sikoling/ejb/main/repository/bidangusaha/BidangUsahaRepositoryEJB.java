@@ -39,13 +39,13 @@ public class BidangUsahaRepositoryEJB implements IBidangUsahaRepository {
 	}
 
 	@Override
-	public List<BidangUsaha> getByQueryNama(String nama) {
-		return bidangUsahaRepository.getByQueryNama(nama);
+	public List<BidangUsaha> getByNama(String nama) {
+		return bidangUsahaRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<BidangUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return bidangUsahaRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<BidangUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return bidangUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

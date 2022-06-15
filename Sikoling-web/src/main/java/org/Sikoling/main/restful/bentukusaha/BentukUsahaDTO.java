@@ -11,7 +11,7 @@ public class BentukUsahaDTO implements Serializable {
 	private String id;
 	private String nama;
 	private String singkatan;
-	private String idKelompok;
+	private String idJenisPelakuUsaha;
 	
 	public BentukUsahaDTO() {
 
@@ -21,58 +21,68 @@ public class BentukUsahaDTO implements Serializable {
 		this.id = bentukUsaha.getId();
 		this.nama = bentukUsaha.getNama();
 		this.singkatan = bentukUsaha.getSingkatan();
-		this.idKelompok = bentukUsaha.getIdJenisPelakuUsaha();
+		this.idJenisPelakuUsaha = bentukUsaha.getIdJenisPelakuUsaha();
 	}	
 
-	public BentukUsahaDTO(String id, String nama, String singkatan, String idKelompok) {
+	public BentukUsahaDTO(String id, String nama, String singkatan, String idJenisPelakuUsaha) {
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;
-		this.idKelompok = idKelompok;
+		this.idJenisPelakuUsaha = idJenisPelakuUsaha;
 	}
 
 	public String getId() {
 		return id;
 	}
 
+	
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 
 	public String getNama() {
 		return nama;
 	}
+	
 
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
 	
+	
 	public String getSingkatan() {
 		return singkatan;
 	}
+	
 
 	public void setSingkatan(String singkatan) {
 		this.singkatan = singkatan;
 	}
+	
 
-	public String getIdKelompok() {
-		return idKelompok;
+	public String getIdJenisPelakuUsaha() {
+		return idJenisPelakuUsaha;
 	}
+	
 
-	public void setIdKelompok(String idKelompok) {
-		this.idKelompok = idKelompok;
+	public void setIdJenisPelakuUsaha(String idJenisPelakuUsaha) {
+		this.idJenisPelakuUsaha = idJenisPelakuUsaha;
 	}
+	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
+	
 	public int hashCode() {
-		int hash = 13;
-        hash = 27 * hash + Objects.hashCode(this.id);
-        hash = 27 * hash + Objects.hashCode(this.nama);
+		int hash = 11;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -100,13 +110,15 @@ public class BentukUsahaDTO implements Serializable {
 
         return true;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "BentukUsahaDTO{" + "id=" + id + ", nama=" + nama + '}';	  
 	}
+	
 
 	public BentukUsaha toBentukUsaha() {
-		return new BentukUsaha(id, nama, singkatan, idKelompok);
+		return new BentukUsaha(id, nama, singkatan, idJenisPelakuUsaha);
 	}
 }

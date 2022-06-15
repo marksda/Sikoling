@@ -9,6 +9,6 @@ public interface IBidangUsahaService {
 	BidangUsaha update(BidangUsaha bidangUsaha);
 	List<BidangUsaha> getAll();
 	List<BidangUsaha> getAllByPage(Integer page, Integer pageSize);
-	List<BidangUsaha> getByQueryNama(String nama);
-	List<BidangUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);	
+	List<BidangUsaha> getByNama(String nama);
+	List<BidangUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize);	
 }

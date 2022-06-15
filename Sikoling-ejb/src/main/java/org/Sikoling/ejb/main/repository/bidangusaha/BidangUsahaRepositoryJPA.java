@@ -52,9 +52,9 @@ public class BidangUsahaRepositoryJPA implements IBidangUsahaRepository {
 	}
 
 	@Override
-	public List<BidangUsaha> getByQueryNama(String nama) {
+	public List<BidangUsaha> getByNama(String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("BidangUsahaData.findAllByQueryNama", BidangUsahaData.class)
+		return entityManager.createNamedQuery("BidangUsahaData.findByNama", BidangUsahaData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -63,9 +63,9 @@ public class BidangUsahaRepositoryJPA implements IBidangUsahaRepository {
 	}
 
 	@Override
-	public List<BidangUsaha> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<BidangUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("BidangUsahaData.findAllByQueryNama", BidangUsahaData.class)
+		return entityManager.createNamedQuery("BidangUsahaData.findByNama", BidangUsahaData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)

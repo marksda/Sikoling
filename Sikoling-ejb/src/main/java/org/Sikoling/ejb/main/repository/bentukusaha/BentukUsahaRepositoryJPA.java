@@ -54,7 +54,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	@Override
 	public List<BentukUsaha> getByNama(String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("BentukUsahaData.findAllByQueryNama", BentukUsahaData.class)
+		return entityManager.createNamedQuery("BentukUsahaData.findByNama", BentukUsahaData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -65,7 +65,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	@Override
 	public List<BentukUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("BentukUsahaData.findAllByQueryNama", BentukUsahaData.class)
+		return entityManager.createNamedQuery("BentukUsahaData.findByNama", BentukUsahaData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -77,7 +77,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	
 	@Override
 	public List<BentukUsaha> getByPelakuUsaha(String idKelompokBentukUsaha) {
-		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+		return entityManager.createNamedQuery("BentukUsahaData.findByPelakuUsaha", BentukUsahaData.class)
 				.setParameter("idKelompok", idKelompokBentukUsaha)
 				.getResultList()
 				.stream()
@@ -88,7 +88,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	@Override
 	public List<BentukUsaha> getByPelakuUsahaAndPage(String idKelompokBentukUsaha, Integer page,
 			Integer pageSize) {
-		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+		return entityManager.createNamedQuery("BentukUsahaData.findByPelakuUsaha", BentukUsahaData.class)
 				.setParameter("idKelompok", idKelompokBentukUsaha)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -101,7 +101,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	@Override
 	public List<BentukUsaha> getByPelakuUsahaAndNama(String idKelompokBentukUsaha, String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+		return entityManager.createNamedQuery("BentukUsahaData.findByPelakuUsahaAndNama", BentukUsahaData.class)
 				.setParameter("nama", nama)
 				.setParameter("idKelompok", idKelompokBentukUsaha)
 				.getResultList()
@@ -114,7 +114,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 	public List<BentukUsaha> getByPelakuUsahaAndNamaAndPage(String idKelompokBentukUsaha, String nama,
 			Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("BentukUsahaData.findAllByKelompokUsaha", BentukUsahaData.class)
+		return entityManager.createNamedQuery("BentukUsahaData.findByPelakuUsahaAndNama", BentukUsahaData.class)
 				.setParameter("nama", nama)
 				.setParameter("idKelompok", idKelompokBentukUsaha)
 				.setMaxResults(pageSize)
