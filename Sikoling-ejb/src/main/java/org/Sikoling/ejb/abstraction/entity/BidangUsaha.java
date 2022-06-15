@@ -29,8 +29,8 @@ public class BidangUsaha implements Serializable {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.nama);
+		int hash = 71;
+		hash = 51 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
 

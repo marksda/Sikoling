@@ -35,13 +35,13 @@ public class DesaService implements IDesaService {
 	}
 
 	@Override
-	public List<Desa> getByQueryNama(String nama) {
-		return desaRepository.getByQueryNama(nama);
+	public List<Desa> getByNama(String nama) {
+		return desaRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Desa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return desaRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Desa> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return desaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
@@ -55,14 +55,14 @@ public class DesaService implements IDesaService {
 	}
 
 	@Override
-	public List<Desa> getByKecamatanAndQueryNama(String idKecamatan, String nama) {
-		return desaRepository.getByKecamatanAndQueryNama(idKecamatan, nama);
+	public List<Desa> getByKecamatanAndNama(String idKecamatan, String nama) {
+		return desaRepository.getByKecamatanAndNama(idKecamatan, nama);
 	}
 
 	@Override
-	public List<Desa> getByKecamatanAndQueryNamaAndPage(String idKecamatan, String nama, Integer page,
+	public List<Desa> getByKecamatanAndNamaAndPage(String idKecamatan, String nama, Integer page,
 			Integer pageSize) {
-		return desaRepository.getByKecamatanAndQueryNamaAndPage(idKecamatan, nama, page, pageSize);
+		return desaRepository.getByKecamatanAndNamaAndPage(idKecamatan, nama, page, pageSize);
 	}
 
 }

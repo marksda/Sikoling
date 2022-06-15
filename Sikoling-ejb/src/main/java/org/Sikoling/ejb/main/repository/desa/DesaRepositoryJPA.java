@@ -52,9 +52,9 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	}
 
 	@Override
-	public List<Desa> getByQueryNama(String nama) {
+	public List<Desa> getByNama(String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findByQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByNama", DesaData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -63,9 +63,9 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	}
 
 	@Override
-	public List<Desa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Desa> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findByQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByNama", DesaData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -98,9 +98,9 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	}
 
 	@Override
-	public List<Desa> getByKecamatanAndQueryNama(String idKecamatan, String nama) {
+	public List<Desa> getByKecamatanAndNama(String idKecamatan, String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findByKecamatanAndQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByKecamatanAndNama", DesaData.class)
 				.setParameter("nama", nama)
 				.setParameter("idKecamatan", idKecamatan)
 				.getResultList()
@@ -110,10 +110,10 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	}
 
 	@Override
-	public List<Desa> getByKecamatanAndQueryNamaAndPage(String idKecamatan, String nama, Integer page,
+	public List<Desa> getByKecamatanAndNamaAndPage(String idKecamatan, String nama, Integer page,
 			Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("DesaData.findByKecamatanAndQueryNama", DesaData.class)
+		return entityManager.createNamedQuery("DesaData.findByKecamatanAndNama", DesaData.class)
 				.setParameter("nama", nama)
 				.setParameter("idKecamatan", idKecamatan)
 				.setMaxResults(pageSize)

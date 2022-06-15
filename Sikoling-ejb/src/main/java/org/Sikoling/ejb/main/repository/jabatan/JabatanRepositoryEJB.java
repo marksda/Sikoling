@@ -39,13 +39,13 @@ public class JabatanRepositoryEJB implements IJabatanRepository {
 	}
 
 	@Override
-	public List<Jabatan> getByQueryNama(String nama) {
-		return jabatanRepositoryJPA.getByQueryNama(nama);
+	public List<Jabatan> getByNama(String nama) {
+		return jabatanRepositoryJPA.getByNama(nama);
 	}
 
 	@Override
-	public List<Jabatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return jabatanRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Jabatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return jabatanRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

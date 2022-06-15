@@ -64,8 +64,8 @@ public class DesaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<DesaDTO> getByQueryNama(@QueryParam("nama") String nama) {
-		return desaService.getByQueryNama(nama)
+	public List<DesaDTO> getByNama(@QueryParam("nama") String nama) {
+		return desaService.getByNama(nama)
 				.stream()
 				.map(d -> new DesaDTO(d))
 				.collect(Collectors.toList());
@@ -75,9 +75,9 @@ public class DesaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<DesaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
+	public List<DesaDTO> getByQueryAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return desaService.getByQueryNamaAndPage(nama, page, pageSize)
+		return desaService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(d -> new DesaDTO(d))
 				.collect(Collectors.toList());
@@ -110,8 +110,8 @@ public class DesaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<DesaDTO> getByKecamatanAndQueryNama(@QueryParam("idKecamatan") String idKecamatan, @QueryParam("nama") String nama) {
-		return desaService.getByKecamatanAndQueryNama(idKecamatan, nama)
+	public List<DesaDTO> getByKecamatanAndNama(@QueryParam("idKecamatan") String idKecamatan, @QueryParam("nama") String nama) {
+		return desaService.getByKecamatanAndNama(idKecamatan, nama)
 				.stream()
 				.map(d -> new DesaDTO(d))
 				.collect(Collectors.toList());
@@ -121,9 +121,9 @@ public class DesaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<DesaDTO> getByKecamatanAndQueryNama(@QueryParam("idKecamatan") String idKecamatan, @QueryParam("nama") String nama,
+	public List<DesaDTO> getByKecamatanAndNama(@QueryParam("idKecamatan") String idKecamatan, @QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return desaService.getByKecamatanAndQueryNamaAndPage(idKecamatan, nama, page, pageSize)
+		return desaService.getByKecamatanAndNamaAndPage(idKecamatan, nama, page, pageSize)
 				.stream()
 				.map(d -> new DesaDTO(d))
 				.collect(Collectors.toList());

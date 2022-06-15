@@ -52,9 +52,9 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 	}
 
 	@Override
-	public List<Jabatan> getByQueryNama(String nama) {
+	public List<Jabatan> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("JabatanData.findAllByQueryNama", JabatanData.class)
+		return entityManager.createNamedQuery("JabatanData.findByNama", JabatanData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -63,9 +63,9 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 	}
 
 	@Override
-	public List<Jabatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Jabatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("JabatanData.findAllByQueryNama", JabatanData.class)
+		return entityManager.createNamedQuery("JabatanData.findByNama", JabatanData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)

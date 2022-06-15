@@ -56,7 +56,7 @@ public class DesaDTO implements Serializable {
 	}
 	
 	public int hashCode() {
-		int hash = 7;
+		int hash = 19;
         hash = 41 * hash + Objects.hashCode(this.id);
         hash = 41 * hash + Objects.hashCode(this.nama);
         hash = 41 * hash + Objects.hashCode(this.idKecamatan);

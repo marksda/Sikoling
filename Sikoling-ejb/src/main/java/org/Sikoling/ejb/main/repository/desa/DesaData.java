@@ -8,9 +8,9 @@ import jakarta.persistence.*;
 @Table(name="master.tbl_desa")
 @NamedQueries({
 @NamedQuery(name="DesaData.findAll", query="SELECT d FROM DesaData d"),
-@NamedQuery(name="DesaData.findByQueryNama", query="SELECT d FROM DesaData d WHERE d.nama ILIKE :nama"),
+@NamedQuery(name="DesaData.findByNama", query="SELECT d FROM DesaData d WHERE d.nama ILIKE :nama"),
 @NamedQuery(name="DesaData.findByKecamatan", query="SELECT d FROM DesaData d WHERE d.idKecamatan = :idKecamatan"),
-@NamedQuery(name="DesaData.findByKecamatanAndQueryNama", query="SELECT d FROM DesaData d WHERE d.nama ILIKE :nama AND d.idKecamatan = :idKecamatan")})
+@NamedQuery(name="DesaData.findByKecamatanAndNama", query="SELECT d FROM DesaData d WHERE d.nama ILIKE :nama AND d.idKecamatan = :idKecamatan")})
 public class DesaData implements Serializable {
 	private static final long serialVersionUID = -5126550971303462658L;
 

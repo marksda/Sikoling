@@ -64,8 +64,8 @@ public class JabatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<JabatanDTO> getAllByPage(@QueryParam("nama") String nama) {
-		return jabatanService.getByQueryNama(nama)
+	public List<JabatanDTO> getByNama(@QueryParam("nama") String nama) {
+		return jabatanService.getByNama(nama)
 				.stream()
 				.map(t -> new JabatanDTO(t))
 				.collect(Collectors.toList());
@@ -75,9 +75,9 @@ public class JabatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<JabatanDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
+	public List<JabatanDTO> getByNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return jabatanService.getByQueryNamaAndPage(nama, page, pageSize)
+		return jabatanService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(t -> new JabatanDTO(t))
 				.collect(Collectors.toList());

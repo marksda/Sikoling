@@ -35,13 +35,13 @@ public class JabatanService implements IJabatanService {
 	}
 
 	@Override
-	public List<Jabatan> getByQueryNama(String nama) {
-		return jabatanRepository.getByQueryNama(nama);
+	public List<Jabatan> getByNama(String nama) {
+		return jabatanRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Jabatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return jabatanRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Jabatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return jabatanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

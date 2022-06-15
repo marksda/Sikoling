@@ -9,6 +9,6 @@ public interface IJabatanService {
 	Jabatan update(Jabatan jabatan);
 	List<Jabatan> getAll();
 	List<Jabatan> getAllByPage(Integer page, Integer pageSize);
-	List<Jabatan> getByQueryNama(String nama);
-	List<Jabatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<Jabatan> getByNama(String nama);
+	List<Jabatan> getByNamaAndPage(String nama, Integer page, Integer pageSize);
 }
