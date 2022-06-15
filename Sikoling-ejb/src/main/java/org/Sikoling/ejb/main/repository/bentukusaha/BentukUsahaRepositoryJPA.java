@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
-import org.Sikoling.ejb.main.repository.kelompokbentukusaha.KelompokBentukUsahaData;
+import org.Sikoling.ejb.main.repository.kelompokbentukusaha.JenisPelakuUsahaData;
 
 import jakarta.persistence.EntityManager;
 
@@ -132,7 +132,7 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 		bentukUsahaData.setId(t.getId());
 		bentukUsahaData.setNama(t.getNama());
 		bentukUsahaData.setSingkatan(t.getSingkatan());
-		KelompokBentukUsahaData kelompokBentukUsahaData = new KelompokBentukUsahaData();
+		JenisPelakuUsahaData kelompokBentukUsahaData = new JenisPelakuUsahaData();
 		kelompokBentukUsahaData.setId(t.getIdKelompok());
 		bentukUsahaData.setKelompokBentukUsaha(kelompokBentukUsahaData);
 		

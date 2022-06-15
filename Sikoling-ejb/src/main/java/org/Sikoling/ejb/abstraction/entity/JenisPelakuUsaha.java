@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class KelompokBentukUsaha implements Serializable {
+public class JenisPelakuUsaha implements Serializable {
 
 	private static final long serialVersionUID = -7606706066333265936L;
 	private final String id;
 	private final String nama;
 	private final List<BentukUsaha> daftarBentukUsaha;
 	
-	public KelompokBentukUsaha(String id, String nama, List<BentukUsaha> daftarBentukUsaha) {
+	public JenisPelakuUsaha(String id, String nama, List<BentukUsaha> daftarBentukUsaha) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -51,7 +51,7 @@ public class KelompokBentukUsaha implements Serializable {
             return false;
         }
         
-        final KelompokBentukUsaha other = (KelompokBentukUsaha) obj;
+        final JenisPelakuUsaha other = (JenisPelakuUsaha) obj;
         
         if (!this.nama.equals(other.nama)) {
             return false;

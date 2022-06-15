@@ -9,9 +9,9 @@ import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 
 
 @Entity
-@Table(name="master.tbl_kelompok_bentuk_usaha")
-@NamedQuery(name="KelompokBentukUsahaData.findAll", query="SELECT k FROM KelompokBentukUsahaData k")
-public class KelompokBentukUsahaData implements Serializable {
+@Table(name="master.tbl_jenis_pelaku_usaha")
+@NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT k FROM JenisPelakuUsahaData k")
+public class JenisPelakuUsahaData implements Serializable {
 	private static final long serialVersionUID = -8189342523798654485L;
 
 	@Id
@@ -23,7 +23,7 @@ public class KelompokBentukUsahaData implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kelompok_bentuk_usaha", fetch = FetchType.EAGER)
 	private List<BentukUsahaData> daftarBentukUsahaData;
 
-	public KelompokBentukUsahaData() {
+	public JenisPelakuUsahaData() {
 	}
 
 	public String getId() {

@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.bentukusaha;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
-import org.Sikoling.ejb.main.repository.kelompokbentukusaha.KelompokBentukUsahaData;
+import org.Sikoling.ejb.main.repository.kelompokbentukusaha.JenisPelakuUsahaData;
 
 
 @Entity
@@ -23,7 +23,7 @@ public class BentukUsahaData implements Serializable {
 	@Column(name="kelompok_bentuk_usaha")
 	@JoinColumn(name = "kelompok_bentuk_usaha", referencedColumnName = "id")
 	@ManyToOne(optional = false)
-	private KelompokBentukUsahaData kelompokBentukUsaha;
+	private JenisPelakuUsahaData kelompokBentukUsaha;
 
 	@Column(name="nama")
 	private String nama;
@@ -42,11 +42,11 @@ public class BentukUsahaData implements Serializable {
 		this.id = id;
 	}
 
-	public KelompokBentukUsahaData getKelompokBentukUsaha() {
+	public JenisPelakuUsahaData getKelompokBentukUsaha() {
 		return this.kelompokBentukUsaha;
 	}
 
-	public void setKelompokBentukUsaha(KelompokBentukUsahaData kelompokBentukUsaha) {
+	public void setKelompokBentukUsaha(JenisPelakuUsahaData kelompokBentukUsaha) {
 		this.kelompokBentukUsaha = kelompokBentukUsaha;
 	}
 
