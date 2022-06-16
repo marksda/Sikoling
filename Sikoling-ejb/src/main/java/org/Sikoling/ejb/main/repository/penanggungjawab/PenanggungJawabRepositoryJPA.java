@@ -66,9 +66,9 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 	}
 
 	@Override
-	public List<PenanggungJawab> getByQueryNama(String nama) {
+	public List<PenanggungJawab> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PenanggungJawabData.findAllByQueryNama", PenanggungJawabData.class)
+		return entityManager.createNamedQuery("PenanggungJawabData.findByNama", PenanggungJawabData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -77,9 +77,9 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 	}
 
 	@Override
-	public List<PenanggungJawab> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<PenanggungJawab> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PenanggungJawabData.findAllByQueryNama", PenanggungJawabData.class)
+		return entityManager.createNamedQuery("PenanggungJawabData.findByNama", PenanggungJawabData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -89,55 +89,6 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 				.collect(Collectors.toList());
 	}
 
-	@Override
-	public List<PenanggungJawab> getAllByPemilik(String idPemilik) {
-		return entityManager.createNamedQuery("PenanggungJawabData.findAllByPemilik", PenanggungJawabData.class)
-				.setParameter("idPemilik", idPemilik)
-				.getResultList()
-				.stream()
-				.map(t -> convertPenanggungJawabDataToPenanggungJawab(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndPage(String idPemilik, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PenanggungJawabData.findAllByPemilik", PenanggungJawabData.class)
-				.setParameter("idPemilik", idPemilik)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertPenanggungJawabDataToPenanggungJawab(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndNama(String idPemilik, String nama) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PenanggungJawabData.findAllByPemilikANDQueryNama", PenanggungJawabData.class)
-				.setParameter("nama", nama)
-				.setParameter("idPemilik", idPemilik)
-				.getResultList()
-				.stream()
-				.map(t -> convertPenanggungJawabDataToPenanggungJawab(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndNamaAndPage(String idPemilik, String nama, Integer page,
-			Integer pageSize) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PenanggungJawabData.findAllByPemilikANDQueryNama", PenanggungJawabData.class)
-				.setParameter("nama", nama)
-				.setParameter("idPemilik", idPemilik)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertPenanggungJawabDataToPenanggungJawab(t))
-				.collect(Collectors.toList());
-	}
-	
 	private PenanggungJawabData convertPenanggungJawabToPenanggungJawabData(PenanggungJawab t) {
 		PenanggungJawabData penanggungJawabData = new PenanggungJawabData();
 		DesaData desaData = new DesaData();
@@ -164,7 +115,6 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 		penanggungJawabData.setNomorHandphone(t.getNoHandphone());
 		penanggungJawabData.setNomorIdentitas(t.getNoIdentitas());
 		penanggungJawabData.setSex(jenisKelaminData);
-		penanggungJawabData.setPemilik(t.getIdPemilik());
 		
 		return penanggungJawabData;
 	}
@@ -184,7 +134,7 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 		JenisKelaminData sexData = d.getSex();
 		JenisKelamin sex = new JenisKelamin(sexData.getId());
 		PenanggungJawab penanggungJawab = new PenanggungJawab(d.getId(), d.getNama(), alamat, 
-				jabatan, sex, d.getNomorIdentitas(), d.getNomorHandphone(), d.getPemilik());
+				jabatan, sex, d.getNomorIdentitas(), d.getNomorHandphone());
 		
 		return penanggungJawab;
 				

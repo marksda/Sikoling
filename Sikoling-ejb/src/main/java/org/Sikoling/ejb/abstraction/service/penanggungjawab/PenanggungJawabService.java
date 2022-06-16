@@ -35,34 +35,13 @@ public class PenanggungJawabService implements IPenanggungJawabService {
 	}
 
 	@Override
-	public List<PenanggungJawab> getByQueryNama(String nama) {
-		return penanggungJawabRepository.getByQueryNama(nama);
+	public List<PenanggungJawab> getByNama(String nama) {
+		return penanggungJawabRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<PenanggungJawab> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return penanggungJawabRepository.getByQueryNamaAndPage(nama, page, pageSize);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilik(String idPemilik) {
-		return penanggungJawabRepository.getAllByPemilik(idPemilik);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndPage(String idPemilik, Integer page, Integer pageSize) {
-		return penanggungJawabRepository.getAllByPemilikAndPage(idPemilik, page, pageSize);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndNama(String idPemilik, String nama) {
-		return penanggungJawabRepository.getAllByPemilikAndNama(idPemilik, nama);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndNamaAndPage(String idPemilik, String nama, Integer page,
-			Integer pageSize) {
-		return penanggungJawabRepository.getAllByPemilikAndNamaAndPage(idPemilik, nama, page, pageSize);
+	public List<PenanggungJawab> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return penanggungJawabRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

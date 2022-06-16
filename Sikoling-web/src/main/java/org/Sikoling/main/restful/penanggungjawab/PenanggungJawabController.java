@@ -65,7 +65,7 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PenanggungJawabDTO> getByQueryNama(@QueryParam("nama") String nama) {
-		return penanggungJawabService.getByQueryNama(nama)
+		return penanggungJawabService.getByNama(nama)
 				.stream()
 				.map(t -> new PenanggungJawabDTO(t))
 				.collect(Collectors.toList());
@@ -76,55 +76,10 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PenanggungJawabDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return penanggungJawabService.getByQueryNamaAndPage(nama, page, pageSize)
+		return penanggungJawabService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(t -> new PenanggungJawabDTO(t))
 				.collect(Collectors.toList());
 	}
-	
-	@Path("pemilik")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PenanggungJawabDTO> getAllByPemilik(@QueryParam("idPemilik") String idPemilik) {
-		return penanggungJawabService.getAllByPemilik(idPemilik)
-				.stream()
-				.map(t -> new PenanggungJawabDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("pemilik/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PenanggungJawabDTO> getAllByPemilikAndPage(@QueryParam("idPemilik") String idPemilik, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return penanggungJawabService.getAllByPemilikAndPage(idPemilik, page, pageSize)
-				.stream()
-				.map(t -> new PenanggungJawabDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("pemilik/nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PenanggungJawabDTO> getAllByPemilikAndNama(@QueryParam("idPemilik") String idPemilik, @QueryParam("nama") String nama) {
-		return penanggungJawabService.getAllByPemilikAndNama(idPemilik, nama)
-				.stream()
-				.map(t -> new PenanggungJawabDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("pemilik/nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PenanggungJawabDTO> getAllByPemilikAndNamaAndPage(@QueryParam("idPemilik") String idPemilik, 
-			@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return penanggungJawabService.getAllByPemilikAndNamaAndPage(idPemilik, nama, page, pageSize)
-				.stream()
-				.map(t -> new PenanggungJawabDTO(t))
-				.collect(Collectors.toList());
-	}
-	
+		
 }

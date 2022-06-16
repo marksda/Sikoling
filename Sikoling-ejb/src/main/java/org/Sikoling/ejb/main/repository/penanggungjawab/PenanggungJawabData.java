@@ -15,9 +15,7 @@ import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 @Table(name="master.tbl_penanggung_jawab")
 @NamedQueries({
 @NamedQuery(name="PenanggungJawabData.findAll", query="SELECT p FROM PenanggungJawabData p"),
-@NamedQuery(name="PenanggungJawabData.findAllByQueryNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama ILIKE :nama"),
-@NamedQuery(name="PenanggungJawabData.findAllByPemilik", query="SELECT p FROM PenanggungJawabData p WHERE p.pemilik = :idPemilik"),
-@NamedQuery(name="PenanggungJawabData.findAllByPemilikANDQueryNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama ILIKE :nama AND p.pemilik = :idPemilik")
+@NamedQuery(name="PenanggungJawabData.findByNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama ILIKE :nama"),
 })
 public class PenanggungJawabData implements Serializable {
 	private static final long serialVersionUID = 6630651928270252860L;
@@ -67,9 +65,6 @@ public class PenanggungJawabData implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
 	private JenisKelaminData sex;
 	
-	@Column(name="pemilik")
-	private String pemilik;
-
 	public PenanggungJawabData() {
 	}
 
@@ -161,12 +156,4 @@ public class PenanggungJawabData implements Serializable {
 		this.sex = sex;
 	}
 
-
-	public String getPemilik() {
-		return pemilik;
-	}
-
-	public void setPemilik(String pemilik) {
-		this.pemilik = pemilik;
-	}
 }

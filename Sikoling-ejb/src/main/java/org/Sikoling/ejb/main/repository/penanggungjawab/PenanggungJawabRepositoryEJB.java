@@ -33,34 +33,13 @@ public class PenanggungJawabRepositoryEJB implements IPenanggungJawabRepository 
 	}
 
 	@Override
-	public List<PenanggungJawab> getByQueryNama(String nama) {
-		return penanggungJawabRepositoryJPA.getByQueryNama(nama);
+	public List<PenanggungJawab> getByNama(String nama) {
+		return penanggungJawabRepositoryJPA.getByNama(nama);
 	}
 
 	@Override
-	public List<PenanggungJawab> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return penanggungJawabRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilik(String idPemilik) {
-		return penanggungJawabRepositoryJPA.getAllByPemilik(idPemilik);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndPage(String idPemilik, Integer page, Integer pageSize) {
-		return penanggungJawabRepositoryJPA.getAllByPemilik(idPemilik);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndNama(String idPemilik, String nama) {
-		return penanggungJawabRepositoryJPA.getAllByPemilikAndNama(idPemilik, nama);
-	}
-
-	@Override
-	public List<PenanggungJawab> getAllByPemilikAndNamaAndPage(String idPemilik, String nama, Integer page,
-			Integer pageSize) {
-		return penanggungJawabRepositoryJPA.getAllByPemilikAndNamaAndPage(idPemilik, nama, page, pageSize);
+	public List<PenanggungJawab> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return penanggungJawabRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

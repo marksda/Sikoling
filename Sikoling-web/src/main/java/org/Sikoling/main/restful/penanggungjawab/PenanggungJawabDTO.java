@@ -15,9 +15,7 @@ public class PenanggungJawabDTO implements Serializable {
 	private JabatanDTO jabatan;
 	private JenisKelaminDTO jenisKelamin;
 	private String noIdentitas;
-	private String noHandphone;
-	private String idPemilik;
-	
+	private String noHandphone;	
 	
 	public PenanggungJawabDTO() {
 		
@@ -26,16 +24,15 @@ public class PenanggungJawabDTO implements Serializable {
 	public PenanggungJawabDTO(PenanggungJawab penanggungJawab) {
 		this.id = penanggungJawab.getId();
 		this.nama = penanggungJawab.getNama();
-//		this.alamat = new Al
+		this.alamat = new AlamatPenanggungJawabDTO(penanggungJawab.getAlamat());
 		this.jabatan = new JabatanDTO(penanggungJawab.getJabatan());
 		this.jenisKelamin = new JenisKelaminDTO(penanggungJawab.getJenisKelamin());
 		this.noIdentitas = penanggungJawab.getNoIdentitas();
 		this.noHandphone = penanggungJawab.getNoHandphone();
-		this.idPemilik = penanggungJawab.getIdPemilik();
 	}
 	
 	public PenanggungJawabDTO(String id, String nama, AlamatPenanggungJawabDTO alamat, JabatanDTO jabatan,
-			JenisKelaminDTO jenisKelamin, String noIdentitas, String noHandphone, String idPemilik) {
+			JenisKelaminDTO jenisKelamin, String noIdentitas, String noHandphone) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -44,7 +41,6 @@ public class PenanggungJawabDTO implements Serializable {
 		this.jenisKelamin = jenisKelamin;
 		this.noIdentitas = noIdentitas;
 		this.noHandphone = noHandphone;
-		this.idPemilik = idPemilik;
 	}
 
 	public String getId() {
@@ -103,14 +99,6 @@ public class PenanggungJawabDTO implements Serializable {
 		this.noHandphone = noHandphone;
 	}
 
-	public String getIdPemilik() {
-		return idPemilik;
-	}
-
-	public void setIdPemilik(String idPemilik) {
-		this.idPemilik = idPemilik;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -155,8 +143,8 @@ public class PenanggungJawabDTO implements Serializable {
 	}
 
 	public PenanggungJawab toPenanggungJawab() {		
-		return new PenanggungJawab(id, nama, alamat.toAlamat(), jabatan.toJabatan(), jenisKelamin.toJenisKelamin(), 
-				noIdentitas, noHandphone, idPemilik);
+		return new PenanggungJawab(id, nama, alamat.toAlamat(), jabatan.toJabatan(), 
+				jenisKelamin.toJenisKelamin(), noIdentitas, noHandphone);
 	}
 
 }
