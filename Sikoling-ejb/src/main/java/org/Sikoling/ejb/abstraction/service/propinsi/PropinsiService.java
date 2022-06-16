@@ -34,13 +34,13 @@ public class PropinsiService implements IPropinsiService {
 	}
 
 	@Override
-	public List<Propinsi> getByQueryNama(String nama) {
-		return propinsiRepository.getByQueryNama(nama);
+	public List<Propinsi> getByNama(String nama) {
+		return propinsiRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return propinsiRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Propinsi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return propinsiRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

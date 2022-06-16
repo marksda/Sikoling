@@ -55,7 +55,7 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Propinsi> getByQueryNama(String nama) {
+	public List<Propinsi> getByNama(String nama) {
 		nama = "%" + nama + "%";
 		Query q = entityManager.createNativeQuery("PropinsiData.findAllByName", PropinsiData.class);		
 		List<PropinsiData> resultList = q.setParameter("nama", nama).getResultList();
@@ -68,7 +68,7 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Propinsi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "'%" + nama + "%'";
 		Query q = entityManager.createNativeQuery("PropinsiData.findAllByName", PropinsiData.class);		
 		List<PropinsiData> resultList = q.setParameter("nama", nama)

@@ -9,7 +9,6 @@ import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IPermohonanRepository;
-import org.Sikoling.ejb.main.data.PermohonanData;
 import org.Sikoling.ejb.main.data.converter.ConverterPermohonan;
 
 import jakarta.persistence.EntityManager;

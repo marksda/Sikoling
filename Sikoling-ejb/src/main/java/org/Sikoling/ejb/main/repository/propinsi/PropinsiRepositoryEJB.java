@@ -39,13 +39,13 @@ public class PropinsiRepositoryEJB implements IPropinsiRepository {
 	}
 
 	@Override
-	public List<Propinsi> getByQueryNama(String nama) {
-		return propinsiRepositoryJPA.getByQueryNama(nama);
+	public List<Propinsi> getByNama(String nama) {
+		return propinsiRepositoryJPA.getByNama(nama);
 	}
 
 	@Override
-	public List<Propinsi> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return propinsiRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Propinsi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return propinsiRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 
 }

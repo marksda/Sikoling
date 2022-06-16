@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.main.data;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 /**

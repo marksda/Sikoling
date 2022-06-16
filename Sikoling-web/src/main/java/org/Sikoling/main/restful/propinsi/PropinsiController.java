@@ -64,8 +64,8 @@ public class PropinsiController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PropinsiDTO> getByQueryNama(@QueryParam("nama") String nama) {
-        return propinsiService.getByQueryNama(nama)
+    public List<PropinsiDTO> getByNama(@QueryParam("nama") String nama) {
+        return propinsiService.getByNama(nama)
                 .stream()
                 .map(f -> new PropinsiDTO(f))
                 .collect(Collectors.toList());
@@ -75,9 +75,9 @@ public class PropinsiController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PropinsiDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
+    public List<PropinsiDTO> getByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
     		@QueryParam("pageSize") Integer pageSize) {
-        return propinsiService.getByQueryNamaAndPage(nama, page, pageSize)
+        return propinsiService.getByNamaAndPage(nama, page, pageSize)
                 .stream()
                 .map(f -> new PropinsiDTO(f))
                 .collect(Collectors.toList());

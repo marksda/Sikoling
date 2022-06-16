@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.main.data.converter;
 
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
-import org.Sikoling.ejb.main.data.PermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.PermohonanData;
 
 public class ConverterPermohonan {
 	

@@ -1,10 +1,12 @@
-package org.Sikoling.ejb.main.data;
+package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
+import org.Sikoling.ejb.main.data.StatusWaliData;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaData;
 import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
+import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.produk.ProdukData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 
@@ -17,7 +19,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="tbl_permohonan")
+@Table(name="transaksi.tbl_permohonan")
 @NamedQuery(name="PermohonanData.findAll", query="SELECT t FROM PermohonanData t")
 public class PermohonanData implements Serializable {
 	private static final long serialVersionUID = -8440556805186981704L;
@@ -65,8 +67,8 @@ public class PermohonanData implements Serializable {
 
 	@Column(name="penanggung_jawab")
 	@JoinColumn(name = "penanggung_jawab", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-	private RelasiPenanggungJawabData penanggungJawab;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+	private PenanggungJawabData penanggungJawab;
 	
 	public Date getTangalSuratPermohonan() {
 		return tangalSuratPermohonan;
@@ -150,14 +152,12 @@ public class PermohonanData implements Serializable {
 	public void setWali(UserData wali) {
 		this.wali = wali;
 	}
-
 	
-	public RelasiPenanggungJawabData getPenanggungJawab() {
+	public PenanggungJawabData getPenanggungJawab() {
 		return penanggungJawab;
 	}
-
 	
-	public void setPenanggungJawab(RelasiPenanggungJawabData penanggungJawab) {
+	public void setPenanggungJawab(PenanggungJawabData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 
