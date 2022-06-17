@@ -19,6 +19,7 @@
   </dependencyManagement>
   <modules>
     <module>Sikoling-ejb</module>
-    <module>Sikoling-web</module>    
+    <module>Sikoling-web</module>
+    <module>Sikoling-ear</module>
   </modules>
 </project>
