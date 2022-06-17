@@ -9,7 +9,7 @@ import jakarta.persistence.*;
  * 
  */
 @Entity
-@Table(name="tbl_status_wali_pemohon")
+@Table(name="master.tbl_status_wali_pemohon")
 @NamedQuery(name="StatusWaliData.findAll", query="SELECT s FROM StatusWaliData s")
 public class StatusWaliData implements Serializable {
 	private static final long serialVersionUID = 1L;

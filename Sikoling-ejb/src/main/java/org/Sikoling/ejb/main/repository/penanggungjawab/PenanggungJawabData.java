@@ -23,27 +23,23 @@ public class PenanggungJawabData implements Serializable {
 	@Id
 	private String id;
 
-	@Column(name="desa")
 	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
 	private DesaData desa;
 
 	@Column(name="detail_alamat")
 	private String detailAlamat;
 
-	@Column(name="jabatan")
 	@JoinColumn(name = "jabatan", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	private JabatanData jabatan;
 
-	@Column(name="kabupaten")
 	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	private KabupatenData kabupaten;
 
-	@Column(name="kecamatan")
 	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	private KecamatanData kecamatan;
 
 	@Column(name="nama")
@@ -55,14 +51,12 @@ public class PenanggungJawabData implements Serializable {
 	@Column(name="nomor_identitas")
 	private String nomorIdentitas;
 
-	@Column(name="propinsi")
 	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	private PropinsiData propinsi;
 
-	@Column(name="sex")
 	@JoinColumn(name = "sex", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	private JenisKelaminData sex;
 	
 	public PenanggungJawabData() {

@@ -17,7 +17,6 @@ public class ProdukData implements Serializable {
 	@Id
 	private String id;
 
-	@Column(name="kategori_produk")
 	@JoinColumn(name = "kategori_produk", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
 	private KategoriProdukData kategoriProduk;

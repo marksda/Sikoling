@@ -1,11 +1,7 @@
-package org.Sikoling.ejb.main.repository.kelompokbentukusaha;
+package org.Sikoling.ejb.main.repository.jenispelakuusaha;
 
 import java.io.Serializable;
-import java.util.List;
-
 import jakarta.persistence.*;
-
-import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 
 
 @Entity
@@ -20,9 +16,6 @@ public class JenisPelakuUsahaData implements Serializable {
 	@Column(name="nama")
 	private String nama;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kelompok_bentuk_usaha", fetch = FetchType.EAGER)
-	private List<BentukUsahaData> daftarBentukUsahaData;
-
 	public JenisPelakuUsahaData() {
 	}
 
