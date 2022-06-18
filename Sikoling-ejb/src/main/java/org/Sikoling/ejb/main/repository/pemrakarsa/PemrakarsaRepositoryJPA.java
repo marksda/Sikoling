@@ -167,15 +167,15 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 	
 	private Pemrakarsa convertPemrakarsaDataToPemrakarsa(PemrakarsaData d) {
 		BentukUsaha bentukUsaha = new BentukUsaha(d.getBentukUsaha().getId(), d.getBentukUsaha().getNama());
-		PropinsiData propinsiData = d.getPropinsi();
+		PropinsiData propinsiData = d.getAlamatPemrakarsaDatas().get(0).getPropinsi();
 		Propinsi propinsi = new Propinsi(propinsiData.getId(), propinsiData.getNama());
-		KabupatenData kabupatenData = d.getKabupaten();
+		KabupatenData kabupatenData = d.getAlamatPemrakarsaDatas().get(0).getKabupaten();
 		Kabupaten kabupaten = new Kabupaten(kabupatenData.getId(), kabupatenData.getNama());
-		KecamatanData kecamatanData = d.getKecamatan();
+		KecamatanData kecamatanData = d.getAlamatPemrakarsaDatas().get(0).getKecamatan();
 		Kecamatan kecamatan = new Kecamatan(kecamatanData.getId(), kecamatanData.getNama());
-		DesaData desaData = d.getDesa();
+		DesaData desaData = d.getAlamatPemrakarsaDatas().get(0).getDesa();
 		Desa desa = new Desa(desaData.getId(), desaData.getNama());
-		Alamat alamat = new Alamat(propinsi, kabupaten, kecamatan, desa, d.getDetailAlamat());
+		Alamat alamat = new Alamat(propinsi, kabupaten, kecamatan, desa, d.getAlamatPemrakarsaDatas().get(0).getKeterangan());
 		PenanggungJawabData penanggungJawabData = d.getPenanggungJawab();
 		PropinsiData propinsiDataPJ = penanggungJawabData.getPropinsi();
 		Propinsi propinsiPJ = new Propinsi(propinsiDataPJ.getId(), propinsiDataPJ.getNama());

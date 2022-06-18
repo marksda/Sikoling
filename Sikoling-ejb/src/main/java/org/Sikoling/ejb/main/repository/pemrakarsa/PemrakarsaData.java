@@ -4,14 +4,11 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
-import org.Sikoling.ejb.main.repository.desa.DesaData;
-import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -68,207 +65,126 @@ public class PemrakarsaData implements Serializable {
 
 	@JoinColumn(name = "creator", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private UserData creator;
+	private UserData creator;	
 	
-	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private PropinsiData propinsi;
-	
-	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private KabupatenData kabupaten;
-	
-	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private KecamatanData kecamatan;
-	
-	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private DesaData desa;
-	
-	@Column(name="detail_alamat")
-	private String detailAlamat;
-	
-	
+	@ElementCollection
+	private List<AlamatPemrakarsaData> alamatPemrakarsaDatas;
+			
 	public PemrakarsaData() {
 	}
 	
-
 	public String getId() {
 		return this.id;
 	}
 	
-
 	public void setId(String id) {
 		this.id = id;
 	}
 	
-
 	public String getAlamatEmail() {
 		return this.alamatEmail;
 	}
 	
-
 	public void setAlamatEmail(String alamatEmail) {
 		this.alamatEmail = alamatEmail;
 	}
 	
-
 	public BentukUsahaData getBentukUsaha() {
 		return this.bentukUsaha;
 	}
 	
-
 	public void setBentukUsaha(BentukUsahaData bentukUsaha) {
 		this.bentukUsaha = bentukUsaha;
 	}
 	
-
 	public String getNama() {
 		return this.nama;
 	}
 	
-
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
 	
-
 	public String getNamaNotaris() {
 		return this.namaNotaris;
 	}
 	
-
 	public void setNamaNotaris(String namaNotaris) {
 		this.namaNotaris = namaNotaris;
-	}
-	
+	}	
 
 	public PenanggungJawabData getPenanggungJawab() {
 		return this.penanggungJawab;
 	}
 	
-
 	public void setPenanggungJawab(PenanggungJawabData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 	
-
 	public String getNoNibOss() {
 		return this.noNibOss;
 	}
 	
-
 	public void setNoNibOss(String noNibOss) {
 		this.noNibOss = noNibOss;
 	}
 	
-
 	public String getNoNpwp() {
 		return this.noNpwp;
 	}
 	
-
 	public void setNoNpwp(String noNpwp) {
 		this.noNpwp = noNpwp;
 	}
 	
-
 	public Date getTanggalNotaris() {
 		return this.tanggalNotaris;
 	}
 	
-
 	public void setTanggalNotaris(Date tanggalNotaris) {
 		this.tanggalNotaris = tanggalNotaris;
 	}
 	
-
 	public Date getTanggalOss() {
 		return this.tanggalOss;
 	}
 	
-
 	public void setTanggalOss(Date tanggalOss) {
 		this.tanggalOss = tanggalOss;
 	}
 	
-
 	public String getTelepone() {
 		return telepone;
 	}
 	
-
 	public void setTelepone(String telepone) {
 		this.telepone = telepone;
 	}
 	
-
 	public String getFax() {
 		return fax;
 	}
 	
-
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	
-	
+		
 	public UserData getCreator() {
 		return creator;
 	}
-	
-	
+		
 	public void setCreator(UserData creator) {
 		this.creator = creator;
 	}
 
+	public List<AlamatPemrakarsaData> getAlamatPemrakarsaDatas() {
+		return alamatPemrakarsaDatas;
+	}
+
+	public void setAlamatPemrakarsaDatas(List<AlamatPemrakarsaData> alamatPemrakarsaDatas) {
+		this.alamatPemrakarsaDatas = alamatPemrakarsaDatas;
+	}
 	
-	public PropinsiData getPropinsi() {
-		return propinsi;
-	}
-
 	
-	public void setPropinsi(PropinsiData propinsi) {
-		this.propinsi = propinsi;
-	}
-
-	
-	public KabupatenData getKabupaten() {
-		return kabupaten;
-	}
-
-	
-	public void setKabupaten(KabupatenData kabupaten) {
-		this.kabupaten = kabupaten;
-	}
-
-	
-	public KecamatanData getKecamatan() {
-		return kecamatan;
-	}
-
-	
-	public void setKecamatan(KecamatanData kecamatan) {
-		this.kecamatan = kecamatan;
-	}
-
-	
-	public DesaData getDesa() {
-		return desa;
-	}
-
-	
-	public void setDesa(DesaData desa) {
-		this.desa = desa;
-	}
-
-	public String getDetailAlamat() {
-		return detailAlamat;
-	}
-
-	public void setDetailAlamat(String detailAlamat) {
-		this.detailAlamat = detailAlamat;
-	}
 	
 }

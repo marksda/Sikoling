@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 public class Pemrakarsa implements Serializable {
@@ -9,41 +8,26 @@ public class Pemrakarsa implements Serializable {
 	private static final long serialVersionUID = 1008634190691153214L;
 	private final String id;
 	private final BentukUsaha bentukUsaha;
-	private final String nomorIndukBerusaha;
-	private final String nama;
-	private final String namaNotaris;	
+	private final AktaPendirianPemrakarsa aktaPendirian;
 	private final Alamat alamat;
-	private final String telepone;
-	private final String fax;
-	private final String npwp;
-	private final String email;
+	private final KontakPemrakarsa kontakPemrakarsa;
+	private final OSS oss;
+	private final String nama;		
+	private final String npwp;	
 	private final PenanggungJawab penanggungJawab;
-	private final Date tanggalNotaris;
-	private final Date tanggalOSS;
-	private final String idCreator;
-	
-	public PenanggungJawab getPenanggungJawab() {
-		return penanggungJawab;
-	}
 
-	public Pemrakarsa(String id, BentukUsaha bentukUsaha, String nomorIndukBerusaha, String nama, String namaNotaris,
-			Alamat alamat, String telepone, String fax, String npwp, String email, PenanggungJawab penanggungJawab,
-			Date tanggalNotaris, Date tanggalOSS, String idCreator) {
+	public Pemrakarsa(String id, BentukUsaha bentukUsaha, AktaPendirianPemrakarsa aktaPendirian, Alamat alamat,
+			KontakPemrakarsa kontakPemrakarsa, OSS oss, String nama, String npwp, PenanggungJawab penanggungJawab) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
-		this.nomorIndukBerusaha = nomorIndukBerusaha;
-		this.nama = nama;
-		this.namaNotaris = namaNotaris;
+		this.aktaPendirian = aktaPendirian;
 		this.alamat = alamat;
-		this.telepone = telepone;
-		this.fax = fax;
+		this.kontakPemrakarsa = kontakPemrakarsa;
+		this.oss = oss;
+		this.nama = nama;
 		this.npwp = npwp;
-		this.email = email;
 		this.penanggungJawab = penanggungJawab;
-		this.tanggalNotaris = tanggalNotaris;
-		this.idCreator = idCreator;
-		this.tanggalOSS = tanggalOSS;
 	}
 
 	public String getId() {
@@ -52,6 +36,10 @@ public class Pemrakarsa implements Serializable {
 
 	public BentukUsaha getBentukUsaha() {
 		return bentukUsaha;
+	}
+	
+	public AktaPendirianPemrakarsa getAktaPendirian() {
+		return aktaPendirian;
 	}
 
 	public String getNama() {
@@ -62,38 +50,22 @@ public class Pemrakarsa implements Serializable {
 		return alamat;
 	}
 
-	public String getTelepone() {
-		return telepone;
+	public PenanggungJawab getPenanggungJawab() {
+		return penanggungJawab;
 	}
-
-	public String getFax() {
-		return fax;
-	}
-
+	
 	public String getNpwp() {
 		return npwp;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getNamaNotaris() {
-		return namaNotaris;
-	}
-
-	public Date getTanggalNotaris() {
-		return tanggalNotaris;
-	}
-
-	public Date getTanggalOSS() {
-		return tanggalOSS;
-	}
-
-	public String getNomorIndukBerusaha() {
-		return nomorIndukBerusaha;
-	}
 	
+	public OSS getOss() {
+		return oss;
+	}
+
+	public KontakPemrakarsa getKontakPemrakarsa() {
+		return kontakPemrakarsa;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -101,13 +73,9 @@ public class Pemrakarsa implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.bentukUsaha.toString());
-		hash = 13 * hash + Objects.hashCode(this.nama);
-		hash = 13 * hash + Objects.hashCode(this.alamat.toString());
-		hash = 13 * hash + Objects.hashCode(this.telepone);
-		hash = 13 * hash + Objects.hashCode(this.fax);
-		hash = 13 * hash + Objects.hashCode(this.npwp);
-		hash = 13 * hash + Objects.hashCode(this.email);
+		hash = 73 * hash + Objects.hashCode(this.bentukUsaha.toString());
+		hash = 73 * hash + Objects.hashCode(this.nama);
+		hash = 73 * hash + Objects.hashCode(this.npwp);
 		return hash;
 	}
 	
@@ -139,19 +107,7 @@ public class Pemrakarsa implements Serializable {
             return false;
         }
         
-        if (!this.telepone.equals(other.telepone)) {
-            return false;
-        }
-        
-        if (!this.fax.equals(other.fax)) {
-            return false;
-        }
-        
         if (!this.npwp.equals(other.npwp)) {
-            return false;
-        }
-        
-        if (!this.email.equals(other.email)) {
             return false;
         }
         
@@ -160,15 +116,8 @@ public class Pemrakarsa implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "PenanggungJawab{" + "bentukUsaha=" + bentukUsaha.toString() + ", NIB=" + nomorIndukBerusaha  + ", nama=" + nama
-				+ ", alamat=" + alamat.toString() + ", telepone=" + telepone + ", fax=" + fax
-				+ ", npwp=" + npwp + ", email=" + email + "}";
-	}
-
-	
-	public String getIdCreator() {
-		return idCreator;
-	}
-	
+		return "Pemrakarsa{" + "bentukUsaha=" + bentukUsaha.toString() + ", NIB=" + oss.getNib()  + ", nama=" + nama
+				+ ", alamat=" + alamat.toString() + ", npwp=" + npwp + "}";
+	}	
 	
 }
