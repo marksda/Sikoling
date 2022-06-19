@@ -24,13 +24,13 @@ public class DesaRepositoryEJB implements IDesaRepository {
 	}
 
 	@Override
-	public Desa save(Desa t) {
-		return desaRepository.save(t);
+	public Desa save(Desa t, String s) {
+		return desaRepository.save(t, s);
 	}
 
 	@Override
-	public Desa update(Desa t) {
-		return desaRepository.update(t);
+	public Desa update(Desa t, String s) {
+		return desaRepository.update(t, s);
 	}
 
 	@Override

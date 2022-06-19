@@ -8,27 +8,17 @@ public class Desa implements Serializable {
 	private static final long serialVersionUID = -7665467179125915846L;
 	private final String id;
 	private final String nama;
-	private final String idKecamatan;
 	
-	public Desa(String id, String nama, String idKecamatan) {
+	public Desa(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
-		this.idKecamatan = idKecamatan;
 	}
 	
 	public Desa(String id) {
 		super();
 		this.id = id;
 		this.nama = "";
-		this.idKecamatan = null;
-	}
-	
-	public Desa(String id, String nama) {
-		super();
-		this.id = id;
-		this.nama = nama;
-		this.idKecamatan = null;
 	}
 
 	public String getId() {
@@ -37,10 +27,6 @@ public class Desa implements Serializable {
 
 	public String getNama() {
 		return nama;
-	}
-
-	public String getIdKecamatan() {
-		return idKecamatan;
 	}
 
 	public static long getSerialversionuid() {

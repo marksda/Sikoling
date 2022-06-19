@@ -13,6 +13,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -25,18 +26,20 @@ public class DesaController {
 	@Inject
 	private IDesaService desaService;
 	
+	@Path("{idKecamatan}")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DesaDTO save(DesaDTO desaDTO) {
-		return new DesaDTO(desaService.save(desaDTO.toDesa()));
+	public DesaDTO save(DesaDTO desaDTO, @PathParam("idKecamatan") String idKecamatan) {
+		return new DesaDTO(desaService.save(desaDTO.toDesa(), idKecamatan));
 	}
 	
+	@Path("{idKecamatan}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DesaDTO update(DesaDTO desaDTO) {
-		return new DesaDTO(desaService.update(desaDTO.toDesa()));
+	public DesaDTO update(DesaDTO desaDTO, @PathParam("idKecamatan") String idKecamatan) {
+		return new DesaDTO(desaService.update(desaDTO.toDesa(), idKecamatan));
 	}
 	
 	@GET
@@ -128,5 +131,5 @@ public class DesaController {
 				.map(d -> new DesaDTO(d))
 				.collect(Collectors.toList());
 	}
-
+	
 }

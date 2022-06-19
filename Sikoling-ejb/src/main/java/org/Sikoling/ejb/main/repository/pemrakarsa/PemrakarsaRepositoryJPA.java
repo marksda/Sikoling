@@ -3,25 +3,25 @@ package org.Sikoling.ejb.main.repository.pemrakarsa;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.AktaPemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.Jabatan;
-import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
+import org.Sikoling.ejb.abstraction.entity.KBLI;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.ejb.abstraction.entity.KontakPemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.OSS;
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPemrakarsaRepository;
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
-import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 
 import jakarta.persistence.EntityManager;
@@ -47,8 +47,10 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 	@Override
 	public Pemrakarsa save(Pemrakarsa t) {
 		PemrakarsaData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
+		
 		entityManager.persist(pemrakarsaData);
 		entityManager.flush();
+		
 		return convertPemrakarsaDataToPemrakarsa(pemrakarsaData);
 	}
 
@@ -142,59 +144,124 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 
 	private PemrakarsaData convertPemrakarsaToPemrakarsaData(Pemrakarsa p) {
 		PemrakarsaData pemrakarsaData = new PemrakarsaData();
+		
 		pemrakarsaData.setId(p.getId());
-		pemrakarsaData.setAlamatEmail(p.getEmail());
+		
 		BentukUsahaData bentukUsahaData = new BentukUsahaData();
 		bentukUsahaData.setId(p.getBentukUsaha().getId());
+		bentukUsahaData.setNama(p.getBentukUsaha().getNama());
 		pemrakarsaData.setBentukUsaha(bentukUsahaData);
+		
+		AktaPemrakarsaData aktaPemrakarsaData = new AktaPemrakarsaData();
+		aktaPemrakarsaData.setNamaNotaris(p.getAktaPendirian().getNamaNotaris());
+		aktaPemrakarsaData.setNomor(p.getAktaPendirian().getNomor());
+		aktaPemrakarsaData.setTanggal(p.getAktaPendirian().getTanggal());
+		pemrakarsaData.setAktaPemrakarsaData(aktaPemrakarsaData);
+		
+		AlamatPemrakarsaData alamatPemrakarsaData = new AlamatPemrakarsaData();
+		DesaData desaData = new DesaData();
+		desaData.setId(p.getAlamat().getDesa().getId());
+		alamatPemrakarsaData.setDesa(desaData);
+		KecamatanData kecamatanData = new KecamatanData();
+		kecamatanData.setId(p.getAlamat().getKecamatan().getId());
+		alamatPemrakarsaData.setKecamatan(kecamatanData);
+		KabupatenData kabupatenData = new KabupatenData();
+		kabupatenData.setId(p.getAlamat().getKabupaten().getId());
+		alamatPemrakarsaData.setKabupaten(kabupatenData);
+		PropinsiData propinsiData = new PropinsiData();
+		propinsiData.setId(p.getAlamat().getPropinsi().getId());
+		alamatPemrakarsaData.setPropinsi(propinsiData);
+		pemrakarsaData.setAlamatPemrakarsaData(alamatPemrakarsaData);
+		
+		KontakPemrakarsaData kontakPemrakarsaData = new KontakPemrakarsaData();
+		kontakPemrakarsaData.setEmail(p.getKontakPemrakarsa().getEmail());
+		kontakPemrakarsaData.setFax(p.getKontakPemrakarsa().getFax());
+		kontakPemrakarsaData.setTelepone(p.getKontakPemrakarsa().getTelepone());
+		pemrakarsaData.setKontakPemrakarsaData(kontakPemrakarsaData);
+		
+		OSSData ossData = new OSSData();
+		ossData.setNib(p.getOss().getNib());
+		ossData.setTanggal(p.getOss().getTanggal());	
+		ossData.setKbliDatas(p.getOss().getKblis()
+				.stream()
+				.map(t -> convertKBLIToKBData(t))
+				.collect(Collectors.toList())				
+				);		
+		pemrakarsaData.setOssData(ossData);		
+		
 		pemrakarsaData.setNama(p.getNama());
-		pemrakarsaData.setNamaNotaris(p.getNamaNotaris());
+		pemrakarsaData.setNoNpwp(p.getNpwp());
+		
 		PenanggungJawabData penanggungJawabData = new PenanggungJawabData();
 		penanggungJawabData.setId(p.getPenanggungJawab().getId());
 		pemrakarsaData.setPenanggungJawab(penanggungJawabData);
-		pemrakarsaData.setNoNibOss(p.getNomorIndukBerusaha());
-		pemrakarsaData.setNoNpwp(p.getNpwp());
-		pemrakarsaData.setTanggalNotaris(p.getTanggalNotaris());
-		pemrakarsaData.setTanggalOss(p.getTanggalOSS());
-		pemrakarsaData.setTelepone(p.getTelepone());
-		pemrakarsaData.setFax(p.getFax());
+		
 		UserData userData = new UserData();
-		userData.setId(p.getIdCreator());
+		userData.setId("0001");
 		pemrakarsaData.setCreator(userData);
 		
 		return pemrakarsaData;
 	}
 	
 	private Pemrakarsa convertPemrakarsaDataToPemrakarsa(PemrakarsaData d) {
-		BentukUsaha bentukUsaha = new BentukUsaha(d.getBentukUsaha().getId(), d.getBentukUsaha().getNama());
-		PropinsiData propinsiData = d.getAlamatPemrakarsaDatas().get(0).getPropinsi();
-		Propinsi propinsi = new Propinsi(propinsiData.getId(), propinsiData.getNama());
-		KabupatenData kabupatenData = d.getAlamatPemrakarsaDatas().get(0).getKabupaten();
-		Kabupaten kabupaten = new Kabupaten(kabupatenData.getId(), kabupatenData.getNama());
-		KecamatanData kecamatanData = d.getAlamatPemrakarsaDatas().get(0).getKecamatan();
-		Kecamatan kecamatan = new Kecamatan(kecamatanData.getId(), kecamatanData.getNama());
-		DesaData desaData = d.getAlamatPemrakarsaDatas().get(0).getDesa();
-		Desa desa = new Desa(desaData.getId(), desaData.getNama());
-		Alamat alamat = new Alamat(propinsi, kabupaten, kecamatan, desa, d.getAlamatPemrakarsaDatas().get(0).getKeterangan());
-		PenanggungJawabData penanggungJawabData = d.getPenanggungJawab();
-		PropinsiData propinsiDataPJ = penanggungJawabData.getPropinsi();
-		Propinsi propinsiPJ = new Propinsi(propinsiDataPJ.getId(), propinsiDataPJ.getNama());
-		KabupatenData kabupatenDataPJ = penanggungJawabData.getKabupaten();
-		Kabupaten kabupatenPJ = new Kabupaten(kabupatenDataPJ.getId(), kabupatenDataPJ.getNama());
-		KecamatanData kecamatanDataPJ = penanggungJawabData.getKecamatan();
-		Kecamatan kecamatanPJ = new Kecamatan(kecamatanDataPJ.getId(), kecamatanDataPJ.getNama());
-		DesaData desaDataPJ = penanggungJawabData.getDesa();
-		Desa desaPJ = new Desa(desaDataPJ.getId(), desaDataPJ.getNama());
-		Alamat alamatPJ = new Alamat(propinsiPJ, kabupatenPJ, kecamatanPJ, desaPJ, penanggungJawabData.getDetailAlamat());
-		JabatanData jabatanData = penanggungJawabData.getJabatan();
-		Jabatan jabatan = new Jabatan(jabatanData.getId(), jabatanData.getNama());
-		JenisKelaminData jenisKelaminData = penanggungJawabData.getSex();
-		JenisKelamin sex = new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama());		
-		PenanggungJawab penanggungJawab = new PenanggungJawab(penanggungJawabData.getId(), penanggungJawabData.getNama(), 
-				alamatPJ, jabatan, sex, penanggungJawabData.getNomorIdentitas(), penanggungJawabData.getNomorHandphone());
+		BentukUsaha bentukUsaha = new BentukUsaha(d.getBentukUsaha().getId(), d.getBentukUsaha().getNama());	
 		
-		return new Pemrakarsa(d.getId(), bentukUsaha, d.getNoNibOss(), d.getNama(), d.getNamaNotaris(), 
-				alamat, d.getTelepone(), d.getFax(), d.getNoNpwp(), d.getAlamatEmail(), penanggungJawab, 
-				d.getTanggalNotaris(), d.getTanggalOss(), d.getCreator().getId());
+		AktaPemrakarsa aktaPemrakarsa = new AktaPemrakarsa(d.getAktaPemrakarsaData().getNomor(), d.getAktaPemrakarsaData().getTanggal(), 
+				d.getAktaPemrakarsaData().getNamaNotaris());		
+		
+		Alamat alamat = new Alamat(
+				new Propinsi(d.getAlamatPemrakarsaData().getPropinsi().getId(), d.getAlamatPemrakarsaData().getPropinsi().getNama()),
+				new Kabupaten(d.getAlamatPemrakarsaData().getKabupaten().getId(), d.getAlamatPemrakarsaData().getKabupaten().getNama()),
+				new Kecamatan(d.getAlamatPemrakarsaData().getKecamatan().getId(), d.getAlamatPemrakarsaData().getKecamatan().getNama()),
+				new Desa(d.getAlamatPemrakarsaData().getDesa().getId(), d.getAlamatPemrakarsaData().getDesa().getNama()),
+				d.getAlamatPemrakarsaData().getKeterangan());
+		
+		KontakPemrakarsa kontakPemrakarsa = new KontakPemrakarsa(d.getKontakPemrakarsaData().getTelepone(), 
+				d.getKontakPemrakarsaData().getFax(), d.getKontakPemrakarsaData().getEmail());
+		
+		OSS oss = new OSS(d.getOssData().getNib(), d.getOssData().getTanggal(), 
+				d.getOssData().getKbliDatas()
+				.stream()
+				.map(dt -> convertKBLIDataToKBLI(dt))
+				.collect(Collectors.toList())
+				);
+		
+//		PenanggungJawab penanggungJawab = new PenanggungJawab(
+//				d.getPenanggungJawab().getId(), d.getPenanggungJawab().getNama()
+//				null, null, alamat, null, null, null, null);
+		
+		
+//		PenanggungJawabData penanggungJawabData = d.getPenanggungJawab();
+//		PropinsiData propinsiDataPJ = penanggungJawabData.getPropinsi();
+//		Propinsi propinsiPJ = new Propinsi(propinsiDataPJ.getId(), propinsiDataPJ.getNama());
+//		KabupatenData kabupatenDataPJ = penanggungJawabData.getKabupaten();
+//		Kabupaten kabupatenPJ = new Kabupaten(kabupatenDataPJ.getId(), kabupatenDataPJ.getNama());
+//		KecamatanData kecamatanDataPJ = penanggungJawabData.getKecamatan();
+//		Kecamatan kecamatanPJ = new Kecamatan(kecamatanDataPJ.getId(), kecamatanDataPJ.getNama());
+//		DesaData desaDataPJ = penanggungJawabData.getDesa();
+//		Desa desaPJ = new Desa(desaDataPJ.getId(), desaDataPJ.getNama());
+//		Alamat alamatPJ = new Alamat(propinsiPJ, kabupatenPJ, kecamatanPJ, desaPJ, penanggungJawabData.getDetailAlamat());
+//		JabatanData jabatanData = penanggungJawabData.getJabatan();
+//		Jabatan jabatan = new Jabatan(jabatanData.getId(), jabatanData.getNama());
+//		JenisKelaminData jenisKelaminData = penanggungJawabData.getSex();
+//		JenisKelamin sex = new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama());		
+//		PenanggungJawab penanggungJawab = new PenanggungJawab(penanggungJawabData.getId(), penanggungJawabData.getNama(), 
+//				alamatPJ, jabatan, sex, penanggungJawabData.getNomorIdentitas(), penanggungJawabData.getNomorHandphone());
+//		
+//		return new Pemrakarsa(d.getId(), bentukUsaha, d.getNoNibOss(), d.getNama(), d.getNamaNotaris(), 
+//				alamat, d.getTelepone(), d.getFax(), d.getNoNpwp(), d.getAlamatEmail(), penanggungJawab, 
+//				d.getTanggalNotaris(), d.getTanggalOss(), d.getCreator().getId());
+		return null;
+	}
+	
+	private KBLIData convertKBLIToKBData(KBLI t) {
+		KBLIData kbliData = new KBLIData();
+		kbliData.setKode(t.getKode());
+		kbliData.setNama(t.getNama());
+		return kbliData;
+	}
+	
+	private KBLI convertKBLIDataToKBLI(KBLIData d) {
+		return new KBLI(d.getKode(), d.getNama());
 	}
 }

@@ -10,7 +10,6 @@ public class DesaDTO implements Serializable {
 	private static final long serialVersionUID = 6969506465322300113L;
 	private String id;
 	private String nama;
-	private String idKecamatan;
 	
 	public DesaDTO() {
 	}
@@ -18,13 +17,11 @@ public class DesaDTO implements Serializable {
 	public DesaDTO(Desa desa) {
 		this.id = desa.getId();
 		this.nama = desa.getNama();
-		this.idKecamatan = desa.getIdKecamatan();
 	}
 	
-	public DesaDTO(String id, String nama, String idKecamatan) {
+	public DesaDTO(String id, String nama) {
 		this.id = id;
 		this.nama = nama;
-		this.idKecamatan = idKecamatan;
 	}
 	
 	public String getId() {
@@ -43,23 +40,14 @@ public class DesaDTO implements Serializable {
 		this.nama = nama;
 	}
 	
-	public String getIdKecamatan() {
-		return idKecamatan;
-	}
-	
-	public void setIdKecamatan(String idKecamatan) {
-		this.idKecamatan = idKecamatan;
-	}
-	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	public int hashCode() {
 		int hash = 19;
-        hash = 41 * hash + Objects.hashCode(this.id);
-        hash = 41 * hash + Objects.hashCode(this.nama);
-        hash = 41 * hash + Objects.hashCode(this.idKecamatan);
+        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -86,10 +74,6 @@ public class DesaDTO implements Serializable {
         if (this.nama != other.nama) {
             return false;
         }
-        
-        if (this.idKecamatan != other.idKecamatan) {
-            return false;
-        }
 
         return true;
 	}
@@ -100,7 +84,7 @@ public class DesaDTO implements Serializable {
 	}
 
 	public Desa toDesa() {
-		return new Desa(id, nama, idKecamatan);
+		return new Desa(id, nama);
 	}
 
 }

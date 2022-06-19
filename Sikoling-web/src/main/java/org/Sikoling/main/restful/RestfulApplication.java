@@ -7,7 +7,9 @@ import jakarta.ws.rs.ApplicationPath;
 
 @ApplicationPath("api")
 public class RestfulApplication extends ResourceConfig {
+	
 	public RestfulApplication() {
 		packages("org.Sikoling.main.restful").register(MultiPartFeature.class);
 	}
+	
 }

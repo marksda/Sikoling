@@ -5,8 +5,8 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 
 public interface IDesaService {
-	Desa save(Desa desa);
-	Desa update(Desa desa);
+	Desa save(Desa desa, String idKecamatan);
+	Desa update(Desa desa, String idKecamatan);
 	List<Desa> getAll();
 	List<Desa> getAllByPage(Integer page, Integer pageSize);
 	List<Desa> getByNama(String nama);

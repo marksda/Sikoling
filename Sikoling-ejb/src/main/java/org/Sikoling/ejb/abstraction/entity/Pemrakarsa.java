@@ -8,7 +8,7 @@ public class Pemrakarsa implements Serializable {
 	private static final long serialVersionUID = 1008634190691153214L;
 	private final String id;
 	private final BentukUsaha bentukUsaha;
-	private final AktaPendirianPemrakarsa aktaPendirian;
+	private final AktaPemrakarsa aktaPendirian;
 	private final Alamat alamat;
 	private final KontakPemrakarsa kontakPemrakarsa;
 	private final OSS oss;
@@ -16,7 +16,7 @@ public class Pemrakarsa implements Serializable {
 	private final String npwp;	
 	private final PenanggungJawab penanggungJawab;
 
-	public Pemrakarsa(String id, BentukUsaha bentukUsaha, AktaPendirianPemrakarsa aktaPendirian, Alamat alamat,
+	public Pemrakarsa(String id, BentukUsaha bentukUsaha, AktaPemrakarsa aktaPendirian, Alamat alamat,
 			KontakPemrakarsa kontakPemrakarsa, OSS oss, String nama, String npwp, PenanggungJawab penanggungJawab) {
 		super();
 		this.id = id;
@@ -38,7 +38,7 @@ public class Pemrakarsa implements Serializable {
 		return bentukUsaha;
 	}
 	
-	public AktaPendirianPemrakarsa getAktaPendirian() {
+	public AktaPemrakarsa getAktaPendirian() {
 		return aktaPendirian;
 	}
 

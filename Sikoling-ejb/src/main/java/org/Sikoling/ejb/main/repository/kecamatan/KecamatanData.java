@@ -1,6 +1,9 @@
 package org.Sikoling.ejb.main.repository.kecamatan;
 
 import java.io.Serializable;
+
+import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
+
 import jakarta.persistence.*;
 
 
@@ -16,12 +19,12 @@ public class KecamatanData implements Serializable {
 
 	@Id
 	private String id;
-
-	@Column(name="kabupaten")
-	private String idKabupaten;
-
-	@Column(name="nama")
+	
 	private String nama;
+
+	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private KabupatenData kabupaten;
 
 	public KecamatanData() {
 		
@@ -35,12 +38,12 @@ public class KecamatanData implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdKabupaten() {
-		return this.idKabupaten;
+	public KabupatenData getKabupaten() {
+		return this.kabupaten;
 	}
 
-	public void setIdKabupaten(String idKabupaten) {
-		this.idKabupaten = idKabupaten;
+	public void setKabupaten(KabupatenData kabupaten) {
+		this.kabupaten = kabupaten;
 	}
 
 	public String getNama() {

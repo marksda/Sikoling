@@ -14,13 +14,13 @@ public class KecamatanService implements IKecamatanService {
 	}
 
 	@Override
-	public Kecamatan save(Kecamatan kecamatan) {
-		return kecamatanRepository.save(kecamatan);
+	public Kecamatan save(Kecamatan kecamatan, String idKabupaten) {
+		return kecamatanRepository.save(kecamatan, idKabupaten);
 	}
 
 	@Override
-	public Kecamatan update(Kecamatan kecamatan) {
-		return kecamatanRepository.update(kecamatan);
+	public Kecamatan update(Kecamatan kecamatan, String idKabupaten) {
+		return kecamatanRepository.update(kecamatan, idKabupaten);
 	}
 
 	@Override
@@ -34,13 +34,13 @@ public class KecamatanService implements IKecamatanService {
 	}
 
 	@Override
-	public List<Kecamatan> getByQueryNama(String nama) {
-		return kecamatanRepository.getByQueryNama(nama);
+	public List<Kecamatan> getByNama(String nama) {
+		return kecamatanRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Kecamatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kecamatanRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Kecamatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return kecamatanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
@@ -54,14 +54,14 @@ public class KecamatanService implements IKecamatanService {
 	}
 
 	@Override
-	public List<Kecamatan> getByKabupatenAndQueryNama(String idKabupaten, String nama) {
-		return kecamatanRepository.getByKabupatenAndQueryNama(idKabupaten, nama);
+	public List<Kecamatan> getByKabupatenAndNama(String idKabupaten, String nama) {
+		return kecamatanRepository.getByKabupatenAndNama(idKabupaten, nama);
 	}
 
 	@Override
-	public List<Kecamatan> getByKabupatenAndQueryNamaAndPage(String idKabupaten, String nama, Integer page,
+	public List<Kecamatan> getByKabupatenAndNamaAndPage(String idKabupaten, String nama, Integer page,
 			Integer pageSize) {
-		return kecamatanRepository.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize);
+		return kecamatanRepository.getByKabupatenAndNamaAndPage(idKabupaten, nama, page, pageSize);
 	}
 
 	

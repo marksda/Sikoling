@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.desa;
 
 import java.io.Serializable;
+import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import jakarta.persistence.*;
-
 
 @Entity
 @Table(name="master.tbl_desa")
@@ -16,11 +16,12 @@ public class DesaData implements Serializable {
 
 	@Id
 	private String id;
-
-	@Column(name="kecamatan")
-	private String idKecamatan;
-
+	
 	private String nama;
+
+	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private KecamatanData kecamatanData;
 
 	public DesaData() {
 	}
@@ -33,14 +34,6 @@ public class DesaData implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdKecamatan() {
-		return this.idKecamatan;
-	}
-
-	public void setIdKecamatan(String idKecamatan) {
-		this.idKecamatan = idKecamatan;
-	}
-
 	public String getNama() {
 		return this.nama;
 	}
@@ -49,4 +42,12 @@ public class DesaData implements Serializable {
 		this.nama = nama;
 	}
 
+	public KecamatanData getKecamatanData() {
+		return this.kecamatanData;
+	}
+
+	public void setKecamatanData(KecamatanData kecamatanData) {
+		this.kecamatanData = kecamatanData;
+	}
+	
 }

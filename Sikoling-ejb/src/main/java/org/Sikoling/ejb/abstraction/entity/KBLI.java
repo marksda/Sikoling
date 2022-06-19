@@ -28,7 +28,6 @@ public class KBLI implements Serializable {
 	public String getNama() {
 		return nama;
 	}
-	
-	
+		
 
 }

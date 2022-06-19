@@ -34,48 +34,39 @@ public class BentukUsahaDTO implements Serializable {
 	public String getId() {
 		return id;
 	}
-
 	
 	public void setId(String id) {
 		this.id = id;
 	}
 	
-
 	public String getNama() {
 		return nama;
 	}
 	
-
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-	
-	
+		
 	public String getSingkatan() {
 		return singkatan;
 	}
 	
-
 	public void setSingkatan(String singkatan) {
 		this.singkatan = singkatan;
 	}
 	
-
 	public String getIdJenisPelakuUsaha() {
 		return idJenisPelakuUsaha;
 	}
 	
-
 	public void setIdJenisPelakuUsaha(String idJenisPelakuUsaha) {
 		this.idJenisPelakuUsaha = idJenisPelakuUsaha;
 	}
 	
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+		
 	public int hashCode() {
 		int hash = 11;
         hash = 17 * hash + Objects.hashCode(this.id);
@@ -83,7 +74,6 @@ public class BentukUsahaDTO implements Serializable {
         return hash;
 	}
 	
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -111,14 +101,13 @@ public class BentukUsahaDTO implements Serializable {
         return true;
 	}
 	
-
 	@Override
 	public String toString() {
 		return "BentukUsahaDTO{" + "id=" + id + ", nama=" + nama + '}';	  
 	}
 	
-
 	public BentukUsaha toBentukUsaha() {
 		return new BentukUsaha(id, nama, singkatan, idJenisPelakuUsaha);
 	}
+	
 }

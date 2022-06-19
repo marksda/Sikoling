@@ -24,13 +24,13 @@ public class KecamatanRepositoryEJB implements IKecamatanRepository {
 	}
 
 	@Override
-	public Kecamatan save(Kecamatan t) {
-		return kecamatanRepository.save(t);
+	public Kecamatan save(Kecamatan t, String s) {
+		return kecamatanRepository.save(t, s);
 	}
 
 	@Override
-	public Kecamatan update(Kecamatan t) {
-		return kecamatanRepository.update(t);
+	public Kecamatan update(Kecamatan t, String s) {
+		return kecamatanRepository.update(t, s);
 	}
 
 	@Override
@@ -39,13 +39,13 @@ public class KecamatanRepositoryEJB implements IKecamatanRepository {
 	}
 
 	@Override
-	public List<Kecamatan> getByQueryNama(String nama) {
-		return kecamatanRepository.getByQueryNama(nama);
+	public List<Kecamatan> getByNama(String nama) {
+		return kecamatanRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Kecamatan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kecamatanRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Kecamatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return kecamatanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
@@ -59,14 +59,14 @@ public class KecamatanRepositoryEJB implements IKecamatanRepository {
 	}
 
 	@Override
-	public List<Kecamatan> getByKabupatenAndQueryNama(String idKabupaten, String nama) {
-		return kecamatanRepository.getByKabupatenAndQueryNama(idKabupaten, nama);
+	public List<Kecamatan> getByKabupatenAndNama(String idKabupaten, String nama) {
+		return kecamatanRepository.getByKabupatenAndNama(idKabupaten, nama);
 	}
 
 	@Override
-	public List<Kecamatan> getByKabupatenAndQueryNamaAndPage(String idKabupaten, String nama, Integer page,
+	public List<Kecamatan> getByKabupatenAndNamaAndPage(String idKabupaten, String nama, Integer page,
 			Integer pageSize) {
-		return kecamatanRepository.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize);
+		return kecamatanRepository.getByKabupatenAndNamaAndPage(idKabupaten, nama, page, pageSize);
 	}
 
 }

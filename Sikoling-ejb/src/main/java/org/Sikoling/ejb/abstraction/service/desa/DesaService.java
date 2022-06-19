@@ -15,13 +15,13 @@ public class DesaService implements IDesaService {
 	}
 
 	@Override
-	public Desa save(Desa desa) {
-		return desaRepository.save(desa);
+	public Desa save(Desa desa, String idKecamatan) {
+		return desaRepository.save(desa, idKecamatan);
 	}
 
 	@Override
-	public Desa update(Desa desa) {
-		return desaRepository.update(desa);
+	public Desa update(Desa desa, String idKecamatan) {
+		return desaRepository.update(desa, idKecamatan);
 	}
 
 	@Override

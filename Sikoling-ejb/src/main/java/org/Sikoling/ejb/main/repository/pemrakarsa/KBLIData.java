@@ -1,0 +1,51 @@
+package org.Sikoling.ejb.main.repository.pemrakarsa;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+
+@Entity
+@Table(name="tbl_kbli")
+@NamedQuery(name="KBLIData.findAll", query="SELECT k FROM KBLIData k")
+public class KBLIData implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private String kode;
+
+	private String nama;
+
+	@JoinColumn(name="nib_oss", referencedColumnName = "nib_oss")
+	@ManyToOne(optional = false)
+	private OSSData oss;
+
+	public KBLIData() {
+	}
+
+	public String getKode() {
+		return this.kode;
+	}
+
+	public void setKode(String kode) {
+		this.kode = kode;
+	}
+
+	public String getNama() {
+		return this.nama;
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+
+	public OSSData getOss() {
+		return this.oss;
+	}
+
+	public void setOss(OSSData oss) {
+		this.oss = oss;
+	}
+
+}

@@ -12,6 +12,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -24,18 +25,20 @@ public class KecamatanController {
 	@Inject
 	private IKecamatanService kecamatanService;
 	
+	@Path("{idKabupaten}")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KecamatanDTO save(KecamatanDTO kecamatanDTO) {
-		return new KecamatanDTO(kecamatanService.save(kecamatanDTO.toKecamatan()));
+	public KecamatanDTO save(KecamatanDTO kecamatanDTO, @PathParam("idKabupaten") String idKabupaten) {
+		return new KecamatanDTO(kecamatanService.save(kecamatanDTO.toKecamatan(), idKabupaten));
 	}
 	
+	@Path("{idKabupaten}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KecamatanDTO update(KecamatanDTO kecamatanDTO) {
-		return new KecamatanDTO(kecamatanService.update(kecamatanDTO.toKecamatan()));
+	public KecamatanDTO update(KecamatanDTO kecamatanDTO, @PathParam("idKabupaten") String idKabupaten) {
+		return new KecamatanDTO(kecamatanService.update(kecamatanDTO.toKecamatan(), idKabupaten));
 	}
 	
 	@GET
@@ -63,8 +66,8 @@ public class KecamatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KecamatanDTO> getByQueryNama(@QueryParam("nama") String nama) {
-		return kecamatanService.getByQueryNama(nama)
+	public List<KecamatanDTO> getByNama(@QueryParam("nama") String nama) {
+		return kecamatanService.getByNama(nama)
 				.stream()
 				.map(k -> new KecamatanDTO(k))
 				.collect(Collectors.toList());
@@ -74,9 +77,9 @@ public class KecamatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KecamatanDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
+	public List<KecamatanDTO> getByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
 			@QueryParam("pageSize") Integer pageSize) {
-		return kecamatanService.getByQueryNamaAndPage(nama, page, pageSize)
+		return kecamatanService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(k -> new KecamatanDTO(k))
 				.collect(Collectors.toList());
@@ -109,9 +112,9 @@ public class KecamatanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KecamatanDTO> getByKabupatenAndQueryNama(@QueryParam("idKabupaten") String idKabupaten, 
+	public List<KecamatanDTO> getByKabupatenAndNama(@QueryParam("idKabupaten") String idKabupaten, 
 			@QueryParam("idKabupaten") String nama) {
-		return kecamatanService.getByKabupatenAndQueryNama(idKabupaten, nama)
+		return kecamatanService.getByKabupatenAndNama(idKabupaten, nama)
 				.stream()
 				.map(k -> new KecamatanDTO(k))
 				.collect(Collectors.toList());
@@ -123,7 +126,7 @@ public class KecamatanController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<KecamatanDTO> getByKabupatenAndQueryNamaAndPage(@QueryParam("idKabupaten") String idKabupaten, 
 			@QueryParam("idKabupaten") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kecamatanService.getByKabupatenAndQueryNamaAndPage(idKabupaten, nama, page, pageSize)
+		return kecamatanService.getByKabupatenAndNamaAndPage(idKabupaten, nama, page, pageSize)
 				.stream()
 				.map(k -> new KecamatanDTO(k))
 				.collect(Collectors.toList());

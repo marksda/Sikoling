@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
 
-public interface IDesaRepository extends IRepository<Desa> {
+public interface IDesaRepository extends IRepository2<Desa, String> {
 	List<Desa> getAllByPage(Integer page, Integer pageSize);
 	List<Desa> getByNama(String nama);
 	List<Desa> getByNamaAndPage(String nama, Integer page, Integer pageSize);

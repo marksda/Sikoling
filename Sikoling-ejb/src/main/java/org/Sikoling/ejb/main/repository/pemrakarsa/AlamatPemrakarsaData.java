@@ -11,12 +11,12 @@ import jakarta.persistence.*;
 
 
 @Embeddable
-@Table(name="master.tbl_alamat_pemrakarsa")
-@NamedQueries({
-@NamedQuery(name="AlamatPemrakarsaData.findAll", query="SELECT a FROM AlamatPemrakarsaData a")
+@AttributeOverrides({
+@AttributeOverride( name = "keterangan", column = @Column(name = "detail_alamat"))
 })
 public class AlamatPemrakarsaData implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = -8334774162037892428L;
 
 	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne
