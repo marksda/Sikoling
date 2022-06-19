@@ -15,13 +15,13 @@ public class PenanggungJawabService implements IPenanggungJawabService {
 	}
 
 	@Override
-	public PenanggungJawab save(PenanggungJawab t) {
-		return penanggungJawabRepository.save(t);
+	public PenanggungJawab save(PenanggungJawab t, String idPemrakarsa) {
+		return penanggungJawabRepository.save(t, idPemrakarsa);
 	}
 
 	@Override
-	public PenanggungJawab update(PenanggungJawab t) {
-		return penanggungJawabRepository.update(t);
+	public PenanggungJawab update(PenanggungJawab t, String idPemrakarsa) {
+		return penanggungJawabRepository.update(t, idPemrakarsa);
 	}
 
 	@Override

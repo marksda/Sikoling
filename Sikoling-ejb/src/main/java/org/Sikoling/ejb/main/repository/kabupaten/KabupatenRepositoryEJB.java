@@ -24,13 +24,13 @@ public class KabupatenRepositoryEJB implements IKabupatenRepository {
 	}
 
 	@Override
-	public Kabupaten save(Kabupaten t) {
-		return kabupatenRepositoryJPA.save(t);
+	public Kabupaten save(Kabupaten t, String s) {
+		return kabupatenRepositoryJPA.save(t, s);
 	}
 
 	@Override
-	public Kabupaten update(Kabupaten t) {
-		return kabupatenRepositoryJPA.update(t);
+	public Kabupaten update(Kabupaten t, String s) {
+		return kabupatenRepositoryJPA.update(t, s);
 	}
 
 	@Override

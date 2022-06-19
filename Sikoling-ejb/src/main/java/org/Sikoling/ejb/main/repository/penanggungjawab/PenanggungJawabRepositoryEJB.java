@@ -18,13 +18,13 @@ public class PenanggungJawabRepositoryEJB implements IPenanggungJawabRepository 
 	}
 
 	@Override
-	public PenanggungJawab save(PenanggungJawab t) {
-		return penanggungJawabRepositoryJPA.save(t);
+	public PenanggungJawab save(PenanggungJawab t, String idPemrakarsa) {
+		return penanggungJawabRepositoryJPA.save(t, idPemrakarsa);
 	}
 
 	@Override
-	public PenanggungJawab update(PenanggungJawab t) {
-		return penanggungJawabRepositoryJPA.update(t);
+	public PenanggungJawab update(PenanggungJawab t, String idPemrakarsa) {
+		return penanggungJawabRepositoryJPA.update(t, idPemrakarsa);
 	}
 
 	@Override

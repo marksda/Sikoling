@@ -2,13 +2,8 @@ package org.Sikoling.ejb.main.repository.penanggungjawab;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-
-import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
-import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
+import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
 
 
 @Entity
@@ -18,46 +13,23 @@ import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 @NamedQuery(name="PenanggungJawabData.findByNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama ILIKE :nama"),
 })
 public class PenanggungJawabData implements Serializable {
+	
 	private static final long serialVersionUID = 6630651928270252860L;
 
 	@Id
 	private String id;
-
-	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-	private DesaData desa;
-
-	@Column(name="detail_alamat")
-	private String detailAlamat;
-
+	
+	@JoinColumn(name = "person", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private PersonData person;
+	
+	@JoinColumn(name = "pemrakarsa", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private PemrakarsaData pemrakarsa;
+	
 	@JoinColumn(name = "jabatan", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private JabatanData jabatan;
-
-	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private KabupatenData kabupaten;
-
-	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private KecamatanData kecamatan;
-
-	@Column(name="nama")
-	private String nama;
-
-	@Column(name="nomor_handphone")
-	private String nomorHandphone;
-
-	@Column(name="nomor_identitas")
-	private String nomorIdentitas;
-
-	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private PropinsiData propinsi;
-
-	@JoinColumn(name = "sex", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private JenisKelaminData sex;
 	
 	public PenanggungJawabData() {
 	}
@@ -70,22 +42,6 @@ public class PenanggungJawabData implements Serializable {
 		this.id = id;
 	}
 
-	public DesaData getDesa() {
-		return this.desa;
-	}
-
-	public void setDesa(DesaData desa) {
-		this.desa = desa;
-	}
-
-	public String getDetailAlamat() {
-		return this.detailAlamat;
-	}
-
-	public void setDetailAlamat(String detailAlamat) {
-		this.detailAlamat = detailAlamat;
-	}
-
 	public JabatanData getJabatan() {
 		return this.jabatan;
 	}
@@ -94,60 +50,20 @@ public class PenanggungJawabData implements Serializable {
 		this.jabatan = jabatan;
 	}
 
-	public KabupatenData getKabupaten() {
-		return this.kabupaten;
+	public PersonData getPerson() {
+		return person;
 	}
 
-	public void setKabupaten(KabupatenData kabupaten) {
-		this.kabupaten = kabupaten;
+	public void setPerson(PersonData person) {
+		this.person = person;
 	}
 
-	public KecamatanData getKecamatan() {
-		return this.kecamatan;
+	public PemrakarsaData getPemrakarsa() {
+		return pemrakarsa;
 	}
 
-	public void setKecamatan(KecamatanData kecamatan) {
-		this.kecamatan = kecamatan;
+	public void setPemrakarsa(PemrakarsaData pemrakarsa) {
+		this.pemrakarsa = pemrakarsa;
 	}
-
-	public String getNama() {
-		return this.nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-
-	public String getNomorHandphone() {
-		return this.nomorHandphone;
-	}
-
-	public void setNomorHandphone(String nomorHandphone) {
-		this.nomorHandphone = nomorHandphone;
-	}
-
-	public String getNomorIdentitas() {
-		return this.nomorIdentitas;
-	}
-
-	public void setNomorIdentitas(String nomorIdentitas) {
-		this.nomorIdentitas = nomorIdentitas;
-	}
-
-	public PropinsiData getPropinsi() {
-		return this.propinsi;
-	}
-
-	public void setPropinsi(PropinsiData propinsi) {
-		this.propinsi = propinsi;
-	}
-
-	public JenisKelaminData getSex() {
-		return this.sex;
-	}
-
-	public void setSex(JenisKelaminData sex) {
-		this.sex = sex;
-	}
-
+	
 }

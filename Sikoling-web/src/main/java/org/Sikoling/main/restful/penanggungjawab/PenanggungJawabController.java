@@ -13,6 +13,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -25,18 +26,20 @@ public class PenanggungJawabController {
 	@Inject
 	private IPenanggungJawabService penanggungJawabService;
 	
+	@Path("{idPemrakarsa}")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PenanggungJawabDTO save(PenanggungJawabDTO pj) {
-		return new PenanggungJawabDTO(penanggungJawabService.save(pj.toPenanggungJawab()));
+	public PenanggungJawabDTO save(PenanggungJawabDTO pj, @PathParam("idPemrakarsa") String idPemrakarsa) {
+		return new PenanggungJawabDTO(penanggungJawabService.save(pj.toPenanggungJawab(), idPemrakarsa));
 	}
 	
+	@Path("{idPemrakarsa}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PenanggungJawabDTO update(PenanggungJawabDTO pj) {
-		return new PenanggungJawabDTO(penanggungJawabService.update(pj.toPenanggungJawab()));
+	public PenanggungJawabDTO update(PenanggungJawabDTO pj, @PathParam("idPemrakarsa") String idPemrakarsa) {
+		return new PenanggungJawabDTO(penanggungJawabService.update(pj.toPenanggungJawab(), idPemrakarsa));
 	}
 	
 	@GET
