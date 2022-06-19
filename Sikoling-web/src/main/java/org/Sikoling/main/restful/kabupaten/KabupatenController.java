@@ -12,6 +12,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -24,18 +25,20 @@ public class KabupatenController {
 	@Inject
 	private IKabupatenService kabupatenService;
 	
+	@Path("{idPropinsi}")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KabupatenDTO save(KabupatenDTO kabupatenDTO) {
-		return new KabupatenDTO(kabupatenService.save(kabupatenDTO.toKabupaten()));
+	public KabupatenDTO save(KabupatenDTO kabupatenDTO, @PathParam("idKabupaten") String idPropinsi) {
+		return new KabupatenDTO(kabupatenService.save(kabupatenDTO.toKabupaten(), idPropinsi));
 	}
 	
+	@Path("{idPropinsi}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KabupatenDTO update(KabupatenDTO kabupatenDTO) {
-		return new KabupatenDTO(kabupatenService.update(kabupatenDTO.toKabupaten()));
+	public KabupatenDTO update(KabupatenDTO kabupatenDTO, @PathParam("idKabupaten") String idPropinsi) {
+		return new KabupatenDTO(kabupatenService.update(kabupatenDTO.toKabupaten(), idPropinsi));
 	}
 	
 	@GET
@@ -63,7 +66,7 @@ public class KabupatenController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByQueryNama(@QueryParam("nama") String nama) {
+	public List<KabupatenDTO> getByNama(@QueryParam("nama") String nama) {
 		return kabupatenService.getByQueryNama(nama)
 				.stream()
 				.map(k -> new KabupatenDTO(k))
@@ -74,7 +77,7 @@ public class KabupatenController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByQueryNamAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
+	public List<KabupatenDTO> getByNamAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
 			@QueryParam("pageSize") Integer pageSize) {
 		return kabupatenService.getByQueryNamAndPage(nama, page, pageSize)
 				.stream()
@@ -109,7 +112,7 @@ public class KabupatenController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByIdPropinsiAndQueryNama(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("nama") String nama) {
+	public List<KabupatenDTO> getByIdPropinsiAndNama(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("nama") String nama) {
 		return kabupatenService.getByIdPropinsiAndQueryNama(idPropinsi, nama)
 				.stream()
 				.map(k -> new KabupatenDTO(k))
@@ -120,7 +123,7 @@ public class KabupatenController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByIdPropinsiAndQueryNamaAndPage(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("nama") String nama,
+	public List<KabupatenDTO> getByIdPropinsiAndNamaAndPage(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return kabupatenService.getByIdPropinsiAndQueryNamaAndPage(idPropinsi, nama, page, pageSize)
 				.stream()

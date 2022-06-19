@@ -1,6 +1,9 @@
 package org.Sikoling.ejb.main.repository.kabupaten;
 
 import java.io.Serializable;
+
+import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+
 import jakarta.persistence.*;
 
 
@@ -20,8 +23,9 @@ public class KabupatenData implements Serializable {
 	@Column(name="nama")
 	private String nama;
 
-	@Column(name="propinsi")
-	private String idPropinsi;
+	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private PropinsiData propinsi;
 
 	public KabupatenData() {
 	}
@@ -42,12 +46,12 @@ public class KabupatenData implements Serializable {
 		this.nama = nama;
 	}
 
-	public String getIdPropinsi() {
-		return this.idPropinsi;
+	public PropinsiData getPropinsi() {
+		return this.propinsi;
 	}
 
-	public void setIdPropinsi(String idPropinsi) {
-		this.idPropinsi = idPropinsi;
+	public void setPropinsi(PropinsiData propinsi) {
+		this.propinsi = propinsi;
 	}
 	
 }

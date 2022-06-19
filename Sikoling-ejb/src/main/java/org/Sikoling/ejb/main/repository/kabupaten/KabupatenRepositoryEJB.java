@@ -39,13 +39,13 @@ public class KabupatenRepositoryEJB implements IKabupatenRepository {
 	}
 
 	@Override
-	public List<Kabupaten> getByQueryNama(String nama) {
-		return kabupatenRepositoryJPA.getByQueryNama(nama);
+	public List<Kabupaten> getByNama(String nama) {
+		return kabupatenRepositoryJPA.getByNama(nama);
 	}
 
 	@Override
-	public List<Kabupaten> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kabupatenRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Kabupaten> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return kabupatenRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
@@ -59,14 +59,14 @@ public class KabupatenRepositoryEJB implements IKabupatenRepository {
 	}
 
 	@Override
-	public List<Kabupaten> getByPropinsiAndQueryNama(String idPropinsi, String nama) {
-		return kabupatenRepositoryJPA.getByPropinsiAndQueryNama(idPropinsi, nama);
+	public List<Kabupaten> getByPropinsiAndNama(String idPropinsi, String nama) {
+		return kabupatenRepositoryJPA.getByPropinsiAndNama(idPropinsi, nama);
 	}
 
 	@Override
-	public List<Kabupaten> getByPropinsiAndQueryNamaAndPage(String idPropinsi, String nama, Integer page,
+	public List<Kabupaten> getByPropinsiAndNamaAndPage(String idPropinsi, String nama, Integer page,
 			Integer pageSize) {
-		return kabupatenRepositoryJPA.getByPropinsiAndQueryNamaAndPage(idPropinsi, nama, page, pageSize);
+		return kabupatenRepositoryJPA.getByPropinsiAndNamaAndPage(idPropinsi, nama, page, pageSize);
 	}
 
 }

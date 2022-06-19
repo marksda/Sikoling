@@ -14,13 +14,13 @@ public class KabupatenService implements IKabupatenService {
 	}
 	
 	@Override
-	public Kabupaten save(Kabupaten kabupaten) {		
-		return kabupatenRepository.save(kabupaten);
+	public Kabupaten save(Kabupaten kabupaten, String idPropinsi) {		
+		return kabupatenRepository.save(kabupaten, idPropinsi);
 	}
 
 	@Override
-	public Kabupaten update(Kabupaten kabupaten) {
-		return kabupatenRepository.update(kabupaten);
+	public Kabupaten update(Kabupaten kabupaten, String idPropinsi) {
+		return kabupatenRepository.update(kabupaten, idPropinsi);
 	}
 
 	@Override
@@ -35,12 +35,12 @@ public class KabupatenService implements IKabupatenService {
 
 	@Override
 	public List<Kabupaten> getByQueryNama(String nama) {
-		return kabupatenRepository.getByQueryNama(nama);
+		return kabupatenRepository.getByNama(nama);
 	}
 
 	@Override
 	public List<Kabupaten> getByQueryNamAndPage(String nama, Integer page, Integer pageSize) {
-		return kabupatenRepository.getByQueryNamaAndPage(nama, page, pageSize);
+		return kabupatenRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
@@ -55,12 +55,12 @@ public class KabupatenService implements IKabupatenService {
 
 	@Override
 	public List<Kabupaten> getByIdPropinsiAndQueryNama(String idPropinsi, String nama) {
-		return kabupatenRepository.getByPropinsiAndQueryNama(idPropinsi, nama);
+		return kabupatenRepository.getByPropinsiAndNama(idPropinsi, nama);
 	}
 
 	@Override
 	public List<Kabupaten> getByIdPropinsiAndQueryNamaAndPage(String idPropinsi, String nama, Integer page, Integer pageSize) {
-		return kabupatenRepository.getByPropinsiAndQueryNamaAndPage(idPropinsi, nama, page, pageSize);
+		return kabupatenRepository.getByPropinsiAndNamaAndPage(idPropinsi, nama, page, pageSize);
 	}
 
 }

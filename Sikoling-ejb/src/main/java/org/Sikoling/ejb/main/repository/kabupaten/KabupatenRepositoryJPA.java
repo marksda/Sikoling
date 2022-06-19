@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
+import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+
 import jakarta.persistence.EntityManager;
 
 public class KabupatenRepositoryJPA implements IKabupatenRepository {
@@ -16,16 +18,16 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 
 	@Override
-	public Kabupaten save(Kabupaten t) {
-		KabupatenData kabupatenData = convertKabupatenToKabupatenData(t);
+	public Kabupaten save(Kabupaten t, String s) {
+		KabupatenData kabupatenData = convertKabupatenToKabupatenData(t, s);
 		entityManager.persist(kabupatenData);
 		entityManager.flush();		
 		return convertKabupatenDataToKabupaten(kabupatenData);
 	}
 
 	@Override
-	public Kabupaten update(Kabupaten t) {
-		KabupatenData kabupatenData = convertKabupatenToKabupatenData(t);
+	public Kabupaten update(Kabupaten t, String s) {
+		KabupatenData kabupatenData = convertKabupatenToKabupatenData(t, s);
 		kabupatenData = entityManager.merge(kabupatenData);
 		return convertKabupatenDataToKabupaten(kabupatenData);
 	}
@@ -51,7 +53,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 	
 	@Override
-	public List<Kabupaten> getByQueryNama(String nama) {
+	public List<Kabupaten> getByNama(String nama) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("kabupatenData.findAllByQueryNama", KabupatenData.class)
 				.setParameter("nama", nama)
@@ -62,7 +64,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 	
 	@Override
-	public List<Kabupaten> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Kabupaten> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("kabupatenData.findAllByQueryNama", KabupatenData.class)
 				.setParameter("nama", nama)
@@ -97,7 +99,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 
 	@Override
-	public List<Kabupaten> getByPropinsiAndQueryNama(String idPropinsi, String nama) {		
+	public List<Kabupaten> getByPropinsiAndNama(String idPropinsi, String nama) {		
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("kabupatenData.findAllByIdPropinsiAndQueryNama", KabupatenData.class)
 				.setParameter("nama", nama)
@@ -109,7 +111,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 	
 	@Override
-	public List<Kabupaten> getByPropinsiAndQueryNamaAndPage(String idPropinsi, String nama, Integer page,
+	public List<Kabupaten> getByPropinsiAndNamaAndPage(String idPropinsi, String nama, Integer page,
 			Integer pageSize) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("kabupatenData.findAllByIdPropinsiAndQueryNama", KabupatenData.class)
@@ -124,14 +126,16 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	}
 	
 	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData kabupatenData) {
-		return new Kabupaten(kabupatenData.getId(), kabupatenData.getNama(), kabupatenData.getIdPropinsi());
+		return new Kabupaten(kabupatenData.getId(), kabupatenData.getNama());
 	}
 	
-	private KabupatenData convertKabupatenToKabupatenData(Kabupaten kabupaten) {
+	private KabupatenData convertKabupatenToKabupatenData(Kabupaten kabupaten, String idPropinsi) {
 		KabupatenData kabupatenData = new KabupatenData();
 		kabupatenData.setId(kabupaten.getId());
 		kabupatenData.setNama(kabupaten.getNama());
-		kabupatenData.setIdPropinsi(kabupaten.getIdPropinsi());
+		PropinsiData propinsiData = new PropinsiData();
+		propinsiData.setId(idPropinsi);
+		kabupatenData.setPropinsi(propinsiData);
 		return kabupatenData;
 	}
 

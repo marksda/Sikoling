@@ -15,7 +15,6 @@ public class PropinsiData implements Serializable {
 	@Id
 	private String id;
 
-	@Column(name="nama")
 	private String nama;
 
 	public PropinsiData() {

@@ -10,7 +10,6 @@ public class KabupatenDTO implements Serializable {
 	private static final long serialVersionUID = -4317489216038458871L;
 	private String id;
 	private String nama;
-	private String idPropinsi;
 	
 	public KabupatenDTO() {
 	}
@@ -18,13 +17,6 @@ public class KabupatenDTO implements Serializable {
 	public KabupatenDTO(Kabupaten kabupaten) {
 		this.id = kabupaten.getId();
 		this.nama = kabupaten.getNama();
-		this.idPropinsi = kabupaten.getIdPropinsi();
-	}
-
-	public KabupatenDTO(String id, String nama, String idPropinsi) {
-		this.id = id;
-		this.nama = nama;
-		this.idPropinsi = idPropinsi;
 	}
 
 	public String getId() {
@@ -43,24 +35,15 @@ public class KabupatenDTO implements Serializable {
 		this.nama = nama;
 	}
 
-	public String getIdPropinsi() {
-		return idPropinsi;
-	}
-
-	public void setIdPropinsi(String idPropinsi) {
-		this.idPropinsi = idPropinsi;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        hash = 13 * hash + Objects.hashCode(this.nama);
-        hash = 13 * hash + Objects.hashCode(this.idPropinsi);
+		int hash = 29;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -87,10 +70,6 @@ public class KabupatenDTO implements Serializable {
         if (this.nama != other.nama) {
             return false;
         }
-        
-        if (this.idPropinsi != other.idPropinsi) {
-            return false;
-        }
 
         return true;
 	}
@@ -101,7 +80,7 @@ public class KabupatenDTO implements Serializable {
 	}
 	
 	public Kabupaten toKabupaten() {
-		return new Kabupaten(id, nama, idPropinsi);
+		return new Kabupaten(id, nama);
 	}
 
 }
