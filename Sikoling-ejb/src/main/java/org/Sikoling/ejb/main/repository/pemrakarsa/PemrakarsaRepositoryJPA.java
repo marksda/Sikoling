@@ -31,6 +31,7 @@ import org.Sikoling.ejb.main.repository.user.UserData;
 
 import jakarta.persistence.EntityManager;
 
+
 public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 	
 	private final EntityManager entityManager;	
@@ -78,7 +79,7 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 	}
 
 	@Override
-	public List<Pemrakarsa> getByQueryNama(String nama) {
+	public List<Pemrakarsa> getByNama(String nama) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PemrakarsaData.class)
 				.setParameter("nama", nama)
@@ -89,7 +90,7 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 	}
 
 	@Override
-	public List<Pemrakarsa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Pemrakarsa> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PemrakarsaData.class)
 				.setParameter("nama", nama)

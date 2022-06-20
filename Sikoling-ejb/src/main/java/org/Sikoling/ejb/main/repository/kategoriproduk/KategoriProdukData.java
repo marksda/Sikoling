@@ -4,10 +4,6 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 
-/**
- * The persistent class for the tbl_kategori_produk database table.
- * 
- */
 @Entity
 @Table(name="master.tbl_kategori_produk")
 @NamedQueries({

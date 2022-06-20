@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.main.repository.pemrakarsa;
 
 import java.io.Serializable;
-
 import jakarta.persistence.*;
 
 

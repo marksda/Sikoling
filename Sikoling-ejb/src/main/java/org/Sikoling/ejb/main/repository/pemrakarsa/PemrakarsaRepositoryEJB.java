@@ -39,13 +39,13 @@ public class PemrakarsaRepositoryEJB implements IPemrakarsaRepository {
 	}
 
 	@Override
-	public List<Pemrakarsa> getByQueryNama(String nama) {
-		return pemrakarsaRepositoryJPA.getByQueryNama(nama);
+	public List<Pemrakarsa> getByNama(String nama) {
+		return pemrakarsaRepositoryJPA.getByNama(nama);
 	}
 
 	@Override
-	public List<Pemrakarsa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return pemrakarsaRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Pemrakarsa> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return pemrakarsaRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override

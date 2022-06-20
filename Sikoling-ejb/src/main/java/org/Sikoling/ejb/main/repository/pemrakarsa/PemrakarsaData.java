@@ -2,7 +2,6 @@ package org.Sikoling.ejb.main.repository.pemrakarsa;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.user.UserData;

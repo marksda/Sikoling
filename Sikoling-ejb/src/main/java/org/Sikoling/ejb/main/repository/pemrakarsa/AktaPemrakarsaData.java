@@ -2,7 +2,6 @@ package org.Sikoling.ejb.main.repository.pemrakarsa;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import jakarta.persistence.*;
 
 @Embeddable

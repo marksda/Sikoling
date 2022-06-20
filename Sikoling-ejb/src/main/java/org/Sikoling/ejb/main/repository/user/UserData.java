@@ -4,8 +4,6 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
 
-
-
 @Entity
 @Table(name="master.tbl_user")
 @NamedQueries({

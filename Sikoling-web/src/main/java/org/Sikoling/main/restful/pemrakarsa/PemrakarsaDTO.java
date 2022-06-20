@@ -1,7 +1,7 @@
 package org.Sikoling.main.restful.pemrakarsa;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.main.restful.bentukusaha.BentukUsahaDTO;
@@ -15,7 +15,10 @@ public class PemrakarsaDTO implements Serializable {
 	private AktaPemrakarsaDTO aktaPemrakarsa;
 	private AlamatPemrakarsaDTO alamat;
 	private KontakPemrakarsaDTO kontakPemrakarsa;
-	
+	private OSSDTO oss;
+	private String nama;
+	private String npwp;
+	private PenanggungJawabDTO penanggungJawab;	
 	
 	private String idCreator;
 	
@@ -26,37 +29,28 @@ public class PemrakarsaDTO implements Serializable {
 	public PemrakarsaDTO(Pemrakarsa p) {
 		this.id = p.getId();
 		this.bentukUsaha = new BentukUsahaDTO(p.getBentukUsaha());
-		this.nomorIndukBerusaha = p.getNomorIndukBerusaha();
-		this.nama = p.getNama();
-		this.namaNotaris = p.getNamaNotaris();
+		this.aktaPemrakarsa = new AktaPemrakarsaDTO(p.getAktaPendirian());
 		this.alamat = new AlamatPemrakarsaDTO(p.getAlamat());
-		this.telepone = p.getTelepone();
-		this.fax = p.getFax();
+		this.kontakPemrakarsa = new KontakPemrakarsaDTO(p.getKontakPemrakarsa());
+		this.oss = new OSSDTO(p.getOss());
+		this.nama = p.getNama();
 		this.npwp = p.getNpwp();
-		this.email = p.getEmail();
 		this.penanggungJawab = new PenanggungJawabDTO(p.getPenanggungJawab());
-		this.tanggalNotaris = p.getTanggalNotaris();
-		this.tanggalOSS = p.getTanggalOSS();
-		this.idCreator = p.getIdCreator();
 	}	
 	
-	public PemrakarsaDTO(String id, BentukUsahaDTO bentukUsaha, String nomorIndukBerusaha, String nama,
-			String namaNotaris, AlamatPemrakarsaDTO alamat, String telepone, String fax, String npwp, String email,
-			PenanggungJawabDTO penanggungJawab, Date tanggalNotaris, Date tanggalOSS, String idCreator) {
+	public PemrakarsaDTO(String id, BentukUsahaDTO bentukUsaha, AktaPemrakarsaDTO aktaPemrakarsa,
+			AlamatPemrakarsaDTO alamat, KontakPemrakarsaDTO kontakPemrakarsa, OSSDTO oss, String nama, String npwp,
+			PenanggungJawabDTO penanggungJawab, String idCreator) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
-		this.nomorIndukBerusaha = nomorIndukBerusaha;
-		this.nama = nama;
-		this.namaNotaris = namaNotaris;
+		this.aktaPemrakarsa = aktaPemrakarsa;
 		this.alamat = alamat;
-		this.telepone = telepone;
-		this.fax = fax;
+		this.kontakPemrakarsa = kontakPemrakarsa;
+		this.oss = oss;
+		this.nama = nama;
 		this.npwp = npwp;
-		this.email = email;
 		this.penanggungJawab = penanggungJawab;
-		this.tanggalNotaris = tanggalNotaris;
-		this.tanggalOSS = tanggalOSS;
 		this.idCreator = idCreator;
 	}
 
@@ -76,28 +70,12 @@ public class PemrakarsaDTO implements Serializable {
 		this.bentukUsaha = bentukUsaha;
 	}
 
-	public String getNomorIndukBerusaha() {
-		return nomorIndukBerusaha;
-	}
-
-	public void setNomorIndukBerusaha(String nomorIndukBerusaha) {
-		this.nomorIndukBerusaha = nomorIndukBerusaha;
-	}
-
 	public String getNama() {
 		return nama;
 	}
 
 	public void setNama(String nama) {
 		this.nama = nama;
-	}
-
-	public String getNamaNotaris() {
-		return namaNotaris;
-	}
-
-	public void setNamaNotaris(String namaNotaris) {
-		this.namaNotaris = namaNotaris;
 	}
 
 	public AlamatPemrakarsaDTO getAlamat() {
@@ -108,36 +86,12 @@ public class PemrakarsaDTO implements Serializable {
 		this.alamat = alamat;
 	}
 
-	public String getTelepone() {
-		return telepone;
-	}
-
-	public void setTelepone(String telepone) {
-		this.telepone = telepone;
-	}
-
-	public String getFax() {
-		return fax;
-	}
-
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
-
 	public String getNpwp() {
 		return npwp;
 	}
 
 	public void setNpwp(String npwp) {
 		this.npwp = npwp;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public PenanggungJawabDTO getPenanggungJawab() {
@@ -148,22 +102,6 @@ public class PemrakarsaDTO implements Serializable {
 		this.penanggungJawab = penanggungJawab;
 	}
 
-	public Date getTanggalNotaris() {
-		return tanggalNotaris;
-	}
-
-	public void setTanggalNotaris(Date tanggalNotaris) {
-		this.tanggalNotaris = tanggalNotaris;
-	}
-
-	public Date getTanggalOSS() {
-		return tanggalOSS;
-	}
-
-	public void setTanggalOSS(Date tanggalOSS) {
-		this.tanggalOSS = tanggalOSS;
-	}
-
 	public String getIdCreator() {
 		return idCreator;
 	}
@@ -171,13 +109,74 @@ public class PemrakarsaDTO implements Serializable {
 	public void setIdCreator(String idCreator) {
 		this.idCreator = idCreator;
 	}
+	
+	public AktaPemrakarsaDTO getAktaPemrakarsa() {
+		return aktaPemrakarsa;
+	}
+
+	public void setAktaPemrakarsa(AktaPemrakarsaDTO aktaPemrakarsa) {
+		this.aktaPemrakarsa = aktaPemrakarsa;
+	}
+
+	public KontakPemrakarsaDTO getKontakPemrakarsa() {
+		return kontakPemrakarsa;
+	}
+
+	public void setKontakPemrakarsa(KontakPemrakarsaDTO kontakPemrakarsa) {
+		this.kontakPemrakarsa = kontakPemrakarsa;
+	}
+
+	public OSSDTO getOss() {
+		return oss;
+	}
+
+	public void setOss(OSSDTO oss) {
+		this.oss = oss;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}	
 	
-	public Pemrakarsa toPemrakarsa() {
-		return new Pemrakarsa(id, bentukUsaha.toBentukUsaha(), nomorIndukBerusaha, nama, namaNotaris, alamat.toAlamat(), 
-				telepone, fax, npwp, email, penanggungJawab.toPenanggungJawab(), tanggalNotaris, tanggalOSS, idCreator);
+	public int hashCode() {
+		int hash = 23;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        return hash;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final PemrakarsaDTO other = (PemrakarsaDTO) obj;
+        
+        if (!this.id.equalsIgnoreCase(other.id)) {
+            return false;
+        }        
+
+        return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PemrakarsaDTO{" + "id=" + id + ", nama=" + bentukUsaha.getSingkatan() +". " + nama + ", alamat=" 
+				+ alamat.getKeterangan() + '}';	  
+	}
+
+	public Pemrakarsa toPemrakarsa() {
+		return new Pemrakarsa(id, bentukUsaha.toBentukUsaha(), aktaPemrakarsa.toAktaPemrakarsa(), alamat.toAlamat(),
+				kontakPemrakarsa.toKontakPemrakarsa(), oss.toOSS(), nama, npwp, penanggungJawab.toPenanggungJawab());
+	}
+	
 }

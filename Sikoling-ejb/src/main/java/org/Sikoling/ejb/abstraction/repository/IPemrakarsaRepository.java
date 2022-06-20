@@ -6,8 +6,8 @@ import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 
 public interface IPemrakarsaRepository extends IRepository<Pemrakarsa> {
 	List<Pemrakarsa> getAllByPage(Integer page, Integer pageSize);
-	List<Pemrakarsa> getByQueryNama(String nama);
-	List<Pemrakarsa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<Pemrakarsa> getByNama(String nama);
+	List<Pemrakarsa> getByNamaAndPage(String nama, Integer page, Integer pageSize);
 	List<Pemrakarsa> getByCreator(String idCreator);
 	List<Pemrakarsa> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize);
 	List<Pemrakarsa> getByCreatorAndNama(String idCreator, String nama);

@@ -1,9 +1,7 @@
 package org.Sikoling.ejb.main.repository.kecamatan;
 
 import java.io.Serializable;
-
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-
 import jakarta.persistence.*;
 
 

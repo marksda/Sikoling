@@ -1,9 +1,7 @@
 package org.Sikoling.ejb.main.repository.kabupaten;
 
 import java.io.Serializable;
-
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-
 import jakarta.persistence.*;
 
 

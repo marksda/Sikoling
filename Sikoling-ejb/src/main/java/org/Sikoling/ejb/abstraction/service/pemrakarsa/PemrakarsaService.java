@@ -35,13 +35,13 @@ public class PemrakarsaService implements IPemrakarsaService {
 	}
 
 	@Override
-	public List<Pemrakarsa> getByQueryNama(String nama) {
-		return pemrakarsaRepository.getByQueryNama(nama);
+	public List<Pemrakarsa> getByNama(String nama) {
+		return pemrakarsaRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Pemrakarsa> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return pemrakarsaRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public List<Pemrakarsa> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+		return pemrakarsaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override

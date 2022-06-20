@@ -53,7 +53,7 @@ public class PemrakarsaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+	public List<PemrakarsaDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return pemrakarsaService.getAllByPage(page, pageSize)
 				.stream()
 				.map(t -> new PemrakarsaDTO(t))
@@ -64,8 +64,8 @@ public class PemrakarsaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByQueryNama(@QueryParam("nama") String nama) {
-		return pemrakarsaService.getByQueryNama(nama)
+	public List<PemrakarsaDTO> getByNama(@QueryParam("nama") String nama) {
+		return pemrakarsaService.getByNama(nama)
 				.stream()
 				.map(t -> new PemrakarsaDTO(t))
 				.collect(Collectors.toList());
@@ -75,9 +75,9 @@ public class PemrakarsaController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
+	public List<PemrakarsaDTO> getByNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return pemrakarsaService.getByQueryNamaAndPage(nama, page, pageSize)
+		return pemrakarsaService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(t -> new PemrakarsaDTO(t))
 				.collect(Collectors.toList());

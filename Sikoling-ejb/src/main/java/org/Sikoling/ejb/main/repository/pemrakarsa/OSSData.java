@@ -3,14 +3,8 @@ package org.Sikoling.ejb.main.repository.pemrakarsa;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.*;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 
 @Embeddable
 @AttributeOverrides({

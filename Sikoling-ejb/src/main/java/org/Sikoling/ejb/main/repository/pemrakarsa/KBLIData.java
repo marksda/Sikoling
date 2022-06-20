@@ -1,14 +1,10 @@
 package org.Sikoling.ejb.main.repository.pemrakarsa;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="tbl_kbli")
+@Table(name="master.tbl_kbli")
 @NamedQuery(name="KBLIData.findAll", query="SELECT k FROM KBLIData k")
 public class KBLIData implements Serializable {
 	private static final long serialVersionUID = 1L;

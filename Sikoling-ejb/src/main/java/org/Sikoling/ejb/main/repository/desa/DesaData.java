@@ -4,6 +4,7 @@ import java.io.Serializable;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name="master.tbl_desa")
 @NamedQueries({
