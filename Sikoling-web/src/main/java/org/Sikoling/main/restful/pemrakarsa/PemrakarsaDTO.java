@@ -12,17 +12,11 @@ public class PemrakarsaDTO implements Serializable {
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
 	private BentukUsahaDTO bentukUsaha;
-	private String nomorIndukBerusaha;
-	private String nama;
-	private String namaNotaris;	
+	private AktaPemrakarsaDTO aktaPemrakarsa;
 	private AlamatPemrakarsaDTO alamat;
-	private String telepone;
-	private String fax;
-	private String npwp;
-	private String email;
-	private PenanggungJawabDTO penanggungJawab;
-	private Date tanggalNotaris;
-	private Date tanggalOSS;
+	private KontakPemrakarsaDTO kontakPemrakarsa;
+	
+	
 	private String idCreator;
 	
 	public PemrakarsaDTO() {

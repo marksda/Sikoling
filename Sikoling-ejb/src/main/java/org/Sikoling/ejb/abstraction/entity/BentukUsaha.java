@@ -48,6 +48,10 @@ public class BentukUsaha implements Serializable{
 		return nama;
 	}
 
+	public String getSingkatan() {
+		return singkatan;
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -86,10 +90,6 @@ public class BentukUsaha implements Serializable{
 	@Override
 	public String toString() {
 		return "BentukUsaha{" + "id=" + id + ", nama=" + nama + "}";
-	}
-
-	public String getSingkatan() {
-		return singkatan;
 	}
 		
 }

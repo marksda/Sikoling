@@ -2,6 +2,8 @@ package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
+
 
 public class AktaPemrakarsa implements Serializable {
 
@@ -33,4 +35,48 @@ public class AktaPemrakarsa implements Serializable {
 		return namaNotaris;
 	}
 
+	public int hashCode() {
+		int hash = 17;
+        hash = 121 * hash + Objects.hashCode(this.nomor);
+        hash = 121 * hash + Objects.hashCode(this.tanggal.toString());
+        hash = 121 * hash + Objects.hashCode(this.nomor);
+        return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final AktaPemrakarsa other = (AktaPemrakarsa) obj;
+        
+        if (!this.nomor.equalsIgnoreCase(other.nomor)) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.tanggal, other.tanggal)) {
+            return false;
+        }
+        
+        if (!this.namaNotaris.equalsIgnoreCase(other.namaNotaris)) {
+            return false;
+        }
+
+        return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AktaPemrakarsa{" + "nomor=" + nomor + ", namaNotaris=" + namaNotaris + ", tanggal=" + tanggal.toString() + "}";
+	}
+		
 }

@@ -7,6 +7,8 @@ import org.Sikoling.ejb.abstraction.entity.AktaPemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.Jabatan;
+import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.KBLI;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
@@ -14,13 +16,16 @@ import org.Sikoling.ejb.abstraction.entity.KontakPemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.OSS;
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPemrakarsaRepository;
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
+import org.Sikoling.ejb.main.repository.penanggungjawab.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
+import org.Sikoling.ejb.main.repository.penanggungjawab.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 
@@ -184,7 +189,7 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 		ossData.setTanggal(p.getOss().getTanggal());	
 		ossData.setKbliDatas(p.getOss().getKblis()
 				.stream()
-				.map(t -> convertKBLIToKBData(t))
+				.map(t -> convertKBLIToKBLIData(t))
 				.collect(Collectors.toList())				
 				);		
 		pemrakarsaData.setOssData(ossData);		
@@ -209,7 +214,7 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 		AktaPemrakarsa aktaPemrakarsa = new AktaPemrakarsa(d.getAktaPemrakarsaData().getNomor(), d.getAktaPemrakarsaData().getTanggal(), 
 				d.getAktaPemrakarsaData().getNamaNotaris());		
 		
-		Alamat alamat = new Alamat(
+		Alamat alamatPemrakarsa = new Alamat(
 				new Propinsi(d.getAlamatPemrakarsaData().getPropinsi().getId(), d.getAlamatPemrakarsaData().getPropinsi().getNama()),
 				new Kabupaten(d.getAlamatPemrakarsaData().getKabupaten().getId(), d.getAlamatPemrakarsaData().getKabupaten().getNama()),
 				new Kecamatan(d.getAlamatPemrakarsaData().getKecamatan().getId(), d.getAlamatPemrakarsaData().getKecamatan().getNama()),
@@ -225,36 +230,30 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 				.map(dt -> convertKBLIDataToKBLI(dt))
 				.collect(Collectors.toList())
 				);
+		 
+		PenanggungJawabData pjd = entityManager.find(PenanggungJawabData.class, d.getPenanggungJawab().getId());
+		PersonData personData = pjd.getPerson();
+		AlamatPersonData alamatPJD = pjd.getPerson().getAlamat();
+		Person person = new Person(
+				personData.getId(), personData.getNama(), 
+				new JenisKelamin(pjd.getPerson().getSex().getId(), pjd.getPerson().getSex().getNama()),
+				new Alamat(
+						new Propinsi(alamatPJD.getPropinsi().getId(), alamatPJD.getPropinsi().getNama()), 
+						new Kabupaten(alamatPJD.getPropinsi().getId(), alamatPJD.getPropinsi().getNama()),
+						new Kecamatan(alamatPJD.getKecamatan().getId(), alamatPJD.getKecamatan().getNama()), 
+						new Desa(alamatPJD.getDesa().getId(), alamatPJD.getDesa().getNama()), 
+						alamatPJD.getDetailAlamat()), 
+				personData.getTelepone(), personData.getScanKtp());
 		
-//		PenanggungJawab penanggungJawab = new PenanggungJawab(
-//				d.getPenanggungJawab().getId(), d.getPenanggungJawab().getNama()
-//				null, null, alamat, null, null, null, null);
-		
-		
-//		PenanggungJawabData penanggungJawabData = d.getPenanggungJawab();
-//		PropinsiData propinsiDataPJ = penanggungJawabData.getPropinsi();
-//		Propinsi propinsiPJ = new Propinsi(propinsiDataPJ.getId(), propinsiDataPJ.getNama());
-//		KabupatenData kabupatenDataPJ = penanggungJawabData.getKabupaten();
-//		Kabupaten kabupatenPJ = new Kabupaten(kabupatenDataPJ.getId(), kabupatenDataPJ.getNama());
-//		KecamatanData kecamatanDataPJ = penanggungJawabData.getKecamatan();
-//		Kecamatan kecamatanPJ = new Kecamatan(kecamatanDataPJ.getId(), kecamatanDataPJ.getNama());
-//		DesaData desaDataPJ = penanggungJawabData.getDesa();
-//		Desa desaPJ = new Desa(desaDataPJ.getId(), desaDataPJ.getNama());
-//		Alamat alamatPJ = new Alamat(propinsiPJ, kabupatenPJ, kecamatanPJ, desaPJ, penanggungJawabData.getDetailAlamat());
-//		JabatanData jabatanData = penanggungJawabData.getJabatan();
-//		Jabatan jabatan = new Jabatan(jabatanData.getId(), jabatanData.getNama());
-//		JenisKelaminData jenisKelaminData = penanggungJawabData.getSex();
-//		JenisKelamin sex = new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama());		
-//		PenanggungJawab penanggungJawab = new PenanggungJawab(penanggungJawabData.getId(), penanggungJawabData.getNama(), 
-//				alamatPJ, jabatan, sex, penanggungJawabData.getNomorIdentitas(), penanggungJawabData.getNomorHandphone());
-//		
-//		return new Pemrakarsa(d.getId(), bentukUsaha, d.getNoNibOss(), d.getNama(), d.getNamaNotaris(), 
-//				alamat, d.getTelepone(), d.getFax(), d.getNoNpwp(), d.getAlamatEmail(), penanggungJawab, 
-//				d.getTanggalNotaris(), d.getTanggalOss(), d.getCreator().getId());
-		return null;
+		PenanggungJawab penanggungJawab = new PenanggungJawab(
+				pjd.getId(), person, new Jabatan(pjd.getJabatan().getId(), pjd.getJabatan().getNama()));
+
+		return new Pemrakarsa(
+				d.getId(), bentukUsaha, aktaPemrakarsa, alamatPemrakarsa, 
+				kontakPemrakarsa, oss, d.getNama(), d.getNoNpwp(), penanggungJawab);
 	}
 	
-	private KBLIData convertKBLIToKBData(KBLI t) {
+	private KBLIData convertKBLIToKBLIData(KBLI t) {
 		KBLIData kbliData = new KBLIData();
 		kbliData.setKode(t.getKode());
 		kbliData.setNama(t.getNama());
@@ -264,4 +263,5 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 	private KBLI convertKBLIDataToKBLI(KBLIData d) {
 		return new KBLI(d.getKode(), d.getNama());
 	}
+	
 }

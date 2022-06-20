@@ -10,12 +10,11 @@ import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
-import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
-
 import jakarta.persistence.EntityManager;
 
 public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository {
@@ -88,12 +87,15 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 
 	private PenanggungJawabData convertPenanggungJawabToPenanggungJawabData(PenanggungJawab t, String idPemrakarsa) {
 		PenanggungJawabData penanggungJawabData = new PenanggungJawabData();
+		
 		PersonData personData = new PersonData();
-		personData.setId(t.getNoIdentitas());
+		personData.setId(t.getPerson().getNik());
 		penanggungJawabData.setPerson(personData);
+		
 		PemrakarsaData pemrakarsaData = new PemrakarsaData();
 		pemrakarsaData.setId(idPemrakarsa);
 		penanggungJawabData.setPemrakarsa(pemrakarsaData);
+		
 		JabatanData jabatanData = new JabatanData();
 		jabatanData.setId(t.getJabatan().getId());
 		penanggungJawabData.setJabatan(jabatanData);
@@ -102,23 +104,22 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 	}
 	
 	private PenanggungJawab convertPenanggungJawabDataToPenanggungJawab(PenanggungJawabData d) {	
-		PenanggungJawabData penanggungJawabData = entityManager.find(PenanggungJawabData.class, d.getId());
-		AlamatPersonData alamatPersonData = penanggungJawabData.getPerson().getAlamat();
-		JenisKelaminData jenisKelaminData = penanggungJawabData.getPerson().getSex();
+		PenanggungJawabData pjd = entityManager.find(PenanggungJawabData.class, d.getId());
+		PersonData personData = pjd.getPerson();
 		
-		return new PenanggungJawab(
-				d.getId(), d.getPerson().getNama(),
+		AlamatPersonData alamatPJD = pjd.getPerson().getAlamat();
+		Person person = new Person(
+				personData.getId(), personData.getNama(), 
+				new JenisKelamin(pjd.getPerson().getSex().getId(), pjd.getPerson().getSex().getNama()),
 				new Alamat(
-						new Propinsi(alamatPersonData.getPropinsi().getId(), alamatPersonData.getPropinsi().getId()),
-						new Kabupaten(alamatPersonData.getKabupaten().getId(), alamatPersonData.getKabupaten().getNama()),
-						new Kecamatan(alamatPersonData.getKecamatan().getId(), alamatPersonData.getKecamatan().getNama()),
-						new Desa(alamatPersonData.getDesa().getId(), alamatPersonData.getDesa().getNama()),
-						alamatPersonData.getDetailAlamat()
-						),
-				new Jabatan(penanggungJawabData.getJabatan().getId(), penanggungJawabData.getJabatan().getNama()), 
-				new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama()), 
-				penanggungJawabData.getPerson().getId(), penanggungJawabData.getPerson().getTelepone()
-				);				
+						new Propinsi(alamatPJD.getPropinsi().getId(), alamatPJD.getPropinsi().getNama()), 
+						new Kabupaten(alamatPJD.getPropinsi().getId(), alamatPJD.getPropinsi().getNama()),
+						new Kecamatan(alamatPJD.getKecamatan().getId(), alamatPJD.getKecamatan().getNama()), 
+						new Desa(alamatPJD.getDesa().getId(), alamatPJD.getDesa().getNama()), 
+						alamatPJD.getDetailAlamat()), 
+				personData.getTelepone(), personData.getScanKtp());
+				
+		return new PenanggungJawab(pjd.getId(), person, new Jabatan(pjd.getJabatan().getId(), pjd.getJabatan().getNama()));
 	}
 
 }

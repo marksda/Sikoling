@@ -7,51 +7,26 @@ public class PenanggungJawab implements Serializable {
 
 	private static final long serialVersionUID = -9008266978579909965L;
 	private final String id;
-	private final String nama;
-	private final Alamat alamat;
+	private final Person person;
 	private final Jabatan jabatan;
-	private final JenisKelamin jenisKelamin;
-	private final String noIdentitas;
-	private final String noHandphone;
 	
-	public PenanggungJawab(String id, String nama, Alamat alamat, Jabatan jabatan, JenisKelamin jenisKelamin, 
-			String noIdentitas,	String noHandphone) {
+	public PenanggungJawab(String id, Person person, Jabatan jabatan) {
 		super();
 		this.id = id;
-		this.nama = nama;
-		this.alamat = alamat;
+		this.person = person;
 		this.jabatan = jabatan;
-		this.jenisKelamin = jenisKelamin;
-		this.noIdentitas = noIdentitas;
-		this.noHandphone = noHandphone;
 	}
 	
 	public String getId() {
 		return id;
 	}
 
-	public String getNama() {
-		return nama;
-	}
-	
-	public Alamat getAlamat() {
-		return alamat;
+	public Person getPerson() {
+		return person;
 	}
 	
 	public Jabatan getJabatan() {
 		return jabatan;
-	}
-	
-	public JenisKelamin getJenisKelamin() {
-		return jenisKelamin;
-	}
-	
-	public String getNoIdentitas() {
-		return noIdentitas;
-	}
-	
-	public String getNoHandphone() {
-		return noHandphone;
 	}
 	
 	public static long getSerialversionuid() {
@@ -60,13 +35,9 @@ public class PenanggungJawab implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.nama);
-		hash = 13 * hash + Objects.hashCode(this.alamat);
-		hash = 13 * hash + Objects.hashCode(this.jabatan);
-		hash = 13 * hash + Objects.hashCode(this.jenisKelamin);
-		hash = 13 * hash + Objects.hashCode(this.noIdentitas);
-		hash = 13 * hash + Objects.hashCode(this.noHandphone);
+		int hash = 79;
+		hash = 117 * hash + Objects.hashCode(this.id);
+		hash = 117 * hash + Objects.hashCode(this.person.toString());
 		return hash;
 	}
 	
@@ -86,22 +57,10 @@ public class PenanggungJawab implements Serializable {
         
         final PenanggungJawab other = (PenanggungJawab) obj;
         
-        if (!this.nama.equals(other.nama)) {
+        if (!this.id.equalsIgnoreCase(id)) {
             return false;
         }
-        if (!Objects.equals(this.alamat, other.alamat)) {
-            return false;
-        }
-        if (!this.jabatan.equals(other.jabatan)) {
-            return false;
-        }
-        if (!this.jenisKelamin.equals(other.jenisKelamin)) {
-            return false;
-        }
-        if (!this.noIdentitas.equals(other.noIdentitas)) {
-            return false;
-        }
-        if (!this.noHandphone.equals(other.noHandphone)) {
+        if (!Objects.equals(this.person, other.person)) {
             return false;
         }
         
@@ -110,8 +69,8 @@ public class PenanggungJawab implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "PenanggungJawab{" + "nama=" + nama + ", alamat=" + alamat.toString() + ", jabatan=" 
-				+ jabatan + ", sex=" + jenisKelamin + ", noIdentitas=" + noIdentitas + ", noHandphone=" + noHandphone + "}";
+		return "PenanggungJawab{" + "nik=" + person.getNik() + ", nama=" + person.getNama() + ", jabatan=" 
+				+ jabatan.getNama() + ", noHandphone=" + person.getTelepone() + "}";
 	}
                                                                                                                                    				
 }
