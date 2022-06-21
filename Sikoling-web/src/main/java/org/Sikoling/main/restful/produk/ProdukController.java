@@ -19,7 +19,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 @LocalBean
-@Path("Produk")
+@Path("produk")
 public class ProdukController {
 
 	@Inject
