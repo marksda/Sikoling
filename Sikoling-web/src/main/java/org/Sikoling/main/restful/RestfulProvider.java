@@ -1,5 +1,7 @@
 package org.Sikoling.main.restful;
 
+import java.util.Properties;
+
 import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
@@ -20,6 +22,7 @@ import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
 import org.Sikoling.ejb.abstraction.service.user.UserService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
+import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
 import org.Sikoling.ejb.abstraction.service.bentukusaha.BentukUsahaService;
@@ -40,6 +43,7 @@ import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabServi
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
 import org.Sikoling.ejb.abstraction.service.produk.ProdukService;
 import org.Sikoling.ejb.main.Infrastructure;
+import org.Sikoling.ejb.main.storage.disk.DiskStorageService;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -123,5 +127,10 @@ public class RestfulProvider {
 	public IProdukService getProdukService(
 			@Infrastructure IProdukRepository produkRepository) {
 		return new ProdukService(produkRepository);
+	}
+	
+	@Produces
+	public IStorageService getStorageService(Properties properties) {
+		return new DiskStorageService(properties.getProperty("STORAGE_PATH"));
 	}
 }

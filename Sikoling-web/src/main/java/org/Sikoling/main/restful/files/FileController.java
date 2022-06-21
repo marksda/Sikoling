@@ -26,6 +26,7 @@ import jakarta.ws.rs.core.UriInfo;
 public class FileController {
 	@Context
 	private UriInfo uriInfo;
+	
 	@Inject
 	private IStorageService storageService;
 	
@@ -45,4 +46,5 @@ public class FileController {
     public InputStream loadFile(@PathParam("fileKey") String fileKey) throws IOException {
         return storageService.load(fileKey);
     }
+	
 }

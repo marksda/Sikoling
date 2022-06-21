@@ -10,7 +10,7 @@ import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
 @Table(name="master.tbl_penanggung_jawab")
 @NamedQueries({
 @NamedQuery(name="PenanggungJawabData.findAll", query="SELECT p FROM PenanggungJawabData p"),
-@NamedQuery(name="PenanggungJawabData.findByNama", query="SELECT p FROM PenanggungJawabData p WHERE p.nama LIKE :nama"),
+@NamedQuery(name="PenanggungJawabData.findByNama", query="SELECT p FROM PenanggungJawabData p WHERE p.person.nama LIKE :nama"),
 })
 public class PenanggungJawabData implements Serializable {
 	

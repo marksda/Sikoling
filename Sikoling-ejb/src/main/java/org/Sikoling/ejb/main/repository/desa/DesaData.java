@@ -10,8 +10,8 @@ import jakarta.persistence.*;
 @NamedQueries({
 @NamedQuery(name="DesaData.findAll", query="SELECT d FROM DesaData d"),
 @NamedQuery(name="DesaData.findByNama", query="SELECT d FROM DesaData d WHERE d.nama LIKE :nama"),
-@NamedQuery(name="DesaData.findByKecamatan", query="SELECT d FROM DesaData d WHERE d.idKecamatan = :idKecamatan"),
-@NamedQuery(name="DesaData.findByKecamatanAndNama", query="SELECT d FROM DesaData d WHERE d.nama LIKE :nama AND d.idKecamatan = :idKecamatan")})
+@NamedQuery(name="DesaData.findByKecamatan", query="SELECT d FROM DesaData d WHERE d.kecamatan.id = :idKecamatan"),
+@NamedQuery(name="DesaData.findByKecamatanAndNama", query="SELECT d FROM DesaData d WHERE d.nama LIKE :nama AND d.kecamatan.id = :idKecamatan")})
 public class DesaData implements Serializable {
 	private static final long serialVersionUID = -5126550971303462658L;
 
@@ -22,7 +22,7 @@ public class DesaData implements Serializable {
 
 	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private KecamatanData kecamatanData;
+	private KecamatanData kecamatan;
 
 	public DesaData() {
 	}
@@ -43,12 +43,12 @@ public class DesaData implements Serializable {
 		this.nama = nama;
 	}
 
-	public KecamatanData getKecamatanData() {
-		return this.kecamatanData;
+	public KecamatanData getKecamatan() {
+		return this.kecamatan;
 	}
 
-	public void setKecamatanData(KecamatanData kecamatanData) {
-		this.kecamatanData = kecamatanData;
+	public void setKecamatan(KecamatanData kecamatanData) {
+		this.kecamatan = kecamatanData;
 	}
 	
 }

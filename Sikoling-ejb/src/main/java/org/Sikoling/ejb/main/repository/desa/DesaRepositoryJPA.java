@@ -132,7 +132,7 @@ public class DesaRepositoryJPA implements IDesaRepository {
 		desaData.setNama(desa.getNama());
 		KecamatanData kecamatanData = new KecamatanData();
 		kecamatanData.setId(idKecamatan);
-		desaData.setKecamatanData(kecamatanData);
+		desaData.setKecamatan(kecamatanData);
 		return desaData;
 	}
 	
