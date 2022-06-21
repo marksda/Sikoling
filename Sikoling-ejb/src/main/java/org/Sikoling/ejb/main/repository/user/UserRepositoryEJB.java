@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
+import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -11,6 +12,7 @@ import jakarta.inject.Inject;
 
 @Stateless
 @LocalBean
+@Infrastructure
 public class UserRepositoryEJB implements IUserRepository {
 	
 	@Inject

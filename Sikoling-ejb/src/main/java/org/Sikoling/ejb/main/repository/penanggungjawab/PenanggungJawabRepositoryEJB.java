@@ -4,9 +4,16 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
+import org.Sikoling.ejb.main.Infrastructure;
 
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
+
+@Stateless
+@LocalBean
+@Infrastructure
 public class PenanggungJawabRepositoryEJB implements IPenanggungJawabRepository {
 	
 	@Inject
