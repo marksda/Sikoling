@@ -17,6 +17,7 @@ public class OSSData implements Serializable {
 	private String nib;
 	private Date tanggal;
 	
+	@ElementCollection  
 	@OneToMany(mappedBy = "oss", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<KBLIData> kbliDatas;
 

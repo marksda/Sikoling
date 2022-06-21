@@ -11,9 +11,9 @@ import org.Sikoling.ejb.main.repository.user.UserData;
 @Table(name="master.tbl_pemrakarsa")
 @NamedQueries({
 @NamedQuery(name="PemrakarsaData.findAll", query="SELECT p FROM PemrakarsaData p"),
-@NamedQuery(name="PemrakarsaData.findByQueryNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama ILIKE :nama"),
+@NamedQuery(name="PemrakarsaData.findByQueryNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama LIKE :nama"),
 @NamedQuery(name="PemrakarsaData.findByCreator", query="SELECT p FROM PemrakarsaData p WHERE p.creator.id = :idCreator"),
-@NamedQuery(name="PemrakarsaData.findByCreatorAndNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama ILIKE :nama AND p.creator.id = :idCreator")
+@NamedQuery(name="PemrakarsaData.findByCreatorAndNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama LIKE :nama AND p.creator.id = :idCreator")
 })
 public class PemrakarsaData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;

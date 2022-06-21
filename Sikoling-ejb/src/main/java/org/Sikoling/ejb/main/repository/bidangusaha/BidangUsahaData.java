@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Table(name="master.tbl_bidang_usaha")
 @NamedQueries({
 @NamedQuery(name="BidangUsahaData.findAll", query="SELECT b FROM BidangUsahaData b"),
-@NamedQuery(name="BidangUsahaData.findByNama", query="SELECT b FROM BidangUsahaData b WHERE b.nama ILIKE :nama")})
+@NamedQuery(name="BidangUsahaData.findByNama", query="SELECT b FROM BidangUsahaData b WHERE b.nama LIKE :nama")})
 public class BidangUsahaData implements Serializable {
 	
 	private static final long serialVersionUID = -8154322742494393038L;

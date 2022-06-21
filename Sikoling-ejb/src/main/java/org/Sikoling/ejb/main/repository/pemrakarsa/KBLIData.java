@@ -3,19 +3,23 @@ package org.Sikoling.ejb.main.repository.pemrakarsa;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
-@Entity
+//@Entity
+//@Table(name="master.tbl_kbli")
+//@NamedQuery(name="KBLIData.findAll", query="SELECT k FROM KBLIData k")
+@Embeddable
 @Table(name="master.tbl_kbli")
 @NamedQuery(name="KBLIData.findAll", query="SELECT k FROM KBLIData k")
 public class KBLIData implements Serializable {
-	private static final long serialVersionUID = 1L;
+		
+	private static final long serialVersionUID = -8124207435585377505L;
 
 	private String kode;
 
 	private String nama;
 
-	@JoinColumn(name="nib_oss", referencedColumnName = "nib_oss")
-	@ManyToOne(optional = false)
-	private OSSData oss;
+//	@JoinColumn(name="nib_oss", referencedColumnName = "nib_oss")
+//	@ManyToOne(optional = false)
+//	private OSSData oss;
 
 	public KBLIData() {
 	}
@@ -36,12 +40,12 @@ public class KBLIData implements Serializable {
 		this.nama = nama;
 	}
 
-	public OSSData getOss() {
-		return this.oss;
-	}
-
-	public void setOss(OSSData oss) {
-		this.oss = oss;
-	}
+//	public OSSData getOss() {
+//		return this.oss;
+//	}
+//
+//	public void setOss(OSSData oss) {
+//		this.oss = oss;
+//	}
 
 }

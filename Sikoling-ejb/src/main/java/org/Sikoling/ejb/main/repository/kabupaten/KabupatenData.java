@@ -9,9 +9,9 @@ import jakarta.persistence.*;
 @Table(name="master.tbl_kabupaten")
 @NamedQueries({
 @NamedQuery(name="KabupatenData.findAll", query="SELECT k FROM KabupatenData k"),
-@NamedQuery(name="KabupatenData.findAllByQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama"),
+@NamedQuery(name="KabupatenData.findAllByQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama LIKE :nama"),
 @NamedQuery(name="KabupatenData.findAllByIdPropinsi", query="SELECT k FROM KabupatenData k WHERE k.idPropinsi = :idPropinsi"),
-@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama ILIKE :nama AND k.idPropinsi = :idPropinsi")})
+@NamedQuery(name="KabupatenData.findAllByIdPropinsiAndQueryNama", query="SELECT k FROM KabupatenData k WHERE k.nama LIKE :nama AND k.idPropinsi = :idPropinsi")})
 public class KabupatenData implements Serializable {
 	private static final long serialVersionUID = -7026002892763939209L;
 
