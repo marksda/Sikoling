@@ -43,7 +43,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	
 	@Override
 	public List<Kabupaten> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("kabupatenData.findAll", KabupatenData.class)
+		return entityManager.createNamedQuery("KabupatenData.findAll", KabupatenData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
@@ -55,7 +55,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	@Override
 	public List<Kabupaten> getByNama(String nama) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("kabupatenData.findAllByQueryNama", KabupatenData.class)
+		return entityManager.createNamedQuery("KabupatenData.findByNama", KabupatenData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -66,7 +66,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	@Override
 	public List<Kabupaten> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("kabupatenData.findAllByQueryNama", KabupatenData.class)
+		return entityManager.createNamedQuery("KabupatenData.findByNama", KabupatenData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -78,8 +78,8 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	
 	@Override
 	public List<Kabupaten> getByPropinsi(String idPropinsi) {
-		return entityManager.createNamedQuery("kabupatenData.findAllByIdPropinsi", KabupatenData.class)
-				.setParameter("id", idPropinsi)
+		return entityManager.createNamedQuery("KabupatenData.findByPropinsi", KabupatenData.class)
+				.setParameter("idPropinsi", idPropinsi)
 				.getResultList()
 				.stream()
 				.map(t -> convertKabupatenDataToKabupaten(t))
@@ -88,8 +88,8 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 
 	@Override
 	public List<Kabupaten> getByPropinsiAndPage(String idPropinsi, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("kabupatenData.findAllByIdPropinsi", KabupatenData.class)
-				.setParameter("id", idPropinsi)
+		return entityManager.createNamedQuery("KabupatenData.findByPropinsi", KabupatenData.class)
+				.setParameter("idPropinsi", idPropinsi)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
@@ -101,7 +101,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	@Override
 	public List<Kabupaten> getByPropinsiAndNama(String idPropinsi, String nama) {		
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("kabupatenData.findAllByIdPropinsiAndQueryNama", KabupatenData.class)
+		return entityManager.createNamedQuery("KabupatenData.findByPropinsiAndNama", KabupatenData.class)
 				.setParameter("nama", nama)
 				.setParameter("idPropinsi", idPropinsi)
 				.getResultList()
@@ -114,7 +114,7 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	public List<Kabupaten> getByPropinsiAndNamaAndPage(String idPropinsi, String nama, Integer page,
 			Integer pageSize) {
 		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("kabupatenData.findAllByIdPropinsiAndQueryNama", KabupatenData.class)
+		return entityManager.createNamedQuery("KabupatenData.findByPropinsiAndNama", KabupatenData.class)
 				.setParameter("nama", nama)
 				.setParameter("idPropinsi", idPropinsi)
 				.setMaxResults(pageSize)
