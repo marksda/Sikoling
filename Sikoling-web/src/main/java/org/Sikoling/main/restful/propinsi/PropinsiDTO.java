@@ -9,7 +9,7 @@ public class PropinsiDTO implements Serializable {
 
 	private static final long serialVersionUID = 530670866344098801L;
 	private String id;
-	private String text;
+	private String nama;
 	
 	public PropinsiDTO() {
 		
@@ -17,16 +17,16 @@ public class PropinsiDTO implements Serializable {
 
 	public PropinsiDTO(String id, String nama) {
 		this.id = id;
-		this.text = nama;
+		this.nama = nama;
 	}
 	
 	public PropinsiDTO(Propinsi propinsi) {
 		this.id = propinsi.getId();
-		this.text = propinsi.getNama();
+		this.nama = propinsi.getNama();
 	}
 
 	public Propinsi toPropinsi() {
-        return new Propinsi(this.id, this.text);
+        return new Propinsi(this.id, this.nama);
     }
 	
 	public String getId() {
@@ -38,11 +38,11 @@ public class PropinsiDTO implements Serializable {
 	}
 
 	public String getNama() {
-		return text;
+		return nama;
 	}
 
 	public void setNama(String nama) {
-		this.text = nama;
+		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {
@@ -53,7 +53,7 @@ public class PropinsiDTO implements Serializable {
 	public int hashCode() {
 		int hash = 7;
         hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.text);
+        hash = 71 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -75,7 +75,7 @@ public class PropinsiDTO implements Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (this.text != other.text) {
+        if (this.nama != other.nama) {
             return false;
         }
 
@@ -84,7 +84,7 @@ public class PropinsiDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PropinsiDTO{" + "id=" + this.id + ", nama=" + this.text + "}";	    
+		return "PropinsiDTO{" + "id=" + this.id + ", nama=" + this.nama + "}";	    
 	}
 	
 }
