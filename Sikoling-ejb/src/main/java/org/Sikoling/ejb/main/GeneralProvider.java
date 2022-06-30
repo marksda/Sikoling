@@ -1,8 +1,7 @@
 package org.Sikoling.ejb.main;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Optional;
+//import java.io.InputStream;
 import java.util.Properties;
 
 import jakarta.ejb.LocalBean;
@@ -17,11 +16,13 @@ public class GeneralProvider {
 	public Properties getProperties() throws IOException {
 		Properties properties = new Properties();
 		
-		InputStream inputStream = GeneralProvider.class.getResourceAsStream(Optional.ofNullable(System.getProperty("ENV"))
-				.map(env -> "/application-" + env + ".properties")
-				.orElse("application.properties"));
+//		InputStream inputStream = GeneralProvider.class.getResourceAsStream(Optional.ofNullable(System.getProperty("ENV"))
+//				.map(env -> "/application-" + env + ".properties")
+//				.orElse("application.properties"));	
 		
-		properties.load(inputStream);
+//		properties.load(inputStream);
+		properties.setProperty("STORAGE_PATH","D:\\data_sikoling\\");  
+		
 		
 		return properties;
 	}

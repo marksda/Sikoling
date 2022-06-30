@@ -24,6 +24,7 @@ import jakarta.ws.rs.core.UriInfo;
 @LocalBean
 @Path("files")
 public class FileController {
+	
 	@Context
 	private UriInfo uriInfo;
 	
@@ -33,11 +34,12 @@ public class FileController {
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ImageDTO uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
+	public ImageDTO uploadFile(
+			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream);
         
-        return new ImageDTO(uriInfo.getBaseUri() + "files/" + fileKey);
+        return new ImageDTO(uriInfo.getBaseUri() + "files/" + fileKey, fileKey);
 	}
 	
 	@Path("{fileKey}")

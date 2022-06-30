@@ -133,4 +133,5 @@ public class RestfulProvider {
 	public IStorageService getStorageService(Properties properties) {
 		return new DiskStorageService(properties.getProperty("STORAGE_PATH"));
 	}
+	
 }

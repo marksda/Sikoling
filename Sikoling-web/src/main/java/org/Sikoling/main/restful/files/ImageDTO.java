@@ -4,14 +4,16 @@ import java.util.Objects;
 
 public class ImageDTO {
 	private String imageUrl;
+	private String namaFile;
 	
 	public ImageDTO() {
 		
 	}
 
-	public ImageDTO(String imageUrl) {
+	public ImageDTO(String imageUrl, String namaFile) {
 		super();
 		this.imageUrl = imageUrl;
+		this.namaFile = namaFile;
 	}
 
 	public String getImageUrl() {
@@ -51,6 +53,15 @@ public class ImageDTO {
 	public String toString() {
 		return "ImageDTO{" + "imageUrl=" + imageUrl + '}';
 	}
+
 	
+	public String getNamaFile() {
+		return namaFile;
+	}
+
+	
+	public void setNamaFile(String namaFile) {
+		this.namaFile = namaFile;
+	}	
 	
 }
