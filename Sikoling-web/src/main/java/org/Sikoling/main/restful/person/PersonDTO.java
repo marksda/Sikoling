@@ -11,7 +11,7 @@ public class PersonDTO implements Serializable {
 	private static final long serialVersionUID = -7836863513864841849L;
 	private String nik;
 	private String nama;
-	private JenisKelaminDTO sex;
+	private JenisKelaminDTO jenisKelamin;
 	private AlamatPersonDTO alamat;
 	private String telepone;
 	private String scanKTP;
@@ -22,7 +22,7 @@ public class PersonDTO implements Serializable {
 	public PersonDTO(Person person) {		
 		this.nik = person.getNik();
 		this.nama = person.getNama();
-		this.sex = new JenisKelaminDTO(person.getSex());
+		this.jenisKelamin = new JenisKelaminDTO(person.getSex());
 		this.alamat = new AlamatPersonDTO(person.getAlamat());
 		this.telepone = person.getTelepone();
 		this.scanKTP = person.getScanKTP();
@@ -33,7 +33,7 @@ public class PersonDTO implements Serializable {
 		super();
 		this.nik = nik;
 		this.nama = nama;
-		this.sex = sex;
+		this.jenisKelamin = sex;
 		this.alamat = alamat;
 		this.telepone = telepone;
 		this.scanKTP = scanKTP;
@@ -55,12 +55,12 @@ public class PersonDTO implements Serializable {
 		this.nama = nama;
 	}
 
-	public JenisKelaminDTO getSex() {
-		return sex;
+	public JenisKelaminDTO getJenisKelamin() {
+		return jenisKelamin;
 	}
 
-	public void setSex(JenisKelaminDTO sex) {
-		this.sex = sex;
+	public void setJenisKelamin(JenisKelaminDTO sex) {
+		this.jenisKelamin = sex;
 	}
 
 	public AlamatPersonDTO getAlamat() {
@@ -127,6 +127,6 @@ public class PersonDTO implements Serializable {
 	}
 
 	public Person toPerson() {
-		return new Person(nik, nama, sex.toJenisKelamin(), alamat.toAlamat(), telepone, scanKTP);
+		return new Person(nik, nama, jenisKelamin.toJenisKelamin(), alamat.toAlamat(), telepone, scanKTP);
 	}
 }
