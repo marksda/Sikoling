@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.penanggungjawab;
+package org.Sikoling.main.restful.person;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,7 +9,7 @@ import org.Sikoling.main.restful.kabupaten.KabupatenDTO;
 import org.Sikoling.main.restful.kecamatan.KecamatanDTO;
 import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
-public class AlamatPenanggungJawabDTO implements Serializable {
+public class AlamatPersonDTO implements Serializable {
 	
 	private static final long serialVersionUID = -3073992539638923482L;
 	private PropinsiDTO propinsi;
@@ -18,11 +18,11 @@ public class AlamatPenanggungJawabDTO implements Serializable {
 	private DesaDTO desa;
 	private String keterangan;
 	
-	public AlamatPenanggungJawabDTO() {
+	public AlamatPersonDTO() {
 		
 	}
 	
-	public AlamatPenanggungJawabDTO(Alamat alamat) {
+	public AlamatPersonDTO(Alamat alamat) {
 		this.propinsi = new PropinsiDTO(alamat.getPropinsi());
 		this.kabupaten = new KabupatenDTO(alamat.getKabupaten());
 		this.kecamatan = new KecamatanDTO(alamat.getKecamatan());
@@ -30,7 +30,7 @@ public class AlamatPenanggungJawabDTO implements Serializable {
 		this.keterangan = alamat.getKeterangan();
 	}
 	
-	public AlamatPenanggungJawabDTO(PropinsiDTO propinsi, KabupatenDTO kabupaten, KecamatanDTO kecamatan, DesaDTO desa,
+	public AlamatPersonDTO(PropinsiDTO propinsi, KabupatenDTO kabupaten, KecamatanDTO kecamatan, DesaDTO desa,
 			String keterangan) {
 		super();
 		this.propinsi = propinsi;
@@ -108,7 +108,7 @@ public class AlamatPenanggungJawabDTO implements Serializable {
             return false;
         }
         
-        final AlamatPenanggungJawabDTO other = (AlamatPenanggungJawabDTO) obj;
+        final AlamatPersonDTO other = (AlamatPersonDTO) obj;
         
         if (this.propinsi.getId() != other.getPropinsi().getId()) {
             return false;

@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.penanggungjawab;
+package org.Sikoling.main.restful.person;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,7 +12,7 @@ public class PersonDTO implements Serializable {
 	private String nik;
 	private String nama;
 	private JenisKelaminDTO sex;
-	private AlamatPenanggungJawabDTO alamat;
+	private AlamatPersonDTO alamat;
 	private String telepone;
 	private String scanKTP;
 	
@@ -23,12 +23,12 @@ public class PersonDTO implements Serializable {
 		this.nik = person.getNik();
 		this.nama = person.getNama();
 		this.sex = new JenisKelaminDTO(person.getSex());
-		this.alamat = new AlamatPenanggungJawabDTO(person.getAlamat());
+		this.alamat = new AlamatPersonDTO(person.getAlamat());
 		this.telepone = person.getTelepone();
 		this.scanKTP = person.getScanKTP();
 	}
 	
-	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatPenanggungJawabDTO alamat, String telepone,
+	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatPersonDTO alamat, String telepone,
 			String scanKTP) {
 		super();
 		this.nik = nik;
@@ -63,11 +63,11 @@ public class PersonDTO implements Serializable {
 		this.sex = sex;
 	}
 
-	public AlamatPenanggungJawabDTO getAlamat() {
+	public AlamatPersonDTO getAlamat() {
 		return alamat;
 	}
 
-	public void setAlamat(AlamatPenanggungJawabDTO alamat) {
+	public void setAlamat(AlamatPersonDTO alamat) {
 		this.alamat = alamat;
 	}
 
