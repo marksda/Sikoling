@@ -15,6 +15,9 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
+import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
+
 import jakarta.persistence.EntityManager;
 
 public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository {

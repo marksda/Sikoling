@@ -23,9 +23,9 @@ import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.penanggungjawab.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
-import org.Sikoling.ejb.main.repository.penanggungjawab.PersonData;
+import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 

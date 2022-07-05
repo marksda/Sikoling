@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.penanggungjawab;
+package org.Sikoling.ejb.main.repository.person;
 
 import java.io.Serializable;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
