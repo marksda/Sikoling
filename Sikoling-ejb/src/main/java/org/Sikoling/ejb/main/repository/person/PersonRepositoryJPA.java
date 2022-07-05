@@ -109,6 +109,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		alamatPersonData.setKabupaten(kabupatenData);
 		alamatPersonData.setKecamatan(kecamatanData);
 		alamatPersonData.setDesa(desaData);
+		alamatPersonData.setDetailAlamat(person.getAlamat().getKeterangan());
 		
 		personData.setAlamat(alamatPersonData);
 		
@@ -123,13 +124,13 @@ public class PersonRepositoryJPA implements IPersonRepository {
 	}
 	
 	private Person convertPersonDataToPerson(PersonData personData) {
-		PersonData data = entityManager.find(PersonData.class, personData.getId());
+		PersonData data = entityManager.find(PersonData.class, personData.getId());		
 		return new Person(
 				data.getId(), data.getNama(), 
 				new JenisKelamin(data.getSex().getId(), data.getSex().getNama()),
 				new Alamat(
 						new Propinsi(data.getAlamat().getPropinsi().getId(), data.getAlamat().getPropinsi().getNama()), 
-						new Kabupaten(data.getAlamat().getPropinsi().getId(), data.getAlamat().getPropinsi().getNama()),
+						new Kabupaten(data.getAlamat().getKabupaten().getId(), data.getAlamat().getKabupaten().getNama()),
 						new Kecamatan(data.getAlamat().getKecamatan().getId(), data.getAlamat().getKecamatan().getNama()), 
 						new Desa(data.getAlamat().getDesa().getId(), data.getAlamat().getDesa().getNama()), 
 						data.getAlamat().getDetailAlamat()), 

@@ -9,28 +9,26 @@ import jakarta.persistence.*;
 
 
 @Embeddable
-@AttributeOverrides({
-@AttributeOverride( name = "detailAlamat", column = @Column(name = "detail_alamat"))
-})
 public class AlamatPersonData implements Serializable {
 	
 	private static final long serialVersionUID = -8334774162037892428L;
 
-	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private DesaData desa;
 
-	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private KabupatenData kabupaten;
 
-	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private KecamatanData kecamatan;
 
+	@Column(name = "detail_alamat")
 	private String detailAlamat;
 
-	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private PropinsiData propinsi;
 

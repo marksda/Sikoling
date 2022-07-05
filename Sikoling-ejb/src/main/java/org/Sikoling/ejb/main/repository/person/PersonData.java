@@ -27,7 +27,7 @@ public class PersonData implements Serializable {
 	@Column(name="scan_ktp")
 	private String scanKtp;
 
-	@JoinColumn(name = "sex", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "sex", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private JenisKelaminData sex;
 
