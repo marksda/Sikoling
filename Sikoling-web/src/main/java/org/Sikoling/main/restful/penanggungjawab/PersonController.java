@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.person;
+package org.Sikoling.main.restful.penanggungjawab;
 
 import java.util.List;
 import java.util.stream.Collectors;

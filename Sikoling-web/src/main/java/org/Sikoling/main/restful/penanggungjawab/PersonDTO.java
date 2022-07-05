@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.person;
+package org.Sikoling.main.restful.penanggungjawab;
 
 import java.io.Serializable;
 import java.util.Objects;

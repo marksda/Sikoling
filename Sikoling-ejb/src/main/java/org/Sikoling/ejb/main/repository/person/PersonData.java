@@ -8,7 +8,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="master.tbl_person")
-@NamedQuery(name="PersonData.findAll", query="SELECT p FROM PersonData p")
+@NamedQueries({
+@NamedQuery(name="PersonData.findAll", query="SELECT p FROM PersonData p"),
+@NamedQuery(name="PersonData.findByNama", query="SELECT p FROM PersonData p WHERE p.nama LIKE :nama")
+})
 public class PersonData implements Serializable {
 	
 	private static final long serialVersionUID = 3940657094951097521L;

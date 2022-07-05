@@ -9,6 +9,7 @@ import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukRepositoryJ
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
+import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
 import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
@@ -95,6 +96,11 @@ public class RepositoryProvider {
 	@Produces
 	public ProdukRepositoryJPA getProdukRepositoryJPA(EntityManager entityManager) {
 		return new ProdukRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public PersonRepositoryJPA getPersonRepositoryJPA(EntityManager entityManager) {
+		return new PersonRepositoryJPA(entityManager);
 	}
 
 }

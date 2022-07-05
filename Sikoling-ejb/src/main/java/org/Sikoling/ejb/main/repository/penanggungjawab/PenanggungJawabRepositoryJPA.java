@@ -32,7 +32,7 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 	@Override
 	public PenanggungJawab save(PenanggungJawab t, String s) {
 		PenanggungJawabData penanggungJawabData = convertPenanggungJawabToPenanggungJawabData(t, s);
-		entityManager.persist(t);
+		entityManager.persist(penanggungJawabData);
 		entityManager.flush();
 		return convertPenanggungJawabDataToPenanggungJawab(penanggungJawabData);
 	}
