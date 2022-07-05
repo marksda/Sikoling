@@ -12,6 +12,7 @@ import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPemrakarsaRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
+import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
@@ -40,6 +41,8 @@ import org.Sikoling.ejb.abstraction.service.pemrakarsa.IPemrakarsaService;
 import org.Sikoling.ejb.abstraction.service.pemrakarsa.PemrakarsaService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
+import org.Sikoling.ejb.abstraction.service.person.IPersonService;
+import org.Sikoling.ejb.abstraction.service.person.PersonService;
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
 import org.Sikoling.ejb.abstraction.service.produk.ProdukService;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -105,6 +108,12 @@ public class RestfulProvider {
 	public IPenanggungJawabService getPenanggungJawabService(
 			@Infrastructure IPenanggungJawabRepository penanggungJawabRepository) {
 		return new PenanggungJawabService(penanggungJawabRepository);
+	}
+	
+	@Produces
+	public IPersonService getPersonService(
+			@Infrastructure IPersonRepository personRepository) {
+		return new PersonService(personRepository);
 	}
 	
 	@Produces

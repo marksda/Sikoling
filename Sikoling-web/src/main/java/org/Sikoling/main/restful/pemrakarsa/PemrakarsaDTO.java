@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.main.restful.bentukusaha.BentukUsahaDTO;
+import org.Sikoling.main.restful.penanggungjawab.PenanggungJawabDTO;
 
 public class PemrakarsaDTO implements Serializable {
 

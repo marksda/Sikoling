@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
-import org.Sikoling.main.restful.pemrakarsa.PenanggungJawabDTO;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -22,7 +21,7 @@ import jakarta.ws.rs.core.MediaType;
 @Stateless
 @LocalBean
 @Path("penanggung_jawab")
-public class PersonController {
+public class PenanggungJawabController {
 	
 	@Inject
 	private IPenanggungJawabService penanggungJawabService;

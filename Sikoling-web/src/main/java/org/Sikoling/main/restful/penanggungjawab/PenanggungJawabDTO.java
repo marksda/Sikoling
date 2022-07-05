@@ -1,11 +1,11 @@
-package org.Sikoling.main.restful.pemrakarsa;
+package org.Sikoling.main.restful.penanggungjawab;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.main.restful.jabatan.JabatanDTO;
-import org.Sikoling.main.restful.penanggungjawab.PersonDTO;
+import org.Sikoling.main.restful.person.PersonDTO;
 
 public class PenanggungJawabDTO implements Serializable {
 	private static final long serialVersionUID = 3847984353247321174L;
