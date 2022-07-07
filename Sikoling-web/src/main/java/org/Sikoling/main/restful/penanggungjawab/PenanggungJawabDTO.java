@@ -95,7 +95,7 @@ public class PenanggungJawabDTO implements Serializable {
 	@Override
 	public String toString() {
 		return "PenanggungJawabDTO{" + "nik=" + person.getNik() + ", nama=" + person.getNama() + ", jabatan=" 
-				+ jabatan.getNama() + ", noHandphone=" + person.getTelepone() + '}';	  
+				+ jabatan.getNama() + ", noHandphone=" + person.getKontak().getTelepone() + '}';	  
 	}
 
 	public PenanggungJawab toPenanggungJawab() {		
