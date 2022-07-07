@@ -18,8 +18,7 @@ public class PemrakarsaDTO implements Serializable {
 	private OSSDTO oss;
 	private String nama;
 	private String npwp;
-	private PenanggungJawabDTO penanggungJawab;	
-	
+	private PenanggungJawabDTO penanggungJawab;		
 	private String idCreator;
 	
 	public PemrakarsaDTO() {
