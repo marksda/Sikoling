@@ -244,7 +244,8 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 						new Kecamatan(alamatPJD.getKecamatan().getId(), alamatPJD.getKecamatan().getNama()), 
 						new Desa(alamatPJD.getDesa().getId(), alamatPJD.getDesa().getNama()), 
 						alamatPJD.getDetailAlamat()), 
-				personData.getTelepone(), personData.getScanKtp());
+				personData.getScanKtp(),
+				new Kontak(personData.getKontak().getTelepone(), null, personData.getKontak().getEmail()));
 		
 		PenanggungJawab penanggungJawab = new PenanggungJawab(
 				pjd.getId(), person, new Jabatan(pjd.getJabatan().getId(), pjd.getJabatan().getNama()));

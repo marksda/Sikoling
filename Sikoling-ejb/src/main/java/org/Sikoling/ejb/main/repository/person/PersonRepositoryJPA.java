@@ -8,6 +8,7 @@ import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
@@ -117,7 +118,11 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		jenisKelaminData.setId(person.getSex().getId());
 		personData.setSex(jenisKelaminData);
 		
-		personData.setTelepone(person.getTelepone());
+		KontakPersonData kontakPersonData = new KontakPersonData();
+		kontakPersonData.setTelepone(person.getKontak().getTelepone());
+		kontakPersonData.setEmail(person.getKontak().getEmail());
+		personData.setKontak(kontakPersonData);
+		
 		personData.setScanKtp(person.getScanKTP());
 		
 		return personData;
@@ -134,6 +139,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 						new Kecamatan(data.getAlamat().getKecamatan().getId(), data.getAlamat().getKecamatan().getNama()), 
 						new Desa(data.getAlamat().getDesa().getId(), data.getAlamat().getDesa().getNama()), 
 						data.getAlamat().getDetailAlamat()), 
-				data.getTelepone(), data.getScanKtp());
+				data.getScanKtp(),
+				new Kontak(data.getKontak().getTelepone(), null, data.getKontak().getEmail()));
 	}
 }

@@ -70,7 +70,7 @@ public class PenanggungJawab implements Serializable {
 	@Override
 	public String toString() {
 		return "PenanggungJawab{" + "nik=" + person.getNik() + ", nama=" + person.getNama() + ", jabatan=" 
-				+ jabatan.getNama() + ", noHandphone=" + person.getTelepone() + "}";
+				+ jabatan.getNama() + ", noHandphone=" + person.getKontak().getTelepone() + "}";
 	}
                                                                                                                                    				
 }

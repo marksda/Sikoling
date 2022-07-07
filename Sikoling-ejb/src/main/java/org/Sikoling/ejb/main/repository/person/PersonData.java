@@ -31,7 +31,8 @@ public class PersonData implements Serializable {
 	@ManyToOne(optional = false)
 	private JenisKelaminData sex;
 
-	private String telepone;
+	@Embedded
+	private KontakPersonData kontak;
 
 	public PersonData() {
 	}
@@ -68,12 +69,12 @@ public class PersonData implements Serializable {
 		this.sex = sex;
 	}
 
-	public String getTelepone() {
-		return this.telepone;
+	public KontakPersonData getKontak() {
+		return this.kontak;
 	}
 
-	public void setTelepone(String telepone) {
-		this.telepone = telepone;
+	public void setKontak(KontakPersonData kontak) {
+		this.kontak = kontak;
 	}
 
 	public AlamatPersonData getAlamat() {

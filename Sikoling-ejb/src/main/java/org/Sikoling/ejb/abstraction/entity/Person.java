@@ -10,17 +10,18 @@ public class Person implements Serializable {
 	private final String nama;
 	private final JenisKelamin sex;
 	private final Alamat alamat;
-	private final String telepone;
 	private final String scanKTP;
+	private final Kontak kontak;
 	
-	public Person(String nik, String nama, JenisKelamin sex, Alamat alamat, String telepone, String scanKTP) {
+	public Person(String nik, String nama, JenisKelamin sex, Alamat alamat, String scanKTP,
+			Kontak kontak) {
 		super();
 		this.nik = nik;
 		this.nama = nama;
 		this.sex = sex;
 		this.alamat = alamat;
-		this.telepone = telepone;
 		this.scanKTP = scanKTP;
+		this.kontak = kontak;
 	}
 
 	public static long getSerialversionuid() {
@@ -43,13 +44,13 @@ public class Person implements Serializable {
 		return alamat;
 	}
 
-	public String getTelepone() {
-		return telepone;
-	}
-
 	public String getScanKTP() {
 		return scanKTP;
-	}	
+	}
+
+	public Kontak getKontak() {
+		return kontak;
+	}
 
 	public int hashCode() {
 		int hash = 83;
