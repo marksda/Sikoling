@@ -32,7 +32,7 @@ public class PemrakarsaData implements Serializable {
 	private AlamatPemrakarsaData alamatPemrakarsaData;
 
 	@Embedded
-	private KontakPemrakarsaData kontakPemrakarsaData;
+	private KontakData kontakPemrakarsaData;
 	
 	@Embedded
 	private OSSData ossData;
@@ -118,12 +118,12 @@ public class PemrakarsaData implements Serializable {
 	}
 
 	
-	public KontakPemrakarsaData getKontakPemrakarsaData() {
+	public KontakData getKontakPemrakarsaData() {
 		return kontakPemrakarsaData;
 	}
 	
 
-	public void setKontakPemrakarsaData(KontakPemrakarsaData kontakPemrakarsaData) {
+	public void setKontakPemrakarsaData(KontakData kontakPemrakarsaData) {
 		this.kontakPemrakarsaData = kontakPemrakarsaData;
 	}
 

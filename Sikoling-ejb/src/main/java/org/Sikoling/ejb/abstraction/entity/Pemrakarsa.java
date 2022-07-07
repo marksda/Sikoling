@@ -10,14 +10,14 @@ public class Pemrakarsa implements Serializable {
 	private final BentukUsaha bentukUsaha;
 	private final AktaPemrakarsa aktaPendirian;
 	private final Alamat alamat;
-	private final KontakPemrakarsa kontakPemrakarsa;
+	private final Kontak kontakPemrakarsa;
 	private final OSS oss;
 	private final String nama;		
 	private final String npwp;	
 	private final PenanggungJawab penanggungJawab;
 
 	public Pemrakarsa(String id, BentukUsaha bentukUsaha, AktaPemrakarsa aktaPendirian, Alamat alamat,
-			KontakPemrakarsa kontakPemrakarsa, OSS oss, String nama, String npwp, PenanggungJawab penanggungJawab) {
+			Kontak kontakPemrakarsa, OSS oss, String nama, String npwp, PenanggungJawab penanggungJawab) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
@@ -62,7 +62,7 @@ public class Pemrakarsa implements Serializable {
 		return oss;
 	}
 
-	public KontakPemrakarsa getKontakPemrakarsa() {
+	public Kontak getKontakPemrakarsa() {
 		return kontakPemrakarsa;
 	}
 

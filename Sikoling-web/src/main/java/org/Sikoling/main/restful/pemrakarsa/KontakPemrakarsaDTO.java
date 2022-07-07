@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.pemrakarsa;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.KontakPemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.Kontak;
 
 public class KontakPemrakarsaDTO implements Serializable {
 
@@ -15,7 +15,7 @@ public class KontakPemrakarsaDTO implements Serializable {
 	public KontakPemrakarsaDTO() {		
 	}
 	
-	public KontakPemrakarsaDTO(KontakPemrakarsa kontakPemrakarsa) {		
+	public KontakPemrakarsaDTO(Kontak kontakPemrakarsa) {		
 		this.telepone = kontakPemrakarsa.getTelepone();
 		this.fax = kontakPemrakarsa.getFax();
 		this.email = kontakPemrakarsa.getEmail();
@@ -100,7 +100,7 @@ public class KontakPemrakarsaDTO implements Serializable {
 		return "KontakPemrakarsaDTO{" + "telepone=" + telepone + ", fax=" + fax  + ", email=" + email + "}";
 	}
 
-	public KontakPemrakarsa toKontakPemrakarsa() {
-		return new KontakPemrakarsa(telepone, fax, email);
+	public Kontak toKontakPemrakarsa() {
+		return new Kontak(telepone, fax, email);
 	}
 }
