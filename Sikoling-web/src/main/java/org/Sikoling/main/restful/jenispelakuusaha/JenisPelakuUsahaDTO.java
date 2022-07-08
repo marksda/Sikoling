@@ -1,25 +1,25 @@
-package org.Sikoling.main.restful.jabatan;
+package org.Sikoling.main.restful.jenispelakuusaha;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
 
-import org.Sikoling.ejb.abstraction.entity.Jabatan;
 
-public class JabatanDTO implements Serializable {
+public class JenisPelakuUsahaDTO implements Serializable {
 
-	private static final long serialVersionUID = -6217839017206272279L;
+	private static final long serialVersionUID = -854418089466652392L;
 	private String id;
 	private String nama;
 	
-	public JabatanDTO() {
+	public JenisPelakuUsahaDTO() {		
 	}
 	
-	public JabatanDTO(Jabatan jabatan) {
-		this.id = jabatan.getId();
-		this.nama = jabatan.getNama();
+	public JenisPelakuUsahaDTO(JenisPelakuUsaha jenisPelakuUsaha) {
+		this.id = jenisPelakuUsaha.getId();
+		this.nama = jenisPelakuUsaha.getNama();
 	}
 	
-	public JabatanDTO(String id, String nama) {
+	public JenisPelakuUsahaDTO(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -44,11 +44,12 @@ public class JabatanDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	@Override
 	public int hashCode() {
-		int hash = 29;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.nama);
+		int hash = 41;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -66,7 +67,7 @@ public class JabatanDTO implements Serializable {
             return false;
         }
         
-        final JabatanDTO other = (JabatanDTO) obj;
+        final JenisPelakuUsahaDTO other = (JenisPelakuUsahaDTO) obj;
         
         if (this.id != other.id) {
             return false;
@@ -81,10 +82,11 @@ public class JabatanDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "JabatanDTO{" + "id=" + id + ", nama=" + nama + '}';	  
+		return "JenisPelakuUsahaDTO{" + "id=" + id + ", nama=" + nama + '}';	  
+	}
+	
+	public JenisPelakuUsaha toJenisPelakuUsaha() {
+		return new JenisPelakuUsaha(id, nama);
 	}
 
-	public Jabatan toJabatan() {
-		return new Jabatan(id, nama);
-	}
 }

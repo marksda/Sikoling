@@ -7,6 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
+import org.Sikoling.ejb.abstraction.repository.IJenisPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
@@ -26,6 +27,8 @@ import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
+import org.Sikoling.ejb.abstraction.service.jenispelakuusaha.IJenisPelakuUsahaService;
+import org.Sikoling.ejb.abstraction.service.jenispelakuusaha.JenisPelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.bentukusaha.BentukUsahaService;
 import org.Sikoling.ejb.abstraction.service.bentukusaha.IBentukUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.BidangUsahaService;
@@ -136,6 +139,12 @@ public class RestfulProvider {
 	public IProdukService getProdukService(
 			@Infrastructure IProdukRepository produkRepository) {
 		return new ProdukService(produkRepository);
+	}
+	
+	@Produces
+	public IJenisPelakuUsahaService getJenisPelakuUsahaService(
+			@Infrastructure IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
+		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
 	}
 	
 	@Produces
