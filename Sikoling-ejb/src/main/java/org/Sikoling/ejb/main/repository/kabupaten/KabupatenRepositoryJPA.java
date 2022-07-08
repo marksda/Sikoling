@@ -138,7 +138,5 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 		kabupatenData.setPropinsi(propinsiData);
 		return kabupatenData;
 	}
-
-	
-	
+		
 }
