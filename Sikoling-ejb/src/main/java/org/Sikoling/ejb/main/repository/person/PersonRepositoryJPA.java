@@ -138,12 +138,8 @@ public class PersonRepositoryJPA implements IPersonRepository {
 						new Kabupaten(data.getAlamat().getKabupaten().getId(), data.getAlamat().getKabupaten().getNama()),
 						new Kecamatan(data.getAlamat().getKecamatan().getId(), data.getAlamat().getKecamatan().getNama()), 
 						new Desa(data.getAlamat().getDesa().getId(), data.getAlamat().getDesa().getNama()), 
-<<<<<<< HEAD
-						data.getAlamat().getDetailAlamat()), data.getTelepone(), data.getScanKtp());
-=======
 						data.getAlamat().getDetailAlamat()), 
 				data.getScanKtp(),
 				new Kontak(data.getKontak().getTelepone(), null, data.getKontak().getEmail()));
->>>>>>> refs/remotes/origin/master
 	}
 }
