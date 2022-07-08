@@ -9,6 +9,7 @@ import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
@@ -120,7 +121,8 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 						new Kecamatan(alamatPJD.getKecamatan().getId(), alamatPJD.getKecamatan().getNama()), 
 						new Desa(alamatPJD.getDesa().getId(), alamatPJD.getDesa().getNama()), 
 						alamatPJD.getDetailAlamat()), 
-				personData.getTelepone(), personData.getScanKtp());
+				personData.getScanKtp(),
+				new Kontak(personData.getKontak().getTelepone(), null, personData.getKontak().getEmail()));
 				
 		return new PenanggungJawab(pjd.getId(), person, new Jabatan(pjd.getJabatan().getId(), pjd.getJabatan().getNama()));
 	}

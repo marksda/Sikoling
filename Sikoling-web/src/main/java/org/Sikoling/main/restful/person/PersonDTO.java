@@ -13,7 +13,7 @@ public class PersonDTO implements Serializable {
 	private String nama;
 	private JenisKelaminDTO jenisKelamin;
 	private AlamatPersonDTO alamat;
-	private String telepone;
+	private KontakPersonDTO kontak;
 	private String scanKTP;
 	
 	public PersonDTO() {		
@@ -24,18 +24,18 @@ public class PersonDTO implements Serializable {
 		this.nama = person.getNama();
 		this.jenisKelamin = new JenisKelaminDTO(person.getSex());
 		this.alamat = new AlamatPersonDTO(person.getAlamat());
-		this.telepone = person.getTelepone();
+		this.kontak = new KontakPersonDTO(person.getKontak());
 		this.scanKTP = person.getScanKTP();
 	}
 	
-	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatPersonDTO alamat, String telepone,
+	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatPersonDTO alamat, KontakPersonDTO kontak,
 			String scanKTP) {
 		super();
 		this.nik = nik;
 		this.nama = nama;
 		this.jenisKelamin = sex;
 		this.alamat = alamat;
-		this.telepone = telepone;
+		this.kontak = kontak;
 		this.scanKTP = scanKTP;
 	}
 
@@ -71,12 +71,12 @@ public class PersonDTO implements Serializable {
 		this.alamat = alamat;
 	}
 
-	public String getTelepone() {
-		return telepone;
+	public KontakPersonDTO getKontak() {
+		return kontak;
 	}
 
-	public void setTelepone(String telepone) {
-		this.telepone = telepone;
+	public void setKontak(KontakPersonDTO kontak) {
+		this.kontak = kontak;
 	}
 
 	public String getScanKTP() {
@@ -88,7 +88,7 @@ public class PersonDTO implements Serializable {
 	}	
 
 	public int hashCode() {
-		int hash = 21;
+		int hash = 29;
         hash = 217 * hash + Objects.hashCode(this.nik);
         hash = 19 * hash + Objects.hashCode(this.nama);
         return hash;
@@ -127,6 +127,6 @@ public class PersonDTO implements Serializable {
 	}
 
 	public Person toPerson() {
-		return new Person(nik, nama, jenisKelamin.toJenisKelamin(), alamat.toAlamat(), telepone, scanKTP);
+		return new Person(nik, nama, jenisKelamin.toJenisKelamin(), alamat.toAlamat(), scanKTP, kontak.toKontak());
 	}
 }

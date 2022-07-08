@@ -3,14 +3,14 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class KontakPemrakarsa implements Serializable {
+public class Kontak implements Serializable {
 
 	private static final long serialVersionUID = 1637431148153802397L;
 	private final String telepone;
 	private final String fax;
 	private final String email;
 	
-	public KontakPemrakarsa(String telepone, String fax, String email) {
+	public Kontak(String telepone, String fax, String email) {
 		super();
 		this.telepone = telepone;
 		this.fax = fax;
@@ -55,7 +55,7 @@ public class KontakPemrakarsa implements Serializable {
             return false;
         }
         
-        final KontakPemrakarsa other = (KontakPemrakarsa) obj;
+        final Kontak other = (Kontak) obj;
         
         if (!this.telepone.equals(other.telepone)) {
             return false;

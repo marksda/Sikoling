@@ -12,7 +12,7 @@ import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.KBLI;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
-import org.Sikoling.ejb.abstraction.entity.KontakPemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.OSS;
 import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
@@ -179,7 +179,7 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 		alamatPemrakarsaData.setPropinsi(propinsiData);
 		pemrakarsaData.setAlamatPemrakarsaData(alamatPemrakarsaData);
 		
-		KontakPemrakarsaData kontakPemrakarsaData = new KontakPemrakarsaData();
+		KontakData kontakPemrakarsaData = new KontakData();
 		kontakPemrakarsaData.setEmail(p.getKontakPemrakarsa().getEmail());
 		kontakPemrakarsaData.setFax(p.getKontakPemrakarsa().getFax());
 		kontakPemrakarsaData.setTelepone(p.getKontakPemrakarsa().getTelepone());
@@ -222,7 +222,7 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 				new Desa(d.getAlamatPemrakarsaData().getDesa().getId(), d.getAlamatPemrakarsaData().getDesa().getNama()),
 				d.getAlamatPemrakarsaData().getKeterangan());
 		
-		KontakPemrakarsa kontakPemrakarsa = new KontakPemrakarsa(d.getKontakPemrakarsaData().getTelepone(), 
+		Kontak kontakPemrakarsa = new Kontak(d.getKontakPemrakarsaData().getTelepone(), 
 				d.getKontakPemrakarsaData().getFax(), d.getKontakPemrakarsaData().getEmail());
 		
 		OSS oss = new OSS(d.getOssData().getNib(), d.getOssData().getTanggal(), 
@@ -244,7 +244,8 @@ public class PemrakarsaRepositoryJPA implements IPemrakarsaRepository {
 						new Kecamatan(alamatPJD.getKecamatan().getId(), alamatPJD.getKecamatan().getNama()), 
 						new Desa(alamatPJD.getDesa().getId(), alamatPJD.getDesa().getNama()), 
 						alamatPJD.getDetailAlamat()), 
-				personData.getTelepone(), personData.getScanKtp());
+				personData.getScanKtp(),
+				new Kontak(personData.getKontak().getTelepone(), null, personData.getKontak().getEmail()));
 		
 		PenanggungJawab penanggungJawab = new PenanggungJawab(
 				pjd.getId(), person, new Jabatan(pjd.getJabatan().getId(), pjd.getJabatan().getNama()));
