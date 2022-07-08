@@ -11,7 +11,6 @@ public class BentukUsahaDTO implements Serializable {
 	private String id;
 	private String nama;
 	private String singkatan;
-	private String idJenisPelakuUsaha;
 	
 	public BentukUsahaDTO() {
 
@@ -21,14 +20,12 @@ public class BentukUsahaDTO implements Serializable {
 		this.id = bentukUsaha.getId();
 		this.nama = bentukUsaha.getNama();
 		this.singkatan = bentukUsaha.getSingkatan();
-		this.idJenisPelakuUsaha = bentukUsaha.getIdJenisPelakuUsaha();
 	}	
 
-	public BentukUsahaDTO(String id, String nama, String singkatan, String idJenisPelakuUsaha) {
+	public BentukUsahaDTO(String id, String nama, String singkatan) {
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;
-		this.idJenisPelakuUsaha = idJenisPelakuUsaha;
 	}
 
 	public String getId() {
@@ -53,14 +50,6 @@ public class BentukUsahaDTO implements Serializable {
 	
 	public void setSingkatan(String singkatan) {
 		this.singkatan = singkatan;
-	}
-	
-	public String getIdJenisPelakuUsaha() {
-		return idJenisPelakuUsaha;
-	}
-	
-	public void setIdJenisPelakuUsaha(String idJenisPelakuUsaha) {
-		this.idJenisPelakuUsaha = idJenisPelakuUsaha;
 	}
 	
 	public static long getSerialversionuid() {
@@ -107,7 +96,7 @@ public class BentukUsahaDTO implements Serializable {
 	}
 	
 	public BentukUsaha toBentukUsaha() {
-		return new BentukUsaha(id, nama, singkatan, idJenisPelakuUsaha);
+		return new BentukUsaha(id, nama, singkatan);
 	}
 	
 }

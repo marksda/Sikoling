@@ -130,13 +130,12 @@ public class BentukUsahaRepositoryJPA implements IBentukUsahaRepository {
 		bentukUsahaData.setId(t.getId());
 		bentukUsahaData.setNama(t.getNama());
 		bentukUsahaData.setSingkatan(t.getSingkatan());
-		bentukUsahaData.setIdPelakuUsaha(t.getIdJenisPelakuUsaha());
 		
 		return bentukUsahaData;
 	}
 	
 	private BentukUsaha convertBentukUsahaDataToBentukUsaha(BentukUsahaData d) {
-		return new BentukUsaha(d.getId(), d.getNama(), d.getSingkatan(), d.getIdPelakuUsaha());
+		return new BentukUsaha(d.getId(), d.getNama(), d.getSingkatan());
 	}
 
 }
