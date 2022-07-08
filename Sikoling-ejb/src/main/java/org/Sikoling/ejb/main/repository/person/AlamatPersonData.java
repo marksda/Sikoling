@@ -5,6 +5,7 @@ import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+
 import jakarta.persistence.*;
 
 
