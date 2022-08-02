@@ -10,8 +10,7 @@ import jakarta.ws.rs.ext.Provider;
 
 @Provider
 @PreMatching
-public class CorsFilter implements ContainerResponseFilter {
-		
+public class CorsFilter implements ContainerResponseFilter {		
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
