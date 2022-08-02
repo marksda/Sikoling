@@ -19,6 +19,9 @@ import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
+import org.Sikoling.ejb.abstraction.service.security.IOpenIdConnectService;
+import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.abstraction.service.security.OpenIdConnectionService;
 import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
@@ -54,6 +57,7 @@ import org.Sikoling.ejb.main.storage.disk.DiskStorageService;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
+import jakarta.ws.rs.client.Client;
 
 @Stateless
 @LocalBean
@@ -145,6 +149,14 @@ public class RestfulProvider {
 	public IJenisPelakuUsahaService getJenisPelakuUsahaService(
 			@Infrastructure IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
 		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
+	}
+	
+	@Produces
+	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {
+		return new OpenIdConnectionService(
+				tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"), 
+				properties.getProperty("SSO_CLIENT_ID"), 
+				properties.getProperty("SSO_CLIENT_SECRET"));
 	}
 	
 	@Produces
