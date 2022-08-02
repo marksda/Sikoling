@@ -154,8 +154,8 @@ public class RestfulProvider {
 	@Produces
 	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {
 		return new OpenIdConnectionService(
-				tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"), 
-				properties.getProperty("SSO_CLIENT_ID"), 
+				tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"),
+				properties.getProperty("SSO_CLIENT_ID"),
 				properties.getProperty("SSO_CLIENT_SECRET"));
 	}
 	
