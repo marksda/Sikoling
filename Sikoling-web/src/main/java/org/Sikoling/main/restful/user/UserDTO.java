@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.User;
+import org.Sikoling.main.restful.person.PersonDTO;
 
 public class UserDTO implements Serializable {
 
@@ -15,6 +16,8 @@ public class UserDTO implements Serializable {
 	private Boolean loginStatus;
 	private Date registerDate;
 	private Boolean statusInternal;
+	private PersonDTO personDTO;
+	private Boolean statusEnable;
 	
 	public UserDTO() {
 		
@@ -87,6 +90,22 @@ public class UserDTO implements Serializable {
 	public void setStatusInternal(Boolean statusInternal) {
 		this.statusInternal = statusInternal;
 	}
+	
+	public PersonDTO getPersonDTO() {
+		return personDTO;
+	}
+
+	public void setPersonDTO(PersonDTO personDTO) {
+		this.personDTO = personDTO;
+	}
+
+	public Boolean getStatusEnable() {
+		return statusEnable;
+	}
+
+	public void setStatusEnable(Boolean statusEnable) {
+		this.statusEnable = statusEnable;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -132,7 +151,7 @@ public class UserDTO implements Serializable {
 	}
 
 	public User toUser() {
-		return new User(id, email, password, loginStatus, registerDate, statusInternal);
+		return new User(id, email, password, loginStatus, registerDate, statusInternal, personDTO.toPerson(), statusEnable);
 	}
 
 }

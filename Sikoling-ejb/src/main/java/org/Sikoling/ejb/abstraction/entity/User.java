@@ -14,6 +14,8 @@ public class User implements Serializable {
 	private final Boolean loginStatus;
 	private final Date registerDate;
 	private final Boolean statusInternal;
+	private final Person person;
+	private final Boolean statusEnable;
 
 	public User(String id) {
 		super();
@@ -23,10 +25,24 @@ public class User implements Serializable {
 		this.loginStatus = null;
 		this.registerDate = null;
 		this.statusInternal = null;
+		this.person = null;
+		this.statusEnable = true;
+	}
+	
+	public User(String id, String email, Person person, Date registerDate, Boolean statusInternal, Boolean statusEnable) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = "";
+		this.loginStatus = false;
+		this.registerDate = registerDate;
+		this.statusInternal = statusInternal;
+		this.person = person;
+		this.statusEnable = statusEnable;
 	}
 
 	public User(String id, String email, String password, Boolean loginStatus, Date registerDate,
-			Boolean statusInternal) {
+			Boolean statusInternal, Person person, Boolean statusEnable) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -34,6 +50,8 @@ public class User implements Serializable {
 		this.loginStatus = loginStatus;
 		this.registerDate = registerDate;
 		this.statusInternal = statusInternal;
+		this.person = person;
+		this.statusEnable = statusEnable;
 	}
 	
 	public static long getSerialversionuid() {
@@ -103,5 +121,14 @@ public class User implements Serializable {
 	public Date getRegisterDate() {
 		return registerDate;
 	}
-		
+
+	
+	public Person getPerson() {
+		return person;
+	}
+
+	public Boolean getStatusEnable() {
+		return statusEnable;
+	}		
+	
 }

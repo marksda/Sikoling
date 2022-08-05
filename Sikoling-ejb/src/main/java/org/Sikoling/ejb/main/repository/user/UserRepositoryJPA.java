@@ -88,7 +88,7 @@ public class UserRepositoryJPA implements IUserRepository {
 	}
 	
 	private User convertUserDataToUser(UserData d) {
-		return new User(d.getId(), d.getUser(), d.getPassword(), d.getStatusLogin(), d.getTanggalRegistrasi(), d.getStatusInternal());
+		return new User(d.getId(), d.getUser(), d.getPassword(), d.getStatusLogin(), d.getTanggalRegistrasi(), d.getStatusInternal(), null, null);
 	}
 
 }
