@@ -49,12 +49,18 @@ public class OpenIdConnectionService implements IOpenIdConnectService {
             throw new IllegalStateException("The tokens couldn't be gotten " + response.readEntity(String.class));
         }
 
-        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() {
-        });
+        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
         
         Map<String, Object> claims = tokenValidationService.validate(map.get("id_token"));
         
-        Token token = new Token(getClaim(claims, "sub"), getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), getClaim(claims, "email"), map.get("access_token"), map.get("refresh_token"), map.get("expires_in"));
+        Token token = new Token(
+        		getClaim(claims, "sub"), 
+        		getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), 
+        		getClaim(claims, "email"), 
+        		map.get("access_token"), 
+        		map.get("refresh_token"), 
+        		map.get("expires_in")
+    		);
 
         return token;
 	}
