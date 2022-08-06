@@ -63,6 +63,17 @@
 		<version>6.1.0.Beta3</version>
 	</dependency>
 	<dependency>
+		<groupId>com.nimbusds</groupId>
+		<artifactId>nimbus-jose-jwt</artifactId>
+		<version>9.23</version>
+		<exclusions>
+			<exclusion>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm</artifactId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
 		<version>4.13</version>

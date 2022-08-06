@@ -195,4 +195,5 @@ public class KeyCloakUserRepository implements IUserRepository {
                 .findFirst()
                 .orElse("");
     }
+
 }
