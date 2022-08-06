@@ -25,8 +25,10 @@ import jakarta.ws.rs.core.UriInfo;
 @LocalBean
 @Path("files")
 public class FileController {	
+	
 	@Context
 	private UriInfo uriInfo;	
+	
 	@Inject
 	private IStorageService storageService;
 	
