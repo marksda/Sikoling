@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -23,17 +24,16 @@ import jakarta.ws.rs.core.UriInfo;
 @Stateless
 @LocalBean
 @Path("files")
-public class FileController {
-	
+public class FileController {	
 	@Context
-	private UriInfo uriInfo;
-	
+	private UriInfo uriInfo;	
 	@Inject
 	private IStorageService storageService;
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
+	@RequiredAuthorization
 	public ImageDTO uploadFile(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
