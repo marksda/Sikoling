@@ -19,9 +19,7 @@ import jakarta.ws.rs.ext.Provider;
 public class CorsFilter implements ContainerResponseFilter {
 	
 	@Inject
-	private Properties properties;
-	
-	
+	private Properties properties;	
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
