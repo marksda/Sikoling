@@ -196,4 +196,10 @@ public class KeyCloakUserRepository implements IUserRepository {
                 .orElse("");
     }
 
+	
+	@Override
+	public Boolean cekName(String nama) {
+		return null;
+	}
+
 }

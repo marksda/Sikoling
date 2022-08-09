@@ -49,4 +49,9 @@ public class UserRepositoryEJB implements IUserRepository {
 		return userRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
 	}
 
+	@Override
+	public Boolean cekName(String nama) {
+		return userRepositoryJPA.cekName(nama);
+	}
+
 }
