@@ -5,6 +5,7 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.main.Infrastructure;
+import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserRepository;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -16,7 +17,7 @@ import jakarta.inject.Inject;
 public class UserRepositoryEJB implements IUserRepository {
 	
 	@Inject
-	private UserRepositoryJPA userRepositoryJPA;
+	private KeyCloakUserRepository userRepositoryJPA;
 
 	@Override
 	public List<User> getAll() {
