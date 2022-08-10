@@ -11,4 +11,5 @@ public interface IUserService {
 	List<User> getAllByPage(Integer page, Integer pageSize);
 	List<User> getByQueryNama(String nama);
 	List<User> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
+	Boolean cekUserName(String nama);
 }

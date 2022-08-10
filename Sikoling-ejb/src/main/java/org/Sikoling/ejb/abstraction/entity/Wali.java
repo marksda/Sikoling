@@ -30,7 +30,7 @@ public class Wali implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.wali.getEmail());
+		hash = 13 * hash + Objects.hashCode(this.wali.getUserName());
 		return hash;
 	}
 

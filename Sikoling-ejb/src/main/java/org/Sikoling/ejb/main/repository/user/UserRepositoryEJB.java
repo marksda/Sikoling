@@ -50,8 +50,8 @@ public class UserRepositoryEJB implements IUserRepository {
 	}
 
 	@Override
-	public Boolean cekName(String nama) {
-		return userRepositoryJPA.cekName(nama);
+	public Boolean cekUserName(String nama) {
+		return userRepositoryJPA.cekUserName(nama);
 	}
 
 }

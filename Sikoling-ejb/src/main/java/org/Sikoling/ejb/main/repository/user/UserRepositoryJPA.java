@@ -78,7 +78,7 @@ public class UserRepositoryJPA implements IUserRepository {
 	private UserData convertUserToUserData(User u) {
 		UserData userData = new UserData();
 		userData.setId(u.getId());
-		userData.setUser(u.getEmail());
+		userData.setUser(u.getUserName());
 		userData.setPassword(u.getPassword());
 		userData.setStatusInternal(u.getStatusInternal());
 		userData.setStatusLogin(u.getLoginStatus());
@@ -89,6 +89,12 @@ public class UserRepositoryJPA implements IUserRepository {
 	
 	private User convertUserDataToUser(UserData d) {
 		return new User(d.getId(), d.getUser(), d.getPassword(), d.getStatusLogin(), d.getTanggalRegistrasi(), d.getStatusInternal(), null, null);
+	}
+
+	
+	@Override
+	public Boolean cekUserName(String nama) {
+		return null;
 	}
 
 }

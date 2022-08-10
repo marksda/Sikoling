@@ -67,7 +67,7 @@ public class KeyCloakUserRepository implements IUserRepository {
 				.create(convertUserToUserPresentatiton(user));
 		
 		if (response.getStatus() != 200) {
-            throw new IllegalArgumentException("user service " + user.getEmail() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
+            throw new IllegalArgumentException("user service " + user.getUserName() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
         }
 
         return user;
@@ -142,8 +142,8 @@ public class KeyCloakUserRepository implements IUserRepository {
 	private UserRepresentation convertUserToUserPresentatiton(User user) {
 		UserRepresentation userRepresentation = new UserRepresentation();
 		userRepresentation.setId(user.getId());
-		userRepresentation.setEmail(user.getEmail());
-        userRepresentation.setUsername(user.getEmail());
+		userRepresentation.setEmail(user.getUserName());
+        userRepresentation.setUsername(user.getUserName());
         userRepresentation.setFirstName(user.getPerson().getNama());
         userRepresentation.setEnabled(user.getStatusEnable());       
         
@@ -195,11 +195,16 @@ public class KeyCloakUserRepository implements IUserRepository {
                 .findFirst()
                 .orElse("");
     }
-
 	
 	@Override
-	public Boolean cekName(String nama) {
-		return null;
+	public Boolean cekUserName(String nama) {
+		Integer count = keycloak.realm(realm).users().count(nama);
+		if(count > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }

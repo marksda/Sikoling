@@ -8,5 +8,5 @@ public interface IUserRepository extends IRepository<User> {
 	List<User> getAllByPage(Integer page, Integer pageSize);
 	List<User> getByQueryNama(String nama);
 	List<User> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
-	Boolean cekName(String nama);
+	Boolean cekUserName(String nama);
 }

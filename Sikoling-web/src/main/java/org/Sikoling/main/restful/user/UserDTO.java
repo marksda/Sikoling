@@ -11,7 +11,7 @@ public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 8350209564637166779L;
 	private String id;
-	private String email;
+	private String userName;
 	private String password;
 	private Boolean loginStatus;
 	private Date registerDate;
@@ -25,7 +25,7 @@ public class UserDTO implements Serializable {
 	
 	public UserDTO(User u) {
 		this.id = u.getId();
-		this.email = u.getEmail();
+		this.userName = u.getUserName();
 		this.password = u.getPassword();
 		this.loginStatus = u.getLoginStatus();
 		this.registerDate = u.getRegisterDate();
@@ -36,7 +36,7 @@ public class UserDTO implements Serializable {
 			Boolean statusInternal) {
 		super();
 		this.id = id;
-		this.email = email;
+		this.userName = email;
 		this.password = password;
 		this.loginStatus = loginStatus;
 		this.registerDate = registerDate;
@@ -51,12 +51,12 @@ public class UserDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserName(String email) {
+		this.userName = email;
 	}
 
 	public String getPassword() {
@@ -114,7 +114,7 @@ public class UserDTO implements Serializable {
 	public int hashCode() {
 		int hash = 17;
         hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.email);
+        hash = 31 * hash + Objects.hashCode(this.userName);
         return hash;
 	}
 
@@ -138,7 +138,7 @@ public class UserDTO implements Serializable {
             return false;
         }
         
-        if (this.email != other.email) {
+        if (this.userName != other.userName) {
             return false;
         }
 
@@ -147,11 +147,11 @@ public class UserDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserDTO{" + "id=" + id + ", email=" + email + '}';	  
+		return "UserDTO{" + "id=" + id + ", email=" + userName + '}';	  
 	}
 
 	public User toUser() {
-		return new User(id, email, password, loginStatus, registerDate, statusInternal, personDTO.toPerson(), statusEnable);
+		return new User(id, userName, password, loginStatus, registerDate, statusInternal, personDTO.toPerson(), statusEnable);
 	}
 
 }

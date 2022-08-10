@@ -84,4 +84,11 @@ public class UserController {
 				.collect(Collectors.toList());
 	}
 
+	@Path("cek_user_name")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_PLAIN})
+	public Boolean cekUserName(@QueryParam("userName") String nama) {
+		return userService.cekUserName(nama);
+	}
 }

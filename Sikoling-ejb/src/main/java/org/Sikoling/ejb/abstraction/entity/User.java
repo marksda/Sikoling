@@ -9,7 +9,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -9207509664824799299L;
 	
 	private final String id;
-	private final String email;
+	private final String userName;
 	private final String password;
 	private final Boolean loginStatus;
 	private final Date registerDate;
@@ -20,7 +20,7 @@ public class User implements Serializable {
 	public User(String id) {
 		super();
 		this.id = id;
-		this.email = null;
+		this.userName = null;
 		this.password = null;
 		this.loginStatus = null;
 		this.registerDate = null;
@@ -32,7 +32,7 @@ public class User implements Serializable {
 	public User(String id, String email, Person person, Date registerDate, Boolean statusInternal, Boolean statusEnable) {
 		super();
 		this.id = id;
-		this.email = email;
+		this.userName = email;
 		this.password = "";
 		this.loginStatus = false;
 		this.registerDate = registerDate;
@@ -45,7 +45,7 @@ public class User implements Serializable {
 			Boolean statusInternal, Person person, Boolean statusEnable) {
 		super();
 		this.id = id;
-		this.email = email;
+		this.userName = email;
 		this.password = password;
 		this.loginStatus = loginStatus;
 		this.registerDate = registerDate;
@@ -62,8 +62,8 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUserName() {
+		return userName;
 	}
 
 	public String getPassword() {
@@ -81,7 +81,7 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.email);
+		hash = 13 * hash + Objects.hashCode(this.userName);
 		hash = 13 * hash + Objects.hashCode(this.password);
 		return hash;
 	}
@@ -102,7 +102,7 @@ public class User implements Serializable {
         
         final User other = (User) obj;
         
-        if (!this.email.equals(other.email)) {
+        if (!this.userName.equals(other.userName)) {
             return false;
         }
         
@@ -115,7 +115,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User{" + "email=" + email + ", password=" + password + "}";
+		return "User{" + "email=" + userName + ", password=" + password + "}";
 	}
 
 	public Date getRegisterDate() {

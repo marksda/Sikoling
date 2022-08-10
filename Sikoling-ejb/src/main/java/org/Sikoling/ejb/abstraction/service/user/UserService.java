@@ -44,4 +44,10 @@ public class UserService implements IUserService {
 		return userRepository.getAll();
 	}
 
+	
+	@Override
+	public Boolean cekUserName(String nama) {
+		return userRepository.cekUserName(nama);
+	}
+
 }
