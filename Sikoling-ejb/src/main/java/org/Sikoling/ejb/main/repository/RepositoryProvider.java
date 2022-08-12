@@ -19,7 +19,6 @@ import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
 import org.Sikoling.ejb.main.repository.user.UserRepositoryJPA;
 import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserRepository;
 import org.keycloak.admin.client.Keycloak;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
