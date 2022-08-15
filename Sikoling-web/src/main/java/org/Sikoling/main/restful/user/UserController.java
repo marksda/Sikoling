@@ -89,6 +89,7 @@ public class UserController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_PLAIN})
 	public Boolean cekUserName(@QueryParam("userName") String nama) {
-		return userService.cekUserName(nama);
+		
+		return nama.length() > 0? userService.cekUserName(nama) : false;
 	}
 }

@@ -90,7 +90,8 @@ public class RepositoryProvider {
 	@Produces
 	public KeyCloakUserRepository getKeyCloakUserRepository(EntityManager entityManager, Properties properties) {
 		Keycloak keycloak = Keycloak.getInstance(
-				properties.getProperty("SSO_AUTH_URL"),
+//				properties.getProperty("SSO_AUTH_URL"),
+				"http://localhost:8082",
                 "master",
                 properties.getProperty("SSO_AUTH_USER"),
                 properties.getProperty("SSO_AUTH_PASSWORD"),

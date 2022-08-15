@@ -198,13 +198,17 @@ public class KeyCloakUserRepository implements IUserRepository {
 	
 	@Override
 	public Boolean cekUserName(String nama) {
-		Integer count = keycloak.realm(realm).users().count(nama);
+		Integer count = keycloak
+				.realm(realm)
+				.users()
+				.count(nama);
 		if(count > 0) {
 			return true;
 		}
 		else {
 			return false;
 		}
+//		return true;
 	}
 
 }

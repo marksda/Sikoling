@@ -43,7 +43,6 @@ public class UserService implements IUserService {
 	public List<User> getAll() {
 		return userRepository.getAll();
 	}
-
 	
 	@Override
 	public Boolean cekUserName(String nama) {
