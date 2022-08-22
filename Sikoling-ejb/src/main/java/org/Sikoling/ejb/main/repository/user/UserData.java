@@ -8,7 +8,8 @@ import java.util.Date;
 @Table(name="master.tbl_user")
 @NamedQueries({
 @NamedQuery(name="UserData.findAll", query="SELECT u FROM UserData u"),
-@NamedQuery(name="UserData.findByQueryNama", query="SELECT u FROM UserData u WHERE u.user LIKE :nama")
+@NamedQuery(name="UserData.findByQueryNama", query="SELECT u FROM UserData u WHERE u.user LIKE :nama"),
+@NamedQuery(name="UserData.authenticationQuery", query="SELECT u FROM UserData u WHERE u.user = :nama AND u.password = :password")
 })
 public class UserData implements Serializable {
 	private static final long serialVersionUID = 1L;

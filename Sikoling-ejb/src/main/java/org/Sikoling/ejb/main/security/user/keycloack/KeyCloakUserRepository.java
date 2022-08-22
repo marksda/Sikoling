@@ -1,5 +1,7 @@
 package org.Sikoling.ejb.main.security.user.keycloack;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -21,6 +23,7 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.main.repository.person.PersonData;
+import org.Sikoling.ejb.main.repository.user.UserData;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -145,16 +148,21 @@ public class KeyCloakUserRepository implements IUserRepository {
 		userRepresentation.setEmail(user.getUserName());
         userRepresentation.setUsername(user.getUserName());
         userRepresentation.setFirstName(user.getPerson().getNama());
-        userRepresentation.setEnabled(user.getStatusEnable());       
-        
+        userRepresentation.setEnabled(user.getStatusEnable());        
         
         Map<String, List<String>> attributes = new HashMap<>();
         attributes.put("statusInternal", Arrays.asList(user.getStatusInternal().toString()));  
         attributes.put("registerDate", Arrays.asList(user.getRegisterDate().toString()));
-        attributes.put("nik", Arrays.asList(user.getPerson().getNik()));
-        
+        attributes.put("nik", Arrays.asList(user.getPerson().getNik()));        
  
         userRepresentation.setAttributes(attributes);
+        
+//      CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+//		credentialRepresentation.setTemporary(false);
+//		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+//		credentialRepresentation.setValue(user.getPassword());
+//		
+//		userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));		
         
 		return userRepresentation;
 	}
@@ -198,17 +206,104 @@ public class KeyCloakUserRepository implements IUserRepository {
 	
 	@Override
 	public Boolean cekUserName(String nama) {
-		Integer count = keycloak
+		
+		if(cekModelAuthentication(nama) == "none") {
+			return false;
+		}
+		else {
+			return true;
+		}
+		
+//		Integer count = keycloak
+//				.realm(realm)
+//				.users()
+//				.count(nama);		
+		
+//		List<CredentialRepresentation> credentialRepresentation = keycloak
+//				.realm(realm)
+//				.users().get(nama).credentials();
+		
+//		if(count > 0) {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+		
+	}
+	
+	private String cekModelAuthentication(String nama) {
+		Integer count = 0;
+		
+		count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+		.setParameter("nama", nama)
+		.getResultList()
+		.size();
+		
+		if(count > 0) {
+			return "local";
+		}
+		
+		count = keycloak
 				.realm(realm)
 				.users()
 				.count(nama);
+		
 		if(count > 0) {
-			return true;
+			return "remote";
 		}
-		else {
-			return false;
-		}
-//		return true;
+		
+		return "none";
 	}
 
+	private Boolean cekPassword(String nama, String password) {
+		String pwd = "";
+		String modelAuthentication = cekModelAuthentication(nama);
+		
+		if( modelAuthentication == "none") {
+			return false;
+		}
+		else if(modelAuthentication == "local") {
+//			Query q;
+			try {
+				
+				MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+				messageDigest.reset();
+				messageDigest.update(password.getBytes());
+                byte[] digest = messageDigest.digest();
+                StringBuilder sb = new StringBuilder();
+                for (int i=0;i<digest.length;i++){
+                    sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+                pwd=sb.toString();                
+
+				Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
+						.setParameter("nama", nama)
+						.setParameter("password", pwd)
+						.getResultList()
+						.size();
+				
+				if(count == 0) {
+					return false;
+				}
+				else {
+					return true;					
+				}
+				
+//				q = entityManager.createNativeQuery(
+//					"SELECT * FROM "
+//				);
+//				q.setParameter(1, id);
+//	            Object results = q.getSingleResult();	            
+				
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				return false;
+			}			
+		}
+		else {
+			//request token
+			return true;
+		}
+	}
 }
