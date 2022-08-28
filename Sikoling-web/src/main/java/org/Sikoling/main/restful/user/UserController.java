@@ -96,7 +96,7 @@ public class UserController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public ResponTokenDTO getToken(UserAuthenticatorDTO u) {		
+	public ResponTokenDTO getToken(UserAuthenticatorDTO u) {
 		return new ResponTokenDTO(userService.getToken(u.toUserAuthenticator()));
 	}
 	

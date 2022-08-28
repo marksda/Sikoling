@@ -191,7 +191,7 @@ public class KeyCloakUserRepository implements IUserRepository {
 	
 	        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
 	        
-	        Map<String, Object> claims = tokenValidationService.validate(map.get("id_token"));
+	        Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
 	        
 	        token = new Token(
 	        		getClaim(claims, "sub"), 
@@ -202,6 +202,7 @@ public class KeyCloakUserRepository implements IUserRepository {
 	        		map.get("expires_in")
 	    		);
 	        return new ResponToken("oke", token);
+			
 		}
 		else if(hasil == "need pid"){
 			return new ResponToken("need pid", null);

@@ -8,6 +8,7 @@ import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.JWTProcessor;
 
+
 public class TokenValidationJWK implements ITokenValidationService {
 	
 	private final JWTProcessor<SecurityContext> jwtProcessor;

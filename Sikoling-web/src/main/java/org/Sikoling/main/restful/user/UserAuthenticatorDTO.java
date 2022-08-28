@@ -8,8 +8,17 @@ import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 public class UserAuthenticatorDTO implements Serializable {
 
 	private static final long serialVersionUID = 8997263655797643037L;
-	private final String userName;
-	private final String password;
+	private String userName;
+	private String password;
+		
+	
+	public UserAuthenticatorDTO() {		
+	}
+
+	public UserAuthenticatorDTO(String userName, String password) {
+		this.userName = userName;
+		this.password = password;
+	}
 	
 	public UserAuthenticatorDTO(UserAuthenticator userAuthenticator) {
 		this.userName = userAuthenticator.getUserName();
@@ -18,6 +27,14 @@ public class UserAuthenticatorDTO implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getUserName() {
@@ -61,6 +78,11 @@ public class UserAuthenticatorDTO implements Serializable {
         
         return true;
 	}
+	
+	@Override
+    public String toString() {
+        return "UserAuthenticatorDTO{" + "userName=" + userName + ", password=" + password + '}';
+    }
 
 	public UserAuthenticator toUserAuthenticator() {
 		return new UserAuthenticator(userName, password);
