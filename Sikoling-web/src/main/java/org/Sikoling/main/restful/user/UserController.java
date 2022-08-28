@@ -92,11 +92,12 @@ public class UserController {
 		return nama.length() > 0? userService.cekUserName(nama) : false;
 	}
 	
+	@Path("get_token")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public ResponTokenDTO getToken(AuthenticationDTO u) {
-		return new UserDTO(userService.save(u.toUser()));
+	public ResponTokenDTO getToken(UserAuthenticatorDTO u) {		
+		return new ResponTokenDTO(userService.getToken(u.toUserAuthenticator()));
 	}
 	
 }

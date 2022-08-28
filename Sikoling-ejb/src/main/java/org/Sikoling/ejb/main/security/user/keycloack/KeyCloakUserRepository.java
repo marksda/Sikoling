@@ -23,6 +23,7 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.Token;
 import org.Sikoling.ejb.abstraction.entity.User;
+import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.person.PersonData;
@@ -170,15 +171,15 @@ public class KeyCloakUserRepository implements IUserRepository {
 	}
 
 	@Override
-	public ResponToken getToken(String nama, String password) {
+	public ResponToken getToken(UserAuthenticator userAuthenticator) {
 		Token token;
-		String hasil = cekPassword(nama, password);
+		String hasil = cekPassword(userAuthenticator.getUserName(), userAuthenticator.getPassword());
 		if( hasil == "remote") {
 			Form form = new Form()
 					.param("grant_type", "password")
 	                .param("client_id", "admin-cli")
-	                .param("username", nama)
-	                .param("password", password);
+	                .param("username", userAuthenticator.getUserName())
+	                .param("password", userAuthenticator.getPassword());
 			Response response = client.target(tokenURL)
 	                .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
 	                .accept(MediaType.APPLICATION_JSON_TYPE)

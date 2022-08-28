@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.User;
+import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserRepository;
@@ -56,8 +57,8 @@ public class UserRepositoryEJB implements IUserRepository {
 	}
 
 	@Override
-	public ResponToken getToken(String nama, String password) {
-		return userRepositoryJPA.getToken(nama, password);
+	public ResponToken getToken(UserAuthenticator u) {
+		return userRepositoryJPA.getToken(u);
 	}
 
 }

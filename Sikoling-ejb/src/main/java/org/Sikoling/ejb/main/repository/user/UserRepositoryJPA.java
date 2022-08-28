@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.User;
+import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import jakarta.persistence.EntityManager;
 
@@ -98,7 +99,7 @@ public class UserRepositoryJPA implements IUserRepository {
 	}
 
 	@Override
-	public ResponToken getToken(String nama, String password) {
+	public ResponToken getToken(UserAuthenticator u) {
 		return null;
 	}
 
