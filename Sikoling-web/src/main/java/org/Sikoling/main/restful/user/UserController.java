@@ -88,8 +88,15 @@ public class UserController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_PLAIN})
-	public Boolean cekUserName(@QueryParam("userName") String nama) {
-		
+	public Boolean cekUserName(@QueryParam("userName") String nama) {		
 		return nama.length() > 0? userService.cekUserName(nama) : false;
 	}
+	
+	@POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public ResponTokenDTO getToken(AuthenticationDTO u) {
+		return new UserDTO(userService.save(u.toUser()));
+	}
+	
 }

@@ -3,17 +3,14 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.util.Objects;
 
 public class Token {
-	private String userId;
-    private String userName;
-    private String userEmail;
-    private String accessToken;
-    private String refreshToken;
-    private String expiresIn;
+	private final String userId;
+    private final String userName;
+    private final String userEmail;
+    private final String accessToken;
+    private final String refreshToken;
+    private final String expiresIn;
 
-    public Token() {
-    }
-
-	public Token(String userId, String userName, String userEmail, String accessToken, String refreshToken,
+    public Token(String userId, String userName, String userEmail, String accessToken, String refreshToken,
 			String expiresIn) {
 		super();
 		this.userId = userId;
@@ -28,49 +25,36 @@ public class Token {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	
 
 	public String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
+	
 	public String getUserEmail() {
 		return userEmail;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+	
 
 	public String getAccessToken() {
 		return accessToken;
 	}
 
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
+	
 
 	public String getRefreshToken() {
 		return refreshToken;
 	}
 
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
-	}
+	
 
 	public String getExpiresIn() {
 		return expiresIn;
 	}
 
-	public void setExpiresIn(String expiresIn) {
-		this.expiresIn = expiresIn;
-	}
+	
 
 	@Override
     public int hashCode() {
@@ -84,7 +68,8 @@ public class Token {
         return hash;
     }
 
-    @Override
+    
+	@Override    
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

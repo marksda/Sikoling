@@ -20,8 +20,11 @@ import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.ResponToken;
+import org.Sikoling.ejb.abstraction.entity.Token;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
+import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 import org.keycloak.admin.client.Keycloak;
@@ -29,6 +32,11 @@ import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 public class KeyCloakUserRepository implements IUserRepository {
@@ -36,12 +44,19 @@ public class KeyCloakUserRepository implements IUserRepository {
 	private final EntityManager entityManager;
 	private final Keycloak keycloak;
 	private final String realm;	
+	private final String tokenURL;
+	private final Client client;
+	private final ITokenValidationService tokenValidationService;
 
-	public KeyCloakUserRepository(Keycloak keycloak, String realm, EntityManager entityManager) {
+	public KeyCloakUserRepository(Keycloak keycloak, String realm, EntityManager entityManager, 
+			String tokenURL, Client client, ITokenValidationService tokenValidationService) {
 		super();
 		this.keycloak = keycloak;
 		this.realm = realm;
 		this.entityManager = entityManager;
+		this.tokenURL = tokenURL;
+		this.client = client;
+		this.tokenValidationService = tokenValidationService;
 	}
 	
 	@Override
@@ -141,7 +156,139 @@ public class KeyCloakUserRepository implements IUserRepository {
 				})
                 .collect(Collectors.toList());
 	}
+	
+	@Override
+	public Boolean cekUserName(String nama) {
+		
+		if(cekModelAuthentication(nama) == "none") {
+			return false;
+		}
+		else {
+			return true;
+		}
+		
+	}
 
+	@Override
+	public ResponToken getToken(String nama, String password) {
+		Token token;
+		String hasil = cekPassword(nama, password);
+		if( hasil == "remote") {
+			Form form = new Form()
+					.param("grant_type", "password")
+	                .param("client_id", "admin-cli")
+	                .param("username", nama)
+	                .param("password", password);
+			Response response = client.target(tokenURL)
+	                .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+	                .accept(MediaType.APPLICATION_JSON_TYPE)
+	                .post(Entity.form(form));
+			
+			if (response.getStatus() != 200) {
+	            throw new IllegalStateException("The tokens couldn't be gotten " + response.readEntity(String.class));
+	        }
+	
+	        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
+	        
+	        Map<String, Object> claims = tokenValidationService.validate(map.get("id_token"));
+	        
+	        token = new Token(
+	        		getClaim(claims, "sub"), 
+	        		getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), 
+	        		getClaim(claims, "email"), 
+	        		map.get("access_token"), 
+	        		map.get("refresh_token"), 
+	        		map.get("expires_in")
+	    		);
+	        return new ResponToken("oke", token);
+		}
+		else if(hasil == "need pid"){
+			return new ResponToken("need pid", null);
+		}
+		else {
+			return new ResponToken("error", null);
+		}
+        
+	}
+	
+	private String getClaim(Map<String, Object> claims, String name){
+        return Optional.ofNullable(claims.get(name))
+                .map(String.class::cast)
+                .orElseThrow(() -> new IllegalStateException("Claim " + name + " was expected"));
+    }
+	
+	private String cekModelAuthentication(String nama) {
+		Integer count = 0;
+		
+		count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+		.setParameter("nama", nama)
+		.getResultList()
+		.size();
+		
+		if(count > 0) {
+			return "local";
+		}
+		
+		count = keycloak
+				.realm(realm)
+				.users()
+				.count(nama);
+		
+		if(count > 0) {
+			return "remote";
+		}
+		
+		return "none";
+	}
+	
+	private String cekPassword(String nama, String password) {
+		String pwd = "";
+		String modelAuthentication = cekModelAuthentication(nama);
+		
+		if( modelAuthentication == "none") {
+			return "none";
+		}
+		else if(modelAuthentication == "local") {
+			try {				
+				MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+				messageDigest.reset();
+				messageDigest.update(password.getBytes());
+                byte[] digest = messageDigest.digest();
+                StringBuilder sb = new StringBuilder();
+                for (int i=0;i<digest.length;i++){
+                    sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+                pwd=sb.toString();                
+
+				Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
+						.setParameter("nama", nama)
+						.setParameter("password", pwd)
+						.getResultList()
+						.size();
+				
+				if(count == 0) {
+					return "none";
+				}
+				else {
+					return "pid not found";					
+				}
+				
+//				q = entityManager.createNativeQuery(
+//					"SELECT * FROM "
+//				);
+//				q.setParameter(1, id);
+//	            Object results = q.getSingleResult();	            
+				
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				return "none";
+			}			
+		}
+		else {	
+	        return "remote";
+		}
+	}
+	
 	private UserRepresentation convertUserToUserPresentatiton(User user) {
 		UserRepresentation userRepresentation = new UserRepresentation();
 		userRepresentation.setId(user.getId());
@@ -204,106 +351,4 @@ public class KeyCloakUserRepository implements IUserRepository {
                 .orElse("");
     }
 	
-	@Override
-	public Boolean cekUserName(String nama) {
-		
-		if(cekModelAuthentication(nama) == "none") {
-			return false;
-		}
-		else {
-			return true;
-		}
-		
-//		Integer count = keycloak
-//				.realm(realm)
-//				.users()
-//				.count(nama);		
-		
-//		List<CredentialRepresentation> credentialRepresentation = keycloak
-//				.realm(realm)
-//				.users().get(nama).credentials();
-		
-//		if(count > 0) {
-//			return true;
-//		}
-//		else {
-//			return false;
-//		}
-		
-	}
-	
-	private String cekModelAuthentication(String nama) {
-		Integer count = 0;
-		
-		count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
-		.setParameter("nama", nama)
-		.getResultList()
-		.size();
-		
-		if(count > 0) {
-			return "local";
-		}
-		
-		count = keycloak
-				.realm(realm)
-				.users()
-				.count(nama);
-		
-		if(count > 0) {
-			return "remote";
-		}
-		
-		return "none";
-	}
-
-	private Boolean cekPassword(String nama, String password) {
-		String pwd = "";
-		String modelAuthentication = cekModelAuthentication(nama);
-		
-		if( modelAuthentication == "none") {
-			return false;
-		}
-		else if(modelAuthentication == "local") {
-//			Query q;
-			try {
-				
-				MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-				messageDigest.reset();
-				messageDigest.update(password.getBytes());
-                byte[] digest = messageDigest.digest();
-                StringBuilder sb = new StringBuilder();
-                for (int i=0;i<digest.length;i++){
-                    sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
-                    }
-                pwd=sb.toString();                
-
-				Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
-						.setParameter("nama", nama)
-						.setParameter("password", pwd)
-						.getResultList()
-						.size();
-				
-				if(count == 0) {
-					return false;
-				}
-				else {
-					return true;					
-				}
-				
-//				q = entityManager.createNativeQuery(
-//					"SELECT * FROM "
-//				);
-//				q.setParameter(1, id);
-//	            Object results = q.getSingleResult();	            
-				
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-				return false;
-			}			
-		}
-		else {
-			//request token
-			return true;
-		}
-	}
 }

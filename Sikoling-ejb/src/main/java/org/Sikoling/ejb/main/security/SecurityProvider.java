@@ -25,16 +25,14 @@ import jakarta.enterprise.inject.Produces;
 public class SecurityProvider {
 
 	@Produces
-	public JWTProcessor<SecurityContext> getJWTProcessor(Properties properties) throws MalformedURLException {
-		
+	public JWTProcessor<SecurityContext> getJWTProcessor(Properties properties) throws MalformedURLException {		
 		ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<> ();
 		JWKSource<SecurityContext> keySource = new RemoteJWKSet<> (new URL(properties.getProperty("SSO_JWK_URL")));
 		JWSAlgorithm expectedJWSAlg = JWSAlgorithm.RS256;
 		JWSKeySelector<SecurityContext> keySelector = new JWSVerificationKeySelector<> (expectedJWSAlg, keySource);
         jwtProcessor.setJWSKeySelector(keySelector);
 
-        return jwtProcessor;
-		
+        return jwtProcessor;		
 	}
 	
 	@Produces

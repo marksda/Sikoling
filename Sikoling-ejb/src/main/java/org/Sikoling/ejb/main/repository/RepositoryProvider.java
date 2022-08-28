@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository;
 
 import java.util.Properties;
 
+import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
@@ -24,6 +25,7 @@ import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.client.Client;
 
 @Stateless
 @LocalBean
@@ -88,16 +90,17 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KeyCloakUserRepository getKeyCloakUserRepository(EntityManager entityManager, Properties properties) {
+	public KeyCloakUserRepository getKeyCloakUserRepository(EntityManager entityManager, Properties properties, 
+			Client client, ITokenValidationService tokenValidationService) {
 		Keycloak keycloak = Keycloak.getInstance(
 				properties.getProperty("SSO_AUTH_URL"),
-//				"http://localhost:8082",
                 "master",
                 properties.getProperty("SSO_AUTH_USER"),
                 properties.getProperty("SSO_AUTH_PASSWORD"),
                 "admin-cli");
 		
-		return new KeyCloakUserRepository(keycloak, properties.getProperty("SSO_REALM"), entityManager);
+		return new KeyCloakUserRepository(keycloak, properties.getProperty("SSO_REALM"), entityManager, 
+				properties.getProperty("SSO_TOKEN_URL"), client, tokenValidationService);
 	}
 	
 	@Produces

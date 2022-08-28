@@ -31,6 +31,7 @@ public class OpenIdConnectionService implements IOpenIdConnectService {
 		this.clientSecret = clientSecret;
 	}
 	
+	
 	@Override
 	public Token requestToken(String grantType, String code, String redirectUrl) {
 		Form form = new Form()
