@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
+import org.Sikoling.main.restful.person.PersonDTO;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -97,6 +98,14 @@ public class UserController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public ResponTokenDTO getToken(UserAuthenticatorDTO u) {
+		return new ResponTokenDTO(userService.getToken(u.toUserAuthenticator()));
+	}
+	
+	@Path("registrasi")
+	@POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public ResponTokenDTO setRegistrasi(UserAuthenticatorDTO u, PersonDTO p) {
 		return new ResponTokenDTO(userService.getToken(u.toUserAuthenticator()));
 	}
 	
