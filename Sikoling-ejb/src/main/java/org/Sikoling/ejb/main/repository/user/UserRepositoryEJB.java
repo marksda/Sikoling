@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.user;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
@@ -59,6 +60,11 @@ public class UserRepositoryEJB implements IUserRepository {
 	@Override
 	public ResponToken getToken(UserAuthenticator u) {
 		return userRepositoryJPA.getToken(u);
+	}
+
+	@Override
+	public Boolean addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
+		return userRepositoryJPA.addRegistrasi(userAuthenticator, person);
 	}
 
 }

@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import jakarta.persistence.EntityManager;
@@ -352,5 +355,49 @@ public class KeyCloakUserRepository implements IUserRepository {
                 .findFirst()
                 .orElse("");
     }
+
+	
+	private UserRepresentation convertRegistrasiToUserPresentatiton(UserAuthenticator userAuthenticator, Person person) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+	    LocalDateTime now = LocalDateTime.now();  
+		   
+		UserRepresentation userRepresentation = new UserRepresentation();
+		userRepresentation.setId(person.getNik());
+		userRepresentation.setEmail(person.getKontak().getEmail());
+        userRepresentation.setUsername(person.getKontak().getEmail());
+        userRepresentation.setFirstName(person.getNama());
+        userRepresentation.setEnabled(true);  
+        
+        Map<String, List<String>> attributes = new HashMap<>();
+        attributes.put("statusInternal", Arrays.asList("ekternal"));  
+        attributes.put("registerDate", Arrays.asList(dtf.format(now)));
+        attributes.put("nik", Arrays.asList(person.getNik()));        
+ 
+        userRepresentation.setAttributes(attributes);
+        
+        CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+	 	credentialRepresentation.setTemporary(false);
+		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+		credentialRepresentation.setValue(userAuthenticator.getPassword());
+		
+		userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));		
+        
+		return userRepresentation;
+	}
+	
+	@Override
+	public Boolean addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
+		Response response = keycloak
+				.realm(realm)
+				.users()
+				.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
+		
+		if (response.getStatus() != 200) {
+//            throw new IllegalArgumentException("user service " + user.getUserName() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
+			return false;
+        }
+
+		return true;
+	}
 	
 }
