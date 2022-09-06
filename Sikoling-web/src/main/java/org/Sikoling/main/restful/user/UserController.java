@@ -105,8 +105,8 @@ public class UserController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_PLAIN})
-	public Boolean setRegistrasi(UserAuthenticatorDTO u, PersonDTO p) {
-		return userService.addRegistrasi(u.toUserAuthenticator(), p.toPerson());
+	public Boolean setRegistrasi(RegistrasiDTO r) {
+		return userService.addRegistrasi(r.getAuth().toUserAuthenticator(), r.getPerson().toPerson());
 	}
 	
 }
