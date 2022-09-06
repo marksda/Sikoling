@@ -367,9 +367,10 @@ public class KeyCloakUserRepository implements IUserRepository {
         userRepresentation.setUsername(person.getKontak().getEmail());
         userRepresentation.setFirstName(person.getNama());
         userRepresentation.setEnabled(true);  
+        userRepresentation.setGroups(Arrays.asList("external"));
         
         Map<String, List<String>> attributes = new HashMap<>();
-        attributes.put("statusInternal", Arrays.asList("ekternal"));  
+        attributes.put("statusInternal", Arrays.asList("external"));  
         attributes.put("registerDate", Arrays.asList(dtf.format(now)));
         attributes.put("nik", Arrays.asList(person.getNik()));        
  
@@ -392,8 +393,8 @@ public class KeyCloakUserRepository implements IUserRepository {
 				.users()
 				.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
 		
-		if (response.getStatus() != 200) {
-//            throw new IllegalArgumentException("user service " + user.getUserName() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
+		if (response.getStatus() != 201) {
+//            throw new IllegalArgumentException("user service " + person.getNama() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
 			return false;
         }
 

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
-import org.Sikoling.main.restful.person.PersonDTO;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
