@@ -355,7 +355,6 @@ public class KeyCloakUserRepository implements IUserRepository {
                 .findFirst()
                 .orElse("");
     }
-
 	
 	private UserRepresentation convertRegistrasiToUserPresentatiton(UserAuthenticator userAuthenticator, Person person) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
