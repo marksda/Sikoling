@@ -245,7 +245,7 @@ public class KeyCloakUserRepository implements IUserRepository {
 		
 		return "none";
 	}
-	
+
 	private String cekPassword(String nama, String password) {
 		String pwd = "";
 		String modelAuthentication = cekModelAuthentication(nama);
@@ -308,13 +308,6 @@ public class KeyCloakUserRepository implements IUserRepository {
         attributes.put("nik", Arrays.asList(user.getPerson().getNik()));        
  
         userRepresentation.setAttributes(attributes);
-        
-//      CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
-//		credentialRepresentation.setTemporary(false);
-//		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
-//		credentialRepresentation.setValue(user.getPassword());
-//		
-//		userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));		
         
 		return userRepresentation;
 	}
