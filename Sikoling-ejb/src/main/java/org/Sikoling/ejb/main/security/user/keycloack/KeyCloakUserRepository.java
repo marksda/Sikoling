@@ -391,10 +391,27 @@ public class KeyCloakUserRepository implements IUserRepository {
         }
 		else {
 			/*
-			 * 1. hapus item di master.tbl_user
-			 * 2. tambahkan data person di master.tbl_person
-			 * 3. tambahkan data di master.table_authority
+			 * 1. cek apakah user ada di database local apa diremote server keycloack
+			 * 2. hapus item di master.tbl_user
+			 * 3. tambahkan data person di master.tbl_person
+			 * 4. tambahkan data di master.table_authority
 			 */
+			String nama = "%" + userAuthenticator.getUserName() + "%";
+			UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+								.setParameter("nama", nama)
+								.getSingleResult();
+//			.getResultList()
+//			.stream()
+//			.map(t -> convertUserDataToUser(t))
+//			.collect(Collectors.toList());
+			
+//			List<User> dataUser = getByQueryNama(userAuthenticator.getUserName());
+//			if(!dataUser.isEmpty()) {
+//				User user = dataUser.get(0);
+//			}
+			entityManager.remove(userData);
+			entityManager.getTransaction().commit();
+			
 			
 			return true;
 		}		
