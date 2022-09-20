@@ -396,8 +396,15 @@ public class KeyCloakUserRepository implements IUserRepository {
 //            throw new IllegalArgumentException("user service " + person.getNama() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
 			return false;
         }
-
-		return true;
+		else {
+			/*
+			 * 1. hapus item di master.tbl_user
+			 * 2. tambahkan data person di master.tbl_person
+			 * 3. tambahkan data di master.table_authority
+			 */
+			
+			return true;
+		}		
 	}
 	
 }

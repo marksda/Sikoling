@@ -103,7 +103,6 @@ public class UserRepositoryJPA implements IUserRepository {
 	public ResponToken getToken(UserAuthenticator u) {
 		return null;
 	}
-
 	
 	@Override
 	public Boolean addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
