@@ -12,7 +12,8 @@ import java.util.Date;
 @NamedQuery(name="UserData.authenticationQuery", query="SELECT u FROM UserData u WHERE u.user = :nama AND u.password = :password")
 })
 public class UserData implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 3347534045164637038L;
 
 	@Id
 	private String id;

@@ -25,36 +25,25 @@ public class Token {
 		return userId;
 	}
 
-	
-
 	public String getUserName() {
 		return userName;
 	}
-
 	
 	public String getUserEmail() {
 		return userEmail;
-	}
-
-	
+	}	
 
 	public String getAccessToken() {
 		return accessToken;
-	}
-
-	
+	}	
 
 	public String getRefreshToken() {
 		return refreshToken;
 	}
 
-	
-
 	public String getExpiresIn() {
 		return expiresIn;
 	}
-
-	
 
 	@Override
     public int hashCode() {
@@ -67,7 +56,6 @@ public class Token {
         hash = 67 * hash + Objects.hashCode(this.expiresIn);
         return hash;
     }
-
     
 	@Override    
     public boolean equals(Object obj) {
