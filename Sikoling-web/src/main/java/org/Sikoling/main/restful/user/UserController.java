@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
+import org.Sikoling.main.restful.message.SimpleResponseDTO;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -102,9 +104,9 @@ public class UserController {
 	@Path("registrasi")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.TEXT_PLAIN})
-	public Boolean setRegistrasi(RegistrasiDTO r) {
-		return userService.addRegistrasi(r.getAuth().toUserAuthenticator(), r.getPerson().toPerson());
+    @Produces({MediaType.APPLICATION_JSON})
+	public SimpleResponseDTO setRegistrasi(RegistrasiDTO r) {
+		return new SimpleResponseDTO(userService.addRegistrasi(r.getAuth().toUserAuthenticator(), r.getPerson().toPerson()));
 	}
 	
 }
