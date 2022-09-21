@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
+import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
@@ -105,7 +106,7 @@ public class UserRepositoryJPA implements IUserRepository {
 	}
 	
 	@Override
-	public Boolean addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
+	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
 		return null;
 	}
 

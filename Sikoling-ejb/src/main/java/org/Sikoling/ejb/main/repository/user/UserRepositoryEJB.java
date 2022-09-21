@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
+import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.main.Infrastructure;
-import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserRepository;
+import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserJPA;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -20,7 +21,7 @@ import jakarta.inject.Inject;
 public class UserRepositoryEJB implements IUserRepository {
 	
 	@Inject
-	private KeyCloakUserRepository userRepositoryJPA;
+	private KeyCloakUserJPA userRepositoryJPA;
 
 	@Override
 	public List<User> getAll() {
@@ -63,7 +64,7 @@ public class UserRepositoryEJB implements IUserRepository {
 	}
 
 	@Override
-	public Boolean addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
+	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
 		return userRepositoryJPA.addRegistrasi(userAuthenticator, person);
 	}
 

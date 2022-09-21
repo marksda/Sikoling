@@ -23,6 +23,7 @@ import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
+import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 import org.Sikoling.ejb.abstraction.entity.Token;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
@@ -43,7 +44,7 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-public class KeyCloakUserRepository implements IUserRepository {
+public class KeyCloakUserJPA implements IUserRepository {
 	
 	private final EntityManager entityManager;
 	private final Keycloak keycloak;
@@ -52,7 +53,7 @@ public class KeyCloakUserRepository implements IUserRepository {
 	private final Client client;
 	private final ITokenValidationService tokenValidationService;
 
-	public KeyCloakUserRepository(Keycloak keycloak, String realm, EntityManager entityManager, 
+	public KeyCloakUserJPA(Keycloak keycloak, String realm, EntityManager entityManager, 
 			String tokenURL, Client client, ITokenValidationService tokenValidationService) {
 		super();
 		this.keycloak = keycloak;
@@ -162,15 +163,13 @@ public class KeyCloakUserRepository implements IUserRepository {
 	}
 	
 	@Override
-	public Boolean cekUserName(String nama) {
-		
+	public Boolean cekUserName(String nama) {		
 		if(cekModelAuthentication(nama) == "none") {
 			return false;
 		}
 		else {
 			return true;
-		}
-		
+		}		
 	}
 
 	@Override
@@ -379,42 +378,53 @@ public class KeyCloakUserRepository implements IUserRepository {
 	}
 	
 	@Override
-	public Boolean addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
-		Response response = keycloak
-				.realm(realm)
-				.users()
-				.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
+	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
+		/*
+		 * 1. cek apakah user ada di database local apa diremote server keycloack
+		 * 2. hapus item di master.tbl_user
+		 * 3. tambahkan data person di master.tbl_person
+		 * 4. tambahkan data di master.table_authority
+		 */
 		
-		if (response.getStatus() != 201) {
-//            throw new IllegalArgumentException("user service " + person.getNama() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
-			return false;
-        }
-		else {
-			/*
-			 * 1. cek apakah user ada di database local apa diremote server keycloack
-			 * 2. hapus item di master.tbl_user
-			 * 3. tambahkan data person di master.tbl_person
-			 * 4. tambahkan data di master.table_authority
-			 */
-			String nama = "%" + userAuthenticator.getUserName() + "%";
-			UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
-								.setParameter("nama", nama)
-								.getSingleResult();
-//			.getResultList()
-//			.stream()
-//			.map(t -> convertUserDataToUser(t))
-//			.collect(Collectors.toList());
+		SimpleResponse hasil;
+		Response response;
+		switch (cekModelAuthentication(userAuthenticator.getUserName())) {
+			case "local": 
+				UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+						.setParameter("nama", userAuthenticator.getUserName())
+						.getSingleResult();
+				//hapus data lama yang ada ditable master.tbl_user
+				entityManager.remove(userData);				
+				//try adding user data to server keycloack
+				response = keycloak
+						.realm(realm)
+						.users()
+						.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
+				//pengecekan apakah data user berhasil ditambahkan ke server keycloack
+				if (response.getStatus() != 201) {	//gagal
+					//batalkan transaksi penghapusan user data
+					entityManager.getTransaction().rollback();
+					hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
+		        }
+				else {	//sukses
+					
+					//commit transaksi penghapusan data user
+					entityManager.getTransaction().commit();					
+					hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
+				}				
+				break;
+			case "remote": 		
+				hasil = new SimpleResponse("gagal", "data user sudah terdaftar di server identification provider");			
+				break;
+			case "none":
+				hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
+				break;
+			default:
+				hasil = new SimpleResponse("gagal", "malfuction");				
 			
-//			List<User> dataUser = getByQueryNama(userAuthenticator.getUserName());
-//			if(!dataUser.isEmpty()) {
-//				User user = dataUser.get(0);
-//			}
-			entityManager.remove(userData);
-			entityManager.getTransaction().commit();
-			
-			
-			return true;
-		}		
+		}	
+		
+		return hasil;
 	}
 	
 }

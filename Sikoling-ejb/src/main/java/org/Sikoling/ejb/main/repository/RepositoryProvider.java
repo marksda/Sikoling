@@ -18,7 +18,7 @@ import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
 import org.Sikoling.ejb.main.repository.user.UserRepositoryJPA;
-import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserRepository;
+import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserJPA;
 import org.keycloak.admin.client.Keycloak;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -90,7 +90,7 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KeyCloakUserRepository getKeyCloakUserRepository(EntityManager entityManager, Properties properties, 
+	public KeyCloakUserJPA getKeyCloakUserRepository(EntityManager entityManager, Properties properties, 
 			Client client, ITokenValidationService tokenValidationService) {
 		Keycloak keycloak = Keycloak.getInstance(
 				properties.getProperty("SSO_AUTH_URL"),
@@ -99,7 +99,7 @@ public class RepositoryProvider {
                 properties.getProperty("SSO_AUTH_PASSWORD"),
                 "admin-cli");
 		
-		return new KeyCloakUserRepository(keycloak, properties.getProperty("SSO_REALM"), entityManager, 
+		return new KeyCloakUserJPA(keycloak, properties.getProperty("SSO_REALM"), entityManager, 
 				properties.getProperty("SSO_TOKEN_URL"), client, tokenValidationService);
 	}
 	
