@@ -476,14 +476,18 @@ public class KeyCloakUserJPA implements IUserRepository {
 		        }
 				else {	//sukses
 					try {
+
+						entityManager.getTransaction().begin();
 						//jpa personData 
 						PersonData personData = convertPersonToPersonData(person);
 						entityManager.persist(personData);
+//						entityManager.flush();
 						//jpa autorisasiData				
 						AutorisasiData autorisasiData = converPersonToDefaultAutorisasiData(person.getNik(), null, "99", false);
 						entityManager.persist(autorisasiData);
 						//make persistence
-						entityManager.flush();
+//						entityManager.flush();
+						entityManager.getTransaction().commit();
 						hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
 					} catch (Exception e) {
 						//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
