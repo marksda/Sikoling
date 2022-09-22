@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.person;
 
 import java.io.Serializable;
 
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import jakarta.persistence.*;
 
@@ -33,8 +34,25 @@ public class PersonData implements Serializable {
 
 	@Embedded
 	private KontakPersonData kontak;
+	
+	@OneToOne(mappedBy = "personData", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+	private AutorisasiData autorisasiData;
 
 	public PersonData() {
+	}
+
+	public AutorisasiData getAutorisasiData() {
+		return autorisasiData;
+	}
+
+	public void setAutorisasiData(AutorisasiData autorisasiData) {
+		this.autorisasiData = autorisasiData;
+		autorisasiData.setPersonData(this);
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getId() {

@@ -1,11 +1,17 @@
 package org.Sikoling.ejb.main.repository.authority;
 
 import java.io.Serializable;
+
+import org.Sikoling.ejb.main.repository.person.PersonData;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +35,19 @@ public class AutorisasiData implements Serializable {
 	
 	@Column(name="status_internal")
 	private Boolean statusInternal;
+	
+	@OneToOne
+    @MapsId
+    @JoinColumn(name = "nik")
+	private PersonData personData;
+
+	public PersonData getPersonData() {
+		return personData;
+	}
+
+	public void setPersonData(PersonData personData) {
+		this.personData = personData;
+	}
 
 	public AutorisasiData() {
 	}
