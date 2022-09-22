@@ -222,6 +222,153 @@ public class KeyCloakUserJPA implements IUserRepository {
 		}
         
 	}
+		
+	@Override
+	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {		
+		SimpleResponse hasil;
+		Response response;
+		switch (cekModelAuthentication(userAuthenticator.getUserName())) {
+			case "local": 
+				//cek apakah password sesuai dengan data yang ada di master.tbl_user
+				String pwd = "";
+				try {
+					MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+					messageDigest.reset();
+					messageDigest.update(userAuthenticator.getPassword().getBytes());
+	                byte[] digest = messageDigest.digest();
+	                StringBuilder sb = new StringBuilder();
+	                for (int i=0;i<digest.length;i++){
+	                    sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+	                
+	                pwd=sb.toString(); 
+	                
+	                Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
+							.setParameter("nama", userAuthenticator.getUserName())
+							.setParameter("password", pwd)
+							.getResultList()
+							.size();
+					
+					if(count == 0) {
+						hasil = new SimpleResponse("gagal", "password tidak sesuai");
+					}
+					else {
+						//try adding user data to server keycloack
+						response = keycloak
+								.realm(realm)
+								.users()
+								.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));						
+						//pengecekan apakah data autentifikasi berhasil ditambahkan ke server keycloack
+						if (response.getStatus() != 201) {	//gagal					
+							hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
+				        }
+						else {	//sukses
+							try {
+								//hapus data lama yang ada ditable master.tbl_user
+								UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+										.setParameter("nama", userAuthenticator.getUserName())
+										.getSingleResult();
+								entityManager.remove(userData);	
+								//tambahkan data person ke master.tbl_person
+								PersonData personData = convertPersonToPersonData(person);
+								entityManager.persist(personData);
+								//data authority
+								//lakukan persistansi data authority dibagian blok ini....
+								
+								//commit penghapusan data user lama dan penambahan data user baru
+								entityManager.getTransaction().commit();
+								hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
+							} catch (Exception e) {
+								//batalkan transaksi penghapusan user data dan penambahan person data
+								entityManager.getTransaction().rollback();
+								//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
+								// .....								
+								hasil = new SimpleResponse("gagal", "data autentifiksi gagal ditambahkan");
+							}
+						}
+					}	                
+				} catch (Exception e) {
+					hasil = new SimpleResponse("gagal", "password tidak sesuai");
+				}		
+				break;
+			case "remote": 		
+				hasil = new SimpleResponse("gagal", "data user sudah terdaftar di server identification provider");			
+				break;
+			case "none":
+				//try adding user data to server keycloack
+				response = keycloak
+						.realm(realm)
+						.users()
+						.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
+				if (response.getStatus() != 201) {	//gagal					
+					hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
+		        }
+				else {	//sukses
+					try {						
+						//jpa personData 
+						PersonData personData = convertPersonToPersonData(person);
+						//jpa autorisasiData				
+						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false);
+						personData.setAutorisasiData(autorisasiData);
+						//attacking PersonData entity
+						entityManager.persist(personData);
+						//make persistence;
+						entityManager.flush();
+						hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
+					} catch (Exception e) {
+						//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
+						// ....
+						hasil = new SimpleResponse("gagal", "data autentifiksi gagal ditambahkan");
+					}
+				}
+				break;
+			default:
+				hasil = new SimpleResponse("gagal", "malfunction");				
+			
+		}	
+		
+		return hasil;
+	}
+	
+	private PersonData convertPersonToPersonData(Person person) {
+		PersonData personData = new PersonData();
+		personData.setId(person.getNik());
+		personData.setNama(person.getNama());
+		
+		PropinsiData propinsiData = new PropinsiData();
+		propinsiData.setId(person.getAlamat().getPropinsi().getId());
+		
+		KabupatenData kabupatenData = new KabupatenData();
+		kabupatenData.setId(person.getAlamat().getKabupaten().getId());
+		
+		KecamatanData kecamatanData = new KecamatanData();
+		kecamatanData.setId(person.getAlamat().getKecamatan().getId());
+		
+		DesaData desaData = new DesaData();
+		desaData.setId(person.getAlamat().getDesa().getId());
+		
+		AlamatPersonData alamatPersonData = new AlamatPersonData();
+		alamatPersonData.setPropinsi(propinsiData);
+		alamatPersonData.setKabupaten(kabupatenData);
+		alamatPersonData.setKecamatan(kecamatanData);
+		alamatPersonData.setDesa(desaData);
+		alamatPersonData.setDetailAlamat(person.getAlamat().getKeterangan());
+		
+		personData.setAlamat(alamatPersonData);
+		
+		JenisKelaminData jenisKelaminData = new JenisKelaminData();
+		jenisKelaminData.setId(person.getSex().getId());
+		personData.setSex(jenisKelaminData);
+		
+		KontakPersonData kontakPersonData = new KontakPersonData();
+		kontakPersonData.setTelepone(person.getKontak().getTelepone());
+		kontakPersonData.setEmail(person.getKontak().getEmail());
+		personData.setKontak(kontakPersonData);
+		
+		personData.setScanKtp(person.getScanKTP());
+		
+		return personData;
+	}	
 	
 	private String getClaim(Map<String, Object> claims, String name){
         return Optional.ofNullable(claims.get(name))
@@ -393,152 +540,5 @@ public class KeyCloakUserJPA implements IUserRepository {
         
 		return userRepresentation;
 	}
-	
-	@Override
-	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {		
-		SimpleResponse hasil;
-		Response response;
-		switch (cekModelAuthentication(userAuthenticator.getUserName())) {
-			case "local": 
-				//cek apakah password sesuai dengan data yang ada di master.tbl_user
-				String pwd = "";
-				try {
-					MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-					messageDigest.reset();
-					messageDigest.update(userAuthenticator.getPassword().getBytes());
-	                byte[] digest = messageDigest.digest();
-	                StringBuilder sb = new StringBuilder();
-	                for (int i=0;i<digest.length;i++){
-	                    sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
-                    }
-	                
-	                pwd=sb.toString(); 
-	                
-	                Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
-							.setParameter("nama", userAuthenticator.getUserName())
-							.setParameter("password", pwd)
-							.getResultList()
-							.size();
-					
-					if(count == 0) {
-						hasil = new SimpleResponse("gagal", "password tidak sesuai");
-					}
-					else {
-						//try adding user data to server keycloack
-						response = keycloak
-								.realm(realm)
-								.users()
-								.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));						
-						//pengecekan apakah data autentifikasi berhasil ditambahkan ke server keycloack
-						if (response.getStatus() != 201) {	//gagal					
-							hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
-				        }
-						else {	//sukses
-							try {
-								//hapus data lama yang ada ditable master.tbl_user
-								UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
-										.setParameter("nama", userAuthenticator.getUserName())
-										.getSingleResult();
-								entityManager.remove(userData);	
-								//tambahkan data person ke master.tbl_person
-								PersonData personData = convertPersonToPersonData(person);
-								entityManager.persist(personData);
-								//data authority
-								//lakukan persistansi data authority dibagian blok ini....
-								
-								//commit penghapusan data user lama dan penambahan data user baru
-								entityManager.getTransaction().commit();
-								hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
-							} catch (Exception e) {
-								//batalkan transaksi penghapusan user data dan penambahan person data
-								entityManager.getTransaction().rollback();
-								//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
-								// .....								
-								hasil = new SimpleResponse("gagal", "data autentifiksi gagal ditambahkan");
-							}
-						}
-					}	                
-				} catch (Exception e) {
-					hasil = new SimpleResponse("gagal", "password tidak sesuai");
-				}		
-				break;
-			case "remote": 		
-				hasil = new SimpleResponse("gagal", "data user sudah terdaftar di server identification provider");			
-				break;
-			case "none":
-				//try adding user data to server keycloack
-				response = keycloak
-						.realm(realm)
-						.users()
-						.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
-				if (response.getStatus() != 201) {	//gagal					
-					hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
-		        }
-				else {	//sukses
-					try {						
-						//jpa personData 
-						PersonData personData = convertPersonToPersonData(person);
-						//jpa autorisasiData				
-						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false);
-						personData.setAutorisasiData(autorisasiData);
-						//attacking PersonData entity
-						entityManager.persist(personData);
-						//make persistence;
-						entityManager.flush();
-						hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
-					} catch (Exception e) {
-						//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
-						// ....
-						hasil = new SimpleResponse("gagal", "data autentifiksi gagal ditambahkan");
-					}
-				}
-				break;
-			default:
-				hasil = new SimpleResponse("gagal", "malfunction");				
-			
-		}	
-		
-		return hasil;
-	}
-	
-	private PersonData convertPersonToPersonData(Person person) {
-		PersonData personData = new PersonData();
-		personData.setId(person.getNik());
-		personData.setNama(person.getNama());
-		
-		PropinsiData propinsiData = new PropinsiData();
-		propinsiData.setId(person.getAlamat().getPropinsi().getId());
-		
-		KabupatenData kabupatenData = new KabupatenData();
-		kabupatenData.setId(person.getAlamat().getKabupaten().getId());
-		
-		KecamatanData kecamatanData = new KecamatanData();
-		kecamatanData.setId(person.getAlamat().getKecamatan().getId());
-		
-		DesaData desaData = new DesaData();
-		desaData.setId(person.getAlamat().getDesa().getId());
-		
-		AlamatPersonData alamatPersonData = new AlamatPersonData();
-		alamatPersonData.setPropinsi(propinsiData);
-		alamatPersonData.setKabupaten(kabupatenData);
-		alamatPersonData.setKecamatan(kecamatanData);
-		alamatPersonData.setDesa(desaData);
-		alamatPersonData.setDetailAlamat(person.getAlamat().getKeterangan());
-		
-		personData.setAlamat(alamatPersonData);
-		
-		JenisKelaminData jenisKelaminData = new JenisKelaminData();
-		jenisKelaminData.setId(person.getSex().getId());
-		personData.setSex(jenisKelaminData);
-		
-		KontakPersonData kontakPersonData = new KontakPersonData();
-		kontakPersonData.setTelepone(person.getKontak().getTelepone());
-		kontakPersonData.setEmail(person.getKontak().getEmail());
-		personData.setKontak(kontakPersonData);
-		
-		personData.setScanKtp(person.getScanKTP());
-		
-		return personData;
-	}	
 	
 }
