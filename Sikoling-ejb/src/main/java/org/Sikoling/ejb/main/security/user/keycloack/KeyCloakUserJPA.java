@@ -29,6 +29,7 @@ import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
@@ -346,6 +347,15 @@ public class KeyCloakUserJPA implements IUserRepository {
 		return user;
 	}
 	
+	private AutorisasiData converPersonToDefaultAutorisasiData(String nik, String idLama, String hakAkses, Boolean statusInternal ) {
+		AutorisasiData autorisasiData = new AutorisasiData();
+		autorisasiData.setNik(nik);
+		autorisasiData.setIdLama(idLama);
+		autorisasiData.setHakAkses(hakAkses);
+		autorisasiData.setStatusInternal(statusInternal);
+		return autorisasiData;
+	}
+	
 	private String getAttribute(Map<String, List<String>> attributes, String name) {
         return Optional.ofNullable(attributes)
                 .map(att -> att.get(name))
@@ -368,7 +378,7 @@ public class KeyCloakUserJPA implements IUserRepository {
         userRepresentation.setGroups(Arrays.asList("external"));
         
         Map<String, List<String>> attributes = new HashMap<>();
-        attributes.put("statusInternal", Arrays.asList("external"));  
+//        attributes.put("statusInternal", Arrays.asList("external"));  
         attributes.put("registerDate", Arrays.asList(dtf.format(now)));
         attributes.put("nik", Arrays.asList(person.getNik()));        
  
@@ -466,12 +476,13 @@ public class KeyCloakUserJPA implements IUserRepository {
 		        }
 				else {	//sukses
 					try {
-						//tambahkan data person ke master.tbl_person
+						//jpa personData 
 						PersonData personData = convertPersonToPersonData(person);
 						entityManager.persist(personData);
-						//data authority
-						//lakukan persistansi data authority dibagian blok ini....						
-						
+						//jpa autorisasiData				
+						AutorisasiData autorisasiData = converPersonToDefaultAutorisasiData(person.getNik(), null, "99", false);
+						entityManager.persist(autorisasiData);
+						//make persistence
 						entityManager.flush();
 						hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
 					} catch (Exception e) {
