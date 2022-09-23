@@ -308,13 +308,13 @@ public class KeyCloakUserJPA implements IUserRepository {
 						//jpa personData 
 						PersonData personData = convertPersonToPersonData(person);
 						//jpa autorisasiData				
-						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false);
+						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false, false);
 						personData.setAutorisasiData(autorisasiData);
 						//attacking PersonData entity
 						entityManager.persist(personData);
 						//make persistence;
 						entityManager.flush();
-						hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
+						hasil = new SimpleResponse("sukses", "data autentifiksi berhasil ditambahkan");
 					} catch (Exception e) {
 						//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
 						// ....
@@ -494,12 +494,13 @@ public class KeyCloakUserJPA implements IUserRepository {
 		return user;
 	}
 	
-	private AutorisasiData converPersonToAutorisasiData(String nik, String idLama, String hakAkses, Boolean statusInternal ) {
+	private AutorisasiData converPersonToAutorisasiData(String nik, String idLama, String hakAkses, Boolean statusInternal, Boolean isVerified) {
 		AutorisasiData autorisasiData = new AutorisasiData();
 		autorisasiData.setNik(nik);
 		autorisasiData.setIdLama(idLama);
 		autorisasiData.setHakAkses(hakAkses);
 		autorisasiData.setStatusInternal(statusInternal);
+		autorisasiData.setIsVerified(isVerified);
 		return autorisasiData;
 	}
 	
