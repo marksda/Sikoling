@@ -36,6 +36,17 @@ public class AutorisasiData implements Serializable {
 	@Column(name="status_internal")
 	private Boolean statusInternal;
 	
+	@Column(name="is_verified")
+	private Boolean isVerified;
+	
+	public Boolean getIsVerified() {
+		return isVerified;
+	}
+
+	public void setIsVerified(Boolean isVerified) {
+		this.isVerified = isVerified;
+	}
+
 	@OneToOne
     @MapsId
     @JoinColumn(name = "nik")
