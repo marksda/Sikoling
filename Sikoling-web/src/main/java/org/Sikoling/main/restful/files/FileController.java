@@ -33,7 +33,7 @@ public class FileController {
 	private IStorageService storageService;	
 	
 	//uploading file with no security
-	@Path("nosc")
+	@Path("nosec")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
