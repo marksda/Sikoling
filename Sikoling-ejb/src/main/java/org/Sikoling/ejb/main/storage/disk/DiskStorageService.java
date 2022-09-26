@@ -18,9 +18,9 @@ public class DiskStorageService implements IStorageService {
 	}
 
 	@Override
-	public String save(String fileName, InputStream inputStream) throws IOException {
+	public String save(String fileName, InputStream inputStream, String subPath) throws IOException {
 		String fileKey = UUID.randomUUID().toString() + "-" + fileName;
-		Path pathLocation = Paths.get(this.rootPath, fileKey);
+		Path pathLocation = Paths.get(this.rootPath + "\\" + subPath + "\\", fileKey);
 		Files.copy(inputStream, pathLocation);
 		
 		return fileKey;

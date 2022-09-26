@@ -30,7 +30,20 @@ public class FileController {
 	private UriInfo uriInfo;	
 	
 	@Inject
-	private IStorageService storageService;
+	private IStorageService storageService;	
+	
+	//uploading file with no security
+	@Path("nosc")
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ImageDTO uploadFileNoSecurity(
+			@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
+		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "personal_identification");
+        
+        return new ImageDTO(uriInfo.getBaseUri() + "files/" + fileKey, fileKey);
+	}
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -39,7 +52,7 @@ public class FileController {
 	public ImageDTO uploadFile(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
-		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream);
+		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "other");
         
         return new ImageDTO(uriInfo.getBaseUri() + "files/" + fileKey, fileKey);
 	}
