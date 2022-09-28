@@ -3,10 +3,15 @@ package org.Sikoling.main.restful.files;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import jakarta.ejb.LocalBean;
@@ -34,88 +39,74 @@ public class FileController {
 	private IStorageService storageService;	
 	
 	//uploading file with no security
-	@Path("nosec/{subPath}")
+	@Path("nosec/{subPath}/{id}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ImageDTO uploadFileNoSecurity(
-			@PathParam("subPath") String subPath,
-			@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
-		String fileKey;
-		String pathLocation;
+			@PathParam("subPath") String subPath, 
+			@PathParam("id") String id,
+			FormDataMultiPart formParams ) throws IOException {
+		Map<String, List<FormDataBodyPart>> fields = formParams.getFields();
+		String fileKey = "";
+		String pathLocation = "";
+		String urlLocatorFeedBack = "";
+		
 		switch (subPath) {
 			case "personal_identification": 
-				fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "personal_identification");
-				pathLocation = "file"
-		        		.concat(File.separator)
-		        		.concat("nosec")
-		        		.concat(File.separator)
-		        		.concat(subPath)
-		        		.concat(File.separator)
-		        		.concat(fileKey);
+				pathLocation = "personal_identification"
+        		.concat(File.separator)
+        		.concat(id);
+				
+				Iterator<Map.Entry<String, List<FormDataBodyPart>>> itrPersonalIdentification = fields.entrySet().iterator();
+				
+				while (itrPersonalIdentification.hasNext()) {
+					Map.Entry<String, List<FormDataBodyPart>> entry = itrPersonalIdentification.next();
+					List<FormDataBodyPart> formDataBodyParts = entry.getValue();
+					for(FormDataBodyPart i : formDataBodyParts) {
+						FormDataContentDisposition fileDetail = i.getFormDataContentDisposition();
+						InputStream uploadedInputStream = i.getEntityAs(InputStream.class);
+						try {
+							fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, pathLocation);
+							urlLocatorFeedBack = "files/personal_identification/"
+									.concat(id)
+									.concat("/")
+									.concat(fileKey);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 				break;
 			default:
-				fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "other");
-				pathLocation = "file"
-		        		.concat(File.separator)
-		        		.concat("nosec")
-		        		.concat(File.separator)
-		        		.concat("other")
-		        		.concat(File.separator)
-		        		.concat(fileKey);
-		}
-		
-        
-        
-        return new ImageDTO(uriInfo.getBaseUri() + pathLocation, fileKey);
+				pathLocation = "other"
+        		.concat(File.separator)
+        		.concat(id);
+				
+				Iterator<Map.Entry<String, List<FormDataBodyPart>>> itrOther = fields.entrySet().iterator();
+				
+				while (itrOther.hasNext()) {
+					Map.Entry<String, List<FormDataBodyPart>> entry = itrOther.next();
+					List<FormDataBodyPart> formDataBodyParts = entry.getValue();
+					for(FormDataBodyPart i : formDataBodyParts) {
+						FormDataContentDisposition fileDetail = i.getFormDataContentDisposition();
+						InputStream uploadedInputStream = i.getEntityAs(InputStream.class);
+						try {
+							fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, pathLocation);
+							urlLocatorFeedBack = "files/other/"
+									.concat(id)
+									.concat("/")
+									.concat(fileKey);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+		}			
+			
+//		return new ImageDTO(uriInfo.getBaseUri() + pathLocation.replaceAll("\\", "/"), fileKey);
+		return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
-	
-//	@Path("pegawai")
-//    @PUT
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response putPegawai(FormDataMultiPart formParams) {
-//        validateToken.getValidate(servletRequest.getHeader(HttpHeaders.AUTHORIZATION));
-//        String hasil;
-//        try {
-//            List<FormDataBodyPart> partNip = formParams.getFields("nip");
-//            String nip = partNip.get(0).getEntityAs(String.class);
-//            List<FormDataBodyPart> partNama = formParams.getFields("nama");
-//            String nama = partNama.get(0).getEntityAs(String.class);
-//            List<FormDataBodyPart> partTelepon = formParams.getFields("no_handphone");
-//            String telepon = partTelepon.get(0).getEntityAs(String.class);
-//            List<FormDataBodyPart> partAlamat = formParams.getFields("alamat");
-//            String alamat = partAlamat.get(0).getEntityAs(String.class); 
-//            List<FormDataBodyPart> partEmail = formParams.getFields("email");
-//            String email = partEmail.get(0).getEntityAs(String.class);    
-//            List<FormDataBodyPart> partStatus = formParams.getFields("status");
-//            Boolean status = partStatus.get(0).getEntityAs(Boolean.class);
-//            String data = "{\"nip\":\"" + nip +"\", \"nama\":\"" + 
-//                        nama +"\", \"no_handphone\":\"" + telepon + "\", \"alamat\":\"" +
-//                        alamat + "\", \"email\":\"" + email + "\", \"status\":" + status.toString() + "}";       
-//            hasil = masterSessionBean.setPegawai(data);
-//            if(hasil.equalsIgnoreCase("gagal")) {
-//                    hasil = "{\"status\": 401, \"keterangan\": \"gagal\"}";
-//            }
-//            else {
-//                List<FormDataBodyPart> parts = formParams.getFields("file");
-//                if(parts != null) {
-//                    for (FormDataBodyPart part : parts) {
-//                        FormDataContentDisposition fileDetail = part.getFormDataContentDisposition();
-//                        String namaFile = URLDecoder.decode(fileDetail.getFileName(), StandardCharsets.UTF_8.name());
-//                        InputStream uploadedInputStream = part.getEntityAs(InputStream.class);
-//                        masterSessionBean.setFotoPegawai(nip, namaFile, uploadedInputStream);
-//                    }                
-//                }
-//                hasil = "{\"status\": 200, \"keterangan\": \"sukses\"}";                            
-//            }
-//            return hasilResponse.responSukses(hasil);
-//        } catch (UnsupportedEncodingException e) {
-//            hasil = "{\"status\": 401, \"keterangan\": \"error parsing value type\"}";
-//            return hasilResponse.responNotFound(hasil);
-//        }        
-//    }    
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
