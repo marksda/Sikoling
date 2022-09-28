@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.files;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,16 +34,41 @@ public class FileController {
 	private IStorageService storageService;	
 	
 	//uploading file with no security
-	@Path("nosec")
+	@Path("nosec/{subpath}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ImageDTO uploadFileNoSecurity(
+			@PathParam("subPath") String subPath,
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
-		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "personal_identification");
+		String fileKey;
+		String pathLocation;
+		switch (subPath) {
+			case "personal_identification": 
+				fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "personal_identification");
+				pathLocation = "file"
+		        		.concat(File.separator)
+		        		.concat("nosec")
+		        		.concat(File.separator)
+		        		.concat(subPath)
+		        		.concat(File.separator)
+		        		.concat(fileKey);
+				break;
+			default:
+				fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "other");
+				pathLocation = "file"
+		        		.concat(File.separator)
+		        		.concat("nosec")
+		        		.concat(File.separator)
+		        		.concat("other")
+		        		.concat(File.separator)
+		        		.concat(fileKey);
+		}
+		
         
-        return new ImageDTO(uriInfo.getBaseUri() + "files/" + fileKey, fileKey);
+        
+        return new ImageDTO(uriInfo.getBaseUri() + pathLocation, fileKey);
 	}
 	
 	@POST
@@ -54,14 +80,14 @@ public class FileController {
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "other");
         
-        return new ImageDTO(uriInfo.getBaseUri() + "files/" + fileKey, fileKey);
+        return new ImageDTO(uriInfo.getBaseUri() + "files/other/" + fileKey, fileKey);
 	}
 	
-	@Path("{fileKey}")
+	@Path("nosec/{subPath}/{fileKey}")
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
-    public InputStream loadFile(@PathParam("fileKey") String fileKey) throws IOException {
-        return storageService.load(fileKey);
+    public InputStream loadFile(@PathParam("subPath") String subPath, @PathParam("fileKey") String fileKey) throws IOException {
+        return storageService.load(subPath, fileKey);
     }
 	
 }

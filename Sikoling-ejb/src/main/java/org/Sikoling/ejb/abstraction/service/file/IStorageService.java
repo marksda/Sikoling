@@ -5,5 +5,5 @@ import java.io.InputStream;
 
 public interface IStorageService {
 	String save(String fileName, InputStream inputStream, String subPath) throws IOException;
-    InputStream load(String fileName) throws IOException;
+    InputStream load(String subPath, String fileName) throws IOException;
 }
