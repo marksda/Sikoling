@@ -34,7 +34,7 @@ public class FileController {
 	private IStorageService storageService;	
 	
 	//uploading file with no security
-	@Path("nosec/{subpath}")
+	@Path("nosec/{subPath}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -70,6 +70,52 @@ public class FileController {
         
         return new ImageDTO(uriInfo.getBaseUri() + pathLocation, fileKey);
 	}
+	
+//	@Path("pegawai")
+//    @PUT
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response putPegawai(FormDataMultiPart formParams) {
+//        validateToken.getValidate(servletRequest.getHeader(HttpHeaders.AUTHORIZATION));
+//        String hasil;
+//        try {
+//            List<FormDataBodyPart> partNip = formParams.getFields("nip");
+//            String nip = partNip.get(0).getEntityAs(String.class);
+//            List<FormDataBodyPart> partNama = formParams.getFields("nama");
+//            String nama = partNama.get(0).getEntityAs(String.class);
+//            List<FormDataBodyPart> partTelepon = formParams.getFields("no_handphone");
+//            String telepon = partTelepon.get(0).getEntityAs(String.class);
+//            List<FormDataBodyPart> partAlamat = formParams.getFields("alamat");
+//            String alamat = partAlamat.get(0).getEntityAs(String.class); 
+//            List<FormDataBodyPart> partEmail = formParams.getFields("email");
+//            String email = partEmail.get(0).getEntityAs(String.class);    
+//            List<FormDataBodyPart> partStatus = formParams.getFields("status");
+//            Boolean status = partStatus.get(0).getEntityAs(Boolean.class);
+//            String data = "{\"nip\":\"" + nip +"\", \"nama\":\"" + 
+//                        nama +"\", \"no_handphone\":\"" + telepon + "\", \"alamat\":\"" +
+//                        alamat + "\", \"email\":\"" + email + "\", \"status\":" + status.toString() + "}";       
+//            hasil = masterSessionBean.setPegawai(data);
+//            if(hasil.equalsIgnoreCase("gagal")) {
+//                    hasil = "{\"status\": 401, \"keterangan\": \"gagal\"}";
+//            }
+//            else {
+//                List<FormDataBodyPart> parts = formParams.getFields("file");
+//                if(parts != null) {
+//                    for (FormDataBodyPart part : parts) {
+//                        FormDataContentDisposition fileDetail = part.getFormDataContentDisposition();
+//                        String namaFile = URLDecoder.decode(fileDetail.getFileName(), StandardCharsets.UTF_8.name());
+//                        InputStream uploadedInputStream = part.getEntityAs(InputStream.class);
+//                        masterSessionBean.setFotoPegawai(nip, namaFile, uploadedInputStream);
+//                    }                
+//                }
+//                hasil = "{\"status\": 200, \"keterangan\": \"sukses\"}";                            
+//            }
+//            return hasilResponse.responSukses(hasil);
+//        } catch (UnsupportedEncodingException e) {
+//            hasil = "{\"status\": 401, \"keterangan\": \"error parsing value type\"}";
+//            return hasilResponse.responNotFound(hasil);
+//        }        
+//    }    
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
