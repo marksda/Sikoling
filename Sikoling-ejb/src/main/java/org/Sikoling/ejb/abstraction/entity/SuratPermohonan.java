@@ -10,11 +10,11 @@ public class SuratPermohonan implements Serializable {
 	private final Date tanggal;
 	private final String nomor;
 	private final PenanggungJawab penanggungJawab;
-	private final Pemrakarsa pemrakarsa;
+	private final Perusahaan pemrakarsa;
 	private final Alamat alamatKegiatan;
 	private final String jenisKegiatan;
 	
-	public SuratPermohonan(Date tanggal, String nomor, PenanggungJawab penanggungJawab, Pemrakarsa pemrakarsa,
+	public SuratPermohonan(Date tanggal, String nomor, PenanggungJawab penanggungJawab, Perusahaan pemrakarsa,
 			Alamat alamatKegiatan, String jenisKegiatan) {
 		super();
 		this.tanggal = tanggal;
@@ -41,7 +41,7 @@ public class SuratPermohonan implements Serializable {
 		return penanggungJawab;
 	}
 	
-	public Pemrakarsa getPemrakarsa() {
+	public Perusahaan getPemrakarsa() {
 		return pemrakarsa;
 	}
 

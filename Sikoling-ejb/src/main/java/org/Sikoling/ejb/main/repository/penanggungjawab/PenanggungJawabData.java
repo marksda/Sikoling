@@ -3,8 +3,8 @@ package org.Sikoling.ejb.main.repository.penanggungjawab;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
-import org.Sikoling.ejb.main.repository.pemrakarsa.PemrakarsaData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
+import org.Sikoling.ejb.main.repository.perusahaan.PemrakarsaData;
 
 
 @Entity

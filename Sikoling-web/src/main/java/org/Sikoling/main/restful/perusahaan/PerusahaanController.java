@@ -1,9 +1,9 @@
-package org.Sikoling.main.restful.pemrakarsa;
+package org.Sikoling.main.restful.perusahaan;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.pemrakarsa.IPemrakarsaService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -19,11 +19,11 @@ import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 @LocalBean
-@Path("pemrakarsa")
-public class PemrakarsaController {
+@Path("perusahaan")
+public class PerusahaanController {
 	
 	@Inject
-	private IPemrakarsaService pemrakarsaService;
+	private IPerusahaanService pemrakarsaService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})

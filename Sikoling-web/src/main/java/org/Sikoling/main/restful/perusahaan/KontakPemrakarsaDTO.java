@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.pemrakarsa;
+package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
 import java.util.Objects;

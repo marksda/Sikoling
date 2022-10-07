@@ -7,11 +7,11 @@ public class PaktaIntegritas implements Serializable {
 
 	private static final long serialVersionUID = 7758064924551524262L;
 	private final String id;
-	private final Pemrakarsa pemrakarsa;
+	private final Perusahaan pemrakarsa;
 	private final PenanggungJawab penanggungJawab;
 	private final Alamat alamatKegiatanUsaha;
 	
-	public PaktaIntegritas(String id, Pemrakarsa pemrakarsa, PenanggungJawab penanggungJawab,
+	public PaktaIntegritas(String id, Perusahaan pemrakarsa, PenanggungJawab penanggungJawab,
 			Alamat alamatKegiatanUsaha) {
 		super();
 		this.id = id;
@@ -28,7 +28,7 @@ public class PaktaIntegritas implements Serializable {
 		return id;
 	}
 
-	public Pemrakarsa getPemrakarsa() {
+	public Perusahaan getPemrakarsa() {
 		return pemrakarsa;
 	}
 

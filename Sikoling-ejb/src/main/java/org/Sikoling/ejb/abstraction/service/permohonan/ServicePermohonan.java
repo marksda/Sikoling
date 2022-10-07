@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriProduk;
-import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Permohonan;
 import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.User;
@@ -38,7 +38,7 @@ public class ServicePermohonan implements IServicePermohonan {
 	}
 
 	@Override
-	public List<Permohonan> getByPemrakarsa(Pemrakarsa pemrakarsa) {		return null;
+	public List<Permohonan> getByPemrakarsa(Perusahaan pemrakarsa) {		return null;
 	}
 
 	@Override
@@ -62,18 +62,18 @@ public class ServicePermohonan implements IServicePermohonan {
 	}
 
 	@Override
-	public List<Permohonan> getByUserAndPemrakarsa(User user, Pemrakarsa pemrakarsa) {		
+	public List<Permohonan> getByUserAndPemrakarsa(User user, Perusahaan pemrakarsa) {		
 		return null;
 	}
 
 	@Override
-	public List<Permohonan> getByUserAndProdukAndPemrakarsa(User user, Produk produk, Pemrakarsa pemrakarsa) {		
+	public List<Permohonan> getByUserAndProdukAndPemrakarsa(User user, Produk produk, Perusahaan pemrakarsa) {		
 		return null;
 	}
 
 	@Override
 	public List<Permohonan> getByUserAndKategoriProdukAndPemrakarsa(User user, KategoriProduk kategoriProduk,
-			Pemrakarsa pemrakarsa) {		
+			Perusahaan pemrakarsa) {		
 		return null;
 	}
 

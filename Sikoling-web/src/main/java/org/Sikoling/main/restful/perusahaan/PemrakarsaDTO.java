@@ -1,9 +1,9 @@
-package org.Sikoling.main.restful.pemrakarsa;
+package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Pemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.main.restful.bentukusaha.BentukUsahaDTO;
 import org.Sikoling.main.restful.penanggungjawab.PenanggungJawabDTO;
 
@@ -12,10 +12,10 @@ public class PemrakarsaDTO implements Serializable {
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
 	private BentukUsahaDTO bentukUsaha;
-	private AktaPemrakarsaDTO aktaPemrakarsa;
+//	private AktaPemrakarsaDTO aktaPemrakarsa;
 	private AlamatPemrakarsaDTO alamat;
 	private KontakPemrakarsaDTO kontakPemrakarsa;
-	private OSSDTO oss;
+//	private OSSDTO oss;
 	private String nama;
 	private String npwp;
 	private PenanggungJawabDTO penanggungJawab;		
@@ -25,13 +25,13 @@ public class PemrakarsaDTO implements Serializable {
 		
 	}
 	
-	public PemrakarsaDTO(Pemrakarsa p) {
+	public PemrakarsaDTO(Perusahaan p) {
 		this.id = p.getId();
 		this.bentukUsaha = new BentukUsahaDTO(p.getBentukUsaha());
-		this.aktaPemrakarsa = new AktaPemrakarsaDTO(p.getAktaPendirian());
+//		this.aktaPemrakarsa = new AktaPemrakarsaDTO(p.getAktaPendirian());
 		this.alamat = new AlamatPemrakarsaDTO(p.getAlamat());
 		this.kontakPemrakarsa = new KontakPemrakarsaDTO(p.getKontakPemrakarsa());
-		this.oss = new OSSDTO(p.getOss());
+//		this.oss = new OSSDTO(p.getOss());
 		this.nama = p.getNama();
 		this.npwp = p.getNpwp();
 		this.penanggungJawab = new PenanggungJawabDTO(p.getPenanggungJawab());
@@ -43,10 +43,10 @@ public class PemrakarsaDTO implements Serializable {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
-		this.aktaPemrakarsa = aktaPemrakarsa;
+//		this.aktaPemrakarsa = aktaPemrakarsa;
 		this.alamat = alamat;
 		this.kontakPemrakarsa = kontakPemrakarsa;
-		this.oss = oss;
+//		this.oss = oss;
 		this.nama = nama;
 		this.npwp = npwp;
 		this.penanggungJawab = penanggungJawab;
@@ -109,13 +109,13 @@ public class PemrakarsaDTO implements Serializable {
 		this.idCreator = idCreator;
 	}
 	
-	public AktaPemrakarsaDTO getAktaPemrakarsa() {
-		return aktaPemrakarsa;
-	}
+//	public AktaPemrakarsaDTO getAktaPemrakarsa() {
+//		return aktaPemrakarsa;
+//	}
 
-	public void setAktaPemrakarsa(AktaPemrakarsaDTO aktaPemrakarsa) {
-		this.aktaPemrakarsa = aktaPemrakarsa;
-	}
+//	public void setAktaPemrakarsa(AktaPemrakarsaDTO aktaPemrakarsa) {
+//		this.aktaPemrakarsa = aktaPemrakarsa;
+//	}
 
 	public KontakPemrakarsaDTO getKontakPemrakarsa() {
 		return kontakPemrakarsa;
@@ -125,13 +125,13 @@ public class PemrakarsaDTO implements Serializable {
 		this.kontakPemrakarsa = kontakPemrakarsa;
 	}
 
-	public OSSDTO getOss() {
-		return oss;
-	}
-
-	public void setOss(OSSDTO oss) {
-		this.oss = oss;
-	}
+//	public OSSDTO getOss() {
+//		return oss;
+//	}
+//
+//	public void setOss(OSSDTO oss) {
+//		this.oss = oss;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -173,9 +173,11 @@ public class PemrakarsaDTO implements Serializable {
 				+ alamat.getKeterangan() + '}';	  
 	}
 
-	public Pemrakarsa toPemrakarsa() {
-		return new Pemrakarsa(id, bentukUsaha.toBentukUsaha(), aktaPemrakarsa.toAktaPemrakarsa(), alamat.toAlamat(),
-				kontakPemrakarsa.toKontakPemrakarsa(), oss.toOSS(), nama, npwp, penanggungJawab.toPenanggungJawab());
+	public Perusahaan toPemrakarsa() {
+//		return new Perusahaan(id, bentukUsaha.toBentukUsaha(), aktaPemrakarsa.toAktaPemrakarsa(), alamat.toAlamat(),
+//				kontakPemrakarsa.toKontakPemrakarsa(), oss.toOSS(), nama, npwp, penanggungJawab.toPenanggungJawab());
+		return new Perusahaan(id, bentukUsaha.toBentukUsaha(), alamat.toAlamat(),
+				kontakPemrakarsa.toKontakPemrakarsa(), nama, npwp, penanggungJawab.toPenanggungJawab());
 	}
 	
 }

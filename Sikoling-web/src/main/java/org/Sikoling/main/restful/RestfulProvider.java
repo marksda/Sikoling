@@ -11,7 +11,7 @@ import org.Sikoling.ejb.abstraction.repository.IJenisPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
-import org.Sikoling.ejb.abstraction.repository.IPemrakarsaRepository;
+import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
@@ -43,12 +43,12 @@ import org.Sikoling.ejb.abstraction.service.kategoriproduk.IKategoriProdukServic
 import org.Sikoling.ejb.abstraction.service.kategoriproduk.KategoriProdukService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
-import org.Sikoling.ejb.abstraction.service.pemrakarsa.IPemrakarsaService;
-import org.Sikoling.ejb.abstraction.service.pemrakarsa.PemrakarsaService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.PerusahaanService;
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
 import org.Sikoling.ejb.abstraction.service.produk.ProdukService;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -129,8 +129,8 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IPemrakarsaService getPemrakarsaService(@Infrastructure IPemrakarsaRepository pemrakarsaRepository) {
-		return new PemrakarsaService(pemrakarsaRepository);		
+	public IPerusahaanService getPemrakarsaService(@Infrastructure IPerusahaanRepository pemrakarsaRepository) {
+		return new PerusahaanService(pemrakarsaRepository);		
 	}
 	
 	@Produces

@@ -3,28 +3,31 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Pemrakarsa implements Serializable {
+public class Perusahaan implements Serializable {
 
 	private static final long serialVersionUID = 1008634190691153214L;
 	private final String id;
+	private final String npwp;	
+	private final String nama;		
 	private final BentukUsaha bentukUsaha;
-	private final AktaPemrakarsa aktaPendirian;
 	private final Alamat alamat;
 	private final Kontak kontakPemrakarsa;
-	private final OSS oss;
-	private final String nama;		
-	private final String npwp;	
 	private final PenanggungJawab penanggungJawab;
+	
+//	private final AktaPemrakarsa aktaPendirian;	
+//	private final OSS oss;
 
-	public Pemrakarsa(String id, BentukUsaha bentukUsaha, AktaPemrakarsa aktaPendirian, Alamat alamat,
-			Kontak kontakPemrakarsa, OSS oss, String nama, String npwp, PenanggungJawab penanggungJawab) {
+	public Perusahaan(
+		String id, BentukUsaha bentukUsaha, Alamat alamat, Kontak kontakPemrakarsa, 
+		String nama, String npwp, PenanggungJawab penanggungJawab
+	) {
 		super();
 		this.id = id;
 		this.bentukUsaha = bentukUsaha;
-		this.aktaPendirian = aktaPendirian;
+//		this.aktaPendirian = aktaPendirian;
 		this.alamat = alamat;
 		this.kontakPemrakarsa = kontakPemrakarsa;
-		this.oss = oss;
+//		this.oss = oss;
 		this.nama = nama;
 		this.npwp = npwp;
 		this.penanggungJawab = penanggungJawab;
@@ -38,9 +41,9 @@ public class Pemrakarsa implements Serializable {
 		return bentukUsaha;
 	}
 	
-	public AktaPemrakarsa getAktaPendirian() {
-		return aktaPendirian;
-	}
+//	public AktaPemrakarsa getAktaPendirian() {
+//		return aktaPendirian;
+//	}
 
 	public String getNama() {
 		return nama;
@@ -58,9 +61,9 @@ public class Pemrakarsa implements Serializable {
 		return npwp;
 	}
 	
-	public OSS getOss() {
-		return oss;
-	}
+//	public OSS getOss() {
+//		return oss;
+//	}
 
 	public Kontak getKontakPemrakarsa() {
 		return kontakPemrakarsa;
@@ -93,7 +96,7 @@ public class Pemrakarsa implements Serializable {
             return false;
         }
         
-        final Pemrakarsa other = (Pemrakarsa) obj;
+        final Perusahaan other = (Perusahaan) obj;
         
         if (!this.bentukUsaha.getNama().equals(other.bentukUsaha.getNama())) {
             return false;
@@ -116,8 +119,9 @@ public class Pemrakarsa implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Pemrakarsa{" + "bentukUsaha=" + bentukUsaha.toString() + ", NIB=" + oss.getNib()  + ", nama=" + nama
-				+ ", alamat=" + alamat.toString() + ", npwp=" + npwp + "}";
+//		return "Pemrakarsa{" + "bentukUsaha=" + bentukUsaha.toString() + ", NIB=" + oss.getNib()  + ", nama=" + nama
+//				+ ", alamat=" + alamat.toString() + ", npwp=" + npwp + "}";
+		return null;
 	}	
 	
 }

@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.pemrakarsa;
+package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
 import java.util.Date;
