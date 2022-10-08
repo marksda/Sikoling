@@ -276,7 +276,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 								//lakukan persistansi data authority dibagian blok ini....
 								
 								//commit penghapusan data user lama dan penambahan data user baru
-								entityManager.getTransaction().commit();
+								//entityManager.getTransaction().commit();
 								hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
 							} catch (Exception e) {
 								//batalkan transaksi penghapusan user data dan penambahan person data

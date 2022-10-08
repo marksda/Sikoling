@@ -3,16 +3,20 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class JenisPelakuUsaha implements Serializable {
+public class JenisPermohonan implements Serializable {
 
-	private static final long serialVersionUID = -7606706066333265936L;
+	private static final long serialVersionUID = -7418664472671865263L;
 	private final String id;
 	private final String nama;
 	
-	public JenisPelakuUsaha(String id, String nama) {
+	public JenisPermohonan(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getId() {
@@ -22,16 +26,11 @@ public class JenisPelakuUsaha implements Serializable {
 	public String getNama() {
 		return nama;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Override
+	
 	public int hashCode() {
-		int hash = 71;
-		hash = 13 * hash + Objects.hashCode(this.id);
-		hash = 13 * hash + Objects.hashCode(this.nama);
+		int hash = 17;
+		hash = 21 * hash + Objects.hashCode(this.id);
+		hash = 21 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
 
@@ -49,7 +48,7 @@ public class JenisPelakuUsaha implements Serializable {
             return false;
         }
         
-        final JenisPelakuUsaha other = (JenisPelakuUsaha) obj;
+        final JenisPermohonan other = (JenisPermohonan) obj;
         
         if (!this.id.equals(other.id)) {
             return false;
@@ -64,7 +63,7 @@ public class JenisPelakuUsaha implements Serializable {
 
 	@Override
 	public String toString() {
-		return "JenisPelakuUsaha{"
+		return "JenisPermohonan{"
 				.concat("id=")
 				.concat(this.id)
 				.concat(", nama=")
@@ -72,4 +71,5 @@ public class JenisPelakuUsaha implements Serializable {
 				.concat("}");
 	}
 	
+
 }

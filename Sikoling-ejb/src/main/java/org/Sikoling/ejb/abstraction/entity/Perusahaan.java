@@ -1,36 +1,33 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Perusahaan implements Serializable {
 
 	private static final long serialVersionUID = 1008634190691153214L;
-	private final String id;
-	private final String npwp;	
-	private final String nama;		
+	private final String id;	
+	private final String nama;
+	private final JenisPelakuUsaha jenisPelakuUsaha;
 	private final BentukUsaha bentukUsaha;
 	private final Alamat alamat;
-	private final Kontak kontakPemrakarsa;
+	private final Kontak kontak;
 	private final PenanggungJawab penanggungJawab;
+	private final List<Dokumen> daftarDokumen;
 	
-//	private final AktaPemrakarsa aktaPendirian;	
-//	private final OSS oss;
-
-	public Perusahaan(
-		String id, BentukUsaha bentukUsaha, Alamat alamat, Kontak kontakPemrakarsa, 
-		String nama, String npwp, PenanggungJawab penanggungJawab
+	public Perusahaan(String id, JenisPelakuUsaha jenisPelakuUsaha, BentukUsaha bentukUsaha, Alamat alamat, Kontak kontakPemrakarsa,
+			String nama, String npwp, PenanggungJawab penanggungJawab, List<Dokumen> daftarDokumen
 	) {
 		super();
 		this.id = id;
+		this.jenisPelakuUsaha = jenisPelakuUsaha;
 		this.bentukUsaha = bentukUsaha;
-//		this.aktaPendirian = aktaPendirian;
 		this.alamat = alamat;
-		this.kontakPemrakarsa = kontakPemrakarsa;
-//		this.oss = oss;
+		this.kontak = kontakPemrakarsa;
 		this.nama = nama;
-		this.npwp = npwp;
 		this.penanggungJawab = penanggungJawab;
+		this.daftarDokumen = daftarDokumen;
 	}
 
 	public String getId() {
@@ -40,10 +37,6 @@ public class Perusahaan implements Serializable {
 	public BentukUsaha getBentukUsaha() {
 		return bentukUsaha;
 	}
-	
-//	public AktaPemrakarsa getAktaPendirian() {
-//		return aktaPendirian;
-//	}
 
 	public String getNama() {
 		return nama;
@@ -56,17 +49,17 @@ public class Perusahaan implements Serializable {
 	public PenanggungJawab getPenanggungJawab() {
 		return penanggungJawab;
 	}
-	
-	public String getNpwp() {
-		return npwp;
+
+	public Kontak getKontak() {
+		return kontak;
 	}
 	
-//	public OSS getOss() {
-//		return oss;
-//	}
+	public JenisPelakuUsaha getJenisPelakuUsaha() {
+		return jenisPelakuUsaha;
+	}
 
-	public Kontak getKontakPemrakarsa() {
-		return kontakPemrakarsa;
+	public List<Dokumen> getDaftarDokumen() {
+		return daftarDokumen;
 	}
 
 	public static long getSerialversionuid() {
@@ -75,10 +68,9 @@ public class Perusahaan implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 73 * hash + Objects.hashCode(this.bentukUsaha.toString());
-		hash = 73 * hash + Objects.hashCode(this.nama);
-		hash = 73 * hash + Objects.hashCode(this.npwp);
+		int hash = 91;
+		hash = 11 * hash + Objects.hashCode(this.id);
+		hash = 11 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
 	
@@ -98,7 +90,7 @@ public class Perusahaan implements Serializable {
         
         final Perusahaan other = (Perusahaan) obj;
         
-        if (!this.bentukUsaha.getNama().equals(other.bentukUsaha.getNama())) {
+        if (!this.id.equals(other.getId())) {
             return false;
         }
         
@@ -107,10 +99,6 @@ public class Perusahaan implements Serializable {
         }
         
         if (!Objects.equals(this.alamat, other.alamat)) {
-            return false;
-        }
-        
-        if (!this.npwp.equals(other.npwp)) {
             return false;
         }
         

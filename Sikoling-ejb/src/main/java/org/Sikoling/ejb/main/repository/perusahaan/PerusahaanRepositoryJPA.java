@@ -32,18 +32,18 @@ import org.Sikoling.ejb.main.repository.user.UserData;
 import jakarta.persistence.EntityManager;
 
 
-public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
+public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	
 	private final EntityManager entityManager;	
 
-	public PemrakarsaRepositoryJPA(EntityManager entityManager) {
+	public PerusahaanRepositoryJPA(EntityManager entityManager) {
 		super();
 		this.entityManager = entityManager;
 	}
 
 	@Override
 	public List<Perusahaan> getAll() {
-		return entityManager.createNamedQuery("PemrakarsaData.findAll", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findAll", PerusahaanData.class)
 				.getResultList()
 				.stream()
 				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
@@ -52,7 +52,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public Perusahaan save(Perusahaan t) {
-		PemrakarsaData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
+		PerusahaanData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
 		
 		entityManager.persist(pemrakarsaData);
 		entityManager.flush();
@@ -62,14 +62,14 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public Perusahaan update(Perusahaan t) {
-		PemrakarsaData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
+		PerusahaanData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
 		pemrakarsaData = entityManager.merge(pemrakarsaData);
 		return convertPemrakarsaDataToPemrakarsa(pemrakarsaData);
 	}
 
 	@Override
 	public List<Perusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PemrakarsaData.findAll", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findAll", PerusahaanData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
@@ -81,7 +81,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 	@Override
 	public List<Perusahaan> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PerusahaanData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -92,7 +92,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 	@Override
 	public List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PerusahaanData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -104,7 +104,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public List<Perusahaan> getByCreator(String idCreator) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreator", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findByCreator", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.getResultList()
 				.stream()
@@ -114,7 +114,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public List<Perusahaan> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreator", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findByCreator", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -126,7 +126,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public List<Perusahaan> getByCreatorAndNama(String idCreator, String nama) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreatorAndNama", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findByCreatorAndNama", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.setParameter("nama", nama)
 				.getResultList()
@@ -137,7 +137,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public List<Perusahaan> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreatorAndNama", PemrakarsaData.class)
+		return entityManager.createNamedQuery("PemrakarsaData.findByCreatorAndNama", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
@@ -148,8 +148,8 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 				.collect(Collectors.toList());
 	}
 
-	private PemrakarsaData convertPemrakarsaToPemrakarsaData(Perusahaan p) {
-		PemrakarsaData pemrakarsaData = new PemrakarsaData();
+	private PerusahaanData convertPemrakarsaToPemrakarsaData(Perusahaan p) {
+		PerusahaanData pemrakarsaData = new PerusahaanData();
 		
 		pemrakarsaData.setId(p.getId());
 		
@@ -180,9 +180,9 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 		pemrakarsaData.setAlamatPemrakarsaData(alamatPemrakarsaData);
 		
 		KontakData kontakPemrakarsaData = new KontakData();
-		kontakPemrakarsaData.setEmail(p.getKontakPemrakarsa().getEmail());
-		kontakPemrakarsaData.setFax(p.getKontakPemrakarsa().getFax());
-		kontakPemrakarsaData.setTelepone(p.getKontakPemrakarsa().getTelepone());
+		kontakPemrakarsaData.setEmail(p.getKontak().getEmail());
+		kontakPemrakarsaData.setFax(p.getKontak().getFax());
+		kontakPemrakarsaData.setTelepone(p.getKontak().getTelepone());
 		pemrakarsaData.setKontakPemrakarsaData(kontakPemrakarsaData);
 		
 //		OSSData ossData = new OSSData();
@@ -209,7 +209,7 @@ public class PemrakarsaRepositoryJPA implements IPerusahaanRepository {
 		return pemrakarsaData;
 	}
 	
-	private Perusahaan convertPemrakarsaDataToPemrakarsa(PemrakarsaData d) {
+	private Perusahaan convertPemrakarsaDataToPemrakarsa(PerusahaanData d) {
 		BentukUsaha bentukUsaha = new BentukUsaha(d.getBentukUsaha().getId(), d.getBentukUsaha().getNama());	
 		
 		AktaPemrakarsa aktaPemrakarsa = new AktaPemrakarsa(d.getAktaPemrakarsaData().getNomor(), d.getAktaPemrakarsaData().getTanggal(), 

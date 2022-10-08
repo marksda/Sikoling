@@ -10,12 +10,12 @@ import org.Sikoling.ejb.main.repository.user.UserData;
 @Entity
 @Table(name="master.tbl_pemrakarsa")
 @NamedQueries({
-@NamedQuery(name="PemrakarsaData.findAll", query="SELECT p FROM PemrakarsaData p"),
-@NamedQuery(name="PemrakarsaData.findByQueryNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama LIKE :nama"),
-@NamedQuery(name="PemrakarsaData.findByCreator", query="SELECT p FROM PemrakarsaData p WHERE p.creator.id = :idCreator"),
-@NamedQuery(name="PemrakarsaData.findByCreatorAndNama", query="SELECT p FROM PemrakarsaData p WHERE p.nama LIKE :nama AND p.creator.id = :idCreator")
+@NamedQuery(name="PerusahaanData.findAll", query="SELECT p FROM PerusahaanData p"),
+@NamedQuery(name="PerusahaanData.findByQueryNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama"),
+@NamedQuery(name="PerusahaanData.findByCreator", query="SELECT p FROM PerusahaanData p WHERE p.creator.id = :idCreator"),
+@NamedQuery(name="PerusahaanData.findByCreatorAndNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama AND p.creator.id = :idCreator")
 })
-public class PemrakarsaData implements Serializable {
+public class PerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
 
 	@Id
@@ -50,7 +50,7 @@ public class PemrakarsaData implements Serializable {
 	@ManyToOne(optional = false)
 	private UserData creator;	
 				
-	public PemrakarsaData() {
+	public PerusahaanData() {
 	}
 	
 	public String getId() {

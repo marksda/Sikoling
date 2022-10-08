@@ -16,7 +16,7 @@ import jakarta.inject.Inject;
 public class PemrakarsaRepositoryEJB implements IPerusahaanRepository {
 	
 	@Inject
-	private PemrakarsaRepositoryJPA pemrakarsaRepositoryJPA;
+	private PerusahaanRepositoryJPA pemrakarsaRepositoryJPA;
 
 	@Override
 	public List<Perusahaan> getAll() {		

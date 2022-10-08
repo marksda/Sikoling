@@ -4,7 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.perusahaan.PemrakarsaData;
+import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 
 
 @Entity
@@ -26,7 +26,7 @@ public class PenanggungJawabData implements Serializable {
 	
 	@JoinColumn(name = "pemrakarsa", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private PemrakarsaData pemrakarsa;
+	private PerusahaanData pemrakarsa;
 	
 	@JoinColumn(name = "jabatan", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
@@ -59,11 +59,11 @@ public class PenanggungJawabData implements Serializable {
 		this.person = person;
 	}
 
-	public PemrakarsaData getPemrakarsa() {
+	public PerusahaanData getPemrakarsa() {
 		return pemrakarsa;
 	}
 
-	public void setPemrakarsa(PemrakarsaData pemrakarsa) {
+	public void setPemrakarsa(PerusahaanData pemrakarsa) {
 		this.pemrakarsa = pemrakarsa;
 	}
 	

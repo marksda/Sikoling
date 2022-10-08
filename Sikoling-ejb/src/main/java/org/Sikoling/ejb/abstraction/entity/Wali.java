@@ -6,17 +6,17 @@ import java.util.Objects;
 public class Wali implements Serializable {
 
 	private static final long serialVersionUID = 2775584601268906714L;
-	private final User wali;
+	private final User user;
 	private final StatusWali status;
 	
-	public Wali(User wali, StatusWali status) {
+	public Wali(User user, StatusWali status) {
 		super();
-		this.wali = wali;
+		this.user = user;
 		this.status = status;
 	}
 
-	public User getWali() {
-		return wali;
+	public User getUser() {
+		return user;
 	}
 
 	public StatusWali getStatus() {
@@ -30,7 +30,7 @@ public class Wali implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.wali.getUserName());
+		hash = 13 * hash + Objects.hashCode(this.user.getId());
 		return hash;
 	}
 
@@ -50,11 +50,7 @@ public class Wali implements Serializable {
         
         final Wali other = (Wali) obj;
         
-        if (!Objects.equals(this.wali, other.wali)) {
-            return false;
-        }
-        
-        if (!Objects.equals(this.status, other.status)) {
+        if (!this.user.getId().equals(other.getUser().getId())) {
             return false;
         }
         
@@ -63,7 +59,13 @@ public class Wali implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WaliPemohon{" + "wali=" + wali.toString() + ", status=" + status.toString() + "}";
+		return "Wali{id=" 
+				.concat(this.user.getId())
+				.concat(", nama=")
+				.concat(this.user.getUserName())
+				.concat(", statusWali=")
+				.concat(this.status.getNama())
+				.concat("}");
 	}
 
 }

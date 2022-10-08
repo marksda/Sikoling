@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 
 public class Dokumen implements Serializable {
@@ -9,12 +10,16 @@ public class Dokumen implements Serializable {
 	private final String id;
 	private final String jenis;
 	private final String nama;
+	private final Map<String, Object> atribute;
+	private final String uriFile;
 	
-	public Dokumen(String id, String jenis, String nama) {
+	public Dokumen(String id, String jenis, String nama, String uriFile,  Map<String, Object> atribute) {
 		super();
 		this.id = id;
 		this.jenis = jenis;
 		this.nama = nama;
+		this.uriFile = uriFile;
+		this.atribute = atribute;
 	}
 
 	public static long getSerialversionuid() {
@@ -32,7 +37,15 @@ public class Dokumen implements Serializable {
 	public String getNama() {
 		return nama;
 	}
-	
+				
+	public Map<String, Object> getAtribute() {
+		return atribute;
+	}
+
+	public String getUriFile() {
+		return uriFile;
+	}
+
 	public int hashCode() {
 		int hash = 19;
 		hash = 41 * hash + Objects.hashCode(this.id);
@@ -71,7 +84,6 @@ public class Dokumen implements Serializable {
         
         return true;
 	}
-
 	
 	@Override
 	public String toString() {

@@ -30,7 +30,7 @@ public class PemrakarsaDTO implements Serializable {
 		this.bentukUsaha = new BentukUsahaDTO(p.getBentukUsaha());
 //		this.aktaPemrakarsa = new AktaPemrakarsaDTO(p.getAktaPendirian());
 		this.alamat = new AlamatPemrakarsaDTO(p.getAlamat());
-		this.kontakPemrakarsa = new KontakPemrakarsaDTO(p.getKontakPemrakarsa());
+		this.kontakPemrakarsa = new KontakPemrakarsaDTO(p.getKontak());
 //		this.oss = new OSSDTO(p.getOss());
 		this.nama = p.getNama();
 		this.npwp = p.getNpwp();
