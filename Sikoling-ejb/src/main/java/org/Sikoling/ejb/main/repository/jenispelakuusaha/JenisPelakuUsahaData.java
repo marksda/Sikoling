@@ -1,29 +1,33 @@
 package org.Sikoling.ejb.main.repository.jenispelakuusaha;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name="master.tbl_jenis_pelaku_usaha")
+@Table(name="master.tbl_kategori_pelaku_usaha")
 @NamedQueries({
-@NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT k FROM JenisPelakuUsahaData k"),
-@NamedQuery(name="JenisPelakuUsahaData.findByNama", query="SELECT k FROM JenisPelakuUsahaData k WHERE k.nama LIKE :nama")
+@NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT FROM JenisPelakuUsahaData p"),
+@NamedQuery(name="JenisPelakuUsahaData.findByQueryNama", query="SELECT FROM JenisPelakuUsahaData p WHERE p.")
 })
 public class JenisPelakuUsahaData implements Serializable {
-	private static final long serialVersionUID = -8189342523798654485L;
 
+	private static final long serialVersionUID = -9028556396730975196L;
+	
 	@Id
 	private String id;
-
-	@Column(name="nama")
-	private String nama;
 	
+	private String nama;
+
 	public JenisPelakuUsahaData() {
 	}
 
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
@@ -31,11 +35,15 @@ public class JenisPelakuUsahaData implements Serializable {
 	}
 
 	public String getNama() {
-		return this.nama;
+		return nama;
 	}
 
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}	
 
 }

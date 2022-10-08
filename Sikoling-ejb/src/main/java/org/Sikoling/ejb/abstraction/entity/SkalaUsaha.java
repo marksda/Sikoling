@@ -3,33 +3,22 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class BentukUsaha implements Serializable{
+public class SkalaUsaha implements Serializable {
 
-	private static final long serialVersionUID = -5160872827538954162L;
-	private final String id;
+	private static final long serialVersionUID = -2069101397105967489L;
+	private final String id;	
 	private final String nama;
 	private final String singkatan;
 	
-	
-	public BentukUsaha(String id) {
-		super();
-		this.id = id;
-		this.nama = null;
-		this.singkatan = null;
-	}
-	
-	public BentukUsaha(String id, String nama) {
-		super();
-		this.id = id;
-		this.nama = nama;
-		this.singkatan = null;
-	}
-	
-	public BentukUsaha(String id, String nama, String singkatan) {
+	public SkalaUsaha(String id, String nama, String singkatan) {
 		super();
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getId() {
@@ -44,18 +33,13 @@ public class BentukUsaha implements Serializable{
 		return singkatan;
 	}
 	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Override
 	public int hashCode() {
-		int hash = 31;
-		hash = 13 * hash + Objects.hashCode(this.id);
-		hash = 13 * hash + Objects.hashCode(this.nama);
+		int hash = 7;
+		hash = 91 * hash + Objects.hashCode(this.id);
+		hash = 91 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -70,7 +54,11 @@ public class BentukUsaha implements Serializable{
             return false;
         }
         
-        final BentukUsaha other = (BentukUsaha) obj;
+        final SkalaUsaha other = (SkalaUsaha) obj;
+        
+        if (!this.id.equals(other.getId())) {
+            return false;
+        }
         
         if (!this.nama.equals(other.nama)) {
             return false;
@@ -78,10 +66,17 @@ public class BentukUsaha implements Serializable{
         
         return true;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "BentukUsaha{" + "id=" + id + ", nama=" + nama + "}";
-	}
-		
+		return "SkalaUsaha { id="
+				.concat(this.id)
+				.concat(", nama=")
+				.concat(this.nama)
+				.concat(", singkatan=")
+				.concat(this.singkatan)
+				.concat("}");
+	}	
+	
+
 }

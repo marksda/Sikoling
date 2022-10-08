@@ -3,12 +3,13 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
+import org.Sikoling.ejb.main.repository.jenispelakuusaha.JenisPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.user.UserData;
 
 
 @Entity
-@Table(name="master.tbl_pemrakarsa")
+@Table(name="master.tbl_perusahaan")
 @NamedQueries({
 @NamedQuery(name="PerusahaanData.findAll", query="SELECT p FROM PerusahaanData p"),
 @NamedQuery(name="PerusahaanData.findByQueryNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama"),
@@ -20,6 +21,10 @@ public class PerusahaanData implements Serializable {
 
 	@Id
 	private String id;
+	
+	@JoinColumn(name="jenis_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private JenisPelakuUsahaData jenisPelakuUsahaData; 
 
 	@JoinColumn(name = "bentuk_usaha", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

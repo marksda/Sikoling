@@ -9,23 +9,25 @@ public class Perusahaan implements Serializable {
 	private static final long serialVersionUID = 1008634190691153214L;
 	private final String id;	
 	private final String nama;
+	private final SkalaUsaha skalaUsaha;	
 	private final JenisPelakuUsaha jenisPelakuUsaha;
-	private final BentukUsaha bentukUsaha;
+	private final DetailPelakuUsaha detailPelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
 	private final PenanggungJawab penanggungJawab;
 	private final List<Dokumen> daftarDokumen;
-	
-	public Perusahaan(String id, JenisPelakuUsaha jenisPelakuUsaha, BentukUsaha bentukUsaha, Alamat alamat, Kontak kontakPemrakarsa,
-			String nama, String npwp, PenanggungJawab penanggungJawab, List<Dokumen> daftarDokumen
-	) {
+
+	public Perusahaan(String id, String nama, SkalaUsaha skalaUsaha, JenisPelakuUsaha jenisPelakuUsaha,
+			DetailPelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak, PenanggungJawab penanggungJawab,
+			List<Dokumen> daftarDokumen) {
 		super();
 		this.id = id;
-		this.jenisPelakuUsaha = jenisPelakuUsaha;
-		this.bentukUsaha = bentukUsaha;
-		this.alamat = alamat;
-		this.kontak = kontakPemrakarsa;
 		this.nama = nama;
+		this.skalaUsaha = skalaUsaha;
+		this.jenisPelakuUsaha = jenisPelakuUsaha;
+		this.detailPelakuUsaha = detailPelakuUsaha;
+		this.alamat = alamat;
+		this.kontak = kontak;
 		this.penanggungJawab = penanggungJawab;
 		this.daftarDokumen = daftarDokumen;
 	}
@@ -33,11 +35,7 @@ public class Perusahaan implements Serializable {
 	public String getId() {
 		return id;
 	}
-
-	public BentukUsaha getBentukUsaha() {
-		return bentukUsaha;
-	}
-
+	
 	public String getNama() {
 		return nama;
 	}
@@ -65,7 +63,17 @@ public class Perusahaan implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+		
+	public SkalaUsaha getSkalaUsaha() {
+		return skalaUsaha;
+	}
 	
+
+	public DetailPelakuUsaha getDetailPelakuUsaha() {
+		return detailPelakuUsaha;
+	}
+	
+
 	@Override
 	public int hashCode() {
 		int hash = 91;
