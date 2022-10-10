@@ -1,9 +1,11 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
+
 import jakarta.persistence.*;
 import org.Sikoling.ejb.main.repository.jenispelakuusaha.JenisPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
+import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
 @Entity
@@ -43,6 +45,9 @@ public class PerusahaanData implements Serializable {
 
 	@Embedded
 	private KontakData kontakPemrakarsaData;
+	
+	@Column(columnDefinition = "json")
+	private String dokumen;
 	
 	public PerusahaanData() {
 	}
@@ -118,7 +123,23 @@ public class PerusahaanData implements Serializable {
 	public void setDetailPelakuUsahaData(DetailPelakuUsahaData detailPelakuUsahaData) {
 		this.detailPelakuUsahaData = detailPelakuUsahaData;
 	}
-	
+		
+
+	public ModelPerizinanData getModelPerizinanData() {
+		return modelPerizinanData;
+	}
+
+	public void setModelPerizinanData(ModelPerizinanData modelPerizinanData) {
+		this.modelPerizinanData = modelPerizinanData;
+	}
+
+	public String getDokumen() {
+		return dokumen;
+	}
+
+	public void setDokumen(String dokumen) {
+		this.dokumen = dokumen;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

@@ -17,6 +17,7 @@ import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
+import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.user.UserRepositoryJPA;
 import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserJPA;
 import org.keycloak.admin.client.Keycloak;
@@ -126,6 +127,11 @@ public class RepositoryProvider {
 	@Produces
 	public JenisPelakuUsahaRepositoryJPA getJenisPelakuUsahaRepositoryJPA(EntityManager entityManager) {
 		return new JenisPelakuUsahaRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public SkalaUsahaRepositoryJPA getSkalaUsahaRepositoryJPA(EntityManager entityManager) {
+		return new SkalaUsahaRepositoryJPA(entityManager);
 	}
 
 }

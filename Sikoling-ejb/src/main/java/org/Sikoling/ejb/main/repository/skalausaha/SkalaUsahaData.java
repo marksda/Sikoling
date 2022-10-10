@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.skalausaha;
 
 import java.io.Serializable;
 
