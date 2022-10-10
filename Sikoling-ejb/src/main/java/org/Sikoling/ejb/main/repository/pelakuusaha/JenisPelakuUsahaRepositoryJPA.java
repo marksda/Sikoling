@@ -12,7 +12,6 @@ public class JenisPelakuUsahaRepositoryJPA implements IJenisPelakuUsahaRepositor
 	private final EntityManager entityManager;	
 
 	public JenisPelakuUsahaRepositoryJPA(EntityManager entityManager) {
-		super();
 		this.entityManager = entityManager;
 	}
 
