@@ -3,7 +3,6 @@ package org.Sikoling.ejb.main.repository;
 import java.util.Properties;
 
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
-import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanRepositoryJPA;
