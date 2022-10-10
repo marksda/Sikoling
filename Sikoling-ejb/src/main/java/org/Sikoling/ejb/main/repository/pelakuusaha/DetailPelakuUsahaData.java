@@ -1,8 +1,6 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.pelakuusaha;
 
 import java.io.Serializable;
-
-import org.Sikoling.ejb.main.repository.jenispelakuusaha.JenisPelakuUsahaData;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

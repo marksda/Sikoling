@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.jenispelakuusaha;
+package org.Sikoling.ejb.main.repository.pelakuusaha;
 
 import java.io.Serializable;
 
@@ -11,8 +11,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_kategori_pelaku_usaha")
 @NamedQueries({
-@NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT FROM JenisPelakuUsahaData p"),
-@NamedQuery(name="JenisPelakuUsahaData.findByQueryNama", query="SELECT FROM JenisPelakuUsahaData p WHERE p.nama LIKE :nama")
+	@NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT FROM JenisPelakuUsahaData p"),
+	@NamedQuery(name="JenisPelakuUsahaData.findByQueryNama", query="SELECT FROM JenisPelakuUsahaData p WHERE p.nama LIKE :nama")
 })
 public class JenisPelakuUsahaData implements Serializable {
 

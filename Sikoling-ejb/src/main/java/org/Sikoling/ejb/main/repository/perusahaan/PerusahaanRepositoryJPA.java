@@ -1,34 +1,32 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.AktaPemrakarsa;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
-import org.Sikoling.ejb.abstraction.entity.BentukUsaha;
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.Jabatan;
-import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
-import org.Sikoling.ejb.abstraction.entity.KBLI;
+import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
-import org.Sikoling.ejb.abstraction.entity.OSS;
+import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
-import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
-import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
-import org.Sikoling.ejb.main.repository.bentukusaha.BentukUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
-import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
-import org.Sikoling.ejb.main.repository.person.PersonData;
+import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.JenisPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-import org.Sikoling.ejb.main.repository.user.UserData;
-
+import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.persistence.EntityManager;
 
 
@@ -43,225 +41,205 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public List<Perusahaan> getAll() {
-		return entityManager.createNamedQuery("PemrakarsaData.findAll", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findAll", PerusahaanData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Perusahaan save(Perusahaan t) {
-		PerusahaanData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
-		
-		entityManager.persist(pemrakarsaData);
-		entityManager.flush();
-		
-		return convertPemrakarsaDataToPemrakarsa(pemrakarsaData);
+		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t);		
+		entityManager.persist(perusahaanData);
+		entityManager.flush();		
+		return convertPerusahaanDataToPerusahaan(perusahaanData);
 	}
 
 	@Override
 	public Perusahaan update(Perusahaan t) {
-		PerusahaanData pemrakarsaData = convertPemrakarsaToPemrakarsaData(t);
+		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t);
 		pemrakarsaData = entityManager.merge(pemrakarsaData);
-		return convertPemrakarsaDataToPemrakarsa(pemrakarsaData);
+		return convertPerusahaanDataToPerusahaan(pemrakarsaData);
 	}
 
 	@Override
 	public List<Perusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PemrakarsaData.findAll", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findAll", PerusahaanData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Perusahaan> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findByQueryNama", PerusahaanData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PemrakarsaData.findByQueryNama", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findByQueryNama", PerusahaanData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Perusahaan> getByCreator(String idCreator) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreator", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findByCreator", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Perusahaan> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreator", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findByCreator", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Perusahaan> getByCreatorAndNama(String idCreator, String nama) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreatorAndNama", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findByCreatorAndNama", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Perusahaan> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PemrakarsaData.findByCreatorAndNama", PerusahaanData.class)
+		return entityManager.createNamedQuery("PerusahaanData.findByCreatorAndNama", PerusahaanData.class)
 				.setParameter("idCreator", idCreator)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertPemrakarsaDataToPemrakarsa(t))
+				.map(t -> convertPerusahaanDataToPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
-	private PerusahaanData convertPemrakarsaToPemrakarsaData(Perusahaan p) {
-		PerusahaanData pemrakarsaData = new PerusahaanData();
+	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan p) {
+		PerusahaanData perusahaanData = new PerusahaanData();		
+		perusahaanData.setId(p.getId());
+		perusahaanData.setNama(p.getNama());
 		
-		pemrakarsaData.setId(p.getId());
+		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
+		modelPerizinanData.setId(p.getModelPerizinan().getId());
+		modelPerizinanData.setNama(p.getModelPerizinan().getNama());
+		modelPerizinanData.setSingkatan(p.getModelPerizinan().getSingkatan());
+		perusahaanData.setModelPerizinanData(modelPerizinanData);
 		
-		BentukUsahaData bentukUsahaData = new BentukUsahaData();
-		bentukUsahaData.setId(p.getBentukUsaha().getId());
-		bentukUsahaData.setNama(p.getBentukUsaha().getNama());
-		pemrakarsaData.setBentukUsaha(bentukUsahaData);
+		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
+		skalaUsahaData.setId(p.getSkalaUsaha().getId());
+		skalaUsahaData.setNama(p.getSkalaUsaha().getNama());
+		skalaUsahaData.setSingkatan(p.getSkalaUsaha().getSingkatan());
+		perusahaanData.setSkalaUsaha(skalaUsahaData);
 		
-		AktaPemrakarsaData aktaPemrakarsaData = new AktaPemrakarsaData();
-//		aktaPemrakarsaData.setNamaNotaris(p.getAktaPendirian().getNamaNotaris());
-//		aktaPemrakarsaData.setNomor(p.getAktaPendirian().getNomor());
-//		aktaPemrakarsaData.setTanggal(p.getAktaPendirian().getTanggal());
-		pemrakarsaData.setAktaPemrakarsaData(aktaPemrakarsaData);
+		JenisPelakuUsahaData jenisPelakuUsahaData = new JenisPelakuUsahaData();
+		jenisPelakuUsahaData.setId(p.getJenisPelakuUsaha().getId());
+		jenisPelakuUsahaData.setNama(p.getJenisPelakuUsaha().getNama());
+		perusahaanData.setJenisPelakuUsahaData(jenisPelakuUsahaData);
 		
-		AlamatPemrakarsaData alamatPemrakarsaData = new AlamatPemrakarsaData();
+		DetailPelakuUsahaData detailPelakuUsahaData = new DetailPelakuUsahaData();
+		detailPelakuUsahaData.setNama(p.getDetailPelakuUsaha().getNama());
+		detailPelakuUsahaData.setSingkatan(p.getDetailPelakuUsaha().getSingkatan());
+		detailPelakuUsahaData.setJenisPelakuUsahaData(jenisPelakuUsahaData);
+		perusahaanData.setDetailPelakuUsahaData(detailPelakuUsahaData);
+				
+		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
 		DesaData desaData = new DesaData();
 		desaData.setId(p.getAlamat().getDesa().getId());
-		alamatPemrakarsaData.setDesa(desaData);
+		alamatPerusahaanData.setDesa(desaData);
 		KecamatanData kecamatanData = new KecamatanData();
 		kecamatanData.setId(p.getAlamat().getKecamatan().getId());
-		alamatPemrakarsaData.setKecamatan(kecamatanData);
+		alamatPerusahaanData.setKecamatan(kecamatanData);
 		KabupatenData kabupatenData = new KabupatenData();
 		kabupatenData.setId(p.getAlamat().getKabupaten().getId());
-		alamatPemrakarsaData.setKabupaten(kabupatenData);
+		alamatPerusahaanData.setKabupaten(kabupatenData);
 		PropinsiData propinsiData = new PropinsiData();
 		propinsiData.setId(p.getAlamat().getPropinsi().getId());
-		alamatPemrakarsaData.setPropinsi(propinsiData);
-		pemrakarsaData.setAlamatPemrakarsaData(alamatPemrakarsaData);
+		alamatPerusahaanData.setPropinsi(propinsiData);
+		perusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
 		
-		KontakData kontakPemrakarsaData = new KontakData();
-		kontakPemrakarsaData.setEmail(p.getKontak().getEmail());
-		kontakPemrakarsaData.setFax(p.getKontak().getFax());
-		kontakPemrakarsaData.setTelepone(p.getKontak().getTelepone());
-		pemrakarsaData.setKontakPemrakarsaData(kontakPemrakarsaData);
+		KontakData kontakPerusahaanData = new KontakData();
+		kontakPerusahaanData.setEmail(p.getKontak().getEmail());
+		kontakPerusahaanData.setFax(p.getKontak().getFax());
+		kontakPerusahaanData.setTelepone(p.getKontak().getTelepone());
+		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
 		
-//		OSSData ossData = new OSSData();
-//		ossData.setNib(p.getOss().getNib());
-//		ossData.setTanggal(p.getOss().getTanggal());	
-//		ossData.setKbliDatas(p.getOss().getKblis()
-//				.stream()
-//				.map(t -> convertKBLIToKBLIData(t))
-//				.collect(Collectors.toList())				
-//				);		
-//		pemrakarsaData.setOssData(ossData);		
+		Jsonb jsonb = JsonbBuilder.create();
+		String dokumen = jsonb.toJson(p.getDaftarDokumen());
+		perusahaanData.setDokumen(dokumen);		
 		
-		pemrakarsaData.setNama(p.getNama());
-		pemrakarsaData.setNoNpwp(p.getNpwp());
+//		UserData userData = new UserData();
+//		userData.setId("0001");
+//		perusahaanData.setCreator(userData);
 		
-		PenanggungJawabData penanggungJawabData = new PenanggungJawabData();
-		penanggungJawabData.setId(p.getPenanggungJawab().getId());
-		pemrakarsaData.setPenanggungJawab(penanggungJawabData);
-		
-		UserData userData = new UserData();
-		userData.setId("0001");
-		pemrakarsaData.setCreator(userData);
-		
-		return pemrakarsaData;
+		return perusahaanData;
 	}
 	
-	private Perusahaan convertPemrakarsaDataToPemrakarsa(PerusahaanData d) {
-		BentukUsaha bentukUsaha = new BentukUsaha(d.getBentukUsaha().getId(), d.getBentukUsaha().getNama());	
+	private Perusahaan convertPerusahaanDataToPerusahaan(PerusahaanData d) {
 		
-		AktaPemrakarsa aktaPemrakarsa = new AktaPemrakarsa(d.getAktaPemrakarsaData().getNomor(), d.getAktaPemrakarsaData().getTanggal(), 
-				d.getAktaPemrakarsaData().getNamaNotaris());		
+		ModelPerizinan modelPerizinan = new ModelPerizinan(
+				d.getModelPerizinanData().getId(), d.getModelPerizinanData().getNama(), 
+				d.getModelPerizinanData().getSingkatan());	
 		
-		Alamat alamatPemrakarsa = new Alamat(
-				new Propinsi(d.getAlamatPemrakarsaData().getPropinsi().getId(), d.getAlamatPemrakarsaData().getPropinsi().getNama()),
-				new Kabupaten(d.getAlamatPemrakarsaData().getKabupaten().getId(), d.getAlamatPemrakarsaData().getKabupaten().getNama()),
-				new Kecamatan(d.getAlamatPemrakarsaData().getKecamatan().getId(), d.getAlamatPemrakarsaData().getKecamatan().getNama()),
-				new Desa(d.getAlamatPemrakarsaData().getDesa().getId(), d.getAlamatPemrakarsaData().getDesa().getNama()),
-				d.getAlamatPemrakarsaData().getKeterangan());
+		SkalaUsaha skalaUsaha = new SkalaUsaha(
+				d.getSkalaUsaha().getId(), d.getSkalaUsaha().getNama(), 
+				d.getSkalaUsaha().getSingkatan());
 		
-		Kontak kontakPemrakarsa = new Kontak(d.getKontakPemrakarsaData().getTelepone(), 
-				d.getKontakPemrakarsaData().getFax(), d.getKontakPemrakarsaData().getEmail());
+		JenisPelakuUsaha pelakuUsaha = new JenisPelakuUsaha(
+				d.getJenisPelakuUsahaData().getId(), d.getJenisPelakuUsahaData().getNama());
 		
-		OSS oss = new OSS(d.getOssData().getNib(), d.getOssData().getTanggal(), 
-				d.getOssData().getKbliDatas()
-				.stream()
-				.map(dt -> convertKBLIDataToKBLI(dt))
-				.collect(Collectors.toList())
-				);
-		 
-		PenanggungJawabData pjd = entityManager.find(PenanggungJawabData.class, d.getPenanggungJawab().getId());
-		PersonData personData = pjd.getPerson();
-		AlamatPersonData alamatPJD = pjd.getPerson().getAlamat();
-		Person person = new Person(
-				personData.getId(), personData.getNama(), 
-				new JenisKelamin(pjd.getPerson().getSex().getId(), pjd.getPerson().getSex().getNama()),
-				new Alamat(
-						new Propinsi(alamatPJD.getPropinsi().getId(), alamatPJD.getPropinsi().getNama()), 
-						new Kabupaten(alamatPJD.getPropinsi().getId(), alamatPJD.getPropinsi().getNama()),
-						new Kecamatan(alamatPJD.getKecamatan().getId(), alamatPJD.getKecamatan().getNama()), 
-						new Desa(alamatPJD.getDesa().getId(), alamatPJD.getDesa().getNama()), 
-						alamatPJD.getDetailAlamat()), 
-				personData.getScanKtp(),
-				new Kontak(personData.getKontak().getTelepone(), null, personData.getKontak().getEmail()));
+		DetailPelakuUsaha detailPelakuUsaha = new DetailPelakuUsaha(
+				d.getDetailPelakuUsahaData().getId(), d.getDetailPelakuUsahaData().getNama(), d.getDetailPelakuUsahaData().getSingkatan());
 		
-		PenanggungJawab penanggungJawab = new PenanggungJawab(
-				pjd.getId(), person, new Jabatan(pjd.getJabatan().getId(), pjd.getJabatan().getNama()));
+		Alamat alamatPerusahaan = new Alamat(
+				new Propinsi(d.getAlamatPerusahaanData().getPropinsi().getId(), d.getAlamatPerusahaanData().getPropinsi().getNama()),
+				new Kabupaten(d.getAlamatPerusahaanData().getKabupaten().getId(), d.getAlamatPerusahaanData().getKabupaten().getNama()),
+				new Kecamatan(d.getAlamatPerusahaanData().getKecamatan().getId(), d.getAlamatPerusahaanData().getKecamatan().getNama()),
+				new Desa(d.getAlamatPerusahaanData().getDesa().getId(), d.getAlamatPerusahaanData().getDesa().getNama()),
+				d.getAlamatPerusahaanData().getKeterangan());
+		
+		Kontak kontakPerusahaan = new Kontak(d.getKontakPerusahaanData().getTelepone(), 
+				d.getKontakPerusahaanData().getFax(), d.getKontakPerusahaanData().getEmail());
+		
+		Jsonb jsonb = JsonbBuilder.create();
+		
+		@SuppressWarnings("serial")
+		List<Dokumen> daftarDokumen = jsonb.fromJson(d.getDokumen(), 
+				new ArrayList<Dokumen>(){}.getClass().getGenericSuperclass());
+		
 
-		return new Perusahaan(d.getId(), bentukUsaha, alamatPemrakarsa, kontakPemrakarsa, d.getNama(), d.getNoNpwp(), penanggungJawab);
-	}
-	
-	private KBLIData convertKBLIToKBLIData(KBLI t) {
-		KBLIData kbliData = new KBLIData();
-		kbliData.setKode(t.getKode());
-		kbliData.setNama(t.getNama());
-		return kbliData;
-	}
-	
-	private KBLI convertKBLIDataToKBLI(KBLIData d) {
-		return new KBLI(d.getKode(), d.getNama());
+		return new Perusahaan( 
+				d.getId(), d.getNama(), modelPerizinan, skalaUsaha, pelakuUsaha,
+				detailPelakuUsaha, alamatPerusahaan, kontakPerusahaan, daftarDokumen);
 	}
 	
 }

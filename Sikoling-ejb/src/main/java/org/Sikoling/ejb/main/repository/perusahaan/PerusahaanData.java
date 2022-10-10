@@ -3,8 +3,10 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
-import org.Sikoling.ejb.main.repository.jenispelakuusaha.JenisPelakuUsahaData;
+
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.JenisPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
@@ -41,57 +43,45 @@ public class PerusahaanData implements Serializable {
 	private DetailPelakuUsahaData detailPelakuUsahaData; 
 	
 	@Embedded
-	private AlamatPemrakarsaData alamatPemrakarsaData;
+	private AlamatPerusahaanData alamatPerusahaanData;
 
 	@Embedded
-	private KontakData kontakPemrakarsaData;
+	private KontakData kontakPerusahaanData;
 	
 	@Column(columnDefinition = "json")
 	private String dokumen;
 	
 	public PerusahaanData() {
 	}
+
 	
 	public String getId() {
-		return this.id;
+		return id;
 	}
+
 	
 	public void setId(String id) {
 		this.id = id;
 	}
-		
+
+	
 	public String getNama() {
-		return this.nama;
+		return nama;
 	}
+
 	
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-		
-	public AlamatPemrakarsaData getAlamatPemrakarsaData() {
-		return alamatPemrakarsaData;
-	}
-
-	public void setAlamatPemrakarsaData(AlamatPemrakarsaData alamatPemrakarsaData) {
-		this.alamatPemrakarsaData = alamatPemrakarsaData;
-	}
-
-	public KontakData getKontakPemrakarsaData() {
-		return kontakPemrakarsaData;
-	}
-	
-	public void setKontakPemrakarsaData(KontakData kontakPemrakarsaData) {
-		this.kontakPemrakarsaData = kontakPemrakarsaData;
-	}
 
 	
-	public ModelPerizinanData getModelPerizinan() {
+	public ModelPerizinanData getModelPerizinanData() {
 		return modelPerizinanData;
 	}
 
 	
-	public void setModelPerizinan(ModelPerizinanData modelPerizinan) {
-		this.modelPerizinanData = modelPerizinan;
+	public void setModelPerizinanData(ModelPerizinanData modelPerizinanData) {
+		this.modelPerizinanData = modelPerizinanData;
 	}
 
 	
@@ -123,26 +113,41 @@ public class PerusahaanData implements Serializable {
 	public void setDetailPelakuUsahaData(DetailPelakuUsahaData detailPelakuUsahaData) {
 		this.detailPelakuUsahaData = detailPelakuUsahaData;
 	}
-		
 
-	public ModelPerizinanData getModelPerizinanData() {
-		return modelPerizinanData;
+	
+	public AlamatPerusahaanData getAlamatPerusahaanData() {
+		return alamatPerusahaanData;
 	}
 
-	public void setModelPerizinanData(ModelPerizinanData modelPerizinanData) {
-		this.modelPerizinanData = modelPerizinanData;
+	
+	public void setAlamatPerusahaanData(AlamatPerusahaanData alamatPerusahaanData) {
+		this.alamatPerusahaanData = alamatPerusahaanData;
 	}
 
+	
+	public KontakData getKontakPerusahaanData() {
+		return kontakPerusahaanData;
+	}
+
+	
+	public void setKontakPerusahaanData(KontakData kontakPerusahaanData) {
+		this.kontakPerusahaanData = kontakPerusahaanData;
+	}
+
+	
 	public String getDokumen() {
 		return dokumen;
 	}
 
+	
 	public void setDokumen(String dokumen) {
 		this.dokumen = dokumen;
 	}
 
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	
 }

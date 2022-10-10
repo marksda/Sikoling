@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 @AttributeOverrides({
 @AttributeOverride( name = "keterangan", column = @Column(name = "detail_alamat"))
 })
-public class AlamatPemrakarsaData implements Serializable {
+public class AlamatPerusahaanData implements Serializable {
 	
 	private static final long serialVersionUID = -8334774162037892428L;
 
@@ -34,7 +34,7 @@ public class AlamatPemrakarsaData implements Serializable {
 	@ManyToOne
 	private PropinsiData propinsi;
 
-	public AlamatPemrakarsaData() {
+	public AlamatPerusahaanData() {
 	}
 
 	public DesaData getDesa() {

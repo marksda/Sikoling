@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.jenispelakuusaha;
+package org.Sikoling.ejb.main.repository.pelakuusaha;
 
 import java.util.List;
 import java.util.stream.Collectors;

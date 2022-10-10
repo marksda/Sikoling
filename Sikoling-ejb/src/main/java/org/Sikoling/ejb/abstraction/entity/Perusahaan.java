@@ -68,12 +68,10 @@ public class Perusahaan implements Serializable {
 		return skalaUsaha;
 	}
 	
-
 	public DetailPelakuUsaha getDetailPelakuUsaha() {
 		return detailPelakuUsaha;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		int hash = 91;
