@@ -9,27 +9,31 @@ public class Perusahaan implements Serializable {
 	private static final long serialVersionUID = 1008634190691153214L;
 	private final String id;	
 	private final String nama;
+	private final ModelPerizinan modelPerizinan;
 	private final SkalaUsaha skalaUsaha;	
 	private final JenisPelakuUsaha jenisPelakuUsaha;
 	private final DetailPelakuUsaha detailPelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
-	private final PenanggungJawab penanggungJawab;
 	private final List<Dokumen> daftarDokumen;
-
-	public Perusahaan(String id, String nama, SkalaUsaha skalaUsaha, JenisPelakuUsaha jenisPelakuUsaha,
-			DetailPelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak, PenanggungJawab penanggungJawab,
+	
+	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
+			JenisPelakuUsaha jenisPelakuUsaha, DetailPelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak,
 			List<Dokumen> daftarDokumen) {
 		super();
 		this.id = id;
 		this.nama = nama;
+		this.modelPerizinan = modelPerizinan;
 		this.skalaUsaha = skalaUsaha;
 		this.jenisPelakuUsaha = jenisPelakuUsaha;
 		this.detailPelakuUsaha = detailPelakuUsaha;
 		this.alamat = alamat;
 		this.kontak = kontak;
-		this.penanggungJawab = penanggungJawab;
 		this.daftarDokumen = daftarDokumen;
+	}
+
+	public ModelPerizinan getModelPerizinan() {
+		return modelPerizinan;
 	}
 
 	public String getId() {
@@ -43,11 +47,7 @@ public class Perusahaan implements Serializable {
 	public Alamat getAlamat() {
 		return alamat;
 	}
-
-	public PenanggungJawab getPenanggungJawab() {
-		return penanggungJawab;
-	}
-
+	
 	public Kontak getKontak() {
 		return kontak;
 	}

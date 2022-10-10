@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @Table(name="master.tbl_kategori_pelaku_usaha")
 @NamedQueries({
 @NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT FROM JenisPelakuUsahaData p"),
-@NamedQuery(name="JenisPelakuUsahaData.findByQueryNama", query="SELECT FROM JenisPelakuUsahaData p WHERE p.")
+@NamedQuery(name="JenisPelakuUsahaData.findByQueryNama", query="SELECT FROM JenisPelakuUsahaData p WHERE p.nama LIKE :nama")
 })
 public class JenisPelakuUsahaData implements Serializable {
 
