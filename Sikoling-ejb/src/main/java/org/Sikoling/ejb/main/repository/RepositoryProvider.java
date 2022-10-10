@@ -105,7 +105,7 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public PerusahaanRepositoryJPA getPemrakarsaRepositoryJPA(EntityManager entityManager) {
+	public PerusahaanRepositoryJPA getPerusahaanRepositoryJPA(EntityManager entityManager) {
 		return new PerusahaanRepositoryJPA(entityManager);
 	}
 	

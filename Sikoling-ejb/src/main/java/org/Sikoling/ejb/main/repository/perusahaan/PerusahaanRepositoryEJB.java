@@ -13,59 +13,59 @@ import jakarta.inject.Inject;
 @Stateless
 @LocalBean
 @Infrastructure
-public class PemrakarsaRepositoryEJB implements IPerusahaanRepository {
+public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 	
 	@Inject
-	private PerusahaanRepositoryJPA pemrakarsaRepositoryJPA;
+	private PerusahaanRepositoryJPA perusahaanRepository;
 
 	@Override
 	public List<Perusahaan> getAll() {		
-		return pemrakarsaRepositoryJPA.getAll();
+		return perusahaanRepository.getAll();
 	}
 
 	@Override
 	public Perusahaan save(Perusahaan t) {
-		return pemrakarsaRepositoryJPA.save(t);
+		return perusahaanRepository.save(t);
 	}
 
 	@Override
 	public Perusahaan update(Perusahaan t) {
-		return pemrakarsaRepositoryJPA.update(t);
+		return perusahaanRepository.update(t);
 	}
 
 	@Override
 	public List<Perusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return pemrakarsaRepositoryJPA.getAllByPage(page, pageSize);
+		return perusahaanRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
 	public List<Perusahaan> getByNama(String nama) {
-		return pemrakarsaRepositoryJPA.getByNama(nama);
+		return perusahaanRepository.getByNama(nama);
 	}
 
 	@Override
 	public List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return pemrakarsaRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
+		return perusahaanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
 	public List<Perusahaan> getByCreator(String idCreator) {
-		return pemrakarsaRepositoryJPA.getByCreator(idCreator);
+		return perusahaanRepository.getByCreator(idCreator);
 	}
 
 	@Override
 	public List<Perusahaan> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize) {
-		return pemrakarsaRepositoryJPA.getByCreatorAndPage(idCreator, page, pageSize);
+		return perusahaanRepository.getByCreatorAndPage(idCreator, page, pageSize);
 	}
 
 	@Override
 	public List<Perusahaan> getByCreatorAndNama(String idCreator, String nama) {
-		return pemrakarsaRepositoryJPA.getByCreatorAndNama(idCreator, nama);
+		return perusahaanRepository.getByCreatorAndNama(idCreator, nama);
 	}
 
 	@Override
 	public List<Perusahaan> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize) {
-		return pemrakarsaRepositoryJPA.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize);
+		return perusahaanRepository.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize);
 	}
 
 }
