@@ -16,6 +16,7 @@ import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
+import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
@@ -24,6 +25,8 @@ import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.abstraction.service.security.OpenIdConnectionService;
 import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
+import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
+import org.Sikoling.ejb.abstraction.service.skalausaha.SkalaUsahaService;
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
 import org.Sikoling.ejb.abstraction.service.user.UserService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
@@ -149,6 +152,12 @@ public class RestfulProvider {
 	public IModelPerizinanService getIModelPerizinanService(
 			@Infrastructure IModelPerizinanRepository modelPerizinanRepository) {
 		return new ModelPerizinanService(modelPerizinanRepository);
+	}
+	
+	@Produces
+	public ISkalaUsahaService getISkalaUsahaService(
+			@Infrastructure ISkalaUsahaRepository skalaUsahaRepository) {
+		return new SkalaUsahaService(skalaUsahaRepository);
 	}
 	
 	
