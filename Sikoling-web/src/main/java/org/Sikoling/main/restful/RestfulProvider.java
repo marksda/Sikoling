@@ -2,7 +2,6 @@ package org.Sikoling.main.restful;
 
 import java.util.Properties;
 
-import org.Sikoling.ejb.abstraction.repository.IBentukUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
@@ -11,6 +10,7 @@ import org.Sikoling.ejb.abstraction.repository.IJenisPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
+import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
@@ -32,8 +32,6 @@ import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
 import org.Sikoling.ejb.abstraction.service.jenispelakuusaha.IJenisPelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.jenispelakuusaha.JenisPelakuUsahaService;
-import org.Sikoling.ejb.abstraction.service.bentukusaha.BentukUsahaService;
-import org.Sikoling.ejb.abstraction.service.bentukusaha.IBentukUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.BidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.IBidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
@@ -43,6 +41,8 @@ import org.Sikoling.ejb.abstraction.service.kategoriproduk.IKategoriProdukServic
 import org.Sikoling.ejb.abstraction.service.kategoriproduk.KategoriProdukService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
+import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
+import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
@@ -85,12 +85,6 @@ public class RestfulProvider {
 	public IDesaService getDesaService(
 			@Infrastructure IDesaRepository desaRepository) {
 		return new DesaService(desaRepository);
-	}
-	
-	@Produces
-	public IBentukUsahaService getBentukUsahaService(
-			@Infrastructure IBentukUsahaRepository bentukUsahaRepository) {
-		return new BentukUsahaService(bentukUsahaRepository);
 	}
 	
 	@Produces
@@ -150,6 +144,13 @@ public class RestfulProvider {
 			@Infrastructure IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
 		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
 	}
+	
+	@Produces
+	public IModelPerizinanService getIModelPerizinanService(
+			@Infrastructure IModelPerizinanRepository modelPerizinanRepository) {
+		return new ModelPerizinanService(modelPerizinanRepository);
+	}
+	
 	
 	@Produces
 	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {

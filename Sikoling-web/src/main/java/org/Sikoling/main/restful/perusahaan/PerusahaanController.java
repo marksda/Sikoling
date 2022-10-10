@@ -28,24 +28,24 @@ public class PerusahaanController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PemrakarsaDTO save(PemrakarsaDTO d) {
-		return new PemrakarsaDTO(pemrakarsaService.save(d.toPemrakarsa()));
+	public PerusahaanDTO save(PerusahaanDTO d) {
+		return new PerusahaanDTO(pemrakarsaService.save(d.toPemrakarsa()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PemrakarsaDTO update(PemrakarsaDTO d) {
-		return new PemrakarsaDTO(pemrakarsaService.update(d.toPemrakarsa()));
+	public PerusahaanDTO update(PerusahaanDTO d) {
+		return new PerusahaanDTO(pemrakarsaService.update(d.toPemrakarsa()));
 	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getAll() {
+	public List<PerusahaanDTO> getAll() {
 		return pemrakarsaService.getAll()
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -53,10 +53,10 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+	public List<PerusahaanDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return pemrakarsaService.getAllByPage(page, pageSize)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -64,10 +64,10 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByNama(@QueryParam("nama") String nama) {
+	public List<PerusahaanDTO> getByNama(@QueryParam("nama") String nama) {
 		return pemrakarsaService.getByNama(nama)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -75,11 +75,11 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByNamaAndPage(@QueryParam("nama") String nama,
+	public List<PerusahaanDTO> getByNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return pemrakarsaService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -87,10 +87,10 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByCreator(@QueryParam("idCreator") String idCreator) {
+	public List<PerusahaanDTO> getByCreator(@QueryParam("idCreator") String idCreator) {
 		return pemrakarsaService.getByCreator(idCreator)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -98,11 +98,11 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByCreatorAndPage(@QueryParam("idCreator") String idCreator,
+	public List<PerusahaanDTO> getByCreatorAndPage(@QueryParam("idCreator") String idCreator,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return pemrakarsaService.getByCreatorAndPage(idCreator, page, pageSize)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -110,11 +110,11 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByCreatorAndNama(@QueryParam("idCreator") String idCreator,
+	public List<PerusahaanDTO> getByCreatorAndNama(@QueryParam("idCreator") String idCreator,
 			@QueryParam("nama") String nama) {
 		return pemrakarsaService.getByCreatorAndNama(idCreator, nama)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -122,11 +122,11 @@ public class PerusahaanController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<PemrakarsaDTO> getByCreatorAndNamaAndPage(@QueryParam("idCreator") String idCreator,
+	public List<PerusahaanDTO> getByCreatorAndNamaAndPage(@QueryParam("idCreator") String idCreator,
 			@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
 		return pemrakarsaService.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize)
 				.stream()
-				.map(t -> new PemrakarsaDTO(t))
+				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}	
 	

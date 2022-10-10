@@ -7,25 +7,23 @@ import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.main.restful.bentukusaha.BentukUsahaDTO;
 import org.Sikoling.main.restful.penanggungjawab.PenanggungJawabDTO;
 
-public class PemrakarsaDTO implements Serializable {
+public class PerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
+	private String nama;
 	private BentukUsahaDTO bentukUsaha;
-//	private AktaPemrakarsaDTO aktaPemrakarsa;
 	private AlamatPemrakarsaDTO alamat;
 	private KontakPemrakarsaDTO kontakPemrakarsa;
-//	private OSSDTO oss;
-	private String nama;
 	private String npwp;
 	private PenanggungJawabDTO penanggungJawab;		
 	private String idCreator;
 	
-	public PemrakarsaDTO() {
+	public PerusahaanDTO() {
 		
 	}
 	
-	public PemrakarsaDTO(Perusahaan p) {
+	public PerusahaanDTO(Perusahaan p) {
 		this.id = p.getId();
 		this.bentukUsaha = new BentukUsahaDTO(p.getBentukUsaha());
 //		this.aktaPemrakarsa = new AktaPemrakarsaDTO(p.getAktaPendirian());
@@ -37,7 +35,7 @@ public class PemrakarsaDTO implements Serializable {
 		this.penanggungJawab = new PenanggungJawabDTO(p.getPenanggungJawab());
 	}	
 	
-	public PemrakarsaDTO(String id, BentukUsahaDTO bentukUsaha, AktaPemrakarsaDTO aktaPemrakarsa,
+	public PerusahaanDTO(String id, BentukUsahaDTO bentukUsaha, AktaPemrakarsaDTO aktaPemrakarsa,
 			AlamatPemrakarsaDTO alamat, KontakPemrakarsaDTO kontakPemrakarsa, OSSDTO oss, String nama, String npwp,
 			PenanggungJawabDTO penanggungJawab, String idCreator) {
 		super();
@@ -158,7 +156,7 @@ public class PemrakarsaDTO implements Serializable {
             return false;
         }
         
-        final PemrakarsaDTO other = (PemrakarsaDTO) obj;
+        final PerusahaanDTO other = (PerusahaanDTO) obj;
         
         if (!this.id.equalsIgnoreCase(other.id)) {
             return false;
