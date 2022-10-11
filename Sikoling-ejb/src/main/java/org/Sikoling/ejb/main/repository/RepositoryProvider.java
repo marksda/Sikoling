@@ -10,7 +10,7 @@ import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanRepositoryJPA;
-import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaJPA;
+import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.pelakuusaha.JenisPelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
@@ -131,8 +131,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public DetailPelakuUsahaJPA getDetailPelakuUsahaJPA(EntityManager entityManager) {
-		return new DetailPelakuUsahaJPA(entityManager);
+	public DetailPelakuUsahaRepositoryJPA getDetailPelakuUsahaJPA(EntityManager entityManager) {
+		return new DetailPelakuUsahaRepositoryJPA(entityManager);
 	}
 	
 	@Produces

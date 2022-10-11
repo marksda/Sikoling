@@ -9,15 +9,14 @@ import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 
 import jakarta.persistence.EntityManager;
 
-public class DetailPelakuUsahaJPA implements IDetailPelakuUsahaRepository {
+public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaRepository {
 	
 	private final EntityManager entityManager;
 	
-	public DetailPelakuUsahaJPA(EntityManager entityManager) {
+	public DetailPelakuUsahaRepositoryJPA(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
-
 	@Override
 	public List<DetailPelakuUsaha> getAll() {
 		return entityManager.createNamedQuery("DetailPelakuUsahaData.findAll", DetailPelakuUsahaData.class)
@@ -28,8 +27,8 @@ public class DetailPelakuUsahaJPA implements IDetailPelakuUsahaRepository {
 	}
 
 	@Override
-	public DetailPelakuUsaha save(DetailPelakuUsaha t, JenisPelakuUsaha s) {
-		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, s);
+	public DetailPelakuUsaha save(DetailPelakuUsaha t) {
+		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, t.getJenisPelakuUsaha());
 		entityManager.persist(detailPelakuUsahaData);
 		entityManager.flush();
 		
@@ -37,8 +36,8 @@ public class DetailPelakuUsahaJPA implements IDetailPelakuUsahaRepository {
 	}
 
 	@Override
-	public DetailPelakuUsaha update(DetailPelakuUsaha t, JenisPelakuUsaha s) {
-		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, s);
+	public DetailPelakuUsaha update(DetailPelakuUsaha t) {
+		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, t.getJenisPelakuUsaha());
 		detailPelakuUsahaData = entityManager.merge(detailPelakuUsahaData);
 		return convertDetailPelakuUsahaDataToDetailPelakuUsaha(detailPelakuUsahaData);
 	}
@@ -79,7 +78,8 @@ public class DetailPelakuUsahaJPA implements IDetailPelakuUsahaRepository {
 	}
 
 	private DetailPelakuUsaha convertDetailPelakuUsahaDataToDetailPelakuUsaha(DetailPelakuUsahaData d) {
-		return new DetailPelakuUsaha(d.getId(), d.getNama(), d.getSingkatan());
+		JenisPelakuUsaha jenisPelakuUsaha = new JenisPelakuUsaha(d.getJenisPelakuUsahaData().getId(), d.getJenisPelakuUsahaData().getNama());
+		return new DetailPelakuUsaha(d.getId(), d.getNama(), d.getSingkatan(), jenisPelakuUsaha);
 	}
 	
 	private DetailPelakuUsahaData converterDetailPelakuUsahaToDetailPelakuUsahaData(DetailPelakuUsaha t, JenisPelakuUsaha pelakuUsaha) {

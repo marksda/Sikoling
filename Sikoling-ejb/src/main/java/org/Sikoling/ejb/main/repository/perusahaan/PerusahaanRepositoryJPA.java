@@ -218,7 +218,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				d.getJenisPelakuUsahaData().getId(), d.getJenisPelakuUsahaData().getNama());
 		
 		DetailPelakuUsaha detailPelakuUsaha = new DetailPelakuUsaha(
-				d.getDetailPelakuUsahaData().getId(), d.getDetailPelakuUsahaData().getNama(), d.getDetailPelakuUsahaData().getSingkatan());
+				d.getDetailPelakuUsahaData().getId(), d.getDetailPelakuUsahaData().getNama(), d.getDetailPelakuUsahaData().getSingkatan(), pelakuUsaha);
 		
 		Alamat alamatPerusahaan = new Alamat(
 				new Propinsi(d.getAlamatPerusahaanData().getPropinsi().getId(), d.getAlamatPerusahaanData().getPropinsi().getNama()),

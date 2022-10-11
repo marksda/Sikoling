@@ -53,97 +53,78 @@ public class PerusahaanData implements Serializable {
 	
 	public PerusahaanData() {
 	}
-
 	
 	public String getId() {
 		return id;
 	}
-
 	
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	
 	public String getNama() {
 		return nama;
 	}
-
 	
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-
 	
 	public ModelPerizinanData getModelPerizinanData() {
 		return modelPerizinanData;
 	}
-
 	
 	public void setModelPerizinanData(ModelPerizinanData modelPerizinanData) {
 		this.modelPerizinanData = modelPerizinanData;
 	}
-
 	
 	public SkalaUsahaData getSkalaUsaha() {
 		return SkalaUsaha;
 	}
-
 	
 	public void setSkalaUsaha(SkalaUsahaData skalaUsaha) {
 		SkalaUsaha = skalaUsaha;
 	}
-
 	
 	public JenisPelakuUsahaData getJenisPelakuUsahaData() {
 		return jenisPelakuUsahaData;
 	}
-
 	
 	public void setJenisPelakuUsahaData(JenisPelakuUsahaData jenisPelakuUsahaData) {
 		this.jenisPelakuUsahaData = jenisPelakuUsahaData;
 	}
-
 	
 	public DetailPelakuUsahaData getDetailPelakuUsahaData() {
 		return detailPelakuUsahaData;
 	}
-
 	
 	public void setDetailPelakuUsahaData(DetailPelakuUsahaData detailPelakuUsahaData) {
 		this.detailPelakuUsahaData = detailPelakuUsahaData;
 	}
-
 	
 	public AlamatPerusahaanData getAlamatPerusahaanData() {
 		return alamatPerusahaanData;
 	}
-
 	
 	public void setAlamatPerusahaanData(AlamatPerusahaanData alamatPerusahaanData) {
 		this.alamatPerusahaanData = alamatPerusahaanData;
 	}
-
 	
 	public KontakData getKontakPerusahaanData() {
 		return kontakPerusahaanData;
 	}
-
 	
 	public void setKontakPerusahaanData(KontakData kontakPerusahaanData) {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
-
 	
 	public String getDokumen() {
 		return dokumen;
 	}
-
 	
 	public void setDokumen(String dokumen) {
 		this.dokumen = dokumen;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;

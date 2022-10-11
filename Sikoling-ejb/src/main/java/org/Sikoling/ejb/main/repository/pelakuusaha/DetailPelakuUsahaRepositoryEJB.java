@@ -3,7 +3,6 @@ package org.Sikoling.ejb.main.repository.pelakuusaha;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -17,7 +16,7 @@ import jakarta.inject.Inject;
 public class DetailPelakuUsahaRepositoryEJB implements IDetailPelakuUsahaRepository {
 	
 	@Inject
-	private DetailPelakuUsahaJPA repositoryJPA;
+	private DetailPelakuUsahaRepositoryJPA repositoryJPA;
 
 	@Override
 	public List<DetailPelakuUsaha> getAll() {
@@ -25,13 +24,13 @@ public class DetailPelakuUsahaRepositoryEJB implements IDetailPelakuUsahaReposit
 	}
 
 	@Override
-	public DetailPelakuUsaha save(DetailPelakuUsaha t, JenisPelakuUsaha s) {
-		return repositoryJPA.save(t, s);
+	public DetailPelakuUsaha save(DetailPelakuUsaha t) {
+		return repositoryJPA.save(t);
 	}
 
 	@Override
-	public DetailPelakuUsaha update(DetailPelakuUsaha t, JenisPelakuUsaha s) {
-		return repositoryJPA.update(t, s);
+	public DetailPelakuUsaha update(DetailPelakuUsaha t) {
+		return repositoryJPA.update(t);
 	}
 
 	@Override

@@ -9,16 +9,22 @@ public class DetailPelakuUsaha implements Serializable {
 	private final String id;
 	private final String nama;
 	private final String singkatan;
+	private final JenisPelakuUsaha jenisPelakuUsaha;
 	
-	public DetailPelakuUsaha(String id, String nama, String singkatan) {
+	public DetailPelakuUsaha(String id, String nama, String singkatan, JenisPelakuUsaha jenisPelakuUsaha) {
 		super();
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;
+		this.jenisPelakuUsaha = jenisPelakuUsaha;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public JenisPelakuUsaha getJenisPelakuUsaha() {
+		return jenisPelakuUsaha;
 	}
 
 	public String getId() {

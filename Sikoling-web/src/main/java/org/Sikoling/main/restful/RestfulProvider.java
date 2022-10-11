@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
+import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisPelakuUsahaRepository;
@@ -46,6 +47,8 @@ import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.DetailPelakuUsahaService;
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.IDetailPelakuUsahaServices;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
@@ -160,6 +163,17 @@ public class RestfulProvider {
 		return new SkalaUsahaService(skalaUsahaRepository);
 	}
 	
+	@Produces
+	public IJenisPelakuUsahaService getIJenisPelakuUsahaService(
+			@Infrastructure IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
+		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
+	}
+	
+	@Produces
+	public IDetailPelakuUsahaServices getIDetailPelakuUsahaServices(
+			@Infrastructure IDetailPelakuUsahaRepository detailPelakuUsahaRepository) {
+		return new DetailPelakuUsahaService(detailPelakuUsahaRepository);
+	}
 	
 	@Produces
 	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {
