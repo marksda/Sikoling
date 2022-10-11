@@ -8,11 +8,13 @@ public class KategoriDokumenPerusahaan implements Serializable {
 	private static final long serialVersionUID = -5095938556108761375L;
 	private final String id;
 	private final String nama;
+	private final String idParent;
 	
-	public KategoriDokumenPerusahaan(String id, String nama) {
+	public KategoriDokumenPerusahaan(String id, String nama, String idParent) {
 		super();
 		this.id = id;
 		this.nama = nama;
+		this.idParent = idParent;
 	}
 
 	public static long getSerialversionuid() {
@@ -27,6 +29,10 @@ public class KategoriDokumenPerusahaan implements Serializable {
 		return nama;
 	}
 	
+	public String getIdParent() {
+		return idParent;
+	}
+
 	public int hashCode() {
 		int hash = 13;
 		hash = 71 * hash + Objects.hashCode(this.id);
