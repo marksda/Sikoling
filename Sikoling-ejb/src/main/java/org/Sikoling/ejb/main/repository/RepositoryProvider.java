@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
+import org.Sikoling.ejb.main.repository.dokumen.DetailDokumenPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
@@ -144,6 +145,11 @@ public class RepositoryProvider {
 	@Produces
 	public KategoriDokumenPerusahaanRepositoryJPA getDokumenPerusahaanRepositoryJPA(EntityManager entityManager) {
 		return new KategoriDokumenPerusahaanRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public DetailDokumenPerusahaanRepositoryJPA getDetailDokumenPerusahaanRepositoryJPA(EntityManager entityManager) {
+		return new DetailDokumenPerusahaanRepositoryJPA(entityManager);
 	}
 
 }

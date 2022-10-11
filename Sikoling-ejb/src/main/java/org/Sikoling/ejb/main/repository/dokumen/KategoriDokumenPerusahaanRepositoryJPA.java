@@ -17,11 +17,11 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 
 	@Override
 	public List<KategoriDokumenPerusahaan> getAll() {
-		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenPerusahaanData.class)
-				.getResultList()
-				.stream()
-				.map(t -> convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(t))
-				.collect(Collectors.toList());
+			return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenPerusahaanData.class)
+					.getResultList()
+					.stream()
+					.map(t -> convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(t))
+					.collect(Collectors.toList());
 	}
 
 	@Override
