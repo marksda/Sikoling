@@ -4,52 +4,38 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
-import org.Sikoling.main.restful.bentukusaha.BentukUsahaDTO;
+import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
+import org.Sikoling.main.restful.pelakuusaha.DetailPelakuUsahaDTO;
+import org.Sikoling.main.restful.pelakuusaha.JenisPelakuUsahaDTO;
 import org.Sikoling.main.restful.penanggungjawab.PenanggungJawabDTO;
+import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
 
 public class PerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
 	private String nama;
-	private BentukUsahaDTO bentukUsaha;
-	private AlamatPemrakarsaDTO alamat;
-	private KontakPemrakarsaDTO kontakPemrakarsa;
-	private String npwp;
-	private PenanggungJawabDTO penanggungJawab;		
-	private String idCreator;
+	private ModelPerizinanDTO modePerizinan;
+	private SkalaUsahaDTO skalaUsaha;
+	private JenisPelakuUsahaDTO jenisPelakuUsaha;
+	private DetailPelakuUsahaDTO detailPelakuUsaha;
+	private AlamatPerusahaanDTO alamat;
+	private KontakPerusahaanDTO kontakPerusahaan;
+	private PenanggungJawabDTO penanggungJawab;	
 	
-	public PerusahaanDTO() {
-		
+	public PerusahaanDTO() {		
 	}
 	
 	public PerusahaanDTO(Perusahaan p) {
 		this.id = p.getId();
-		this.bentukUsaha = new BentukUsahaDTO(p.getBentukUsaha());
-//		this.aktaPemrakarsa = new AktaPemrakarsaDTO(p.getAktaPendirian());
-		this.alamat = new AlamatPemrakarsaDTO(p.getAlamat());
-		this.kontakPemrakarsa = new KontakPemrakarsaDTO(p.getKontak());
-//		this.oss = new OSSDTO(p.getOss());
 		this.nama = p.getNama();
-		this.npwp = p.getNpwp();
-		this.penanggungJawab = new PenanggungJawabDTO(p.getPenanggungJawab());
+		this.modePerizinan = new ModelPerizinanDTO(p.getModelPerizinan());
+		this.skalaUsaha = new SkalaUsahaDTO(p.getSkalaUsaha());
+		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(p.getJenisPelakuUsaha());
+		this.detailPelakuUsaha = new DetailPelakuUsahaDTO(p.getDetailPelakuUsaha());
+		this.alamat = new AlamatPerusahaanDTO(p.getAlamat());
+		this.kontakPerusahaan = new KontakPerusahaanDTO(p.getKontak());
 	}	
-	
-	public PerusahaanDTO(String id, BentukUsahaDTO bentukUsaha, AktaPemrakarsaDTO aktaPemrakarsa,
-			AlamatPemrakarsaDTO alamat, KontakPemrakarsaDTO kontakPemrakarsa, OSSDTO oss, String nama, String npwp,
-			PenanggungJawabDTO penanggungJawab, String idCreator) {
-		super();
-		this.id = id;
-		this.bentukUsaha = bentukUsaha;
-//		this.aktaPemrakarsa = aktaPemrakarsa;
-		this.alamat = alamat;
-		this.kontakPemrakarsa = kontakPemrakarsa;
-//		this.oss = oss;
-		this.nama = nama;
-		this.npwp = npwp;
-		this.penanggungJawab = penanggungJawab;
-		this.idCreator = idCreator;
-	}
 
 	public String getId() {
 		return id;
@@ -57,14 +43,6 @@ public class PerusahaanDTO implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public BentukUsahaDTO getBentukUsaha() {
-		return bentukUsaha;
-	}
-
-	public void setBentukUsaha(BentukUsahaDTO bentukUsaha) {
-		this.bentukUsaha = bentukUsaha;
 	}
 
 	public String getNama() {
@@ -75,20 +53,52 @@ public class PerusahaanDTO implements Serializable {
 		this.nama = nama;
 	}
 
-	public AlamatPemrakarsaDTO getAlamat() {
+	public ModelPerizinanDTO getModePerizinan() {
+		return modePerizinan;
+	}
+
+	public void setModePerizinan(ModelPerizinanDTO modePerizinan) {
+		this.modePerizinan = modePerizinan;
+	}
+
+	public SkalaUsahaDTO getSkalaUsaha() {
+		return skalaUsaha;
+	}
+
+	public void setSkalaUsaha(SkalaUsahaDTO skalaUsaha) {
+		this.skalaUsaha = skalaUsaha;
+	}
+
+	public JenisPelakuUsahaDTO getJenisPelakuUsaha() {
+		return jenisPelakuUsaha;
+	}
+
+	public void setJenisPelakuUsaha(JenisPelakuUsahaDTO jenisPelakuUsaha) {
+		this.jenisPelakuUsaha = jenisPelakuUsaha;
+	}
+
+	public DetailPelakuUsahaDTO getDetailPelakuUsaha() {
+		return detailPelakuUsaha;
+	}
+
+	public void setDetailPelakuUsaha(DetailPelakuUsahaDTO detailPelakuUsaha) {
+		this.detailPelakuUsaha = detailPelakuUsaha;
+	}
+
+	public AlamatPerusahaanDTO getAlamat() {
 		return alamat;
 	}
 
-	public void setAlamat(AlamatPemrakarsaDTO alamat) {
+	public void setAlamat(AlamatPerusahaanDTO alamat) {
 		this.alamat = alamat;
 	}
 
-	public String getNpwp() {
-		return npwp;
+	public KontakPerusahaanDTO getKontakPerusahaan() {
+		return kontakPerusahaan;
 	}
 
-	public void setNpwp(String npwp) {
-		this.npwp = npwp;
+	public void setKontakPerusahaan(KontakPerusahaanDTO kontakPerusahaan) {
+		this.kontakPerusahaan = kontakPerusahaan;
 	}
 
 	public PenanggungJawabDTO getPenanggungJawab() {
@@ -99,45 +109,14 @@ public class PerusahaanDTO implements Serializable {
 		this.penanggungJawab = penanggungJawab;
 	}
 
-	public String getIdCreator() {
-		return idCreator;
-	}
-
-	public void setIdCreator(String idCreator) {
-		this.idCreator = idCreator;
-	}
-	
-//	public AktaPemrakarsaDTO getAktaPemrakarsa() {
-//		return aktaPemrakarsa;
-//	}
-
-//	public void setAktaPemrakarsa(AktaPemrakarsaDTO aktaPemrakarsa) {
-//		this.aktaPemrakarsa = aktaPemrakarsa;
-//	}
-
-	public KontakPemrakarsaDTO getKontakPemrakarsa() {
-		return kontakPemrakarsa;
-	}
-
-	public void setKontakPemrakarsa(KontakPemrakarsaDTO kontakPemrakarsa) {
-		this.kontakPemrakarsa = kontakPemrakarsa;
-	}
-
-//	public OSSDTO getOss() {
-//		return oss;
-//	}
-//
-//	public void setOss(OSSDTO oss) {
-//		this.oss = oss;
-//	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}	
 	
 	public int hashCode() {
-		int hash = 23;
-        hash = 11 * hash + Objects.hashCode(this.id);
+		int hash = 29;
+        hash = 171 * hash + Objects.hashCode(this.id);
+        hash = 171 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -167,15 +146,18 @@ public class PerusahaanDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PemrakarsaDTO{" + "id=" + id + ", nama=" + bentukUsaha.getSingkatan() +". " + nama + ", alamat=" 
-				+ alamat.getKeterangan() + '}';	  
+		return "PerusahaanDTO{id="
+				.concat(id)
+				.concat(", nama=")
+				.concat(nama)
+				.concat("}");	  
 	}
 
-	public Perusahaan toPemrakarsa() {
-//		return new Perusahaan(id, bentukUsaha.toBentukUsaha(), aktaPemrakarsa.toAktaPemrakarsa(), alamat.toAlamat(),
-//				kontakPemrakarsa.toKontakPemrakarsa(), oss.toOSS(), nama, npwp, penanggungJawab.toPenanggungJawab());
-		return new Perusahaan(id, bentukUsaha.toBentukUsaha(), alamat.toAlamat(),
-				kontakPemrakarsa.toKontakPemrakarsa(), nama, npwp, penanggungJawab.toPenanggungJawab());
-	}
+//	public Perusahaan toPemrakarsa() {
+//		return new Perusahaan(
+//				id, nama, modePerizinan.toModelPerizinan(),
+//				skalaUsaha.toSkalaUsaha(), jenisPelakuUsaha.toJenisPelakuUsaha(),
+//				alamat.toAlamat(), kontakPerusahaan.toKontakPerusahaan(),);
+//	}
 	
 }

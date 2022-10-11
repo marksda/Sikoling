@@ -9,7 +9,7 @@ import org.Sikoling.main.restful.kabupaten.KabupatenDTO;
 import org.Sikoling.main.restful.kecamatan.KecamatanDTO;
 import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
-public class AlamatPemrakarsaDTO implements Serializable {
+public class AlamatPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = -5929733794216900470L;
 	private PropinsiDTO propinsi;
@@ -18,11 +18,11 @@ public class AlamatPemrakarsaDTO implements Serializable {
 	private DesaDTO desa;
 	private String keterangan;
 	
-	public AlamatPemrakarsaDTO() {
+	public AlamatPerusahaanDTO() {
 		
 	}
 	
-	public AlamatPemrakarsaDTO(Alamat alamat) {
+	public AlamatPerusahaanDTO(Alamat alamat) {
 		this.propinsi = new PropinsiDTO(alamat.getPropinsi());
 		this.kabupaten = new KabupatenDTO(alamat.getKabupaten());
 		this.kecamatan = new KecamatanDTO(alamat.getKecamatan());
@@ -30,7 +30,7 @@ public class AlamatPemrakarsaDTO implements Serializable {
 		this.keterangan = alamat.getKeterangan();
 	}
 	
-	public AlamatPemrakarsaDTO(PropinsiDTO propinsi, KabupatenDTO kabupaten, KecamatanDTO kecamatan, DesaDTO desa,
+	public AlamatPerusahaanDTO(PropinsiDTO propinsi, KabupatenDTO kabupaten, KecamatanDTO kecamatan, DesaDTO desa,
 			String keterangan) {
 		super();
 		this.propinsi = propinsi;
@@ -108,7 +108,7 @@ public class AlamatPemrakarsaDTO implements Serializable {
             return false;
         }
         
-        final AlamatPemrakarsaDTO other = (AlamatPemrakarsaDTO) obj;
+        final AlamatPerusahaanDTO other = (AlamatPerusahaanDTO) obj;
         
         if (this.propinsi.getId() != other.getPropinsi().getId()) {
             return false;

@@ -1,25 +1,18 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
 
-public class Dokumen implements Serializable {
+public class KategoriDokumenPerusahaan implements Serializable {
 
-	private static final long serialVersionUID = -1869365745189974891L;
+	private static final long serialVersionUID = -5095938556108761375L;
 	private final String id;
-	private final String jenis;
 	private final String nama;
-	private final Map<String, Object> atribute;
-	private final String uriFile;
 	
-	public Dokumen(String id, String jenis, String nama, String uriFile,  Map<String, Object> atribute) {
+	public KategoriDokumenPerusahaan(String id, String nama) {
 		super();
 		this.id = id;
-		this.jenis = jenis;
 		this.nama = nama;
-		this.uriFile = uriFile;
-		this.atribute = atribute;
 	}
 
 	public static long getSerialversionuid() {
@@ -30,27 +23,14 @@ public class Dokumen implements Serializable {
 		return id;
 	}
 
-	public String getJenis() {
-		return jenis;
-	}
-
 	public String getNama() {
 		return nama;
 	}
-				
-	public Map<String, Object> getAtribute() {
-		return atribute;
-	}
-
-	public String getUriFile() {
-		return uriFile;
-	}
-
+	
 	public int hashCode() {
-		int hash = 19;
-		hash = 41 * hash + Objects.hashCode(this.id);
-		hash = 41 * hash + Objects.hashCode(this.jenis);
-		hash = 41 * hash + Objects.hashCode(this.nama);
+		int hash = 13;
+		hash = 71 * hash + Objects.hashCode(this.id);
+		hash = 71 * hash + Objects.hashCode(this.nama);
 		return hash;
 	}
 	
@@ -68,13 +48,9 @@ public class Dokumen implements Serializable {
             return false;
         }
         
-        final Dokumen other = (Dokumen) obj;
+        final KategoriDokumenPerusahaan other = (KategoriDokumenPerusahaan) obj;
         
         if (!this.id.equals(other.getId())) {
-            return false;
-        }
-        
-        if (!this.jenis.equals(other.getJenis())) {
             return false;
         }
         
@@ -87,15 +63,13 @@ public class Dokumen implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Dokumen {"
+		return "KategoriDokumenPerusahaan{"
 				.concat("id=")
 				.concat(this.id)
-				.concat(", ")
-				.concat("jenis=")
-				.concat(this.jenis)
 				.concat(", ")
 				.concat("nama=")
 				.concat(this.nama)
 				.concat("}");
 	}	
+
 }

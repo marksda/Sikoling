@@ -5,23 +5,23 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 
-public class KontakPemrakarsaDTO implements Serializable {
+public class KontakPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = -7197745612958948259L;
 	private String telepone;
 	private String fax;
 	private String email;
 	
-	public KontakPemrakarsaDTO() {		
+	public KontakPerusahaanDTO() {		
 	}
 	
-	public KontakPemrakarsaDTO(Kontak kontakPemrakarsa) {		
+	public KontakPerusahaanDTO(Kontak kontakPemrakarsa) {		
 		this.telepone = kontakPemrakarsa.getTelepone();
 		this.fax = kontakPemrakarsa.getFax();
 		this.email = kontakPemrakarsa.getEmail();
 	}
 	
-	public KontakPemrakarsaDTO(String telepone, String fax, String email) {
+	public KontakPerusahaanDTO(String telepone, String fax, String email) {
 		super();
 		this.telepone = telepone;
 		this.fax = fax;
@@ -78,7 +78,7 @@ public class KontakPemrakarsaDTO implements Serializable {
             return false;
         }
         
-        final KontakPemrakarsaDTO other = (KontakPemrakarsaDTO) obj;
+        final KontakPerusahaanDTO other = (KontakPerusahaanDTO) obj;
         
         if (!this.telepone.equals(other.telepone)) {
             return false;
@@ -100,7 +100,7 @@ public class KontakPemrakarsaDTO implements Serializable {
 		return "KontakPemrakarsaDTO{" + "telepone=" + telepone + ", fax=" + fax  + ", email=" + email + "}";
 	}
 
-	public Kontak toKontakPemrakarsa() {
+	public Kontak toKontakPerusahaan() {
 		return new Kontak(telepone, fax, email);
 	}
 }
