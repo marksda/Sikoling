@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class DesaRepositoryEJB implements IDesaRepository {
+public class DesaRepositoryEJB implements IDesaRepository<Desa, String> {
 	
 	@Inject
 	private DesaRepositoryJPA desaRepository;

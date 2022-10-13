@@ -2,14 +2,12 @@ package org.Sikoling.ejb.abstraction.repository;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.Desa;
-
-public interface IDesaRepository extends IRepository2<Desa, String> {
-	List<Desa> getAllByPage(Integer page, Integer pageSize);
-	List<Desa> getByNama(String nama);
-	List<Desa> getByNamaAndPage(String nama, Integer page, Integer pageSize);
-	List<Desa> getByKecamatan(String idKecamatan);
-	List<Desa> getByKecamatanAndPage(String idKecamatan, Integer page, Integer pageSize);
-	List<Desa> getByKecamatanAndNama(String idKecamatan, String nama);
-	List<Desa> getByKecamatanAndNamaAndPage(String idKecamatan, String nama, Integer page, Integer pageSize);
+public interface IDesaRepository<T, S> extends IRepository2<T, S> {
+	List<T> getAllByPage(Integer page, Integer pageSize);
+	List<T> getByNama(String nama);
+	List<T> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<T> getByKecamatan(String idKecamatan);
+	List<T> getByKecamatanAndPage(String idKecamatan, Integer page, Integer pageSize);
+	List<T> getByKecamatanAndNama(String idKecamatan, String nama);
+	List<T> getByKecamatanAndNamaAndPage(String idKecamatan, String nama, Integer page, Integer pageSize);
 }

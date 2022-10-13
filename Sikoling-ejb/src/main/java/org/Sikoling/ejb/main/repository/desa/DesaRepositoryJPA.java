@@ -9,7 +9,7 @@ import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 
 import jakarta.persistence.EntityManager;
 
-public class DesaRepositoryJPA implements IDesaRepository {
+public class DesaRepositoryJPA implements IDesaRepository<Desa, String> {
 	
 	private final EntityManager entityManager;
 
