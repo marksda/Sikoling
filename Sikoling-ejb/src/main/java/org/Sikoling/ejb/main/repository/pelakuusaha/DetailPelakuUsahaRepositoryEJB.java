@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class DetailPelakuUsahaRepositoryEJB implements IDetailPelakuUsahaRepository<DetailPelakuUsaha> {
+public class DetailPelakuUsahaRepositoryEJB implements IDetailPelakuUsahaRepository {
 	
 	@Inject
 	private DetailPelakuUsahaRepositoryJPA repositoryJPA;

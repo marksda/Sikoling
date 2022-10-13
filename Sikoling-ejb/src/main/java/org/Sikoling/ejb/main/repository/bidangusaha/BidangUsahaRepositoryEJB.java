@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class BidangUsahaRepositoryEJB implements IBidangUsahaRepository<BidangUsaha> {
+public class BidangUsahaRepositoryEJB implements IBidangUsahaRepository {
 	
 	@Inject
 	private BidangUsahaRepositoryJPA bidangUsahaRepository;

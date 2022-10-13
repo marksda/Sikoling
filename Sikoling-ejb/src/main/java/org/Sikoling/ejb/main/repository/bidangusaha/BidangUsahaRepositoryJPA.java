@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import jakarta.persistence.EntityManager;
 
-public class BidangUsahaRepositoryJPA implements IBidangUsahaRepository<BidangUsaha> {
+public class BidangUsahaRepositoryJPA implements IBidangUsahaRepository {
 	
 	private final EntityManager entityManager;	
 
