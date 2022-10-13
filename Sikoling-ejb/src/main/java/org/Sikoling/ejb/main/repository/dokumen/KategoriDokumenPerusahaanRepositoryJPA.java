@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumenPerusahaan;
-import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import jakarta.persistence.EntityManager;
 
-public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenPerusahaanRepository {
+public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenRepository {
 
 	private final EntityManager entityManager;	
 	
@@ -17,7 +17,7 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 
 	@Override
 	public List<KategoriDokumenPerusahaan> getAll() {
-			return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenPerusahaanData.class)
+			return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenData.class)
 					.getResultList()
 					.stream()
 					.map(t -> convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(t))
@@ -26,7 +26,7 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 
 	@Override
 	public KategoriDokumenPerusahaan save(KategoriDokumenPerusahaan t, String t2) {
-		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
+		KategoriDokumenData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
 		entityManager.persist(kategoriDokumenPerusahaanData);
 		entityManager.flush();
 		
@@ -35,7 +35,7 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 
 	@Override
 	public KategoriDokumenPerusahaan update(KategoriDokumenPerusahaan t, String t2) {
-		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
+		KategoriDokumenData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
 		kategoriDokumenPerusahaanData = entityManager.merge(kategoriDokumenPerusahaanData);
 		
 		return convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(kategoriDokumenPerusahaanData);
@@ -43,7 +43,7 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 
 	@Override
 	public List<KategoriDokumenPerusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenPerusahaanData.class)
+		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
@@ -55,7 +55,7 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 	@Override
 	public List<KategoriDokumenPerusahaan> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findByName", KategoriDokumenPerusahaanData.class)
+		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findByName", KategoriDokumenData.class)
 				.setParameter("nama", nama)				
 				.getResultList()
 				.stream()
@@ -66,7 +66,7 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 	@Override
 	public List<KategoriDokumenPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findByName", KategoriDokumenPerusahaanData.class)
+		return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findByName", KategoriDokumenData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)			
@@ -76,12 +76,12 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 				.collect(Collectors.toList());
 	}
 
-	private KategoriDokumenPerusahaan convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(KategoriDokumenPerusahaanData d) {
+	private KategoriDokumenPerusahaan convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(KategoriDokumenData d) {
 		return new KategoriDokumenPerusahaan(d.getId(), d.getNama());
 	}
 	
-	private KategoriDokumenPerusahaanData convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(KategoriDokumenPerusahaan t, String t2) {
-		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = new KategoriDokumenPerusahaanData();
+	private KategoriDokumenData convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(KategoriDokumenPerusahaan t, String t2) {
+		KategoriDokumenData kategoriDokumenPerusahaanData = new KategoriDokumenData();
 		kategoriDokumenPerusahaanData.setId(t.getId());
 		kategoriDokumenPerusahaanData.setNama(t.getNama());
 		kategoriDokumenPerusahaanData.setParent(t2);

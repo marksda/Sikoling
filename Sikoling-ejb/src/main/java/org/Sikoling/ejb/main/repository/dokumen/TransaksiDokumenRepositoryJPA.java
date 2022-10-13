@@ -5,25 +5,24 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IDokumenPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.ITransaksiDokumenRepository;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.persistence.EntityManager;
 
-public class DokumenPerusahaanRepositoryJPA implements IDokumenPerusahaanRepository {
+public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepository {
 
 	private final EntityManager entityManager;	
 	
-	public DokumenPerusahaanRepositoryJPA(EntityManager entityManager) {
+	public TransaksiDokumenRepositoryJPA(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
-
 	@Override
 	public List<Dokumen> getAll() {
-		return entityManager.createNamedQuery("DokumenPerusahaanData.findAll", DokumenPerusahaanData.class)
+		return entityManager.createNamedQuery("DokumenPerusahaanData.findAll", TransaksiDokumenData.class)
 				.getResultList()
 				.stream()
 				.map(t -> convertDokumenPerusahaanDataToDokumenPerusahaan(t))
@@ -32,7 +31,7 @@ public class DokumenPerusahaanRepositoryJPA implements IDokumenPerusahaanReposit
 
 	@Override
 	public Dokumen save(Dokumen t) {
-		DokumenPerusahaanData dokumenPerusahaanData = convertDokumenPerusahaanToDokumenPerusahaanData(t);
+		TransaksiDokumenData dokumenPerusahaanData = convertDokumenPerusahaanToDokumenPerusahaanData(t);
 		entityManager.persist(dokumenPerusahaanData);
 		entityManager.flush();
 		
@@ -63,7 +62,7 @@ public class DokumenPerusahaanRepositoryJPA implements IDokumenPerusahaanReposit
 		return null;
 	}
 
-	private Dokumen convertDokumenPerusahaanDataToDokumenPerusahaan(DokumenPerusahaanData d) {
+	private Dokumen convertDokumenPerusahaanDataToDokumenPerusahaan(TransaksiDokumenData d) {
 //		Perusahaan perusahaan = new Perusahaan();
 //		
 //		DetailDokumenPerusahaanData detailDokumenPerusahaanData = new DetailDokumenPerusahaanData();
@@ -80,15 +79,15 @@ public class DokumenPerusahaanRepositoryJPA implements IDokumenPerusahaanReposit
 		return null;
 	}
 	
-	private DokumenPerusahaanData convertDokumenPerusahaanToDokumenPerusahaanData(Dokumen t) {
-		DokumenPerusahaanData dokumenPerusahaanData = new DokumenPerusahaanData();
+	private TransaksiDokumenData convertDokumenPerusahaanToDokumenPerusahaanData(Dokumen t) {
+		TransaksiDokumenData dokumenPerusahaanData = new TransaksiDokumenData();
 		dokumenPerusahaanData.setId("test");
 		
 		PerusahaanData perusahaanData = new PerusahaanData();
 		perusahaanData.setId(t.getPerusahaan().getId());
 		dokumenPerusahaanData.setPerusahaan(perusahaanData);
 		
-		DetailDokumenPerusahaanData detailDokumenPerusahaanData = new DetailDokumenPerusahaanData();
+		DokumenData detailDokumenPerusahaanData = new DokumenData();
 		detailDokumenPerusahaanData.setId(t.getNamaDokumen().getId());		
 		dokumenPerusahaanData.setDetailDokumen(detailDokumenPerusahaanData);
 		

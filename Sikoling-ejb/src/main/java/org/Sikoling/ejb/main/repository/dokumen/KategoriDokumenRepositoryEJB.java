@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumenPerusahaan;
-import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.Local;
@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class KategoriDokumenPerusahaanRepositoryEJB implements IKategoriDokumenPerusahaanRepository {
+public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository {
 
 	@Inject
 	private KategoriDokumenPerusahaanRepositoryJPA kategoriDokumenPerusahaanRepository;

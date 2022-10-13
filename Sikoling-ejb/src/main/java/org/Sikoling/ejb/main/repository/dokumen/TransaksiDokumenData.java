@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="DokumenPerusahaanData.findAll", query="SELECT d FROM DokumenData d")
 })
-public class DokumenPerusahaanData implements Serializable {
+public class TransaksiDokumenData implements Serializable {
 
 	private static final long serialVersionUID = 781878194764826140L;
 	
@@ -33,7 +33,7 @@ public class DokumenPerusahaanData implements Serializable {
 	
 	@JoinColumn(name = "detail_dokumen", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private DetailDokumenPerusahaanData detailDokumen;
+	private DokumenData detailDokumen;
 	
 	@Column(name="tanggal_upload")
 	private Date tanggalUpload;
@@ -67,11 +67,11 @@ public class DokumenPerusahaanData implements Serializable {
 		this.perusahaan = perusahaan;
 	}
 
-	public DetailDokumenPerusahaanData getDetailDokumen() {
+	public DokumenData getDetailDokumen() {
 		return detailDokumen;
 	}
 
-	public void setDetailDokumen(DetailDokumenPerusahaanData detailDokumen) {
+	public void setDetailDokumen(DokumenData detailDokumen) {
 		this.detailDokumen = detailDokumen;
 	}
 

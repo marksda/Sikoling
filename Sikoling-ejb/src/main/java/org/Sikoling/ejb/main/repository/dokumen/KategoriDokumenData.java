@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="KategoriDokumenPerusahaanData.findAll", query = "SELECT d FROM KategoriDokumenPerusahaanData d"),
 	@NamedQuery(name="KategoriDokumenPerusahaanData.findByName", query = "SELECT d FROM KategoriDokumenPerusahaanData d WHERE d.nama LIKE :nama")
 })
-public class KategoriDokumenPerusahaanData implements Serializable {
+public class KategoriDokumenData implements Serializable {
 
 	private static final long serialVersionUID = -3798387570437701800L;
 	
@@ -25,7 +25,7 @@ public class KategoriDokumenPerusahaanData implements Serializable {
 	
 	private String parent;
 
-	public KategoriDokumenPerusahaanData() {
+	public KategoriDokumenData() {
 	}
 
 	public String getId() {

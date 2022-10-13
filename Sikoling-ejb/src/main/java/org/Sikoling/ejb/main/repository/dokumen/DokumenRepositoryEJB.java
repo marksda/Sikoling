@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IDetailDokumenPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.Local;
@@ -13,10 +13,10 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class DetailDokumenPerusahaanRepositoryEJB implements IDetailDokumenPerusahaanRepository {
+public class DokumenRepositoryEJB implements IDokumenRepository {
 
 	@Inject
-	private DetailDokumenPerusahaanRepositoryJPA detailDokumenPerusahaanRepository;
+	private DokumenRepositoryJPA detailDokumenPerusahaanRepository;
 	
 	@Override
 	public List<Dokumen> getAll() {

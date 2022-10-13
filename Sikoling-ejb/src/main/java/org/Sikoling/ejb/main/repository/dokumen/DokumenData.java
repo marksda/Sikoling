@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="DetailDokumenPerusahaanData.findByNama", query = "SELECT d FROM DetailDokumenPerusahaanData d WHERE d.nama LIKE :nama"),
 	@NamedQuery(name="DetailDokumenPerusahaanData.findByKategori", query = "SELECT d FROM DetailDokumenPerusahaanData d WHERE d.kategori = kategori")
 })
-public class DetailDokumenPerusahaanData implements Serializable {
+public class DokumenData implements Serializable {
 
 	private static final long serialVersionUID = -3312507197298632070L;
 	
@@ -28,9 +28,9 @@ public class DetailDokumenPerusahaanData implements Serializable {
 	
 	@JoinColumn(name = "kategori", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private KategoriDokumenPerusahaanData kategori;
+	private KategoriDokumenData kategori;
 
-	public DetailDokumenPerusahaanData() {
+	public DokumenData() {
 	}
 
 	public String getId() {
@@ -49,11 +49,11 @@ public class DetailDokumenPerusahaanData implements Serializable {
 		this.nama = nama;
 	}
 
-	public KategoriDokumenPerusahaanData getKategori() {
+	public KategoriDokumenData getKategori() {
 		return kategori;
 	}
 
-	public void setKategori(KategoriDokumenPerusahaanData kategori) {
+	public void setKategori(KategoriDokumenData kategori) {
 		this.kategori = kategori;
 	}
 
