@@ -1,20 +1,36 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Dokumen implements Serializable {
 
 	private static final long serialVersionUID = -1869365745189974891L;
 	private final String id;
-	private final String nama;
 	private final KategoriDokumenPerusahaan kategoriDokumenPerusahaan;
+	private final String nama;
+	private final List<ItemAttributeDokumen<Object>> attribute;
 	
 	public Dokumen(String id, String nama, KategoriDokumenPerusahaan kategoriDokumenPerusahaan) {
 		this.id = id;
 		this.nama = nama;
 		this.kategoriDokumenPerusahaan = kategoriDokumenPerusahaan;
+		this.attribute = null;
 	}	
+
+	public Dokumen(String id, KategoriDokumenPerusahaan kategoriDokumenPerusahaan, String nama,
+			List<ItemAttributeDokumen<Object>> attribute) {
+		super();
+		this.id = id;
+		this.kategoriDokumenPerusahaan = kategoriDokumenPerusahaan;
+		this.nama = nama;
+		this.attribute = attribute;
+	}
+
+	public List<ItemAttributeDokumen<Object>> getAttribute() {
+		return attribute;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
