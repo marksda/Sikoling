@@ -14,9 +14,10 @@ public class ItemTransaksiDokumen implements Serializable {
 	private final Date tanggalTransaksi;
 	private final boolean isBerlaku;
 	private final Autorisasi autorisasi;
+	private final Perusahaan perusahaan;
 	
 	public ItemTransaksiDokumen(String idTransaksi, Dokumen dokumen, List<ItemAttributeDokumen<Object>> attribute,
-			Date tanggalTransaksi, boolean isBerlaku, Autorisasi autorisasi) {
+			Date tanggalTransaksi, boolean isBerlaku, Autorisasi autorisasi, Perusahaan perusahaan) {
 		super();
 		this.idTransaksi = idTransaksi;
 		this.dokumen = dokumen;
@@ -24,6 +25,11 @@ public class ItemTransaksiDokumen implements Serializable {
 		this.tanggalTransaksi = tanggalTransaksi;
 		this.isBerlaku = isBerlaku;
 		this.autorisasi = autorisasi;
+		this.perusahaan = perusahaan;
+	}
+
+	public Perusahaan getPerusahaan() {
+		return perusahaan;
 	}
 
 	public static long getSerialversionuid() {
