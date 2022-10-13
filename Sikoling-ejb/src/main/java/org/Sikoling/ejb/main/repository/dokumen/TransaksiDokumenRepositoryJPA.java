@@ -1,18 +1,11 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.ItemTransaksiDokumen;
 import org.Sikoling.ejb.abstraction.repository.ITransaksiDokumenRepository;
-import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
-
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
 import jakarta.persistence.EntityManager;
 
-public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepository {
+public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepository<ItemTransaksiDokumen> {
 
 	private final EntityManager entityManager;	
 	
@@ -21,16 +14,17 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 	}
 	
 	@Override
-	public List<Dokumen> getAll() {
-		return entityManager.createNamedQuery("DokumenPerusahaanData.findAll", TransaksiDokumenData.class)
-				.getResultList()
-				.stream()
-				.map(t -> convertDokumenPerusahaanDataToDokumenPerusahaan(t))
-				.collect(Collectors.toList());
+	public List<ItemTransaksiDokumen> getAll() {
+//		return entityManager.createNamedQuery("DokumenPerusahaanData.findAll", TransaksiDokumenData.class)
+//				.getResultList()
+//				.stream()
+//				.map(t -> convertDokumenPerusahaanDataToDokumenPerusahaan(t))
+//				.collect(Collectors.toList());
+		return null;
 	}
 
 	@Override
-	public Dokumen save(Dokumen t) {
+	public ItemTransaksiDokumen save(ItemTransaksiDokumen t) {
 		TransaksiDokumenData dokumenPerusahaanData = convertDokumenPerusahaanToDokumenPerusahaanData(t);
 		entityManager.persist(dokumenPerusahaanData);
 		entityManager.flush();
@@ -39,30 +33,31 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 	}
 
 	@Override
-	public Dokumen update(Dokumen t) {
+	public ItemTransaksiDokumen update(ItemTransaksiDokumen t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
+	public List<ItemTransaksiDokumen> getAllByPage(Integer page, Integer pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Dokumen> getByNama(String nama) {
+	public List<ItemTransaksiDokumen> getByNama(String nama) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<ItemTransaksiDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private Dokumen convertDokumenPerusahaanDataToDokumenPerusahaan(TransaksiDokumenData d) {
+	private ItemTransaksiDokumen convertDokumenPerusahaanDataToDokumenPerusahaan(TransaksiDokumenData d) {
+//		Dokumen dokumen = new Dokumen(d.getId(), d.get, null, null)
 //		Perusahaan perusahaan = new Perusahaan();
 //		
 //		DetailDokumenPerusahaanData detailDokumenPerusahaanData = new DetailDokumenPerusahaanData();
@@ -79,27 +74,30 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 		return null;
 	}
 	
-	private TransaksiDokumenData convertDokumenPerusahaanToDokumenPerusahaanData(Dokumen t) {
-		TransaksiDokumenData dokumenPerusahaanData = new TransaksiDokumenData();
-		dokumenPerusahaanData.setId("test");
-		
-		PerusahaanData perusahaanData = new PerusahaanData();
-		perusahaanData.setId(t.getPerusahaan().getId());
-		dokumenPerusahaanData.setPerusahaan(perusahaanData);
-		
-		DokumenData detailDokumenPerusahaanData = new DokumenData();
-		detailDokumenPerusahaanData.setId(t.getNamaDokumen().getId());		
-		dokumenPerusahaanData.setDetailDokumen(detailDokumenPerusahaanData);
-		
-		dokumenPerusahaanData.setTanggalUpload(t.getTanggalUpload());
-		dokumenPerusahaanData.setBerlaku(t.isBerlaku());
-		
-		Jsonb jsonb = JsonbBuilder.create();		 
-		String result = jsonb.toJson(t.getAttribute());
-		dokumenPerusahaanData.setAttribute(result);
-		
-		dokumenPerusahaanData.setLokasiFile(t.getLokasiFile());
-		
-		return dokumenPerusahaanData;
+	private TransaksiDokumenData convertDokumenPerusahaanToDokumenPerusahaanData(ItemTransaksiDokumen t) {
+//		TransaksiDokumenData dokumenPerusahaanData = new TransaksiDokumenData();
+//		dokumenPerusahaanData.setId("test");
+//		
+//		PerusahaanData perusahaanData = new PerusahaanData();
+//		perusahaanData.setId(t.getPerusahaan().getId());
+//		dokumenPerusahaanData.setPerusahaan(perusahaanData);
+//		
+//		DokumenData detailDokumenPerusahaanData = new DokumenData();
+//		detailDokumenPerusahaanData.setId(t.getNamaDokumen().getId());		
+//		dokumenPerusahaanData.setDetailDokumen(detailDokumenPerusahaanData);
+//		
+//		dokumenPerusahaanData.setTanggalUpload(t.getTanggalUpload());
+//		dokumenPerusahaanData.setBerlaku(t.isBerlaku());
+//		
+//		Jsonb jsonb = JsonbBuilder.create();		 
+//		String result = jsonb.toJson(t.getAttribute());
+//		dokumenPerusahaanData.setAttribute(result);
+//		
+//		dokumenPerusahaanData.setLokasiFile(t.getLokasiFile());
+//		
+//		return dokumenPerusahaanData;
+		return null;
 	}
+
+	
 }

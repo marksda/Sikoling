@@ -2,7 +2,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.KategoriDokumenPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -16,35 +16,35 @@ import jakarta.inject.Inject;
 public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository {
 
 	@Inject
-	private KategoriDokumenPerusahaanRepositoryJPA kategoriDokumenPerusahaanRepository;
+	private KategoriDokumenRepositoryJPA kategoriDokumenPerusahaanRepository;
 	
 	@Override
-	public List<KategoriDokumenPerusahaan> getAll() {
+	public List<KategoriDokumen> getAll() {
 		return kategoriDokumenPerusahaanRepository.getAll();
 	}
 
 	@Override
-	public KategoriDokumenPerusahaan save(KategoriDokumenPerusahaan t, String t2) {
+	public KategoriDokumen save(KategoriDokumen t, String t2) {
 		return kategoriDokumenPerusahaanRepository.save(t, t2);
 	}
 
 	@Override
-	public KategoriDokumenPerusahaan update(KategoriDokumenPerusahaan t, String t2) {
+	public KategoriDokumen update(KategoriDokumen t, String t2) {
 		return kategoriDokumenPerusahaanRepository.update(t, t2);
 	}
 
 	@Override
-	public List<KategoriDokumenPerusahaan> getAllByPage(Integer page, Integer pageSize) {
+	public List<KategoriDokumen> getAllByPage(Integer page, Integer pageSize) {
 		return kategoriDokumenPerusahaanRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<KategoriDokumenPerusahaan> getByNama(String nama) {
+	public List<KategoriDokumen> getByNama(String nama) {
 		return kategoriDokumenPerusahaanRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<KategoriDokumenPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<KategoriDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriDokumenPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 

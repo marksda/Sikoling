@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.KategoriDokumenPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 
 import jakarta.persistence.EntityManager;
@@ -22,23 +22,23 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", DokumenData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
+				.map(t -> convertDokumenDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Dokumen save(Dokumen t) {
-		DokumenData detailDokumenPerusahaanData = convertDokumenToDetailDokumenPerusahaanData(t);
+		DokumenData detailDokumenPerusahaanData = convertDokumenToDokumenData(t);
 		entityManager.persist(detailDokumenPerusahaanData);
 		entityManager.flush();
-		return convertDetailDokumenPerusahaanDataToDokumen(detailDokumenPerusahaanData);
+		return convertDokumenDataToDokumen(detailDokumenPerusahaanData);
 	}
 
 	@Override
 	public Dokumen update(Dokumen t) {
-		DokumenData detailDokumenPerusahaanData = convertDokumenToDetailDokumenPerusahaanData(t);
+		DokumenData detailDokumenPerusahaanData = convertDokumenToDokumenData(t);
 		detailDokumenPerusahaanData = entityManager.merge(detailDokumenPerusahaanData);
-		return convertDetailDokumenPerusahaanDataToDokumen(detailDokumenPerusahaanData);
+		return convertDokumenDataToDokumen(detailDokumenPerusahaanData);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
+				.map(t -> convertDokumenDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 
@@ -59,7 +59,7 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
+				.map(t -> convertDokumenDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 
@@ -72,27 +72,27 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
+				.map(t -> convertDokumenDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 	
-	private Dokumen convertDetailDokumenPerusahaanDataToDokumen(DokumenData d) {
-		KategoriDokumenPerusahaan kategoriDokumenPerusahaan = 
-				new KategoriDokumenPerusahaan(d.getKategori().getId(), d.getKategori().getNama());
-		return new Dokumen(d.getId(), d.getNama(), kategoriDokumenPerusahaan);
+	private Dokumen convertDokumenDataToDokumen(DokumenData d) {
+		KategoriDokumen kategoriDokumen = 
+				new KategoriDokumen(d.getKategori().getId(), d.getKategori().getNama());
+		return new Dokumen(d.getId(), kategoriDokumen, d.getNama());
 	}
 	
-	private DokumenData convertDokumenToDetailDokumenPerusahaanData(Dokumen t) {
-		DokumenData detailDokumenPerusahaanData = new DokumenData();
-		detailDokumenPerusahaanData.setId(t.getId());
-		detailDokumenPerusahaanData.setNama(t.getNama());
+	private DokumenData convertDokumenToDokumenData(Dokumen t) {
+		DokumenData dokumenData = new DokumenData();
+		dokumenData.setId(t.getId());
+		dokumenData.setNama(t.getNama());
 		
-		KategoriDokumenData kategoriDokumenPerusahaanData = new KategoriDokumenData();
-		kategoriDokumenPerusahaanData.setId(t.getKategoriDokumenPerusahaan().getId());
-		kategoriDokumenPerusahaanData.setNama(t.getKategoriDokumenPerusahaan().getNama());
-		detailDokumenPerusahaanData.setKategori(kategoriDokumenPerusahaanData);
+		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
+		kategoriDokumenData.setId(t.getKategoriDokumenPerusahaan().getId());
+		kategoriDokumenData.setNama(t.getKategoriDokumenPerusahaan().getNama());
+		dokumenData.setKategori(kategoriDokumenData);
 		
-		return detailDokumenPerusahaanData;
+		return dokumenData;
 	}
 
 }
