@@ -17,8 +17,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_autorisasi")
 @NamedQueries({
-@NamedQuery(name="AutorisasiData.findAll", query="SELECT u FROM AutorisasiData u"),
-@NamedQuery(name="AutorisasiData.findByQueryNik", query="SELECT u FROM AutorisasiData u WHERE u.nik = :nik")
+	@NamedQuery(name="AutorisasiData.findAll", query="SELECT u FROM AutorisasiData u"),
+	@NamedQuery(name="AutorisasiData.findByQueryNik", query="SELECT u FROM AutorisasiData u WHERE u.nik = :nik")
 })
 public class AutorisasiData implements Serializable {
 
