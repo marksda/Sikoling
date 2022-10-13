@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.DokumenPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
@@ -233,8 +233,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		Jsonb jsonb = JsonbBuilder.create();
 		
 		@SuppressWarnings("serial")
-		List<DokumenPerusahaan> daftarDokumen = jsonb.fromJson(d.getDokumen(), 
-				new ArrayList<DokumenPerusahaan>(){}.getClass().getGenericSuperclass());
+		List<Dokumen> daftarDokumen = jsonb.fromJson(d.getDokumen(), 
+				new ArrayList<Dokumen>(){}.getClass().getGenericSuperclass());
 		
 
 		return new Perusahaan( 

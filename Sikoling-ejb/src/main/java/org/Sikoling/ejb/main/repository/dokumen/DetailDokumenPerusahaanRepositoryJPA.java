@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DetailDokumenPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumenPerusahaan;
 import org.Sikoling.ejb.abstraction.repository.IDetailDokumenPerusahaanRepository;
 
@@ -18,53 +18,53 @@ public class DetailDokumenPerusahaanRepositoryJPA implements IDetailDokumenPerus
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getAll() {
+	public List<Dokumen> getAll() {
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", DetailDokumenPerusahaanData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(t))
+				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public DetailDokumenPerusahaan save(DetailDokumenPerusahaan t) {
-		DetailDokumenPerusahaanData detailDokumenPerusahaanData = convertDetailDokumenPerusahaanToDetailDokumenPerusahaanData(t);
+	public Dokumen save(Dokumen t) {
+		DetailDokumenPerusahaanData detailDokumenPerusahaanData = convertDokumenToDetailDokumenPerusahaanData(t);
 		entityManager.persist(detailDokumenPerusahaanData);
 		entityManager.flush();
-		return convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(detailDokumenPerusahaanData);
+		return convertDetailDokumenPerusahaanDataToDokumen(detailDokumenPerusahaanData);
 	}
 
 	@Override
-	public DetailDokumenPerusahaan update(DetailDokumenPerusahaan t) {
-		DetailDokumenPerusahaanData detailDokumenPerusahaanData = convertDetailDokumenPerusahaanToDetailDokumenPerusahaanData(t);
+	public Dokumen update(Dokumen t) {
+		DetailDokumenPerusahaanData detailDokumenPerusahaanData = convertDokumenToDetailDokumenPerusahaanData(t);
 		detailDokumenPerusahaanData = entityManager.merge(detailDokumenPerusahaanData);
-		return convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(detailDokumenPerusahaanData);
+		return convertDetailDokumenPerusahaanDataToDokumen(detailDokumenPerusahaanData);
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getAllByPage(Integer page, Integer pageSize) {
+	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", DetailDokumenPerusahaanData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(t))
+				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getByNama(String nama) {
+	public List<Dokumen> getByNama(String nama) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findByNama", DetailDokumenPerusahaanData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(t))
+				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findByNama", DetailDokumenPerusahaanData.class)
 				.setParameter("nama", nama)
@@ -72,22 +72,17 @@ public class DetailDokumenPerusahaanRepositoryJPA implements IDetailDokumenPerus
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(t))
+				.map(t -> convertDetailDokumenPerusahaanDataToDokumen(t))
 				.collect(Collectors.toList());
 	}
 	
-	private DetailDokumenPerusahaan convertDetailDokumenPerusahaanDataToDetailDokumenPerusahaan(DetailDokumenPerusahaanData d) {
-		return new DetailDokumenPerusahaan(
-				d.getId(), 
-				d.getNama(), 
-				new KategoriDokumenPerusahaan(
-						d.getKategori().getId(), 
-						d.getKategori().getNama(), 
-						d.getKategori().getParent())
-				);
+	private Dokumen convertDetailDokumenPerusahaanDataToDokumen(DetailDokumenPerusahaanData d) {
+		KategoriDokumenPerusahaan kategoriDokumenPerusahaan = 
+				new KategoriDokumenPerusahaan(d.getKategori().getId(), d.getKategori().getNama());
+		return new Dokumen(d.getId(), d.getNama(), kategoriDokumenPerusahaan);
 	}
 	
-	private DetailDokumenPerusahaanData convertDetailDokumenPerusahaanToDetailDokumenPerusahaanData(DetailDokumenPerusahaan t) {
+	private DetailDokumenPerusahaanData convertDokumenToDetailDokumenPerusahaanData(Dokumen t) {
 		DetailDokumenPerusahaanData detailDokumenPerusahaanData = new DetailDokumenPerusahaanData();
 		detailDokumenPerusahaanData.setId(t.getId());
 		detailDokumenPerusahaanData.setNama(t.getNama());
@@ -95,7 +90,6 @@ public class DetailDokumenPerusahaanRepositoryJPA implements IDetailDokumenPerus
 		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = new KategoriDokumenPerusahaanData();
 		kategoriDokumenPerusahaanData.setId(t.getKategoriDokumenPerusahaan().getId());
 		kategoriDokumenPerusahaanData.setNama(t.getKategoriDokumenPerusahaan().getNama());
-		kategoriDokumenPerusahaanData.setParent(t.getKategoriDokumenPerusahaan().getIdParent());
 		detailDokumenPerusahaanData.setKategori(kategoriDokumenPerusahaanData);
 		
 		return detailDokumenPerusahaanData;

@@ -25,8 +25,8 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 	}
 
 	@Override
-	public KategoriDokumenPerusahaan save(KategoriDokumenPerusahaan t) {
-		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t);
+	public KategoriDokumenPerusahaan save(KategoriDokumenPerusahaan t, String t2) {
+		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
 		entityManager.persist(kategoriDokumenPerusahaanData);
 		entityManager.flush();
 		
@@ -34,8 +34,8 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 	}
 
 	@Override
-	public KategoriDokumenPerusahaan update(KategoriDokumenPerusahaan t) {
-		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t);
+	public KategoriDokumenPerusahaan update(KategoriDokumenPerusahaan t, String t2) {
+		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
 		kategoriDokumenPerusahaanData = entityManager.merge(kategoriDokumenPerusahaanData);
 		
 		return convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(kategoriDokumenPerusahaanData);
@@ -77,14 +77,14 @@ public class KategoriDokumenPerusahaanRepositoryJPA implements IKategoriDokumenP
 	}
 
 	private KategoriDokumenPerusahaan convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(KategoriDokumenPerusahaanData d) {
-		return new KategoriDokumenPerusahaan(d.getId(), d.getNama(), d.getParent());
+		return new KategoriDokumenPerusahaan(d.getId(), d.getNama());
 	}
 	
-	private KategoriDokumenPerusahaanData convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(KategoriDokumenPerusahaan t) {
+	private KategoriDokumenPerusahaanData convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(KategoriDokumenPerusahaan t, String t2) {
 		KategoriDokumenPerusahaanData kategoriDokumenPerusahaanData = new KategoriDokumenPerusahaanData();
 		kategoriDokumenPerusahaanData.setId(t.getId());
 		kategoriDokumenPerusahaanData.setNama(t.getNama());
-		kategoriDokumenPerusahaanData.setParent(t.getIdParent());
+		kategoriDokumenPerusahaanData.setParent(t2);
 		
 		return kategoriDokumenPerusahaanData;
 	}

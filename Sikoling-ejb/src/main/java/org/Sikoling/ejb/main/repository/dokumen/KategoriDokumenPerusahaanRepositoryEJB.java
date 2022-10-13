@@ -24,13 +24,13 @@ public class KategoriDokumenPerusahaanRepositoryEJB implements IKategoriDokumenP
 	}
 
 	@Override
-	public KategoriDokumenPerusahaan save(KategoriDokumenPerusahaan t) {
-		return kategoriDokumenPerusahaanRepository.save(t);
+	public KategoriDokumenPerusahaan save(KategoriDokumenPerusahaan t, String t2) {
+		return kategoriDokumenPerusahaanRepository.save(t, t2);
 	}
 
 	@Override
-	public KategoriDokumenPerusahaan update(KategoriDokumenPerusahaan t) {
-		return kategoriDokumenPerusahaanRepository.update(t);
+	public KategoriDokumenPerusahaan update(KategoriDokumenPerusahaan t, String t2) {
+		return kategoriDokumenPerusahaanRepository.update(t, t2);
 	}
 
 	@Override

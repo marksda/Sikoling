@@ -3,28 +3,12 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class KategoriDokumenPerusahaan implements Serializable {
+public class ItemAttributeDokumen implements Serializable {
 
-	private static final long serialVersionUID = -5095938556108761375L;
-	private final String id;
+	private static final long serialVersionUID = -3166732876247970646L;
 	private final String nama;
+	private final String nilai;
 	
-	public KategoriDokumenPerusahaan(String id, String nama) {
-		this.id = id;
-		this.nama = nama;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public String getNama() {
-		return nama;
-	}
 	
 	public int hashCode() {
 		int hash = 13;
@@ -47,7 +31,7 @@ public class KategoriDokumenPerusahaan implements Serializable {
             return false;
         }
         
-        final KategoriDokumenPerusahaan other = (KategoriDokumenPerusahaan) obj;
+        final ItemAttributeDokumen other = (ItemAttributeDokumen) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;
@@ -62,13 +46,13 @@ public class KategoriDokumenPerusahaan implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "KategoriDokumenPerusahaan{"
+		return "DetailDokumenPerusahaan{"
 				.concat("id=")
 				.concat(this.id)
 				.concat(", ")
 				.concat("nama=")
 				.concat(this.nama)
 				.concat("}");
-	}	
+	}
 
 }

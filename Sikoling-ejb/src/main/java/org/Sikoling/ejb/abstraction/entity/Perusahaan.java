@@ -15,11 +15,11 @@ public class Perusahaan implements Serializable {
 	private final DetailPelakuUsaha detailPelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
-	private final List<DokumenPerusahaan> daftarDokumen;
-	
+	private final List<Dokumen> daftarDokumen;
+		
 	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
 			JenisPelakuUsaha jenisPelakuUsaha, DetailPelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak,
-			List<DokumenPerusahaan> daftarDokumen) {
+			List<Dokumen> daftarDokumen) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -56,7 +56,7 @@ public class Perusahaan implements Serializable {
 		return jenisPelakuUsaha;
 	}
 
-	public List<DokumenPerusahaan> getDaftarDokumen() {
+	public List<Dokumen> getDaftarDokumen() {
 		return daftarDokumen;
 	}
 

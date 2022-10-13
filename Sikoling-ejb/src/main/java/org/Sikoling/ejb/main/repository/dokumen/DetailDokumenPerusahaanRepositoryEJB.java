@@ -2,7 +2,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DetailDokumenPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.repository.IDetailDokumenPerusahaanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -13,38 +13,38 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class DetailDokumenPerusahaanRepository implements IDetailDokumenPerusahaanRepository {
+public class DetailDokumenPerusahaanRepositoryEJB implements IDetailDokumenPerusahaanRepository {
 
 	@Inject
 	private DetailDokumenPerusahaanRepositoryJPA detailDokumenPerusahaanRepository;
 	
 	@Override
-	public List<DetailDokumenPerusahaan> getAll() {
+	public List<Dokumen> getAll() {
 		return detailDokumenPerusahaanRepository.getAll();
 	}
 
 	@Override
-	public DetailDokumenPerusahaan save(DetailDokumenPerusahaan t) {
+	public Dokumen save(Dokumen t) {
 		return detailDokumenPerusahaanRepository.save(t);
 	}
 
 	@Override
-	public DetailDokumenPerusahaan update(DetailDokumenPerusahaan t) {
+	public Dokumen update(Dokumen t) {
 		return detailDokumenPerusahaanRepository.update(t);
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getAllByPage(Integer page, Integer pageSize) {
+	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
 		return detailDokumenPerusahaanRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getByNama(String nama) {
+	public List<Dokumen> getByNama(String nama) {
 		return detailDokumenPerusahaanRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<DetailDokumenPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return detailDokumenPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 

@@ -2,10 +2,10 @@ package org.Sikoling.ejb.abstraction.repository;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DokumenPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 
-public interface IDokumenPerusahaanRepository extends IRepository<DokumenPerusahaan> {
-	List<DokumenPerusahaan> getAllByPage(Integer page, Integer pageSize);
-	List<DokumenPerusahaan> getByNama(String nama);
-	List<DokumenPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize);	
+public interface IDokumenPerusahaanRepository extends IRepository<Dokumen> {
+	List<Dokumen> getAllByPage(Integer page, Integer pageSize);
+	List<Dokumen> getByNama(String nama);
+	List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize);	
 }

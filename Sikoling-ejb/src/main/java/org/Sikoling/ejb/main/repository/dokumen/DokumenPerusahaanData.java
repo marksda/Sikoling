@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_dokumen")
 @NamedQueries({
-	@NamedQuery(name="DokumenData.findAll", query="SELECT d FROM DokumenData d")
+	@NamedQuery(name="DokumenPerusahaanData.findAll", query="SELECT d FROM DokumenData d")
 })
 public class DokumenPerusahaanData implements Serializable {
 
