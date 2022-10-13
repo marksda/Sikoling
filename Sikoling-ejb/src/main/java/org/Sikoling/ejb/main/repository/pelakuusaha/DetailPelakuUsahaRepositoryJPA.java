@@ -9,7 +9,7 @@ import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 
 import jakarta.persistence.EntityManager;
 
-public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaRepository {
+public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaRepository<DetailPelakuUsaha> {
 	
 	private final EntityManager entityManager;
 	
