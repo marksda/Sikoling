@@ -11,14 +11,14 @@ public class Perusahaan implements Serializable {
 	private final String nama;
 	private final ModelPerizinan modelPerizinan;
 	private final SkalaUsaha skalaUsaha;	
-	private final JenisPelakuUsaha jenisPelakuUsaha;
-	private final DetailPelakuUsaha detailPelakuUsaha;
+	private final KategoriPelakuUsaha jenisPelakuUsaha;
+	private final PelakuUsaha detailPelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
 	private final List<Dokumen> daftarDokumen;
 		
 	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
-			JenisPelakuUsaha jenisPelakuUsaha, DetailPelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak,
+			KategoriPelakuUsaha jenisPelakuUsaha, PelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak,
 			List<Dokumen> daftarDokumen) {
 		super();
 		this.id = id;
@@ -52,7 +52,7 @@ public class Perusahaan implements Serializable {
 		return kontak;
 	}
 	
-	public JenisPelakuUsaha getJenisPelakuUsaha() {
+	public KategoriPelakuUsaha getJenisPelakuUsaha() {
 		return jenisPelakuUsaha;
 	}
 
@@ -68,7 +68,7 @@ public class Perusahaan implements Serializable {
 		return skalaUsaha;
 	}
 	
-	public DetailPelakuUsaha getDetailPelakuUsaha() {
+	public PelakuUsaha getDetailPelakuUsaha() {
 		return detailPelakuUsaha;
 	}
 	

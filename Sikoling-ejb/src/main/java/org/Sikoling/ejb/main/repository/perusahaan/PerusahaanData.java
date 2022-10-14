@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
-import org.Sikoling.ejb.main.repository.pelakuusaha.JenisPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
@@ -36,7 +36,7 @@ public class PerusahaanData implements Serializable {
 	
 	@JoinColumn(name="jenis_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private JenisPelakuUsahaData jenisPelakuUsahaData; 
+	private KategoriPelakuUsahaData kategoriPelakuUsahaData; 
 	
 	@JoinColumn(name="detail_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
@@ -47,10 +47,7 @@ public class PerusahaanData implements Serializable {
 
 	@Embedded
 	private KontakData kontakPerusahaanData;
-	
-	@Column(columnDefinition = "json")
-	private String dokumen;
-	
+		
 	public PerusahaanData() {
 	}
 	
@@ -86,12 +83,12 @@ public class PerusahaanData implements Serializable {
 		SkalaUsaha = skalaUsaha;
 	}
 	
-	public JenisPelakuUsahaData getJenisPelakuUsahaData() {
-		return jenisPelakuUsahaData;
+	public KategoriPelakuUsahaData getKategoriPelakuUsahaData() {
+		return kategoriPelakuUsahaData;
 	}
 	
-	public void setJenisPelakuUsahaData(JenisPelakuUsahaData jenisPelakuUsahaData) {
-		this.jenisPelakuUsahaData = jenisPelakuUsahaData;
+	public void setKategoriPelakuUsahaData(KategoriPelakuUsahaData kategoriPelakuUsahaData) {
+		this.kategoriPelakuUsahaData = kategoriPelakuUsahaData;
 	}
 	
 	public DetailPelakuUsahaData getDetailPelakuUsahaData() {
@@ -116,14 +113,6 @@ public class PerusahaanData implements Serializable {
 	
 	public void setKontakPerusahaanData(KontakData kontakPerusahaanData) {
 		this.kontakPerusahaanData = kontakPerusahaanData;
-	}
-	
-	public String getDokumen() {
-		return dokumen;
-	}
-	
-	public void setDokumen(String dokumen) {
-		this.dokumen = dokumen;
 	}
 	
 	public static long getSerialversionuid() {

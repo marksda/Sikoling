@@ -2,7 +2,7 @@ package org.Sikoling.ejb.main.repository.pelakuusaha;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -19,32 +19,32 @@ public class DetailPelakuUsahaRepositoryEJB implements IDetailPelakuUsahaReposit
 	private DetailPelakuUsahaRepositoryJPA repositoryJPA;
 
 	@Override
-	public List<DetailPelakuUsaha> getAll() {
+	public List<PelakuUsaha> getAll() {
 		return repositoryJPA.getAll();
 	}
 
 	@Override
-	public DetailPelakuUsaha save(DetailPelakuUsaha t) {
+	public PelakuUsaha save(PelakuUsaha t) {
 		return repositoryJPA.save(t);
 	}
 
 	@Override
-	public DetailPelakuUsaha update(DetailPelakuUsaha t) {
+	public PelakuUsaha update(PelakuUsaha t) {
 		return repositoryJPA.update(t);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
+	public List<PelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
 		return repositoryJPA.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getByNama(String nama) {
+	public List<PelakuUsaha> getByNama(String nama) {
 		return repositoryJPA.getByNama(nama);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<PelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return repositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 

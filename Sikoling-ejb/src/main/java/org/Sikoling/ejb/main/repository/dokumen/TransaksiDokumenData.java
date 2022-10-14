@@ -14,11 +14,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="transaksi.tbl_dokumen")
 @NamedQueries({
-	@NamedQuery(name="DokumenPerusahaanData.findAll", query="SELECT d FROM DokumenData d")
+	@NamedQuery(name="TransaksiDokumenData.findAll", query="SELECT d FROM TransaksiDokumenData d")
 })
 public class TransaksiDokumenData implements Serializable {
 
@@ -33,9 +35,10 @@ public class TransaksiDokumenData implements Serializable {
 	
 	@JoinColumn(name = "detail_dokumen", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private DokumenData detailDokumen;
+	private DokumenData dokumen;
 	
 	@Column(name="tanggal_upload")
+	@Temporal(TemporalType.DATE)
 	private Date tanggalUpload;
 	
 	@Column(name="is_berlaku")
@@ -67,12 +70,12 @@ public class TransaksiDokumenData implements Serializable {
 		this.perusahaan = perusahaan;
 	}
 
-	public DokumenData getDetailDokumen() {
-		return detailDokumen;
+	public DokumenData getDokumen() {
+		return dokumen;
 	}
 
-	public void setDetailDokumen(DokumenData detailDokumen) {
-		this.detailDokumen = detailDokumen;
+	public void setDokumen(DokumenData dokumen) {
+		this.dokumen = dokumen;
 	}
 
 	public Date getTanggalUpload() {
@@ -83,11 +86,11 @@ public class TransaksiDokumenData implements Serializable {
 		this.tanggalUpload = tanggalUpload;
 	}
 
-	public boolean isBerlaku() {
+	public boolean getIsBerlaku() {
 		return isBerlaku;
 	}
 
-	public void setBerlaku(boolean isBerlaku) {
+	public void setIsBerlaku(boolean isBerlaku) {
 		this.isBerlaku = isBerlaku;
 	}
 

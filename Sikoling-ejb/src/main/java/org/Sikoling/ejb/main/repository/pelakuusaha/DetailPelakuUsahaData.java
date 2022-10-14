@@ -30,7 +30,7 @@ public class DetailPelakuUsahaData implements Serializable {
 	
 	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private JenisPelakuUsahaData jenisPelakuUsahaData;
+	private KategoriPelakuUsahaData jenisPelakuUsahaData;
 
 	public DetailPelakuUsahaData() {
 	}
@@ -59,11 +59,11 @@ public class DetailPelakuUsahaData implements Serializable {
 		this.singkatan = singkatan;
 	}
 
-	public JenisPelakuUsahaData getJenisPelakuUsahaData() {
+	public KategoriPelakuUsahaData getJenisPelakuUsahaData() {
 		return jenisPelakuUsahaData;
 	}
 
-	public void setJenisPelakuUsahaData(JenisPelakuUsahaData jenisPelakuUsahaData) {
+	public void setJenisPelakuUsahaData(KategoriPelakuUsahaData jenisPelakuUsahaData) {
 		this.jenisPelakuUsahaData = jenisPelakuUsahaData;
 	}
 

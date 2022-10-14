@@ -88,8 +88,8 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 		dokumenData.setNama(t.getNama());
 		
 		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
-		kategoriDokumenData.setId(t.getKategoriDokumenPerusahaan().getId());
-		kategoriDokumenData.setNama(t.getKategoriDokumenPerusahaan().getNama());
+		kategoriDokumenData.setId(t.getKategoriDokumen().getId());
+		kategoriDokumenData.setNama(t.getKategoriDokumen().getNama());
 		dokumenData.setKategori(kategoriDokumenData);
 		
 		return dokumenData;

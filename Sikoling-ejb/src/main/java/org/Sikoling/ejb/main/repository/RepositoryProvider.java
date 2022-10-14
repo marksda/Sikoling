@@ -3,6 +3,7 @@ package org.Sikoling.ejb.main.repository;
 import java.util.Properties;
 
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
@@ -14,7 +15,7 @@ import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukRepositoryJ
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaRepositoryJPA;
-import org.Sikoling.ejb.main.repository.pelakuusaha.JenisPelakuUsahaRepositoryJPA;
+import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanRepositoryJPA;
@@ -129,8 +130,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public JenisPelakuUsahaRepositoryJPA getJenisPelakuUsahaRepositoryJPA(EntityManager entityManager) {
-		return new JenisPelakuUsahaRepositoryJPA(entityManager);
+	public KategoriPelakuUsahaRepositoryJPA getKategoriPelakuUsahaRepositoryJPA(EntityManager entityManager) {
+		return new KategoriPelakuUsahaRepositoryJPA(entityManager);
 	}
 	
 	@Produces
@@ -156,6 +157,11 @@ public class RepositoryProvider {
 	@Produces
 	public HakAksesRepositoryJPA getHakAksesRepositoryJPA(EntityManager entityManager) {
 		return new HakAksesRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public AutorisasiRepositoryJPA getAutorisasiRepositoryJPA(EntityManager entityManager) {
+		return new AutorisasiRepositoryJPA(entityManager);
 	}
 
 }

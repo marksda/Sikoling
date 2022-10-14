@@ -3,8 +3,8 @@ package org.Sikoling.ejb.main.repository.pelakuusaha;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 
 import jakarta.persistence.EntityManager;
@@ -18,7 +18,7 @@ public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaReposit
 	}
 	
 	@Override
-	public List<DetailPelakuUsaha> getAll() {
+	public List<PelakuUsaha> getAll() {
 		return entityManager.createNamedQuery("DetailPelakuUsahaData.findAll", DetailPelakuUsahaData.class)
 				.getResultList()
 				.stream()
@@ -27,8 +27,8 @@ public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaReposit
 	}
 
 	@Override
-	public DetailPelakuUsaha save(DetailPelakuUsaha t) {
-		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, t.getJenisPelakuUsaha());
+	public PelakuUsaha save(PelakuUsaha t) {
+		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, t.getKategoriPelakuUsaha());
 		entityManager.persist(detailPelakuUsahaData);
 		entityManager.flush();
 		
@@ -36,14 +36,14 @@ public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaReposit
 	}
 
 	@Override
-	public DetailPelakuUsaha update(DetailPelakuUsaha t) {
-		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, t.getJenisPelakuUsaha());
+	public PelakuUsaha update(PelakuUsaha t) {
+		DetailPelakuUsahaData detailPelakuUsahaData = converterDetailPelakuUsahaToDetailPelakuUsahaData(t, t.getKategoriPelakuUsaha());
 		detailPelakuUsahaData = entityManager.merge(detailPelakuUsahaData);
 		return convertDetailPelakuUsahaDataToDetailPelakuUsaha(detailPelakuUsahaData);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
+	public List<PelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("DetailPelakuUsahaData.findAll", DetailPelakuUsahaData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -54,7 +54,7 @@ public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaReposit
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getByNama(String nama) {
+	public List<PelakuUsaha> getByNama(String nama) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("DetailPelakuUsahaData.findByQueryNama", DetailPelakuUsahaData.class)
 				.setParameter("nama", nama)				
@@ -65,7 +65,7 @@ public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaReposit
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<PelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama +"%";
 		return entityManager.createNamedQuery("DetailPelakuUsahaData.findByQueryNama", DetailPelakuUsahaData.class)
 				.setParameter("nama", nama)
@@ -77,18 +77,18 @@ public class DetailPelakuUsahaRepositoryJPA implements IDetailPelakuUsahaReposit
 				.collect(Collectors.toList());
 	}
 
-	private DetailPelakuUsaha convertDetailPelakuUsahaDataToDetailPelakuUsaha(DetailPelakuUsahaData d) {
-		JenisPelakuUsaha jenisPelakuUsaha = new JenisPelakuUsaha(d.getJenisPelakuUsahaData().getId(), d.getJenisPelakuUsahaData().getNama());
-		return new DetailPelakuUsaha(d.getId(), d.getNama(), d.getSingkatan(), jenisPelakuUsaha);
+	private PelakuUsaha convertDetailPelakuUsahaDataToDetailPelakuUsaha(DetailPelakuUsahaData d) {
+		KategoriPelakuUsaha jenisPelakuUsaha = new KategoriPelakuUsaha(d.getJenisPelakuUsahaData().getId(), d.getJenisPelakuUsahaData().getNama());
+		return new PelakuUsaha(d.getId(), d.getNama(), d.getSingkatan(), jenisPelakuUsaha);
 	}
 	
-	private DetailPelakuUsahaData converterDetailPelakuUsahaToDetailPelakuUsahaData(DetailPelakuUsaha t, JenisPelakuUsaha pelakuUsaha) {
+	private DetailPelakuUsahaData converterDetailPelakuUsahaToDetailPelakuUsahaData(PelakuUsaha t, KategoriPelakuUsaha pelakuUsaha) {
 		DetailPelakuUsahaData detailPelakuUsahaData = new DetailPelakuUsahaData();
 		detailPelakuUsahaData.setId(t.getId());
 		detailPelakuUsahaData.setNama(t.getNama());
 		detailPelakuUsahaData.setSingkatan(t.getSingkatan());
 		
-		JenisPelakuUsahaData jenisPelakuUsahaData = new JenisPelakuUsahaData();
+		KategoriPelakuUsahaData jenisPelakuUsahaData = new KategoriPelakuUsahaData();
 		jenisPelakuUsahaData.setId(pelakuUsaha.getId());
 		detailPelakuUsahaData.setJenisPelakuUsahaData(jenisPelakuUsahaData);
 		

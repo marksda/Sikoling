@@ -11,10 +11,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_kategori_pelaku_usaha")
 @NamedQueries({
-	@NamedQuery(name="JenisPelakuUsahaData.findAll", query="SELECT FROM JenisPelakuUsahaData p"),
-	@NamedQuery(name="JenisPelakuUsahaData.findByQueryNama", query="SELECT FROM JenisPelakuUsahaData p WHERE p.nama LIKE :nama")
+	@NamedQuery(name="KategoriPelakuUsahaData.findAll", query="SELECT k FROM KategoriPelakuUsahaData k"),
+	@NamedQuery(name="KategoriPelakuUsahaData.findByQueryNama", query="SELECT k FROM KategoriPelakuUsahaData k WHERE k.nama LIKE :nama")
 })
-public class JenisPelakuUsahaData implements Serializable {
+public class KategoriPelakuUsahaData implements Serializable {
 
 	private static final long serialVersionUID = -9028556396730975196L;
 	
@@ -23,7 +23,7 @@ public class JenisPelakuUsahaData implements Serializable {
 	
 	private String nama;
 
-	public JenisPelakuUsahaData() {
+	public KategoriPelakuUsahaData() {
 	}
 
 	public String getId() {

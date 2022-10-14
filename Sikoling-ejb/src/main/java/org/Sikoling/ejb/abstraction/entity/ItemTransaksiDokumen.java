@@ -9,12 +9,12 @@ public class ItemTransaksiDokumen implements Serializable {
 
 	private static final long serialVersionUID = 2847248198419126532L;
 	private final String idTransaksi;
+	private final Perusahaan perusahaan;
 	private final Dokumen dokumen;
 	private final List<ItemAttributeDokumen<Object>> attribute;
 	private final Date tanggalTransaksi;
 	private final boolean isBerlaku;
 	private final Autorisasi autorisasi;
-	private final Perusahaan perusahaan;
 	
 	public ItemTransaksiDokumen(String idTransaksi, Dokumen dokumen, List<ItemAttributeDokumen<Object>> attribute,
 			Date tanggalTransaksi, boolean isBerlaku, Autorisasi autorisasi, Perusahaan perusahaan) {

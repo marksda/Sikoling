@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Autorisasi implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
+	private final String id;
 	private final Person person;
 	private final String idLama;
 	private final HakAkses hakAkses;
@@ -13,9 +14,10 @@ public class Autorisasi implements Serializable {
 	private final boolean isVerified;
 	private final String userName;
 	
-	public Autorisasi(Person person, String idLama, HakAkses hakAkses, boolean statusInternal, boolean isVerified,
-			String userName) {
-		super();
+	public Autorisasi(
+			String id, Person person, String idLama, HakAkses hakAkses, 
+			boolean statusInternal, boolean isVerified,	String userName) {
+		this.id = id;
 		this.person = person;
 		this.idLama = idLama;
 		this.hakAkses = hakAkses;
@@ -26,6 +28,10 @@ public class Autorisasi implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public Person getPerson() {

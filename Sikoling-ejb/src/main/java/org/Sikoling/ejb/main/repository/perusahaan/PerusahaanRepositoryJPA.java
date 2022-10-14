@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
@@ -22,7 +22,7 @@ import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
-import org.Sikoling.ejb.main.repository.pelakuusaha.JenisPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 import jakarta.json.bind.Jsonb;
@@ -161,10 +161,10 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		skalaUsahaData.setSingkatan(p.getSkalaUsaha().getSingkatan());
 		perusahaanData.setSkalaUsaha(skalaUsahaData);
 		
-		JenisPelakuUsahaData jenisPelakuUsahaData = new JenisPelakuUsahaData();
+		KategoriPelakuUsahaData jenisPelakuUsahaData = new KategoriPelakuUsahaData();
 		jenisPelakuUsahaData.setId(p.getJenisPelakuUsaha().getId());
 		jenisPelakuUsahaData.setNama(p.getJenisPelakuUsaha().getNama());
-		perusahaanData.setJenisPelakuUsahaData(jenisPelakuUsahaData);
+		perusahaanData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
 		
 		DetailPelakuUsahaData detailPelakuUsahaData = new DetailPelakuUsahaData();
 		detailPelakuUsahaData.setNama(p.getDetailPelakuUsaha().getNama());
@@ -214,10 +214,10 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				d.getSkalaUsaha().getId(), d.getSkalaUsaha().getNama(), 
 				d.getSkalaUsaha().getSingkatan());
 		
-		JenisPelakuUsaha pelakuUsaha = new JenisPelakuUsaha(
-				d.getJenisPelakuUsahaData().getId(), d.getJenisPelakuUsahaData().getNama());
+		KategoriPelakuUsaha pelakuUsaha = new KategoriPelakuUsaha(
+				d.getKategoriPelakuUsahaData().getId(), d.getKategoriPelakuUsahaData().getNama());
 		
-		DetailPelakuUsaha detailPelakuUsaha = new DetailPelakuUsaha(
+		PelakuUsaha detailPelakuUsaha = new PelakuUsaha(
 				d.getDetailPelakuUsahaData().getId(), d.getDetailPelakuUsahaData().getNama(), d.getDetailPelakuUsahaData().getSingkatan(), pelakuUsaha);
 		
 		Alamat alamatPerusahaan = new Alamat(

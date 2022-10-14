@@ -2,11 +2,11 @@ package org.Sikoling.ejb.abstraction.repository;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 
-public interface IDetailPelakuUsahaRepository extends IRepository<DetailPelakuUsaha> {
-	List<DetailPelakuUsaha> getAllByPage(Integer page, Integer pageSize);
-	List<DetailPelakuUsaha> getByNama(String nama);
-	List<DetailPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+public interface IDetailPelakuUsahaRepository extends IRepository<PelakuUsaha> {
+	List<PelakuUsaha> getAllByPage(Integer page, Integer pageSize);
+	List<PelakuUsaha> getByNama(String nama);
+	List<PelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize);
 
 }

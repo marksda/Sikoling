@@ -2,7 +2,7 @@ package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 
 public class DetailPelakuUsahaService implements IDetailPelakuUsahaServices {
@@ -15,32 +15,32 @@ public class DetailPelakuUsahaService implements IDetailPelakuUsahaServices {
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getALL() {
+	public List<PelakuUsaha> getALL() {
 		return detailPelakuUsahaRepository.getAll();
 	}
 
 	@Override
-	public DetailPelakuUsaha save(DetailPelakuUsaha detailPelakuUsaha) {
+	public PelakuUsaha save(PelakuUsaha detailPelakuUsaha) {
 		return detailPelakuUsahaRepository.save(detailPelakuUsaha);
 	}
 
 	@Override
-	public DetailPelakuUsaha update(DetailPelakuUsaha detailPelakuUsaha) {
+	public PelakuUsaha update(PelakuUsaha detailPelakuUsaha) {
 		return detailPelakuUsahaRepository.save(detailPelakuUsaha);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
+	public List<PelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
 		return detailPelakuUsahaRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getByNama(String nama) {
+	public List<PelakuUsaha> getByNama(String nama) {
 		return detailPelakuUsahaRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<DetailPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<PelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return detailPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 

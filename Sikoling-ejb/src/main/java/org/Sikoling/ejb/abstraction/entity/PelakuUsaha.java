@@ -3,28 +3,28 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class DetailPelakuUsaha implements Serializable {
+public class PelakuUsaha implements Serializable {
 
 	private static final long serialVersionUID = 1121508636394824313L;
 	private final String id;
 	private final String nama;
 	private final String singkatan;
-	private final JenisPelakuUsaha jenisPelakuUsaha;
+	private final KategoriPelakuUsaha kategoriPelakuUsaha;
 	
-	public DetailPelakuUsaha(String id, String nama, String singkatan, JenisPelakuUsaha jenisPelakuUsaha) {
+	public PelakuUsaha(String id, String nama, String singkatan, KategoriPelakuUsaha kategoriPelakuUsaha) {
 		super();
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;
-		this.jenisPelakuUsaha = jenisPelakuUsaha;
+		this.kategoriPelakuUsaha = kategoriPelakuUsaha;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public JenisPelakuUsaha getJenisPelakuUsaha() {
-		return jenisPelakuUsaha;
+	public KategoriPelakuUsaha getKategoriPelakuUsaha() {
+		return kategoriPelakuUsaha;
 	}
 
 	public String getId() {
@@ -61,7 +61,7 @@ public class DetailPelakuUsaha implements Serializable {
             return false;
         }
         
-        final DetailPelakuUsaha other = (DetailPelakuUsaha) obj;
+        final PelakuUsaha other = (PelakuUsaha) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;

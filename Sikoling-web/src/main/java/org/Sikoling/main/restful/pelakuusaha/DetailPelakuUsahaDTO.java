@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.pelakuusaha;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.DetailPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 
 public class DetailPelakuUsahaDTO implements Serializable {
 
@@ -16,11 +16,11 @@ public class DetailPelakuUsahaDTO implements Serializable {
 	public DetailPelakuUsahaDTO() {
 	}
 	
-	public DetailPelakuUsahaDTO(DetailPelakuUsaha t) {
+	public DetailPelakuUsahaDTO(PelakuUsaha t) {
 		this.id = t.getId();
 		this.nama = t.getNama();
 		this.singkatan = t.getSingkatan();
-		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(t.getJenisPelakuUsaha());
+		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(t.getKategoriPelakuUsaha());
 	}
 
 	public String getId() {
@@ -59,8 +59,8 @@ public class DetailPelakuUsahaDTO implements Serializable {
 		this.jenisPelakuUsaha = jenisPelakuUsaha;
 	}
 
-	public DetailPelakuUsaha toDetailPelakuUsaha() {
-		return new DetailPelakuUsaha(id, nama, singkatan, jenisPelakuUsaha.toJenisPelakuUsaha());
+	public PelakuUsaha toDetailPelakuUsaha() {
+		return new PelakuUsaha(id, nama, singkatan, jenisPelakuUsaha.toJenisPelakuUsaha());
 	}
 	
 	public int hashCode() {

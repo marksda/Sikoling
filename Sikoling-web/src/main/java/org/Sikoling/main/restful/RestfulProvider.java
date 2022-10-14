@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
-import org.Sikoling.ejb.abstraction.repository.IJenisPelakuUsahaRepository;
+import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
@@ -147,7 +147,7 @@ public class RestfulProvider {
 	
 	@Produces
 	public IJenisPelakuUsahaService getJenisPelakuUsahaService(
-			@Infrastructure IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
+			@Infrastructure IKategoriPelakuUsahaRepository jenisPelakuUsahaRepository) {
 		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
 	}
 	
@@ -158,17 +158,11 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public ISkalaUsahaService getISkalaUsahaService(
+	public ISkalaUsahaService getSkalaUsahaService(
 			@Infrastructure ISkalaUsahaRepository skalaUsahaRepository) {
 		return new SkalaUsahaService(skalaUsahaRepository);
 	}
-	
-	@Produces
-	public IJenisPelakuUsahaService getIJenisPelakuUsahaService(
-			@Infrastructure IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
-		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
-	}
-	
+		
 	@Produces
 	public IDetailPelakuUsahaServices getIDetailPelakuUsahaServices(
 			@Infrastructure IDetailPelakuUsahaRepository detailPelakuUsahaRepository) {

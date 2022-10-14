@@ -2,45 +2,45 @@ package org.Sikoling.ejb.abstraction.service.jenispelakuusaha;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.JenisPelakuUsaha;
-import org.Sikoling.ejb.abstraction.repository.IJenisPelakuUsahaRepository;
+import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
+import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 
 public class JenisPelakuUsahaService implements IJenisPelakuUsahaService {
 	
-	private final IJenisPelakuUsahaRepository jenisPelakuUsahaRepository;
+	private final IKategoriPelakuUsahaRepository jenisPelakuUsahaRepository;
 
-	public JenisPelakuUsahaService(IJenisPelakuUsahaRepository jenisPelakuUsahaRepository) {
+	public JenisPelakuUsahaService(IKategoriPelakuUsahaRepository jenisPelakuUsahaRepository) {
 		super();
 		this.jenisPelakuUsahaRepository = jenisPelakuUsahaRepository;
 	}
 
 	@Override
-	public JenisPelakuUsaha save(JenisPelakuUsaha t) {
+	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) {
 		return jenisPelakuUsahaRepository.save(t);
 	}
 
 	@Override
-	public JenisPelakuUsaha update(JenisPelakuUsaha t) {
+	public KategoriPelakuUsaha update(KategoriPelakuUsaha t) {
 		return jenisPelakuUsahaRepository.update(t);
 	}
 
 	@Override
-	public List<JenisPelakuUsaha> getAll() {
+	public List<KategoriPelakuUsaha> getAll() {
 		return jenisPelakuUsahaRepository.getAll();
 	}
 
 	@Override
-	public List<JenisPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
+	public List<KategoriPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
 		return jenisPelakuUsahaRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<JenisPelakuUsaha> getByNama(String nama) {
+	public List<KategoriPelakuUsaha> getByNama(String nama) {
 		return jenisPelakuUsahaRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<JenisPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return jenisPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
