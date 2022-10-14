@@ -3,13 +3,13 @@ package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
-import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
+import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 
 public class DetailPelakuUsahaService implements IDetailPelakuUsahaServices {
 	
-	private final IDetailPelakuUsahaRepository detailPelakuUsahaRepository;
+	private final IPelakuUsahaRepository detailPelakuUsahaRepository;
 
-	public DetailPelakuUsahaService(IDetailPelakuUsahaRepository pelakuUsahaRepository) {
+	public DetailPelakuUsahaService(IPelakuUsahaRepository pelakuUsahaRepository) {
 		super();
 		this.detailPelakuUsahaRepository = pelakuUsahaRepository;
 	}

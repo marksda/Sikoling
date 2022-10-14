@@ -30,7 +30,7 @@ import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
-import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.person.KontakPersonData;
@@ -158,7 +158,7 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 		SkalaUsahaData skalaUsahaData = perusahaanData.getSkalaUsaha();
 		SkalaUsaha skalaUsaha = new SkalaUsaha(skalaUsahaData.getId(), 
 				skalaUsahaData.getNama(), skalaUsahaData.getSingkatan());
-		DetailPelakuUsahaData detailPelakuUsahaData = perusahaanData.getDetailPelakuUsahaData();
+		PelakuUsahaData detailPelakuUsahaData = perusahaanData.getPelakuUsahaData();
 		PelakuUsaha detailPelakuUsaha = new PelakuUsaha(
 				detailPelakuUsahaData.getId(), detailPelakuUsahaData.getNama(), 
 				detailPelakuUsahaData.getSingkatan(), jenisPelakuUsaha);

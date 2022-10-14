@@ -13,11 +13,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_detail_pelaku_usaha")
 @NamedQueries({
-	@NamedQuery(name="DetailPelakuUsahaData.findAll", query="SELECT p FROM DetailPelakuUsahaData p"),
-	@NamedQuery(name="DetailPelakuUsahaData.findByQueryNama", query="SELECT p FROM DetailPelakuUsahaData p WHERE p.nama LIKE :nama"),
-	@NamedQuery(name="DetailPelakuUsahaData.findByPelakuUsaha", query="SELECT p FROM DetailPelakuUsahaData p WHERE p.jenisPelakuUsahaData.id = :idPelakuUsaha")
+	@NamedQuery(name="PelakuUsahaData.findAll", query="SELECT p FROM PelakuUsahaData p"),
+	@NamedQuery(name="PelakuUsahaData.findByQueryNama", query="SELECT p FROM PelakuUsahaData p WHERE p.nama LIKE :nama"),
+	@NamedQuery(name="PelakuUsahaData.findByKategoriPelakuUsaha", query="SELECT p FROM PelakuUsahaData p WHERE p.kategoriPelakuUsahaData = :kategoriPelakuUsaha")
 })
-public class DetailPelakuUsahaData implements Serializable {
+public class PelakuUsahaData implements Serializable {
 
 	private static final long serialVersionUID = 6462001128432032704L;
 
@@ -30,9 +30,9 @@ public class DetailPelakuUsahaData implements Serializable {
 	
 	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private KategoriPelakuUsahaData jenisPelakuUsahaData;
+	private KategoriPelakuUsahaData kategoriPelakuUsahaData;
 
-	public DetailPelakuUsahaData() {
+	public PelakuUsahaData() {
 	}
 
 	public String getId() {
@@ -59,12 +59,12 @@ public class DetailPelakuUsahaData implements Serializable {
 		this.singkatan = singkatan;
 	}
 
-	public KategoriPelakuUsahaData getJenisPelakuUsahaData() {
-		return jenisPelakuUsahaData;
+	public KategoriPelakuUsahaData getKategoriPelakuUsahaData() {
+		return kategoriPelakuUsahaData;
 	}
 
-	public void setJenisPelakuUsahaData(KategoriPelakuUsahaData jenisPelakuUsahaData) {
-		this.jenisPelakuUsahaData = jenisPelakuUsahaData;
+	public void setKategoriPelakuUsahaData(KategoriPelakuUsahaData kategoriPelakuUsahaData) {
+		this.kategoriPelakuUsahaData = kategoriPelakuUsahaData;
 	}
 
 	public static long getSerialversionuid() {

@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
-import org.Sikoling.ejb.abstraction.repository.IDetailPelakuUsahaRepository;
+import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
@@ -165,7 +165,7 @@ public class RestfulProvider {
 		
 	@Produces
 	public IDetailPelakuUsahaServices getIDetailPelakuUsahaServices(
-			@Infrastructure IDetailPelakuUsahaRepository detailPelakuUsahaRepository) {
+			@Infrastructure IPelakuUsahaRepository detailPelakuUsahaRepository) {
 		return new DetailPelakuUsahaService(detailPelakuUsahaRepository);
 	}
 	

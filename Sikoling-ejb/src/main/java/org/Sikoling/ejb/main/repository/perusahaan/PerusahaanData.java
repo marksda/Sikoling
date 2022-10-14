@@ -5,7 +5,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
-import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
@@ -34,13 +34,13 @@ public class PerusahaanData implements Serializable {
 	@ManyToOne(optional = false)
 	private SkalaUsahaData SkalaUsaha;
 	
-	@JoinColumn(name="jenis_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private KategoriPelakuUsahaData kategoriPelakuUsahaData; 
 	
-	@JoinColumn(name="detail_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private DetailPelakuUsahaData detailPelakuUsahaData; 
+	private PelakuUsahaData pelakuUsahaData; 
 	
 	@Embedded
 	private AlamatPerusahaanData alamatPerusahaanData;
@@ -91,12 +91,12 @@ public class PerusahaanData implements Serializable {
 		this.kategoriPelakuUsahaData = kategoriPelakuUsahaData;
 	}
 	
-	public DetailPelakuUsahaData getDetailPelakuUsahaData() {
-		return detailPelakuUsahaData;
+	public PelakuUsahaData getPelakuUsahaData() {
+		return pelakuUsahaData;
 	}
 	
-	public void setDetailPelakuUsahaData(DetailPelakuUsahaData detailPelakuUsahaData) {
-		this.detailPelakuUsahaData = detailPelakuUsahaData;
+	public void setPelakuUsahaData(PelakuUsahaData pelakuUsahaData) {
+		this.pelakuUsahaData = pelakuUsahaData;
 	}
 	
 	public AlamatPerusahaanData getAlamatPerusahaanData() {

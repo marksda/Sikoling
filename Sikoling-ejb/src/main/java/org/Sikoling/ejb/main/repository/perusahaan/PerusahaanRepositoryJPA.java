@@ -21,7 +21,7 @@ import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
-import org.Sikoling.ejb.main.repository.pelakuusaha.DetailPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
@@ -166,11 +166,11 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		jenisPelakuUsahaData.setNama(p.getJenisPelakuUsaha().getNama());
 		perusahaanData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
 		
-		DetailPelakuUsahaData detailPelakuUsahaData = new DetailPelakuUsahaData();
+		PelakuUsahaData detailPelakuUsahaData = new PelakuUsahaData();
 		detailPelakuUsahaData.setNama(p.getDetailPelakuUsaha().getNama());
 		detailPelakuUsahaData.setSingkatan(p.getDetailPelakuUsaha().getSingkatan());
-		detailPelakuUsahaData.setJenisPelakuUsahaData(jenisPelakuUsahaData);
-		perusahaanData.setDetailPelakuUsahaData(detailPelakuUsahaData);
+		detailPelakuUsahaData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
+		perusahaanData.setPelakuUsahaData(detailPelakuUsahaData);
 				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
 		DesaData desaData = new DesaData();
@@ -218,7 +218,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				d.getKategoriPelakuUsahaData().getId(), d.getKategoriPelakuUsahaData().getNama());
 		
 		PelakuUsaha detailPelakuUsaha = new PelakuUsaha(
-				d.getDetailPelakuUsahaData().getId(), d.getDetailPelakuUsahaData().getNama(), d.getDetailPelakuUsahaData().getSingkatan(), pelakuUsaha);
+				d.getPelakuUsahaData().getId(), d.getPelakuUsahaData().getNama(), d.getPelakuUsahaData().getSingkatan(), pelakuUsaha);
 		
 		Alamat alamatPerusahaan = new Alamat(
 				new Propinsi(d.getAlamatPerusahaanData().getPropinsi().getId(), d.getAlamatPerusahaanData().getPropinsi().getNama()),
