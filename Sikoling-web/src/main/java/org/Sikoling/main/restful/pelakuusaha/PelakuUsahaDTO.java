@@ -5,22 +5,22 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 
-public class DetailPelakuUsahaDTO implements Serializable {
+public class PelakuUsahaDTO implements Serializable {
 
 	private static final long serialVersionUID = -2960356457387629854L;
 	private String id;
 	private String nama;
 	private String singkatan;
-	private JenisPelakuUsahaDTO jenisPelakuUsaha;
+	private KategoriPelakuUsahaDTO kategoriPelakuUsaha;
 	
-	public DetailPelakuUsahaDTO() {
+	public PelakuUsahaDTO() {
 	}
 	
-	public DetailPelakuUsahaDTO(PelakuUsaha t) {
+	public PelakuUsahaDTO(PelakuUsaha t) {
 		this.id = t.getId();
 		this.nama = t.getNama();
 		this.singkatan = t.getSingkatan();
-		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(t.getKategoriPelakuUsaha());
+		this.kategoriPelakuUsaha = new KategoriPelakuUsahaDTO(t.getKategoriPelakuUsaha());
 	}
 
 	public String getId() {
@@ -51,16 +51,16 @@ public class DetailPelakuUsahaDTO implements Serializable {
 		return serialVersionUID;
 	}
 		
-	public JenisPelakuUsahaDTO getJenisPelakuUsaha() {
-		return jenisPelakuUsaha;
+	public KategoriPelakuUsahaDTO getKategoriPelakuUsaha() {
+		return kategoriPelakuUsaha;
 	}
 
-	public void setJenisPelakuUsaha(JenisPelakuUsahaDTO jenisPelakuUsaha) {
-		this.jenisPelakuUsaha = jenisPelakuUsaha;
+	public void setKategoriPelakuUsaha(KategoriPelakuUsahaDTO kategoriPelakuUsaha) {
+		this.kategoriPelakuUsaha = kategoriPelakuUsaha;
 	}
 
 	public PelakuUsaha toDetailPelakuUsaha() {
-		return new PelakuUsaha(id, nama, singkatan, jenisPelakuUsaha.toJenisPelakuUsaha());
+		return new PelakuUsaha(id, nama, singkatan, kategoriPelakuUsaha.toKategoriPelakuUsaha());
 	}
 	
 	public int hashCode() {
@@ -84,7 +84,7 @@ public class DetailPelakuUsahaDTO implements Serializable {
             return false;
         }
         
-        final DetailPelakuUsahaDTO other = (DetailPelakuUsahaDTO) obj;
+        final PelakuUsahaDTO other = (PelakuUsahaDTO) obj;
         if (this.id.equals(other.getId())) {
             return false;
         }

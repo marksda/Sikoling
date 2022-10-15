@@ -1,13 +1,13 @@
-package org.Sikoling.ejb.abstraction.service.jenispelakuusaha;
+package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 
-public interface IJenisPelakuUsahaService {
-	KategoriPelakuUsaha save(KategoriPelakuUsaha t);
-	KategoriPelakuUsaha update(KategoriPelakuUsaha t);
-	List<KategoriPelakuUsaha> getAll();
+public interface IKategoriPelakuUsahaServices {
+	KategoriPelakuUsaha save(KategoriPelakuUsaha kategoriPelakuUsaha);
+	KategoriPelakuUsaha update(KategoriPelakuUsaha kategoriPelakuUsaha);
+	List<KategoriPelakuUsaha> getALL();
 	List<KategoriPelakuUsaha> getAllByPage(Integer page, Integer pageSize);
 	List<KategoriPelakuUsaha> getByNama(String nama);
 	List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize);

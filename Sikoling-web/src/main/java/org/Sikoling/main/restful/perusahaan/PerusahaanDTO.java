@@ -5,8 +5,8 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
-import org.Sikoling.main.restful.pelakuusaha.DetailPelakuUsahaDTO;
-import org.Sikoling.main.restful.pelakuusaha.JenisPelakuUsahaDTO;
+import org.Sikoling.main.restful.pelakuusaha.PelakuUsahaDTO;
+import org.Sikoling.main.restful.pelakuusaha.KategoriPelakuUsahaDTO;
 import org.Sikoling.main.restful.penanggungjawab.PenanggungJawabDTO;
 import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
 
@@ -17,8 +17,8 @@ public class PerusahaanDTO implements Serializable {
 	private String nama;
 	private ModelPerizinanDTO modePerizinan;
 	private SkalaUsahaDTO skalaUsaha;
-	private JenisPelakuUsahaDTO jenisPelakuUsaha;
-	private DetailPelakuUsahaDTO detailPelakuUsaha;
+	private KategoriPelakuUsahaDTO jenisPelakuUsaha;
+	private PelakuUsahaDTO detailPelakuUsaha;
 	private AlamatPerusahaanDTO alamat;
 	private KontakPerusahaanDTO kontakPerusahaan;
 	private PenanggungJawabDTO penanggungJawab;	
@@ -31,8 +31,8 @@ public class PerusahaanDTO implements Serializable {
 		this.nama = p.getNama();
 		this.modePerizinan = new ModelPerizinanDTO(p.getModelPerizinan());
 		this.skalaUsaha = new SkalaUsahaDTO(p.getSkalaUsaha());
-		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(p.getKategoriPelakuUsaha());
-		this.detailPelakuUsaha = new DetailPelakuUsahaDTO(p.getPelakuUsaha());
+		this.jenisPelakuUsaha = new KategoriPelakuUsahaDTO(p.getKategoriPelakuUsaha());
+		this.detailPelakuUsaha = new PelakuUsahaDTO(p.getPelakuUsaha());
 		this.alamat = new AlamatPerusahaanDTO(p.getAlamat());
 		this.kontakPerusahaan = new KontakPerusahaanDTO(p.getKontak());
 	}	
@@ -69,19 +69,19 @@ public class PerusahaanDTO implements Serializable {
 		this.skalaUsaha = skalaUsaha;
 	}
 
-	public JenisPelakuUsahaDTO getJenisPelakuUsaha() {
+	public KategoriPelakuUsahaDTO getJenisPelakuUsaha() {
 		return jenisPelakuUsaha;
 	}
 
-	public void setJenisPelakuUsaha(JenisPelakuUsahaDTO jenisPelakuUsaha) {
+	public void setJenisPelakuUsaha(KategoriPelakuUsahaDTO jenisPelakuUsaha) {
 		this.jenisPelakuUsaha = jenisPelakuUsaha;
 	}
 
-	public DetailPelakuUsahaDTO getDetailPelakuUsaha() {
+	public PelakuUsahaDTO getDetailPelakuUsaha() {
 		return detailPelakuUsaha;
 	}
 
-	public void setDetailPelakuUsaha(DetailPelakuUsahaDTO detailPelakuUsaha) {
+	public void setDetailPelakuUsaha(PelakuUsahaDTO detailPelakuUsaha) {
 		this.detailPelakuUsaha = detailPelakuUsaha;
 	}
 

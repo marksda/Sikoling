@@ -34,8 +34,6 @@ import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
-import org.Sikoling.ejb.abstraction.service.jenispelakuusaha.IJenisPelakuUsahaService;
-import org.Sikoling.ejb.abstraction.service.jenispelakuusaha.JenisPelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.BidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.IBidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
@@ -47,8 +45,10 @@ import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.DetailPelakuUsahaService;
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.IDetailPelakuUsahaServices;
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.PelakuUsahaService;
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.IKategoriPelakuUsahaServices;
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.KategoriPelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
@@ -146,13 +146,13 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IJenisPelakuUsahaService getJenisPelakuUsahaService(
-			@Infrastructure IKategoriPelakuUsahaRepository jenisPelakuUsahaRepository) {
-		return new JenisPelakuUsahaService(jenisPelakuUsahaRepository);
+	public IKategoriPelakuUsahaServices getKategoriPelakuUsahaServices(
+			@Infrastructure IKategoriPelakuUsahaRepository kategoriPelakuUsahaRepository) {
+		return new KategoriPelakuUsahaService(kategoriPelakuUsahaRepository);
 	}
 	
 	@Produces
-	public IModelPerizinanService getIModelPerizinanService(
+	public IModelPerizinanService getModelPerizinanService(
 			@Infrastructure IModelPerizinanRepository modelPerizinanRepository) {
 		return new ModelPerizinanService(modelPerizinanRepository);
 	}
@@ -164,9 +164,9 @@ public class RestfulProvider {
 	}
 		
 	@Produces
-	public IDetailPelakuUsahaServices getIDetailPelakuUsahaServices(
-			@Infrastructure IPelakuUsahaRepository detailPelakuUsahaRepository) {
-		return new DetailPelakuUsahaService(detailPelakuUsahaRepository);
+	public IPelakuUsahaServices getPelakuUsahaServices(
+			@Infrastructure IPelakuUsahaRepository pelakuUsahaRepository) {
+		return new PelakuUsahaService(pelakuUsahaRepository);
 	}
 	
 	@Produces

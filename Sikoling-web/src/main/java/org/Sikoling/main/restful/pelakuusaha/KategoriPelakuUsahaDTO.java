@@ -5,16 +5,16 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 
-public class JenisPelakuUsahaDTO implements Serializable {
+public class KategoriPelakuUsahaDTO implements Serializable {
 
 	private static final long serialVersionUID = 8462185491153635603L;
 	private String id;
 	private String nama;
 	
-	public JenisPelakuUsahaDTO() {
+	public KategoriPelakuUsahaDTO() {
 	}
 	
-	public JenisPelakuUsahaDTO(KategoriPelakuUsaha t) {
+	public KategoriPelakuUsahaDTO(KategoriPelakuUsaha t) {
 		this.id = t.getId();
 		this.nama = t.getNama();
 	}
@@ -39,7 +39,7 @@ public class JenisPelakuUsahaDTO implements Serializable {
 		return serialVersionUID;
 	}
 	
-	public KategoriPelakuUsaha toJenisPelakuUsaha() {
+	public KategoriPelakuUsaha toKategoriPelakuUsaha() {
 		return new KategoriPelakuUsaha(id, nama);
 	}
 	
@@ -64,7 +64,7 @@ public class JenisPelakuUsahaDTO implements Serializable {
             return false;
         }
         
-        final JenisPelakuUsahaDTO other = (JenisPelakuUsahaDTO) obj;
+        final KategoriPelakuUsahaDTO other = (KategoriPelakuUsahaDTO) obj;
         if (this.id.equals(other.getId())) {
             return false;
         }
