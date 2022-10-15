@@ -31,8 +31,8 @@ public class PerusahaanDTO implements Serializable {
 		this.nama = p.getNama();
 		this.modePerizinan = new ModelPerizinanDTO(p.getModelPerizinan());
 		this.skalaUsaha = new SkalaUsahaDTO(p.getSkalaUsaha());
-		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(p.getJenisPelakuUsaha());
-		this.detailPelakuUsaha = new DetailPelakuUsahaDTO(p.getDetailPelakuUsaha());
+		this.jenisPelakuUsaha = new JenisPelakuUsahaDTO(p.getKategoriPelakuUsaha());
+		this.detailPelakuUsaha = new DetailPelakuUsahaDTO(p.getPelakuUsaha());
 		this.alamat = new AlamatPerusahaanDTO(p.getAlamat());
 		this.kontakPerusahaan = new KontakPerusahaanDTO(p.getKontak());
 	}	

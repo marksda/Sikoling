@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
-import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
@@ -14,9 +13,7 @@ import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 @Table(name="master.tbl_perusahaan")
 @NamedQueries({
 	@NamedQuery(name="PerusahaanData.findAll", query="SELECT p FROM PerusahaanData p"),
-	@NamedQuery(name="PerusahaanData.findByQueryNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama"),
-	@NamedQuery(name="PerusahaanData.findByCreator", query="SELECT p FROM PerusahaanData p WHERE p.creator.id = :idCreator"),
-	@NamedQuery(name="PerusahaanData.findByCreatorAndNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama AND p.creator.id = :idCreator")
+	@NamedQuery(name="PerusahaanData.findByQueryNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama")
 })
 public class PerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
@@ -26,6 +23,9 @@ public class PerusahaanData implements Serializable {
 	
 	private String nama;
 	
+	@Embedded
+	private AlamatPerusahaanData alamatPerusahaanData;
+	
 	@JoinColumn(name="model_perizinan", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private ModelPerizinanData modelPerizinanData;
@@ -33,24 +33,28 @@ public class PerusahaanData implements Serializable {
 	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private SkalaUsahaData SkalaUsaha;
-	
-	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private KategoriPelakuUsahaData kategoriPelakuUsahaData; 
-	
+		
 	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private PelakuUsahaData pelakuUsahaData; 
 	
+	@Column(name="status_verifikasi")
+	private boolean statusVerifikasi;
+	
 	@Embedded
-	private AlamatPerusahaanData alamatPerusahaanData;
-
-	@Embedded
-	private KontakData kontakPerusahaanData;
+	private KontakPerusahaanData kontakPerusahaanData;
 		
 	public PerusahaanData() {
 	}
 	
+	public boolean getStatusVerifikasi() {
+		return statusVerifikasi;
+	}
+
+	public void setStatusVerifikasi(boolean statusVerifikasi) {
+		this.statusVerifikasi = statusVerifikasi;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -83,14 +87,6 @@ public class PerusahaanData implements Serializable {
 		SkalaUsaha = skalaUsaha;
 	}
 	
-	public KategoriPelakuUsahaData getKategoriPelakuUsahaData() {
-		return kategoriPelakuUsahaData;
-	}
-	
-	public void setKategoriPelakuUsahaData(KategoriPelakuUsahaData kategoriPelakuUsahaData) {
-		this.kategoriPelakuUsahaData = kategoriPelakuUsahaData;
-	}
-	
 	public PelakuUsahaData getPelakuUsahaData() {
 		return pelakuUsahaData;
 	}
@@ -107,11 +103,11 @@ public class PerusahaanData implements Serializable {
 		this.alamatPerusahaanData = alamatPerusahaanData;
 	}
 	
-	public KontakData getKontakPerusahaanData() {
+	public KontakPerusahaanData getKontakPerusahaanData() {
 		return kontakPerusahaanData;
 	}
 	
-	public void setKontakPerusahaanData(KontakData kontakPerusahaanData) {
+	public void setKontakPerusahaanData(KontakPerusahaanData kontakPerusahaanData) {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
 	

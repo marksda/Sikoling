@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 
 
 @Embeddable
-public class KontakData implements Serializable {
+public class KontakPerusahaanData implements Serializable {
 
 	private static final long serialVersionUID = -2623776256607009635L;
 	private String telepone;
 	private String fax;
 	private String email;
 	
-	public KontakData() {
+	public KontakPerusahaanData() {
 		super();
 	}
 

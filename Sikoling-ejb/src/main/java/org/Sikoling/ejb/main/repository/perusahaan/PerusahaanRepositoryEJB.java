@@ -68,4 +68,10 @@ public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 		return perusahaanRepository.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize);
 	}
 
+	
+	@Override
+	public Perusahaan updateStatusVerifikasi(Perusahaan t, boolean statusVerifikasi) {
+		return perusahaanRepository.updateStatusVerifikasi(t, statusVerifikasi);
+	}
+
 }

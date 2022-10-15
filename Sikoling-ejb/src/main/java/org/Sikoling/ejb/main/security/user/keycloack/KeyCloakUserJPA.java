@@ -29,7 +29,6 @@ import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
@@ -308,8 +307,8 @@ public class KeyCloakUserJPA implements IUserRepository {
 						//jpa personData 
 						PersonData personData = convertPersonToPersonData(person);
 						//jpa autorisasiData				
-						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false, false);
-						personData.setAutorisasiData(autorisasiData);
+//						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false, false);
+//						personData.setAutorisasiData(autorisasiData);
 						//attacking PersonData entity
 						entityManager.persist(personData);
 						//make persistence;
@@ -494,15 +493,15 @@ public class KeyCloakUserJPA implements IUserRepository {
 		return user;
 	}
 	
-	private AutorisasiData converPersonToAutorisasiData(String nik, String idLama, String hakAkses, Boolean statusInternal, Boolean isVerified) {
-		AutorisasiData autorisasiData = new AutorisasiData();
-		autorisasiData.setNik(nik);
-		autorisasiData.setIdLama(idLama);
-		autorisasiData.setHakAkses(hakAkses);
-		autorisasiData.setStatusInternal(statusInternal);
-		autorisasiData.setIsVerified(isVerified);
-		return autorisasiData;
-	}
+//	private AutorisasiData converPersonToAutorisasiData(String nik, String idLama, String hakAkses, Boolean statusInternal, Boolean isVerified) {
+//		AutorisasiData autorisasiData = new AutorisasiData();
+//		autorisasiData.setNik(nik);
+//		autorisasiData.setIdLama(idLama);
+//		autorisasiData.setHakAkses(hakAkses);
+//		autorisasiData.setStatusInternal(statusInternal);
+//		autorisasiData.setIsVerified(isVerified);
+//		return autorisasiData;
+//	}
 	
 	private String getAttribute(Map<String, List<String>> attributes, String name) {
         return Optional.ofNullable(attributes)

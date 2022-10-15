@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ItemTransaksiDokumen implements Serializable {
+public class TransaksiDokumen implements Serializable {
 
 	private static final long serialVersionUID = 2847248198419126532L;
 	private final String idTransaksi;
@@ -14,17 +14,15 @@ public class ItemTransaksiDokumen implements Serializable {
 	private final List<ItemAttributeDokumen<Object>> attribute;
 	private final Date tanggalTransaksi;
 	private final boolean isBerlaku;
-	private final Autorisasi autorisasi;
 	
-	public ItemTransaksiDokumen(String idTransaksi, Dokumen dokumen, List<ItemAttributeDokumen<Object>> attribute,
-			Date tanggalTransaksi, boolean isBerlaku, Autorisasi autorisasi, Perusahaan perusahaan) {
+	public TransaksiDokumen(String idTransaksi, Dokumen dokumen, List<ItemAttributeDokumen<Object>> attribute,
+			Date tanggalTransaksi, boolean isBerlaku, Perusahaan perusahaan) {
 		super();
 		this.idTransaksi = idTransaksi;
 		this.dokumen = dokumen;
 		this.attribute = attribute;
 		this.tanggalTransaksi = tanggalTransaksi;
 		this.isBerlaku = isBerlaku;
-		this.autorisasi = autorisasi;
 		this.perusahaan = perusahaan;
 	}
 
@@ -56,10 +54,6 @@ public class ItemTransaksiDokumen implements Serializable {
 		return isBerlaku;
 	}
 
-	public Autorisasi getAutorisasi() {
-		return autorisasi;
-	}
-	
 	public int hashCode() {
 		int hash = 19;
 		hash = 41 * hash + Objects.hashCode(this.idTransaksi);
@@ -80,7 +74,7 @@ public class ItemTransaksiDokumen implements Serializable {
             return false;
         }
         
-        final ItemTransaksiDokumen other = (ItemTransaksiDokumen) obj;
+        final TransaksiDokumen other = (TransaksiDokumen) obj;
         
         if (!this.idTransaksi.equals(other.getIdTransaksi())) {
             return false;

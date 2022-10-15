@@ -1,13 +1,11 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
@@ -25,8 +23,6 @@ import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
 import jakarta.persistence.EntityManager;
 
 
@@ -35,7 +31,6 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	private final EntityManager entityManager;	
 
 	public PerusahaanRepositoryJPA(EntityManager entityManager) {
-		super();
 		this.entityManager = entityManager;
 	}
 
@@ -61,6 +56,14 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t);
 		pemrakarsaData = entityManager.merge(pemrakarsaData);
 		return convertPerusahaanDataToPerusahaan(pemrakarsaData);
+	}
+	
+	@Override
+	public Perusahaan updateStatusVerifikasi(Perusahaan t, boolean statusVerifikasi) {
+		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t);
+		perusahaanData.setStatusVerifikasi(statusVerifikasi);
+		perusahaanData = entityManager.merge(perusahaanData);
+		return convertPerusahaanDataToPerusahaan(perusahaanData);
 	}
 
 	@Override
@@ -144,34 +147,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				.collect(Collectors.toList());
 	}
 
-	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan p) {
-		PerusahaanData perusahaanData = new PerusahaanData();		
-		perusahaanData.setId(p.getId());
-		perusahaanData.setNama(p.getNama());
+	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan p) {	
 		
-		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
-		modelPerizinanData.setId(p.getModelPerizinan().getId());
-		modelPerizinanData.setNama(p.getModelPerizinan().getNama());
-		modelPerizinanData.setSingkatan(p.getModelPerizinan().getSingkatan());
-		perusahaanData.setModelPerizinanData(modelPerizinanData);
-		
-		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
-		skalaUsahaData.setId(p.getSkalaUsaha().getId());
-		skalaUsahaData.setNama(p.getSkalaUsaha().getNama());
-		skalaUsahaData.setSingkatan(p.getSkalaUsaha().getSingkatan());
-		perusahaanData.setSkalaUsaha(skalaUsahaData);
-		
-		KategoriPelakuUsahaData jenisPelakuUsahaData = new KategoriPelakuUsahaData();
-		jenisPelakuUsahaData.setId(p.getJenisPelakuUsaha().getId());
-		jenisPelakuUsahaData.setNama(p.getJenisPelakuUsaha().getNama());
-		perusahaanData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
-		
-		PelakuUsahaData detailPelakuUsahaData = new PelakuUsahaData();
-		detailPelakuUsahaData.setNama(p.getDetailPelakuUsaha().getNama());
-		detailPelakuUsahaData.setSingkatan(p.getDetailPelakuUsaha().getSingkatan());
-		detailPelakuUsahaData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
-		perusahaanData.setPelakuUsahaData(detailPelakuUsahaData);
-				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
 		DesaData desaData = new DesaData();
 		desaData.setId(p.getAlamat().getDesa().getId());
@@ -185,21 +162,39 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		PropinsiData propinsiData = new PropinsiData();
 		propinsiData.setId(p.getAlamat().getPropinsi().getId());
 		alamatPerusahaanData.setPropinsi(propinsiData);
-		perusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
 		
-		KontakData kontakPerusahaanData = new KontakData();
+		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
+		modelPerizinanData.setId(p.getModelPerizinan().getId());
+		modelPerizinanData.setNama(p.getModelPerizinan().getNama());
+		modelPerizinanData.setSingkatan(p.getModelPerizinan().getSingkatan());
+		
+		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
+		skalaUsahaData.setId(p.getSkalaUsaha().getId());
+		skalaUsahaData.setNama(p.getSkalaUsaha().getNama());
+		skalaUsahaData.setSingkatan(p.getSkalaUsaha().getSingkatan());
+		
+		KategoriPelakuUsahaData jenisPelakuUsahaData = new KategoriPelakuUsahaData();
+		jenisPelakuUsahaData.setId(p.getPelakuUsaha().getKategoriPelakuUsaha().getId());
+		jenisPelakuUsahaData.setNama(p.getPelakuUsaha().getKategoriPelakuUsaha().getNama());
+		
+		PelakuUsahaData detailPelakuUsahaData = new PelakuUsahaData();
+		detailPelakuUsahaData.setNama(p.getPelakuUsaha().getNama());
+		detailPelakuUsahaData.setSingkatan(p.getPelakuUsaha().getSingkatan());
+		detailPelakuUsahaData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
+		
+		KontakPerusahaanData kontakPerusahaanData = new KontakPerusahaanData();
 		kontakPerusahaanData.setEmail(p.getKontak().getEmail());
 		kontakPerusahaanData.setFax(p.getKontak().getFax());
-		kontakPerusahaanData.setTelepone(p.getKontak().getTelepone());
-		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
-		
-		Jsonb jsonb = JsonbBuilder.create();
-		String dokumen = jsonb.toJson(p.getDaftarDokumen());
-		perusahaanData.setDokumen(dokumen);		
-		
-//		UserData userData = new UserData();
-//		userData.setId("0001");
-//		perusahaanData.setCreator(userData);
+		kontakPerusahaanData.setTelepone(p.getKontak().getTelepone());	
+
+		PerusahaanData perusahaanData = new PerusahaanData();		
+		perusahaanData.setId(p.getId());
+		perusahaanData.setNama(p.getNama());
+		perusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
+		perusahaanData.setModelPerizinanData(modelPerizinanData);
+		perusahaanData.setSkalaUsaha(skalaUsahaData);
+		perusahaanData.setPelakuUsahaData(detailPelakuUsahaData);
+		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);	
 		
 		return perusahaanData;
 	}
@@ -214,11 +209,12 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				d.getSkalaUsaha().getId(), d.getSkalaUsaha().getNama(), 
 				d.getSkalaUsaha().getSingkatan());
 		
-		KategoriPelakuUsaha pelakuUsaha = new KategoriPelakuUsaha(
-				d.getKategoriPelakuUsahaData().getId(), d.getKategoriPelakuUsahaData().getNama());
+		KategoriPelakuUsaha kategoriPelakuUsaha = new KategoriPelakuUsaha(
+				d.getPelakuUsahaData().getKategoriPelakuUsahaData().getId(), 
+				d.getPelakuUsahaData().getKategoriPelakuUsahaData().getNama());
 		
-		PelakuUsaha detailPelakuUsaha = new PelakuUsaha(
-				d.getPelakuUsahaData().getId(), d.getPelakuUsahaData().getNama(), d.getPelakuUsahaData().getSingkatan(), pelakuUsaha);
+		PelakuUsaha pelakuUsaha = new PelakuUsaha(
+				d.getPelakuUsahaData().getId(), d.getPelakuUsahaData().getNama(), d.getPelakuUsahaData().getSingkatan(), kategoriPelakuUsaha);
 		
 		Alamat alamatPerusahaan = new Alamat(
 				new Propinsi(d.getAlamatPerusahaanData().getPropinsi().getId(), d.getAlamatPerusahaanData().getPropinsi().getNama()),
@@ -230,16 +226,10 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		Kontak kontakPerusahaan = new Kontak(d.getKontakPerusahaanData().getTelepone(), 
 				d.getKontakPerusahaanData().getFax(), d.getKontakPerusahaanData().getEmail());
 		
-		Jsonb jsonb = JsonbBuilder.create();
 		
-		@SuppressWarnings("serial")
-		List<Dokumen> daftarDokumen = jsonb.fromJson(d.getDokumen(), 
-				new ArrayList<Dokumen>(){}.getClass().getGenericSuperclass());
-		
-
 		return new Perusahaan( 
-				d.getId(), d.getNama(), modelPerizinan, skalaUsaha, pelakuUsaha,
-				detailPelakuUsaha, alamatPerusahaan, kontakPerusahaan, daftarDokumen);
+				d.getId(), d.getNama(), modelPerizinan, skalaUsaha, 
+				pelakuUsaha, alamatPerusahaan, kontakPerusahaan);
 	}
 	
 }

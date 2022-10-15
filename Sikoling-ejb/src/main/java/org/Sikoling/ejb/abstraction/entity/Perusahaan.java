@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 public class Perusahaan implements Serializable {
@@ -11,25 +10,19 @@ public class Perusahaan implements Serializable {
 	private final String nama;
 	private final ModelPerizinan modelPerizinan;
 	private final SkalaUsaha skalaUsaha;	
-	private final KategoriPelakuUsaha jenisPelakuUsaha;
-	private final PelakuUsaha detailPelakuUsaha;
+	private final PelakuUsaha pelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
-	private final List<Dokumen> daftarDokumen;
 		
 	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
-			KategoriPelakuUsaha jenisPelakuUsaha, PelakuUsaha detailPelakuUsaha, Alamat alamat, Kontak kontak,
-			List<Dokumen> daftarDokumen) {
-		super();
+			PelakuUsaha pelakuUsaha, Alamat alamat, Kontak kontak) {
 		this.id = id;
 		this.nama = nama;
 		this.modelPerizinan = modelPerizinan;
 		this.skalaUsaha = skalaUsaha;
-		this.jenisPelakuUsaha = jenisPelakuUsaha;
-		this.detailPelakuUsaha = detailPelakuUsaha;
+		this.pelakuUsaha = pelakuUsaha;
 		this.alamat = alamat;
 		this.kontak = kontak;
-		this.daftarDokumen = daftarDokumen;
 	}
 
 	public ModelPerizinan getModelPerizinan() {
@@ -52,14 +45,6 @@ public class Perusahaan implements Serializable {
 		return kontak;
 	}
 	
-	public KategoriPelakuUsaha getJenisPelakuUsaha() {
-		return jenisPelakuUsaha;
-	}
-
-	public List<Dokumen> getDaftarDokumen() {
-		return daftarDokumen;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -68,8 +53,8 @@ public class Perusahaan implements Serializable {
 		return skalaUsaha;
 	}
 	
-	public PelakuUsaha getDetailPelakuUsaha() {
-		return detailPelakuUsaha;
+	public PelakuUsaha getPelakuUsaha() {
+		return pelakuUsaha;
 	}
 	
 	@Override
