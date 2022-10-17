@@ -129,8 +129,8 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IPerusahaanService getPemrakarsaService(@Infrastructure IPerusahaanRepository pemrakarsaRepository) {
-		return new PerusahaanService(pemrakarsaRepository);		
+	public IPerusahaanService getPerusahaanService(@Infrastructure IPerusahaanRepository perusahaanRepository) {
+		return new PerusahaanService(perusahaanRepository);		
 	}
 	
 	@Produces

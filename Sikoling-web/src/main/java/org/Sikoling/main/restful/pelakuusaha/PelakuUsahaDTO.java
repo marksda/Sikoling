@@ -59,7 +59,7 @@ public class PelakuUsahaDTO implements Serializable {
 		this.kategoriPelakuUsaha = kategoriPelakuUsaha;
 	}
 
-	public PelakuUsaha toDetailPelakuUsaha() {
+	public PelakuUsaha toPelakuUsaha() {
 		return new PelakuUsaha(id, nama, singkatan, kategoriPelakuUsaha.toKategoriPelakuUsaha());
 	}
 	

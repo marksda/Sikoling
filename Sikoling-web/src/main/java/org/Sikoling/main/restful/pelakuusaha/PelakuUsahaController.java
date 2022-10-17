@@ -33,105 +33,102 @@ public class PelakuUsahaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public KategoriPelakuUsahaDTO save(KategoriPelakuUsahaDTO d) {
+    public KategoriPelakuUsahaDTO saveKategori(KategoriPelakuUsahaDTO d) {
         return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.save(d.toKategoriPelakuUsaha()));
     }
 	
-	@Path("detail")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public PelakuUsahaDTO saveDetail(PelakuUsahaDTO d) {		
-        return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toDetailPelakuUsaha()));
+    public PelakuUsahaDTO save(PelakuUsahaDTO d) {		
+        return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toPelakuUsaha()));
     }
 	
-	@Path("jenis")
+	@Path("kategori")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KategoriPelakuUsahaDTO update(KategoriPelakuUsahaDTO d) {
+	public KategoriPelakuUsahaDTO updateKategori(KategoriPelakuUsahaDTO d) {
 		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.update(d.toKategoriPelakuUsaha()));
 	}
 	
-	@Path("detail")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PelakuUsahaDTO updateDetail(PelakuUsahaDTO d) {		
-		return new PelakuUsahaDTO(pelakuUsahaServices.update(d.toDetailPelakuUsaha()));
+	public PelakuUsahaDTO update(PelakuUsahaDTO d) {		
+		return new PelakuUsahaDTO(pelakuUsahaServices.update(d.toPelakuUsaha()));
 	}
 
-	@Path("jenis")
+	@Path("kategori")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<KategoriPelakuUsahaDTO> getAll() {
+    public List<KategoriPelakuUsahaDTO> getAllKategori() {
         return kategoriPelakuUsahaService.getALL()
                 .stream()
                 .map(t -> new KategoriPelakuUsahaDTO(t))
                 .collect(Collectors.toList());
     }
 	
-	@Path("detail")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PelakuUsahaDTO> getAllDetail() {
+    public List<PelakuUsahaDTO> getAll() {
         return pelakuUsahaServices.getALL()
                 .stream()
                 .map(t -> new PelakuUsahaDTO(t))
                 .collect(Collectors.toList());
     }
 	
-	@Path("jenis/page")
+	@Path("kategori/page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<KategoriPelakuUsahaDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+    public List<KategoriPelakuUsahaDTO> getAllKategoriByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
         return kategoriPelakuUsahaService.getAllByPage(page, pageSize)
                 .stream()
                 .map(t -> new KategoriPelakuUsahaDTO(t))
                 .collect(Collectors.toList());
     }
 	
-	@Path("detail/page")
+	@Path("page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PelakuUsahaDTO> getDetailAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+    public List<PelakuUsahaDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
         return pelakuUsahaServices.getAllByPage(page, pageSize)
                 .stream()
                 .map(t -> new PelakuUsahaDTO(t))
                 .collect(Collectors.toList());
     }
 	
-	@Path("jenis/nama")
+	@Path("kategori/nama")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<KategoriPelakuUsahaDTO> getByNama(@QueryParam("nama") String nama) {
+    public List<KategoriPelakuUsahaDTO> getKategoriByNama(@QueryParam("nama") String nama) {
         return kategoriPelakuUsahaService.getByNama(nama)
                 .stream()
                 .map(t -> new KategoriPelakuUsahaDTO(t))
                 .collect(Collectors.toList());
     }
 	
-	@Path("detail/nama")
+	@Path("nama")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PelakuUsahaDTO> getDetailByNama(@QueryParam("nama") String nama) {
+    public List<PelakuUsahaDTO> getByNama(@QueryParam("nama") String nama) {
         return pelakuUsahaServices.getByNama(nama)
                 .stream()
                 .map(t -> new PelakuUsahaDTO(t))
                 .collect(Collectors.toList());
     }
 	
-	@Path("jenis/nama/page")
+	@Path("kategori/nama/page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<KategoriPelakuUsahaDTO> getByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
+    public List<KategoriPelakuUsahaDTO> getKategoriByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
     		@QueryParam("pageSize") Integer pageSize) {
         return kategoriPelakuUsahaService.getByNamaAndPage(nama, page, pageSize)
                 .stream()
@@ -139,13 +136,26 @@ public class PelakuUsahaController {
                 .collect(Collectors.toList());
     }
 	
-	@Path("detail/nama/page")
+	@Path("nama/page")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PelakuUsahaDTO> getDetailByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
+    public List<PelakuUsahaDTO> getByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
     		@QueryParam("pageSize") Integer pageSize) {
         return pelakuUsahaServices.getByNamaAndPage(nama, page, pageSize)
+                .stream()
+                .map(t -> new PelakuUsahaDTO(t))
+                .collect(Collectors.toList());
+    }
+	
+	@Path("bykategori")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<PelakuUsahaDTO> getByKategori(@QueryParam("idKategori") String idKategori) {
+		KategoriPelakuUsahaDTO kategori = new KategoriPelakuUsahaDTO();
+		kategori.setId(idKategori);
+        return pelakuUsahaServices.getByKategoriPelakuUsaha(kategori.toKategoriPelakuUsaha())
                 .stream()
                 .map(t -> new PelakuUsahaDTO(t))
                 .collect(Collectors.toList());

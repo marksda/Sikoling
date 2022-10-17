@@ -122,8 +122,5 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 		return pelakuUsahaData;
 		
 	}
-
-	
-
-	
+		
 }

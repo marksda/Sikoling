@@ -23,27 +23,27 @@ import jakarta.ws.rs.core.MediaType;
 public class PerusahaanController {
 	
 	@Inject
-	private IPerusahaanService pemrakarsaService;
+	private IPerusahaanService perusahaanService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public PerusahaanDTO save(PerusahaanDTO d) {
-		return new PerusahaanDTO(pemrakarsaService.save(d.toPemrakarsa()));
+		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public PerusahaanDTO update(PerusahaanDTO d) {
-		return new PerusahaanDTO(pemrakarsaService.update(d.toPemrakarsa()));
+		return new PerusahaanDTO(perusahaanService.update(d.toPerusahaan()));
 	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getAll() {
-		return pemrakarsaService.getAll()
+		return perusahaanService.getAll()
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class PerusahaanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return pemrakarsaService.getAllByPage(page, pageSize)
+		return perusahaanService.getAllByPage(page, pageSize)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -65,7 +65,7 @@ public class PerusahaanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByNama(@QueryParam("nama") String nama) {
-		return pemrakarsaService.getByNama(nama)
+		return perusahaanService.getByNama(nama)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByNamaAndPage(@QueryParam("nama") String nama,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return pemrakarsaService.getByNamaAndPage(nama, page, pageSize)
+		return perusahaanService.getByNamaAndPage(nama, page, pageSize)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -88,7 +88,7 @@ public class PerusahaanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByCreator(@QueryParam("idCreator") String idCreator) {
-		return pemrakarsaService.getByCreator(idCreator)
+		return perusahaanService.getByCreator(idCreator)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -100,7 +100,7 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByCreatorAndPage(@QueryParam("idCreator") String idCreator,
 			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return pemrakarsaService.getByCreatorAndPage(idCreator, page, pageSize)
+		return perusahaanService.getByCreatorAndPage(idCreator, page, pageSize)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -112,7 +112,7 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByCreatorAndNama(@QueryParam("idCreator") String idCreator,
 			@QueryParam("nama") String nama) {
-		return pemrakarsaService.getByCreatorAndNama(idCreator, nama)
+		return perusahaanService.getByCreatorAndNama(idCreator, nama)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -124,7 +124,7 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PerusahaanDTO> getByCreatorAndNamaAndPage(@QueryParam("idCreator") String idCreator,
 			@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return pemrakarsaService.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize)
+		return perusahaanService.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize)
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());

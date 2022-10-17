@@ -2,6 +2,7 @@ package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 
@@ -41,6 +42,17 @@ public class PelakuUsahaService implements IPelakuUsahaServices {
 	@Override
 	public List<PelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return pelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
+	}
+
+	@Override
+	public List<PelakuUsaha> getByKategoriPelakuUsaha(KategoriPelakuUsaha kategoriPelakuUsaha) {
+		return pelakuUsahaRepository.getByKategoriPelakuUsaha(kategoriPelakuUsaha);
+	}
+
+	@Override
+	public List<PelakuUsaha> getByKategoriPelakuUsahaAndPage(KategoriPelakuUsaha kategoriPelakuUsaha, Integer page,
+			Integer pageSize) {
+		return pelakuUsahaRepository.getByKategoriPelakuUsahaAndPage(kategoriPelakuUsaha, page, pageSize);
 	}
 
 }
