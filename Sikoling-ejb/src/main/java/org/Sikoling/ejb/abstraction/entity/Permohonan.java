@@ -68,11 +68,7 @@ public class Permohonan implements Serializable {
         }
         
         final Permohonan other = (Permohonan) obj;
-        
-        if (!Objects.equals(this.nomor, other)) {
-            return false;
-        }
-        
+                   
         if (!this.nomor.equals(other.getNomor())) {
             return false;
         }
