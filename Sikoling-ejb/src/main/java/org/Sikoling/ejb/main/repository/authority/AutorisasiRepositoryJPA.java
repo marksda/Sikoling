@@ -71,7 +71,7 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 	public List<Autorisasi> getByNama(String nama) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
-				.setParameter("nama", nama)
+				.setParameter("userName", nama)
 				.getResultList()
 				.stream()
 				.map(d -> convertAutorisasiDataToAutorisasi(d))

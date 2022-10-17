@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @Table(name="master.tbl_autorisasi")
 @NamedQueries({
 	@NamedQuery(name="AutorisasiData.findAll", query="SELECT u FROM AutorisasiData u"),
-	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.nik = :nik")
+	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.userName = :userName")
 })
 public class AutorisasiData implements Serializable {
 

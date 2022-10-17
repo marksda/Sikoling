@@ -11,8 +11,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_kategori_model_perizinan")
 @NamedQueries({
-	@NamedQuery(name="ModelPerizinanData.findAll", query="SELECT FROM ModelPerizinanData p"),
-	@NamedQuery(name="ModelPerizinanData.findByQueryNama", query="SELECT FROM ModelPerizinanData p WHERE p.nama LIKE :nama")
+	@NamedQuery(name="ModelPerizinanData.findAll", query="SELECT p FROM ModelPerizinanData p"),
+	@NamedQuery(name="ModelPerizinanData.findByQueryNama", query="SELECT p FROM ModelPerizinanData p WHERE p.nama LIKE :nama")
 })
 public class ModelPerizinanData implements Serializable {
 

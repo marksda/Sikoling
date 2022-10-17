@@ -3,9 +3,8 @@ package org.Sikoling.main.restful.pelakuusaha;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.service.pelakuusaha.IKategoriPelakuUsahaServices;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.KategoriPelakuUsahaService;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -24,7 +23,7 @@ import jakarta.ws.rs.core.MediaType;
 public class PelakuUsahaController {
 	
 	@Inject
-	private KategoriPelakuUsahaService kategoriPelakuUsahaService;
+	private IKategoriPelakuUsahaServices kategoriPelakuUsahaService;
 	
 	@Inject
 	private IPelakuUsahaServices pelakuUsahaServices;
