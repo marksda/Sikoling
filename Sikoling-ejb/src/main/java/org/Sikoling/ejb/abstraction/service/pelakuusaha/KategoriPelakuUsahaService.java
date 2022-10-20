@@ -42,6 +42,11 @@ public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices 
 	public List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
+	
+	@Override
+	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
+		return kategoriPelakuUsahaRepository.getALLBySkalaUsaha(idSkalaUsaha);
+	}
 
 	
 

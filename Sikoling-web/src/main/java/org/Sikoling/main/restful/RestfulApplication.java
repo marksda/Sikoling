@@ -8,7 +8,8 @@ import jakarta.ws.rs.ApplicationPath;
 public class RestfulApplication extends ResourceConfig {
 	
 	public RestfulApplication() {
-		packages("org.Sikoling.main.restful").register(MultiPartFeature.class);
+		packages("org.Sikoling.main.restful")
+		.register(MultiPartFeature.class);
 	}
 	
 }

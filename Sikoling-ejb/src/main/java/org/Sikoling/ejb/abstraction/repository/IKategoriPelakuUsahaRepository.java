@@ -8,4 +8,5 @@ public interface IKategoriPelakuUsahaRepository extends IRepository<KategoriPela
 	List<KategoriPelakuUsaha> getAllByPage(Integer page, Integer pageSize);
 	List<KategoriPelakuUsaha> getByNama(String nama);
 	List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha);
 }

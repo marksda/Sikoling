@@ -22,7 +22,12 @@ public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRep
 	public List<KategoriPelakuUsaha> getAll() {
 		return kategoriPelakuUsahaRepository.getAll();
 	}
-
+	
+	@Override
+	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
+		return kategoriPelakuUsahaRepository.getALLBySkalaUsaha(idSkalaUsaha);
+	}
+	
 	@Override
 	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) {
 		return kategoriPelakuUsahaRepository.save(t);
@@ -47,5 +52,6 @@ public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRep
 	public List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
+
 
 }

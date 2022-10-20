@@ -69,6 +69,17 @@ public class PelakuUsahaController {
                 .collect(Collectors.toList());
     }
 	
+	@Path("kategori/skala_usaha")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<KategoriPelakuUsahaDTO> getAllKategoriBySkalaUsaha(@QueryParam("idSkalaUsaha") String idSkalaUsaha) {
+        return kategoriPelakuUsahaService.getALLBySkalaUsaha(idSkalaUsaha)
+                .stream()
+                .map(t -> new KategoriPelakuUsahaDTO(t))
+                .collect(Collectors.toList());
+    }
+	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})

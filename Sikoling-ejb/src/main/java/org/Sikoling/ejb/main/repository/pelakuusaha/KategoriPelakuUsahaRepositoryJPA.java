@@ -25,6 +25,16 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 	}
 
 	@Override
+	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
+		return entityManager.createNamedQuery("KategoriPelakuUsahaData.findAllBySkalaUsaha", KategoriPelakuUsahaData.class)
+				.setParameter("idSkalaUsaha", idSkalaUsaha)
+				.getResultList()
+				.stream()
+				.map(t -> convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Override
 	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) {
 		KategoriPelakuUsahaData kategoriPelakuUsahaData = convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t);
 		entityManager.persist(kategoriPelakuUsahaData);
@@ -86,4 +96,5 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 		return kategoriPelakuUsahaData;
 	}
 
+	
 }
