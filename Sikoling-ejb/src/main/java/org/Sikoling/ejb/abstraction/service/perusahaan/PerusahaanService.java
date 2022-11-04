@@ -64,4 +64,10 @@ public class PerusahaanService implements IPerusahaanService {
 		return pemrakarsaRepository.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize);
 	}
 
+	
+	@Override
+	public Boolean getById(String id) {
+		return pemrakarsaRepository.getById(id);
+	}
+
 }

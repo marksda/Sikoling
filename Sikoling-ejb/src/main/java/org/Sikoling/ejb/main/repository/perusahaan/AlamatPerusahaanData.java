@@ -16,21 +16,22 @@ public class AlamatPerusahaanData implements Serializable {
 	
 	private static final long serialVersionUID = -8334774162037892428L;
 
-	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
 	private DesaData desa;
 
-	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
 	private KabupatenData kabupaten;
 
-	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
 	private KecamatanData kecamatan;
 
+	@Column(name="detail_alamat")
 	private String keterangan;
 
-	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
 	private PropinsiData propinsi;
 

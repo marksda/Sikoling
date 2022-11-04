@@ -7,6 +7,7 @@ import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 public interface IPerusahaanService {
 	Perusahaan save(Perusahaan t);
 	Perusahaan update(Perusahaan t);
+	Boolean getById(String id);
 	List<Perusahaan> getAll();
 	List<Perusahaan> getAllByPage(Integer page, Integer pageSize);
 	List<Perusahaan> getByNama(String nama);

@@ -26,15 +26,15 @@ public class PerusahaanData implements Serializable {
 	@Embedded
 	private AlamatPerusahaanData alamatPerusahaanData;
 	
-	@JoinColumn(name="model_perizinan", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="model_perizinan", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private ModelPerizinanData modelPerizinanData;
 	
-	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private SkalaUsahaData SkalaUsaha;
 		
-	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private PelakuUsahaData pelakuUsahaData; 
 	

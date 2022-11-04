@@ -39,6 +39,13 @@ public class PerusahaanController {
 		return new PerusahaanDTO(perusahaanService.update(d.toPerusahaan()));
 	}
 	
+	@Path("is_eksis")
+	@GET
+    @Produces({MediaType.TEXT_PLAIN})
+	public Boolean getById(@QueryParam("id") String id) {
+		return perusahaanService.getById(id);
+	}
+	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})

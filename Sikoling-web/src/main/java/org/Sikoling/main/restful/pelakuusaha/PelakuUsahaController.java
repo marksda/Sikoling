@@ -69,7 +69,7 @@ public class PelakuUsahaController {
                 .collect(Collectors.toList());
     }
 	
-	@Path("kategori/skala_usaha")
+	@Path("kategori/by_skala_usaha")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -158,11 +158,11 @@ public class PelakuUsahaController {
                 .collect(Collectors.toList());
     }
 	
-	@Path("bykategori")
+	@Path("by_kategori")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PelakuUsahaDTO> getByKategori(@QueryParam("idKategori") String idKategori) {
+    public List<PelakuUsahaDTO> getPelakuUsahaByKategoriPelakuusaha(@QueryParam("idKategori") String idKategori) {
 		KategoriPelakuUsahaDTO kategori = new KategoriPelakuUsahaDTO();
 		kategori.setId(idKategori);
         return pelakuUsahaServices.getByKategoriPelakuUsaha(kategori.toKategoriPelakuUsaha())

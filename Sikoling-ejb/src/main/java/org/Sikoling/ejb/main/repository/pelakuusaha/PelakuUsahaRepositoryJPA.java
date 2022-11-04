@@ -80,7 +80,7 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 	@Override
 	public List<PelakuUsaha> getByKategoriPelakuUsaha(KategoriPelakuUsaha kategoriPelakuUsaha) {
 		return entityManager.createNamedQuery("PelakuUsahaData.findByKategoriPelakuUsaha", PelakuUsahaData.class)
-				.setParameter("kategoriPelakuUsaha", kategoriPelakuUsaha)
+				.setParameter("idKategoriPelakuUsaha", kategoriPelakuUsaha.getId())
 				.getResultList()
 				.stream()
 				.map(t -> convertPelakuUsahaDataToPelakuUsaha(t))

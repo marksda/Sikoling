@@ -74,4 +74,9 @@ public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 		return perusahaanRepository.updateStatusVerifikasi(t, statusVerifikasi);
 	}
 
+	@Override
+	public Boolean getById(String id) {
+		return perusahaanRepository.getById(id);
+	}
+
 }

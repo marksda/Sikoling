@@ -6,6 +6,7 @@ import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 
 public interface IPerusahaanRepository extends IRepository<Perusahaan> {
 	Perusahaan updateStatusVerifikasi(Perusahaan t, boolean statusVerifikasi);
+	Boolean getById(String id);
 	List<Perusahaan> getAllByPage(Integer page, Integer pageSize);
 	List<Perusahaan> getByNama(String nama);
 	List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize);

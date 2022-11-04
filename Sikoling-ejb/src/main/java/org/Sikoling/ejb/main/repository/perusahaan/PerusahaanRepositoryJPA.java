@@ -150,6 +150,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan p) {	
 		
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
+		alamatPerusahaanData.setKeterangan(p.getAlamat().getKeterangan());
 		DesaData desaData = new DesaData();
 		desaData.setId(p.getAlamat().getDesa().getId());
 		alamatPerusahaanData.setDesa(desaData);
@@ -178,6 +179,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		jenisPelakuUsahaData.setNama(p.getPelakuUsaha().getKategoriPelakuUsaha().getNama());
 		
 		PelakuUsahaData detailPelakuUsahaData = new PelakuUsahaData();
+		detailPelakuUsahaData.setId(p.getPelakuUsaha().getId());
 		detailPelakuUsahaData.setNama(p.getPelakuUsaha().getNama());
 		detailPelakuUsahaData.setSingkatan(p.getPelakuUsaha().getSingkatan());
 		detailPelakuUsahaData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
@@ -230,6 +232,17 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		return new Perusahaan( 
 				d.getId(), d.getNama(), modelPerizinan, skalaUsaha, 
 				pelakuUsaha, alamatPerusahaan, kontakPerusahaan);
+	}
+	
+	@Override
+	public Boolean getById(String id) {
+		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
+		if(perusahaanData == null) {
+			return false;
+		}
+		else {
+			return true;
+		}		 
 	}
 	
 }

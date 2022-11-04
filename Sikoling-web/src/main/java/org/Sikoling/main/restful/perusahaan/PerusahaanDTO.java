@@ -13,7 +13,7 @@ public class PerusahaanDTO implements Serializable {
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
 	private String nama;
-	private ModelPerizinanDTO modePerizinan;
+	private ModelPerizinanDTO modelPerizinan;
 	private SkalaUsahaDTO skalaUsaha;
 	private PelakuUsahaDTO pelakuUsaha;
 	private AlamatPerusahaanDTO alamat;
@@ -25,7 +25,7 @@ public class PerusahaanDTO implements Serializable {
 	public PerusahaanDTO(Perusahaan p) {
 		this.id = p.getId();
 		this.nama = p.getNama();
-		this.modePerizinan = new ModelPerizinanDTO(p.getModelPerizinan());
+		this.modelPerizinan = new ModelPerizinanDTO(p.getModelPerizinan());
 		this.skalaUsaha = new SkalaUsahaDTO(p.getSkalaUsaha());
 		this.pelakuUsaha = new PelakuUsahaDTO(p.getPelakuUsaha());
 		this.alamat = new AlamatPerusahaanDTO(p.getAlamat());
@@ -49,11 +49,11 @@ public class PerusahaanDTO implements Serializable {
 	}
 	
 	public ModelPerizinanDTO getModePerizinan() {
-		return modePerizinan;
+		return modelPerizinan;
 	}
 	
-	public void setModePerizinan(ModelPerizinanDTO modePerizinan) {
-		this.modePerizinan = modePerizinan;
+	public void setModelPerizinan(ModelPerizinanDTO modePerizinan) {
+		this.modelPerizinan = modePerizinan;
 	}
 	
 	public SkalaUsahaDTO getSkalaUsaha() {
@@ -64,11 +64,11 @@ public class PerusahaanDTO implements Serializable {
 		this.skalaUsaha = skalaUsaha;
 	}
 
-	public PelakuUsahaDTO getDetailPelakuUsaha() {
+	public PelakuUsahaDTO getPelakuUsaha() {
 		return pelakuUsaha;
 	}
 
-	public void setDetailPelakuUsaha(PelakuUsahaDTO detailPelakuUsaha) {
+	public void setPelakuUsaha(PelakuUsahaDTO detailPelakuUsaha) {
 		this.pelakuUsaha = detailPelakuUsaha;
 	}
 
@@ -80,11 +80,11 @@ public class PerusahaanDTO implements Serializable {
 		this.alamat = alamat;
 	}
 
-	public KontakPerusahaanDTO getKontakPerusahaan() {
+	public KontakPerusahaanDTO getKontak() {
 		return kontak;
 	}
 
-	public void setKontakPerusahaan(KontakPerusahaanDTO kontakPerusahaan) {
+	public void setKontak(KontakPerusahaanDTO kontakPerusahaan) {
 		this.kontak = kontakPerusahaan;
 	}
 
@@ -134,7 +134,7 @@ public class PerusahaanDTO implements Serializable {
 
 	public Perusahaan toPerusahaan() {
 		return new Perusahaan(
-				id, nama, modePerizinan.toModelPerizinan(), 
+				id, nama, modelPerizinan.toModelPerizinan(), 
 				skalaUsaha.toSkalaUsaha(), pelakuUsaha.toPelakuUsaha(),
 				alamat.toAlamat(), kontak.toKontakPerusahaan());
 	}
