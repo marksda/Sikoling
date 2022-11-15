@@ -11,7 +11,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="master.tbl_detail_dokumen_perusahaan")
+@Table(name="master.tbl_dokumen_perusahaan")
 @NamedQueries({
 	@NamedQuery(name="DokumenData.findAll", query = "SELECT d FROM DokumenData d"),
 	@NamedQuery(name="DokumenData.findByNama", query = "SELECT d FROM DokumenData d WHERE d.nama LIKE :nama"),
@@ -26,7 +26,7 @@ public class DokumenData implements Serializable {
 	
 	private String nama;
 	
-	@JoinColumn(name = "kategori", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kategori", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private KategoriDokumenData kategori;
 

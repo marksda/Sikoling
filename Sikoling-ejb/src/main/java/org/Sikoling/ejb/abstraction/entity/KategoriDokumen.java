@@ -8,10 +8,16 @@ public class KategoriDokumen implements Serializable {
 	private static final long serialVersionUID = -5095938556108761375L;
 	private final String id;
 	private final String nama;
+	private final String parent;
 	
-	public KategoriDokumen(String id, String nama) {
+	public KategoriDokumen(String id, String nama, String parent) {
 		this.id = id;
 		this.nama = nama;
+		this.parent = parent;
+	}
+		
+	public String getParent() {
+		return parent;
 	}
 
 	public static long getSerialversionuid() {

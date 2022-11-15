@@ -89,7 +89,8 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 	private TransaksiDokumen convertTransaksiDokumenDataToTransaksiDokumen(TransaksiDokumenData d) {
 		KategoriDokumen kategoriDokumen = new KategoriDokumen(
 				d.getDokumen().getKategori().getId(), 
-				d.getDokumen().getKategori().getNama());	
+				d.getDokumen().getKategori().getNama(),
+				d.getDokumen().getKategori().getId());	
 		
 		Dokumen dokumen = new Dokumen(
 				d.getDokumen().getId(), 

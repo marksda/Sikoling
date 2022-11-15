@@ -25,8 +25,8 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 	}
 
 	@Override
-	public KategoriDokumen save(KategoriDokumen t, String t2) {
-		KategoriDokumenData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
+	public KategoriDokumen save(KategoriDokumen t) {
+		KategoriDokumenData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t);
 		entityManager.persist(kategoriDokumenPerusahaanData);
 		entityManager.flush();
 		
@@ -34,8 +34,8 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 	}
 
 	@Override
-	public KategoriDokumen update(KategoriDokumen t, String t2) {
-		KategoriDokumenData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t, t2);
+	public KategoriDokumen update(KategoriDokumen t) {
+		KategoriDokumenData kategoriDokumenPerusahaanData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(t);
 		kategoriDokumenPerusahaanData = entityManager.merge(kategoriDokumenPerusahaanData);
 		
 		return convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(kategoriDokumenPerusahaanData);
@@ -77,14 +77,14 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 	}
 
 	private KategoriDokumen convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(KategoriDokumenData d) {
-		return new KategoriDokumen(d.getId(), d.getNama());
+		return new KategoriDokumen(d.getId(), d.getNama(), d.getParent());
 	}
 	
-	private KategoriDokumenData convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(KategoriDokumen t, String t2) {
+	private KategoriDokumenData convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(KategoriDokumen t) {
 		KategoriDokumenData kategoriDokumenPerusahaanData = new KategoriDokumenData();
 		kategoriDokumenPerusahaanData.setId(t.getId());
 		kategoriDokumenPerusahaanData.setNama(t.getNama());
-		kategoriDokumenPerusahaanData.setParent(t2);
+		kategoriDokumenPerusahaanData.setParent(t.getParent());
 		
 		return kategoriDokumenPerusahaanData;
 	}

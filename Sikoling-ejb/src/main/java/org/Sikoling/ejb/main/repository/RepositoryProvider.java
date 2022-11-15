@@ -145,12 +145,12 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KategoriDokumenRepositoryJPA getDokumenPerusahaanRepositoryJPA(EntityManager entityManager) {
+	public KategoriDokumenRepositoryJPA getKategoriDokumenRepositoryJPA(EntityManager entityManager) {
 		return new KategoriDokumenRepositoryJPA(entityManager);
 	}
 	
 	@Produces
-	public DokumenRepositoryJPA getDetailDokumenPerusahaanRepositoryJPA(EntityManager entityManager) {
+	public DokumenRepositoryJPA getDokumenRepositoryJPA(EntityManager entityManager) {
 		return new DokumenRepositoryJPA(entityManager);
 	}
 	

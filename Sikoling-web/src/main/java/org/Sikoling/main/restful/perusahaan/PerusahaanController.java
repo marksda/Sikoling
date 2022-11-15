@@ -42,7 +42,7 @@ public class PerusahaanController {
 	@Path("is_eksis")
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
-	public Boolean getById(@QueryParam("id") String id) {
+	public Boolean cekPerusahaan(@QueryParam("id") String id) {
 		return perusahaanService.getById(id);
 	}
 	

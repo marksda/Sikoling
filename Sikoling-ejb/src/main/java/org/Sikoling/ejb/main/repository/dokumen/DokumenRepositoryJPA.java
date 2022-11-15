@@ -77,8 +77,10 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 	}
 	
 	private Dokumen convertDokumenDataToDokumen(DokumenData d) {
-		KategoriDokumen kategoriDokumen = 
-				new KategoriDokumen(d.getKategori().getId(), d.getKategori().getNama());
+		KategoriDokumen kategoriDokumen = new KategoriDokumen(
+				d.getKategori().getId(), 
+				d.getKategori().getNama(), 
+				d.getKategori().getParent());
 		return new Dokumen(d.getId(), kategoriDokumen, d.getNama());
 	}
 	
@@ -90,6 +92,7 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
 		kategoriDokumenData.setId(t.getKategoriDokumen().getId());
 		kategoriDokumenData.setNama(t.getKategoriDokumen().getNama());
+		kategoriDokumenData.setParent(t.getKategoriDokumen().getParent());
 		dokumenData.setKategori(kategoriDokumenData);
 		
 		return dokumenData;
