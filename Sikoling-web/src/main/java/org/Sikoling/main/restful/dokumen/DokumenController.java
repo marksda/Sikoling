@@ -1,0 +1,86 @@
+package org.Sikoling.main.restful.dokumen;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
+
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+@Stateless
+@LocalBean
+@Path("kategori_dokumen")
+public class DokumenController {
+	
+	@Inject
+	private IDokumenService dokumenService;
+	
+	@POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public DokumenDTO save(DokumenDTO d) {
+		return new DokumenDTO(dokumenService.save(d.toDokumen()));
+	}
+	
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public DokumenDTO update(DokumenDTO d) {
+		return new DokumenDTO(dokumenService.update(d.toDokumen()));
+	}
+	
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<DokumenDTO> getAll() {
+		return dokumenService.getAll()
+				.stream()
+				.map(t -> new DokumenDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<DokumenDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+		return dokumenService.getAllByPage(page, pageSize)
+				.stream()
+				.map(t -> new DokumenDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("nama")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<DokumenDTO> getByNama(@QueryParam("nama") String nama) {
+		return dokumenService.getByNama(nama)
+				.stream()
+				.map(t -> new DokumenDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("nama/page")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<DokumenDTO> getByNamaAndPage(@QueryParam("nama") String nama,
+			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+		return dokumenService.getByNamaAndPage(nama, page, pageSize)
+				.stream()
+				.map(t -> new DokumenDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+}

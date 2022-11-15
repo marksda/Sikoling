@@ -10,8 +10,7 @@ public class Dokumen implements Serializable {
 	private final KategoriDokumen kategoriDokumen;
 	private final String nama;	
 	
-	public Dokumen(String id, KategoriDokumen kategoriDokumen, String nama) {
-		super();
+	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen) {
 		this.id = id;
 		this.kategoriDokumen = kategoriDokumen;
 		this.nama = nama;

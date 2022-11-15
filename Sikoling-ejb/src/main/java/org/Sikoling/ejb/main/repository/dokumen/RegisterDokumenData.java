@@ -18,11 +18,11 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name="transaksi.tbl_dokumen")
+@Table(name="transaksi.tbl_master_register_dokumen")
 @NamedQueries({
 	@NamedQuery(name="TransaksiDokumenData.findAll", query="SELECT d FROM TransaksiDokumenData d")
 })
-public class TransaksiDokumenData implements Serializable {
+public class RegisterDokumenData implements Serializable {
 
 	private static final long serialVersionUID = 781878194764826140L;
 	
@@ -49,11 +49,7 @@ public class TransaksiDokumenData implements Serializable {
 	private AutorisasiData uploader;
 	
 	@Column(columnDefinition = "json")
-	private String attribute;
 	
-	@Column(name="lokasi_file")
-	private String lokasiFile;
-
 	public String getId() {
 		return id;
 	}
@@ -100,22 +96,6 @@ public class TransaksiDokumenData implements Serializable {
 
 	public void setUploader(AutorisasiData uploader) {
 		this.uploader = uploader;
-	}
-
-	public String getAttribute() {
-		return attribute;
-	}
-
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
-	}
-
-	public String getLokasiFile() {
-		return lokasiFile;
-	}
-
-	public void setLokasiFile(String lokasiFile) {
-		this.lokasiFile = lokasiFile;
 	}
 
 	public static long getSerialversionuid() {

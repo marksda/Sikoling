@@ -2,28 +2,35 @@ package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
-public class TransaksiDokumen implements Serializable {
+public class RegisterDokumen implements Serializable {
 
 	private static final long serialVersionUID = 2847248198419126532L;
-	private final String idTransaksi;
+	private final String id;
 	private final Perusahaan perusahaan;
 	private final Dokumen dokumen;
-	private final List<ItemAttributeDokumen<Object>> attribute;
 	private final Date tanggalTransaksi;
 	private final boolean isBerlaku;
+	private final Autorisasi autorisasi;
 	
-	public TransaksiDokumen(String idTransaksi, Dokumen dokumen, List<ItemAttributeDokumen<Object>> attribute,
-			Date tanggalTransaksi, boolean isBerlaku, Perusahaan perusahaan) {
+	public RegisterDokumen(String idTransaksi, Dokumen dokumen, Date tanggalTransaksi, boolean isBerlaku, 
+			Perusahaan perusahaan, Autorisasi autorisasi) {
 		super();
-		this.idTransaksi = idTransaksi;
+		this.id = idTransaksi;
 		this.dokumen = dokumen;
-		this.attribute = attribute;
 		this.tanggalTransaksi = tanggalTransaksi;
 		this.isBerlaku = isBerlaku;
 		this.perusahaan = perusahaan;
+		this.autorisasi = autorisasi;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public Autorisasi getAutorisasi() {
+		return autorisasi;
 	}
 
 	public Perusahaan getPerusahaan() {
@@ -34,16 +41,8 @@ public class TransaksiDokumen implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getIdTransaksi() {
-		return idTransaksi;
-	}
-
 	public Dokumen getDokumen() {
 		return dokumen;
-	}
-
-	public List<ItemAttributeDokumen<Object>> getAttribute() {
-		return attribute;
 	}
 
 	public Date getTanggalTransaksi() {
@@ -56,7 +55,7 @@ public class TransaksiDokumen implements Serializable {
 
 	public int hashCode() {
 		int hash = 19;
-		hash = 41 * hash + Objects.hashCode(this.idTransaksi);
+		hash = 41 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
 	
@@ -74,9 +73,9 @@ public class TransaksiDokumen implements Serializable {
             return false;
         }
         
-        final TransaksiDokumen other = (TransaksiDokumen) obj;
+        final RegisterDokumen other = (RegisterDokumen) obj;
         
-        if (!this.idTransaksi.equals(other.getIdTransaksi())) {
+        if (!this.id.equals(other.getId())) {
             return false;
         }
         
@@ -87,7 +86,7 @@ public class TransaksiDokumen implements Serializable {
 	public String toString() {
 		return "ItemTransaksiDokumen {"
 				.concat("id=")
-				.concat(this.idTransaksi)
+				.concat(this.id)
 				.concat(", ")
 				.concat("nama dokumen=")
 				.concat(this.dokumen.getNama())

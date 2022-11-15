@@ -1,15 +1,17 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
+import org.Sikoling.ejb.abstraction.entity.Autorisasi;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.ItemAttributeDokumen;
-import org.Sikoling.ejb.abstraction.entity.TransaksiDokumen;
+import org.Sikoling.ejb.abstraction.entity.HakAkses;
+import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
@@ -20,33 +22,37 @@ import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.repository.ITransaksiDokumenRepository;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
+import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
+import org.Sikoling.ejb.main.repository.person.KontakPersonData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.perusahaan.AlamatPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.KontakPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
 import jakarta.persistence.EntityManager;
 
-public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepository<TransaksiDokumen> {
+public class RegisterDokumenRepositoryJPA implements ITransaksiDokumenRepository<RegisterDokumen> {
 
 	private final EntityManager entityManager;	
 	
-	public TransaksiDokumenRepositoryJPA(EntityManager entityManager) {
+	public RegisterDokumenRepositoryJPA(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
 	@Override
-	public List<TransaksiDokumen> getAll() {
-		return entityManager.createNamedQuery("TransaksiDokumenData.findAll", TransaksiDokumenData.class)
+	public List<RegisterDokumen> getAll() {
+		return entityManager.createNamedQuery("TransaksiDokumenData.findAll", RegisterDokumenData.class)
 				.getResultList()
 				.stream()
 				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
@@ -54,8 +60,8 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 	}
 
 	@Override
-	public TransaksiDokumen save(TransaksiDokumen t) {
-		TransaksiDokumenData transaksiDokumenData = convertTransaksiDokumenToTransaksiDokumenData(t);
+	public RegisterDokumen save(RegisterDokumen t) {
+		RegisterDokumenData transaksiDokumenData = convertTransaksiDokumenToTransaksiDokumenData(t);
 		entityManager.persist(transaksiDokumenData);
 		entityManager.flush();
 		
@@ -63,99 +69,99 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 	}
 
 	@Override
-	public TransaksiDokumen update(TransaksiDokumen t) {
+	public RegisterDokumen update(RegisterDokumen t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<TransaksiDokumen> getAllByPage(Integer page, Integer pageSize) {
+	public List<RegisterDokumen> getAllByPage(Integer page, Integer pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<TransaksiDokumen> getByNama(String nama) {
+	public List<RegisterDokumen> getByNama(String nama) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<TransaksiDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<RegisterDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private TransaksiDokumen convertTransaksiDokumenDataToTransaksiDokumen(TransaksiDokumenData d) {
+	private RegisterDokumen convertTransaksiDokumenDataToTransaksiDokumen(RegisterDokumenData d) {
 		KategoriDokumen kategoriDokumen = new KategoriDokumen(
 				d.getDokumen().getKategori().getId(), 
 				d.getDokumen().getKategori().getNama(),
 				d.getDokumen().getKategori().getId());	
 		
 		Dokumen dokumen = new Dokumen(
-				d.getDokumen().getId(), 
-				kategoriDokumen, 
-				d.getDokumen().getNama());
+				d.getDokumen().getId(),
+				d.getDokumen().getNama(),				 
+				kategoriDokumen);
 		
-		Jsonb jsonb = JsonbBuilder.create();
-		@SuppressWarnings("serial")
-		List<ItemAttributeDokumen<Object>> attributeDokumen = jsonb
-				.fromJson(
-						d.getAttribute(), 
-						new ArrayList<ItemAttributeDokumen<Object>>(){}.getClass().getGenericSuperclass());
+//		Jsonb jsonb = JsonbBuilder.create();
+//		@SuppressWarnings("serial")
+//		List<ItemAttributeDokumen<Object>> attributeDokumen = jsonb
+//				.fromJson(
+//						d.getAttribute(), 
+//						new ArrayList<ItemAttributeDokumen<Object>>(){}.getClass().getGenericSuperclass());
 		
-//		AutorisasiData autorisasiData = d.getUploader();
-//		
-//		PersonData personData  = autorisasiData.getPersonData();
-//		
-//		JenisKelaminData jenisKelaminData = personData.getSex();
-//		
-//		AlamatPersonData alamatPersonData = personData.getAlamat();
-//		
-//		Propinsi propinsiPerson = new Propinsi(
-//				alamatPersonData.getPropinsi().getId(), 
-//				alamatPersonData.getPropinsi().getNama());
-//		
-//		Kabupaten kabupatenPerson = new Kabupaten(
-//				alamatPersonData.getKabupaten().getId(), 
-//				alamatPersonData.getKabupaten().getNama());
-//		
-//		Kecamatan kecamatanPerson = new Kecamatan(
-//				alamatPersonData.getKecamatan().getId(), 
-//				alamatPersonData.getKecamatan().getNama());
-//		
-//		Desa desaPerson = new Desa(
-//				alamatPersonData.getDesa().getId(), 
-//				alamatPersonData.getDesa().getNama());
-//		
-//		Alamat alamatPerson = new Alamat(
-//				propinsiPerson, kabupatenPerson, kecamatanPerson, 
-//				desaPerson, alamatPersonData.getDetailAlamat());
-//				
-//		KontakPersonData kontakPersonData = personData.getKontak();
-//		
-//		Kontak kontak = new Kontak(kontakPersonData.getTelepone(), null, kontakPersonData.getEmail());
-//		JenisKelamin jenisKelamin = new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama());
-//		
-//		Person person = new Person(
-//				personData.getId(), personData.getNama(), 
-//				jenisKelamin, 
-//				alamatPerson, personData.getScanKtp(), kontak);
-//		
-//		HakAksesData hakAksesData = autorisasiData.getHakAkses();
-//		HakAkses hakAkses = new HakAkses(
-//				hakAksesData.getId(), 
-//				hakAksesData.getNama(), 
-//				hakAksesData.getKeterangan());
-//		
-//		Autorisasi autorisasi = new Autorisasi(
-//				autorisasiData.getId(), 
-//				person, 
-//				autorisasiData.getIdLama(), 
-//				hakAkses, 
-//				autorisasiData.getStatusInternal(), 
-//				autorisasiData.getIsVerified(), 
-//				autorisasiData.getUserName());
+		AutorisasiData autorisasiData = d.getUploader();
+		
+		PersonData personData  = autorisasiData.getPersonData();
+		
+		JenisKelaminData jenisKelaminData = personData.getSex();
+		
+		AlamatPersonData alamatPersonData = personData.getAlamat();
+		
+		Propinsi propinsiPerson = new Propinsi(
+				alamatPersonData.getPropinsi().getId(), 
+				alamatPersonData.getPropinsi().getNama());
+		
+		Kabupaten kabupatenPerson = new Kabupaten(
+				alamatPersonData.getKabupaten().getId(), 
+				alamatPersonData.getKabupaten().getNama());
+		
+		Kecamatan kecamatanPerson = new Kecamatan(
+				alamatPersonData.getKecamatan().getId(), 
+				alamatPersonData.getKecamatan().getNama());
+		
+		Desa desaPerson = new Desa(
+				alamatPersonData.getDesa().getId(), 
+				alamatPersonData.getDesa().getNama());
+		
+		Alamat alamatPerson = new Alamat(
+				propinsiPerson, kabupatenPerson, kecamatanPerson, 
+				desaPerson, alamatPersonData.getDetailAlamat());
+				
+		KontakPersonData kontakPersonData = personData.getKontak();
+		
+		Kontak kontak = new Kontak(kontakPersonData.getTelepone(), null, kontakPersonData.getEmail());
+		JenisKelamin jenisKelamin = new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama());
+		
+		Person person = new Person(
+				personData.getId(), personData.getNama(), 
+				jenisKelamin, 
+				alamatPerson, personData.getScanKtp(), kontak);
+		
+		HakAksesData hakAksesData = autorisasiData.getHakAkses();
+		HakAkses hakAkses = new HakAkses(
+				hakAksesData.getId(), 
+				hakAksesData.getNama(), 
+				hakAksesData.getKeterangan());
+		
+		Autorisasi autorisasi = new Autorisasi(
+				autorisasiData.getId(), 
+				person, 
+				autorisasiData.getIdLama(), 
+				hakAkses, 
+				autorisasiData.getStatusInternal(), 
+				autorisasiData.getIsVerified(), 
+				autorisasiData.getUserName());
 		
 		PerusahaanData perusahaanData = d.getPerusahaan();
 		
@@ -206,16 +212,12 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 				alamatPerusahaan, 
 				kontakPerusahaan);
 		
-		return new TransaksiDokumen(
-				d.getId(), 
-				dokumen, 
-				attributeDokumen, 
-				d.getTanggalUpload(), 
-				d.getIsBerlaku(), 
-				perusahaan);
+		return new RegisterDokumen(
+				d.getId(), dokumen, d.getTanggalUpload(), 
+				d.getIsBerlaku(), perusahaan, autorisasi);
 	}
 	
-	private TransaksiDokumenData convertTransaksiDokumenToTransaksiDokumenData(TransaksiDokumen t) {		
+	private RegisterDokumenData convertTransaksiDokumenToTransaksiDokumenData(RegisterDokumen t) {		
 		
 		Perusahaan perusahaan = t.getPerusahaan();
 		
@@ -289,16 +291,20 @@ public class TransaksiDokumenRepositoryJPA implements ITransaksiDokumenRepositor
 		dokumenData.setNama(dokumen.getNama());
 		dokumenData.setKategori(kategoriDokumenData);
 		
-		Jsonb jsonb = JsonbBuilder.create();
-		List<ItemAttributeDokumen<Object>> attributeDokumen = t.getAttribute();
-		String attributeDokumenData = jsonb.toJson(attributeDokumen);
+//		Jsonb jsonb = JsonbBuilder.create();
+//		List<ItemAttributeDokumen<Object>> attributeDokumen = t.getAttribute();
+//		String attributeDokumenData = jsonb.toJson(attributeDokumen);
 		
-		TransaksiDokumenData transaksiDokumenData = new TransaksiDokumenData();
-		transaksiDokumenData.setId(t.getIdTransaksi());
+		RegisterDokumenData transaksiDokumenData = new RegisterDokumenData();
+		transaksiDokumenData.setId(t.getId());
 		transaksiDokumenData.setPerusahaan(perusahaanData);
 		transaksiDokumenData.setDokumen(dokumenData);
 		transaksiDokumenData.setTanggalUpload(t.getTanggalTransaksi());
-		transaksiDokumenData.setAttribute(attributeDokumenData);		
+		transaksiDokumenData.setIsBerlaku(true);
+		
+		AutorisasiData autorisasiData = new AutorisasiData();
+		//lakukan pengisian autorisasi data
+		transaksiDokumenData.setUploader(autorisasiData);
 		
 		return transaksiDokumenData;
 	}

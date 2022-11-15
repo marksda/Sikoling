@@ -81,7 +81,7 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 				d.getKategori().getId(), 
 				d.getKategori().getNama(), 
 				d.getKategori().getParent());
-		return new Dokumen(d.getId(), kategoriDokumen, d.getNama());
+		return new Dokumen(d.getId(), d.getNama(), kategoriDokumen);
 	}
 	
 	private DokumenData convertDokumenToDokumenData(Dokumen t) {
