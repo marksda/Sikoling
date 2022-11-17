@@ -20,7 +20,11 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name="transaksi.tbl_master_register_dokumen")
 @NamedQueries({
-	@NamedQuery(name="TransaksiDokumenData.findAll", query="SELECT d FROM TransaksiDokumenData d")
+	@NamedQuery(name="RegisterDokumenData.findAll", query="SELECT d FROM RegisterDokumenData d"),
+	@NamedQuery(name="RegisterDokumenData.findByNamaDokumen", query = "SELECT d FROM RegisterDokumenData d WHERE d.dokumen.nama LIKE :namaDokumen"),
+	@NamedQuery(name="RegisterDokumenData.findByIdDocument", query="SELECT d FROM RegisterDokumenData d WHERE d.dokumen.id = :idDokumen"),
+	@NamedQuery(name="RegisterDokumenData.findByNamaPerusahaan", query = "SELECT d FROM RegisterDokumenData d WHERE d.perusahaan.nama LIKE :namaPerusahaan"),
+	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaan", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaan.id = :idPerusahaan")
 })
 public class RegisterDokumenData implements Serializable {
 
@@ -29,11 +33,11 @@ public class RegisterDokumenData implements Serializable {
 	@Id
 	private String id;
 	
-	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private PerusahaanData perusahaan;
 	
-	@JoinColumn(name = "detail_dokumen", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "detail_dokumen", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private DokumenData dokumen;
 	

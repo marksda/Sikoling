@@ -6,21 +6,20 @@ import java.util.List;
 import java.util.Objects;
 
 
-/*
-** Sistem Online Single Submission (OSS)
-*/
-public class OSS implements Serializable {
+public class DokumenOss extends Dokumen implements Serializable {
 
 	private static final long serialVersionUID = -2123829934784643942L;
 	private final String nib;
 	private final Date tanggal;
-	private final List<KBLI> kblis;	
+	private final List<KBLI> daftarKbli;	
 
-	public OSS(String nib, Date tanggal, List<KBLI> kblis) {
-		super();
+
+	public DokumenOss(String id, String nama, KategoriDokumen kategoriDokumen, String nib, Date tanggal,
+			List<KBLI> daftarKbli) {
+		super(id, nama, kategoriDokumen);
 		this.nib = nib;
 		this.tanggal = tanggal;
-		this.kblis = kblis;
+		this.daftarKbli = daftarKbli;
 	}
 
 	public static long getSerialversionuid() {
@@ -35,8 +34,8 @@ public class OSS implements Serializable {
 		return tanggal;
 	}
 
-	public List<KBLI> getKblis() {
-		return kblis;
+	public List<KBLI> getDaftarKbli() {
+		return daftarKbli;
 	}
 	
 	public int hashCode() {
@@ -60,7 +59,7 @@ public class OSS implements Serializable {
             return false;
         }
         
-        final OSS other = (OSS) obj;
+        final DokumenOss other = (DokumenOss) obj;
         
         if (!this.nib.equalsIgnoreCase(other.nib)) {
             return false;

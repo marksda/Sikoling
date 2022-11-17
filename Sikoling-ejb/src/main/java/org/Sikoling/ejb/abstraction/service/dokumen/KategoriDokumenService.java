@@ -2,6 +2,7 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 
@@ -37,11 +38,21 @@ public class KategoriDokumenService implements IKategoriDokumenService {
 	public List<KategoriDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriDokumenRepository.getByNamaAndPage(nama, page, pageSize);
 	}
-
 	
 	@Override
 	public List<KategoriDokumen> getAll() {
 		return kategoriDokumenRepository.getAll();
+	}
+
+	@Override
+	public DeleteResponse delete(String Id) {
+		return kategoriDokumenRepository.delete(Id);
+	}
+	
+
+	@Override
+	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
+		return kategoriDokumenRepository.updateById(id, kategoriDokumen);
 	}
 
 }

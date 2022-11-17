@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -19,7 +21,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 @LocalBean
-@Path("kategori_dokumen")
+@Path("dokumen")
 public class DokumenController {
 	
 	@Inject
@@ -35,8 +37,14 @@ public class DokumenController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DokumenDTO update(DokumenDTO d) {
-		return new DokumenDTO(dokumenService.update(d.toDokumen()));
+	public DokumenDTO update(@QueryParam("id") String id, DokumenDTO d) {
+		return new DokumenDTO(dokumenService.updateById(id, d.toDokumen()));
+	}
+	
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	public DeleteResponseDTO delete(@QueryParam("id") String id) {
+		return new DeleteResponseDTO(dokumenService.delete(id));
 	}
 	
 	@GET

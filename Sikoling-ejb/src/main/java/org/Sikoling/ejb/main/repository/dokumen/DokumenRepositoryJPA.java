@@ -3,6 +3,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
@@ -96,6 +97,25 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 		dokumenData.setKategori(kategoriDokumenData);
 		
 		return dokumenData;
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		DokumenData dokumenData = entityManager.find(DokumenData.class, id);
+		entityManager.remove(dokumenData);		
+		return new DeleteResponse(true, id);
+	}
+
+	@Override
+	public Dokumen updateById(String id, Dokumen dokumen) {
+		DokumenData updateData = convertDokumenToDokumenData(dokumen);
+		DokumenData dokumenData = entityManager.find(DokumenData.class, id);
+		dokumenData.setId(updateData.getId());
+		dokumenData.setKategori(updateData.getKategori());
+		dokumenData.setNama(updateData.getNama());
+		dokumenData = entityManager.merge(dokumenData);
+		return convertDokumenDataToDokumen(dokumenData);
 	}
 
 }

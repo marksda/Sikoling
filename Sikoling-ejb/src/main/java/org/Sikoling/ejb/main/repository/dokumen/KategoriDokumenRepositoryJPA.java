@@ -3,6 +3,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import jakarta.persistence.EntityManager;
@@ -87,5 +88,24 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 		kategoriDokumenPerusahaanData.setParent(t.getParent());
 		
 		return kategoriDokumenPerusahaanData;
+	}
+	
+	@Override
+	public DeleteResponse delete(String Id) {
+		KategoriDokumen kategoriDokumen = entityManager.find(KategoriDokumen.class, Id);
+		entityManager.remove(kategoriDokumen);		
+		return new DeleteResponse(true, Id);
+	}
+
+	
+	@Override
+	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
+		KategoriDokumenData updateData = convertKategoriDokumenPerusahaanToKategoriDokumenPerusahaanData(kategoriDokumen);
+		KategoriDokumenData kategoriDokumenData = entityManager.find(KategoriDokumenData.class, id);
+		kategoriDokumenData.setId(updateData.getId());
+		kategoriDokumenData.setNama(updateData.getNama());
+		kategoriDokumenData.setParent(updateData.getNama());
+		kategoriDokumenData = entityManager.merge(kategoriDokumenData);
+		return convertKategoriDokumenPerusahaanDataToKategoriDokumenPerusahaan(kategoriDokumenData);
 	}
 }

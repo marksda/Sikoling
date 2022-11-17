@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -46,6 +47,17 @@ public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository 
 	@Override
 	public List<KategoriDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriDokumenPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String Id) {
+		return kategoriDokumenPerusahaanRepository.delete(Id);
+	}
+
+	@Override
+	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
+		return kategoriDokumenPerusahaanRepository.updateById(id, kategoriDokumen);
 	}
 
 }

@@ -49,7 +49,7 @@ public class RegisterDokumen implements Serializable {
 		return tanggalTransaksi;
 	}
 
-	public boolean isBerlaku() {
+	public boolean getIsBerlaku() {
 		return isBerlaku;
 	}
 

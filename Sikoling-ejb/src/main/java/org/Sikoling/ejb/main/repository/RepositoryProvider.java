@@ -8,6 +8,7 @@ import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenRepositoryJPA;
+import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesRepositoryJPA;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
@@ -152,6 +153,11 @@ public class RepositoryProvider {
 	@Produces
 	public DokumenRepositoryJPA getDokumenRepositoryJPA(EntityManager entityManager) {
 		return new DokumenRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public RegisterDokumenRepositoryJPA getRegisterDokumenRepositoryJPA(EntityManager entityManager) {
+		return new RegisterDokumenRepositoryJPA(entityManager);
 	}
 	
 	@Produces

@@ -3,46 +3,36 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Alamat;
-import org.Sikoling.ejb.abstraction.entity.Autorisasi;
-import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.Alamat;
+import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.HakAkses;
-import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
+import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
+import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
-import org.Sikoling.ejb.abstraction.repository.ITransaksiDokumenRepository;
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
-import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
-import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
-import org.Sikoling.ejb.main.repository.person.KontakPersonData;
-import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.perusahaan.AlamatPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.KontakPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 import jakarta.persistence.EntityManager;
 
-public class RegisterDokumenRepositoryJPA implements ITransaksiDokumenRepository<RegisterDokumen> {
+public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository {
 
 	private final EntityManager entityManager;	
 	
@@ -52,7 +42,7 @@ public class RegisterDokumenRepositoryJPA implements ITransaksiDokumenRepository
 	
 	@Override
 	public List<RegisterDokumen> getAll() {
-		return entityManager.createNamedQuery("TransaksiDokumenData.findAll", RegisterDokumenData.class)
+		return entityManager.createNamedQuery("RegisterDokumenData.findAll", RegisterDokumenData.class)
 				.getResultList()
 				.stream()
 				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
@@ -61,253 +51,229 @@ public class RegisterDokumenRepositoryJPA implements ITransaksiDokumenRepository
 
 	@Override
 	public RegisterDokumen save(RegisterDokumen t) {
-		RegisterDokumenData transaksiDokumenData = convertTransaksiDokumenToTransaksiDokumenData(t);
-		entityManager.persist(transaksiDokumenData);
+		RegisterDokumenData registerDokumenData = convertTransaksiDokumenToTransaksiDokumenData(t);
+		entityManager.persist(registerDokumenData);
 		entityManager.flush();
-		
-		return convertTransaksiDokumenDataToTransaksiDokumen(transaksiDokumenData);
+		//save detailnya disini
+		return convertTransaksiDokumenDataToTransaksiDokumen(registerDokumenData);
 	}
 
 	@Override
 	public RegisterDokumen update(RegisterDokumen t) {
-		// TODO Auto-generated method stub
-		return null;
+		RegisterDokumenData registerDokumenData = convertTransaksiDokumenToTransaksiDokumenData(t);
+		registerDokumenData = entityManager.merge(registerDokumenData);
+		return convertTransaksiDokumenDataToTransaksiDokumen(registerDokumenData);
 	}
 
 	@Override
 	public List<RegisterDokumen> getAllByPage(Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.createNamedQuery("RegisterDokumenData.findAll", RegisterDokumenData.class)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(t -> convertTransaksiDokumenDataToTransaksiDokumen(t))
+				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<RegisterDokumen> getByNama(String nama) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RegisterDokumen> getByNamaPerusahaan(String namaPerusahaan) {
+		namaPerusahaan = "%" + namaPerusahaan + "%";
+		return entityManager.createNamedQuery("RegisterDokumenData.findByNamaPerusahaan", RegisterDokumenData.class)
+				.setParameter("namaPerusahaan", namaPerusahaan)
+				.getResultList()
+				.stream()
+				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
+				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<RegisterDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private RegisterDokumen convertTransaksiDokumenDataToTransaksiDokumen(RegisterDokumenData d) {
-		KategoriDokumen kategoriDokumen = new KategoriDokumen(
-				d.getDokumen().getKategori().getId(), 
-				d.getDokumen().getKategori().getNama(),
-				d.getDokumen().getKategori().getId());	
-		
-		Dokumen dokumen = new Dokumen(
-				d.getDokumen().getId(),
-				d.getDokumen().getNama(),				 
-				kategoriDokumen);
-		
-//		Jsonb jsonb = JsonbBuilder.create();
-//		@SuppressWarnings("serial")
-//		List<ItemAttributeDokumen<Object>> attributeDokumen = jsonb
-//				.fromJson(
-//						d.getAttribute(), 
-//						new ArrayList<ItemAttributeDokumen<Object>>(){}.getClass().getGenericSuperclass());
-		
-		AutorisasiData autorisasiData = d.getUploader();
-		
-		PersonData personData  = autorisasiData.getPersonData();
-		
-		JenisKelaminData jenisKelaminData = personData.getSex();
-		
-		AlamatPersonData alamatPersonData = personData.getAlamat();
-		
-		Propinsi propinsiPerson = new Propinsi(
-				alamatPersonData.getPropinsi().getId(), 
-				alamatPersonData.getPropinsi().getNama());
-		
-		Kabupaten kabupatenPerson = new Kabupaten(
-				alamatPersonData.getKabupaten().getId(), 
-				alamatPersonData.getKabupaten().getNama());
-		
-		Kecamatan kecamatanPerson = new Kecamatan(
-				alamatPersonData.getKecamatan().getId(), 
-				alamatPersonData.getKecamatan().getNama());
-		
-		Desa desaPerson = new Desa(
-				alamatPersonData.getDesa().getId(), 
-				alamatPersonData.getDesa().getNama());
-		
-		Alamat alamatPerson = new Alamat(
-				propinsiPerson, kabupatenPerson, kecamatanPerson, 
-				desaPerson, alamatPersonData.getDetailAlamat());
-				
-		KontakPersonData kontakPersonData = personData.getKontak();
-		
-		Kontak kontak = new Kontak(kontakPersonData.getTelepone(), null, kontakPersonData.getEmail());
-		JenisKelamin jenisKelamin = new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama());
-		
-		Person person = new Person(
-				personData.getId(), personData.getNama(), 
-				jenisKelamin, 
-				alamatPerson, personData.getScanKtp(), kontak);
-		
-		HakAksesData hakAksesData = autorisasiData.getHakAkses();
-		HakAkses hakAkses = new HakAkses(
-				hakAksesData.getId(), 
-				hakAksesData.getNama(), 
-				hakAksesData.getKeterangan());
-		
-		Autorisasi autorisasi = new Autorisasi(
-				autorisasiData.getId(), 
-				person, 
-				autorisasiData.getIdLama(), 
-				hakAkses, 
-				autorisasiData.getStatusInternal(), 
-				autorisasiData.getIsVerified(), 
-				autorisasiData.getUserName());
-		
-		PerusahaanData perusahaanData = d.getPerusahaan();
-		
-		ModelPerizinanData modelPerizinanData = perusahaanData.getModelPerizinanData();
-		ModelPerizinan modelPerizinan = new ModelPerizinan(modelPerizinanData.getId(), 
-				modelPerizinanData.getNama(), modelPerizinanData.getSingkatan());
-		
-		SkalaUsahaData skalaUsahaData = perusahaanData.getSkalaUsaha();
-		SkalaUsaha skalaUsaha = new SkalaUsaha(skalaUsahaData.getId(), 
-				skalaUsahaData.getNama(), skalaUsahaData.getSingkatan());
-		
-		PelakuUsahaData pelakuUsahaData = perusahaanData.getPelakuUsahaData();
-		KategoriPelakuUsahaData kategoriPelakuUsahaData = pelakuUsahaData.getKategoriPelakuUsahaData();
-		KategoriPelakuUsaha kategoriPelakuUsaha = new KategoriPelakuUsaha(kategoriPelakuUsahaData.getId(), 
-				kategoriPelakuUsahaData.getNama());
-		PelakuUsaha detailPelakuUsaha = new PelakuUsaha(
-				pelakuUsahaData.getId(), pelakuUsahaData.getNama(), 
-				pelakuUsahaData.getSingkatan(), kategoriPelakuUsaha);
-		
-		AlamatPerusahaanData alamatPerusahaanData = perusahaanData.getAlamatPerusahaanData();
-		PropinsiData propinsiDataPerusahaan = alamatPerusahaanData.getPropinsi();
-		Propinsi propinsiPerusahaan = new Propinsi(
-				propinsiDataPerusahaan.getId(), propinsiDataPerusahaan.getNama());
-		KabupatenData kabupatenDataPerusahaan = alamatPerusahaanData.getKabupaten();
-		Kabupaten kabupatenPerusahaan = new Kabupaten(
-				kabupatenDataPerusahaan.getId(), kabupatenDataPerusahaan.getNama());
-		KecamatanData kecamatanDataPerusahaan = alamatPerusahaanData.getKecamatan();
-		Kecamatan kecamatanPerusahaan = new Kecamatan(
-				kecamatanDataPerusahaan.getId(), kecamatanDataPerusahaan.getNama());
-		DesaData desaDataPerusahaan = alamatPerusahaanData.getDesa();
-		Desa desaPerusahaan = new Desa(desaDataPerusahaan.getId(), desaDataPerusahaan.getNama());
-		
-		Alamat alamatPerusahaan = new Alamat(
-				propinsiPerusahaan, kabupatenPerusahaan, kecamatanPerusahaan, 
-				desaPerusahaan, alamatPerusahaanData.getKeterangan());
-		
-		KontakPerusahaanData kontakData = perusahaanData.getKontakPerusahaanData();
-		Kontak kontakPerusahaan = new Kontak(
-				kontakData.getTelepone(), kontakData.getFax(), kontakData.getEmail());
-		
-		
-		Perusahaan perusahaan = new Perusahaan(
-				perusahaanData.getId(), 
-				perusahaanData.getNama(), 
-				modelPerizinan, 
-				skalaUsaha,
-				detailPelakuUsaha, 
-				alamatPerusahaan, 
-				kontakPerusahaan);
-		
-		return new RegisterDokumen(
-				d.getId(), dokumen, d.getTanggalUpload(), 
-				d.getIsBerlaku(), perusahaan, autorisasi);
+	public List<RegisterDokumen> getByNamaPerusahaanAndPage(String namaPerusahaan, Integer page, Integer pageSize) {
+		namaPerusahaan = "%" + namaPerusahaan + "%";
+		return entityManager.createNamedQuery("RegisterDokumenData.findByNamaPerusahaan", RegisterDokumenData.class)
+				.setParameter("namaPerusahaan", namaPerusahaan)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(t -> convertTransaksiDokumenDataToTransaksiDokumen(t))
+				.collect(Collectors.toList());
 	}
 	
-	private RegisterDokumenData convertTransaksiDokumenToTransaksiDokumenData(RegisterDokumen t) {		
-		
-		Perusahaan perusahaan = t.getPerusahaan();
-		
-		Alamat alamatPerusahaan = perusahaan.getAlamat();
-		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
-		Propinsi propinsiPerusahaan = alamatPerusahaan.getPropinsi();
-		PropinsiData propinsiPerusahaanData = new PropinsiData();
-		propinsiPerusahaanData.setId(propinsiPerusahaan.getId());
-		propinsiPerusahaanData.setNama(propinsiPerusahaan.getNama());
-		Kabupaten kabupatenPerusahaan = alamatPerusahaan.getKabupaten();
-		KabupatenData kabupatenPerusahaanData = new KabupatenData();
-		kabupatenPerusahaanData.setId(kabupatenPerusahaan.getId());
-		kabupatenPerusahaanData.setNama(kabupatenPerusahaan.getNama());
-		kabupatenPerusahaanData.setPropinsi(propinsiPerusahaanData);
-		Kecamatan kecamatanPerusahaan = alamatPerusahaan.getKecamatan();
-		KecamatanData kecamatanPerusahaanData = new KecamatanData();
-		kecamatanPerusahaanData.setId(kecamatanPerusahaan.getId());
-		kecamatanPerusahaanData.setNama(kecamatanPerusahaan.getNama());
-		kecamatanPerusahaanData.setKabupaten(kabupatenPerusahaanData);
-		Desa desaPerusahaan = alamatPerusahaan.getDesa();
-		DesaData desaPerusahaanData = new DesaData();
-		desaPerusahaanData.setId(desaPerusahaan.getId());
-		desaPerusahaanData.setNama(desaPerusahaan.getNama());
-		desaPerusahaanData.setKecamatan(kecamatanPerusahaanData);		
-		alamatPerusahaanData.setPropinsi(propinsiPerusahaanData);
-		alamatPerusahaanData.setKabupaten(kabupatenPerusahaanData);
-		alamatPerusahaanData.setKecamatan(kecamatanPerusahaanData);
-		alamatPerusahaanData.setDesa(desaPerusahaanData);
-		alamatPerusahaanData.setKeterangan(alamatPerusahaan.getKeterangan());
-		
-		
-		ModelPerizinan modelPerizinan = perusahaan.getModelPerizinan();
-		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
-		modelPerizinanData.setId(modelPerizinan.getId());
-		modelPerizinanData.setNama(modelPerizinan.getNama());
-		modelPerizinanData.setSingkatan(modelPerizinan.getSingkatan());
-		
-		SkalaUsaha skalaUsaha = perusahaan.getSkalaUsaha();
-		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
-		skalaUsahaData.setId(skalaUsaha.getId());
-		skalaUsahaData.setNama(skalaUsaha.getNama());
-		skalaUsahaData.setSingkatan(skalaUsaha.getSingkatan());
-		
-		PelakuUsaha pelakuUsaha = perusahaan.getPelakuUsaha();
-		KategoriPelakuUsaha kategoriPelakuUsaha = pelakuUsaha.getKategoriPelakuUsaha();
-		KategoriPelakuUsahaData kategoriPelakuUsahaData = new KategoriPelakuUsahaData();
-		kategoriPelakuUsahaData.setId(kategoriPelakuUsaha.getId());
-		kategoriPelakuUsahaData.setNama(kategoriPelakuUsaha.getNama());
-		
-		PelakuUsahaData pelakuUsahaData = new PelakuUsahaData();
-		pelakuUsahaData.setId(pelakuUsaha.getId());
-		pelakuUsahaData.setNama(pelakuUsaha.getNama());
-		pelakuUsahaData.setSingkatan(pelakuUsaha.getSingkatan());
-		pelakuUsahaData.setKategoriPelakuUsahaData(kategoriPelakuUsahaData);
-
-		PerusahaanData perusahaanData = new PerusahaanData();
-		perusahaanData.setId(perusahaan.getId());
-		perusahaanData.setNama(perusahaan.getNama());
-		perusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
-		perusahaanData.setModelPerizinanData(modelPerizinanData);
-		perusahaanData.setSkalaUsaha(skalaUsahaData);
-		perusahaanData.setPelakuUsahaData(pelakuUsahaData);		
-		
-		Dokumen dokumen = t.getDokumen();
-		DokumenData dokumenData = new DokumenData();
-		KategoriDokumen kategoriDokumen = dokumen.getKategoriDokumen();
-		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
-		kategoriDokumenData.setId(kategoriDokumen.getId());
-		kategoriDokumenData.setNama(kategoriDokumen.getNama());
-		dokumenData.setId(dokumen.getId());
-		dokumenData.setNama(dokumen.getNama());
-		dokumenData.setKategori(kategoriDokumenData);
-		
-//		Jsonb jsonb = JsonbBuilder.create();
-//		List<ItemAttributeDokumen<Object>> attributeDokumen = t.getAttribute();
-//		String attributeDokumenData = jsonb.toJson(attributeDokumen);
-		
-		RegisterDokumenData transaksiDokumenData = new RegisterDokumenData();
-		transaksiDokumenData.setId(t.getId());
-		transaksiDokumenData.setPerusahaan(perusahaanData);
-		transaksiDokumenData.setDokumen(dokumenData);
-		transaksiDokumenData.setTanggalUpload(t.getTanggalTransaksi());
-		transaksiDokumenData.setIsBerlaku(true);
-		
-		AutorisasiData autorisasiData = new AutorisasiData();
-		//lakukan pengisian autorisasi data
-		transaksiDokumenData.setUploader(autorisasiData);
-		
-		return transaksiDokumenData;
+	@Override
+	public List<RegisterDokumen> getByIdPerusahaan(String idPerusahaan) {
+		return entityManager.createNamedQuery("RegisterDokumenData.findByIdPerusahaan", RegisterDokumenData.class)
+				.setParameter("idPerusahaan", idPerusahaan)
+				.getResultList()
+				.stream()
+				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
+				.collect(Collectors.toList());
 	}
 
+	
+	@Override
+	public List<RegisterDokumen> getByIdPerusahaanAndPage(String idPerusahaan, Integer page, Integer pageSize) {
+		return entityManager.createNamedQuery("RegisterDokumenData.findByIdPerusahaan", RegisterDokumenData.class)
+				.setParameter("idPerusahaan", idPerusahaan)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(t -> convertTransaksiDokumenDataToTransaksiDokumen(t))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<RegisterDokumen> getByNamaDokumen(String namaDokumen) {
+		namaDokumen = "%" + namaDokumen + "%";
+		return entityManager.createNamedQuery("RegisterDokumenData.findByNamaDokumen", RegisterDokumenData.class)
+				.setParameter("namaDokumen", namaDokumen)
+				.getResultList()
+				.stream()
+				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<RegisterDokumen> getByNamaDokumenAndPage(String namaDokumen, Integer page, Integer pageSize) {
+		namaDokumen = "%" + namaDokumen + "%";
+		return entityManager.createNamedQuery("RegisterDokumenData.findByNamaDokumen", RegisterDokumenData.class)
+				.setParameter("namaDokumen", namaDokumen)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<RegisterDokumen> getByIdDokumen(String idDokumen) {
+		return entityManager.createNamedQuery("RegisterDokumenData.findByIdDocument", RegisterDokumenData.class)
+				.setParameter("idDokumen", idDokumen)
+				.getResultList()
+				.stream()
+				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
+				.collect(Collectors.toList());
+	}
+
+	
+	@Override
+	public List<RegisterDokumen> getByIdDokumenAndPage(String idDokumen, Integer page, Integer pageSize) {
+		return entityManager.createNamedQuery("RegisterDokumenData.findByIdDocument", RegisterDokumenData.class)
+				.setParameter("idDokumen", idDokumen)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
+				.collect(Collectors.toList());
+	}
+
+	private Dokumen convertDokumenDataToDokumen(DokumenData d) {		
+		return new Dokumen(
+				d.getId(), 
+				d.getNama(),
+				new KategoriDokumen(d.getKategori().getId(), d.getKategori().getNama(), d.getKategori().getParent())
+				);
+	}
+	
+	private Perusahaan convertPerusahaanDataToPerusahaan(PerusahaanData d) {
+		ModelPerizinanData modelPerizinanData = d.getModelPerizinanData();
+		SkalaUsahaData skalaUsahaData = d.getSkalaUsaha();
+		PelakuUsahaData pelakuUsahaData = d.getPelakuUsahaData();
+		KategoriPelakuUsahaData kategoriPelakuUsahaData = pelakuUsahaData.getKategoriPelakuUsahaData();
+		AlamatPerusahaanData alamatPerusahaanData = d.getAlamatPerusahaanData();
+		PropinsiData propinsiDataPerusahaan = alamatPerusahaanData.getPropinsi();
+		KabupatenData kabupatenDataPerusahaan = alamatPerusahaanData.getKabupaten();
+		KecamatanData kecamatanDataPerusahaan = alamatPerusahaanData.getKecamatan();
+		DesaData desaDataPerusahaan = alamatPerusahaanData.getDesa();
+		KontakPerusahaanData kontakData = d.getKontakPerusahaanData();
+		
+		return new Perusahaan(
+				d.getId(), 
+				d.getNama(), 
+				new ModelPerizinan(
+						modelPerizinanData.getId(), 
+						modelPerizinanData.getNama(), 
+						modelPerizinanData.getSingkatan()
+						), 
+				new SkalaUsaha(
+						skalaUsahaData.getId(), 
+						skalaUsahaData.getNama(), 
+						skalaUsahaData.getSingkatan()
+						), 
+				new PelakuUsaha(
+						pelakuUsahaData.getId(), 
+						pelakuUsahaData.getNama(), 
+						pelakuUsahaData.getSingkatan(), 
+						new KategoriPelakuUsaha(kategoriPelakuUsahaData.getId(), kategoriPelakuUsahaData.getNama())
+						), 
+				new Alamat(
+						new Propinsi(
+								propinsiDataPerusahaan.getId(), 
+								propinsiDataPerusahaan.getNama()
+								), 
+						new Kabupaten(
+								kabupatenDataPerusahaan.getId(), 
+								kabupatenDataPerusahaan.getNama()
+								), 
+						new Kecamatan(
+								kecamatanDataPerusahaan.getId(), 
+								kecamatanDataPerusahaan.getNama()
+								), 
+						new Desa(
+								desaDataPerusahaan.getId(), 
+								desaDataPerusahaan.getNama()
+								), 
+						alamatPerusahaanData.getKeterangan()), 
+				new Kontak(
+						kontakData.getTelepone(), 
+						kontakData.getFax(), 
+						kontakData.getEmail()
+						)
+				);
+	}
+	
+	private RegisterDokumen convertTransaksiDokumenDataToTransaksiDokumen(RegisterDokumenData d) {
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, d.getId());
+		
+		return new RegisterDokumen(
+				registerDokumenData.getId(), 
+				convertDokumenDataToDokumen(registerDokumenData.getDokumen()), 
+				registerDokumenData.getTanggalUpload(), 
+				registerDokumenData.getIsBerlaku(), 
+				convertPerusahaanDataToPerusahaan(registerDokumenData.getPerusahaan()), null);
+
+	}
+	
+	private RegisterDokumenData convertTransaksiDokumenToTransaksiDokumenData(RegisterDokumen t) {	
+		
+		RegisterDokumenData registerDokumenData = new RegisterDokumenData();
+		
+		//setId
+		registerDokumenData.setId(t.getId());
+		
+		//setPerusahaan		
+		PerusahaanData perusahaanData = new PerusahaanData();
+		perusahaanData.setId(t.getPerusahaan().getId());
+		registerDokumenData.setPerusahaan(perusahaanData);
+		
+		//setDokumen
+		DokumenData dokumenData = new DokumenData();
+		dokumenData.setId(t.getDokumen().getId());
+		registerDokumenData.setDokumen(dokumenData);
+		
+		//setTanggalUpload
+		registerDokumenData.setTanggalUpload(t.getTanggalTransaksi());
+		
+		//setIsBerlaku
+		registerDokumenData.setIsBerlaku(true);
+		
+		return registerDokumenData;
+	}
 	
 }

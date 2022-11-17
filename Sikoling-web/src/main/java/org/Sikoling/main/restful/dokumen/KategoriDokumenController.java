@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IKategoriDokumenService;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -34,8 +37,14 @@ public class KategoriDokumenController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KategoriDokumenDTO update(KategoriDokumenDTO d) {
-		return new KategoriDokumenDTO(kategoriDokumenService.update(d.toKategoriDokumen()));
+	public KategoriDokumenDTO update(@QueryParam("id") String id, KategoriDokumenDTO d) {
+		return new KategoriDokumenDTO(kategoriDokumenService.updateById(id, d.toKategoriDokumen()));
+	}
+	
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	public DeleteResponseDTO delete(@QueryParam("id") String id) {
+		return new DeleteResponseDTO(kategoriDokumenService.delete(id));
 	}
 	
 	@GET

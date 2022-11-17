@@ -20,38 +20,31 @@ public class DokumenDTO implements Serializable {
 		this.nama = dokumen.getNama();
 		this.kategori = new KategoriDokumenDTO(dokumen.getKategoriDokumen());
 	}
-
 	
 	public String getId() {
 		return id;
 	}
-
 	
 	public void setId(String id) {
 		this.id = id;
 	}
 	
-
 	public String getNama() {
 		return nama;
 	}
 	
-
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
 	
-
 	public KategoriDokumenDTO getKategori() {
 		return kategori;
 	}
 	
-
 	public void setKategori(KategoriDokumenDTO kategori) {
 		this.kategori = kategori;
 	}
 	
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

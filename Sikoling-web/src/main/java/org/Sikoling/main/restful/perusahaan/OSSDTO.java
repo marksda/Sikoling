@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import org.Sikoling.ejb.abstraction.entity.OSS;
+import org.Sikoling.ejb.abstraction.entity.DokumenOss;
 
 
 public class OSSDTO implements Serializable {
@@ -19,10 +19,10 @@ public class OSSDTO implements Serializable {
 		
 	}
 	
-	public OSSDTO(OSS oss) {
+	public OSSDTO(DokumenOss oss) {
 		this.nib = oss.getNib();
 		this.tanggal = oss.getTanggal();
-		this.kblis = oss.getKblis()
+		this.kblis = oss.getDaftarKbli()
 				.stream()
 				.map(t -> new KBLIDTO(t))
 				.collect(Collectors.toList());
@@ -98,8 +98,10 @@ public class OSSDTO implements Serializable {
 		return "OSSDTO{" + "nib=" + nib + ", tanggal=" + tanggal.toString() + '}';	  
 	}
 	
-	public OSS toOSS() {
-		return new OSS(nib, tanggal, kblis.stream().map(d -> d.toKBLI()).collect(Collectors.toList()));
+	public DokumenOss toOSS() {
+		return new DokumenOss(nib, nib, null, nib, tanggal, null);				
+				
+//				nib, tanggal, kblis.stream().map(d -> d.toKBLI()).collect(Collectors.toList()));
 	}
 
 }
