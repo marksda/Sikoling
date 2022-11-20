@@ -2,11 +2,14 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 
 public interface IRegisterDokumenService {
 	RegisterDokumen save(RegisterDokumen registerDokumen);
 	RegisterDokumen update(RegisterDokumen registerDokumen);
+	RegisterDokumen updateById(String id, RegisterDokumen registerDokumen);
+	DeleteResponse delete(String id);
 	List<RegisterDokumen> getAll();
 	List<RegisterDokumen> getAllByPage(Integer page, Integer pageSize);
 	List<RegisterDokumen> getByNamaPerusahaan(String namaPerusahaan);

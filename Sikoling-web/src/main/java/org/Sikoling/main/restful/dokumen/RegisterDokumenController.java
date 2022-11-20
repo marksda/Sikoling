@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -28,15 +30,21 @@ public class RegisterDokumenController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public RegisterDokumenDTO save(RegisterDokumenDTO d) {
+	public RegisterDokumenDTO save(RegisterDokumenDTO d) {		
 		return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public RegisterDokumenDTO update(RegisterDokumenDTO d) {
-		return new RegisterDokumenDTO(registerDokumenService.update(d.toRegisterDokumen()));
+	public RegisterDokumenDTO update(@QueryParam("id") String id, RegisterDokumenDTO d) {
+		return new RegisterDokumenDTO(registerDokumenService.updateById(id, d.toRegisterDokumen()));
+	}
+
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	public DeleteResponseDTO delete(@QueryParam("id") String id) {
+		return new DeleteResponseDTO(registerDokumenService.delete(id));
 	}
 	
 	@GET

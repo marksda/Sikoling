@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -76,6 +77,18 @@ public class RegisterDokumenRepositoryEJB implements IRegisterDokumenRepository 
 	@Override
 	public List<RegisterDokumen> getByIdDokumenAndPage(String idDokumen, Integer page, Integer pageSize) {
 		return RegisterDokumenRepository.getByIdDokumenAndPage(idDokumen, page, pageSize);
+	}
+
+	
+	@Override
+	public RegisterDokumen updateById(String id, RegisterDokumen registerDokumen) {
+		return RegisterDokumenRepository.updateById(id, registerDokumen);
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		return RegisterDokumenRepository.delete(id);
 	}
 
 }

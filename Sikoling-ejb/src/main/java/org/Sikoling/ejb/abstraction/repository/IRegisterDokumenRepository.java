@@ -2,9 +2,12 @@ package org.Sikoling.ejb.abstraction.repository;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 
 public interface IRegisterDokumenRepository extends IRepository<RegisterDokumen> {
+	DeleteResponse delete(String id);
+	RegisterDokumen updateById(String id, RegisterDokumen registerDokumen);
 	List<RegisterDokumen> getAllByPage(Integer page, Integer pageSize);
 	List<RegisterDokumen> getByNamaPerusahaan(String namaPerusahaan);
 	List<RegisterDokumen> getByNamaPerusahaanAndPage(String namaPerusahaan, Integer page, Integer pageSize);	

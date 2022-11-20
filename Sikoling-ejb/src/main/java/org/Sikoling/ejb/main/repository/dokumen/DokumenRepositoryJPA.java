@@ -98,7 +98,6 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 		
 		return dokumenData;
 	}
-
 	
 	@Override
 	public DeleteResponse delete(String id) {

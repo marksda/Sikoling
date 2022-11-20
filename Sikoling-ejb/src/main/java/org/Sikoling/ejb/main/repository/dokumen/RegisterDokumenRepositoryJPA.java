@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
@@ -53,8 +54,9 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	public RegisterDokumen save(RegisterDokumen t) {
 		RegisterDokumenData registerDokumenData = convertTransaksiDokumenToTransaksiDokumenData(t);
 		entityManager.persist(registerDokumenData);
-		entityManager.flush();
 		//save detailnya disini
+		entityManager.flush();
+		
 		return convertTransaksiDokumenDataToTransaksiDokumen(registerDokumenData);
 	}
 
@@ -109,7 +111,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<RegisterDokumen> getByIdPerusahaanAndPage(String idPerusahaan, Integer page, Integer pageSize) {
@@ -122,7 +123,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.map(t -> convertTransaksiDokumenDataToTransaksiDokumen(t))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<RegisterDokumen> getByNamaDokumen(String namaDokumen) {
@@ -134,7 +134,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<RegisterDokumen> getByNamaDokumenAndPage(String namaDokumen, Integer page, Integer pageSize) {
@@ -148,7 +147,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<RegisterDokumen> getByIdDokumen(String idDokumen) {
@@ -159,7 +157,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.map(d -> convertTransaksiDokumenDataToTransaksiDokumen(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public List<RegisterDokumen> getByIdDokumenAndPage(String idDokumen, Integer page, Integer pageSize) {
@@ -274,6 +271,28 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		registerDokumenData.setIsBerlaku(true);
 		
 		return registerDokumenData;
+	}
+
+	
+	@Override
+	public RegisterDokumen updateById(String id, RegisterDokumen registerDokumen) {
+		RegisterDokumenData updateData = convertTransaksiDokumenToTransaksiDokumenData(registerDokumen);
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, id);
+		registerDokumenData.setId(id);
+		registerDokumenData.setPerusahaan(updateData.getPerusahaan());
+		registerDokumenData.setDokumen(updateData.getDokumen());
+		registerDokumenData.setTanggalUpload(updateData.getTanggalUpload());
+		registerDokumenData.setIsBerlaku(updateData.getIsBerlaku());
+		
+		return convertTransaksiDokumenDataToTransaksiDokumen(registerDokumenData);
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, id);
+		entityManager.remove(registerDokumenData);
+		return new DeleteResponse(true, id);
 	}
 	
 }

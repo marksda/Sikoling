@@ -2,6 +2,7 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 
@@ -71,6 +72,18 @@ public class RegisterDokumenService implements IRegisterDokumenService {
 	@Override
 	public List<RegisterDokumen> getAll() {
 		return registerDokumenRepository.getAll();
+	}
+
+	
+	@Override
+	public RegisterDokumen updateById(String id, RegisterDokumen registerDokumen) {
+		return registerDokumenRepository.updateById(id, registerDokumen);
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		return registerDokumenRepository.delete(id);
 	}
 
 }
