@@ -63,7 +63,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
 	}
-
 	
 	@Override
 	public RegisterDokumen update(RegisterDokumen t) {
@@ -71,7 +70,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		registerDokumenData = entityManager.merge(registerDokumenData);
 		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
 	}
-
 	
 	@Override
 	public List<RegisterDokumen> getAllByPage(Integer page, Integer pageSize) {
@@ -156,7 +154,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	@Override
 	public List<RegisterDokumen> getByIdDokumen(String idDokumen) {
-		return entityManager.createNamedQuery("RegisterDokumenData.findByIdDocument", RegisterDokumenData.class)
+		return entityManager.createNamedQuery("RegisterDokumenData.findByIdDokumen", RegisterDokumenData.class)
 				.setParameter("idDokumen", idDokumen)
 				.getResultList()
 				.stream()
@@ -166,7 +164,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 	@Override
 	public List<RegisterDokumen> getByIdDokumenAndPage(String idDokumen, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("RegisterDokumenData.findByIdDocument", RegisterDokumenData.class)
+		return entityManager.createNamedQuery("RegisterDokumenData.findByIdDokumen", RegisterDokumenData.class)
 				.setParameter("idDokumen", idDokumen)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)

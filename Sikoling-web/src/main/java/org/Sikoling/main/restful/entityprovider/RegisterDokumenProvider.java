@@ -2,6 +2,7 @@ package org.Sikoling.main.restful.entityprovider;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -23,16 +24,19 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.stream.JsonParser;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.MessageBodyReader;
+import jakarta.ws.rs.ext.MessageBodyWriter;
 import jakarta.ws.rs.ext.Provider;
 
 
 @Provider
 @Consumes("application/json")
-public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokumenDTO> {
+@Produces("application/json")
+public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokumenDTO>, MessageBodyWriter<RegisterDokumenDTO> {
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
@@ -96,7 +100,6 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 			registerDokumenDTO.setDetailDokumen(dokumenOssDTO);
 			break;
 		default:
-//			detailDokumenDTO = jsonb.fromJson(detailDokumenDTOJsonObject.toString(), DetailDokumenDTO.class);
 			break;
 		}
 				
@@ -108,6 +111,23 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 		registerDokumenDTO.setIsBerlaku(rootDTOJsonObject.getBoolean("isBerlaku"));
 		
 		return registerDokumenDTO;
+	}
+
+	
+	@Override
+	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+		return RegisterDokumenDTO.class == type;
+	}
+
+	
+	@Override
+	public void writeTo(RegisterDokumenDTO t, Class<?> type, Type genericType, Annotation[] annotations,
+			MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
+			throws IOException, WebApplicationException {
+		Jsonb jsonb = JsonbBuilder.create();
+		String hasil = jsonb.toJson(t);
+		
+		entityStream.write(hasil.getBytes());
 	}
 
 }

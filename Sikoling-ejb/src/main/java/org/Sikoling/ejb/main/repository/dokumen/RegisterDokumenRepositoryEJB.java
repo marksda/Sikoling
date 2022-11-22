@@ -78,13 +78,11 @@ public class RegisterDokumenRepositoryEJB implements IRegisterDokumenRepository 
 	public List<RegisterDokumen> getByIdDokumenAndPage(String idDokumen, Integer page, Integer pageSize) {
 		return RegisterDokumenRepository.getByIdDokumenAndPage(idDokumen, page, pageSize);
 	}
-
 	
 	@Override
 	public RegisterDokumen updateById(String id, RegisterDokumen registerDokumen) {
 		return RegisterDokumenRepository.updateById(id, registerDokumen);
 	}
-
 	
 	@Override
 	public DeleteResponse delete(String id) {
