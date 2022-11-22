@@ -43,13 +43,11 @@ public class DokumenService implements IDokumenService {
 	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return dokumenRepository.getByNamaAndPage(nama, page, pageSize);
 	}
-
 	
 	@Override
 	public DeleteResponse delete(String Id) {
 		return dokumenRepository.delete(Id);
 	}
-
 	
 	@Override
 	public Dokumen updateById(String id, Dokumen dokumen) {

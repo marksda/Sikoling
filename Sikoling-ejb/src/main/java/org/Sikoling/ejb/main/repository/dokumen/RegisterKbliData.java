@@ -27,9 +27,7 @@ public class RegisterKbliData implements Serializable {
 
 	private String kode;
 	
-	private String nama;
-	
-	@JoinColumn(name = "dokumen_oss", referencedColumnName = "nib", insertable = false, updatable = false)
+	@JoinColumn(name = "dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private RegisterDokumenOssData registerDokumenOssData;	
 	
@@ -50,14 +48,6 @@ public class RegisterKbliData implements Serializable {
 
 	public void setKode(String kode) {
 		this.kode = kode;
-	}
-
-	public String getNama() {
-		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
 	}
 
 	public RegisterDokumenOssData getRegisterDokumenOssData() {

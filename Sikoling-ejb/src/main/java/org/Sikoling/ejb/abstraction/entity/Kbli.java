@@ -11,11 +11,13 @@ public class Kbli implements Serializable {
 	private static final long serialVersionUID = 336395546827376279L;
 	private final String kode;
 	private final String nama;
+	private final String kategori;
 	
-	public Kbli(String kode, String nama) {
+	public Kbli(String kode, String nama, String kategori) {
 		super();
 		this.kode = kode;
 		this.nama = nama;
+		this.kategori = kategori;
 	}
 
 	public static long getSerialversionuid() {
@@ -29,7 +31,11 @@ public class Kbli implements Serializable {
 	public String getNama() {
 		return nama;
 	}
-		
+			
+	public String getKategori() {
+		return kategori;
+	}
+
 	public int hashCode() {
 		int hash = 3;
         hash = 101 * hash + Objects.hashCode(this.kode);

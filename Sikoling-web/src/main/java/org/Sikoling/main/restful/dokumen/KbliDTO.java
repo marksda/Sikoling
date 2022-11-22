@@ -10,13 +10,15 @@ public class KbliDTO implements Serializable {
 	private static final long serialVersionUID = 1180913705797914480L;
 	private String kode;
 	private String nama;
+	private String kategori;
 	
-	public KbliDTO() {
+ 	public KbliDTO() {
 	}
 	
 	public KbliDTO(Kbli t) {
 		this.kode = t.getKode();
 		this.nama = t.getNama();
+		this.kategori = t.getKategori();
 	}
 
 	public String getKode() {
@@ -33,6 +35,14 @@ public class KbliDTO implements Serializable {
 
 	public void setNama(String nama) {
 		this.nama = nama;
+	}
+	
+	public String getKategori() {
+		return kategori;
+	}
+
+	public void setKategori(String kategori) {
+		this.kategori = kategori;
 	}
 
 	public static long getSerialversionuid() {
@@ -80,7 +90,7 @@ public class KbliDTO implements Serializable {
 	}
 
 	public Kbli toKbli() {
-		return new Kbli(kode, nama);
+		return new Kbli(kode, nama, kategori);
 	}
 	
 }

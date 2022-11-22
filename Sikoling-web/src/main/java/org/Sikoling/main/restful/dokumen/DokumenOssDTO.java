@@ -100,7 +100,7 @@ public class DokumenOssDTO extends DetailDokumenDTO implements Serializable {
 				null, 
 				nib, 
 				tanggal, 
-				daftarKbli.stream().map(t -> new Kbli(t.getKode(), t.getNama())).collect(Collectors.toList())
+				daftarKbli.stream().map(t -> new Kbli(t.getKode(), t.getNama(), t.getKategori())).collect(Collectors.toList())
 				);
 	}
 
