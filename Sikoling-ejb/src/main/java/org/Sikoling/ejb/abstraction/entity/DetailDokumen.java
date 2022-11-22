@@ -3,33 +3,32 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ItemAttributeDokumen<T> implements Serializable {
+public class DetailDokumen implements Serializable {
 
 	private static final long serialVersionUID = -3166732876247970646L;
-	private final String nama;
-	private final T nilai;
-	
-	public ItemAttributeDokumen(String nama, T nilai) {
-		super();
-		this.nama = nama;
-		this.nilai = nilai;
+	private final Dokumen dokumen;
+	private final String lokasiFile;
+
+	public DetailDokumen(Dokumen dokumen, String lokasiFile) {
+		this.dokumen = dokumen;
+		this.lokasiFile = lokasiFile;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getNama() {
-		return nama;
+	public Dokumen getDokumen() {
+		return dokumen;
 	}
-
-	public T getNilai() {
-		return nilai;
+	
+	public String getLokasiFile() {
+		return lokasiFile;
 	}
 
 	public int hashCode() {
-		int hash = 13;
-		hash = 71 * hash + Objects.hashCode(this.nama);
+		int hash = 71;
+		hash = 411 * hash + Objects.hashCode(this.dokumen.getId());
 		return hash;
 	}
 	
@@ -47,10 +46,9 @@ public class ItemAttributeDokumen<T> implements Serializable {
             return false;
         }
         
-        @SuppressWarnings("unchecked")
-		final ItemAttributeDokumen<T> other = (ItemAttributeDokumen<T>) obj;
+        final DetailDokumen other = (DetailDokumen) obj;
         
-        if (!this.nama.equals(other.getNama())) {
+        if (!this.dokumen.getId().equals(other.getDokumen().getId())) {
             return false;
         }
         
@@ -59,13 +57,13 @@ public class ItemAttributeDokumen<T> implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "DetailDokumenPerusahaan{"				
-				.concat("nama=")
-				.concat(this.nama)
+		return "DetailDokumen {"
+				.concat("id=")
+				.concat(this.dokumen.getId())
 				.concat(", ")
-				.concat("nilai=")
-				.concat(this.nilai.toString())
+				.concat("nama=")
+				.concat(this.dokumen.getNama())
 				.concat("}");
-	}
+	}	
 
 }

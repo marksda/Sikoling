@@ -1,8 +1,7 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.time.LocalDate;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 
@@ -13,9 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="transaksi.tbl_master_register_dokumen")
@@ -41,9 +39,11 @@ public class RegisterDokumenData implements Serializable {
 	@ManyToOne(optional = false)
 	private DokumenData dokumen;
 	
-	@Column(name="tanggal_upload")
-	@Temporal(TemporalType.DATE)
-	private Date tanggalUpload;
+	@Column(name="lokasi_file")
+	private String lokasiFile;
+	
+	@Column(name="tanggal_upload", columnDefinition = "DATE")
+	private LocalDate tanggalUpload;
 	
 	@Column(name="is_berlaku")
 	private boolean isBerlaku;	
@@ -52,8 +52,20 @@ public class RegisterDokumenData implements Serializable {
 	@ManyToOne(optional = false)
 	private AutorisasiData uploader;
 	
-	@Column(columnDefinition = "json")
+	@OneToOne(mappedBy = "registerDokumen")
+    private RegisterDokumenOssData registerDokumenOssData;	
 	
+	public RegisterDokumenData() {
+	}
+
+	public RegisterDokumenOssData getRegisterDokumenOssData() {
+		return registerDokumenOssData;
+	}	
+
+	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
+		this.registerDokumenOssData = registerDokumenOssData;
+	}	
+		
 	public String getId() {
 		return id;
 	}
@@ -78,11 +90,11 @@ public class RegisterDokumenData implements Serializable {
 		this.dokumen = dokumen;
 	}
 
-	public Date getTanggalUpload() {
+	public LocalDate getTanggalUpload() {
 		return tanggalUpload;
 	}
 
-	public void setTanggalUpload(Date tanggalUpload) {
+	public void setTanggalUpload(LocalDate tanggalUpload) {
 		this.tanggalUpload = tanggalUpload;
 	}
 
@@ -104,6 +116,16 @@ public class RegisterDokumenData implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+	public String getLokasiFile() {
+		return lokasiFile;
+	}
+
+	
+	public void setLokasiFile(String lokasiFile) {
+		this.lokasiFile = lokasiFile;
 	}
 
 }

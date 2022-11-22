@@ -1,7 +1,7 @@
 package org.Sikoling.main.restful.dokumen;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
@@ -12,8 +12,8 @@ public class RegisterDokumenDTO implements Serializable {
 	private static final long serialVersionUID = 1384518698621127848L;
 	private String id;
 	private PerusahaanDTO perusahaan;
-	private DokumenDTO dokumen;
-	private Date tanggal;
+	private DetailDokumenDTO detailDokumen;
+	private LocalDate tanggal;	//tanggal registrasi dokumen
 	private boolean isBerlaku;
 	
 	public RegisterDokumenDTO() {
@@ -22,7 +22,7 @@ public class RegisterDokumenDTO implements Serializable {
 	public RegisterDokumenDTO(RegisterDokumen registerDokumen) {
 		this.id = registerDokumen.getId();
 		this.perusahaan = new PerusahaanDTO(registerDokumen.getPerusahaan());
-		this.dokumen = new DokumenDTO(registerDokumen.getDokumen());
+		this.detailDokumen = new DetailDokumenDTO(registerDokumen.getDetailDokumen());
 		this.tanggal = registerDokumen.getTanggalTransaksi();
 		this.isBerlaku = registerDokumen.getIsBerlaku();
 	}
@@ -43,27 +43,27 @@ public class RegisterDokumenDTO implements Serializable {
 		this.perusahaan = perusahaan;
 	}
 
-	public DokumenDTO getDokumen() {
-		return dokumen;
+	public DetailDokumenDTO getDetailDokumen() {
+		return detailDokumen;
 	}
 
-	public void setDokumen(DokumenDTO dokumen) {
-		this.dokumen = dokumen;
+	public void setDetailDokumen(DetailDokumenDTO detailDokumen) {
+		this.detailDokumen = detailDokumen;
 	}
 
-	public Date getTanggal() {
+	public LocalDate getTanggal() {
 		return tanggal;
 	}
 
-	public void setTanggal(Date tanggal) {
+	public void setTanggal(LocalDate tanggal) {
 		this.tanggal = tanggal;
 	}
 
-	public boolean isBerlaku() {
+	public boolean getIsBerlaku() {
 		return isBerlaku;
 	}
 
-	public void setBerlaku(boolean isBerlaku) {
+	public void setIsBerlaku(boolean isBerlaku) {
 		this.isBerlaku = isBerlaku;
 	}
 
@@ -108,12 +108,12 @@ public class RegisterDokumenDTO implements Serializable {
 				.concat(", namaPerusahaan=")
 				.concat(perusahaan.getNama())
 				.concat(", namaDokumen=")
-				.concat(dokumen.getNama())
+				.concat(detailDokumen.getDokumen().getNama())
 				.concat("}");	  
 	}
 
 	public RegisterDokumen toRegisterDokumen() {
-		return new RegisterDokumen(id, dokumen.toDokumen(), tanggal, isBerlaku, perusahaan.toPerusahaan(), null);
+		return new RegisterDokumen(id, detailDokumen.toDetailDokumen(), tanggal, isBerlaku, perusahaan.toPerusahaan(), null);
 	}
 	
 }

@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class RegisterDokumen implements Serializable {
@@ -9,16 +9,16 @@ public class RegisterDokumen implements Serializable {
 	private static final long serialVersionUID = 2847248198419126532L;
 	private final String id;
 	private final Perusahaan perusahaan;
-	private final Dokumen dokumen;
-	private final Date tanggalTransaksi;
+	private final DetailDokumen detailDokumen;
+	private final LocalDate tanggalTransaksi;
 	private final boolean isBerlaku;
 	private final Autorisasi autorisasi;
 	
-	public RegisterDokumen(String idTransaksi, Dokumen dokumen, Date tanggalTransaksi, boolean isBerlaku, 
+	public RegisterDokumen(String idTransaksi, DetailDokumen detailDokumen, LocalDate tanggalTransaksi, boolean isBerlaku, 
 			Perusahaan perusahaan, Autorisasi autorisasi) {
 		super();
 		this.id = idTransaksi;
-		this.dokumen = dokumen;
+		this.detailDokumen = detailDokumen;
 		this.tanggalTransaksi = tanggalTransaksi;
 		this.isBerlaku = isBerlaku;
 		this.perusahaan = perusahaan;
@@ -41,11 +41,11 @@ public class RegisterDokumen implements Serializable {
 		return serialVersionUID;
 	}
 
-	public Dokumen getDokumen() {
-		return dokumen;
+	public DetailDokumen getDetailDokumen() {
+		return detailDokumen;
 	}
 
-	public Date getTanggalTransaksi() {
+	public LocalDate getTanggalTransaksi() {
 		return tanggalTransaksi;
 	}
 
@@ -89,7 +89,7 @@ public class RegisterDokumen implements Serializable {
 				.concat(this.id)
 				.concat(", ")
 				.concat("nama dokumen=")
-				.concat(this.dokumen.getNama())
+				.concat(this.detailDokumen.getDokumen().getNama())
 				.concat("}");
 	}	
 

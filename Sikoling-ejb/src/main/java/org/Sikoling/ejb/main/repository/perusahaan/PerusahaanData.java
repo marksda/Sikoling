@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.persistence.*;
 
+import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
@@ -44,6 +45,9 @@ public class PerusahaanData implements Serializable {
 	@Embedded
 	private KontakPerusahaanData kontakPerusahaanData;
 		
+	@OneToMany(mappedBy="perusahaan")
+	private RegisterDokumenData registerDokumenData;
+	
 	public PerusahaanData() {
 	}
 	

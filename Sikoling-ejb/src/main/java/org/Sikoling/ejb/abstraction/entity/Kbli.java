@@ -1,53 +1,37 @@
-package org.Sikoling.main.restful.perusahaan;
+package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.KBLI;
+/*
+** Klasifikasi Baku Lapangan Usaha Indonesia(KBLI)
+*/
+public class Kbli implements Serializable {
 
-public class KBLIDTO implements Serializable {
-
-	private static final long serialVersionUID = 5334713148360421780L;
-	private String kode;
-	private String nama;
+	private static final long serialVersionUID = 336395546827376279L;
+	private final String kode;
+	private final String nama;
 	
-	public KBLIDTO() {
-		
-	}
-	
-	public KBLIDTO(KBLI kbli) {
-		this.kode = kbli.getKode();
-		this.nama = kbli.getNama();
-	}
-	
-	public KBLIDTO(String kode, String nama) {
+	public Kbli(String kode, String nama) {
 		super();
 		this.kode = kode;
-		this.nama = nama;
-	}
-
-	public String getKode() {
-		return kode;
-	}
-
-	public void setKode(String kode) {
-		this.kode = kode;
-	}
-
-	public String getNama() {
-		return nama;
-	}
-
-	public void setNama(String nama) {
 		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	public String getKode() {
+		return kode;
+	}
+
+	public String getNama() {
+		return nama;
+	}
+		
 	public int hashCode() {
-		int hash = 29;
+		int hash = 3;
         hash = 101 * hash + Objects.hashCode(this.kode);
         hash = 101 * hash + Objects.hashCode(this.nama);
         return hash;
@@ -68,7 +52,7 @@ public class KBLIDTO implements Serializable {
             return false;
         }
         
-        final KBLIDTO other = (KBLIDTO) obj;
+        final Kbli other = (Kbli) obj;
         
         if (!this.kode.equalsIgnoreCase(other.kode)) {
             return false;
@@ -83,10 +67,7 @@ public class KBLIDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "KBLIDTO{" + "kode=" + kode + ", nama=" + nama + '}';	  
+		return "KBLI{" + "kode=" + kode + ", nama=" + nama + '}';	  
 	}
 
-	public KBLI toKBLI() {
-		return new KBLI(kode, nama);
-	}
 }

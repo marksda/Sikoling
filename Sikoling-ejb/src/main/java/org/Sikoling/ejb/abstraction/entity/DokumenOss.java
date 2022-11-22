@@ -1,22 +1,20 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 
-public class DokumenOss extends Dokumen implements Serializable {
+public class DokumenOss extends DetailDokumen implements Serializable {
 
 	private static final long serialVersionUID = -2123829934784643942L;
 	private final String nib;
-	private final Date tanggal;
-	private final List<KBLI> daftarKbli;	
-
-
-	public DokumenOss(String id, String nama, KategoriDokumen kategoriDokumen, String nib, Date tanggal,
-			List<KBLI> daftarKbli) {
-		super(id, nama, kategoriDokumen);
+	private final LocalDate tanggal;
+	private final List<Kbli> daftarKbli;
+	
+	public DokumenOss(Dokumen dokumen, String lokasiFile, String nib, LocalDate tanggal, List<Kbli> daftarKbli) {
+		super(dokumen, lokasiFile);
 		this.nib = nib;
 		this.tanggal = tanggal;
 		this.daftarKbli = daftarKbli;
@@ -30,11 +28,11 @@ public class DokumenOss extends Dokumen implements Serializable {
 		return nib;
 	}
 
-	public Date getTanggal() {
+	public LocalDate getTanggal() {
 		return tanggal;
 	}
 
-	public List<KBLI> getDaftarKbli() {
+	public List<Kbli> getDaftarKbli() {
 		return daftarKbli;
 	}
 	
