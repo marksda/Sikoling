@@ -55,7 +55,6 @@ public class KbliRepositoryJPA implements IKbliRepository {
 		kbliData.setId(updateData.getId());
 		kbliData.setNama(updateData.getNama());
 		kbliData.setKategori(updateData.getKategori());
-		kbliData = entityManager.merge(kbliData);
 		
 		return convertKbliDataToKbli(kbliData);
 	}

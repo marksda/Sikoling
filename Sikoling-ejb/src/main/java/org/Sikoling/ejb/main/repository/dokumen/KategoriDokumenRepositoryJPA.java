@@ -96,7 +96,6 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 		entityManager.remove(kategoriDokumen);		
 		return new DeleteResponse(true, Id);
 	}
-
 	
 	@Override
 	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {

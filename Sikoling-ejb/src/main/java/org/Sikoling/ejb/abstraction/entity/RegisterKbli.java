@@ -3,25 +3,25 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-/*
-** Klasifikasi Baku Lapangan Usaha Indonesia(KBLI)
-*/
-public class Kbli implements Serializable {
+public class RegisterKbli implements Serializable {
 
-	private static final long serialVersionUID = 336395546827376279L;
+	private static final long serialVersionUID = 2998858268709853490L;
+	private final String nib;
 	private final String kode;
 	private final String nama;
-	private final String kategori;
 	
-	public Kbli(String kode, String nama, String kategori) {
-		super();
+	public RegisterKbli(String nib, String kode, String nama) {
+		this.nib = nib;
 		this.kode = kode;
 		this.nama = nama;
-		this.kategori = kategori;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getNib() {
+		return nib;
 	}
 
 	public String getKode() {
@@ -31,15 +31,12 @@ public class Kbli implements Serializable {
 	public String getNama() {
 		return nama;
 	}
-			
-	public String getKategori() {
-		return kategori;
-	}
-
+	
 	public int hashCode() {
-		int hash = 7;
-        hash = 101 * hash + Objects.hashCode(this.kode);
-        hash = 101 * hash + Objects.hashCode(this.nama);
+		int hash = 17;
+		hash = 131 * hash + Objects.hashCode(this.nib);
+        hash = 131 * hash + Objects.hashCode(this.kode);
+        hash = 131 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -58,7 +55,11 @@ public class Kbli implements Serializable {
             return false;
         }
         
-        final Kbli other = (Kbli) obj;
+        final RegisterKbli other = (RegisterKbli) obj;
+        
+        if (!this.nib.equalsIgnoreCase(other.getNib())) {
+            return false;
+        }
         
         if (!this.kode.equalsIgnoreCase(other.getKode())) {
             return false;
@@ -73,7 +74,8 @@ public class Kbli implements Serializable {
 
 	@Override
 	public String toString() {
-		return "KBLI{" + "kode=" + kode + ", nama=" + nama + '}';	  
+		return "RegisterKbli{ nib=" + nib + ", kode=" + kode + ", nama=" + nama + '}';	  
 	}
+
 
 }

@@ -102,7 +102,8 @@ public class DokumenRepositoryJPA implements IDokumenRepository {
 	@Override
 	public DeleteResponse delete(String id) {
 		DokumenData dokumenData = entityManager.find(DokumenData.class, id);
-		entityManager.remove(dokumenData);		
+		entityManager.remove(dokumenData);	
+		entityManager.flush();
 		return new DeleteResponse(true, id);
 	}
 
