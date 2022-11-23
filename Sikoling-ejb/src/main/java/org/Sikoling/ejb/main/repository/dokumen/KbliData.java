@@ -22,7 +22,7 @@ public class KbliData {
 	private String nama;
 	
 	private String kategori;
-
+	
 	public KbliData() {
 	}
 

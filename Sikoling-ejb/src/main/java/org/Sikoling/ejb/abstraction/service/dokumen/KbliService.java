@@ -69,4 +69,9 @@ public class KbliService implements IKbliService {
 		return kbliRepository.getByKategoriAndPage(kategori, page, pageSize);
 	}
 
+	@Override
+	public List<Kbli> getAll() {
+		return kbliRepository.getAll();
+	}
+
 }

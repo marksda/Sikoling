@@ -24,12 +24,14 @@ public class RegisterKbliData implements Serializable {
 	
 	@Id
 	private String id;
-
-	private String kode;
 	
-	@JoinColumn(name = "dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
+	@JoinColumn(name = "register_dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private RegisterDokumenOssData registerDokumenOssData;	
+	
+	@JoinColumn(name = "kode", referencedColumnName = "id", insertable = true, updatable = false)
+	@ManyToOne(optional = false)
+	private KbliData kbliData;
 	
 	public RegisterKbliData() {
 	}
@@ -42,20 +44,20 @@ public class RegisterKbliData implements Serializable {
 		this.id = id;
 	}
 
-	public String getKode() {
-		return kode;
-	}
-
-	public void setKode(String kode) {
-		this.kode = kode;
-	}
-
 	public RegisterDokumenOssData getRegisterDokumenOssData() {
 		return registerDokumenOssData;
 	}
 
 	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
 		this.registerDokumenOssData = registerDokumenOssData;
+	}
+	
+	public KbliData getKbliData() {
+		return kbliData;
+	}
+
+	public void setKbliData(KbliData kbliData) {
+		this.kbliData = kbliData;
 	}
 
 	public static long getSerialversionuid() {

@@ -17,7 +17,6 @@ public class KbliRepositoryJPA implements IKbliRepository {
 		this.entityManager = entityManager;
 	}
 	
-
 	@Override
 	public List<Kbli> getAll() {
 		return entityManager.createNamedQuery("KbliData.findAll", KbliData.class)

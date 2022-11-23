@@ -10,6 +10,7 @@ public interface IKbliService {
 	Kbli update(Kbli kbli);
 	Kbli updateById(String id, Kbli kbli);
 	DeleteResponse delete(String kode);
+	List<Kbli> getAll();
 	List<Kbli> getAllByPage(Integer page, Integer pageSize);
 	List<Kbli> getByNama(String nama);
 	List<Kbli> getByNamaAndPage(String nama, Integer page, Integer pageSize);

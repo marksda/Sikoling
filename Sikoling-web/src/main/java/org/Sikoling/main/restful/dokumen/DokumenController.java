@@ -15,6 +15,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -34,16 +35,18 @@ public class DokumenController {
 		return new DokumenDTO(dokumenService.save(d.toDokumen()));
 	}
 	
+	@Path("{id}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DokumenDTO update(@QueryParam("id") String id, DokumenDTO d) {
+	public DokumenDTO update(@PathParam("id") String id, DokumenDTO d) {
 		return new DokumenDTO(dokumenService.updateById(id, d.toDokumen()));
 	}
 	
+	@Path("{id}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@QueryParam("id") String id) {
+	public DeleteResponseDTO delete(@PathParam("id") String id) {
 		return new DeleteResponseDTO(dokumenService.delete(id));
 	}
 	

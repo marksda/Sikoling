@@ -37,7 +37,7 @@ public class RegisterDokumenOssData implements Serializable {
 	private RegisterDokumenData registerDokumenData;
 	
 	@OneToMany(mappedBy="registerDokumenOssData")
-    private Set<RegisterKbliData> daftarKbli;
+    private Set<RegisterKbliData> daftarRegisterKbliData;
 	
 	public RegisterDokumenOssData() {
 	}
@@ -66,12 +66,12 @@ public class RegisterDokumenOssData implements Serializable {
 		this.registerDokumenData = registerDokumenData;
 	}
 
-	public Set<RegisterKbliData> getDaftarKbli() {
-		return daftarKbli;
+	public Set<RegisterKbliData> getDaftarRegisterKbliData() {
+		return daftarRegisterKbliData;
 	}
 
-	public void setDaftarKbli(Set<RegisterKbliData> daftarKbli) {
-		this.daftarKbli = daftarKbli;
+	public void setDaftarRegisterKbliData(Set<RegisterKbliData> daftarRegisterKbliData) {
+		this.daftarRegisterKbliData = daftarRegisterKbliData;
 	}
 
 	public static long getSerialversionuid() {
