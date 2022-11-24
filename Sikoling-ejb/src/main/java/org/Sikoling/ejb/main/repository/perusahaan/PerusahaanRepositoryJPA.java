@@ -1,13 +1,17 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.DokumenOss;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
+import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
@@ -16,6 +20,8 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
+import org.Sikoling.ejb.main.repository.dokumen.DokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
@@ -198,6 +204,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		perusahaanData.setPelakuUsahaData(detailPelakuUsahaData);
 		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);	
 		
+		
 		return perusahaanData;
 	}
 	
@@ -227,11 +234,31 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		
 		Kontak kontakPerusahaan = new Kontak(d.getKontakPerusahaanData().getTelepone(), 
 				d.getKontakPerusahaanData().getFax(), d.getKontakPerusahaanData().getEmail());
+		List<RegisterDokumenData> daftarItemRegisterDokumenData = d.getDaftarItemRegisterDokumenData();
+		List<Dokumen> daftarDokumen = new ArrayList<Dokumen>();
 		
+		for(RegisterDokumenData item : daftarItemRegisterDokumenData) {
+			DokumenData dokumenData = item.getDokumen();
+			
+			switch (dokumenData.getId()) {
+			case "010301":				
+				DokumenOss dokumenOss = new DokumenOss(
+						dokumenData.getId(), 
+						dokumenData.getNama(), 
+						new KategoriDokumen(dokumenData.getKategori().getId(), null, null), 
+						item.getRegisterDokumenOssData().getNib(), 
+						null, 
+						null);
+				daftarDokumen.add(dokumenOss);
+				break;
+			default:
+				break;
+			}			
+		}
 		
 		return new Perusahaan( 
 				d.getId(), d.getNama(), modelPerizinan, skalaUsaha, 
-				pelakuUsaha, alamatPerusahaan, kontakPerusahaan);
+				pelakuUsaha, alamatPerusahaan, kontakPerusahaan, daftarDokumen);
 	}
 	
 	@Override

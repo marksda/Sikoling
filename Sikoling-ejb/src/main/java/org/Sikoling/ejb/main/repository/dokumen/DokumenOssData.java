@@ -18,11 +18,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_register_dokumen_oss")
 @NamedQueries({
-	@NamedQuery(name="RegisterDokumenOssData.findAll", query="SELECT d FROM RegisterKbliData d"),
-	@NamedQuery(name="RegisterDokumenOssData.findByNib", query = "SELECT d FROM RegisterKbliData d WHERE d.dokumen.nama LIKE :namaDokumen"),
-	@NamedQuery(name="RegisterDokumenOssData.findByPerusahaan", query="SELECT d FROM RegisterKbliData d WHERE d.dokumen.id = :idDokumen")
+	@NamedQuery(name="DokumenOssData.findAll", query="SELECT d FROM DokumenOssData d"),
+	@NamedQuery(name="DokumenOssData.findByNib", query = "SELECT d FROM DokumenOssData d WHERE d.nib = :nib")
 })
-public class RegisterDokumenOssData implements Serializable {
+public class DokumenOssData implements Serializable {
 
 	private static final long serialVersionUID = 411899176836678359L;
 	
@@ -30,7 +29,7 @@ public class RegisterDokumenOssData implements Serializable {
 	private String nib;
 	
 	@Column(name = "tanggal_penerbitan", columnDefinition = "DATE")
-	private LocalDate tanggal;
+	private LocalDate tanggalPenerbitan;
 	
 	@JoinColumn(name="master_register_dokumen", referencedColumnName = "id", insertable = true, updatable = false)
 	@OneToOne(cascade = CascadeType.ALL)
@@ -39,7 +38,7 @@ public class RegisterDokumenOssData implements Serializable {
 	@OneToMany(mappedBy="registerDokumenOssData")
     private Set<RegisterKbliData> daftarRegisterKbliData;
 	
-	public RegisterDokumenOssData() {
+	public DokumenOssData() {
 	}
 
 	public String getNib() {
@@ -50,12 +49,12 @@ public class RegisterDokumenOssData implements Serializable {
 		this.nib = nib;
 	}
 
-	public LocalDate getTanggal() {
-		return tanggal;
+	public LocalDate getTanggalPenerbitan() {
+		return tanggalPenerbitan;
 	}
 
-	public void setTanggal(LocalDate tanggal) {
-		this.tanggal = tanggal;
+	public void setTanggalPenerbitan(LocalDate tanggalPenerbitan) {
+		this.tanggalPenerbitan = tanggalPenerbitan;
 	}
 
 	public RegisterDokumenData getRegisterDokumenData() {
@@ -76,6 +75,6 @@ public class RegisterDokumenOssData implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
-
+	}
+	
 }

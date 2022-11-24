@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -46,12 +47,60 @@ public class PerusahaanData implements Serializable {
 	private KontakPerusahaanData kontakPerusahaanData;
 		
 	@OneToMany(mappedBy="perusahaan")
-	private RegisterDokumenData registerDokumenData;
+	private List<RegisterDokumenData> daftarItemRegisterDokumenData;
 	
 	public PerusahaanData() {
 	}
-	
-	public boolean getStatusVerifikasi() {
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNama() {
+		return nama;
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+
+	public AlamatPerusahaanData getAlamatPerusahaanData() {
+		return alamatPerusahaanData;
+	}
+
+	public void setAlamatPerusahaanData(AlamatPerusahaanData alamatPerusahaanData) {
+		this.alamatPerusahaanData = alamatPerusahaanData;
+	}
+
+	public ModelPerizinanData getModelPerizinanData() {
+		return modelPerizinanData;
+	}
+
+	public void setModelPerizinanData(ModelPerizinanData modelPerizinanData) {
+		this.modelPerizinanData = modelPerizinanData;
+	}
+
+	public SkalaUsahaData getSkalaUsaha() {
+		return SkalaUsaha;
+	}
+
+	public void setSkalaUsaha(SkalaUsahaData skalaUsaha) {
+		SkalaUsaha = skalaUsaha;
+	}
+
+	public PelakuUsahaData getPelakuUsahaData() {
+		return pelakuUsahaData;
+	}
+
+	public void setPelakuUsahaData(PelakuUsahaData pelakuUsahaData) {
+		this.pelakuUsahaData = pelakuUsahaData;
+	}
+
+	public boolean isStatusVerifikasi() {
 		return statusVerifikasi;
 	}
 
@@ -59,65 +108,24 @@ public class PerusahaanData implements Serializable {
 		this.statusVerifikasi = statusVerifikasi;
 	}
 
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getNama() {
-		return nama;
-	}
-	
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-	
-	public ModelPerizinanData getModelPerizinanData() {
-		return modelPerizinanData;
-	}
-	
-	public void setModelPerizinanData(ModelPerizinanData modelPerizinanData) {
-		this.modelPerizinanData = modelPerizinanData;
-	}
-	
-	public SkalaUsahaData getSkalaUsaha() {
-		return SkalaUsaha;
-	}
-	
-	public void setSkalaUsaha(SkalaUsahaData skalaUsaha) {
-		SkalaUsaha = skalaUsaha;
-	}
-	
-	public PelakuUsahaData getPelakuUsahaData() {
-		return pelakuUsahaData;
-	}
-	
-	public void setPelakuUsahaData(PelakuUsahaData pelakuUsahaData) {
-		this.pelakuUsahaData = pelakuUsahaData;
-	}
-	
-	public AlamatPerusahaanData getAlamatPerusahaanData() {
-		return alamatPerusahaanData;
-	}
-	
-	public void setAlamatPerusahaanData(AlamatPerusahaanData alamatPerusahaanData) {
-		this.alamatPerusahaanData = alamatPerusahaanData;
-	}
-	
 	public KontakPerusahaanData getKontakPerusahaanData() {
 		return kontakPerusahaanData;
 	}
-	
+
 	public void setKontakPerusahaanData(KontakPerusahaanData kontakPerusahaanData) {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
-	
+
+	public List<RegisterDokumenData> getDaftarItemRegisterDokumenData() {
+		return daftarItemRegisterDokumenData;
+	}
+
+	public void setDaftarItemRegisterDokumenData(List<RegisterDokumenData> daftarItemRegisterDokumenData) {
+		this.daftarItemRegisterDokumenData = daftarItemRegisterDokumenData;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
 	
 }

@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,7 +28,7 @@ public class RegisterKbliData implements Serializable {
 	@Id
 	@JoinColumn(name = "register_dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private RegisterDokumenOssData registerDokumenOssData;
+	private DokumenOssData dokumenOssData;
 		
 	@Id
 	@JoinColumn(name = "kode", referencedColumnName = "id", insertable = true, updatable = false)
@@ -36,25 +37,77 @@ public class RegisterKbliData implements Serializable {
 	
 	public RegisterKbliData() {
 	}
-	
-	public RegisterDokumenOssData getRegisterDokumenOssData() {
-		return registerDokumenOssData;
+		
+	public DokumenOssData getDokumenOssData() {
+		return dokumenOssData;
 	}
+	
 
-	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
-		this.registerDokumenOssData = registerDokumenOssData;
+
+
+	public void setDokumenOssData(DokumenOssData dokumenOssData) {
+		this.dokumenOssData = dokumenOssData;
 	}
 	
+
+
+
 	public KbliData getKbliData() {
 		return kbliData;
 	}
+	
+
+
 
 	public void setKbliData(KbliData kbliData) {
 		this.kbliData = kbliData;
 	}
+	
+
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+
+
+
+	@Override
+	public int hashCode() {
+		int hash = 83;
+		hash = 137 * hash + Objects.hashCode(this.dokumenOssData.getNib());
+		hash = 137 * hash + Objects.hashCode(this.kbliData.getId());
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
 		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final RegisterKbliData other = (RegisterKbliData) obj;
+        
+        if ( !(this.dokumenOssData.getNib().equals(other.dokumenOssData.getNib()) && 
+        		this.kbliData.getId().equals(other.kbliData.getId())) ) {
+            return false;
+        }
+        
+        return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RegisterKbliData{" + "nib=" + dokumenOssData.getNib() + ", kode=" + kbliData.getId() + "}";
+	}
+
 }

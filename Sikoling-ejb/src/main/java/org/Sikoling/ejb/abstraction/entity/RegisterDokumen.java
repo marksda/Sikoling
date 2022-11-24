@@ -2,95 +2,61 @@ package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class RegisterDokumen implements Serializable {
-
-	private static final long serialVersionUID = 2847248198419126532L;
-	private final String id;
-	private final Perusahaan perusahaan;
-	private final DetailDokumen detailDokumen;
-	private final LocalDate tanggalTransaksi;
-	private final boolean isBerlaku;
-	private final Autorisasi autorisasi;
+class RegisterDokumen implements Serializable {
 	
-	public RegisterDokumen(String idTransaksi, DetailDokumen detailDokumen, LocalDate tanggalTransaksi, boolean isBerlaku, 
-			Perusahaan perusahaan, Autorisasi autorisasi) {
-		super();
-		this.id = idTransaksi;
-		this.detailDokumen = detailDokumen;
-		this.tanggalTransaksi = tanggalTransaksi;
-		this.isBerlaku = isBerlaku;
+	private static final long serialVersionUID = 5607669072989245707L;
+	private final String id;
+	private final Dokumen dokumen;
+	private final Perusahaan perusahaan;
+	private final String lokasiFile;
+	private final LocalDate tanggalRegistrasi;
+	private final boolean statusBerlaku;
+	private final Autorisasi autorisasi;
+
+	public RegisterDokumen(Dokumen dokumen, Perusahaan perusahaan, String lokasiFile, LocalDate tanggalRegistrasi,
+			boolean statusBerlaku, Autorisasi autorisasi) {
+		this.id = perusahaan.getId().concat("*").concat(dokumen.getId());
+		this.dokumen = dokumen;
 		this.perusahaan = perusahaan;
+		this.lokasiFile = lokasiFile;
+		this.tanggalRegistrasi = tanggalRegistrasi;
+		this.statusBerlaku = statusBerlaku;
 		this.autorisasi = autorisasi;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public Autorisasi getAutorisasi() {
-		return autorisasi;
-	}
-
-	public Perusahaan getPerusahaan() {
-		return perusahaan;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public DetailDokumen getDetailDokumen() {
-		return detailDokumen;
+	public String getId() {
+		return id;
 	}
 
-	public LocalDate getTanggalTransaksi() {
-		return tanggalTransaksi;
+	public Dokumen getDokumen() {
+		return dokumen;
 	}
 
-	public boolean getIsBerlaku() {
-		return isBerlaku;
+	public Perusahaan getPerusahaan() {
+		return perusahaan;
 	}
 
-	public int hashCode() {
-		int hash = 19;
-		hash = 41 * hash + Objects.hashCode(this.id);
-		return hash;
+	public String getLokasiFile() {
+		return lokasiFile;
+	}
+
+	public LocalDate getTanggalRegistrasi() {
+		return tanggalRegistrasi;
+	}
+
+	public boolean isStatusBerlaku() {
+		return statusBerlaku;
+	}
+
+	public Autorisasi getAutorisasi() {
+		return autorisasi;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-            return true;
-        }
-		
-        if (obj == null) {
-            return false;
-        }
-        
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        
-        final RegisterDokumen other = (RegisterDokumen) obj;
-        
-        if (!this.id.equals(other.getId())) {
-            return false;
-        }
-        
-        return true;
-	}
 	
-	@Override
-	public String toString() {
-		return "ItemTransaksiDokumen {"
-				.concat("id=")
-				.concat(this.id)
-				.concat(", ")
-				.concat("nama dokumen=")
-				.concat(this.detailDokumen.getDokumen().getNama())
-				.concat("}");
-	}	
-
+	
 }

@@ -11,7 +11,7 @@ import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.DetailDokumen;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.DokumenOss;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumenOss;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
@@ -263,8 +263,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		switch (dokumenData.getId()) {
 		case "010301":
-			RegisterDokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
-			detailDokumen = new DokumenOss(
+			DokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
+			detailDokumen = new RegisterDokumenOss(
 					convertDokumenDataToDokumen(dokumenData),  
 					d.getLokasiFile(), 
 					registerDokumenOssData.getNib(), 
@@ -313,8 +313,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		//setDetailDokumen
 		switch (dokumen.getId()) {
 		case "010301":
-			DokumenOss dokumenOss = (DokumenOss) detailDokumen;
-			RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();
+			RegisterDokumenOss dokumenOss = (RegisterDokumenOss) detailDokumen;
+			DokumenOssData registerDokumenOssData = new DokumenOssData();
 			String nib = dokumenOss.getNib();
 			registerDokumenOssData.setNib(nib);
 			registerDokumenOssData.setTanggal(dokumenOss.getTanggal());
@@ -328,7 +328,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			
 			registerDokumenOssData.setDaftarKbli(daftarKbliData);
 			
-			registerDokumenData.setRegisterDokumenOssData(registerDokumenOssData);
+			registerDokumenData.setDokumenOssData(registerDokumenOssData);
 			break;
 		default:
 			break;

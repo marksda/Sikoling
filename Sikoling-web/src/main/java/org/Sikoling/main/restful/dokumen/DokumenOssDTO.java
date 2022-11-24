@@ -6,25 +6,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DetailDokumen;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.DokumenOss;
-import org.Sikoling.ejb.abstraction.entity.Kbli;
 
-public class DokumenOssDTO extends DetailDokumenDTO implements Serializable {
+public class DokumenOssDTO extends DokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = -8619439553490560056L;	
 	private String nib;
-	private LocalDate tanggal;	//tanggal penerbitan dokumen
+	private LocalDate tanggalPenerbitan;
 	private List<KbliDTO> daftarKbli;
 	
 	public DokumenOssDTO() {
 	}
 	
-	public DokumenOssDTO(DetailDokumen detailDokumen, String nib, LocalDate tanggal, List<KbliDTO> daftarKbli) {
-		super(detailDokumen);
-		this.nib = nib;
-		this.tanggal = tanggal;
-		this.daftarKbli = daftarKbli;
+	public DokumenOssDTO(DokumenOss t) {
+		super(new Dokumen(t.getId(), t.getNama(), t.getKategoriDokumen()));
+		this.nib = t.getNib();
+		this.tanggalPenerbitan = t.getTanggalPenerbitan();
+		this.daftarKbli = t.getDaftarKbli().stream().map(item -> new KbliDTO(item)).collect(Collectors.toList());
 	}
 
 	public String getNib() {
@@ -35,12 +34,12 @@ public class DokumenOssDTO extends DetailDokumenDTO implements Serializable {
 		this.nib = nib;
 	}
 
-	public LocalDate getTanggal() {
-		return tanggal;
+	public LocalDate getTanggalPenerbitan() {
+		return tanggalPenerbitan;
 	}
 
-	public void setTanggal(LocalDate tanggal) {
-		this.tanggal = tanggal;
+	public void setTanggalPenerbitan(LocalDate tanggalPenerbitan) {
+		this.tanggalPenerbitan = tanggalPenerbitan;
 	}
 
 	public List<KbliDTO> getDaftarKbli() {
@@ -89,19 +88,23 @@ public class DokumenOssDTO extends DetailDokumenDTO implements Serializable {
 	public String toString() {
 		return "DokumenOssDTO{nib="
 				.concat(nib)
-				.concat(", tanggal = ")
-				.concat(tanggal.toString())
+				.concat(", tanggal penerbitan = ")
+				.concat(tanggalPenerbitan.toString())
 				.concat("}");	  
 	}
 
 	public DokumenOss toDokumenOss() {
-		return new DokumenOss(
-				this.getDokumen().toDokumen(), 
-				null, 
-				nib, 
-				tanggal, 
-				daftarKbli.stream().map(t -> new Kbli(t.getKode(), t.getNama(), t.getKategori())).collect(Collectors.toList())
+		Dokumen dokumen = new Dokumen(
+				this.getId(), 
+				this.getNama(), 
+				this.getKategori().toKategoriDokumen()
 				);
+		
+		return new DokumenOss(
+				dokumen, 
+				this.nib, 
+				this.tanggalPenerbitan, 
+				this.daftarKbli.stream().map(t -> t.toKbli()).collect(Collectors.toList()));
 	}
 
 }

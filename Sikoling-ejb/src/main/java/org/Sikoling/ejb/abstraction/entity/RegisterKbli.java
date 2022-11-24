@@ -8,12 +8,10 @@ public class RegisterKbli implements Serializable {
 	private static final long serialVersionUID = 2998858268709853490L;
 	private final String nib;
 	private final String kode;
-	private final String nama;
-	
-	public RegisterKbli(String nib, String kode, String nama) {
+		
+	public RegisterKbli(String nib, String kode) {
 		this.nib = nib;
 		this.kode = kode;
-		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {
@@ -28,15 +26,10 @@ public class RegisterKbli implements Serializable {
 		return kode;
 	}
 
-	public String getNama() {
-		return nama;
-	}
-	
 	public int hashCode() {
 		int hash = 17;
 		hash = 131 * hash + Objects.hashCode(this.nib);
         hash = 131 * hash + Objects.hashCode(this.kode);
-        hash = 131 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 
@@ -65,16 +58,12 @@ public class RegisterKbli implements Serializable {
             return false;
         }
 
-        if (!this.nama.equalsIgnoreCase(other.getNama())) {
-            return false;
-        }
-
         return true;
 	}
 
 	@Override
 	public String toString() {
-		return "RegisterKbli{ nib=" + nib + ", kode=" + kode + ", nama=" + nama + '}';	  
+		return "RegisterKbli{ nib=" + nib + ", kode=" + kode +  "}";	  
 	}
 
 

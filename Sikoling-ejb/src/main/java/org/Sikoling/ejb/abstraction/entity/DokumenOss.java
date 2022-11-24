@@ -5,18 +5,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-
-public class DokumenOss extends DetailDokumen implements Serializable {
-
-	private static final long serialVersionUID = -2123829934784643942L;
+public class DokumenOss extends Dokumen implements Serializable {
+	private static final long serialVersionUID = -7953417225751501778L;
 	private final String nib;
-	private final LocalDate tanggal;
+	private final LocalDate tanggalPenerbitan;
 	private final List<Kbli> daftarKbli;
 	
-	public DokumenOss(Dokumen dokumen, String lokasiFile, String nib, LocalDate tanggal, List<Kbli> daftarKbli) {
-		super(dokumen, lokasiFile);
+	public DokumenOss(Dokumen dokumen, String nib, LocalDate tanggalPenerbitan, List<Kbli> daftarKbli) {
+		super(dokumen.getId(), dokumen.getNama(), dokumen.getKategoriDokumen());
 		this.nib = nib;
-		this.tanggal = tanggal;
+		this.tanggalPenerbitan = tanggalPenerbitan;
 		this.daftarKbli = daftarKbli;
 	}
 
@@ -28,24 +26,24 @@ public class DokumenOss extends DetailDokumen implements Serializable {
 		return nib;
 	}
 
-	public LocalDate getTanggal() {
-		return tanggal;
+	public LocalDate getTanggalPenerbitan() {
+		return tanggalPenerbitan;
 	}
 
 	public List<Kbli> getDaftarKbli() {
 		return daftarKbli;
 	}
 	
+	@Override
 	public int hashCode() {
-		int hash = 17;
-        hash = 113 * hash + Objects.hashCode(this.nib);
-        return hash;
+		int hash = 83;
+		hash = 137 * hash + Objects.hashCode(nib);
+		return hash;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-
-        if (this == obj) {
+		if (this == obj) {
             return true;
         }
 		
@@ -59,16 +57,16 @@ public class DokumenOss extends DetailDokumen implements Serializable {
         
         final DokumenOss other = (DokumenOss) obj;
         
-        if (!this.nib.equalsIgnoreCase(other.nib)) {
+        if ( !this.nib.equals(other.getNib()) ) {
             return false;
-        }        
-
+        }
+        
         return true;
 	}
 
 	@Override
 	public String toString() {
-		return "OSS{" + "nib=" + nib + ", tanggal=" + tanggal.toString() + '}';	  
+		return "DokumenOss{" + "nib=" + nib + ", tanggal penerbitan=" + tanggalPenerbitan.toString() + "}";
 	}
-	
+
 }

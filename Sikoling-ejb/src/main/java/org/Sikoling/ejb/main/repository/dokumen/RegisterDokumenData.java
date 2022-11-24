@@ -43,29 +43,21 @@ public class RegisterDokumenData implements Serializable {
 	private String lokasiFile;
 	
 	@Column(name="tanggal_upload", columnDefinition = "DATE")
-	private LocalDate tanggalUpload;
+	private LocalDate tanggalRegistrasi;
 	
 	@Column(name="is_berlaku")
-	private boolean isBerlaku;	
+	private boolean statusBerlaku;	
 
 	@JoinColumn(name = "uploader", referencedColumnName = "nik", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private AutorisasiData uploader;
 	
 	@OneToOne(mappedBy = "registerDokumen")
-    private RegisterDokumenOssData registerDokumenOssData;	
+    private DokumenOssData dokumenOssData;	
 	
 	public RegisterDokumenData() {
 	}
 
-	public RegisterDokumenOssData getRegisterDokumenOssData() {
-		return registerDokumenOssData;
-	}	
-
-	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
-		this.registerDokumenOssData = registerDokumenOssData;
-	}	
-		
 	public String getId() {
 		return id;
 	}
@@ -90,20 +82,28 @@ public class RegisterDokumenData implements Serializable {
 		this.dokumen = dokumen;
 	}
 
-	public LocalDate getTanggalUpload() {
-		return tanggalUpload;
+	public String getLokasiFile() {
+		return lokasiFile;
 	}
 
-	public void setTanggalUpload(LocalDate tanggalUpload) {
-		this.tanggalUpload = tanggalUpload;
+	public void setLokasiFile(String lokasiFile) {
+		this.lokasiFile = lokasiFile;
 	}
 
-	public boolean getIsBerlaku() {
-		return isBerlaku;
+	public LocalDate getTanggalRegistrasi() {
+		return tanggalRegistrasi;
 	}
 
-	public void setIsBerlaku(boolean isBerlaku) {
-		this.isBerlaku = isBerlaku;
+	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
+		this.tanggalRegistrasi = tanggalRegistrasi;
+	}
+
+	public boolean isStatusBerlaku() {
+		return statusBerlaku;
+	}
+
+	public void setStatusBerlaku(boolean statusBerlaku) {
+		this.statusBerlaku = statusBerlaku;
 	}
 
 	public AutorisasiData getUploader() {
@@ -114,18 +114,17 @@ public class RegisterDokumenData implements Serializable {
 		this.uploader = uploader;
 	}
 
+	public DokumenOssData getDokumenOssData() {
+		return dokumenOssData;
+	}
+
+	public void setDokumenOssData(DokumenOssData dokumenOssData) {
+		this.dokumenOssData = dokumenOssData;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-
-	public String getLokasiFile() {
-		return lokasiFile;
-	}
-
 	
-	public void setLokasiFile(String lokasiFile) {
-		this.lokasiFile = lokasiFile;
-	}
-
+	
 }

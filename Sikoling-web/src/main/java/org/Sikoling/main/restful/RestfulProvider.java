@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
+import org.Sikoling.ejb.abstraction.repository.IDokumenOssRepository;
 import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
@@ -21,6 +22,7 @@ import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
@@ -35,14 +37,18 @@ import org.Sikoling.ejb.abstraction.service.skalausaha.SkalaUsahaService;
 import org.Sikoling.ejb.abstraction.service.user.IUserService;
 import org.Sikoling.ejb.abstraction.service.user.UserService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
+import org.Sikoling.ejb.abstraction.service.dokumen.DokumenOssService;
 import org.Sikoling.ejb.abstraction.service.dokumen.DokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenOssService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IKategoriDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IKbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterKbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.KategoriDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.KbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterDokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.RegisterKbliService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
@@ -185,6 +191,18 @@ public class RestfulProvider {
 	public IKbliService getKbliService(
 			@Infrastructure IKbliRepository kbliRepository) {
 		return new KbliService(kbliRepository);
+	}
+	
+	@Produces
+	public IRegisterKbliService getRegisterKbliService(
+			@Infrastructure IRegisterKbliRepository registerKbliRepository) {
+		return new RegisterKbliService(registerKbliRepository);
+	}
+	
+	@Produces
+	public IDokumenOssService getDokumenOssService(
+			@Infrastructure IDokumenOssRepository dokumenOssRepository) {
+		return new DokumenOssService(dokumenOssRepository);
 	}
 	
 	@Produces

@@ -17,7 +17,6 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 		this.entityManager = entityManager;
 	}
 	
-
 	@Override
 	public List<RegisterKbli> getAll() {
 		return entityManager.createNamedQuery("RegisterKbliData.findAll", RegisterKbliData.class)
@@ -155,14 +154,13 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 	private RegisterKbli convertRegisterKbliDataToRegisterKbli(RegisterKbliData d) {
 		return new RegisterKbli(
 				d.getRegisterDokumenOssData().getNib(), 
-				d.getKbliData().getId(), 
-				d.getKbliData().getNama()
+				d.getKbliData().getId()
 				);
 	}
 	
 	private RegisterKbliData convertRegisterKbliToRegisterKbliData(RegisterKbli t) {
 		RegisterKbliData registerKbliData = new RegisterKbliData();
-		RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();
+		DokumenOssData registerDokumenOssData = new DokumenOssData();
 		registerDokumenOssData.setNib(t.getNib());		
 		registerKbliData.setRegisterDokumenOssData(registerDokumenOssData);
 		KbliData kbliData = new KbliData();
