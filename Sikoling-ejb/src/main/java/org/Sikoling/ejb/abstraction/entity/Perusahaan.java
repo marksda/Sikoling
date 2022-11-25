@@ -65,7 +65,6 @@ public class Perusahaan implements Serializable {
 		return daftarDokumen;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		int hash = 91;

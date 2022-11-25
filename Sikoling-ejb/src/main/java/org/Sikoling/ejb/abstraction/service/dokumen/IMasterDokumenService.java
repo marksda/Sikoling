@@ -5,7 +5,7 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 
-public interface IDokumenService {
+public interface IMasterDokumenService {
 	Dokumen save(Dokumen dokumen);
 	Dokumen update(Dokumen dokumen);
 	Dokumen updateById(String id, Dokumen dokumen);

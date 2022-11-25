@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.dokumen;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.IMasterDokumenService;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 
 import jakarta.ejb.LocalBean;
@@ -26,7 +26,7 @@ import jakarta.ws.rs.core.MediaType;
 public class DokumenController {
 	
 	@Inject
-	private IDokumenService dokumenService;
+	private IMasterDokumenService dokumenService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})

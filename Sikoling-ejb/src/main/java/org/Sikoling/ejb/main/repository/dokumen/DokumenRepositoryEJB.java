@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.Local;
@@ -14,7 +14,7 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class DokumenRepositoryEJB implements IDokumenRepository {
+public class DokumenRepositoryEJB implements IMasterDokumenRepository {
 
 	@Inject
 	private DokumenRepositoryJPA dokumenPerusahaanRepository;

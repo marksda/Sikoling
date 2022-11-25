@@ -160,7 +160,7 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 	
 	private RegisterKbliData convertRegisterKbliToRegisterKbliData(RegisterKbli t) {
 		RegisterKbliData registerKbliData = new RegisterKbliData();
-		DokumenOssData registerDokumenOssData = new DokumenOssData();
+		RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();
 		registerDokumenOssData.setNib(t.getNib());		
 		registerKbliData.setRegisterDokumenOssData(registerDokumenOssData);
 		KbliData kbliData = new KbliData();

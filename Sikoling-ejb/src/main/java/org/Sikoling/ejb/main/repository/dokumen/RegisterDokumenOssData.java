@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -21,7 +22,7 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="DokumenOssData.findAll", query="SELECT d FROM DokumenOssData d"),
 	@NamedQuery(name="DokumenOssData.findByNib", query = "SELECT d FROM DokumenOssData d WHERE d.nib = :nib")
 })
-public class DokumenOssData implements Serializable {
+public class RegisterDokumenOssData implements Serializable {
 
 	private static final long serialVersionUID = 411899176836678359L;
 	
@@ -31,14 +32,17 @@ public class DokumenOssData implements Serializable {
 	@Column(name = "tanggal_penerbitan", columnDefinition = "DATE")
 	private LocalDate tanggalPenerbitan;
 	
-	@JoinColumn(name="master_register_dokumen", referencedColumnName = "id", insertable = true, updatable = false)
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumns({
+		@JoinColumn(name = "perusahaan", referencedColumnName = "perusahaan", insertable = true, updatable = false),
+		@JoinColumn(name = "dokumen", referencedColumnName = "dokumen", insertable = true, updatable = false)
+	})
 	private RegisterDokumenData registerDokumenData;
 	
 	@OneToMany(mappedBy="registerDokumenOssData")
     private Set<RegisterKbliData> daftarRegisterKbliData;
 	
-	public DokumenOssData() {
+	public RegisterDokumenOssData() {
 	}
 
 	public String getNib() {

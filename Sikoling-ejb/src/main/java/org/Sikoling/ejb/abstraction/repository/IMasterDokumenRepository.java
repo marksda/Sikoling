@@ -5,7 +5,7 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 
-public interface IDokumenRepository extends IRepository<Dokumen> {
+public interface IMasterDokumenRepository extends IRepository<Dokumen> {
 	DeleteResponse delete(String id);
 	Dokumen updateById(String id, Dokumen dokumen);
 	List<Dokumen> getAllByPage(Integer page, Integer pageSize);

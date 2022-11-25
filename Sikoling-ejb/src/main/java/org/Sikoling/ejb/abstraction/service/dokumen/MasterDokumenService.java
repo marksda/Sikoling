@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
-public class DokumenService implements IDokumenService {
+public class MasterDokumenService implements IMasterDokumenService {
 	
-	private final IDokumenRepository dokumenRepository;
+	private final IMasterDokumenRepository dokumenRepository;
 	
-	public DokumenService(IDokumenRepository dokumenRepository) {
+	public MasterDokumenService(IMasterDokumenRepository dokumenRepository) {
 		this.dokumenRepository = dokumenRepository;
 	}
 

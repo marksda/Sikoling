@@ -9,11 +9,9 @@ import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.DetailDokumen;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.RegisterDokumenOss;
+import org.Sikoling.ejb.abstraction.entity.DokumenOss;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kbli;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
@@ -22,6 +20,7 @@ import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
@@ -180,7 +179,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	private RegisterKbliData convertKbliToRegisterKbliData(Kbli kbli, String nib) {
 		RegisterKbliData registerKbliData = new RegisterKbliData();
-		registerKbliData.setId(nib.concat("*").concat(kbli.getKode()));
 		registerKbliData.setKode(kbli.getKode());
 		registerKbliData.setNama(kbli.getNama());
 				
@@ -256,68 +254,76 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				);
 	}
 	
-	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData registerDokumenData) {
-		RegisterDokumenData d = entityManager.find(RegisterDokumenData.class, registerDokumenData.getId());
-		DokumenData dokumenData = d.getDokumen();		
-		DetailDokumen detailDokumen;
+	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
+		RegisterDokumen registerDokumen;
+		DokumenData masterDokumenData = d.getDokumenData();
+		KategoriDokumenData kategoriDokumenData = masterDokumenData.getKategori();
 		
-		switch (dokumenData.getId()) {
+		switch (d.getDokumenData().getId()) {
 		case "010301":
-			DokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
-			detailDokumen = new RegisterDokumenOss(
-					convertDokumenDataToDokumen(dokumenData),  
-					d.getLokasiFile(), 
+			RegisterDokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
+			DokumenOss dokumenOss = new DokumenOss(
+					new Dokumen(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							new KategoriDokumen(
+									kategoriDokumenData.getId(), 
+									kategoriDokumenData.getNama(), 
+									kategoriDokumenData.getParent()
+									)
+							), 
 					registerDokumenOssData.getNib(), 
-					registerDokumenOssData.getTanggal(), 
-					registerDokumenOssData
-						.getDaftarKbli()
-						.stream()
-						.map(t -> convertRegisterKbliDataToKbli(t))
-						.collect(Collectors.toList())
-					);			
+					null, 
+					null
+					);
+			registerDokumen = new RegisterDokumen(dokumenOss, null, null, null, false, null);
+//			RegisterDokumenOssData registerDokumenOssData = d.getDokumenOssData();			
+//			DokumenOss dokumen = new DokumenOss(null, null, null, null);
+//					
+//					
+//					
+//			RegisterDokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
+//			detailDokumen = new RegisterDokumenOss(
+//					convertDokumenDataToDokumen(dokumenData),  
+//					d.getLokasiFile(), 
+//					registerDokumenOssData.getNib(), 
+//					registerDokumenOssData.getTanggal(), 
+//					registerDokumenOssData
+//						.getDaftarKbli()
+//						.stream()
+//						.map(t -> convertRegisterKbliDataToKbli(t))
+//						.collect(Collectors.toList())
+//					);			
 			break;
 		default:
-			detailDokumen = new DetailDokumen(convertDokumenDataToDokumen(dokumenData), d.getLokasiFile());
+			registerDokumen = null;
 			break;
 		}		
 		
-		return new RegisterDokumen(
-				d.getId(), 
-				detailDokumen, 
-				d.getTanggalUpload(), 
-				d.getIsBerlaku(), 
-				convertPerusahaanDataToPerusahaan(d.getPerusahaan()), 
-				null
-				);
+		return registerDokumen;
 
 	}
 	
-	private RegisterDokumenData convertRegisterDokumenToRegisterDokumenData(RegisterDokumen t) {	
+	private RegisterDokumenData convertRegisterDokumenToRegisterDokumenData(RegisterDokumen t) {
 		
-		DetailDokumen detailDokumen = t.getDetailDokumen();
-		
-		RegisterDokumenData registerDokumenData = new RegisterDokumenData();	
-		registerDokumenData.setId(t.getId());
-		
-		//setPerusahaan		
+		RegisterDokumenData registerDokumenData = new RegisterDokumenData();
 		PerusahaanData perusahaanData = new PerusahaanData();
-		perusahaanData.setId(t.getPerusahaan().getId());
 		registerDokumenData.setPerusahaan(perusahaanData);
 		
-		//setDokumen		
-		Dokumen dokumen = detailDokumen.getDokumen();
-		DokumenData dokumenData = new DokumenData();
-		dokumenData.setId(dokumen.getId());
-		registerDokumenData.setDokumen(dokumenData);		
+		DokumenData masterDokumenData = new DokumenData();
+		masterDokumenData.setId(t.getDokumen().getId());
+		registerDokumenData.setDokumenData(masterDokumenData);				
+		registerDokumenData.setTanggalRegistrasi(t.getTanggalRegistrasi());		
+		registerDokumenData.setStatusBerlaku(t.isStatusBerlaku());
 		
-		//setDetailDokumen
-		switch (dokumen.getId()) {
+
+		switch (t.getDokumen().getId()) {
 		case "010301":
-			RegisterDokumenOss dokumenOss = (RegisterDokumenOss) detailDokumen;
-			DokumenOssData registerDokumenOssData = new DokumenOssData();
+			DokumenOss dokumenOss = (DokumenOss) t.getDokumen();
 			String nib = dokumenOss.getNib();
+			RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();			
 			registerDokumenOssData.setNib(nib);
-			registerDokumenOssData.setTanggal(dokumenOss.getTanggal());
+			registerDokumenOssData.setTanggalPenerbitan(dokumenOss.getTanggalPenerbitan());
 			registerDokumenOssData.setRegisterDokumenData(registerDokumenData);
 			List<Kbli> daftarKbli = dokumenOss.getDaftarKbli();
 			Set<RegisterKbliData> daftarKbliData = new HashSet<RegisterKbliData>();
@@ -326,19 +332,13 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				daftarKbliData.add(convertKbliToRegisterKbliData(daftarKbli.get(i), nib));
 			}
 			
-			registerDokumenOssData.setDaftarKbli(daftarKbliData);
+			registerDokumenOssData.setDaftarRegisterKbliData(daftarKbliData);
 			
-			registerDokumenData.setDokumenOssData(registerDokumenOssData);
+			registerDokumenData.setRegisterDokumenOssData(registerDokumenOssData);
 			break;
 		default:
 			break;
 		}
-		
-		//setTanggalUpload
-		registerDokumenData.setTanggalUpload(t.getTanggalTransaksi());
-		
-		//setIsBerlaku
-		registerDokumenData.setIsBerlaku(true);
 		
 		return registerDokumenData;
 	}

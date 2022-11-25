@@ -28,7 +28,7 @@ public class RegisterKbliData implements Serializable {
 	@Id
 	@JoinColumn(name = "register_dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private DokumenOssData dokumenOssData;
+	private RegisterDokumenOssData dokumenOssData;
 		
 	@Id
 	@JoinColumn(name = "kode", referencedColumnName = "id", insertable = true, updatable = false)
@@ -38,41 +38,26 @@ public class RegisterKbliData implements Serializable {
 	public RegisterKbliData() {
 	}
 		
-	public DokumenOssData getDokumenOssData() {
+	public RegisterDokumenOssData getDokumenOssData() {
 		return dokumenOssData;
 	}
-	
 
-
-
-	public void setDokumenOssData(DokumenOssData dokumenOssData) {
+	public void setDokumenOssData(RegisterDokumenOssData dokumenOssData) {
 		this.dokumenOssData = dokumenOssData;
 	}
 	
-
-
-
 	public KbliData getKbliData() {
 		return kbliData;
 	}
 	
-
-
-
 	public void setKbliData(KbliData kbliData) {
 		this.kbliData = kbliData;
 	}
 	
-
-
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
-
-
-
 	@Override
 	public int hashCode() {
 		int hash = 83;

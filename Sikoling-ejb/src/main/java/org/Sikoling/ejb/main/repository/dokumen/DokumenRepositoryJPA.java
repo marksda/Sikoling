@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
-import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
 import jakarta.persistence.EntityManager;
 
-public class DokumenRepositoryJPA implements IDokumenRepository {
+public class DokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	private final EntityManager entityManager;	
 	

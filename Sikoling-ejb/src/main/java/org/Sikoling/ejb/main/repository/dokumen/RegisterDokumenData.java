@@ -8,6 +8,7 @@ import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -24,20 +25,20 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="RegisterDokumenData.findByNamaPerusahaan", query = "SELECT d FROM RegisterDokumenData d WHERE d.perusahaan.nama LIKE :namaPerusahaan"),
 	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaan", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaan.id = :idPerusahaan")
 })
+@IdClass(RegisterDokumenDataId.class)
 public class RegisterDokumenData implements Serializable {
 
 	private static final long serialVersionUID = 781878194764826140L;
-	
+		
 	@Id
-	private String id;
-	
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private PerusahaanData perusahaan;
+	private PerusahaanData perusahaanData;
 	
-	@JoinColumn(name = "detail_dokumen", referencedColumnName = "id", insertable = true, updatable = false)
+	@Id
+	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private DokumenData dokumen;
+	private DokumenData dokumenData;
 	
 	@Column(name="lokasi_file")
 	private String lokasiFile;
@@ -52,34 +53,26 @@ public class RegisterDokumenData implements Serializable {
 	@ManyToOne(optional = false)
 	private AutorisasiData uploader;
 	
-	@OneToOne(mappedBy = "registerDokumen")
-    private DokumenOssData dokumenOssData;	
+	@OneToOne(mappedBy = "registerDokumenData")
+	private RegisterDokumenOssData registerDokumenOssData;
 	
 	public RegisterDokumenData() {
 	}
 
-	public String getId() {
-		return id;
+	public PerusahaanData getPerusahaanData() {
+		return perusahaanData;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setPerusahaan(PerusahaanData perusahaanData) {
+		this.perusahaanData = perusahaanData;
 	}
 
-	public PerusahaanData getPerusahaan() {
-		return perusahaan;
+	public DokumenData getDokumenData() {
+		return dokumenData;
 	}
 
-	public void setPerusahaan(PerusahaanData perusahaan) {
-		this.perusahaan = perusahaan;
-	}
-
-	public DokumenData getDokumen() {
-		return dokumen;
-	}
-
-	public void setDokumen(DokumenData dokumen) {
-		this.dokumen = dokumen;
+	public void setDokumenData(DokumenData dokumenData) {
+		this.dokumenData = dokumenData;
 	}
 
 	public String getLokasiFile() {
@@ -114,12 +107,12 @@ public class RegisterDokumenData implements Serializable {
 		this.uploader = uploader;
 	}
 
-	public DokumenOssData getDokumenOssData() {
-		return dokumenOssData;
+	public RegisterDokumenOssData getRegisterDokumenOssData() {
+		return registerDokumenOssData;
 	}
 
-	public void setDokumenOssData(DokumenOssData dokumenOssData) {
-		this.dokumenOssData = dokumenOssData;
+	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
+		this.registerDokumenOssData = registerDokumenOssData;
 	}
 
 	public static long getSerialversionuid() {
