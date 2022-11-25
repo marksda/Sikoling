@@ -11,8 +11,7 @@ public class DokumenOss extends Dokumen implements Serializable {
 	private final LocalDate tanggalPenerbitan;
 	private final List<Kbli> daftarKbli;
 	
-	public DokumenOss(Dokumen dokumen, String nib, LocalDate tanggalPenerbitan, 
-			List<Kbli> daftarKbli, String lokasiFile) {
+	public DokumenOss(Dokumen dokumen, String nib, LocalDate tanggalPenerbitan, List<Kbli> daftarKbli) {
 		super(dokumen.getId(), dokumen.getNama(), dokumen.getKategoriDokumen());
 		this.nib = nib;
 		this.tanggalPenerbitan = tanggalPenerbitan;

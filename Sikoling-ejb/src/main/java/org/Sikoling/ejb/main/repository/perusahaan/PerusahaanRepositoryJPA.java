@@ -1,6 +1,8 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,7 +59,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 
 	@Override
 	public Perusahaan save(Perusahaan t) {
-		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t);		
+		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t);
 		entityManager.persist(perusahaanData);
 		entityManager.flush();		
 		return convertPerusahaanDataToPerusahaan(perusahaanData);
@@ -182,6 +184,23 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		return daftarKbli;
 	}
 	
+	private Set<RegisterKbliData> convertDaftarKbliToDaftarRegisterKbliData(List<Kbli> daftarKbli) {
+		
+		Set<RegisterKbliData> daftarRegisterKbliData = new HashSet<RegisterKbliData>();
+		
+		for(Kbli item : daftarKbli) {
+			RegisterKbliData registerKbliData = new RegisterKbliData();
+			KbliData kbliData = new KbliData();
+			kbliData.setId(item.getKode());
+			kbliData.setNama(item.getNama());
+			kbliData.setKategori(item.getKategori());			
+			daftarRegisterKbliData.add(registerKbliData);		
+		}
+		
+		return daftarRegisterKbliData;
+		
+	}
+	
 	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan p) {	
 		
 		PerusahaanData perusahaanData = new PerusahaanData();	
@@ -233,27 +252,35 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		kontakPerusahaanData.setTelepone(p.getKontak().getTelepone());	
 		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
 		
-		List<Dokumen> daftarDokumen = p.getDaftarRegisterDokumen();
+		List<RegisterDokumen> daftarRegisterDokumen = p.getDaftarRegisterDokumen();
 		List<RegisterDokumenData> daftarRegisterDokumenData = new ArrayList<RegisterDokumenData>();
 		
-		for(Dokumen item : daftarDokumen) {
+		for(RegisterDokumen item : daftarRegisterDokumen) {
 			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
 
 			DokumenData dokumenData = new DokumenData();
-			dokumenData.setId(item.getId());
-			dokumenData.setNama(item.getNama());
-			KategoriDokumen kategoriDokumen = item.getKategoriDokumen();
+			dokumenData.setId(item.getDokumen().getId());
+			dokumenData.setNama(item.getDokumen().getNama());
+			KategoriDokumen kategoriDokumen = item.getDokumen().getKategoriDokumen();
 			KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
 			kategoriDokumenData.setId(kategoriDokumen.getId());
 			kategoriDokumenData.setNama(kategoriDokumen.getNama());
 			kategoriDokumenData.setParent(kategoriDokumen.getParent());
 			dokumenData.setKategoriDokumenData(kategoriDokumenData);
 			registerDokumenData.setDokumenData(dokumenData);
+			registerDokumenData.setLokasiFile(item.getLokasiFile());
+			registerDokumenData.setTanggalRegistrasi(item.getTanggalRegistrasi() == null ? LocalDate.now():item.getTanggalRegistrasi());
+			registerDokumenData.setStatusBerlaku(item.isStatusBerlaku());
 			
-			switch (item.getId()) {
+			switch (item.getDokumen().getId()) {
 			case "010301":
-				DokumenOss dokumenOss = (DokumenOss) item;
-				registerDokumenData.setLokasiFile(dokumenOss.getLokasiFile());
+				DokumenOss dokumenOss = (DokumenOss) item.getDokumen();
+				DokumenOssData dokumenOssData = new DokumenOssData();
+				dokumenOssData.setNib(dokumenOss.getNib());
+				dokumenOssData.setTanggalPenerbitan(dokumenOss.getTanggalPenerbitan());
+				dokumenOssData.setDaftarRegisterKbliData(convertDaftarKbliToDaftarRegisterKbliData(dokumenOss.getDaftarKbli()));
+								
+				registerDokumenData.setDokumenOssData(dokumenOssData);
 				break;
 
 			default:
@@ -298,7 +325,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		List<RegisterDokumenData> daftarRegisterDokumenData = d.getDaftarRegisterDokumenData();
 		List<RegisterDokumen> daftarRegisterDokumen = new ArrayList<RegisterDokumen>();
 		
-		for(RegisterDokumenData item : daftarRegisterDokumenData) {
+		for(RegisterDokumenData item : daftarRegisterDokumenData) {			
 			DokumenData dokumenData = item.getDokumenData();
 			KategoriDokumenData kategoriDokumenData = dokumenData.getKategoriDokumenData();
 			Dokumen dokumen = new Dokumen(
@@ -309,20 +336,25 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 							kategoriDokumenData.getNama(), 
 							kategoriDokumenData.getParent()
 							)
-					);
-			
+					);			
+		
 			switch (dokumenData.getId()) {
 			case "010301":				
-				DokumenOssData dokumenOssData = item.getDokumenOssData();
-				DokumenOss dokumenOss = new DokumenOss(dokumen, null, null, null, null);
-						
-//				DokumenOss dokumenOss = new DokumenOss(
-//						dokumen, 
-//						dokumenOssData.getNib(), 
-//						dokumenOssData.getTanggalPenerbitan(), 
-//						convertDaftarRegisterKbliDataToDaftarKbli(dokumenOssData.getDaftarRegisterKbliData())
-//						);			
-				daftarRegisterDokumen.add(dokumenOss);
+				DokumenOssData dokumenOssData = item.getDokumenOssData();						
+				DokumenOss dokumenOss = new DokumenOss(
+						dokumen, 
+						dokumenOssData.getNib(), 
+						dokumenOssData.getTanggalPenerbitan(), 
+						convertDaftarRegisterKbliDataToDaftarKbli(dokumenOssData.getDaftarRegisterKbliData())
+						);			
+				daftarRegisterDokumen.add(
+						new RegisterDokumen(
+								dokumenOss, 
+								item.getLokasiFile(), 
+								item.getTanggalRegistrasi(), 
+								item.isStatusBerlaku(), 
+								null)
+						);
 				break;
 			default:
 				break;
