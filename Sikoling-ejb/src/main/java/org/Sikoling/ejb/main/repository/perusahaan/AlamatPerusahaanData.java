@@ -18,48 +18,48 @@ public class AlamatPerusahaanData implements Serializable {
 
 	@JoinColumn(name = "desa", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
-	private DesaData desa;
+	private DesaData desaData;
 
 	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
-	private KabupatenData kabupaten;
+	private KabupatenData kabupatenData;
 
 	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
-	private KecamatanData kecamatan;
+	private KecamatanData kecamatanData;
 
 	@Column(name="detail_alamat")
 	private String keterangan;
 
 	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne
-	private PropinsiData propinsi;
+	private PropinsiData propinsiData;
 
 	public AlamatPerusahaanData() {
 	}
 
-	public DesaData getDesa() {
-		return this.desa;
+	public DesaData getDesaData() {
+		return this.desaData;
 	}
 
-	public void setDesa(DesaData desa) {
-		this.desa = desa;
+	public void setDesaData(DesaData desaData) {
+		this.desaData = desaData;
 	}
 
-	public KabupatenData getKabupaten() {
-		return this.kabupaten;
+	public KabupatenData getKabupatenData() {
+		return this.kabupatenData;
 	}
 
-	public void setKabupaten(KabupatenData kabupaten) {
-		this.kabupaten = kabupaten;
+	public void setKabupatenData(KabupatenData kabupatenData) {
+		this.kabupatenData = kabupatenData;
 	}
 
-	public KecamatanData getKecamatan() {
-		return this.kecamatan;
+	public KecamatanData getKecamatanData() {
+		return this.kecamatanData;
 	}
 
-	public void setKecamatan(KecamatanData kecamatan) {
-		this.kecamatan = kecamatan;
+	public void setKecamatanData(KecamatanData kecamatanData) {
+		this.kecamatanData = kecamatanData;
 	}
 
 	public String getKeterangan() {
@@ -70,12 +70,12 @@ public class AlamatPerusahaanData implements Serializable {
 		this.keterangan = keterangan;
 	}
 
-	public PropinsiData getPropinsi() {
-		return this.propinsi;
+	public PropinsiData getPropinsiData() {
+		return this.propinsiData;
 	}
 
-	public void setPropinsi(PropinsiData propinsi) {
-		this.propinsi = propinsi;
+	public void setPropinsiData(PropinsiData propinsiData) {
+		this.propinsiData = propinsiData;
 	}
 
 }

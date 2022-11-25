@@ -34,7 +34,7 @@ public class PerusahaanData implements Serializable {
 	
 	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private SkalaUsahaData SkalaUsaha;
+	private SkalaUsahaData skalaUsahaData;
 		
 	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
@@ -46,8 +46,8 @@ public class PerusahaanData implements Serializable {
 	@Embedded
 	private KontakPerusahaanData kontakPerusahaanData;
 		
-	@OneToMany(mappedBy="perusahaan")
-	private List<RegisterDokumenData> daftarItemRegisterDokumenData;
+	@OneToMany(mappedBy="perusahaanData")
+	private List<RegisterDokumenData> daftarRegisterDokumenData;
 	
 	public PerusahaanData() {
 	}
@@ -84,12 +84,12 @@ public class PerusahaanData implements Serializable {
 		this.modelPerizinanData = modelPerizinanData;
 	}
 
-	public SkalaUsahaData getSkalaUsaha() {
-		return SkalaUsaha;
+	public SkalaUsahaData getSkalaUsahaData() {
+		return skalaUsahaData;
 	}
 
-	public void setSkalaUsaha(SkalaUsahaData skalaUsaha) {
-		SkalaUsaha = skalaUsaha;
+	public void setSkalaUsahaData(SkalaUsahaData skalaUsahaData) {
+		this.skalaUsahaData = skalaUsahaData;
 	}
 
 	public PelakuUsahaData getPelakuUsahaData() {
@@ -116,12 +116,12 @@ public class PerusahaanData implements Serializable {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
 
-	public List<RegisterDokumenData> getDaftarItemRegisterDokumenData() {
-		return daftarItemRegisterDokumenData;
+	public List<RegisterDokumenData> getDaftarRegisterDokumenData() {
+		return daftarRegisterDokumenData;
 	}
 
-	public void setDaftarItemRegisterDokumenData(List<RegisterDokumenData> daftarItemRegisterDokumenData) {
-		this.daftarItemRegisterDokumenData = daftarItemRegisterDokumenData;
+	public void setDaftarRegisterDokumenData(List<RegisterDokumenData> daftarRegisterDokumenData) {
+		this.daftarRegisterDokumenData = daftarRegisterDokumenData;
 	}
 
 	public static long getSerialversionuid() {

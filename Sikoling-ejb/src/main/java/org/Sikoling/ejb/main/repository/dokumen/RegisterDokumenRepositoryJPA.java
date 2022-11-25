@@ -186,7 +186,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	}
 	
 	private Dokumen convertDokumenDataToDokumen(DokumenData d) {
-		KategoriDokumenData kategoriDokumenData = d.getKategori();
+		KategoriDokumenData kategoriDokumenData = d.getKategoriDokumenData();
 		return new Dokumen(
 				d.getId(), 
 				d.getNama(),
@@ -199,14 +199,14 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	private Perusahaan convertPerusahaanDataToPerusahaan(PerusahaanData d) {
 		ModelPerizinanData modelPerizinanData = d.getModelPerizinanData();
-		SkalaUsahaData skalaUsahaData = d.getSkalaUsaha();
+		SkalaUsahaData skalaUsahaData = d.getSkalaUsahaData();
 		PelakuUsahaData pelakuUsahaData = d.getPelakuUsahaData();
 		KategoriPelakuUsahaData kategoriPelakuUsahaData = pelakuUsahaData.getKategoriPelakuUsahaData();
 		AlamatPerusahaanData alamatPerusahaanData = d.getAlamatPerusahaanData();
-		PropinsiData propinsiDataPerusahaan = alamatPerusahaanData.getPropinsi();
-		KabupatenData kabupatenDataPerusahaan = alamatPerusahaanData.getKabupaten();
-		KecamatanData kecamatanDataPerusahaan = alamatPerusahaanData.getKecamatan();
-		DesaData desaDataPerusahaan = alamatPerusahaanData.getDesa();
+		PropinsiData propinsiDataPerusahaan = alamatPerusahaanData.getPropinsiData();
+		KabupatenData kabupatenDataPerusahaan = alamatPerusahaanData.getKabupatenData();
+		KecamatanData kecamatanDataPerusahaan = alamatPerusahaanData.getKecamatanData();
+		DesaData desaDataPerusahaan = alamatPerusahaanData.getDesaData();
 		KontakPerusahaanData kontakData = d.getKontakPerusahaanData();
 		
 		return new Perusahaan(
@@ -257,11 +257,11 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
 		RegisterDokumen registerDokumen;
 		DokumenData masterDokumenData = d.getDokumenData();
-		KategoriDokumenData kategoriDokumenData = masterDokumenData.getKategori();
+		KategoriDokumenData kategoriDokumenData = masterDokumenData.getKategoriDokumenData();
 		
 		switch (d.getDokumenData().getId()) {
 		case "010301":
-			RegisterDokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
+			DokumenOssData registerDokumenOssData = d.getDokumenOssData();
 			DokumenOss dokumenOss = new DokumenOss(
 					new Dokumen(
 							masterDokumenData.getId(), 
@@ -277,23 +277,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					null
 					);
 			registerDokumen = new RegisterDokumen(dokumenOss, null, null, null, false, null);
-//			RegisterDokumenOssData registerDokumenOssData = d.getDokumenOssData();			
-//			DokumenOss dokumen = new DokumenOss(null, null, null, null);
-//					
-//					
-//					
-//			RegisterDokumenOssData registerDokumenOssData = d.getRegisterDokumenOssData();
-//			detailDokumen = new RegisterDokumenOss(
-//					convertDokumenDataToDokumen(dokumenData),  
-//					d.getLokasiFile(), 
-//					registerDokumenOssData.getNib(), 
-//					registerDokumenOssData.getTanggal(), 
-//					registerDokumenOssData
-//						.getDaftarKbli()
-//						.stream()
-//						.map(t -> convertRegisterKbliDataToKbli(t))
-//						.collect(Collectors.toList())
-//					);			
 			break;
 		default:
 			registerDokumen = null;
@@ -321,10 +304,9 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		case "010301":
 			DokumenOss dokumenOss = (DokumenOss) t.getDokumen();
 			String nib = dokumenOss.getNib();
-			RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();			
-			registerDokumenOssData.setNib(nib);
-			registerDokumenOssData.setTanggalPenerbitan(dokumenOss.getTanggalPenerbitan());
-			registerDokumenOssData.setRegisterDokumenData(registerDokumenData);
+			DokumenOssData dokumenOssData = new DokumenOssData();			
+			dokumenOssData.setNib(nib);
+			dokumenOssData.setTanggalPenerbitan(dokumenOss.getTanggalPenerbitan());
 			List<Kbli> daftarKbli = dokumenOss.getDaftarKbli();
 			Set<RegisterKbliData> daftarKbliData = new HashSet<RegisterKbliData>();
 			
@@ -332,9 +314,9 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				daftarKbliData.add(convertKbliToRegisterKbliData(daftarKbli.get(i), nib));
 			}
 			
-			registerDokumenOssData.setDaftarRegisterKbliData(daftarKbliData);
+			dokumenOssData.setDaftarRegisterKbliData(daftarKbliData);
 			
-			registerDokumenData.setRegisterDokumenOssData(registerDokumenOssData);
+			registerDokumenData.setDokumenOssData(dokumenOssData);
 			break;
 		default:
 			break;

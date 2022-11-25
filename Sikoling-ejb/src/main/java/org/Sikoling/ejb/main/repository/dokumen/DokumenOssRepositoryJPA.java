@@ -26,7 +26,7 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 
 	@Override
 	public List<DokumenOss> getAll() {
-		return entityManager.createNamedQuery("DokumenOssData.findAll", RegisterDokumenOssData.class)
+		return entityManager.createNamedQuery("DokumenOssData.findAll", DokumenOssData.class)
 				.getResultList()
 				.stream()
 				.map(t -> convertDokumenOssDataToDokumenOss(t))
@@ -35,7 +35,7 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 
 	@Override
 	public DokumenOss save(DokumenOss t, String s) {
-		RegisterDokumenOssData dokumenOssData = convertDokumenOssToDokumenOssData(t, s);
+		DokumenOssData dokumenOssData = convertDokumenOssToDokumenOssData(t, s);
 		entityManager.persist(dokumenOssData);
 		entityManager.flush();		
 		return convertDokumenOssDataToDokumenOss(dokumenOssData);
@@ -43,22 +43,22 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 
 	@Override
 	public DokumenOss update(DokumenOss t, String s) {
-		RegisterDokumenOssData dokumenOssData = convertDokumenOssToDokumenOssData(t, s);
+		DokumenOssData dokumenOssData = convertDokumenOssToDokumenOssData(t, s);
 		dokumenOssData = entityManager.merge(dokumenOssData);
 		return convertDokumenOssDataToDokumenOss(dokumenOssData);
 	}
 
 	@Override
 	public DeleteResponse delete(String nib) {
-		RegisterDokumenOssData dokumenOssData = entityManager.find(RegisterDokumenOssData.class, nib);
+		DokumenOssData dokumenOssData = entityManager.find(DokumenOssData.class, nib);
 		entityManager.remove(dokumenOssData);
 		return new DeleteResponse(true, nib);
 	}
 
 	@Override
 	public DokumenOss updateById(String nib, DokumenOss dokumenOss, String s) {
-		RegisterDokumenOssData updaData = convertDokumenOssToDokumenOssData(dokumenOss, s);
-		RegisterDokumenOssData dokumenOssData = entityManager.find(RegisterDokumenOssData.class, nib);
+		DokumenOssData updaData = convertDokumenOssToDokumenOssData(dokumenOss, s);
+		DokumenOssData dokumenOssData = entityManager.find(DokumenOssData.class, nib);
 		dokumenOssData.setNib(updaData.getNib());
 		dokumenOssData.setTanggalPenerbitan(updaData.getTanggalPenerbitan());
 		dokumenOssData.setDaftarRegisterKbliData(updaData.getDaftarRegisterKbliData());
@@ -68,7 +68,7 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 
 	@Override
 	public List<DokumenOss> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("DokumenOssData.findAll", RegisterDokumenOssData.class)
+		return entityManager.createNamedQuery("DokumenOssData.findAll", DokumenOssData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
@@ -79,7 +79,7 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 
 	@Override
 	public List<DokumenOss> getByNib(String nib) {
-		return entityManager.createNamedQuery("DokumenOssData.findByNib", RegisterDokumenOssData.class)
+		return entityManager.createNamedQuery("DokumenOssData.findByNib", DokumenOssData.class)
 				.setParameter("nib", nib)
 				.getResultList()
 				.stream()
@@ -89,7 +89,7 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 
 	@Override
 	public List<DokumenOss> getByNibAndPage(String nib, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("DokumenOssData.findByNib", RegisterDokumenOssData.class)
+		return entityManager.createNamedQuery("DokumenOssData.findByNib", DokumenOssData.class)
 				.setParameter("nib", nib)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -99,8 +99,8 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 				.collect(Collectors.toList());
 	}
 	
-	private RegisterDokumenOssData convertDokumenOssToDokumenOssData(DokumenOss t, String s) {
-		RegisterDokumenOssData dokumenOssData = new RegisterDokumenOssData();		
+	private DokumenOssData convertDokumenOssToDokumenOssData(DokumenOss t, String s) {
+		DokumenOssData dokumenOssData = new DokumenOssData();		
 		dokumenOssData.setNib(t.getNib());
 		dokumenOssData.setTanggalPenerbitan(LocalDate.now());
 		
@@ -123,9 +123,9 @@ public class DokumenOssRepositoryJPA implements IDokumenOssRepository {
 		return dokumenOssData;
 	}
 	
-	private DokumenOss convertDokumenOssDataToDokumenOss(RegisterDokumenOssData d) {
+	private DokumenOss convertDokumenOssDataToDokumenOss(DokumenOssData d) {
 		DokumenData dokumenData = d.getRegisterDokumenData().getDokumen();
-		KategoriDokumenData kategoriDokumenData = dokumenData.getKategori();
+		KategoriDokumenData kategoriDokumenData = dokumenData.getKategoriDokumenData();
 		Dokumen dokumen = new Dokumen(
 				dokumenData.getId(), 
 				dokumenData.getNama(), 

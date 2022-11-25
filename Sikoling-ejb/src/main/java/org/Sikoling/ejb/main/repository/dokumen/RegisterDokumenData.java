@@ -54,7 +54,7 @@ public class RegisterDokumenData implements Serializable {
 	private AutorisasiData uploader;
 	
 	@OneToOne(mappedBy = "registerDokumenData")
-	private RegisterDokumenOssData registerDokumenOssData;
+	private DokumenOssData dokumenOssData;
 	
 	public RegisterDokumenData() {
 	}
@@ -107,12 +107,12 @@ public class RegisterDokumenData implements Serializable {
 		this.uploader = uploader;
 	}
 
-	public RegisterDokumenOssData getRegisterDokumenOssData() {
-		return registerDokumenOssData;
+	public DokumenOssData getDokumenOssData() {
+		return dokumenOssData;
 	}
 
-	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
-		this.registerDokumenOssData = registerDokumenOssData;
+	public void setDokumenOssData(DokumenOssData dokumenOssData) {
+		this.dokumenOssData = dokumenOssData;
 	}
 
 	public static long getSerialversionuid() {

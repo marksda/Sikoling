@@ -79,9 +79,9 @@ public class DokumenRepositoryJPA implements IMasterDokumenRepository {
 	
 	private Dokumen convertDokumenDataToDokumen(DokumenData d) {
 		KategoriDokumen kategoriDokumen = new KategoriDokumen(
-				d.getKategori().getId(), 
-				d.getKategori().getNama(), 
-				d.getKategori().getParent());
+				d.getKategoriDokumenData().getId(), 
+				d.getKategoriDokumenData().getNama(), 
+				d.getKategoriDokumenData().getParent());
 		return new Dokumen(d.getId(), d.getNama(), kategoriDokumen);
 	}
 	
@@ -94,7 +94,7 @@ public class DokumenRepositoryJPA implements IMasterDokumenRepository {
 		kategoriDokumenData.setId(t.getKategoriDokumen().getId());
 		kategoriDokumenData.setNama(t.getKategoriDokumen().getNama());
 		kategoriDokumenData.setParent(t.getKategoriDokumen().getParent());
-		dokumenData.setKategori(kategoriDokumenData);
+		dokumenData.setKategoriDokumenData(kategoriDokumenData);
 		
 		return dokumenData;
 	}
@@ -112,7 +112,7 @@ public class DokumenRepositoryJPA implements IMasterDokumenRepository {
 		DokumenData updateData = convertDokumenToDokumenData(dokumen);
 		DokumenData dokumenData = entityManager.find(DokumenData.class, id);
 		dokumenData.setId(updateData.getId());
-		dokumenData.setKategori(updateData.getKategori());
+		dokumenData.setKategoriDokumenData(updateData.getKategoriDokumenData());
 		dokumenData.setNama(updateData.getNama());
 		dokumenData = entityManager.merge(dokumenData);
 		return convertDokumenDataToDokumen(dokumenData);

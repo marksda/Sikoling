@@ -28,7 +28,7 @@ public class DokumenData implements Serializable {
 	
 	@JoinColumn(name = "kategori", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private KategoriDokumenData kategori;
+	private KategoriDokumenData kategoriDokumenData;
 
 	public DokumenData() {
 	}
@@ -49,12 +49,12 @@ public class DokumenData implements Serializable {
 		this.nama = nama;
 	}
 
-	public KategoriDokumenData getKategori() {
-		return kategori;
+	public KategoriDokumenData getKategoriDokumenData() {
+		return kategoriDokumenData;
 	}
 
-	public void setKategori(KategoriDokumenData kategori) {
-		this.kategori = kategori;
+	public void setKategoriDokumenData(KategoriDokumenData kategoriDokumenData) {
+		this.kategoriDokumenData = kategoriDokumenData;
 	}
 
 	public static long getSerialversionuid() {
