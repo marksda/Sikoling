@@ -7,67 +7,58 @@ import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
 
 public class PerusahaanService implements IPerusahaanService {
 	
-	private final IPerusahaanRepository pemrakarsaRepository;
+	private final IPerusahaanRepository perusahaanRepository;
 
 	public PerusahaanService(IPerusahaanRepository pemrakarsaRepository) {
 		super();
-		this.pemrakarsaRepository = pemrakarsaRepository;
+		this.perusahaanRepository = pemrakarsaRepository;
 	}
 
 	@Override
 	public Perusahaan save(Perusahaan t) {
-		return pemrakarsaRepository.save(t);
+		return perusahaanRepository.save(t);
 	}
 
 	@Override
 	public Perusahaan update(Perusahaan t) {
-		return pemrakarsaRepository.update(t);
+		return perusahaanRepository.update(t);
 	}
 
 	@Override
 	public List<Perusahaan> getAll() {
-		return pemrakarsaRepository.getAll();
+		return perusahaanRepository.getAll();
 	}
 
 	@Override
 	public List<Perusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return pemrakarsaRepository.getAllByPage(page, pageSize);
+		return perusahaanRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
 	public List<Perusahaan> getByNama(String nama) {
-		return pemrakarsaRepository.getByNama(nama);
+		return perusahaanRepository.getByNama(nama);
 	}
 
 	@Override
 	public List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return pemrakarsaRepository.getByNamaAndPage(nama, page, pageSize);
+		return perusahaanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
-	public List<Perusahaan> getByCreator(String idCreator) {
-		return pemrakarsaRepository.getByCreator(idCreator);
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize) {
-		return pemrakarsaRepository.getByCreatorAndPage(idCreator, page, pageSize);
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndNama(String idCreator, String nama) {
-		return null;
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize) {
-		return pemrakarsaRepository.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize);
+	public Boolean cekById(String id) {
+		return perusahaanRepository.cekById(id);
 	}
 
 	
 	@Override
-	public Boolean getById(String id) {
-		return pemrakarsaRepository.getById(id);
+	public Perusahaan getByNpwp(String npwp) {
+		return perusahaanRepository.getByNpwp(npwp);
+	}
+
+
+	@Override
+	public Perusahaan updateById(String id, Perusahaan perusahaan) {
+		return perusahaanRepository.updateById(id, perusahaan);
 	}
 
 }

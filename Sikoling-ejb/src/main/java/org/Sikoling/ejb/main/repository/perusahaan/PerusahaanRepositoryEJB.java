@@ -49,25 +49,9 @@ public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 	}
 
 	@Override
-	public List<Perusahaan> getByCreator(String idCreator) {
-		return perusahaanRepository.getByCreator(idCreator);
+	public Perusahaan getByNpwp(String npwp) {
+		return perusahaanRepository.getByNpwp(npwp);
 	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize) {
-		return perusahaanRepository.getByCreatorAndPage(idCreator, page, pageSize);
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndNama(String idCreator, String nama) {
-		return perusahaanRepository.getByCreatorAndNama(idCreator, nama);
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize) {
-		return perusahaanRepository.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize);
-	}
-
 	
 	@Override
 	public Perusahaan updateStatusVerifikasi(Perusahaan t, boolean statusVerifikasi) {
@@ -75,8 +59,14 @@ public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 	}
 
 	@Override
-	public Boolean getById(String id) {
-		return perusahaanRepository.getById(id);
+	public Boolean cekById(String id) {
+		return perusahaanRepository.cekById(id);
+	}
+
+	
+	@Override
+	public Perusahaan updateById(String id, Perusahaan perusahaan) {
+		return perusahaanRepository.updateById(id, perusahaan);
 	}
 
 }

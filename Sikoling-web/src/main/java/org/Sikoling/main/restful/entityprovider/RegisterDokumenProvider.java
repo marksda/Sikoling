@@ -65,8 +65,6 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 		dokumenDTO.setKategori(kategoriDokumenDTO);
 		
 		RegisterDokumenDTO registerDokumenDTO = new RegisterDokumenDTO();
-		PerusahaanDTO perusahaanDTO = jsonb.fromJson(perusahaanDTOJsonObject.toString(), PerusahaanDTO.class);
-		registerDokumenDTO.setPerusahaan(perusahaanDTO);
 		
 		String dateStr;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");

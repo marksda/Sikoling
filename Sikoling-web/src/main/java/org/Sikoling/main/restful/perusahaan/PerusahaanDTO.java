@@ -1,9 +1,12 @@
 package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
+import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
 import org.Sikoling.main.restful.pelakuusaha.PelakuUsahaDTO;
 import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
@@ -13,11 +16,13 @@ public class PerusahaanDTO implements Serializable {
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
 	private String nama;
-	private ModelPerizinanDTO modelPerizinan;
-	private SkalaUsahaDTO skalaUsaha;
-	private PelakuUsahaDTO pelakuUsaha;
-	private AlamatPerusahaanDTO alamat;
-	private KontakPerusahaanDTO kontak;
+	private ModelPerizinanDTO modelPerizinanDTO;
+	private SkalaUsahaDTO skalaUsahaDTO;
+	private PelakuUsahaDTO pelakuUsahaDTO;
+	private AlamatPerusahaanDTO alamatPerusahaanDTO;
+	private KontakPerusahaanDTO kontakPerusahaanDTO;
+	private List<RegisterDokumenDTO> daftarRegisterDokumenDTO;
+	private boolean statusVerifikasi;
 	
 	public PerusahaanDTO() {		
 	}
@@ -25,11 +30,14 @@ public class PerusahaanDTO implements Serializable {
 	public PerusahaanDTO(Perusahaan p) {
 		this.id = p.getId();
 		this.nama = p.getNama();
-		this.modelPerizinan = new ModelPerizinanDTO(p.getModelPerizinan());
-		this.skalaUsaha = new SkalaUsahaDTO(p.getSkalaUsaha());
-		this.pelakuUsaha = new PelakuUsahaDTO(p.getPelakuUsaha());
-		this.alamat = new AlamatPerusahaanDTO(p.getAlamat());
-		this.kontak = new KontakPerusahaanDTO(p.getKontak());
+		this.modelPerizinanDTO = new ModelPerizinanDTO(p.getModelPerizinan());
+		this.skalaUsahaDTO = new SkalaUsahaDTO(p.getSkalaUsaha());
+		this.pelakuUsahaDTO = new PelakuUsahaDTO(p.getPelakuUsaha());
+		this.alamatPerusahaanDTO = new AlamatPerusahaanDTO(p.getAlamat());
+		this.kontakPerusahaanDTO = new KontakPerusahaanDTO(p.getKontak());
+		this.daftarRegisterDokumenDTO = p.getDaftarRegisterDokumen().stream()
+				.map(t -> new RegisterDokumenDTO(t)).collect(Collectors.toList());
+		this.statusVerifikasi = p.isStatusVerifikasi();
 	}	
 
 	public String getId() {
@@ -47,45 +55,61 @@ public class PerusahaanDTO implements Serializable {
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
+		
+	public ModelPerizinanDTO getModelPerizinanDTO() {
+		return modelPerizinanDTO;
+	}
+
+	public void setModelPerizinanDTO(ModelPerizinanDTO modelPerizinanDTO) {
+		this.modelPerizinanDTO = modelPerizinanDTO;
+	}
+
+	public SkalaUsahaDTO getSkalaUsahaDTO() {
+		return skalaUsahaDTO;
+	}
 	
-	public ModelPerizinanDTO getModePerizinan() {
-		return modelPerizinan;
+	public void setSkalaUsahaDTO(SkalaUsahaDTO skalaUsahaDTO) {
+		this.skalaUsahaDTO = skalaUsahaDTO;
+	}
+
+	public PelakuUsahaDTO getPelakuUsahaDTO() {
+		return pelakuUsahaDTO;
+	}
+
+	public void setPelakuUsahaDTO(PelakuUsahaDTO detailPelakuUsahaDTO) {
+		this.pelakuUsahaDTO = detailPelakuUsahaDTO;
+	}
+
+	public AlamatPerusahaanDTO getAlamatPerusahaanDTO() {
+		return alamatPerusahaanDTO;
+	}
+
+	public void setAlamatPerusahaanDTO(AlamatPerusahaanDTO alamatPerusahaanDTO) {
+		this.alamatPerusahaanDTO = alamatPerusahaanDTO;
+	}
+
+	public KontakPerusahaanDTO getKontakPerusahaanDTO() {
+		return kontakPerusahaanDTO;
+	}
+
+	public void setKontakPerusahaanDTO(KontakPerusahaanDTO kontakPerusahaanPerusahaanDTO) {
+		this.kontakPerusahaanDTO = kontakPerusahaanPerusahaanDTO;
 	}
 	
-	public void setModelPerizinan(ModelPerizinanDTO modePerizinan) {
-		this.modelPerizinan = modePerizinan;
-	}
-	
-	public SkalaUsahaDTO getSkalaUsaha() {
-		return skalaUsaha;
-	}
-	
-	public void setSkalaUsaha(SkalaUsahaDTO skalaUsaha) {
-		this.skalaUsaha = skalaUsaha;
+	public List<RegisterDokumenDTO> getDaftarRegisterDokumenDTO() {
+		return daftarRegisterDokumenDTO;
 	}
 
-	public PelakuUsahaDTO getPelakuUsaha() {
-		return pelakuUsaha;
+	public void setDaftarRegisterDokumenDTO(List<RegisterDokumenDTO> daftarRegisterDokumenDTO) {
+		this.daftarRegisterDokumenDTO = daftarRegisterDokumenDTO;
 	}
 
-	public void setPelakuUsaha(PelakuUsahaDTO detailPelakuUsaha) {
-		this.pelakuUsaha = detailPelakuUsaha;
+	public boolean isStatusVerifikasi() {
+		return statusVerifikasi;
 	}
 
-	public AlamatPerusahaanDTO getAlamat() {
-		return alamat;
-	}
-
-	public void setAlamat(AlamatPerusahaanDTO alamat) {
-		this.alamat = alamat;
-	}
-
-	public KontakPerusahaanDTO getKontak() {
-		return kontak;
-	}
-
-	public void setKontak(KontakPerusahaanDTO kontakPerusahaan) {
-		this.kontak = kontakPerusahaan;
+	public void setStatusVerifikasi(boolean statusVerifikasi) {
+		this.statusVerifikasi = statusVerifikasi;
 	}
 
 	public static long getSerialversionuid() {
@@ -134,8 +158,14 @@ public class PerusahaanDTO implements Serializable {
 
 	public Perusahaan toPerusahaan() {
 		return new Perusahaan(
-				id, nama, modelPerizinan.toModelPerizinan(), 
-				skalaUsaha.toSkalaUsaha(), pelakuUsaha.toPelakuUsaha(),
-				alamat.toAlamat(), kontak.toKontakPerusahaan());
+				id, 
+				nama, 
+				modelPerizinanDTO.toModelPerizinan(), 
+				skalaUsahaDTO.toSkalaUsaha(), 
+				pelakuUsahaDTO.toPelakuUsaha(),
+				alamatPerusahaanDTO.toAlamat(),
+				kontakPerusahaanDTO.toKontakPerusahaan(),
+				daftarRegisterDokumenDTO.stream().map(d -> d.toRegisterDokumen()).collect(Collectors.toList()), 
+				statusVerifikasi);
 	}
 }

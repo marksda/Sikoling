@@ -13,6 +13,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -32,18 +33,19 @@ public class PerusahaanController {
 		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan()));
 	}
 	
+	@Path("{id}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PerusahaanDTO update(PerusahaanDTO d) {
-		return new PerusahaanDTO(perusahaanService.update(d.toPerusahaan()));
+	public PerusahaanDTO update(@PathParam("id") String id, PerusahaanDTO d) {
+		return new PerusahaanDTO(perusahaanService.updateById(id, d.toPerusahaan()));
 	}
 	
 	@Path("is_eksis")
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	public Boolean cekPerusahaan(@QueryParam("id") String id) {
-		return perusahaanService.getById(id);
+		return perusahaanService.cekById(id);
 	}
 	
 	@GET
@@ -54,6 +56,14 @@ public class PerusahaanController {
 				.stream()
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
+	}
+	
+	@Path("id")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public PerusahaanDTO getByNpwp(@QueryParam("id") String id) {
+		return new PerusahaanDTO(perusahaanService.getByNpwp(id));
 	}
 	
 	@Path("page")
@@ -89,52 +99,5 @@ public class PerusahaanController {
 				.map(t -> new PerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
-	
-	@Path("creator")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PerusahaanDTO> getByCreator(@QueryParam("idCreator") String idCreator) {
-		return perusahaanService.getByCreator(idCreator)
-				.stream()
-				.map(t -> new PerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("creator/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PerusahaanDTO> getByCreatorAndPage(@QueryParam("idCreator") String idCreator,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return perusahaanService.getByCreatorAndPage(idCreator, page, pageSize)
-				.stream()
-				.map(t -> new PerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("creator/nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PerusahaanDTO> getByCreatorAndNama(@QueryParam("idCreator") String idCreator,
-			@QueryParam("nama") String nama) {
-		return perusahaanService.getByCreatorAndNama(idCreator, nama)
-				.stream()
-				.map(t -> new PerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("creator/nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<PerusahaanDTO> getByCreatorAndNamaAndPage(@QueryParam("idCreator") String idCreator,
-			@QueryParam("nama") String nama, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return perusahaanService.getByCreatorAndNamaAndPage(idCreator, nama, page, pageSize)
-				.stream()
-				.map(t -> new PerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}	
 	
 }

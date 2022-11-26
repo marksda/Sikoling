@@ -14,7 +14,7 @@ public class DokumenOssDTO extends DokumenDTO implements Serializable {
 	private static final long serialVersionUID = -8619439553490560056L;	
 	private String nib;
 	private LocalDate tanggalPenerbitan;
-	private List<KbliDTO> daftarKbli;
+	private List<KbliDTO> daftarKbliDTO;
 	
 	public DokumenOssDTO() {
 	}
@@ -23,7 +23,7 @@ public class DokumenOssDTO extends DokumenDTO implements Serializable {
 		super(new Dokumen(t.getId(), t.getNama(), t.getKategoriDokumen()));
 		this.nib = t.getNib();
 		this.tanggalPenerbitan = t.getTanggalPenerbitan();
-		this.daftarKbli = t.getDaftarKbli().stream().map(item -> new KbliDTO(item)).collect(Collectors.toList());
+		this.daftarKbliDTO = t.getDaftarKbli().stream().map(item -> new KbliDTO(item)).collect(Collectors.toList());
 	}
 
 	public String getNib() {
@@ -42,12 +42,12 @@ public class DokumenOssDTO extends DokumenDTO implements Serializable {
 		this.tanggalPenerbitan = tanggalPenerbitan;
 	}
 
-	public List<KbliDTO> getDaftarKbli() {
-		return daftarKbli;
+	public List<KbliDTO> getDaftarKbliDTO() {
+		return daftarKbliDTO;
 	}
 
-	public void setDaftarKbli(List<KbliDTO> daftarKbli) {
-		this.daftarKbli = daftarKbli;
+	public void setDaftarKbliDTO(List<KbliDTO> daftarKbliDTO) {
+		this.daftarKbliDTO = daftarKbliDTO;
 	}
 
 	public static long getSerialversionuid() {
@@ -104,7 +104,7 @@ public class DokumenOssDTO extends DokumenDTO implements Serializable {
 				dokumen, 
 				this.nib, 
 				this.tanggalPenerbitan, 
-				this.daftarKbli.stream().map(t -> t.toKbli()).collect(Collectors.toList()));
+				this.daftarKbliDTO.stream().map(t -> t.toKbli()).collect(Collectors.toList()));
 	}
 
 }

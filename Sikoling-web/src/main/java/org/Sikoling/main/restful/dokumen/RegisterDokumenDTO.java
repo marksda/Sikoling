@@ -4,76 +4,67 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.DokumenOss;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
-import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
 
 public class RegisterDokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = 1384518698621127848L;
-	private String id;
-	private PerusahaanDTO perusahaan;
-	private DetailDokumenDTO detailDokumen;
-	private LocalDate tanggal;	//tanggal registrasi dokumen
-	private boolean isBerlaku;
+	private DokumenDTO dokumenDTO;
+	private String lokasiFile;
+	private LocalDate tanggalRegistrasi;
+	private boolean statusBerlaku;
 	
 	public RegisterDokumenDTO() {
 	}
 	
-	public RegisterDokumenDTO(RegisterDokumen registerDokumen) {
-		this.id = registerDokumen.getId();
-		this.perusahaan = new PerusahaanDTO(registerDokumen.getPerusahaan());
-		this.detailDokumen = new DetailDokumenDTO(registerDokumen.getDetailDokumen());
-		this.tanggal = registerDokumen.getTanggalTransaksi();
-		this.isBerlaku = registerDokumen.getIsBerlaku();
+	public RegisterDokumenDTO(RegisterDokumen registerDokumen) {		
+		this.dokumenDTO = convertDokumenToDokumenDTO(registerDokumen.getDokumen());
+		this.lokasiFile = registerDokumen.getLokasiFile();
+		this.tanggalRegistrasi = registerDokumen.getTanggalRegistrasi();
+		this.statusBerlaku = registerDokumen.isStatusBerlaku();
+	}
+	
+	public DokumenDTO getDokumenDTO() {
+		return dokumenDTO;
 	}
 
-	public String getId() {
-		return id;
+	public void setDokumenDTO(DokumenDTO dokumenDTO) {
+		this.dokumenDTO = dokumenDTO;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getLokasiFile() {
+		return lokasiFile;
 	}
 
-	public PerusahaanDTO getPerusahaan() {
-		return perusahaan;
+	public void setLokasiFile(String lokasiFile) {
+		this.lokasiFile = lokasiFile;
 	}
 
-	public void setPerusahaan(PerusahaanDTO perusahaan) {
-		this.perusahaan = perusahaan;
+	public LocalDate getTanggalRegistrasi() {
+		return tanggalRegistrasi;
 	}
 
-	public DetailDokumenDTO getDetailDokumen() {
-		return detailDokumen;
+	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
+		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public void setDetailDokumen(DetailDokumenDTO detailDokumen) {
-		this.detailDokumen = detailDokumen;
+	public boolean isStatusBerlaku() {
+		return statusBerlaku;
 	}
 
-	public LocalDate getTanggal() {
-		return tanggal;
-	}
-
-	public void setTanggal(LocalDate tanggal) {
-		this.tanggal = tanggal;
-	}
-
-	public boolean getIsBerlaku() {
-		return isBerlaku;
-	}
-
-	public void setIsBerlaku(boolean isBerlaku) {
-		this.isBerlaku = isBerlaku;
+	public void setStatusBerlaku(boolean statusBerlaku) {
+		this.statusBerlaku = statusBerlaku;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	public int hashCode() {
-		int hash = 129;
-        hash = 171 * hash + Objects.hashCode(this.id);
+		int hash = 183;
+        hash = 171 * hash + Objects.hashCode(dokumenDTO.getId());
         return hash;
 	}
 	
@@ -94,7 +85,7 @@ public class RegisterDokumenDTO implements Serializable {
         
         final RegisterDokumenDTO other = (RegisterDokumenDTO) obj;
         
-        if (!this.id.equalsIgnoreCase(other.getId())) {
+        if (!this.dokumenDTO.getId().equals(other.getDokumenDTO().getId())) {
             return false;
         }        
 
@@ -103,17 +94,33 @@ public class RegisterDokumenDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "RegisterDokumenDTO{id="
-				.concat(id)
-				.concat(", namaPerusahaan=")
-				.concat(perusahaan.getNama())
+		return "RegisterDokumenDTO{idDokumen="
+				.concat(dokumenDTO.getId())
 				.concat(", namaDokumen=")
-				.concat(detailDokumen.getDokumen().getNama())
+				.concat(dokumenDTO.getNama())
 				.concat("}");	  
 	}
 
 	public RegisterDokumen toRegisterDokumen() {
-		return new RegisterDokumen(id, detailDokumen.toDetailDokumen(), tanggal, isBerlaku, perusahaan.toPerusahaan(), null);
+		return new RegisterDokumen(
+				dokumenDTO.toDokumen(), 
+				lokasiFile, 
+				tanggalRegistrasi, 
+				statusBerlaku);
 	}
 	
+	//fungsi ini digunakan untuk menginisialisasi dokumen induk 
+	//dengan dokumen turunannya
+	private DokumenDTO convertDokumenToDokumenDTO(Dokumen dokumen) {
+		DokumenDTO dokumenDTO;
+		switch (dokumen.getClass().getSimpleName()) {
+		case "DokumenOss":
+			dokumenDTO = new DokumenOssDTO((DokumenOss) dokumen);
+			break;
+		default:
+			dokumenDTO = null;
+			break;
+		}
+		return dokumenDTO;
+	}
 }

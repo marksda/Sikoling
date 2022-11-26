@@ -10,11 +10,11 @@ import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
 import jakarta.persistence.EntityManager;
 
-public class DokumenRepositoryJPA implements IMasterDokumenRepository {
+public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	private final EntityManager entityManager;	
 	
-	public DokumenRepositoryJPA(EntityManager entityManager) {
+	public MasterDokumenRepositoryJPA(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 

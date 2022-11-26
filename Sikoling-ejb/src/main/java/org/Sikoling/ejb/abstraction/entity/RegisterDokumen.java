@@ -10,15 +10,13 @@ public class RegisterDokumen implements Serializable {
 	private final String lokasiFile;
 	private final LocalDate tanggalRegistrasi;
 	private final boolean statusBerlaku;
-	private final Autorisasi autorisasi;
 
-	public RegisterDokumen(Dokumen dokumen, String lokasiFile, LocalDate tanggalRegistrasi,
-			boolean statusBerlaku, Autorisasi autorisasi) {
+	public RegisterDokumen(Dokumen dokumen, String lokasiFile, 
+			LocalDate tanggalRegistrasi, boolean statusBerlaku) {
 		this.dokumen = dokumen;
 		this.lokasiFile = lokasiFile;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.statusBerlaku = statusBerlaku;
-		this.autorisasi = autorisasi;
 	}
 
 	public static long getSerialversionuid() {
@@ -41,10 +39,6 @@ public class RegisterDokumen implements Serializable {
 		return statusBerlaku;
 	}
 
-	public Autorisasi getAutorisasi() {
-		return autorisasi;
-	}
-	
 	@Override
 	public int hashCode() {
 		int hash = 17;

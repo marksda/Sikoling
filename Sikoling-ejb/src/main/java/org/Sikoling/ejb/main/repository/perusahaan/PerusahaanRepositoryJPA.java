@@ -116,53 +116,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	}
 
 	@Override
-	public List<Perusahaan> getByCreator(String idCreator) {
-		return entityManager.createNamedQuery("PerusahaanData.findByCreator", PerusahaanData.class)
-				.setParameter("idCreator", idCreator)
-				.getResultList()
-				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndPage(String idCreator, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PerusahaanData.findByCreator", PerusahaanData.class)
-				.setParameter("idCreator", idCreator)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndNama(String idCreator, String nama) {
-		return entityManager.createNamedQuery("PerusahaanData.findByCreatorAndNama", PerusahaanData.class)
-				.setParameter("idCreator", idCreator)
-				.setParameter("nama", nama)
-				.getResultList()
-				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Perusahaan> getByCreatorAndNamaAndPage(String idCreator, String nama, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PerusahaanData.findByCreatorAndNama", PerusahaanData.class)
-				.setParameter("idCreator", idCreator)
-				.setParameter("nama", nama)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public Boolean getById(String id) {
+	public Boolean cekById(String id) {
 		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
 		if(perusahaanData == null) {
 			return false;
@@ -170,6 +124,25 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		else {
 			return true;
 		}		 
+	}
+	
+	@Override
+	public Perusahaan getByNpwp(String npwp) {
+		return convertPerusahaanDataToPerusahaan(entityManager.find(PerusahaanData.class, npwp));
+	}
+	
+	@Override
+	public Perusahaan updateById(String id, Perusahaan perusahaan) {
+		String idBaru = perusahaan.getId();
+		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(perusahaan);
+		perusahaanData.setId(id);
+		perusahaanData = entityManager.merge(perusahaanData);
+		if(!idBaru.equals(id)) {
+			perusahaanData.setId(idBaru);
+			entityManager.flush();
+		}
+		
+		return convertPerusahaanDataToPerusahaan(perusahaanData);
 	}
 	
 	private List<Kbli> convertDaftarRegisterKbliDataToDaftarKbli(Set<RegisterKbliData> daftaRegisterKbliData) {
@@ -183,6 +156,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		
 		return daftarKbli;
 	}
+	
 	
 	private Set<RegisterKbliData> convertDaftarKbliToDaftarRegisterKbliData(List<Kbli> daftarKbli) {
 		
@@ -352,8 +326,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 								dokumenOss, 
 								item.getLokasiFile(), 
 								item.getTanggalRegistrasi(), 
-								item.isStatusBerlaku(), 
-								null)
+								item.isStatusBerlaku()
+								)
 						);
 				break;
 			default:
@@ -366,4 +340,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				alamatPerusahaan, kontakPerusahaan, daftarRegisterDokumen, d.isStatusVerifikasi()
 				);
 	}
+
+	
+
+	
 }

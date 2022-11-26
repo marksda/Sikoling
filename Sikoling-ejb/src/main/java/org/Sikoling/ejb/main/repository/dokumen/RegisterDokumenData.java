@@ -2,7 +2,6 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 
 import jakarta.persistence.Column;
@@ -48,10 +47,6 @@ public class RegisterDokumenData implements Serializable {
 	
 	@Column(name="is_berlaku")
 	private boolean statusBerlaku;	
-
-	@JoinColumn(name = "uploader", referencedColumnName = "nik", insertable = false, updatable = false)
-	@ManyToOne(optional = false)
-	private AutorisasiData uploader;
 	
 	@OneToOne(mappedBy = "registerDokumenData")
 	private DokumenOssData dokumenOssData;
@@ -97,14 +92,6 @@ public class RegisterDokumenData implements Serializable {
 
 	public void setStatusBerlaku(boolean statusBerlaku) {
 		this.statusBerlaku = statusBerlaku;
-	}
-
-	public AutorisasiData getUploader() {
-		return uploader;
-	}
-
-	public void setUploader(AutorisasiData uploader) {
-		this.uploader = uploader;
 	}
 
 	public DokumenOssData getDokumenOssData() {

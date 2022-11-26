@@ -71,7 +71,6 @@ public class Perusahaan implements Serializable {
 		return statusVerifikasi;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		int hash = 91;
@@ -113,9 +112,13 @@ public class Perusahaan implements Serializable {
 	
 	@Override
 	public String toString() {
-//		return "Pemrakarsa{" + "bentukUsaha=" + bentukUsaha.toString() + ", NIB=" + oss.getNib()  + ", nama=" + nama
-//				+ ", alamat=" + alamat.toString() + ", npwp=" + npwp + "}";
-		return null;
+		return "Perusahaan{ npwp="
+				.concat(id)
+				.concat(", nama=")
+				.concat(pelakuUsaha.getSingkatan())
+				.concat(". ")
+				.concat(nama)
+				.concat("}");
 	}	
 	
 }

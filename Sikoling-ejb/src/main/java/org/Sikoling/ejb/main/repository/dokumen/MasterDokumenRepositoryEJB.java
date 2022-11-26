@@ -14,10 +14,10 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class DokumenRepositoryEJB implements IMasterDokumenRepository {
+public class MasterDokumenRepositoryEJB implements IMasterDokumenRepository {
 
 	@Inject
-	private DokumenRepositoryJPA dokumenPerusahaanRepository;
+	private MasterDokumenRepositoryJPA dokumenPerusahaanRepository;
 	
 	@Override
 	public List<Dokumen> getAll() {

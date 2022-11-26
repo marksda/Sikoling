@@ -9,8 +9,8 @@ public class DokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = -2378592503272433605L;
 	private String id;
-	private String nama;
 	private KategoriDokumenDTO kategori;
+	private String nama;
 	
 	public DokumenDTO() {
 	}
@@ -18,7 +18,7 @@ public class DokumenDTO implements Serializable {
 	public DokumenDTO(Dokumen dokumen) {
 		this.id = dokumen.getId();
 		this.nama = dokumen.getNama();
-		this.kategori = new KategoriDokumenDTO(dokumen.getKategoriDokumen());
+		this.kategori = new KategoriDokumenDTO(dokumen.getKategoriDokumen());		
 	}
 	
 	public String getId() {
