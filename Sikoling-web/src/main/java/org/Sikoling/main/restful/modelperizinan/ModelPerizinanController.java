@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -31,11 +35,19 @@ public class ModelPerizinanController {
         return new ModelPerizinanDTO(modelPerizinanService.save(modelPerizinanDTO.toModelPerizinan()));
     }
 	
+	@Path("{id}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public ModelPerizinanDTO update(ModelPerizinanDTO modelPerizinanDTO) {
-		return new ModelPerizinanDTO(modelPerizinanService.update(modelPerizinanDTO.toModelPerizinan()));
+	public ModelPerizinanDTO update(@PathParam("id") String id, ModelPerizinanDTO modelPerizinanDTO) {
+		return new ModelPerizinanDTO(modelPerizinanService.updateById(id, modelPerizinanDTO.toModelPerizinan()));
+	}
+	
+	@Path("{id}")
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	public DeleteResponseDTO delete(@PathParam("id") String id) {
+		return new DeleteResponseDTO(modelPerizinanService.delete(id));
 	}
 	
 	@GET

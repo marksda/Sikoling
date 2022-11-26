@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.DokumenOss;
@@ -65,6 +66,13 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		return convertPerusahaanDataToPerusahaan(perusahaanData);
 	}
 
+	@Override
+	public DeleteResponse delete(String id) {
+		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
+		entityManager.remove(perusahaanData);	
+		return new DeleteResponse(true, id);
+	}
+	
 	@Override
 	public Perusahaan update(Perusahaan t) {
 		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t);
@@ -156,8 +164,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		
 		return daftarKbli;
 	}
-	
-	
+		
 	private Set<RegisterKbliData> convertDaftarKbliToDaftarRegisterKbliData(List<Kbli> daftarKbli) {
 		
 		Set<RegisterKbliData> daftarRegisterKbliData = new HashSet<RegisterKbliData>();

@@ -2,9 +2,11 @@ package org.Sikoling.ejb.abstraction.service.perusahaan;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 
 public interface IPerusahaanService {
+	DeleteResponse delete(String id);
 	Perusahaan save(Perusahaan t);
 	Perusahaan update(Perusahaan t);
 	Perusahaan updateById(String id, Perusahaan perusahaan);

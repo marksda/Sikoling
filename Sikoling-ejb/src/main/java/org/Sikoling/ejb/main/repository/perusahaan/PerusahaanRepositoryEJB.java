@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -62,11 +63,16 @@ public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 	public Boolean cekById(String id) {
 		return perusahaanRepository.cekById(id);
 	}
-
 	
 	@Override
 	public Perusahaan updateById(String id, Perusahaan perusahaan) {
 		return perusahaanRepository.updateById(id, perusahaan);
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		return perusahaanRepository.delete(id);
 	}
 
 }

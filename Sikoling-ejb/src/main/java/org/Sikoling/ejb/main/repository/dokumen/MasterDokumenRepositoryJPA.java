@@ -102,8 +102,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	@Override
 	public DeleteResponse delete(String id) {
 		DokumenData dokumenData = entityManager.find(DokumenData.class, id);
-		entityManager.remove(dokumenData);	
-		entityManager.flush();
+		entityManager.remove(dokumenData);
 		return new DeleteResponse(true, id);
 	}
 

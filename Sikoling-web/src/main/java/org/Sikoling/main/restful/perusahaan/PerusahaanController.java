@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -39,6 +41,13 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	public PerusahaanDTO update(@PathParam("id") String id, PerusahaanDTO d) {
 		return new PerusahaanDTO(perusahaanService.updateById(id, d.toPerusahaan()));
+	}
+	
+	@Path("{id}")
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	public DeleteResponseDTO delete(@PathParam("id") String id) {
+		return new DeleteResponseDTO(perusahaanService.delete(id));
 	}
 	
 	@Path("is_eksis")

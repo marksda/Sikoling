@@ -3,6 +3,7 @@ package org.Sikoling.ejb.main.repository.modelperizinan;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
 import jakarta.persistence.EntityManager;
@@ -12,11 +13,9 @@ public class ModelPerizinanRepositoryJPA implements IModelPerizinanRepository {
 	private final EntityManager entityManager;	
 
 	public ModelPerizinanRepositoryJPA(EntityManager entityManager) {
-		super();
 		this.entityManager = entityManager;
 	}
 	
-
 	@Override
 	public List<ModelPerizinan> getAll() {
 		return entityManager.createNamedQuery("ModelPerizinanData.findAll", ModelPerizinanData.class)
@@ -76,6 +75,26 @@ public class ModelPerizinanRepositoryJPA implements IModelPerizinanRepository {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public ModelPerizinan updateById(String id, ModelPerizinan modelPerizinan) {
+		String idBaru = modelPerizinan.getId();
+		ModelPerizinanData modelPerizinanData = convertModelPerizinanTOModelPerizinanData(modelPerizinan);
+		modelPerizinanData.setId(id);
+		modelPerizinanData = entityManager.merge(modelPerizinanData);
+		if(!idBaru.equals(id)) {
+			modelPerizinanData.setId(idBaru);
+			entityManager.flush();
+		}
+		return convertModelPerizinanDataToModelPerizinan(modelPerizinanData);
+	}
+
+	@Override
+	public DeleteResponse delete(String id) {
+		ModelPerizinanData modelPerizinanData = entityManager.find(ModelPerizinanData.class, id);
+		entityManager.remove(modelPerizinanData);
+		return new DeleteResponse(true, id);
+	}
+	
 	private ModelPerizinanData convertModelPerizinanTOModelPerizinanData(ModelPerizinan m) {
 		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
 		modelPerizinanData.setId(m.getId());

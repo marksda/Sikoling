@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.modelperizinan;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -46,6 +47,16 @@ public class ModelPerizinanRepositoryEJB implements IModelPerizinanRepository {
 	@Override
 	public List<ModelPerizinan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return modelPerizinanRepository.getByNamaAndPage(nama, page, pageSize);
+	}
+	
+	@Override
+	public ModelPerizinan updateById(String id, ModelPerizinan modelPerizinan) {
+		return modelPerizinanRepository.updateById(id, modelPerizinan);
+	}
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		return modelPerizinanRepository.delete(id);
 	}
 
 }
