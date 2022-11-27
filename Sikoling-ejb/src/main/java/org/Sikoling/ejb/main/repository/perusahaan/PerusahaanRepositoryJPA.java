@@ -347,8 +347,5 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				alamatPerusahaan, kontakPerusahaan, daftarRegisterDokumen, d.isStatusVerifikasi()
 				);
 	}
-
-	
-
 	
 }
