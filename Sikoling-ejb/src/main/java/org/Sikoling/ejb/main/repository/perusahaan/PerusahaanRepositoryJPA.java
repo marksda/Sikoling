@@ -70,6 +70,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	public DeleteResponse delete(String id) {
 		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
 		entityManager.remove(perusahaanData);	
+		
 		return new DeleteResponse(true, id);
 	}
 	
@@ -78,6 +79,20 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t);
 		pemrakarsaData = entityManager.merge(pemrakarsaData);
 		return convertPerusahaanDataToPerusahaan(pemrakarsaData);
+	}
+	
+	@Override
+	public Perusahaan updateById(String id, Perusahaan perusahaan) {
+		String idBaru = perusahaan.getId();
+		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(perusahaan);
+		perusahaanData.setId(id);
+		perusahaanData = entityManager.merge(perusahaanData);
+		if(!idBaru.equals(id)) {
+			perusahaanData.setId(idBaru);
+			entityManager.flush();
+		}
+		
+		return convertPerusahaanDataToPerusahaan(perusahaanData);
 	}
 	
 	@Override
@@ -138,21 +153,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	public Perusahaan getByNpwp(String npwp) {
 		return convertPerusahaanDataToPerusahaan(entityManager.find(PerusahaanData.class, npwp));
 	}
-	
-	@Override
-	public Perusahaan updateById(String id, Perusahaan perusahaan) {
-		String idBaru = perusahaan.getId();
-		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(perusahaan);
-		perusahaanData.setId(id);
-		perusahaanData = entityManager.merge(perusahaanData);
-		if(!idBaru.equals(id)) {
-			perusahaanData.setId(idBaru);
-			entityManager.flush();
-		}
 		
-		return convertPerusahaanDataToPerusahaan(perusahaanData);
-	}
-	
 	private List<Kbli> convertDaftarRegisterKbliDataToDaftarKbli(Set<RegisterKbliData> daftaRegisterKbliData) {
 		List<Kbli> daftarKbli = new ArrayList<Kbli>();
 		

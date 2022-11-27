@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.main.restful.kategoripelakuusaha.KategoriPelakuUsahaDTO;
 
 public class PelakuUsahaDTO implements Serializable {
 

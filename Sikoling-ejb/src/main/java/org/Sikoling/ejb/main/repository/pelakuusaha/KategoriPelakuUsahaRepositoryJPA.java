@@ -3,6 +3,7 @@ package org.Sikoling.ejb.main.repository.pelakuusaha;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 import jakarta.persistence.EntityManager;
@@ -50,6 +51,29 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 	}
 
 	@Override
+	public DeleteResponse delete(String id) {
+		KategoriPelakuUsahaData kategoriPelakuUsahaData = entityManager.find(KategoriPelakuUsahaData.class, id);
+		entityManager.remove(kategoriPelakuUsahaData);
+		
+		return new DeleteResponse(true, id);
+	}
+
+	@Override
+	public KategoriPelakuUsaha updateById(String id, KategoriPelakuUsaha kategoriPelakuUsaha) {
+		String idBaru = kategoriPelakuUsaha.getId();
+		KategoriPelakuUsahaData kategoriPelakuUsahaData = convertKategoriPelakuUsahaToKategoriPelakuUsahaData(kategoriPelakuUsaha);
+		kategoriPelakuUsahaData.setId(id);
+		kategoriPelakuUsahaData = entityManager.merge(kategoriPelakuUsahaData);
+		
+		if(!idBaru.equals(id)) {
+			kategoriPelakuUsahaData.setId(idBaru);
+			entityManager.flush();
+		}
+		
+		return null;
+	}
+	
+	@Override
 	public List<KategoriPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("KategoriPelakuUsahaData.findAll", KategoriPelakuUsahaData.class)
 				.setMaxResults(pageSize)
@@ -96,5 +120,5 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 		return kategoriPelakuUsahaData;
 	}
 
-	
+		
 }

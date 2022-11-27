@@ -2,6 +2,7 @@ package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 
@@ -46,6 +47,17 @@ public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices 
 	@Override
 	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
 		return kategoriPelakuUsahaRepository.getALLBySkalaUsaha(idSkalaUsaha);
+	}
+
+	
+	@Override
+	public KategoriPelakuUsaha updateById(String id, KategoriPelakuUsaha kategoriPelakuUsaha) {
+		return kategoriPelakuUsahaRepository.updateById(id, kategoriPelakuUsaha);
+	}
+
+	@Override
+	public DeleteResponse delete(String id) {
+		return kategoriPelakuUsahaRepository.delete(id);
 	}
 
 	

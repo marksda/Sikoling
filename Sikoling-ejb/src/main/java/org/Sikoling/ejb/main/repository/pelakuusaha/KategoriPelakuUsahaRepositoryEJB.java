@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.pelakuusaha;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -51,6 +52,17 @@ public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRep
 	@Override
 	public List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
+	}
+
+	
+	@Override
+	public KategoriPelakuUsaha updateById(String id, KategoriPelakuUsaha kategoriPelakuUsaha) {
+		return kategoriPelakuUsahaRepository.updateById(id, kategoriPelakuUsaha);
+	}
+
+	@Override
+	public DeleteResponse delete(String id) {
+		return kategoriPelakuUsahaRepository.delete(id);
 	}
 
 

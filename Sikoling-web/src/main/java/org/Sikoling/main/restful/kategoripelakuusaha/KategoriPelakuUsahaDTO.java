@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.pelakuusaha;
+package org.Sikoling.main.restful.kategoripelakuusaha;
 
 import java.io.Serializable;
 import java.util.Objects;
