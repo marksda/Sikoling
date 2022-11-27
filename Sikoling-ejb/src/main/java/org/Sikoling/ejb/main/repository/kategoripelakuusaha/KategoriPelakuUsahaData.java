@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.pelakuusaha;
+package org.Sikoling.ejb.main.repository.kategoripelakuusaha;
 
 import java.io.Serializable;
 

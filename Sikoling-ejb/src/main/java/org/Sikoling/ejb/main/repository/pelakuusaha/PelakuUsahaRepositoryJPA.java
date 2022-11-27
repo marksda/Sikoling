@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
+import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 
 import jakarta.persistence.EntityManager;
 

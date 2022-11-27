@@ -57,6 +57,8 @@ import org.Sikoling.ejb.abstraction.service.bidangusaha.IBidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
 import org.Sikoling.ejb.abstraction.service.kabupaten.IKabupatenService;
 import org.Sikoling.ejb.abstraction.service.kabupaten.KabupatenService;
+import org.Sikoling.ejb.abstraction.service.kategoripelakuusaha.IKategoriPelakuUsahaServices;
+import org.Sikoling.ejb.abstraction.service.kategoripelakuusaha.KategoriPelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.kategoriproduk.IKategoriProdukService;
 import org.Sikoling.ejb.abstraction.service.kategoriproduk.KategoriProdukService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
@@ -65,8 +67,6 @@ import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanServic
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.PelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.IKategoriPelakuUsahaServices;
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.KategoriPelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;

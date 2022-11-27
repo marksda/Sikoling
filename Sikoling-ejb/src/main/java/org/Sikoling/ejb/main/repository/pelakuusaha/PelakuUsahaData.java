@@ -2,6 +2,8 @@ package org.Sikoling.ejb.main.repository.pelakuusaha;
 
 import java.io.Serializable;
 
+import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;

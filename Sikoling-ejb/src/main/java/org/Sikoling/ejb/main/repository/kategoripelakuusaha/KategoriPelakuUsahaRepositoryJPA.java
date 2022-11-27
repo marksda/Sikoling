@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.pelakuusaha;
+package org.Sikoling.ejb.main.repository.kategoripelakuusaha;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
+
 import jakarta.persistence.EntityManager;
 
 public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRepository {

@@ -14,6 +14,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -33,10 +34,11 @@ public class PelakuUsahaController {
         return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toPelakuUsaha()));
     }
 		
+	@Path("{id}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PelakuUsahaDTO update(PelakuUsahaDTO d) {		
+	public PelakuUsahaDTO update(@PathParam("id") String id, PelakuUsahaDTO d) {		
 		return new PelakuUsahaDTO(pelakuUsahaServices.update(d.toPelakuUsaha()));
 	}
 		

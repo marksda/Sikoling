@@ -1,34 +1,19 @@
-package org.Sikoling.ejb.main.repository.pelakuusaha;
+package org.Sikoling.ejb.abstraction.service.kategoripelakuusaha;
 
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
-import org.Sikoling.ejb.main.Infrastructure;
 
-import jakarta.ejb.Local;
-import jakarta.ejb.Stateless;
-import jakarta.inject.Inject;
-
-@Stateless
-@Local
-@Infrastructure
-public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRepository {
+public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices {
 	
-	@Inject
-	private KategoriPelakuUsahaRepositoryJPA kategoriPelakuUsahaRepository;
+	private final IKategoriPelakuUsahaRepository kategoriPelakuUsahaRepository;	
 
-	@Override
-	public List<KategoriPelakuUsaha> getAll() {
-		return kategoriPelakuUsahaRepository.getAll();
+	public KategoriPelakuUsahaService(IKategoriPelakuUsahaRepository kategoriPelakuUsahaRepository) {
+		this.kategoriPelakuUsahaRepository = kategoriPelakuUsahaRepository;
 	}
-	
-	@Override
-	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
-		return kategoriPelakuUsahaRepository.getALLBySkalaUsaha(idSkalaUsaha);
-	}
-	
+
 	@Override
 	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) {
 		return kategoriPelakuUsahaRepository.save(t);
@@ -37,6 +22,11 @@ public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRep
 	@Override
 	public KategoriPelakuUsaha update(KategoriPelakuUsaha t) {
 		return kategoriPelakuUsahaRepository.update(t);
+	}
+
+	@Override
+	public List<KategoriPelakuUsaha> getALL() {
+		return kategoriPelakuUsahaRepository.getAll();
 	}
 
 	@Override
@@ -53,6 +43,11 @@ public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRep
 	public List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return kategoriPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
 	}
+	
+	@Override
+	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
+		return kategoriPelakuUsahaRepository.getALLBySkalaUsaha(idSkalaUsaha);
+	}
 
 	
 	@Override
@@ -65,5 +60,6 @@ public class KategoriPelakuUsahaRepositoryEJB implements IKategoriPelakuUsahaRep
 		return kategoriPelakuUsahaRepository.delete(id);
 	}
 
+	
 
 }

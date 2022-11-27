@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.service.pelakuusaha;
+package org.Sikoling.ejb.abstraction.service.kategoripelakuusaha;
 
 import java.util.List;
 

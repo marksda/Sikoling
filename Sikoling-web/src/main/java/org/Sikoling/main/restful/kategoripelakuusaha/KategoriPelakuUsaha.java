@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.kategoripelakuusaha;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.IKategoriPelakuUsahaServices;
+import org.Sikoling.ejb.abstraction.service.kategoripelakuusaha.IKategoriPelakuUsahaServices;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 
 import jakarta.ejb.LocalBean;
