@@ -89,7 +89,6 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		perusahaanData = entityManager.merge(perusahaanData);
 		if(!idBaru.equals(id)) {
 			perusahaanData.setId(idBaru);
-			entityManager.flush();
 		}
 		
 		return convertPerusahaanDataToPerusahaan(perusahaanData);

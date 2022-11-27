@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
@@ -35,7 +36,14 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 		
 		return convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
 	}
-
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		PelakuUsahaData pelakuUsahaData = entityManager.find(PelakuUsahaData.class, id);
+		entityManager.remove(pelakuUsahaData);
+		return new DeleteResponse(true, id);
+	}
+		
 	@Override
 	public PelakuUsaha update(PelakuUsaha t) {
 		PelakuUsahaData detailPelakuUsahaData = converterPelakuUsahaToPelakuUsahaData(t);
@@ -43,6 +51,20 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 		return convertPelakuUsahaDataToPelakuUsaha(detailPelakuUsahaData);
 	}
 
+	@Override
+	public PelakuUsaha updateById(String id, PelakuUsaha pelakuUsaha) {
+		String idBaru = pelakuUsaha.getId();
+		PelakuUsahaData pelakuUsahaData = converterPelakuUsahaToPelakuUsahaData(pelakuUsaha);
+		pelakuUsahaData.setId(id);
+		pelakuUsahaData = entityManager.merge(pelakuUsahaData);
+		
+		if(!idBaru.equals(id)) {
+			pelakuUsahaData.setId(idBaru);
+		}
+		
+		return convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
+	}
+	
 	@Override
 	public List<PelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("PelakuUsahaData.findAll", PelakuUsahaData.class)
@@ -123,5 +145,7 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 		return pelakuUsahaData;
 		
 	}
-		
+
+	
+	
 }
