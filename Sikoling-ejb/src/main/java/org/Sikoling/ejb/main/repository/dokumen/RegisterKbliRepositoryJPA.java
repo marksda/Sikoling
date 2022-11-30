@@ -65,7 +65,7 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 		
 		RegisterKbliData registerKbliData = entityManager.find(RegisterKbliData.class, id);
 		registerKbliData.setKbliData(updateData.getKbliData());
-		registerKbliData.setDokumenOssData(updateData.getDokumenOssData());
+		registerKbliData.setRegisterDokumenOssData(updateData.getDokumenOssData());
 		
 		return null;
 	}
@@ -162,7 +162,7 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 		RegisterKbliData registerKbliData = new RegisterKbliData();
 		RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();
 		registerDokumenOssData.setNib(t.getNib());		
-		registerKbliData.setDokumenOssData(registerDokumenOssData);
+		registerKbliData.setRegisterDokumenOssData(registerDokumenOssData);
 		KbliData kbliData = new KbliData();
 		kbliData.setId(t.getKode());	
 		registerKbliData.setKbliData(kbliData);

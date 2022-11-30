@@ -28,7 +28,7 @@ public class RegisterKbliData implements Serializable {
 	@Id
 	@JoinColumn(name = "register_dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private RegisterDokumenOssData dokumenOssData;
+	private RegisterDokumenOssData registerDokumenOssData;
 		
 	@Id
 	@JoinColumn(name = "kode", referencedColumnName = "id", insertable = true, updatable = false)
@@ -39,11 +39,11 @@ public class RegisterKbliData implements Serializable {
 	}
 		
 	public RegisterDokumenOssData getDokumenOssData() {
-		return dokumenOssData;
+		return registerDokumenOssData;
 	}
 
-	public void setDokumenOssData(RegisterDokumenOssData dokumenOssData) {
-		this.dokumenOssData = dokumenOssData;
+	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
+		this.registerDokumenOssData = registerDokumenOssData;
 	}
 	
 	public KbliData getKbliData() {
@@ -61,7 +61,7 @@ public class RegisterKbliData implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 83;
-		hash = 137 * hash + Objects.hashCode(this.dokumenOssData.getNib());
+		hash = 137 * hash + Objects.hashCode(this.registerDokumenOssData.getNib());
 		hash = 137 * hash + Objects.hashCode(this.kbliData.getId());
 		return hash;
 	}
@@ -82,7 +82,7 @@ public class RegisterKbliData implements Serializable {
         
         final RegisterKbliData other = (RegisterKbliData) obj;
         
-        if ( !(this.dokumenOssData.getNib().equals(other.dokumenOssData.getNib()) && 
+        if ( !(this.registerDokumenOssData.getNib().equals(other.registerDokumenOssData.getNib()) && 
         		this.kbliData.getId().equals(other.kbliData.getId())) ) {
             return false;
         }
@@ -92,7 +92,7 @@ public class RegisterKbliData implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RegisterKbliData{" + "nib=" + dokumenOssData.getNib() + ", kode=" + kbliData.getId() + "}";
+		return "RegisterKbliData{" + "nib=" + registerDokumenOssData.getNib() + ", kode=" + kbliData.getId() + "}";
 	}
 
 }
