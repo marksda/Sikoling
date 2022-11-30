@@ -6,7 +6,6 @@ import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
-import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenOssRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KbliRepositoryJPA;
@@ -167,12 +166,7 @@ public class RepositoryProvider {
 	public RegisterKbliRepositoryJPA getRegisterKbliRepositoryJPA(EntityManager entityManager) {
 		return new RegisterKbliRepositoryJPA(entityManager);
 	}
-	
-	@Produces
-	public RegisterDokumenOssRepositoryJPA getDokumenOssRepositoryJPA(EntityManager entityManager) {
-		return new RegisterDokumenOssRepositoryJPA(entityManager);
-	}
-	
+		
 	@Produces
 	public RegisterDokumenRepositoryJPA getRegisterDokumenRepositoryJPA(EntityManager entityManager) {
 		return new RegisterDokumenRepositoryJPA(entityManager);

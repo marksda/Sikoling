@@ -5,20 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
-import org.Sikoling.main.restful.dokumen.DokumenOssDTO;
 import org.Sikoling.main.restful.dokumen.KategoriDokumenDTO;
-import org.Sikoling.main.restful.dokumen.KbliDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
-import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
-
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -47,11 +37,11 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 	public RegisterDokumenDTO readFrom(Class<RegisterDokumenDTO> type, Type genericType, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
-		Jsonb jsonb = JsonbBuilder.create();
+//		Jsonb jsonb = JsonbBuilder.create();
 		JsonParser jsonParser = Json.createParser(entityStream);
 		
 		JsonObject rootDTOJsonObject = jsonParser.getObject();		
-		JsonObject perusahaanDTOJsonObject = rootDTOJsonObject.getJsonObject("perusahaan");
+//		JsonObject perusahaanDTOJsonObject = rootDTOJsonObject.getJsonObject("perusahaan");
 		JsonObject detailDokumenDTOJsonObject = rootDTOJsonObject.getJsonObject("detailDokumen");
 		JsonObject dokumenDTOJsonObject = detailDokumenDTOJsonObject.getJsonObject("dokumen");
 		
@@ -62,51 +52,51 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 		KategoriDokumenDTO kategoriDokumenDTO = new KategoriDokumenDTO();
 		kategoriDokumenDTO.setId(kategoriDokumenDTOJsonObject.getString("id"));
 		kategoriDokumenDTO.setNama(kategoriDokumenDTOJsonObject.getString("nama"));
-		dokumenDTO.setKategori(kategoriDokumenDTO);
+//		dokumenDTO.setKategori(kategoriDokumenDTO);
 		
 		RegisterDokumenDTO registerDokumenDTO = new RegisterDokumenDTO();
 		
-		String dateStr;
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		LocalDate tanggal;
+//		String dateStr;
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+//		LocalDate tanggal;
 		
 		switch (dokumenDTO.getId()) {
 		case "010301":
-			DokumenOssDTO dokumenOssDTO = new DokumenOssDTO();
-			dokumenOssDTO.setDokumen(dokumenDTO);
-			dokumenOssDTO.setNib(detailDokumenDTOJsonObject.getString("nib"));	
-			
-			dateStr = detailDokumenDTOJsonObject.getString("tanggal");	
-			tanggal = LocalDate.parse(dateStr, formatter);
-			dokumenOssDTO.setTanggal(tanggal);	//tanggal penerbitan oss
-			
-			
-			JsonArray kbliJsonArray = detailDokumenDTOJsonObject.getJsonArray("daftarKbli");
-			List<KbliDTO> daftarKbliDTO = new ArrayList<KbliDTO>();
-			KbliDTO	itemKbli;
-			JsonObject explrObject;		
-			
-			for(int i=0; i<kbliJsonArray.size(); i++) {				
-				explrObject = kbliJsonArray.getJsonObject(i);
-				itemKbli = new KbliDTO();
-				itemKbli.setKode(explrObject.getString("kode"));
-				itemKbli.setNama(explrObject.getString("nama"));
-				daftarKbliDTO.add(itemKbli);
-			}
-			
-			dokumenOssDTO.setDaftarKbli(daftarKbliDTO);		//daftar kbli	
-			registerDokumenDTO.setDetailDokumen(dokumenOssDTO);
+////			DokumenOssDTO dokumenOssDTO = new DokumenOssDTO();
+//			dokumenOssDTO.setDokumen(dokumenDTO);
+//			dokumenOssDTO.setNib(detailDokumenDTOJsonObject.getString("nib"));	
+//			
+//			dateStr = detailDokumenDTOJsonObject.getString("tanggal");	
+//			tanggal = LocalDate.parse(dateStr, formatter);
+//			dokumenOssDTO.setTanggal(tanggal);	//tanggal penerbitan oss
+//			
+//			
+//			JsonArray kbliJsonArray = detailDokumenDTOJsonObject.getJsonArray("daftarKbli");
+//			List<KbliDTO> daftarKbliDTO = new ArrayList<KbliDTO>();
+//			KbliDTO	itemKbli;
+//			JsonObject explrObject;		
+//			
+//			for(int i=0; i<kbliJsonArray.size(); i++) {				
+//				explrObject = kbliJsonArray.getJsonObject(i);
+//				itemKbli = new KbliDTO();
+//				itemKbli.setKode(explrObject.getString("kode"));
+//				itemKbli.setNama(explrObject.getString("nama"));
+//				daftarKbliDTO.add(itemKbli);
+//			}
+//			
+//			dokumenOssDTO.setDaftarKbli(daftarKbliDTO);		//daftar kbli	
+//			registerDokumenDTO.setDetailDokumen(dokumenOssDTO);
 			break;
 		default:
 			break;
 		}
 				
-		//tanggal registrasi dokumen			
-		dateStr = rootDTOJsonObject.getString("tanggal");
-		tanggal = LocalDate.parse(dateStr, formatter);
-		registerDokumenDTO.setTanggal(tanggal);
-						
-		registerDokumenDTO.setIsBerlaku(rootDTOJsonObject.getBoolean("isBerlaku"));
+//		//tanggal registrasi dokumen			
+//		dateStr = rootDTOJsonObject.getString("tanggal");
+//		tanggal = LocalDate.parse(dateStr, formatter);
+//		registerDokumenDTO.setTanggal(tanggal);
+//						
+//		registerDokumenDTO.setIsBerlaku(rootDTOJsonObject.getBoolean("isBerlaku"));
 		
 		return registerDokumenDTO;
 	}

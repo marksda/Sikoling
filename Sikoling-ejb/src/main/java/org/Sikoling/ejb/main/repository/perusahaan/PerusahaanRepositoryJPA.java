@@ -3,6 +3,7 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,11 +11,10 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.String;
-import org.Sikoling.ejb.abstraction.entity.DokumenOss;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.Kbli;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
@@ -33,12 +33,19 @@ import org.Sikoling.ejb.main.repository.dokumen.KbliData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterKbliData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
+
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.JsonValue;
 import jakarta.persistence.EntityManager;
 
 public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
@@ -152,88 +159,64 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	public Perusahaan getByNpwp(String npwp) {
 		return convertPerusahaanDataToPerusahaan(entityManager.find(PerusahaanData.class, npwp));
 	}
+	
+	private Set<RegisterKbliData> convertJsonArrayKbliToDaftarRegisterKbliData(JsonArray daftarKbli) {
+		Iterator<JsonValue> iteratorDaftarKbli = daftarKbli.iterator();
 		
-	private List<Kbli> convertDaftarRegisterKbliDataToDaftarKbli(Set<RegisterKbliData> daftaRegisterKbliData) {
-		List<Kbli> daftarKbli = new ArrayList<Kbli>();
-		
-		for(RegisterKbliData item : daftaRegisterKbliData) {
-			KbliData kbliData = item.getKbliData();
-			Kbli kbli = new Kbli(kbliData.getId(), kbliData.getNama(), kbliData.getKategori());
-			daftarKbli.add(kbli);		
+		Set<RegisterKbliData> daftarKbliData = new HashSet<RegisterKbliData>();
+		while (iteratorDaftarKbli.hasNext()) {
+			 JsonObject kbliJsonObject = iteratorDaftarKbli.next().asJsonObject();
+			 RegisterKbliData registerKbliData = new RegisterKbliData();
+			 KbliData kbliData = new KbliData();
+			 kbliData.setId(kbliJsonObject.getString("kode"));
+			 registerKbliData.setKbliData(kbliData);				 
+			 daftarKbliData.add(registerKbliData);
 		}
 		
-		return daftarKbli;
-	}
-		
-	private Set<RegisterKbliData> convertDaftarKbliToDaftarRegisterKbliData(List<Kbli> daftarKbli) {
-		
-		Set<RegisterKbliData> daftarRegisterKbliData = new HashSet<RegisterKbliData>();
-		
-		for(Kbli item : daftarKbli) {
-			RegisterKbliData registerKbliData = new RegisterKbliData();
-			KbliData kbliData = new KbliData();
-			kbliData.setId(item.getKode());
-			kbliData.setNama(item.getNama());
-			kbliData.setKategori(item.getKategori());			
-			daftarRegisterKbliData.add(registerKbliData);		
-		}
-		
-		return daftarRegisterKbliData;
-		
+		return daftarKbliData;
 	}
 	
-	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan p) {	
+	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan t) {	
 		
 		PerusahaanData perusahaanData = new PerusahaanData();	
-		perusahaanData.setId(p.getId());
-		perusahaanData.setNama(p.getNama());
+		perusahaanData.setId(t.getId());
+		perusahaanData.setNama(t.getNama());
 				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
-		alamatPerusahaanData.setKeterangan(p.getAlamat().getKeterangan());
+		alamatPerusahaanData.setKeterangan(t.getAlamat().getKeterangan());
 		DesaData desaData = new DesaData();
-		desaData.setId(p.getAlamat().getDesa().getId());
+		desaData.setId(t.getAlamat().getDesa().getId());
 		alamatPerusahaanData.setDesaData(desaData);
 		KecamatanData kecamatanData = new KecamatanData();
-		kecamatanData.setId(p.getAlamat().getKecamatan().getId());
+		kecamatanData.setId(t.getAlamat().getKecamatan().getId());
 		alamatPerusahaanData.setKecamatanData(kecamatanData);
 		KabupatenData kabupatenData = new KabupatenData();
-		kabupatenData.setId(p.getAlamat().getKabupaten().getId());
+		kabupatenData.setId(t.getAlamat().getKabupaten().getId());
 		alamatPerusahaanData.setKabupatenData(kabupatenData);
 		PropinsiData propinsiData = new PropinsiData();
-		propinsiData.setId(p.getAlamat().getPropinsi().getId());
+		propinsiData.setId(t.getAlamat().getPropinsi().getId());
 		alamatPerusahaanData.setPropinsiData(propinsiData);
 		perusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
 		
 		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
-		modelPerizinanData.setId(p.getModelPerizinan().getId());
-		modelPerizinanData.setNama(p.getModelPerizinan().getNama());
-		modelPerizinanData.setSingkatan(p.getModelPerizinan().getSingkatan());
+		modelPerizinanData.setId(t.getModelPerizinan().getId());
 		perusahaanData.setModelPerizinanData(modelPerizinanData);
 		
 		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
-		skalaUsahaData.setId(p.getSkalaUsaha().getId());
-		skalaUsahaData.setNama(p.getSkalaUsaha().getNama());
-		skalaUsahaData.setSingkatan(p.getSkalaUsaha().getSingkatan());
+		skalaUsahaData.setId(t.getSkalaUsaha().getId());
 		perusahaanData.setSkalaUsahaData(skalaUsahaData);
-		
-		KategoriPelakuUsahaData jenisPelakuUsahaData = new KategoriPelakuUsahaData();
-		jenisPelakuUsahaData.setId(p.getPelakuUsaha().getKategoriPelakuUsaha().getId());
-		jenisPelakuUsahaData.setNama(p.getPelakuUsaha().getKategoriPelakuUsaha().getNama());
-		
-		PelakuUsahaData detailPelakuUsahaData = new PelakuUsahaData();
-		detailPelakuUsahaData.setId(p.getPelakuUsaha().getId());
-		detailPelakuUsahaData.setNama(p.getPelakuUsaha().getNama());
-		detailPelakuUsahaData.setSingkatan(p.getPelakuUsaha().getSingkatan());
-		detailPelakuUsahaData.setKategoriPelakuUsahaData(jenisPelakuUsahaData);
-		perusahaanData.setPelakuUsahaData(detailPelakuUsahaData);
+				
+		PelakuUsahaData pelakuUsahaData = new PelakuUsahaData();
+		pelakuUsahaData.setId(t.getPelakuUsaha().getId());
+		perusahaanData.setPelakuUsahaData(pelakuUsahaData);
 		
 		KontakPerusahaanData kontakPerusahaanData = new KontakPerusahaanData();
-		kontakPerusahaanData.setEmail(p.getKontak().getEmail());
-		kontakPerusahaanData.setFax(p.getKontak().getFax());
-		kontakPerusahaanData.setTelepone(p.getKontak().getTelepone());	
+		kontakPerusahaanData.setEmail(t.getKontak().getEmail());
+		kontakPerusahaanData.setFax(t.getKontak().getFax());
+		kontakPerusahaanData.setTelepone(t.getKontak().getTelepone());	
 		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
 		
-		List<RegisterDokumen> daftarRegisterDokumen = p.getDaftarRegisterDokumen();
+		List<RegisterDokumen> daftarRegisterDokumen = t.getDaftarRegisterDokumen();
 		List<RegisterDokumenData> daftarRegisterDokumenData = new ArrayList<RegisterDokumenData>();
 		
 		for(RegisterDokumen item : daftarRegisterDokumen) {
@@ -241,38 +224,33 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 
 			MasterDokumenData dokumenData = new MasterDokumenData();
 			dokumenData.setId(item.getDokumen().getId());
-			dokumenData.setNama(item.getDokumen().getNama());
-			KategoriDokumen kategoriDokumen = item.getDokumen().getKategoriDokumen();
-			KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
-			kategoriDokumenData.setId(kategoriDokumen.getId());
-			kategoriDokumenData.setNama(kategoriDokumen.getNama());
-			kategoriDokumenData.setParent(kategoriDokumen.getParent());
-			dokumenData.setKategoriDokumenData(kategoriDokumenData);
 			registerDokumenData.setDokumenData(dokumenData);
+			registerDokumenData.setTanggalRegistrasi(item.getTanggalRegistrasi());
+			
+			PersonData personData = new PersonData();
+			personData.setId(registerDokumenData.getUploader().getId());
+			registerDokumenData.setUploader(personData);
 			registerDokumenData.setLokasiFile(item.getLokasiFile());
-			registerDokumenData.setTanggalRegistrasi(item.getTanggalRegistrasi() == null ? LocalDate.now():item.getTanggalRegistrasi());
-			registerDokumenData.setStatusBerlaku(item.isStatusBerlaku());
 			
 			switch (item.getDokumen().getId()) {
-			case "010301":
-				DokumenOss dokumenOss = (DokumenOss) item.getDokumen();
+			case "010301":				
+				JsonObject detailAttributeDokumen = item.getDokumen().getDetailAttributeDokumen();
 				RegisterDokumenOssData dokumenOssData = new RegisterDokumenOssData();
-				dokumenOssData.setNib(dokumenOss.getNib());
-				dokumenOssData.setTanggalPenerbitan(dokumenOss.getTanggalPenerbitan());
-				dokumenOssData.setDaftarRegisterKbliData(convertDaftarKbliToDaftarRegisterKbliData(dokumenOss.getDaftarKbli()));
-								
+				dokumenOssData.setNib(detailAttributeDokumen.getString("nib"));
+				dokumenOssData.setTanggalPenerbitan(LocalDate.parse(detailAttributeDokumen.getString("tanggalPenerbitan")));
+				dokumenOssData.setDaftarRegisterKbliData(convertJsonArrayKbliToDaftarRegisterKbliData(detailAttributeDokumen.getJsonArray("daftarKbli")));
+				
 				registerDokumenData.setDokumenOssData(dokumenOssData);
 				break;
-
 			default:
 				break;
 			}
-			
+			daftarRegisterDokumenData.add(registerDokumenData);
 			
 		}
 		
 		perusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
-		perusahaanData.setStatusVerifikasi(p.isStatusVerifikasi());
+		perusahaanData.setStatusVerifikasi(t.isStatusVerifikasi());
 		
 		return perusahaanData;
 	}
@@ -306,38 +284,55 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		List<RegisterDokumenData> daftarRegisterDokumenData = d.getDaftarRegisterDokumenData();
 		List<RegisterDokumen> daftarRegisterDokumen = new ArrayList<RegisterDokumen>();
 		
-		for(RegisterDokumenData item : daftarRegisterDokumenData) {			
+		for(RegisterDokumenData item : daftarRegisterDokumenData) {		
 			MasterDokumenData dokumenData = item.getDokumenData();
 			KategoriDokumenData kategoriDokumenData = dokumenData.getKategoriDokumenData();
-			String dokumen = new String(
-					dokumenData.getId(), 
-					dokumenData.getNama(), 
-					new KategoriDokumen(
-							kategoriDokumenData.getId(), 
-							kategoriDokumenData.getNama(), 
-							kategoriDokumenData.getParent()
-							)
-					);			
+			RegisterDokumen registerDokumen;
+			Dokumen dokumen;
+			Person uploader = new Person(
+					item.getUploader().getId(), 
+					item.getUploader().getNama(), 
+					null, null, null, null);
 		
 			switch (dokumenData.getId()) {
 			case "010301":				
 				RegisterDokumenOssData dokumenOssData = item.getDokumenOssData();						
-				DokumenOss dokumenOss = new DokumenOss(
-						dokumen, 
-						dokumenOssData.getNib(), 
-						dokumenOssData.getTanggalPenerbitan(), 
-						convertDaftarRegisterKbliDataToDaftarKbli(dokumenOssData.getDaftarRegisterKbliData())
-						);			
-				daftarRegisterDokumen.add(
-						new RegisterDokumen(
-								dokumenOss, 
-								item.getLokasiFile(), 
-								item.getTanggalRegistrasi(), 
-								item.isStatusBerlaku()
-								)
+				JsonObjectBuilder jsonDetailAttributeDokumenBuilder = Json.createObjectBuilder();
+				jsonDetailAttributeDokumenBuilder.add("nip", dokumenOssData.getNib());
+				jsonDetailAttributeDokumenBuilder.add("tanggalPenerbitan", dokumenOssData.getTanggalPenerbitan().toString());
+				
+				JsonArrayBuilder jsonArrayDaftarKbliBuilder = Json.createArrayBuilder();		
+				Set<RegisterKbliData> daftarRegisterKbliData = dokumenOssData.getDaftarRegisterKbliData();
+				Iterator<RegisterKbliData> iteratorDaftarRegitrasiKbliData = daftarRegisterKbliData.iterator();
+				
+				while (iteratorDaftarRegitrasiKbliData.hasNext()) {
+					RegisterKbliData registerKbliData = (RegisterKbliData) iteratorDaftarRegitrasiKbliData.next();
+					JsonObjectBuilder jsonKbliBuilder = Json.createObjectBuilder();
+					jsonKbliBuilder.add("kode", registerKbliData.getKbliData().getId());
+					jsonKbliBuilder.add("nama", registerKbliData.getKbliData().getNama());
+					jsonArrayDaftarKbliBuilder.add(jsonKbliBuilder);				
+				}
+				
+				jsonDetailAttributeDokumenBuilder.add("daftarKbli", jsonArrayDaftarKbliBuilder);
+				JsonObject detailAttributeDokumenJson = jsonDetailAttributeDokumenBuilder.build();
+				
+				dokumen = new Dokumen(
+						dokumenData.getId(), 
+						dokumenData.getNama(), 
+						new KategoriDokumen(
+								kategoriDokumenData.getId(), 
+								kategoriDokumenData.getNama(), 
+								kategoriDokumenData.getParent()
+								),
+						detailAttributeDokumenJson
 						);
+				
+				registerDokumen = new RegisterDokumen(dokumen, null, item.getLokasiFile(), item.getTanggalRegistrasi(), uploader);
+						
+				daftarRegisterDokumen.add(registerDokumen);
 				break;
 			default:
+				daftarRegisterDokumen = null;
 				break;
 			}			
 		}

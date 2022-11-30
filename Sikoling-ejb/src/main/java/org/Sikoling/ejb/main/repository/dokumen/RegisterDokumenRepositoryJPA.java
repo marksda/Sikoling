@@ -335,9 +335,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		switch (dokumen.getId()) {
 		case "010301":
 			JsonObject detailAttributeDokumen = dokumen.getDetailAttributeDokumen();
-			RegisterDokumenOssData dokumenOssData = new RegisterDokumenOssData();			
-			String nib = detailAttributeDokumen.getString("nib");
-			dokumenOssData.setNib(nib);
+			RegisterDokumenOssData dokumenOssData = new RegisterDokumenOssData();	
+			dokumenOssData.setNib(detailAttributeDokumen.getString("nib"));
 			dokumenOssData.setTanggalPenerbitan(LocalDate.parse(detailAttributeDokumen.getString("tanggalPenerbitan")));
 			dokumenOssData.setDaftarRegisterKbliData(convertJsonArrayKbliToDaftarRegisterKbliData(detailAttributeDokumen.getJsonArray("daftarKbli")));
 			

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
@@ -18,7 +19,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public List<String> getAll() {
+	public List<Dokumen> getAll() {
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", MasterDokumenData.class)
 				.getResultList()
 				.stream()
@@ -27,7 +28,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public String save(String t) {
+	public Dokumen save(Dokumen t) {
 		MasterDokumenData detailDokumenPerusahaanData = convertDokumenToDokumenData(t);
 		entityManager.persist(detailDokumenPerusahaanData);
 		entityManager.flush();
@@ -35,14 +36,14 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public String update(String t) {
+	public Dokumen update(Dokumen t) {
 		MasterDokumenData detailDokumenPerusahaanData = convertDokumenToDokumenData(t);
 		detailDokumenPerusahaanData = entityManager.merge(detailDokumenPerusahaanData);
 		return convertDokumenDataToDokumen(detailDokumenPerusahaanData);
 	}
 
 	@Override
-	public List<String> getAllByPage(Integer page, Integer pageSize) {
+	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", MasterDokumenData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -53,7 +54,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public List<String> getByNama(String nama) {
+	public List<Dokumen> getByNama(String nama) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findByNama", MasterDokumenData.class)
 				.setParameter("nama", nama)
@@ -64,7 +65,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public List<String> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findByNama", MasterDokumenData.class)
 				.setParameter("nama", nama)
@@ -76,23 +77,22 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 				.collect(Collectors.toList());
 	}
 	
-	private String convertDokumenDataToDokumen(MasterDokumenData d) {
+	private Dokumen convertDokumenDataToDokumen(MasterDokumenData d) {
+		KategoriDokumenData kategoriDokumenData = d.getKategoriDokumenData();
 		KategoriDokumen kategoriDokumen = new KategoriDokumen(
-				d.getKategoriDokumenData().getId(), 
-				d.getKategoriDokumenData().getNama(), 
-				d.getKategoriDokumenData().getParent());
-		return new String(d.getId(), d.getNama(), kategoriDokumen);
+												kategoriDokumenData.getId(), 
+												kategoriDokumenData.getNama(), 
+												kategoriDokumenData.getParent());
+		return new Dokumen(d.getId(), d.getNama(), kategoriDokumen, null);
 	}
 	
-	private MasterDokumenData convertDokumenToDokumenData(String t) {
+	private MasterDokumenData convertDokumenToDokumenData(Dokumen t) {
 		MasterDokumenData dokumenData = new MasterDokumenData();
 		dokumenData.setId(t.getId());
 		dokumenData.setNama(t.getNama());
 		
 		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
 		kategoriDokumenData.setId(t.getKategoriDokumen().getId());
-		kategoriDokumenData.setNama(t.getKategoriDokumen().getNama());
-		kategoriDokumenData.setParent(t.getKategoriDokumen().getParent());
 		dokumenData.setKategoriDokumenData(kategoriDokumenData);
 		
 		return dokumenData;
@@ -106,14 +106,16 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public String updateById(String id, String dokumen) {
-		MasterDokumenData updateData = convertDokumenToDokumenData(dokumen);
-		MasterDokumenData dokumenData = entityManager.find(MasterDokumenData.class, id);
-		dokumenData.setId(updateData.getId());
-		dokumenData.setKategoriDokumenData(updateData.getKategoriDokumenData());
-		dokumenData.setNama(updateData.getNama());
-		dokumenData = entityManager.merge(dokumenData);
-		return convertDokumenDataToDokumen(dokumenData);
+	public Dokumen updateById(String id, Dokumen dokumen) {
+		String idBaru = dokumen.getId();
+		MasterDokumenData masterDokumenData = convertDokumenToDokumenData(dokumen);
+		masterDokumenData.setId(id);
+		masterDokumenData = entityManager.merge(masterDokumenData);
+		if(!idBaru.equals(id)) {
+			masterDokumenData.setId(idBaru);
+		}
+		
+		return convertDokumenDataToDokumen(masterDokumenData);
 	}
 
 }
