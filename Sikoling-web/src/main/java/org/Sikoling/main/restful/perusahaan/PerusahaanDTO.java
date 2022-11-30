@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
-import org.Sikoling.main.restful.dokumen.DokumenDTO;
+import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
 import org.Sikoling.main.restful.pelakuusaha.PelakuUsahaDTO;
 import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
@@ -21,7 +21,7 @@ public class PerusahaanDTO implements Serializable {
 	private PelakuUsahaDTO pelakuUsaha;
 	private AlamatPerusahaanDTO alamat;
 	private KontakPerusahaanDTO kontak;
-	private List<DokumenDTO> daftarDokumen;
+	private List<RegisterDokumenDTO> daftarRegisterDokumen;
 	private boolean statusVerifikasi;
 	
 	public PerusahaanDTO() {		
@@ -35,9 +35,9 @@ public class PerusahaanDTO implements Serializable {
 		this.pelakuUsaha = new PelakuUsahaDTO(t.getPelakuUsaha());
 		this.alamat = new AlamatPerusahaanDTO(t.getAlamat());
 		this.kontak = new KontakPerusahaanDTO(t.getKontak());
-		this.daftarDokumen = t.getDaftarDokumen()
+		this.daftarRegisterDokumen = t.getDaftarRegisterDokumen()
 								.stream()
-								.map(item -> new DokumenDTO(item))
+								.map(item -> new RegisterDokumenDTO(item))
 								.collect(Collectors.toList());
 		this.statusVerifikasi = t.isStatusVerifikasi();
 	}	
@@ -98,12 +98,12 @@ public class PerusahaanDTO implements Serializable {
 		this.kontak = kontak;
 	}
 
-	public List<DokumenDTO> getDaftarDokumen() {
-		return daftarDokumen;
+	public List<RegisterDokumenDTO> getDaftarRegisterDokumen() {
+		return daftarRegisterDokumen;
 	}
 
-	public void setDaftarDokumen(List<DokumenDTO> daftarDokumen) {
-		this.daftarDokumen = daftarDokumen;
+	public void setDaftarRegisterDokumen(List<RegisterDokumenDTO> daftarRegisterDokumen) {
+		this.daftarRegisterDokumen = daftarRegisterDokumen;
 	}
 
 	public boolean isStatusVerifikasi() {
@@ -166,7 +166,7 @@ public class PerusahaanDTO implements Serializable {
 				pelakuUsaha.toPelakuUsaha(),
 				alamat.toAlamat(),
 				kontak.toKontak(),
-				daftarDokumen.stream().map(item -> item.toDokumen()).collect(Collectors.toList()), 
+				daftarRegisterDokumen.stream().map(item -> item.toRegisterDokumen()).collect(Collectors.toList()), 
 				statusVerifikasi
 				);
 	}	
