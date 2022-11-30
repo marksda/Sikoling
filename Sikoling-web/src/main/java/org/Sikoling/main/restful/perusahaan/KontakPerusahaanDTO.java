@@ -100,7 +100,7 @@ public class KontakPerusahaanDTO implements Serializable {
 		return "KontakPemrakarsaDTO{" + "telepone=" + telepone + ", fax=" + fax  + ", email=" + email + "}";
 	}
 
-	public Kontak toKontakPerusahaan() {
+	public Kontak toKontak() {
 		return new Kontak(telepone, fax, email);
 	}
 }

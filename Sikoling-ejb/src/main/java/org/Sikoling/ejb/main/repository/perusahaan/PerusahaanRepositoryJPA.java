@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.String;
 import org.Sikoling.ejb.abstraction.entity.DokumenOss;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
@@ -26,8 +26,8 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
-import org.Sikoling.ejb.main.repository.dokumen.DokumenData;
-import org.Sikoling.ejb.main.repository.dokumen.DokumenOssData;
+import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenOssData;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.KbliData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
@@ -239,7 +239,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		for(RegisterDokumen item : daftarRegisterDokumen) {
 			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
 
-			DokumenData dokumenData = new DokumenData();
+			MasterDokumenData dokumenData = new MasterDokumenData();
 			dokumenData.setId(item.getDokumen().getId());
 			dokumenData.setNama(item.getDokumen().getNama());
 			KategoriDokumen kategoriDokumen = item.getDokumen().getKategoriDokumen();
@@ -256,7 +256,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 			switch (item.getDokumen().getId()) {
 			case "010301":
 				DokumenOss dokumenOss = (DokumenOss) item.getDokumen();
-				DokumenOssData dokumenOssData = new DokumenOssData();
+				RegisterDokumenOssData dokumenOssData = new RegisterDokumenOssData();
 				dokumenOssData.setNib(dokumenOss.getNib());
 				dokumenOssData.setTanggalPenerbitan(dokumenOss.getTanggalPenerbitan());
 				dokumenOssData.setDaftarRegisterKbliData(convertDaftarKbliToDaftarRegisterKbliData(dokumenOss.getDaftarKbli()));
@@ -307,9 +307,9 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		List<RegisterDokumen> daftarRegisterDokumen = new ArrayList<RegisterDokumen>();
 		
 		for(RegisterDokumenData item : daftarRegisterDokumenData) {			
-			DokumenData dokumenData = item.getDokumenData();
+			MasterDokumenData dokumenData = item.getDokumenData();
 			KategoriDokumenData kategoriDokumenData = dokumenData.getKategoriDokumenData();
-			Dokumen dokumen = new Dokumen(
+			String dokumen = new String(
 					dokumenData.getId(), 
 					dokumenData.getNama(), 
 					new KategoriDokumen(
@@ -321,7 +321,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		
 			switch (dokumenData.getId()) {
 			case "010301":				
-				DokumenOssData dokumenOssData = item.getDokumenOssData();						
+				RegisterDokumenOssData dokumenOssData = item.getDokumenOssData();						
 				DokumenOss dokumenOss = new DokumenOss(
 						dokumen, 
 						dokumenOssData.getNib(), 

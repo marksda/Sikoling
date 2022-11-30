@@ -3,17 +3,21 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Dokumen implements Serializable {
+import jakarta.json.JsonObject;
 
+public class Dokumen implements Serializable {
+	
 	private static final long serialVersionUID = -1869365745189974891L;
 	private final String id;
-	private final KategoriDokumen kategoriDokumen;
 	private final String nama;	
+	private final KategoriDokumen kategoriDokumen;
+	private final JsonObject detailAttributeDokumen;
 	
-	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen) {
+	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen) {
 		this.id = id;
-		this.kategoriDokumen = kategoriDokumen;
 		this.nama = nama;
+		this.kategoriDokumen = kategoriDokumen;
+		this.detailAttributeDokumen = detailAttributeDokumen;
 	}
 
 	public static long getSerialversionuid() {
@@ -31,10 +35,14 @@ public class Dokumen implements Serializable {
 	public KategoriDokumen getKategoriDokumen() {
 		return kategoriDokumen;
 	}
+		
+	public JsonObject getDetailAttributeDokumen() {
+		return detailAttributeDokumen;
+	}
 
 	public int hashCode() {
-		int hash = 19;
-		hash = 41 * hash + Objects.hashCode(this.id);
+		int hash = 91;
+		hash = 13 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
 	
@@ -63,12 +71,10 @@ public class Dokumen implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Dokumen {"
-				.concat("id=")
-				.concat(this.id)
-				.concat(", ")
-				.concat("nama=")
-				.concat(this.nama)
+		return "Dokumen={id="
+				.concat(id)
+				.concat(", nama=")
+				.concat(nama)
 				.concat("}");
 	}	
 	

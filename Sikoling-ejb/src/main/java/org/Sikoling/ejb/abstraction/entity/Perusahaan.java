@@ -14,12 +14,13 @@ public class Perusahaan implements Serializable {
 	private final PelakuUsaha pelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
-	private final List<RegisterDokumen> daftarRegisterDokumen;
+	private final List<Dokumen> daftarDokumen;
 	private final boolean statusVerifikasi;
-	
+
 	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
-			PelakuUsaha pelakuUsaha, Alamat alamat, Kontak kontak, List<RegisterDokumen> daftarRegisterDokumen, 
+			PelakuUsaha pelakuUsaha, Alamat alamat, Kontak kontak, List<Dokumen> daftarDokumen,
 			boolean statusVerifikasi) {
+		super();
 		this.id = id;
 		this.nama = nama;
 		this.modelPerizinan = modelPerizinan;
@@ -27,7 +28,7 @@ public class Perusahaan implements Serializable {
 		this.pelakuUsaha = pelakuUsaha;
 		this.alamat = alamat;
 		this.kontak = kontak;
-		this.daftarRegisterDokumen = daftarRegisterDokumen;
+		this.daftarDokumen = daftarDokumen;
 		this.statusVerifikasi = statusVerifikasi;
 	}
 
@@ -62,11 +63,11 @@ public class Perusahaan implements Serializable {
 	public PelakuUsaha getPelakuUsaha() {
 		return pelakuUsaha;
 	}
-		
-	public List<RegisterDokumen> getDaftarRegisterDokumen() {
-		return daftarRegisterDokumen;
+	
+	public List<Dokumen> getDaftarDokumen() {
+		return daftarDokumen;
 	}
-		
+
 	public boolean isStatusVerifikasi() {
 		return statusVerifikasi;
 	}

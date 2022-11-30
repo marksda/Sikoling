@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="DokumenOssData.findAll", query="SELECT d FROM DokumenOssData d"),
 	@NamedQuery(name="DokumenOssData.findByNib", query = "SELECT d FROM DokumenOssData d WHERE d.nib = :nib")
 })
-public class DokumenOssData implements Serializable {
+public class RegisterDokumenOssData implements Serializable {
 
 	private static final long serialVersionUID = 411899176836678359L;
 	
@@ -42,7 +42,7 @@ public class DokumenOssData implements Serializable {
 	@OneToMany(mappedBy="registerDokumenOssData")
     private Set<RegisterKbliData> daftarRegisterKbliData;
 	
-	public DokumenOssData() {
+	public RegisterDokumenOssData() {
 	}
 
 	public String getNib() {

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.String;
 import org.Sikoling.ejb.abstraction.entity.DokumenOss;
 
 public class DokumenOssDTO extends DokumenDTO implements Serializable {
@@ -20,7 +20,7 @@ public class DokumenOssDTO extends DokumenDTO implements Serializable {
 	}
 	
 	public DokumenOssDTO(DokumenOss t) {
-		super(new Dokumen(t.getId(), t.getNama(), t.getKategoriDokumen()));
+		super(new String(t.getId(), t.getNama(), t.getKategoriDokumen()));
 		this.nib = t.getNib();
 		this.tanggalPenerbitan = t.getTanggalPenerbitan();
 		this.daftarKbliDTO = t.getDaftarKbli().stream().map(item -> new KbliDTO(item)).collect(Collectors.toList());
@@ -94,7 +94,7 @@ public class DokumenOssDTO extends DokumenDTO implements Serializable {
 	}
 
 	public DokumenOss toDokumenOss() {
-		Dokumen dokumen = new Dokumen(
+		String dokumen = new String(
 				this.getId(), 
 				this.getNama(), 
 				this.getKategori().toKategoriDokumen()

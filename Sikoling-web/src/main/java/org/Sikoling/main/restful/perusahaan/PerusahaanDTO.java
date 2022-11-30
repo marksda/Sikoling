@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
-import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
 import org.Sikoling.main.restful.pelakuusaha.PelakuUsahaDTO;
 import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
@@ -16,92 +16,94 @@ public class PerusahaanDTO implements Serializable {
 	private static final long serialVersionUID = 739451306385730136L;
 	private String id;
 	private String nama;
-	private ModelPerizinanDTO modelPerizinanDTO;
-	private SkalaUsahaDTO skalaUsahaDTO;
-	private PelakuUsahaDTO pelakuUsahaDTO;
-	private AlamatPerusahaanDTO alamatPerusahaanDTO;
-	private KontakPerusahaanDTO kontakPerusahaanDTO;
-	private List<RegisterDokumenDTO> daftarRegisterDokumenDTO;
+	private ModelPerizinanDTO modelPerizinan;
+	private SkalaUsahaDTO skalaUsaha;
+	private PelakuUsahaDTO pelakuUsaha;
+	private AlamatPerusahaanDTO alamat;
+	private KontakPerusahaanDTO kontak;
+	private List<DokumenDTO> daftarDokumen;
 	private boolean statusVerifikasi;
 	
 	public PerusahaanDTO() {		
 	}
 	
-	public PerusahaanDTO(Perusahaan p) {
-		this.id = p.getId();
-		this.nama = p.getNama();
-		this.modelPerizinanDTO = new ModelPerizinanDTO(p.getModelPerizinan());
-		this.skalaUsahaDTO = new SkalaUsahaDTO(p.getSkalaUsaha());
-		this.pelakuUsahaDTO = new PelakuUsahaDTO(p.getPelakuUsaha());
-		this.alamatPerusahaanDTO = new AlamatPerusahaanDTO(p.getAlamat());
-		this.kontakPerusahaanDTO = new KontakPerusahaanDTO(p.getKontak());
-		this.daftarRegisterDokumenDTO = p.getDaftarRegisterDokumen().stream()
-				.map(t -> new RegisterDokumenDTO(t)).collect(Collectors.toList());
-		this.statusVerifikasi = p.isStatusVerifikasi();
+	public PerusahaanDTO(Perusahaan t) {
+		this.id = t.getId();
+		this.nama = t.getNama();
+		this.modelPerizinan = new ModelPerizinanDTO(t.getModelPerizinan());
+		this.skalaUsaha = new SkalaUsahaDTO(t.getSkalaUsaha());
+		this.pelakuUsaha = new PelakuUsahaDTO(t.getPelakuUsaha());
+		this.alamat = new AlamatPerusahaanDTO(t.getAlamat());
+		this.kontak = new KontakPerusahaanDTO(t.getKontak());
+		this.daftarDokumen = t.getDaftarDokumen()
+								.stream()
+								.map(item -> new DokumenDTO(item))
+								.collect(Collectors.toList());
+		this.statusVerifikasi = t.isStatusVerifikasi();
 	}	
-
+	
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getNama() {
 		return nama;
 	}
-	
+
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-		
-	public ModelPerizinanDTO getModelPerizinanDTO() {
-		return modelPerizinanDTO;
+
+	public ModelPerizinanDTO getModelPerizinan() {
+		return modelPerizinan;
 	}
 
-	public void setModelPerizinanDTO(ModelPerizinanDTO modelPerizinanDTO) {
-		this.modelPerizinanDTO = modelPerizinanDTO;
+	public void setModelPerizinan(ModelPerizinanDTO modelPerizinan) {
+		this.modelPerizinan = modelPerizinan;
 	}
 
-	public SkalaUsahaDTO getSkalaUsahaDTO() {
-		return skalaUsahaDTO;
-	}
-	
-	public void setSkalaUsahaDTO(SkalaUsahaDTO skalaUsahaDTO) {
-		this.skalaUsahaDTO = skalaUsahaDTO;
+	public SkalaUsahaDTO getSkalaUsaha() {
+		return skalaUsaha;
 	}
 
-	public PelakuUsahaDTO getPelakuUsahaDTO() {
-		return pelakuUsahaDTO;
+	public void setSkalaUsaha(SkalaUsahaDTO skalaUsaha) {
+		this.skalaUsaha = skalaUsaha;
 	}
 
-	public void setPelakuUsahaDTO(PelakuUsahaDTO detailPelakuUsahaDTO) {
-		this.pelakuUsahaDTO = detailPelakuUsahaDTO;
+	public PelakuUsahaDTO getPelakuUsaha() {
+		return pelakuUsaha;
 	}
 
-	public AlamatPerusahaanDTO getAlamatPerusahaanDTO() {
-		return alamatPerusahaanDTO;
+	public void setPelakuUsaha(PelakuUsahaDTO pelakuUsaha) {
+		this.pelakuUsaha = pelakuUsaha;
 	}
 
-	public void setAlamatPerusahaanDTO(AlamatPerusahaanDTO alamatPerusahaanDTO) {
-		this.alamatPerusahaanDTO = alamatPerusahaanDTO;
+	public AlamatPerusahaanDTO getAlamat() {
+		return alamat;
 	}
 
-	public KontakPerusahaanDTO getKontakPerusahaanDTO() {
-		return kontakPerusahaanDTO;
+	public void setAlamat(AlamatPerusahaanDTO alamat) {
+		this.alamat = alamat;
 	}
 
-	public void setKontakPerusahaanDTO(KontakPerusahaanDTO kontakPerusahaanPerusahaanDTO) {
-		this.kontakPerusahaanDTO = kontakPerusahaanPerusahaanDTO;
-	}
-	
-	public List<RegisterDokumenDTO> getDaftarRegisterDokumenDTO() {
-		return daftarRegisterDokumenDTO;
+	public KontakPerusahaanDTO getKontak() {
+		return kontak;
 	}
 
-	public void setDaftarRegisterDokumenDTO(List<RegisterDokumenDTO> daftarRegisterDokumenDTO) {
-		this.daftarRegisterDokumenDTO = daftarRegisterDokumenDTO;
+	public void setKontak(KontakPerusahaanDTO kontak) {
+		this.kontak = kontak;
+	}
+
+	public List<DokumenDTO> getDaftarDokumen() {
+		return daftarDokumen;
+	}
+
+	public void setDaftarDokumen(List<DokumenDTO> daftarDokumen) {
+		this.daftarDokumen = daftarDokumen;
 	}
 
 	public boolean isStatusVerifikasi() {
@@ -114,12 +116,11 @@ public class PerusahaanDTO implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
-	
+	}
+
 	public int hashCode() {
-		int hash = 29;
+		int hash = 113;
         hash = 171 * hash + Objects.hashCode(this.id);
-        hash = 171 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 	
@@ -140,7 +141,7 @@ public class PerusahaanDTO implements Serializable {
         
         final PerusahaanDTO other = (PerusahaanDTO) obj;
         
-        if (!this.id.equalsIgnoreCase(other.id)) {
+        if (!this.id.equalsIgnoreCase(other.getId())) {
             return false;
         }        
 
@@ -160,12 +161,13 @@ public class PerusahaanDTO implements Serializable {
 		return new Perusahaan(
 				id, 
 				nama, 
-				modelPerizinanDTO.toModelPerizinan(), 
-				skalaUsahaDTO.toSkalaUsaha(), 
-				pelakuUsahaDTO.toPelakuUsaha(),
-				alamatPerusahaanDTO.toAlamat(),
-				kontakPerusahaanDTO.toKontakPerusahaan(),
-				daftarRegisterDokumenDTO.stream().map(d -> d.toRegisterDokumen()).collect(Collectors.toList()), 
-				statusVerifikasi);
-	}
+				modelPerizinan.toModelPerizinan(),
+				skalaUsaha.toSkalaUsaha(),
+				pelakuUsaha.toPelakuUsaha(),
+				alamat.toAlamat(),
+				kontak.toKontak(),
+				daftarDokumen.stream().map(item -> item.toDokumen()).collect(Collectors.toList()), 
+				statusVerifikasi
+				);
+	}	
 }

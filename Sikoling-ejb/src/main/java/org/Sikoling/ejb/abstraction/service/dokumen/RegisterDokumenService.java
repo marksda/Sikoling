@@ -73,13 +73,6 @@ public class RegisterDokumenService implements IRegisterDokumenService {
 	public List<RegisterDokumen> getAll() {
 		return registerDokumenRepository.getAll();
 	}
-
-	
-	@Override
-	public RegisterDokumen updateById(String id, RegisterDokumen registerDokumen) {
-		return registerDokumenRepository.updateById(id, registerDokumen);
-	}
-
 	
 	@Override
 	public DeleteResponse delete(String id) {

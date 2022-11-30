@@ -7,24 +7,18 @@ import java.util.Objects;
 public class RegisterDokumen implements Serializable {	
 	private static final long serialVersionUID = 5607669072989245707L;
 	private final Dokumen dokumen;
+	private final Perusahaan perusahaan;
 	private final String lokasiFile;
 	private final LocalDate tanggalRegistrasi;
-	private final boolean statusBerlaku;
-
-	public RegisterDokumen(Dokumen dokumen, String lokasiFile, 
-			LocalDate tanggalRegistrasi, boolean statusBerlaku) {
+	private final Person uploader;
+	
+	public RegisterDokumen(Dokumen dokumen, Perusahaan perusahaan, String lokasiFile, LocalDate tanggalRegistrasi,
+			Person uploader) {
 		this.dokumen = dokumen;
+		this.perusahaan = perusahaan;
 		this.lokasiFile = lokasiFile;
 		this.tanggalRegistrasi = tanggalRegistrasi;
-		this.statusBerlaku = statusBerlaku;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public Dokumen getDokumen() {
-		return dokumen;
+		this.uploader = uploader;
 	}
 
 	public String getLokasiFile() {
@@ -34,15 +28,28 @@ public class RegisterDokumen implements Serializable {
 	public LocalDate getTanggalRegistrasi() {
 		return tanggalRegistrasi;
 	}
+	
+	public Dokumen getDokumen() {
+		return dokumen;
+	}
 
-	public boolean isStatusBerlaku() {
-		return statusBerlaku;
+	public Perusahaan getPerusahaan() {
+		return perusahaan;
+	}
+
+	public Person getUploader() {
+		return uploader;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 17;
-		hash = 141 * hash + Objects.hashCode(this.dokumen.getId());
+		hash = 141 * hash + Objects.hashCode(dokumen.getId());
+		hash = 141 * hash + Objects.hashCode(perusahaan.getId());
 		return hash;
 	}
 
@@ -65,12 +72,16 @@ public class RegisterDokumen implements Serializable {
             return false;
         }
         
+        if ( !this.perusahaan.getId().equals(other.getPerusahaan().getId()) ) {
+            return false;
+        }
+        
         return true;
 	}
 
 	@Override
 	public String toString() {
-		return "RegisterDokumen{" + "idDokumen=" + dokumen.getId() + ", namaDokumen=" + dokumen.getNama() + "}";
+		return "RegisterDokumen{" + "idDokumen=" + dokumen.getId() + ", idPerusahaan=" + perusahaan.getId() + "}";
 	}
 	
 }

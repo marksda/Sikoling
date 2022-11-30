@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.String;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
 public class MasterDokumenService implements IMasterDokumenService {
@@ -15,32 +15,32 @@ public class MasterDokumenService implements IMasterDokumenService {
 	}
 
 	@Override
-	public Dokumen save(Dokumen dokumen) {
+	public String save(String dokumen) {
 		return dokumenRepository.save(dokumen);
 	}
 
 	@Override
-	public Dokumen update(Dokumen dokumen) {
+	public String update(String dokumen) {
 		return dokumenRepository.update(dokumen);
 	}
 
 	@Override
-	public List<Dokumen> getAll() {
+	public List<String> getAll() {
 		return dokumenRepository.getAll();
 	}
 
 	@Override
-	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
+	public List<String> getAllByPage(Integer page, Integer pageSize) {
 		return dokumenRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<Dokumen> getByNama(String nama) {
+	public List<String> getByNama(String nama) {
 		return dokumenRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<String> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return dokumenRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 	
@@ -50,7 +50,7 @@ public class MasterDokumenService implements IMasterDokumenService {
 	}
 	
 	@Override
-	public Dokumen updateById(String id, Dokumen dokumen) {
+	public String updateById(String id, String dokumen) {
 		return dokumenRepository.updateById(id, dokumen);
 	}
 

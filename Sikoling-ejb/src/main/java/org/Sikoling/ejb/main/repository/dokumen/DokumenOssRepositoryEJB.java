@@ -17,7 +17,7 @@ import jakarta.inject.Inject;
 public class DokumenOssRepositoryEJB implements IDokumenOssRepository {
 	
 	@Inject
-	private DokumenOssRepositoryJPA dokumenOssRepository;
+	private RegisterDokumenOssRepositoryJPA dokumenOssRepository;
 
 	@Override
 	public List<DokumenOss> getAll() {

@@ -2,6 +2,9 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
+
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 
 import jakarta.persistence.Column;
@@ -37,19 +40,20 @@ public class RegisterDokumenData implements Serializable {
 	@Id
 	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private DokumenData dokumenData;
+	private MasterDokumenData dokumenData;
+	
+	@Column(name="tanggal_registrasi")
+	private LocalDate tanggalRegistrasi;
+	
+	@JoinColumn(name = "uploader", referencedColumnName = "id", insertable = true, updatable = false)
+	@ManyToOne(optional = false)
+	private PersonData uploader;
 	
 	@Column(name="lokasi_file")
 	private String lokasiFile;
 	
-	@Column(name="tanggal_upload", columnDefinition = "DATE")
-	private LocalDate tanggalRegistrasi;
-	
-	@Column(name="is_berlaku")
-	private boolean statusBerlaku;	
-	
 	@OneToOne(mappedBy = "registerDokumenData")
-	private DokumenOssData dokumenOssData;
+	private RegisterDokumenOssData dokumenOssData;
 	
 	public RegisterDokumenData() {
 	}
@@ -58,24 +62,16 @@ public class RegisterDokumenData implements Serializable {
 		return perusahaanData;
 	}
 
-	public void setPerusahaan(PerusahaanData perusahaanData) {
+	public void setPerusahaanData(PerusahaanData perusahaanData) {
 		this.perusahaanData = perusahaanData;
 	}
 
-	public DokumenData getDokumenData() {
+	public MasterDokumenData getDokumenData() {
 		return dokumenData;
 	}
 
-	public void setDokumenData(DokumenData dokumenData) {
+	public void setDokumenData(MasterDokumenData dokumenData) {
 		this.dokumenData = dokumenData;
-	}
-
-	public String getLokasiFile() {
-		return lokasiFile;
-	}
-
-	public void setLokasiFile(String lokasiFile) {
-		this.lokasiFile = lokasiFile;
 	}
 
 	public LocalDate getTanggalRegistrasi() {
@@ -86,19 +82,27 @@ public class RegisterDokumenData implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public boolean isStatusBerlaku() {
-		return statusBerlaku;
+	public PersonData getUploader() {
+		return uploader;
 	}
 
-	public void setStatusBerlaku(boolean statusBerlaku) {
-		this.statusBerlaku = statusBerlaku;
+	public void setUploader(PersonData uploader) {
+		this.uploader = uploader;
 	}
 
-	public DokumenOssData getDokumenOssData() {
+	public String getLokasiFile() {
+		return lokasiFile;
+	}
+
+	public void setLokasiFile(String lokasiFile) {
+		this.lokasiFile = lokasiFile;
+	}
+
+	public RegisterDokumenOssData getDokumenOssData() {
 		return dokumenOssData;
 	}
 
-	public void setDokumenOssData(DokumenOssData dokumenOssData) {
+	public void setDokumenOssData(RegisterDokumenOssData dokumenOssData) {
 		this.dokumenOssData = dokumenOssData;
 	}
 
@@ -106,5 +110,38 @@ public class RegisterDokumenData implements Serializable {
 		return serialVersionUID;
 	}
 	
+	public int hashCode() {
+		int hash = 71;
+		hash = 13 * hash + Objects.hashCode(this.perusahaanData.getId());
+		hash = 13 * hash + Objects.hashCode(this.dokumenData.getId());
+		return hash;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final RegisterDokumenData other = (RegisterDokumenData) obj;
+        
+        if (!this.perusahaanData.getId().equals(other.getPerusahaanData().getId())) {
+            return false;
+        }
+        
+        if (!this.dokumenData.getId().equals(other.getDokumenData().getId())) {
+            return false;
+        }
+        
+        return true;
+	}
 	
 }

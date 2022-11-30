@@ -5,12 +5,15 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 
+import jakarta.json.JsonObject;
+
 public class DokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = -2378592503272433605L;
 	private String id;
-	private KategoriDokumenDTO kategori;
 	private String nama;
+	private KategoriDokumenDTO kategoriDokumen;
+	private JsonObject detailAttributeDokumen;
 	
 	public DokumenDTO() {
 	}
@@ -18,7 +21,8 @@ public class DokumenDTO implements Serializable {
 	public DokumenDTO(Dokumen dokumen) {
 		this.id = dokumen.getId();
 		this.nama = dokumen.getNama();
-		this.kategori = new KategoriDokumenDTO(dokumen.getKategoriDokumen());		
+		this.kategoriDokumen = new KategoriDokumenDTO(dokumen.getKategoriDokumen());	
+		this.detailAttributeDokumen = dokumen.getDetailAttributeDokumen();
 	}
 	
 	public String getId() {
@@ -36,15 +40,23 @@ public class DokumenDTO implements Serializable {
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-	
-	public KategoriDokumenDTO getKategori() {
-		return kategori;
+			
+	public KategoriDokumenDTO getKategoriDokumen() {
+		return kategoriDokumen;
 	}
-	
-	public void setKategori(KategoriDokumenDTO kategori) {
-		this.kategori = kategori;
+
+	public void setKategoriDokumen(KategoriDokumenDTO kategoriDokumen) {
+		this.kategoriDokumen = kategoriDokumen;
 	}
-	
+
+	public JsonObject getDetailAttributeDokumen() {
+		return detailAttributeDokumen;
+	}
+
+	public void setDetailAttributeDokumen(JsonObject detailAttributeDokumen) {
+		this.detailAttributeDokumen = detailAttributeDokumen;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -52,7 +64,6 @@ public class DokumenDTO implements Serializable {
 	public int hashCode() {
 		int hash = 73;
         hash = 171 * hash + Objects.hashCode(this.id);
-        hash = 171 * hash + Objects.hashCode(this.nama);
         return hash;
 	}
 	
@@ -90,7 +101,7 @@ public class DokumenDTO implements Serializable {
 	}
 
 	public Dokumen toDokumen() {
-		return new Dokumen(id, nama, kategori.toKategoriDokumen());
+		return new Dokumen(id, nama, kategoriDokumen.toKategoriDokumen(), detailAttributeDokumen);
 	}
 
 }

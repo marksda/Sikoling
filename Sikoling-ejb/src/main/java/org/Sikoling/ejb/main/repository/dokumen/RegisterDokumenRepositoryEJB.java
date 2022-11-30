@@ -80,11 +80,6 @@ public class RegisterDokumenRepositoryEJB implements IRegisterDokumenRepository 
 	}
 	
 	@Override
-	public RegisterDokumen updateById(String id, RegisterDokumen registerDokumen) {
-		return RegisterDokumenRepository.updateById(id, registerDokumen);
-	}
-	
-	@Override
 	public DeleteResponse delete(String id) {
 		return RegisterDokumenRepository.delete(id);
 	}

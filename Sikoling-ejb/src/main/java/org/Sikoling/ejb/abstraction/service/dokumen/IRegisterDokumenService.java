@@ -8,7 +8,6 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 public interface IRegisterDokumenService {
 	RegisterDokumen save(RegisterDokumen registerDokumen);
 	RegisterDokumen update(RegisterDokumen registerDokumen);
-	RegisterDokumen updateById(String id, RegisterDokumen registerDokumen);
 	DeleteResponse delete(String id);
 	List<RegisterDokumen> getAll();
 	List<RegisterDokumen> getAllByPage(Integer page, Integer pageSize);
