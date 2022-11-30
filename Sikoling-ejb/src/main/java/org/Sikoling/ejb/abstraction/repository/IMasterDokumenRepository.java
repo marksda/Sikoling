@@ -3,7 +3,6 @@ package org.Sikoling.ejb.abstraction.repository;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.String;
 
 public interface IMasterDokumenRepository extends IRepository<String> {
 	DeleteResponse delete(String id);
