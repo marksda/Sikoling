@@ -5,8 +5,12 @@ import org.Sikoling.main.restful.security.TokenDTO;
 
 public class ResponTokenDTO {
 	
-	private final String status;
-	private final TokenDTO token;
+	private String status;
+	private TokenDTO token;	
+	
+	public ResponTokenDTO() {
+		
+	}
 	
 	public ResponTokenDTO(String status, TokenDTO token) {
 		this.status = status;
@@ -25,5 +29,14 @@ public class ResponTokenDTO {
 	public TokenDTO getToken() {
 		return token;
 	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public void setToken(TokenDTO token) {
+		this.token = token;
+	}
 
+	
 }

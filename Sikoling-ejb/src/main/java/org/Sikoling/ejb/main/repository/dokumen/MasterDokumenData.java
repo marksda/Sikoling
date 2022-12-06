@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_dokumen_perusahaan")
 @NamedQueries({
-	@NamedQuery(name="DokumenData.findAll", query = "SELECT d FROM DokumenData d"),
-	@NamedQuery(name="DokumenData.findByNama", query = "SELECT d FROM DokumenData d WHERE d.nama LIKE :nama"),
-	@NamedQuery(name="DokumenData.findByKategori", query = "SELECT d FROM DokumenData d WHERE d.kategori = :kategori")
+	@NamedQuery(name="MasterDokumenData.findAll", query = "SELECT d FROM MasterDokumenData d"),
+	@NamedQuery(name="MasterDokumenData.findByNama", query = "SELECT d FROM MasterDokumenData d WHERE d.nama LIKE :nama"),
+	@NamedQuery(name="MasterDokumenData.findByKategori", query = "SELECT d FROM MasterDokumenData d WHERE d.kategoriDokumenData.id = :kategori")
 })
 public class MasterDokumenData implements Serializable {
 

@@ -29,7 +29,9 @@ import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
+import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
@@ -228,7 +230,6 @@ public class KeyCloakUserJPA implements IUserRepository {
 		Response response;
 		switch (cekModelAuthentication(userAuthenticator.getUserName())) {
 			case "local": 
-				//cek apakah password sesuai dengan data yang ada di master.tbl_user
 				String pwd = "";
 				try {
 					MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
@@ -252,36 +253,42 @@ public class KeyCloakUserJPA implements IUserRepository {
 						hasil = new SimpleResponse("gagal", "password tidak sesuai");
 					}
 					else {
-						//try adding user data to server keycloack
 						response = keycloak
 								.realm(realm)
 								.users()
-								.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));						
-						//pengecekan apakah data autentifikasi berhasil ditambahkan ke server keycloack
+								.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));		
 						if (response.getStatus() != 201) {	//gagal					
 							hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
 				        }
-						else {	//sukses
+						else {	
 							try {
-								//hapus data lama yang ada ditable master.tbl_user
 								UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
 										.setParameter("nama", userAuthenticator.getUserName())
-										.getSingleResult();
-								entityManager.remove(userData);	
-								//tambahkan data person ke master.tbl_person
-								PersonData personData = convertPersonToPersonData(person);
-								entityManager.persist(personData);
-								//data authority
-								//lakukan persistansi data authority dibagian blok ini....
+										.getSingleResult();								
 								
-								//commit penghapusan data user lama dan penambahan data user baru
-								//entityManager.getTransaction().commit();
+								PersonData personData = convertPersonToPersonData(person);								
+								
+								//data authority
+								AutorisasiData autorisasiData = new AutorisasiData();
+								autorisasiData.setId(person.getNik());
+								autorisasiData.setIdLama(userData.getId());
+								
+								HakAksesData hakAksesData = new HakAksesData();
+								hakAksesData.setId("09");
+								autorisasiData.setHakAkses(hakAksesData);
+								autorisasiData.setStatusInternal(false);
+								autorisasiData.setIsVerified(false);
+								autorisasiData.setUserName(userAuthenticator.getUserName());
+								
+								entityManager.remove(userData);	
+								entityManager.persist(personData);
+								entityManager.persist(autorisasiData);
+								entityManager.flush();
+								
+								
 								hasil = new SimpleResponse("berhasil", "data autentifiksi berhasil ditambahkan");
 							} catch (Exception e) {
-								//batalkan transaksi penghapusan user data dan penambahan person data
 								entityManager.getTransaction().rollback();
-								//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
-								// .....								
 								hasil = new SimpleResponse("gagal", "data autentifiksi gagal ditambahkan");
 							}
 						}
@@ -294,29 +301,35 @@ public class KeyCloakUserJPA implements IUserRepository {
 				hasil = new SimpleResponse("gagal", "data user sudah terdaftar di server identification provider");			
 				break;
 			case "none":
-				//try adding user data to server keycloack
 				response = keycloak
 						.realm(realm)
 						.users()
 						.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
-				if (response.getStatus() != 201) {	//gagal					
+				if (response.getStatus() != 201) {					
 					hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
 		        }
-				else {	//sukses
+				else {	
 					try {						
-						//jpa personData 
 						PersonData personData = convertPersonToPersonData(person);
-						//jpa autorisasiData				
-//						AutorisasiData autorisasiData = converPersonToAutorisasiData(person.getNik(), null, "99", false, false);
-//						personData.setAutorisasiData(autorisasiData);
-						//attacking PersonData entity
+						
+						//data authority
+						AutorisasiData autorisasiData = new AutorisasiData();
+						autorisasiData.setId(person.getNik());
+						
+						HakAksesData hakAksesData = new HakAksesData();
+						hakAksesData.setId("09");
+						autorisasiData.setHakAkses(hakAksesData);
+						autorisasiData.setStatusInternal(false);
+						autorisasiData.setIsVerified(false);
+						autorisasiData.setUserName(userAuthenticator.getUserName());				
+
+
 						entityManager.persist(personData);
-						//make persistence;
+						entityManager.persist(autorisasiData);
 						entityManager.flush();
 						hasil = new SimpleResponse("sukses", "data autentifiksi berhasil ditambahkan");
 					} catch (Exception e) {
-						//lakukan penghabusan data autentifikasi di server identification provider yang baru saja ditambahkan
-						// ....
+						entityManager.getTransaction().rollback();
 						hasil = new SimpleResponse("gagal", "data autentifiksi gagal ditambahkan");
 					}
 				}

@@ -166,7 +166,11 @@ public class PerusahaanDTO implements Serializable {
 				pelakuUsaha.toPelakuUsaha(),
 				alamat.toAlamat(),
 				kontak.toKontak(),
-				daftarRegisterDokumen.stream().map(item -> item.toRegisterDokumen()).collect(Collectors.toList()), 
+				daftarRegisterDokumen != null ? 
+						daftarRegisterDokumen.stream()
+						.map(item -> item.toRegisterDokumen())
+						.collect(Collectors.toList())
+						: null, 
 				statusVerifikasi
 				);
 	}	

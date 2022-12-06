@@ -27,12 +27,12 @@ public class AutorisasiData implements Serializable {
 	private static final long serialVersionUID = 2467589981792742907L;
 	
 	@Id
-	@Column(name="nik")
+	@Column(name="person")
 	private String id;
 	
 	@OneToOne
     @MapsId
-//    @JoinColumn(name = "nik")
+    @JoinColumn(name = "person")
 	private PersonData personData;
 	
 	@Column(name="id_lama")

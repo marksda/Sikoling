@@ -6,12 +6,16 @@ import org.Sikoling.ejb.abstraction.entity.Token;
 
 public class TokenDTO {
 	
-	private final String userId;
-    private final String userName;
-    private final String userEmail;
-    private final String accessToken;
-    private final String refreshToken;
-    private final String expiresIn;
+	private String userId;
+    private String userName;
+    private String userEmail;
+    private String tipeAkses;
+    private String accessToken;
+    private String refreshToken;
+    private String expiresIn;
+    
+    public TokenDTO() {    	
+    }
     
     public TokenDTO(Token token) {
         this.userId = token.getUserId();
@@ -21,31 +25,63 @@ public class TokenDTO {
         this.refreshToken = token.getRefreshToken();
         this.expiresIn = token.getExpiresIn();
     }
-
+    
 	public String getUserId() {
 		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {
 		return userName;
 	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getUserEmail() {
 		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getTipeAkses() {
+		return tipeAkses;
+	}
+
+	public void setTipeAkses(String tipeAkses) {
+		this.tipeAkses = tipeAkses;
 	}
 
 	public String getAccessToken() {
 		return accessToken;
 	}
 
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
 	public String getRefreshToken() {
 		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
 	}
 
 	public String getExpiresIn() {
 		return expiresIn;
 	}
-	
+
+	public void setExpiresIn(String expiresIn) {
+		this.expiresIn = expiresIn;
+	}
+
 	@Override
     public int hashCode() {
         int hash = 5;
