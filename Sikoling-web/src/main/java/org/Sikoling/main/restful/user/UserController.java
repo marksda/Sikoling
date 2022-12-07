@@ -101,6 +101,14 @@ public class UserController {
 		return new ResponTokenDTO(userService.getToken(u.toUserAuthenticator()));
 	}
 	
+	@Path("refresh_token")
+	@POST
+    @Consumes({MediaType.TEXT_PLAIN})
+    @Produces({MediaType.APPLICATION_JSON})
+	public ResponTokenDTO getRefreshToken(String refreshToken) {
+		return new ResponTokenDTO(userService.refreshToken(refreshToken));
+	}
+	
 	@Path("registrasi")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})

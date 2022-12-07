@@ -110,4 +110,11 @@ public class UserRepositoryJPA implements IUserRepository {
 		return null;
 	}
 
+	
+	@Override
+	public ResponToken refreshToken(String refreshToken) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

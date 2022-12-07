@@ -75,4 +75,10 @@ public class PerusahaanRepositoryEJB implements IPerusahaanRepository {
 		return perusahaanRepository.delete(id);
 	}
 
+	
+	@Override
+	public List<Perusahaan> getByIdPerson(String personId) {
+		return perusahaanRepository.getByIdPerson(personId);
+	}
+
 }

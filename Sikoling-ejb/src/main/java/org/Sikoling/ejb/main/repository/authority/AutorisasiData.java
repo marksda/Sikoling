@@ -7,10 +7,10 @@ import org.Sikoling.ejb.main.repository.person.PersonData;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
@@ -27,18 +27,14 @@ public class AutorisasiData implements Serializable {
 	private static final long serialVersionUID = 2467589981792742907L;
 	
 	@Id
-	@Column(name="person")
-	private String id;
-	
-	@OneToOne
-    @MapsId
-    @JoinColumn(name = "person")
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person", referencedColumnName = "id")
 	private PersonData personData;
 	
 	@Column(name="id_lama")
 	private String idLama;
 	
-	@JoinColumn(name = "hak_akses", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "hak_akses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private HakAksesData hakAkses;
 	
@@ -78,13 +74,13 @@ public class AutorisasiData implements Serializable {
 	public AutorisasiData() {
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
+//	public String getId() {
+//		return id;
+//	}
+//
+//	public void setId(String id) {
+//		this.id = id;
+//	}
 
 	public String getIdLama() {
 		return idLama;

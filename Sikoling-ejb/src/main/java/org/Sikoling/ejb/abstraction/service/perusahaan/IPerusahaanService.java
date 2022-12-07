@@ -16,4 +16,5 @@ public interface IPerusahaanService {
 	List<Perusahaan> getAllByPage(Integer page, Integer pageSize);
 	List<Perusahaan> getByNama(String nama);
 	List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+	List<Perusahaan> getByIdPerson(String personId);
 }

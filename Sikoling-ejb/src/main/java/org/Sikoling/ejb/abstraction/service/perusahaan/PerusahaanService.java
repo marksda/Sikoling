@@ -66,4 +66,10 @@ public class PerusahaanService implements IPerusahaanService {
 	}
 
 	
+	@Override
+	public List<Perusahaan> getByIdPerson(String personId) {
+		return perusahaanRepository.getByIdPerson(personId);
+	}
+
+	
 }

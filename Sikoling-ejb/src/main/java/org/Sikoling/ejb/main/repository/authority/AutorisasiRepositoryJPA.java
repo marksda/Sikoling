@@ -139,7 +139,7 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 		hakAksesData.setNama(hakAkses.getNama());
 		hakAksesData.setKeterangan(hakAkses.getKeterangan());
 		
-		autorisasiData.setId(t.getId());
+//		autorisasiData.setId(t.getId());
 		autorisasiData.setIdLama(t.getIdLama());
 		autorisasiData.setPersonData(personData);
 		autorisasiData.setIdLama(t.getIdLama());
@@ -183,7 +183,7 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 				d.getHakAkses().getKeterangan());
 		
 		return new Autorisasi(
-				d.getId(), person, d.getIdLama(), hakAkses, 
+				person.getNik(), person, d.getIdLama(), hakAkses, 
 				d.getStatusInternal(), d.getIsVerified(), d.getUserName());
 	}
 }

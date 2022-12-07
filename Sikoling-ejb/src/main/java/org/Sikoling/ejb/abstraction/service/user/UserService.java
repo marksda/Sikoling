@@ -57,11 +57,16 @@ public class UserService implements IUserService {
 	public ResponToken getToken(UserAuthenticator u) {		
 		return userRepository.getToken(u);
 	}
-
 	
 	@Override
 	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
 		return userRepository.addRegistrasi(userAuthenticator, person);
+	}
+
+	
+	@Override
+	public ResponToken refreshToken(String refreshToken) {
+		return userRepository.refreshToken(refreshToken);
 	}
 
 }

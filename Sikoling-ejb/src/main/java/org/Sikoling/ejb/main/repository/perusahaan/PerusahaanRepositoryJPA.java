@@ -354,4 +354,14 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 				);
 	}
 	
+	@Override
+	public List<Perusahaan> getByIdPerson(String personId) {
+		return entityManager.createNamedQuery("PersonPerusahaanData.findByPemilik", PersonPerusahaanData.class)
+				.setParameter("personId", personId)
+				.getResultList()
+				.stream()
+				.map(t -> convertPerusahaanDataToPerusahaan(t.getPerusahaan()))
+				.collect(Collectors.toList());
+	}
+	
 }

@@ -9,7 +9,7 @@ public class TokenDTO {
 	private String userId;
     private String userName;
     private String userEmail;
-    private String tipeAkses;
+    private String hakAkses;
     private String accessToken;
     private String refreshToken;
     private String expiresIn;
@@ -24,6 +24,7 @@ public class TokenDTO {
         this.accessToken = token.getAccessToken();
         this.refreshToken = token.getRefreshToken();
         this.expiresIn = token.getExpiresIn();
+        this.hakAkses = token.getHakAkses();
     }
     
 	public String getUserId() {
@@ -50,12 +51,12 @@ public class TokenDTO {
 		this.userEmail = userEmail;
 	}
 
-	public String getTipeAkses() {
-		return tipeAkses;
+	public String getHakAkses() {
+		return hakAkses;
 	}
 
-	public void setTipeAkses(String tipeAkses) {
-		this.tipeAkses = tipeAkses;
+	public void setHakAkses(String hakAkses) {
+		this.hakAkses = hakAkses;
 	}
 
 	public String getAccessToken() {

@@ -6,12 +6,13 @@ public class Token {
 	private final String userId;
     private final String userName;
     private final String userEmail;
+    private final String hakAkses;
     private final String accessToken;
     private final String refreshToken;
     private final String expiresIn;
 
     public Token(String userId, String userName, String userEmail, String accessToken, String refreshToken,
-			String expiresIn) {
+			String expiresIn, String hakAkses) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -19,6 +20,11 @@ public class Token {
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 		this.expiresIn = expiresIn;
+		this.hakAkses = hakAkses;
+	}
+
+	public String getHakAkses() {
+		return hakAkses;
 	}
 
 	public String getUserId() {

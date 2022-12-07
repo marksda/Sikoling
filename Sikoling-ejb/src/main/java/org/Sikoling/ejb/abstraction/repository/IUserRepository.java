@@ -14,5 +14,6 @@ public interface IUserRepository extends IRepository<User> {
 	List<User> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
 	Boolean cekUserName(String nama);
 	ResponToken getToken(UserAuthenticator userAuthenticator);
+	ResponToken refreshToken(String refreshToken);
 	SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person);
 }

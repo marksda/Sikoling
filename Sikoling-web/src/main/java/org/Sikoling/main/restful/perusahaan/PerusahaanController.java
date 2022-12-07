@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -18,7 +19,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.SecurityContext;
 
 @Stateless
 @LocalBean
@@ -31,7 +34,11 @@ public class PerusahaanController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PerusahaanDTO save(PerusahaanDTO d) {
+	@RequiredAuthorization
+	public PerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) {
+//		Principal principal = securityContext.getUserPrincipal();
+//		String userName = principal.getName();
+		
 		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan()));
 	}
 	
@@ -109,4 +116,15 @@ public class PerusahaanController {
 				.collect(Collectors.toList());
 	}
 	
+	@Path("person/{personId}")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	public List<PerusahaanDTO> getByIdPerson(@PathParam("personId") String personId) {
+		return perusahaanService.getByIdPerson(personId)
+				.stream()
+				.map(t -> new PerusahaanDTO(t))
+				.collect(Collectors.toList());
+	}
 }

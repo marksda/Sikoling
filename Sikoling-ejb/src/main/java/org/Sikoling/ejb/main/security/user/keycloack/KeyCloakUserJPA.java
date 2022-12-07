@@ -197,20 +197,27 @@ public class KeyCloakUserJPA implements IUserRepository {
 	                .post(Entity.form(form));
 			
 			if (response.getStatus() != 200) {
+//				return new ResponToken("error", null);
 	            throw new IllegalStateException("The tokens couldn't be gotten " + response.readEntity(String.class));
 	        }
 	
 	        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
 	        
 	        Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
+//	        AutorisasiData autorisasiData = entityManager.
+	        
+	        AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+					.setParameter("userName", userAuthenticator.getUserName())
+					.getSingleResult();
 	        
 	        token = new Token(
-	        		getClaim(claims, "sub"), 
-	        		getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), 
+	        		autorisasiData.getPersonData().getId(), 
+	        		getClaim(claims, "given_name"), //+ " " + getClaim(claims, "family_name"), 
 	        		getClaim(claims, "email"), 
 	        		map.get("access_token"), 
 	        		map.get("refresh_token"), 
-	        		map.get("expires_in")
+	        		map.get("expires_in"),
+	        		autorisasiData.getHakAkses().getNama()
 	    		);
 	        return new ResponToken("oke", token);
 			
@@ -222,6 +229,40 @@ public class KeyCloakUserJPA implements IUserRepository {
 			return new ResponToken("error", null);
 		}
         
+	}
+	
+	@Override
+	public ResponToken refreshToken(String refreshToken) {
+		Form form = new Form()
+                .param("client_id", "admin-cli")
+                .param("grant_type", "refresh_token")
+                .param("refresh_token", refreshToken);
+		Response response = client.target(tokenURL)
+                .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.form(form));
+		
+		if (response.getStatus() != 200) {
+            throw new IllegalStateException("The tokens couldn't be gotten " + response.readEntity(String.class));
+        }
+		
+		Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
+		Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
+		
+		AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+				.setParameter("userName", getClaim(claims, "email"))
+				.getSingleResult();
+        
+		Token token = new Token(
+        		autorisasiData.getPersonData().getId(), 
+        		getClaim(claims, "given_name"), 
+        		getClaim(claims, "email"), 
+        		map.get("access_token"), 
+        		map.get("refresh_token"),
+        		map.get("expires_in"),
+        		autorisasiData.getHakAkses().getNama()
+    		);
+        return new ResponToken("oke", token);
 	}
 		
 	@Override
@@ -270,8 +311,8 @@ public class KeyCloakUserJPA implements IUserRepository {
 								
 								//data authority
 								AutorisasiData autorisasiData = new AutorisasiData();
-								autorisasiData.setId(person.getNik());
-								autorisasiData.setIdLama(userData.getId());
+//								autorisasiData.setId(person.getNik());
+								autorisasiData.setIdLama(userData.getId());								
 								
 								HakAksesData hakAksesData = new HakAksesData();
 								hakAksesData.setId("09");
@@ -280,9 +321,10 @@ public class KeyCloakUserJPA implements IUserRepository {
 								autorisasiData.setIsVerified(false);
 								autorisasiData.setUserName(userAuthenticator.getUserName());
 								
+								personData.setAutorisasiData(autorisasiData);
+								
 								entityManager.remove(userData);	
 								entityManager.persist(personData);
-								entityManager.persist(autorisasiData);
 								entityManager.flush();
 								
 								
@@ -313,19 +355,18 @@ public class KeyCloakUserJPA implements IUserRepository {
 						PersonData personData = convertPersonToPersonData(person);
 						
 						//data authority
-						AutorisasiData autorisasiData = new AutorisasiData();
-						autorisasiData.setId(person.getNik());
-						
+						AutorisasiData autorisasiData = new AutorisasiData();						
 						HakAksesData hakAksesData = new HakAksesData();
 						hakAksesData.setId("09");
 						autorisasiData.setHakAkses(hakAksesData);
 						autorisasiData.setStatusInternal(false);
 						autorisasiData.setIsVerified(false);
-						autorisasiData.setUserName(userAuthenticator.getUserName());				
+						autorisasiData.setUserName(userAuthenticator.getUserName());	
+						
+						personData.setAutorisasiData(autorisasiData);
 
 
 						entityManager.persist(personData);
-						entityManager.persist(autorisasiData);
 						entityManager.flush();
 						hasil = new SimpleResponse("sukses", "data autentifiksi berhasil ditambahkan");
 					} catch (Exception e) {
@@ -506,16 +547,6 @@ public class KeyCloakUserJPA implements IUserRepository {
 		return user;
 	}
 	
-//	private AutorisasiData converPersonToAutorisasiData(String nik, String idLama, String hakAkses, Boolean statusInternal, Boolean isVerified) {
-//		AutorisasiData autorisasiData = new AutorisasiData();
-//		autorisasiData.setNik(nik);
-//		autorisasiData.setIdLama(idLama);
-//		autorisasiData.setHakAkses(hakAkses);
-//		autorisasiData.setStatusInternal(statusInternal);
-//		autorisasiData.setIsVerified(isVerified);
-//		return autorisasiData;
-//	}
-	
 	private String getAttribute(Map<String, List<String>> attributes, String name) {
         return Optional.ofNullable(attributes)
                 .map(att -> att.get(name))
@@ -553,5 +584,6 @@ public class KeyCloakUserJPA implements IUserRepository {
         
 		return userRepresentation;
 	}
-	
+
+		
 }

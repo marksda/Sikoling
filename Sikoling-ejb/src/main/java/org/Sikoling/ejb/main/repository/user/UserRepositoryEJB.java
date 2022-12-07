@@ -67,5 +67,10 @@ public class UserRepositoryEJB implements IUserRepository {
 	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
 		return userRepositoryJPA.addRegistrasi(userAuthenticator, person);
 	}
+	
+	@Override
+	public ResponToken refreshToken(String refreshToken) {
+		return userRepositoryJPA.refreshToken(refreshToken);
+	}
 
 }

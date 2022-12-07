@@ -6,6 +6,7 @@ import org.Sikoling.ejb.abstraction.service.security.AuthorizationException;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 
 import com.nimbusds.jose.proc.SecurityContext;
+import com.nimbusds.jwt.proc.BadJWTException;
 import com.nimbusds.jwt.proc.JWTProcessor;
 
 
@@ -21,7 +22,11 @@ public class TokenValidationJWK implements ITokenValidationService {
 	public Map<String, Object> validate(String jwt) {
 		try {
             return jwtProcessor.process(jwt, null).getClaims();
-        } catch (Exception ex) {
+        } 
+		catch (BadJWTException e) {
+			throw new AuthorizationException(e.getMessage());
+		}
+		catch (Exception ex) {
             throw new AuthorizationException("Token validation fails", ex);
         }
 	}

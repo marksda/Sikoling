@@ -48,7 +48,7 @@ public class PerusahaanData implements Serializable {
 		
 	@OneToMany(mappedBy="perusahaanData")
 	private List<RegisterDokumenData> daftarRegisterDokumenData;
-	
+		
 	public PerusahaanData() {
 	}
 

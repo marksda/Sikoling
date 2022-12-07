@@ -60,7 +60,7 @@ public class OpenIdConnectionService implements IOpenIdConnectService {
         		getClaim(claims, "email"), 
         		map.get("access_token"), 
         		map.get("refresh_token"), 
-        		map.get("expires_in")
+        		map.get("expires_in"), null
     		);
 
         return token;
