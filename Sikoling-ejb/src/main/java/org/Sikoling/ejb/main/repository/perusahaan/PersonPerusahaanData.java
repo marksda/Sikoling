@@ -32,7 +32,7 @@ public class PersonPerusahaanData implements Serializable {
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PerusahaanData perusahaan;
+	private RegisterPerusahaanData perusahaan;
 
 	public PersonData getPerson() {
 		return person;
@@ -42,11 +42,11 @@ public class PersonPerusahaanData implements Serializable {
 		this.person = person;
 	}
 
-	public PerusahaanData getPerusahaan() {
+	public RegisterPerusahaanData getPerusahaan() {
 		return perusahaan;
 	}
 
-	public void setPerusahaan(PerusahaanData perusahaan) {
+	public void setPerusahaan(RegisterPerusahaanData perusahaan) {
 		this.perusahaan = perusahaan;
 	}
 

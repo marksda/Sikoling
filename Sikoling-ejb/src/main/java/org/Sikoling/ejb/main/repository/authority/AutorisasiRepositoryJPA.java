@@ -172,8 +172,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 	
 	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
-//		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, autorisasiData.getId());
-		
+
 		Person person = new Person(
 				d.getPersonData().getId(), 
 				d.getPersonData().getNama(), 
@@ -203,7 +202,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				d.getHakAkses().getKeterangan());
 		
 		return new Authority(
-				person.getNik(), person, d.getIdLama(), hakAkses, 
+				person, d.getIdLama(), hakAkses, 
 				d.getStatusInternal(), d.getIsVerified(), d.getUserName());
 	}
 

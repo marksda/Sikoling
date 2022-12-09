@@ -33,7 +33,7 @@ import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.AlamatPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.KontakPerusahaanData;
-import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
+import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
@@ -197,7 +197,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		return daftarKbliData;
 	}
 
-	private Perusahaan convertPerusahaanDataToPerusahaan(PerusahaanData d) {
+	private Perusahaan convertPerusahaanDataToPerusahaan(RegisterPerusahaanData d) {
 		ModelPerizinanData modelPerizinanData = d.getModelPerizinanData();
 		SkalaUsahaData skalaUsahaData = d.getSkalaUsahaData();
 		PelakuUsahaData pelakuUsahaData = d.getPelakuUsahaData();
@@ -319,7 +319,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		RegisterDokumenData registerDokumenData = new RegisterDokumenData();
 		
-		PerusahaanData perusahaanData = new PerusahaanData();
+		RegisterPerusahaanData perusahaanData = new RegisterPerusahaanData();
 		registerDokumenData.setPerusahaanData(perusahaanData);		
 		
 		MasterDokumenData masterDokumenData = new MasterDokumenData();

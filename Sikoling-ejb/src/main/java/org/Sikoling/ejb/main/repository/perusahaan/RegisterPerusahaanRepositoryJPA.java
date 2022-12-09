@@ -23,8 +23,9 @@ import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
+import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
-import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenOssData;
@@ -49,104 +50,83 @@ import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
 import jakarta.persistence.EntityManager;
 
-public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
+public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepository {
 	
 	private final EntityManager entityManager;	
 
-	public PerusahaanRepositoryJPA(EntityManager entityManager) {
+	public RegisterPerusahaanRepositoryJPA(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
 	@Override
-	public List<Perusahaan> getAll() {
-		return entityManager.createNamedQuery("PerusahaanData.findAll", PerusahaanData.class)
+	public List<RegisterPerusahaan> getAll() {
+		return entityManager.createNamedQuery("RegisterPerusahaanData.findAll", RegisterPerusahaanData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Perusahaan save(Perusahaan t, Person s) {
-		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t, s);		
-		entityManager.persist(perusahaanData);
+	public RegisterPerusahaan save(RegisterPerusahaan t) {
+		RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);
+		entityManager.persist(registerPerusahaanData);
 		entityManager.flush();		
-		return convertPerusahaanDataToPerusahaan(perusahaanData);
+		return convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanData);
 	}
-
+	
 	@Override
 	public DeleteResponse delete(String id) {
-		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
-		entityManager.remove(perusahaanData);			
+		RegisterPerusahaanData registerPerusahaanData = entityManager.find(RegisterPerusahaanData.class, id);
+		entityManager.remove(registerPerusahaanData);			
 		return new DeleteResponse(true, id);
 	}
 	
 	@Override
-	public Perusahaan update(Perusahaan t, Person s) {
-		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t, s);
-		pemrakarsaData = entityManager.merge(pemrakarsaData);
-		return convertPerusahaanDataToPerusahaan(pemrakarsaData);
+	public RegisterPerusahaan update(RegisterPerusahaan t) {
+		RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);
+		registerPerusahaanData = entityManager.merge(registerPerusahaanData);
+		return convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanData);
 	}
-	
-	@Override
-	public Perusahaan updateById(String id, Perusahaan perusahaan) {
-		String idBaru = perusahaan.getId();
-		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(perusahaan);
-		perusahaanData.setId(id);
-		perusahaanData = entityManager.merge(perusahaanData);
-		if(!idBaru.equals(id)) {
-			perusahaanData.setId(idBaru);
-		}
 		
-		return convertPerusahaanDataToPerusahaan(perusahaanData);
-	}
-	
 	@Override
-	public Perusahaan updateStatusVerifikasi(Perusahaan t, boolean statusVerifikasi) {
-		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t);
-		perusahaanData.setStatusVerifikasi(statusVerifikasi);
-		perusahaanData = entityManager.merge(perusahaanData);
-		return convertPerusahaanDataToPerusahaan(perusahaanData);
-	}
-
-	@Override
-	public List<Perusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PerusahaanData.findAll", PerusahaanData.class)
+	public List<RegisterPerusahaan> getAllByPage(Integer page, Integer pageSize) {
+		return entityManager.createNamedQuery("RegisterPerusahaanData.findAll", RegisterPerusahaanData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Perusahaan> getByNama(String nama) {
+	public List<RegisterPerusahaan> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PerusahaanData.findByQueryNama", PerusahaanData.class)
+		return entityManager.createNamedQuery("RegisterPerusahaanData.findByQueryNama", RegisterPerusahaanData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<RegisterPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PerusahaanData.findByQueryNama", PerusahaanData.class)
+		return entityManager.createNamedQuery("RegisterPerusahaanData.findByQueryNama", RegisterPerusahaanData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t))
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Boolean cekById(String id) {
-		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
+		RegisterPerusahaanData perusahaanData = entityManager.find(RegisterPerusahaanData.class, id);
 		if(perusahaanData == null) {
 			return false;
 		}
@@ -156,8 +136,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	}
 	
 	@Override
-	public Perusahaan getByNpwp(String npwp) {
-		return convertPerusahaanDataToPerusahaan(entityManager.find(PerusahaanData.class, npwp));
+	public RegisterPerusahaan getByNpwp(String npwp) {
+		return convertRegisterPerusahaanDataToRegisterPerusahaan(entityManager.find(RegisterPerusahaanData.class, npwp));
 	}
 	
 	private Set<RegisterKbliData> convertJsonArrayKbliToDaftarRegisterKbliData(JsonArray daftarKbli) {
@@ -176,52 +156,54 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		return daftarKbliData;
 	}
 	
-	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan t, Person s) {	
+	private RegisterPerusahaanData convertRegisterPerusahaanToRegisterPerusahaanData(RegisterPerusahaan t) {	
 		
-		PerusahaanData perusahaanData = new PerusahaanData();	
-		perusahaanData.setId(t.getId());
-		perusahaanData.setNama(t.getNama());
+		RegisterPerusahaanData RegisterPerusahaanData = new RegisterPerusahaanData();	
+		
+		Perusahaan perusahaan = t.getPerusahaan();
+		RegisterPerusahaanData.setId(perusahaan.getId());
+		RegisterPerusahaanData.setNama(perusahaan.getNama());
 				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
-		alamatPerusahaanData.setKeterangan(t.getAlamat().getKeterangan());
+		alamatPerusahaanData.setKeterangan(perusahaan.getAlamat().getKeterangan());
 		DesaData desaData = new DesaData();
-		desaData.setId(t.getAlamat().getDesa().getId());
+		desaData.setId(perusahaan.getAlamat().getDesa().getId());
 		alamatPerusahaanData.setDesaData(desaData);
 		KecamatanData kecamatanData = new KecamatanData();
-		kecamatanData.setId(t.getAlamat().getKecamatan().getId());
+		kecamatanData.setId(perusahaan.getAlamat().getKecamatan().getId());
 		alamatPerusahaanData.setKecamatanData(kecamatanData);
 		KabupatenData kabupatenData = new KabupatenData();
-		kabupatenData.setId(t.getAlamat().getKabupaten().getId());
+		kabupatenData.setId(perusahaan.getAlamat().getKabupaten().getId());
 		alamatPerusahaanData.setKabupatenData(kabupatenData);
 		PropinsiData propinsiData = new PropinsiData();
-		propinsiData.setId(t.getAlamat().getPropinsi().getId());
+		propinsiData.setId(perusahaan.getAlamat().getPropinsi().getId());
 		alamatPerusahaanData.setPropinsiData(propinsiData);
-		perusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
+		RegisterPerusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
 		
 		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
-		modelPerizinanData.setId(t.getModelPerizinan().getId());
-		perusahaanData.setModelPerizinanData(modelPerizinanData);
+		modelPerizinanData.setId(perusahaan.getModelPerizinan().getId());
+		RegisterPerusahaanData.setModelPerizinanData(modelPerizinanData);
 		
 		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
-		skalaUsahaData.setId(t.getSkalaUsaha().getId());
-		perusahaanData.setSkalaUsahaData(skalaUsahaData);
+		skalaUsahaData.setId(perusahaan.getSkalaUsaha().getId());
+		RegisterPerusahaanData.setSkalaUsahaData(skalaUsahaData);
 			
-		PelakuUsaha pelakuUsaha = t.getPelakuUsaha();
+		PelakuUsaha pelakuUsaha = perusahaan.getPelakuUsaha();
 		KategoriPelakuUsaha kategoriPelakuUsaha = pelakuUsaha.getKategoriPelakuUsaha();
 		PelakuUsahaData pelakuUsahaData = new PelakuUsahaData();
 		pelakuUsahaData.setId(pelakuUsaha.getId());
 		KategoriPelakuUsahaData kategoriPelakuUsahaData = new KategoriPelakuUsahaData();
 		kategoriPelakuUsahaData.setId(kategoriPelakuUsaha.getId());
 		pelakuUsahaData.setKategoriPelakuUsahaData(kategoriPelakuUsahaData);
-		perusahaanData.setPelakuUsahaData(pelakuUsahaData);
+		RegisterPerusahaanData.setPelakuUsahaData(pelakuUsahaData);
 		
 		KontakPerusahaanData kontakPerusahaanData = new KontakPerusahaanData();
-		kontakPerusahaanData.setEmail(t.getKontak().getEmail());
-		kontakPerusahaanData.setFax(t.getKontak().getFax());
-		kontakPerusahaanData.setTelepone(t.getKontak().getTelepone());	
-		perusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
+		kontakPerusahaanData.setEmail(perusahaan.getKontak().getEmail());
+		kontakPerusahaanData.setFax(perusahaan.getKontak().getFax());
+		kontakPerusahaanData.setTelepone(perusahaan.getKontak().getTelepone());	
+		RegisterPerusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
 		
-		List<RegisterDokumen> daftarRegisterDokumen = t.getDaftarRegisterDokumen();
+		List<RegisterDokumen> daftarRegisterDokumen = perusahaan.getDaftarRegisterDokumen();
 		List<RegisterDokumenData> daftarRegisterDokumenData = new ArrayList<RegisterDokumenData>();
 		
 		
@@ -257,16 +239,16 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 			}
 		}
 		
-		perusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
-		perusahaanData.setStatusVerifikasi(t.isStatusVerifikasi());
-		PersonData personData = new PersonData();
-		personData.setId(s.getNik());
-		perusahaanData.setKreator(personData);
+		RegisterPerusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
+		RegisterPerusahaanData.setStatusVerifikasi(perusahaan.isStatusVerifikasi());
+		PersonData kreator = new PersonData();
+		kreator.setId(t.getKreator().getNik());
+		RegisterPerusahaanData.setKreator(kreator);
 		
-		return perusahaanData;
+		return RegisterPerusahaanData;
 	}
 	
-	private Perusahaan convertPerusahaanDataToPerusahaan(PerusahaanData d) {
+	private RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {
 		
 		ModelPerizinan modelPerizinan = new ModelPerizinan(
 				d.getModelPerizinanData().getId(), d.getModelPerizinanData().getNama(), 
@@ -350,20 +332,26 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 			}
 		}
 		
-		return new Perusahaan( 
-				d.getId(), d.getNama(), modelPerizinan, skalaUsaha, pelakuUsaha, 
-				alamatPerusahaan, kontakPerusahaan, daftarRegisterDokumen, d.isStatusVerifikasi()
+		return new RegisterPerusahaan(
+				d.getTanggalRegistrasi(), 
+				new Person(d.getKreator().getId(), d.getKreator().getNama(), null, null, null, null), 
+				new Person(d.getVerifikator().getId(), d.getVerifikator().getNama(), null, null, null, null), 
+				new Perusahaan( 
+						d.getId(), d.getNama(), modelPerizinan, skalaUsaha, pelakuUsaha, 
+						alamatPerusahaan, kontakPerusahaan, daftarRegisterDokumen, d.isStatusVerifikasi()
+						)
 				);
 	}
 	
 	@Override
-	public List<Perusahaan> getByIdPerson(String personId) {
+	public List<RegisterPerusahaan> getByIdPerson(String personId) {
 		return entityManager.createNamedQuery("PersonPerusahaanData.findByPemilik", PersonPerusahaanData.class)
 				.setParameter("personId", personId)
 				.getResultList()
 				.stream()
-				.map(t -> convertPerusahaanDataToPerusahaan(t.getPerusahaan()))
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))
 				.collect(Collectors.toList());
 	}
-	
+
+		
 }

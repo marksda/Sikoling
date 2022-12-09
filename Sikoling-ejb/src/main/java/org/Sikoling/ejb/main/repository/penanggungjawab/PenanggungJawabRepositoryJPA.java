@@ -17,7 +17,7 @@ import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
+import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.EntityManager;
 
@@ -96,7 +96,7 @@ public class PenanggungJawabRepositoryJPA implements IPenanggungJawabRepository 
 		personData.setId(t.getPerson().getNik());
 		penanggungJawabData.setPerson(personData);
 		
-		PerusahaanData pemrakarsaData = new PerusahaanData();
+		RegisterPerusahaanData pemrakarsaData = new RegisterPerusahaanData();
 		pemrakarsaData.setId(idPemrakarsa);
 		penanggungJawabData.setPemrakarsa(pemrakarsaData);
 		

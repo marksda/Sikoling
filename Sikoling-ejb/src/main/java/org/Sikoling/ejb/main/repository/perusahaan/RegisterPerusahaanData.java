@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -15,10 +16,10 @@ import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 @Entity
 @Table(name="master.tbl_perusahaan")
 @NamedQueries({
-	@NamedQuery(name="PerusahaanData.findAll", query="SELECT p FROM PerusahaanData p"),
-	@NamedQuery(name="PerusahaanData.findByQueryNama", query="SELECT p FROM PerusahaanData p WHERE p.nama LIKE :nama")
+	@NamedQuery(name="RegisterPerusahaanData.findAll", query="SELECT p FROM RegisterPerusahaanData p"),
+	@NamedQuery(name="RegisterPerusahaanData.findByQueryNama", query="SELECT p FROM RegisterPerusahaanData p WHERE p.nama LIKE :nama")
 })
-public class PerusahaanData implements Serializable {
+public class RegisterPerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
 
 	@Id
@@ -50,7 +51,33 @@ public class PerusahaanData implements Serializable {
 	@JoinColumn(name="kreator", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private PersonData kreator;
-		
+	
+	@JoinColumn(name="verifikator", referencedColumnName = "id", insertable = true, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private PersonData verifikator;
+	
+	@Column(name="tanggal_registrasi")
+	private LocalDate tanggalRegistrasi;	
+	
+	public RegisterPerusahaanData() {
+	}
+	
+	public PersonData getVerifikator() {
+		return verifikator;
+	}
+
+	public void setVerifikator(PersonData verifikator) {
+		this.verifikator = verifikator;
+	}
+
+	public LocalDate getTanggalRegistrasi() {
+		return tanggalRegistrasi;
+	}
+	
+	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
+		this.tanggalRegistrasi = tanggalRegistrasi;
+	}
+
 	public PersonData getKreator() {
 		return kreator;
 	}
@@ -72,10 +99,7 @@ public class PerusahaanData implements Serializable {
 	
 	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
 	private List<PersonPerusahaanData> daftarPersonPerusahaanData;
-		
-	public PerusahaanData() {
-	}
-
+	
 	public String getId() {
 		return id;
 	}

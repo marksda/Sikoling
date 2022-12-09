@@ -16,7 +16,7 @@ import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
-import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
@@ -71,8 +71,8 @@ import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabServ
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
-import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
-import org.Sikoling.ejb.abstraction.service.perusahaan.PerusahaanService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.RegisterPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
 import org.Sikoling.ejb.abstraction.service.produk.ProdukService;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -147,8 +147,8 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IPerusahaanService getPerusahaanService(@Infrastructure IPerusahaanRepository perusahaanRepository) {
-		return new PerusahaanService(perusahaanRepository);		
+	public IRegisterPerusahaanService getPerusahaanService(@Infrastructure IRegisterPerusahaanRepository registerPerusahaanRepository) {
+		return new RegisterPerusahaanService(registerPerusahaanRepository);		
 	}
 	
 	@Produces

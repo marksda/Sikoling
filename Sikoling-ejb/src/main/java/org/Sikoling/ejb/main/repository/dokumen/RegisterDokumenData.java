@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
+import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +35,7 @@ public class RegisterDokumenData implements Serializable {
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private PerusahaanData perusahaanData;
+	private RegisterPerusahaanData perusahaanData;
 	
 	@Id
 	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = false)
@@ -58,11 +58,11 @@ public class RegisterDokumenData implements Serializable {
 	public RegisterDokumenData() {
 	}
 
-	public PerusahaanData getPerusahaanData() {
+	public RegisterPerusahaanData getPerusahaanData() {
 		return perusahaanData;
 	}
 
-	public void setPerusahaanData(PerusahaanData perusahaanData) {
+	public void setPerusahaanData(RegisterPerusahaanData perusahaanData) {
 		this.perusahaanData = perusahaanData;
 	}
 

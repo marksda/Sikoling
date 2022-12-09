@@ -6,7 +6,6 @@ import java.util.Objects;
 public class Authority implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
-	private final String id;
 	private final Person person;
 	private final String idLama;
 	private final HakAkses hakAkses;
@@ -15,9 +14,8 @@ public class Authority implements Serializable {
 	private final String userName;
 	
 	public Authority(
-			String id, Person person, String idLama, HakAkses hakAkses, 
+			Person person, String idLama, HakAkses hakAkses, 
 			boolean statusInternal, boolean isVerified,	String userName) {
-		this.id = id;
 		this.person = person;
 		this.idLama = idLama;
 		this.hakAkses = hakAkses;
@@ -28,10 +26,6 @@ public class Authority implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public Person getPerson() {

@@ -9,7 +9,6 @@ import org.Sikoling.main.restful.person.PersonDTO;
 public class AuthorityDTO implements Serializable {
 
 	private static final long serialVersionUID = 6026401650478903435L;
-	private String id;
 	private PersonDTO person;
 	private String idLama;
 	private HakAksesDTO hakAkses;
@@ -21,21 +20,12 @@ public class AuthorityDTO implements Serializable {
 	}
 	
 	public AuthorityDTO(Authority t) {
-		this.id = t.getId();
 		this.person = new PersonDTO(t.getPerson());
 		this.idLama = t.getIdLama();
 		this.hakAkses = new HakAksesDTO(t.getHakAkses());
 		this.statusInternal = t.isStatusInternal();
 		this.isVerified = t.isVerified();
 		this.userName = t.getUserName();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public PersonDTO getPerson() {
@@ -93,7 +83,7 @@ public class AuthorityDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 37;
-		hash = 121 * hash + Objects.hashCode(this.id);
+		hash = 121 * hash + Objects.hashCode(userName);
 		return hash;
 	}
 
@@ -113,7 +103,7 @@ public class AuthorityDTO implements Serializable {
         
         final AuthorityDTO other = (AuthorityDTO) obj;
         
-        if (!this.id.equals(other.getId())) {
+        if (!this.userName.equals(other.getUserName())) {
             return false;
         }
         
@@ -123,18 +113,15 @@ public class AuthorityDTO implements Serializable {
 	@Override
 	public String toString() {
 		return "AuthorityDTO {"
-				.concat("id=")
-				.concat(this.id)
-				.concat(", person=")
-				.concat(this.person.getNama())
-				.concat(", userName=")
-				.concat(this.userName)
+				.concat("userName=")
+				.concat(userName)
+				.concat(", nama asli=")
+				.concat(person.getNama())
 				.concat("}");
 	}
 	
 	public Authority toAuthority() {
 		return new Authority(
-				id, 
 				person.toPerson(), 
 				idLama, 
 				hakAkses.toHakAkses(), 

@@ -21,7 +21,7 @@ import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanRepositoryJ
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
-import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanRepositoryJPA;
+import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
@@ -113,8 +113,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public PerusahaanRepositoryJPA getPerusahaanRepositoryJPA(EntityManager entityManager) {
-		return new PerusahaanRepositoryJPA(entityManager);
+	public RegisterPerusahaanRepositoryJPA getRegisterPerusahaanRepositoryJPA(EntityManager entityManager) {
+		return new RegisterPerusahaanRepositoryJPA(entityManager);
 	}
 	
 	@Produces

@@ -3,24 +3,24 @@ package org.Sikoling.ejb.abstraction.service.perusahaan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Perusahaan;
-import org.Sikoling.ejb.abstraction.repository.IPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
+import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 
-public class PerusahaanService implements IPerusahaanService {
+public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	
-	private final IPerusahaanRepository perusahaanRepository;
+	private final IRegisterPerusahaanRepository perusahaanRepository;
 
-	public PerusahaanService(IPerusahaanRepository pemrakarsaRepository) {
+	public RegisterPerusahaanService(IRegisterPerusahaanRepository pemrakarsaRepository) {
 		this.perusahaanRepository = pemrakarsaRepository;
 	}
 
 	@Override
-	public Perusahaan save(Perusahaan t) {
+	public RegisterPerusahaan save(RegisterPerusahaan t) {
 		return perusahaanRepository.save(t);
 	}
 
 	@Override
-	public Perusahaan update(Perusahaan t) {
+	public RegisterPerusahaan update(RegisterPerusahaan t) {
 		return perusahaanRepository.update(t);
 	}
 
@@ -30,22 +30,22 @@ public class PerusahaanService implements IPerusahaanService {
 	}
 
 	@Override
-	public List<Perusahaan> getAll() {
+	public List<RegisterPerusahaan> getAll() {
 		return perusahaanRepository.getAll();
 	}
 
 	@Override
-	public List<Perusahaan> getAllByPage(Integer page, Integer pageSize) {
+	public List<RegisterPerusahaan> getAllByPage(Integer page, Integer pageSize) {
 		return perusahaanRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<Perusahaan> getByNama(String nama) {
+	public List<RegisterPerusahaan> getByNama(String nama) {
 		return perusahaanRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Perusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<RegisterPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return perusahaanRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
@@ -55,18 +55,12 @@ public class PerusahaanService implements IPerusahaanService {
 	}
 	
 	@Override
-	public Perusahaan getByNpwp(String npwp) {
+	public RegisterPerusahaan getByNpwp(String npwp) {
 		return perusahaanRepository.getByNpwp(npwp);
 	}
-
-	@Override
-	public Perusahaan updateById(String id, Perusahaan perusahaan) {
-		return perusahaanRepository.updateById(id, perusahaan);
-	}
-
 	
 	@Override
-	public List<Perusahaan> getByIdPerson(String personId) {
+	public List<RegisterPerusahaan> getByIdPerson(String personId) {
 		return perusahaanRepository.getByIdPerson(personId);
 	}
 
