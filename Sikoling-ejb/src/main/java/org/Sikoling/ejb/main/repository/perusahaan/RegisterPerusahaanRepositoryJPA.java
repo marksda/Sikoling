@@ -352,6 +352,5 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))
 				.collect(Collectors.toList());
 	}
-
 		
 }
