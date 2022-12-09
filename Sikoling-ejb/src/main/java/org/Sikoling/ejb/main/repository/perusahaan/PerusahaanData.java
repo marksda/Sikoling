@@ -48,6 +48,9 @@ public class PerusahaanData implements Serializable {
 		
 	@OneToMany(mappedBy="perusahaanData")
 	private List<RegisterDokumenData> daftarRegisterDokumenData;
+	
+	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
+	private List<PersonPerusahaanData> daftarPersonPerusahaanData;
 		
 	public PerusahaanData() {
 	}

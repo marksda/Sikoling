@@ -77,8 +77,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	@Override
 	public DeleteResponse delete(String id) {
 		PerusahaanData perusahaanData = entityManager.find(PerusahaanData.class, id);
-		entityManager.remove(perusahaanData);	
-		
+		entityManager.remove(perusahaanData);			
 		return new DeleteResponse(true, id);
 	}
 	

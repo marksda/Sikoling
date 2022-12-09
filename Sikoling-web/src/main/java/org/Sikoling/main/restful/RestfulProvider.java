@@ -2,6 +2,7 @@ package org.Sikoling.main.restful;
 
 import java.util.Properties;
 
+import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
@@ -49,6 +50,8 @@ import org.Sikoling.ejb.abstraction.service.dokumen.RegisterKbliService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
+import org.Sikoling.ejb.abstraction.service.authority.AuthorityService;
+import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.BidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.IBidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
@@ -212,6 +215,12 @@ public class RestfulProvider {
 	public IRegisterDokumenService getRegisterDokumenService(
 			@Infrastructure IRegisterDokumenRepository registerDokumenRepository) {
 		return new RegisterDokumenService(registerDokumenRepository);
+	}
+	
+	@Produces
+	public IAuthorityService getAuthorityService(
+			@Infrastructure IAuthorityRepository authorityRepository) {
+		return new AuthorityService(authorityRepository);
 	}
 	
 	@Produces

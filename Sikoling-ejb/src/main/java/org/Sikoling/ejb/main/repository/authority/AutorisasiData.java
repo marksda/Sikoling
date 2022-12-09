@@ -7,7 +7,6 @@ import org.Sikoling.ejb.main.repository.person.PersonData;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -20,14 +19,15 @@ import jakarta.persistence.Table;
 @Table(name="master.tbl_autorisasi")
 @NamedQueries({
 	@NamedQuery(name="AutorisasiData.findAll", query="SELECT u FROM AutorisasiData u"),
-	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.userName = :userName")
+	@NamedQuery(name="AutorisasiData.findByNama", query="SELECT u FROM AutorisasiData u WHERE u.personData.nama like :nama"),
+	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.userName = :userName")	
 })
 public class AutorisasiData implements Serializable {
 
 	private static final long serialVersionUID = 2467589981792742907L;
 	
 	@Id
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
     @JoinColumn(name = "person", referencedColumnName = "id")
 	private PersonData personData;
 	

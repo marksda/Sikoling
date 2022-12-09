@@ -11,7 +11,6 @@ public class PerusahaanService implements IPerusahaanService {
 	private final IPerusahaanRepository perusahaanRepository;
 
 	public PerusahaanService(IPerusahaanRepository pemrakarsaRepository) {
-		super();
 		this.perusahaanRepository = pemrakarsaRepository;
 	}
 

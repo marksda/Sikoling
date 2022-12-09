@@ -5,7 +5,6 @@ import java.io.Serializable;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -27,7 +26,7 @@ public class PersonPerusahaanData implements Serializable {
 	
 	@Id
 	@JoinColumn(name = "person", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private PersonData person;
 	
 	@Id

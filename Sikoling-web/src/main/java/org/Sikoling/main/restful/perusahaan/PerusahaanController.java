@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
+import org.Sikoling.main.restful.person.PersonDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -35,10 +38,14 @@ public class PerusahaanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) {
 //		Principal principal = securityContext.getUserPrincipal();
 //		String userName = principal.getName();
+		PersonDTO creator = new PersonDTO();
+		creator.setNik(securityContext.getUserPrincipal().getName());
 		
+//		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan(), creator.toPerson()));
 		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan()));
 	}
 	

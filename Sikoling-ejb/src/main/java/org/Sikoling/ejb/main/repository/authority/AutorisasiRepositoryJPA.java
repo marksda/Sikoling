@@ -1,10 +1,12 @@
 package org.Sikoling.ejb.main.repository.authority;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Autorisasi;
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
@@ -13,7 +15,7 @@ import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
-import org.Sikoling.ejb.abstraction.repository.IAutorisasiRepository;
+import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
@@ -24,7 +26,7 @@ import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 
 import jakarta.persistence.EntityManager;
 
-public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
+public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	
 	private final EntityManager entityManager;
 
@@ -55,7 +57,14 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 		autorisasiData = entityManager.merge(autorisasiData);
 		return convertAutorisasiDataToAutorisasi(autorisasiData);
 	}
-
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, id);
+		entityManager.remove(autorisasiData);
+		return new DeleteResponse(true, id);
+	}
+	
 	@Override
 	public List<Autorisasi> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
@@ -70,8 +79,8 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 	@Override
 	public List<Autorisasi> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
-				.setParameter("userName", nama)
+		return entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
+				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
 				.map(d -> convertAutorisasiDataToAutorisasi(d))
@@ -81,7 +90,7 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 	@Override
 	public List<Autorisasi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
+		return entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -91,6 +100,16 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public Autorisasi getByUserName(String userName) {
+		AutorisasiData data = Optional.ofNullable(
+				entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
+				.setParameter("userName", userName).getSingleResult()
+				)
+				.orElse(null);
+		return data != null ? convertAutorisasiDataToAutorisasi(data):null;				
+	}
+	
 	private AutorisasiData convertAutorisasiToAutorisasiData(Autorisasi t) {
 		AutorisasiData autorisasiData = new AutorisasiData();
 		
@@ -151,6 +170,7 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 		
 		return autorisasiData;
 	}
+	
 	private Autorisasi convertAutorisasiDataToAutorisasi(AutorisasiData d) {
 //		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, autorisasiData.getId());
 		
@@ -186,4 +206,6 @@ public class AutorisasiRepositoryJPA implements IAutorisasiRepository {
 				person.getNik(), person, d.getIdLama(), hakAkses, 
 				d.getStatusInternal(), d.getIsVerified(), d.getUserName());
 	}
+
+	
 }
