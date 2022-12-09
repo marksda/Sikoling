@@ -67,8 +67,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	}
 
 	@Override
-	public Perusahaan save(Perusahaan t) {
-		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t);
+	public Perusahaan save(Perusahaan t, Person s) {
+		PerusahaanData perusahaanData = convertPerusahaanToPerusahaanData(t, s);		
 		entityManager.persist(perusahaanData);
 		entityManager.flush();		
 		return convertPerusahaanDataToPerusahaan(perusahaanData);
@@ -82,8 +82,8 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 	}
 	
 	@Override
-	public Perusahaan update(Perusahaan t) {
-		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t);
+	public Perusahaan update(Perusahaan t, Person s) {
+		PerusahaanData pemrakarsaData = convertPerusahaanToPerusahaanData(t, s);
 		pemrakarsaData = entityManager.merge(pemrakarsaData);
 		return convertPerusahaanDataToPerusahaan(pemrakarsaData);
 	}
@@ -176,7 +176,7 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		return daftarKbliData;
 	}
 	
-	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan t) {	
+	private PerusahaanData convertPerusahaanToPerusahaanData(Perusahaan t, Person s) {	
 		
 		PerusahaanData perusahaanData = new PerusahaanData();	
 		perusahaanData.setId(t.getId());
@@ -259,6 +259,9 @@ public class PerusahaanRepositoryJPA implements IPerusahaanRepository {
 		
 		perusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
 		perusahaanData.setStatusVerifikasi(t.isStatusVerifikasi());
+		PersonData personData = new PersonData();
+		personData.setId(s.getNik());
+		perusahaanData.setKreator(personData);
 		
 		return perusahaanData;
 	}

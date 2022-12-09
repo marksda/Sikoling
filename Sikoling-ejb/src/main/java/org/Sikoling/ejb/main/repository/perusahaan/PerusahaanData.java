@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
@@ -45,7 +46,27 @@ public class PerusahaanData implements Serializable {
 	
 	@Embedded
 	private KontakPerusahaanData kontakPerusahaanData;
+	
+	@JoinColumn(name="kreator", referencedColumnName = "id", insertable = true, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private PersonData kreator;
 		
+	public PersonData getKreator() {
+		return kreator;
+	}
+
+	public void setKreator(PersonData kreator) {
+		this.kreator = kreator;
+	}
+
+	public List<PersonPerusahaanData> getDaftarPersonPerusahaanData() {
+		return daftarPersonPerusahaanData;
+	}
+
+	public void setDaftarPersonPerusahaanData(List<PersonPerusahaanData> daftarPersonPerusahaanData) {
+		this.daftarPersonPerusahaanData = daftarPersonPerusahaanData;
+	}
+
 	@OneToMany(mappedBy="perusahaanData")
 	private List<RegisterDokumenData> daftarRegisterDokumenData;
 	

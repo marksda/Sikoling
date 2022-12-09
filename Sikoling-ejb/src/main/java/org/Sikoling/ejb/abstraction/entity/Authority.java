@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Autorisasi implements Serializable {
+public class Authority implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
 	private final String id;
@@ -14,7 +14,7 @@ public class Autorisasi implements Serializable {
 	private final boolean isVerified;
 	private final String userName;
 	
-	public Autorisasi(
+	public Authority(
 			String id, Person person, String idLama, HakAkses hakAkses, 
 			boolean statusInternal, boolean isVerified,	String userName) {
 		this.id = id;
@@ -78,7 +78,7 @@ public class Autorisasi implements Serializable {
             return false;
         }
         
-        final Autorisasi other = (Autorisasi) obj;
+        final Authority other = (Authority) obj;
         
         if (!this.person.getNik().equals(other.person.getNik())) {
             return false;

@@ -64,12 +64,13 @@ public class HakAkses implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "ItemTransaksiDokumen {"
+		return "HakAkses {"
 				.concat("id=")
 				.concat(this.id)
-				.concat(", ")
-				.concat("nama=")
+				.concat(", nama=")
 				.concat(this.nama)
+				.concat(", keterangan=")
+				.concat(this.keterangan)
 				.concat("}");
 	}	
 

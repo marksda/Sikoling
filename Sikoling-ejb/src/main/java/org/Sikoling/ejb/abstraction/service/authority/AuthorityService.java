@@ -2,7 +2,7 @@ package org.Sikoling.ejb.abstraction.service.authority;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.Autorisasi;
+import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 
@@ -15,12 +15,12 @@ public class AuthorityService implements IAuthorityService {
 	}
 
 	@Override
-	public Autorisasi save(Autorisasi t) {
+	public Authority save(Authority t) {
 		return authorityRepository.save(t);
 	}
 
 	@Override
-	public Autorisasi update(Autorisasi t) {
+	public Authority update(Authority t) {
 		return authorityRepository.update(t);
 	}
 
@@ -28,25 +28,31 @@ public class AuthorityService implements IAuthorityService {
 	public DeleteResponse delete(String id) {
 		return authorityRepository.delete(id);
 	}
+	
+	@Override
+	public List<Authority> getAll() {
+		return authorityRepository.getAll();
+	}
 
 	@Override
-	public List<Autorisasi> getAllByPage(Integer page, Integer pageSize) {
+	public List<Authority> getAllByPage(Integer page, Integer pageSize) {
 		return authorityRepository.getAllByPage(page, pageSize);
 	}
 
 	@Override
-	public List<Autorisasi> getByNama(String nama) {
+	public List<Authority> getByNama(String nama) {
 		return authorityRepository.getByNama(nama);
 	}
 
 	@Override
-	public List<Autorisasi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Authority> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		return authorityRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
 	@Override
-	public Autorisasi getByUserName(String userName) {
+	public Authority getByUserName(String userName) {
 		return authorityRepository.getByUserName(userName);
 	}
 
+	
 }

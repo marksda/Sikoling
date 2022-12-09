@@ -3,7 +3,9 @@ package org.Sikoling.main.restful.perusahaan;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IPerusahaanService;
+import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.person.PersonDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
@@ -34,18 +36,20 @@ public class PerusahaanController {
 	@Inject
 	private IPerusahaanService perusahaanService;
 	
+	@Inject
+	private IAuthorityService authorityService;
+	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) {
-//		Principal principal = securityContext.getUserPrincipal();
-//		String userName = principal.getName();
-		PersonDTO creator = new PersonDTO();
-		creator.setNik(securityContext.getUserPrincipal().getName());
 		
-//		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan(), creator.toPerson()));
+		AuthorityDTO authorityDTO = new AuthorityDTO(
+				authorityService.getByUserName(securityContext.getUserPrincipal().getName()));
+		
+//		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan(), authorityDTO.getPerson().toPerson()));
 		return new PerusahaanDTO(perusahaanService.save(d.toPerusahaan()));
 	}
 	

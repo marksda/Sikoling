@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
-import org.Sikoling.ejb.abstraction.entity.Autorisasi;
+import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
@@ -35,7 +35,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public List<Autorisasi> getAll() {
+	public List<Authority> getAll() {
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
 				.getResultList()
 				.stream()
@@ -44,7 +44,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public Autorisasi save(Autorisasi t) {
+	public Authority save(Authority t) {
 		AutorisasiData autorisasiData = convertAutorisasiToAutorisasiData(t);
 		entityManager.persist(autorisasiData);
 		entityManager.flush();
@@ -52,7 +52,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public Autorisasi update(Autorisasi t) {
+	public Authority update(Authority t) {
 		AutorisasiData autorisasiData = convertAutorisasiToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
 		return convertAutorisasiDataToAutorisasi(autorisasiData);
@@ -66,7 +66,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 	
 	@Override
-	public List<Autorisasi> getAllByPage(Integer page, Integer pageSize) {
+	public List<Authority> getAllByPage(Integer page, Integer pageSize) {
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
@@ -77,7 +77,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public List<Autorisasi> getByNama(String nama) {
+	public List<Authority> getByNama(String nama) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
 				.setParameter("nama", nama)
@@ -88,7 +88,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public List<Autorisasi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
+	public List<Authority> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
 		return entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
 				.setParameter("nama", nama)
@@ -101,7 +101,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public Autorisasi getByUserName(String userName) {
+	public Authority getByUserName(String userName) {
 		AutorisasiData data = Optional.ofNullable(
 				entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
 				.setParameter("userName", userName).getSingleResult()
@@ -110,7 +110,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		return data != null ? convertAutorisasiDataToAutorisasi(data):null;				
 	}
 	
-	private AutorisasiData convertAutorisasiToAutorisasiData(Autorisasi t) {
+	private AutorisasiData convertAutorisasiToAutorisasiData(Authority t) {
 		AutorisasiData autorisasiData = new AutorisasiData();
 		
 		PersonData personData = new PersonData();
@@ -171,7 +171,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		return autorisasiData;
 	}
 	
-	private Autorisasi convertAutorisasiDataToAutorisasi(AutorisasiData d) {
+	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
 //		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, autorisasiData.getId());
 		
 		Person person = new Person(
@@ -202,7 +202,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				d.getHakAkses().getNama(), 
 				d.getHakAkses().getKeterangan());
 		
-		return new Autorisasi(
+		return new Authority(
 				person.getNik(), person, d.getIdLama(), hakAkses, 
 				d.getStatusInternal(), d.getIsVerified(), d.getUserName());
 	}

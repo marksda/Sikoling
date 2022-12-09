@@ -1,8 +1,10 @@
 package org.Sikoling.ejb.main.repository.person;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import jakarta.persistence.*;
 
@@ -34,6 +36,9 @@ public class PersonData implements Serializable {
 
 	@Embedded
 	private KontakPersonData kontak;
+	
+	@OneToMany(mappedBy = "kreator", fetch = FetchType.LAZY)
+	private List<PerusahaanData> daftarPerusahaan;
 	
 	@OneToOne(mappedBy = "personData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private AutorisasiData autorisasiData;
