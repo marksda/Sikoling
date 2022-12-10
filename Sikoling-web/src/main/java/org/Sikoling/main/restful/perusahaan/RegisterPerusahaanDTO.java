@@ -2,8 +2,6 @@ package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
-
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.main.restful.person.PersonDTO;
 

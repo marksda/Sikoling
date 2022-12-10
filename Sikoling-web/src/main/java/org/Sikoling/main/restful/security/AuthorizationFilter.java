@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 
 import jakarta.ejb.LocalBean;
@@ -37,6 +39,9 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 	
 	@Inject
 	private ITokenValidationService tokenValidationService;		
+	
+	@Inject
+	private IAuthorityService authorityService;
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -106,8 +111,12 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     }
     
     private void checkPermissions(List<Role> allowedRoles, Map<String, Object> claims) throws Exception {
-    	String hakAkses = claims.get("email").toString();
+    	Authority authority = authorityService.getByUserName(claims.get("email").toString());		
     	boolean grandPermission = false;
+    	String hakAkses = "ADMIN";
+    	if(authority.getHakAkses().getId().equals("09")) {
+    		hakAkses = "PEMRAKARSA";
+    	}
     	
     	Iterator<Role> iterator = allowedRoles.iterator();    	
     	while(iterator.hasNext()) {    		

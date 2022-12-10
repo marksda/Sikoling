@@ -103,7 +103,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	@Override
 	public Authority getByUserName(String userName) {
 		AutorisasiData data = Optional.ofNullable(
-				entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
+				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
 				.setParameter("userName", userName).getSingleResult()
 				)
 				.orElse(null);
