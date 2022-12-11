@@ -49,8 +49,7 @@ public class PerusahaanController {
 		Authority authority = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		RegisterPerusahaanDTO registerPerusahaanDTO = new RegisterPerusahaanDTO();
 		registerPerusahaanDTO.setTanggalRegistrasi(LocalDate.now());
-		PersonDTO kreator = new PersonDTO();
-		kreator.setNik(authority.getPerson().getNik());
+		PersonDTO kreator = new PersonDTO(authority.getPerson());
 		registerPerusahaanDTO.setKreator(kreator);
 		registerPerusahaanDTO.setPerusahaan(d);
 		
@@ -146,14 +145,27 @@ public class PerusahaanController {
 				.collect(Collectors.toList());
 	}
 	
-	@Path("person/{personId}")
+	@Path("kreator/{idKreator}")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByIdPerson(@PathParam("personId") String personId) {
-		return registerPerusahaanService.getByIdPerson(personId)
+	public List<RegisterPerusahaanDTO> getByIdPerson(@PathParam("idKreator") String idKreator) {
+		return registerPerusahaanService.getByIdKreator(idKreator)
+				.stream()
+				.map(t -> new RegisterPerusahaanDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("kepemilikan/{idLinkKepemilikan}")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<RegisterPerusahaanDTO> getByIdLinkKepemilikan(@PathParam("idLinkKepemilikan") String idLinkKepemilikan) {
+		return registerPerusahaanService.getByIdLinkKepemilikan(idLinkKepemilikan)
 				.stream()
 				.map(t -> new RegisterPerusahaanDTO(t))
 				.collect(Collectors.toList());

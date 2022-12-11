@@ -2,6 +2,7 @@ package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.main.restful.person.PersonDTO;
 
@@ -18,9 +19,9 @@ public class RegisterPerusahaanDTO implements Serializable {
 	
 	public RegisterPerusahaanDTO(RegisterPerusahaan t) {
 		this.tanggalRegistrasi = t.getTanggalRegistrasi();
-		this.kreator = new PersonDTO(t.getKreator());
-		this.verifikator = new PersonDTO(t.getVerifikator());
-		this.perusahaan = new PerusahaanDTO(t.getPerusahaan());
+		this.kreator = t.getKreator() != null ? new PersonDTO(t.getKreator()) : null;
+		this.verifikator = t.getVerifikator() != null ? new PersonDTO(t.getVerifikator()) : null;
+		this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 	}
 
 	public LocalDate getTanggalRegistrasi() {

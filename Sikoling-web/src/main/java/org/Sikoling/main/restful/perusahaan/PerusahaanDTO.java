@@ -30,11 +30,11 @@ public class PerusahaanDTO implements Serializable {
 	public PerusahaanDTO(Perusahaan t) {
 		this.id = t.getId();
 		this.nama = t.getNama();
-		this.modelPerizinan = new ModelPerizinanDTO(t.getModelPerizinan());
-		this.skalaUsaha = new SkalaUsahaDTO(t.getSkalaUsaha());
-		this.pelakuUsaha = new PelakuUsahaDTO(t.getPelakuUsaha());
-		this.alamat = new AlamatPerusahaanDTO(t.getAlamat());
-		this.kontak = new KontakPerusahaanDTO(t.getKontak());
+		this.modelPerizinan = t.getModelPerizinan() != null ? new ModelPerizinanDTO(t.getModelPerizinan()) : null;
+		this.skalaUsaha = t.getSkalaUsaha() != null ? new SkalaUsahaDTO(t.getSkalaUsaha()) : null;
+		this.pelakuUsaha = t.getPelakuUsaha() != null ? new PelakuUsahaDTO(t.getPelakuUsaha()) : null;
+		this.alamat = t.getAlamat() != null ? new AlamatPerusahaanDTO(t.getAlamat()) : null;
+		this.kontak = t.getKontak() != null ? new KontakPerusahaanDTO(t.getKontak()) : null;
 		this.daftarRegisterDokumen = t.getDaftarRegisterDokumen()
 								.stream()
 								.map(item -> new RegisterDokumenDTO(item))

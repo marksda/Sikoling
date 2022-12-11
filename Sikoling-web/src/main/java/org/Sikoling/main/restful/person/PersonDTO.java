@@ -22,9 +22,9 @@ public class PersonDTO implements Serializable {
 	public PersonDTO(Person person) {		
 		this.nik = person.getNik();
 		this.nama = person.getNama();
-		this.jenisKelamin = new JenisKelaminDTO(person.getSex());
-		this.alamat = new AlamatPersonDTO(person.getAlamat());
-		this.kontak = new KontakPersonDTO(person.getKontak());
+		this.jenisKelamin = person.getSex() != null ? new JenisKelaminDTO(person.getSex()) : null;
+		this.alamat = person.getAlamat() != null ? new AlamatPersonDTO(person.getAlamat()) : null;
+		this.kontak = person.getKontak() != null ? new KontakPersonDTO(person.getKontak()) : null;
 		this.scanKTP = person.getScanKTP();
 	}
 	

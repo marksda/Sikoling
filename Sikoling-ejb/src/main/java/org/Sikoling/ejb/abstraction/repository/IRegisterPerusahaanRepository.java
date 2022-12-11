@@ -11,6 +11,7 @@ public interface IRegisterPerusahaanRepository extends IRepository<RegisterPerus
 	List<RegisterPerusahaan> getAllByPage(Integer page, Integer pageSize);
 	List<RegisterPerusahaan> getByNama(String nama);
 	List<RegisterPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize);
-	List<RegisterPerusahaan> getByIdPerson(String personId);
+	List<RegisterPerusahaan> getByIdKreator(String idKreator);
+	List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan);
 	RegisterPerusahaan getByNpwp(String npwp);
 }

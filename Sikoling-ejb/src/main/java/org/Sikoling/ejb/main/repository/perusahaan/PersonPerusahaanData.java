@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.Sikoling.ejb.main.repository.person.PersonData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -31,7 +32,7 @@ public class PersonPerusahaanData implements Serializable {
 	
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private RegisterPerusahaanData perusahaan;
 
 	public PersonData getPerson() {

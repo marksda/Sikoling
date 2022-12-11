@@ -243,7 +243,16 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		RegisterPerusahaanData.setStatusVerifikasi(perusahaan.isStatusVerifikasi());
 		PersonData kreator = new PersonData();
 		kreator.setId(t.getKreator().getNik());
+		kreator.setNama(t.getKreator().getNama());
 		RegisterPerusahaanData.setKreator(kreator);
+		
+		List<PersonPerusahaanData> daftarPersonPerusahaanData = new ArrayList<>();
+		PersonPerusahaanData personPerusahaanData = new PersonPerusahaanData();
+		personPerusahaanData.setPerson(kreator);
+		personPerusahaanData.setPerusahaan(RegisterPerusahaanData);
+		daftarPersonPerusahaanData.add(personPerusahaanData);
+		
+		RegisterPerusahaanData.setDaftarPersonPerusahaanData(daftarPersonPerusahaanData);
 		
 		return RegisterPerusahaanData;
 	}
@@ -332,10 +341,14 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			}
 		}
 		
+		
+		
 		return new RegisterPerusahaan(
 				d.getTanggalRegistrasi(), 
 				new Person(d.getKreator().getId(), d.getKreator().getNama(), null, null, null, null), 
-				new Person(d.getVerifikator().getId(), d.getVerifikator().getNama(), null, null, null, null), 
+				d.getVerifikator() != null ?
+						new Person(d.getVerifikator().getId(), d.getVerifikator().getNama(), null, null, null, null) : 
+						null, 
 				new Perusahaan( 
 						d.getId(), d.getNama(), modelPerizinan, skalaUsaha, pelakuUsaha, 
 						alamatPerusahaan, kontakPerusahaan, daftarRegisterDokumen, d.isStatusVerifikasi()
@@ -344,9 +357,19 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 	
 	@Override
-	public List<RegisterPerusahaan> getByIdPerson(String personId) {
+	public List<RegisterPerusahaan> getByIdKreator(String idKreator) {
+		return entityManager.createNamedQuery("RegisterPerusahaanData.findByIdKreator", PersonPerusahaanData.class)
+				.setParameter("idKreator", idKreator)
+				.getResultList()
+				.stream()
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
 		return entityManager.createNamedQuery("PersonPerusahaanData.findByPemilik", PersonPerusahaanData.class)
-				.setParameter("personId", personId)
+				.setParameter("personId", idLinkKepemilikan)
 				.getResultList()
 				.stream()
 				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))

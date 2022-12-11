@@ -17,7 +17,8 @@ import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 @Table(name="master.tbl_perusahaan")
 @NamedQueries({
 	@NamedQuery(name="RegisterPerusahaanData.findAll", query="SELECT p FROM RegisterPerusahaanData p"),
-	@NamedQuery(name="RegisterPerusahaanData.findByQueryNama", query="SELECT p FROM RegisterPerusahaanData p WHERE p.nama LIKE :nama")
+	@NamedQuery(name="RegisterPerusahaanData.findByQueryNama", query="SELECT p FROM RegisterPerusahaanData p WHERE p.nama LIKE :nama"),
+	@NamedQuery(name="RegisterPerusahaanData.findByIdKreator", query="SELECT p FROM RegisterPerusahaanData p WHERE p.kreator.id = :idKreator")
 })
 public class RegisterPerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
@@ -59,6 +60,12 @@ public class RegisterPerusahaanData implements Serializable {
 	@Column(name="tanggal_registrasi")
 	private LocalDate tanggalRegistrasi;	
 	
+	@OneToMany(mappedBy="perusahaanData")
+	private List<RegisterDokumenData> daftarRegisterDokumenData;	
+
+	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private List<PersonPerusahaanData> daftarPersonPerusahaanData;
+	
 	public RegisterPerusahaanData() {
 	}
 	
@@ -93,12 +100,6 @@ public class RegisterPerusahaanData implements Serializable {
 	public void setDaftarPersonPerusahaanData(List<PersonPerusahaanData> daftarPersonPerusahaanData) {
 		this.daftarPersonPerusahaanData = daftarPersonPerusahaanData;
 	}
-
-	@OneToMany(mappedBy="perusahaanData")
-	private List<RegisterDokumenData> daftarRegisterDokumenData;
-	
-	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
-	private List<PersonPerusahaanData> daftarPersonPerusahaanData;
 	
 	public String getId() {
 		return id;

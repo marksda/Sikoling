@@ -60,8 +60,14 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	}
 	
 	@Override
-	public List<RegisterPerusahaan> getByIdPerson(String personId) {
-		return perusahaanRepository.getByIdPerson(personId);
+	public List<RegisterPerusahaan> getByIdKreator(String idKreator) {
+		return perusahaanRepository.getByIdKreator(idKreator);
+	}
+
+	
+	@Override
+	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
+		return perusahaanRepository.getByIdLinkKepemilikan(idLinkKepemilikan);
 	}
 
 	

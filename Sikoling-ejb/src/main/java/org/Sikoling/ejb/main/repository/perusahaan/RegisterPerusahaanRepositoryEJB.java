@@ -63,11 +63,16 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 	public DeleteResponse delete(String id) {
 		return registerPerusahaanRepository.delete(id);
 	}
+	
+	@Override
+	public List<RegisterPerusahaan> getByIdKreator(String personId) {
+		return registerPerusahaanRepository.getByIdKreator(personId);
+	}
 
 	
 	@Override
-	public List<RegisterPerusahaan> getByIdPerson(String personId) {
-		return registerPerusahaanRepository.getByIdPerson(personId);
+	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
+		return registerPerusahaanRepository.getByIdLinkKepemilikan(idLinkKepemilikan);
 	}
 
 }
