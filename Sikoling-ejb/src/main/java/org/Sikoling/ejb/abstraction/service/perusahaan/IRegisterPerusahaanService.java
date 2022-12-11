@@ -7,6 +7,7 @@ import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 
 public interface IRegisterPerusahaanService {
 	DeleteResponse delete(String id);
+	DeleteResponse deleteLinkKepemilikanPerusahaan(String idPerson, String idPerusahaan);
 	RegisterPerusahaan save(RegisterPerusahaan t);
 	RegisterPerusahaan update(RegisterPerusahaan t);
 	Boolean cekById(String id);

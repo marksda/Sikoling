@@ -74,6 +74,18 @@ public class PerusahaanController {
 		return new DeleteResponseDTO(registerPerusahaanService.delete(id));
 	}
 	
+	@Path("kepemilikan")
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public DeleteResponseDTO deleteLinkKepemilikanPerusahaan(PersonPerusahaanIdDTO id) {
+		return new DeleteResponseDTO(
+				registerPerusahaanService.deleteLinkKepemilikanPerusahaan(id.getIdPerson(), id.getIdPerusahaan())
+				);
+	}
+	
 	@Path("is_eksis")
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
@@ -170,4 +182,5 @@ public class PerusahaanController {
 				.map(t -> new RegisterPerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
+	
 }

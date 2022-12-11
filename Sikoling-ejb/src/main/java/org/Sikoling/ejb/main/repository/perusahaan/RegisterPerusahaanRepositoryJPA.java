@@ -83,6 +83,17 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 	
 	@Override
+	public DeleteResponse deleteLinkKepemilikanPerusahaan(String idPerson, String idPerusahaan) {
+		PersonPerusahaanDataId id = new PersonPerusahaanDataId();
+		id.setPerson(idPerson);
+		id.setPerusahaan(idPerusahaan);
+		
+		PersonPerusahaanData personPerusahaanData = entityManager.find(PersonPerusahaanData.class, id);
+		entityManager.remove(personPerusahaanData);			
+		return new DeleteResponse(true, idPerusahaan);
+	}
+	
+	@Override
 	public RegisterPerusahaan update(RegisterPerusahaan t) {
 		RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);
 		registerPerusahaanData = entityManager.merge(registerPerusahaanData);
@@ -339,9 +350,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 					break;
 				}			
 			}
-		}
-		
-		
+		}		
 		
 		return new RegisterPerusahaan(
 				d.getTanggalRegistrasi(), 

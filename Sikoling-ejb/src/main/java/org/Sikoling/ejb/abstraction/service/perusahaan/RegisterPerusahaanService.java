@@ -63,11 +63,16 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	public List<RegisterPerusahaan> getByIdKreator(String idKreator) {
 		return perusahaanRepository.getByIdKreator(idKreator);
 	}
-
 	
 	@Override
 	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
 		return perusahaanRepository.getByIdLinkKepemilikan(idLinkKepemilikan);
+	}
+
+
+	@Override
+	public DeleteResponse deleteLinkKepemilikanPerusahaan(String idPerson, String idPerusahaan) {
+		return perusahaanRepository.deleteLinkKepemilikanPerusahaan(idPerson, idPerusahaan);
 	}
 
 	
