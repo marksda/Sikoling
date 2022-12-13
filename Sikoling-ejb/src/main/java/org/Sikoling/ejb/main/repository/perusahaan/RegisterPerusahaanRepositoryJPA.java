@@ -169,11 +169,13 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	
 	private RegisterPerusahaanData convertRegisterPerusahaanToRegisterPerusahaanData(RegisterPerusahaan t) {	
 		
-		RegisterPerusahaanData RegisterPerusahaanData = new RegisterPerusahaanData();	
+		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();	
 		
 		Perusahaan perusahaan = t.getPerusahaan();
-		RegisterPerusahaanData.setId(perusahaan.getId());
-		RegisterPerusahaanData.setNama(perusahaan.getNama());
+		registerPerusahaanData.setId(perusahaan.getId());
+		registerPerusahaanData.setNama(perusahaan.getNama());
+		registerPerusahaanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
+		
 				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
 		alamatPerusahaanData.setKeterangan(perusahaan.getAlamat().getKeterangan());
@@ -189,15 +191,15 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		PropinsiData propinsiData = new PropinsiData();
 		propinsiData.setId(perusahaan.getAlamat().getPropinsi().getId());
 		alamatPerusahaanData.setPropinsiData(propinsiData);
-		RegisterPerusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
+		registerPerusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
 		
 		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
 		modelPerizinanData.setId(perusahaan.getModelPerizinan().getId());
-		RegisterPerusahaanData.setModelPerizinanData(modelPerizinanData);
+		registerPerusahaanData.setModelPerizinanData(modelPerizinanData);
 		
 		SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
 		skalaUsahaData.setId(perusahaan.getSkalaUsaha().getId());
-		RegisterPerusahaanData.setSkalaUsahaData(skalaUsahaData);
+		registerPerusahaanData.setSkalaUsahaData(skalaUsahaData);
 			
 		PelakuUsaha pelakuUsaha = perusahaan.getPelakuUsaha();
 		KategoriPelakuUsaha kategoriPelakuUsaha = pelakuUsaha.getKategoriPelakuUsaha();
@@ -206,13 +208,13 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		KategoriPelakuUsahaData kategoriPelakuUsahaData = new KategoriPelakuUsahaData();
 		kategoriPelakuUsahaData.setId(kategoriPelakuUsaha.getId());
 		pelakuUsahaData.setKategoriPelakuUsahaData(kategoriPelakuUsahaData);
-		RegisterPerusahaanData.setPelakuUsahaData(pelakuUsahaData);
+		registerPerusahaanData.setPelakuUsahaData(pelakuUsahaData);
 		
 		KontakPerusahaanData kontakPerusahaanData = new KontakPerusahaanData();
 		kontakPerusahaanData.setEmail(perusahaan.getKontak().getEmail());
 		kontakPerusahaanData.setFax(perusahaan.getKontak().getFax());
 		kontakPerusahaanData.setTelepone(perusahaan.getKontak().getTelepone());	
-		RegisterPerusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
+		registerPerusahaanData.setKontakPerusahaanData(kontakPerusahaanData);		
 		
 		List<RegisterDokumen> daftarRegisterDokumen = perusahaan.getDaftarRegisterDokumen();
 		List<RegisterDokumenData> daftarRegisterDokumenData = new ArrayList<RegisterDokumenData>();
@@ -250,22 +252,22 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			}
 		}
 		
-		RegisterPerusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
-		RegisterPerusahaanData.setStatusVerifikasi(perusahaan.isStatusVerifikasi());
+		registerPerusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
+		registerPerusahaanData.setStatusVerifikasi(perusahaan.isStatusVerifikasi());
 		PersonData kreator = new PersonData();
 		kreator.setId(t.getKreator().getNik());
 		kreator.setNama(t.getKreator().getNama());
-		RegisterPerusahaanData.setKreator(kreator);
+		registerPerusahaanData.setKreator(kreator);
 		
 		List<PersonPerusahaanData> daftarPersonPerusahaanData = new ArrayList<>();
 		PersonPerusahaanData personPerusahaanData = new PersonPerusahaanData();
 		personPerusahaanData.setPerson(kreator);
-		personPerusahaanData.setPerusahaan(RegisterPerusahaanData);
+		personPerusahaanData.setPerusahaan(registerPerusahaanData);
 		daftarPersonPerusahaanData.add(personPerusahaanData);
 		
-		RegisterPerusahaanData.setDaftarPersonPerusahaanData(daftarPersonPerusahaanData);
+		registerPerusahaanData.setDaftarPersonPerusahaanData(daftarPersonPerusahaanData);
 		
-		return RegisterPerusahaanData;
+		return registerPerusahaanData;
 	}
 	
 	private RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {

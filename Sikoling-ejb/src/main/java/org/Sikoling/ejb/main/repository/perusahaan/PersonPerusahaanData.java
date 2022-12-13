@@ -32,7 +32,7 @@ public class PersonPerusahaanData implements Serializable {
 	
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private RegisterPerusahaanData perusahaan;
 
 	public PersonData getPerson() {

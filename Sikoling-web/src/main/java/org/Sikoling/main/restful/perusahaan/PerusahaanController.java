@@ -74,15 +74,16 @@ public class PerusahaanController {
 		return new DeleteResponseDTO(registerPerusahaanService.delete(id));
 	}
 	
-	@Path("kepemilikan")
+	@Path("kepemilikan/{idPerusahaan}/{idPerson}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO deleteLinkKepemilikanPerusahaan(PersonPerusahaanIdDTO id) {
+	public DeleteResponseDTO deleteLinkKepemilikanPerusahaan(@PathParam("idPerusahaan") String idPerusahaan,
+			@PathParam("idPerson") String idPerson) {
 		return new DeleteResponseDTO(
-				registerPerusahaanService.deleteLinkKepemilikanPerusahaan(id.getIdPerson(), id.getIdPerusahaan())
+				registerPerusahaanService.deleteLinkKepemilikanPerusahaan(idPerson, idPerusahaan)
 				);
 	}
 	
