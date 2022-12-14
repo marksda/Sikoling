@@ -204,7 +204,6 @@ public class KeyCloakUserJPA implements IUserRepository {
 	        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
 	        
 	        Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
-//	        AutorisasiData autorisasiData = entityManager.
 	        
 	        AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
 					.setParameter("userName", userAuthenticator.getUserName())

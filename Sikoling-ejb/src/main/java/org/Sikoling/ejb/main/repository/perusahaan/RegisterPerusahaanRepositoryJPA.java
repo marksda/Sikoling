@@ -314,7 +314,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				case "010301":				
 					RegisterDokumenOssData dokumenOssData = item.getDokumenOssData();						
 					JsonObjectBuilder jsonDetailAttributeDokumenBuilder = Json.createObjectBuilder();
-					jsonDetailAttributeDokumenBuilder.add("nip", dokumenOssData.getNib());
+					jsonDetailAttributeDokumenBuilder.add("nib", dokumenOssData.getNib());
 					jsonDetailAttributeDokumenBuilder.add("tanggalPenerbitan", dokumenOssData.getTanggalPenerbitan().toString());
 					
 					JsonArrayBuilder jsonArrayDaftarKbliBuilder = Json.createArrayBuilder();		

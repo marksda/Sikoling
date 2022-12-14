@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -31,6 +34,8 @@ public class RegisterDokumenController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterDokumenDTO save(RegisterDokumenDTO d) {		
 		return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
 	}

@@ -20,7 +20,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	@Override
 	public List<Dokumen> getAll() {
-		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", MasterDokumenData.class)
+		return entityManager.createNamedQuery("MasterDokumenData.findAll", MasterDokumenData.class)
 				.getResultList()
 				.stream()
 				.map(t -> convertDokumenDataToDokumen(t))
@@ -44,7 +44,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	@Override
 	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findAll", MasterDokumenData.class)
+		return entityManager.createNamedQuery("MasterDokumenData.findAll", MasterDokumenData.class)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
@@ -56,7 +56,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	@Override
 	public List<Dokumen> getByNama(String nama) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findByNama", MasterDokumenData.class)
+		return entityManager.createNamedQuery("MasterDokumenData.findByNama", MasterDokumenData.class)
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
@@ -67,7 +67,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	@Override
 	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
 		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("DetailDokumenPerusahaanData.findByNama", MasterDokumenData.class)
+		return entityManager.createNamedQuery("MasterDokumenData.findByNama", MasterDokumenData.class)
 				.setParameter("nama", nama)
 				.setMaxResults(pageSize)
 				.setFirstResult((page-1)*pageSize)

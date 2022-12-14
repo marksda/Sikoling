@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IMasterDokumenService;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -31,6 +34,8 @@ public class DokumenController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public DokumenDTO save(DokumenDTO d) {
 		return new DokumenDTO(dokumenService.save(d.toDokumen()));
 	}
@@ -53,6 +58,8 @@ public class DokumenController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public List<DokumenDTO> getAll() {
 		return dokumenService.getAll()
 				.stream()
