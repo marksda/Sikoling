@@ -60,8 +60,11 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO update(RegisterPerusahaanDTO d) {
-		return new RegisterPerusahaanDTO(registerPerusahaanService.update(d.toRegisterPerusahaan()));
+	public RegisterPerusahaanDTO update(PerusahaanDTO d) {
+		RegisterPerusahaanDTO registerPerusahaanDTO = new RegisterPerusahaanDTO();
+		registerPerusahaanDTO.setPerusahaan(d);
+		
+		return new RegisterPerusahaanDTO(registerPerusahaanService.update(registerPerusahaanDTO.toRegisterPerusahaan()));
 	}
 	
 	@Path("{id}")

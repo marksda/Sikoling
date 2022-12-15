@@ -70,6 +70,20 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	@Override
 	public RegisterPerusahaan save(RegisterPerusahaan t) {
 		RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);
+		registerPerusahaanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
+		
+		PersonData kreator = new PersonData();
+		kreator.setId(t.getKreator().getNik());
+		kreator.setNama(t.getKreator().getNama());
+		registerPerusahaanData.setKreator(kreator);
+		
+		List<PersonPerusahaanData> daftarPersonPerusahaanData = new ArrayList<>();
+		PersonPerusahaanData personPerusahaanData = new PersonPerusahaanData();
+		personPerusahaanData.setPerson(kreator);
+		personPerusahaanData.setPerusahaan(registerPerusahaanData);
+		daftarPersonPerusahaanData.add(personPerusahaanData);		
+		registerPerusahaanData.setDaftarPersonPerusahaanData(daftarPersonPerusahaanData);
+		
 		entityManager.persist(registerPerusahaanData);
 		entityManager.flush();		
 		return convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanData);
@@ -95,7 +109,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	
 	@Override
 	public RegisterPerusahaan update(RegisterPerusahaan t) {
-		RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);
+		RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);		
 		registerPerusahaanData = entityManager.merge(registerPerusahaanData);
 		return convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanData);
 	}
@@ -174,7 +188,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		Perusahaan perusahaan = t.getPerusahaan();
 		registerPerusahaanData.setId(perusahaan.getId());
 		registerPerusahaanData.setNama(perusahaan.getNama());
-		registerPerusahaanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
 		
 				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
@@ -254,18 +267,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		
 		registerPerusahaanData.setDaftarRegisterDokumenData(daftarRegisterDokumenData);
 		registerPerusahaanData.setStatusVerifikasi(perusahaan.isStatusVerifikasi());
-		PersonData kreator = new PersonData();
-		kreator.setId(t.getKreator().getNik());
-		kreator.setNama(t.getKreator().getNama());
-		registerPerusahaanData.setKreator(kreator);
-		
-		List<PersonPerusahaanData> daftarPersonPerusahaanData = new ArrayList<>();
-		PersonPerusahaanData personPerusahaanData = new PersonPerusahaanData();
-		personPerusahaanData.setPerson(kreator);
-		personPerusahaanData.setPerusahaan(registerPerusahaanData);
-		daftarPersonPerusahaanData.add(personPerusahaanData);
-		
-		registerPerusahaanData.setDaftarPersonPerusahaanData(daftarPersonPerusahaanData);
 		
 		return registerPerusahaanData;
 	}
