@@ -3,13 +3,13 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UserAuthenticator implements Serializable {
+public class Credential implements Serializable {
 
 	private static final long serialVersionUID = -6621586842419432649L;
 	private final String userName;
 	private final String password;
 	
-	public UserAuthenticator(String userName, String password) {
+	public Credential(String userName, String password) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -48,7 +48,7 @@ public class UserAuthenticator implements Serializable {
             return false;
         }
         
-        final UserAuthenticator other = (UserAuthenticator) obj;
+        final Credential other = (Credential) obj;
         
         if (!this.userName.equals(other.userName)) {
             return false;

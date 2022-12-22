@@ -3,30 +3,29 @@ package org.Sikoling.main.restful.user;
 import java.io.Serializable;
 
 import org.Sikoling.ejb.abstraction.entity.Person;
-import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
+import org.Sikoling.ejb.abstraction.entity.Credential;
 import org.Sikoling.main.restful.person.PersonDTO;
 
 public class RegistrasiDTO implements Serializable {
 
 	private static final long serialVersionUID = -4220243950689051507L;
-	private UserAuthenticatorDTO auth;
+	private CredentialDTO credential;
 	private PersonDTO person;	
 	
 	public RegistrasiDTO() {
 	}
 
-	public RegistrasiDTO(UserAuthenticator userAuthenticator, Person person) {
-		super();
-		this.auth = new UserAuthenticatorDTO(userAuthenticator);
+	public RegistrasiDTO(Credential credential, Person person) {
+		this.credential = new CredentialDTO(credential);
 		this.person = new PersonDTO(person);
 	}
 
-	public UserAuthenticatorDTO getAuth() {
-		return auth;
+	public CredentialDTO getCredential() {
+		return credential;
 	}
 
-	public void setAuth(UserAuthenticatorDTO auth) {
-		this.auth = auth;
+	public void setCredential(CredentialDTO credential) {
+		this.credential = credential;
 	}
 
 	public PersonDTO getPerson() {

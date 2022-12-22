@@ -44,6 +44,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository {
 
@@ -330,6 +331,9 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		Dokumen dokumen = t.getDokumen();
 		
 		RegisterDokumenData registerDokumenData = new RegisterDokumenData();
+		registerDokumenData.setId(
+				t.getId() != null ? t.getId() : getGenerateIdRegisterDokumen()
+				);
 		
 		RegisterPerusahaanData perusahaanData = new RegisterPerusahaanData();
 		registerDokumenData.setPerusahaanData(perusahaanData);		
@@ -367,14 +371,33 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			
 	@Override
 	public DeleteResponse delete(String id) {
-		String[] arrOfId = id.split("*", 2);
-		RegisterDokumenDataId registerDokumenDataId = new RegisterDokumenDataId();
-		registerDokumenDataId.setPerusahaanData(arrOfId[0]);
-		registerDokumenDataId.setDokumenData(arrOfId[1]);
-		
-		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, registerDokumenDataId);
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, id);
 		entityManager.remove(registerDokumenData);
 		return new DeleteResponse(true, id);
+	}
+	
+	private String getGenerateIdRegisterDokumen() {
+		int tahun = LocalDate.now().getYear();
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT max(rd.id) "
+				+ "FROM master.tbl_register_dokumen rd "
+				+ "WHERE date_part('year', rd.tanggal_registrasi) = :tahun");
+		
+		q.setParameter("tahun", tahun);
+		
+		try {
+			int idBaru = (int) q.getSingleResult() + 1;
+			hasil = LPad(Integer.toString(idBaru), 4, '0');
+			return hasil.concat(Integer.toString(tahun));
+		} catch (Exception e) {	
+			hasil = "0001";			
+			return hasil.concat(Integer.toString(tahun));
+		}		
+	}
+	
+	private String LPad(String str, Integer length, char car) {
+		  return (str + String.format("%" + length + "s", "").replace(" ", String.valueOf(car))).substring(0, length);
 	}
 	
 }

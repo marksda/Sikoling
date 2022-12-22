@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.user;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.User;
-import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
+import org.Sikoling.ejb.abstraction.entity.Credential;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
@@ -16,7 +16,7 @@ public interface IUserService {
 	List<User> getByQueryNama(String nama);
 	List<User> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
 	Boolean cekUserName(String nama);
-	ResponToken getToken(UserAuthenticator userAuthenticator);
+	ResponToken getToken(Credential userAuthenticator);
 	ResponToken refreshToken(String refreshToken);
-	SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person);
+	SimpleResponse addRegistrasi(Credential userAuthenticator, Person person);
 }

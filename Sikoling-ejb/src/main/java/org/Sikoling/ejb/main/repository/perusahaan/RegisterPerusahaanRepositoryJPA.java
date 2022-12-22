@@ -54,7 +54,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	public RegisterPerusahaan save(RegisterPerusahaan t) {	
 			RegisterPerusahaanData registerPerusahaanData = convertRegisterPerusahaanToRegisterPerusahaanData(t);
 			AutorityPerusahaanData autorityPerusahaanData = new AutorityPerusahaanData();
-			autorityPerusahaanData.setUserKepemilikanPerusahaan(registerPerusahaanData.getKreator());
+			autorityPerusahaanData.setAutority(registerPerusahaanData.getKreator());
 			autorityPerusahaanData.setPerusahaan(registerPerusahaanData);			
 			entityManager.persist(registerPerusahaanData);
 			entityManager.persist(autorityPerusahaanData);
@@ -437,19 +437,21 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		
 	private String getGenerateIdRegisterPerusahaan() {
 		int tahun = LocalDate.now().getYear();
+		String hasil;
 		
 		Query q = entityManager.createQuery("SELECT count(p.id) jml "
 				+ "FROM master.tbl_perusahaan p "
-				+ "WHERE year(p.tanggal_registrasi) = :tahun");
+				+ "WHERE date_part('year', p.tanggal_registrasi) = :tahun");
 		
 		q.setParameter("tahun", tahun);
 		
 		try {
 			int idBaru = (int) q.getSingleResult() + 1;
-			String hasil = LPad(Integer.toString(idBaru), 4, '0');
+			hasil = LPad(Integer.toString(idBaru), 4, '0');
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {			
-			return null;
+			hasil = "0001";			
+			return hasil.concat(Integer.toString(tahun));
 		}		
 	}
 	

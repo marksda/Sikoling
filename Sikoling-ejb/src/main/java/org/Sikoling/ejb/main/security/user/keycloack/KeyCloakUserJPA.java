@@ -26,7 +26,7 @@ import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 import org.Sikoling.ejb.abstraction.entity.Token;
 import org.Sikoling.ejb.abstraction.entity.User;
-import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
+import org.Sikoling.ejb.abstraction.entity.Credential;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -182,7 +182,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 	}
 
 	@Override
-	public ResponToken getToken(UserAuthenticator userAuthenticator) {
+	public ResponToken getToken(Credential userAuthenticator) {
 		Token token;
 		String hasil = cekPassword(userAuthenticator.getUserName(), userAuthenticator.getPassword());
 		if( hasil == "remote") {
@@ -265,16 +265,16 @@ public class KeyCloakUserJPA implements IUserRepository {
 	}
 		
 	@Override
-	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {		
+	public SimpleResponse addRegistrasi(Credential credential, Person person) {		
 		SimpleResponse hasil;
 		Response response;
-		switch (cekModelAuthentication(userAuthenticator.getUserName())) {
+		switch (cekModelAuthentication(credential.getUserName())) {
 			case "local": 
 				String pwd = "";
 				try {
 					MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 					messageDigest.reset();
-					messageDigest.update(userAuthenticator.getPassword().getBytes());
+					messageDigest.update(credential.getPassword().getBytes());
 	                byte[] digest = messageDigest.digest();
 	                StringBuilder sb = new StringBuilder();
 	                for (int i=0;i<digest.length;i++){
@@ -284,7 +284,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 	                pwd=sb.toString(); 
 	                
 	                Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
-							.setParameter("nama", userAuthenticator.getUserName())
+							.setParameter("nama", credential.getUserName())
 							.setParameter("password", pwd)
 							.getResultList()
 							.size();
@@ -296,30 +296,25 @@ public class KeyCloakUserJPA implements IUserRepository {
 						response = keycloak
 								.realm(realm)
 								.users()
-								.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));		
+								.create(convertRegistrasiToUserPresentatiton(credential, person));		
 						if (response.getStatus() != 201) {	//gagal					
 							hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
 				        }
 						else {	
 							try {
 								UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
-										.setParameter("nama", userAuthenticator.getUserName())
+										.setParameter("nama", credential.getUserName())
 										.getSingleResult();								
 								
-								PersonData personData = convertPersonToPersonData(person);								
-								
-								//data authority
+								PersonData personData = convertPersonToPersonData(person);
 								AutorisasiData autorisasiData = new AutorisasiData();
-//								autorisasiData.setId(person.getNik());					
 								
 								HakAksesData hakAksesData = new HakAksesData();
 								hakAksesData.setId("09");
 								autorisasiData.setHakAkses(hakAksesData);
 								autorisasiData.setStatusInternal(false);
 								autorisasiData.setIsVerified(false);
-								autorisasiData.setUserName(userAuthenticator.getUserName());
-								
-								personData.setAutorisasiData(autorisasiData);
+								autorisasiData.setUserName(credential.getUserName());
 								
 								entityManager.remove(userData);	
 								entityManager.persist(personData);
@@ -344,7 +339,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 				response = keycloak
 						.realm(realm)
 						.users()
-						.create(convertRegistrasiToUserPresentatiton(userAuthenticator, person));
+						.create(convertRegistrasiToUserPresentatiton(credential, person));
 				if (response.getStatus() != 201) {					
 					hasil = new SimpleResponse("gagal", "data autentikasi tidak bisa ditambahkan ke server identification provider");
 		        }
@@ -359,12 +354,10 @@ public class KeyCloakUserJPA implements IUserRepository {
 						autorisasiData.setHakAkses(hakAksesData);
 						autorisasiData.setStatusInternal(false);
 						autorisasiData.setIsVerified(false);
-						autorisasiData.setUserName(userAuthenticator.getUserName());	
-						
-						personData.setAutorisasiData(autorisasiData);
-
+						autorisasiData.setUserName(credential.getUserName());	
 
 						entityManager.persist(personData);
+						entityManager.persist(autorisasiData);
 						entityManager.flush();
 						hasil = new SimpleResponse("sukses", "data autentifiksi berhasil ditambahkan");
 					} catch (Exception e) {
@@ -554,7 +547,7 @@ public class KeyCloakUserJPA implements IUserRepository {
                 .orElse("");
     }
 	
-	private UserRepresentation convertRegistrasiToUserPresentatiton(UserAuthenticator userAuthenticator, Person person) {
+	private UserRepresentation convertRegistrasiToUserPresentatiton(Credential userAuthenticator, Person person) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 	    LocalDateTime now = LocalDateTime.now();  
 		   

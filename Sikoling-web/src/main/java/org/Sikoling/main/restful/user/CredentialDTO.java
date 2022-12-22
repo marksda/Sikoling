@@ -3,24 +3,24 @@ package org.Sikoling.main.restful.user;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
+import org.Sikoling.ejb.abstraction.entity.Credential;
 
-public class UserAuthenticatorDTO implements Serializable {
+public class CredentialDTO implements Serializable {
 
 	private static final long serialVersionUID = 8997263655797643037L;
 	private String userName;
 	private String password;
 		
 	
-	public UserAuthenticatorDTO() {		
+	public CredentialDTO() {		
 	}
 
-	public UserAuthenticatorDTO(String userName, String password) {
+	public CredentialDTO(String userName, String password) {
 		this.userName = userName;
 		this.password = password;
 	}
 	
-	public UserAuthenticatorDTO(UserAuthenticator userAuthenticator) {
+	public CredentialDTO(Credential userAuthenticator) {
 		this.userName = userAuthenticator.getUserName();
 		this.password = userAuthenticator.getPassword();
 	}
@@ -66,7 +66,7 @@ public class UserAuthenticatorDTO implements Serializable {
             return false;
         }
         
-        final UserAuthenticatorDTO other = (UserAuthenticatorDTO) obj;
+        final CredentialDTO other = (CredentialDTO) obj;
         
         if (!this.userName.equals(other.userName)) {
             return false;
@@ -84,7 +84,7 @@ public class UserAuthenticatorDTO implements Serializable {
         return "UserAuthenticatorDTO{" + "userName=" + userName + ", password=" + password + '}';
     }
 
-	public UserAuthenticator toUserAuthenticator() {
-		return new UserAuthenticator(userName, password);
+	public Credential toCredential() {
+		return new Credential(userName, password);
 	}
 }

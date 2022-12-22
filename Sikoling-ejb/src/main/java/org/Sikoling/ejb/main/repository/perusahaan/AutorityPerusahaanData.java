@@ -27,19 +27,19 @@ public class AutorityPerusahaanData implements Serializable {
 	@Id
 	@JoinColumn(name = "autority", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData userKepemilikanPerusahaan;
+	private AutorisasiData autority;
 	
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private RegisterPerusahaanData perusahaan;
 
-	public AutorisasiData getUserKepemilikanPerusahaan() {
-		return userKepemilikanPerusahaan;
+	public AutorisasiData getAutority() {
+		return autority;
 	}
 
-	public void setUserKepemilikanPerusahaan(AutorisasiData userKepemilikanPerusahaan) {
-		this.userKepemilikanPerusahaan = userKepemilikanPerusahaan;
+	public void setAutority(AutorisasiData autority) {
+		this.autority = autority;
 	}
 
 	public RegisterPerusahaanData getPerusahaan() {

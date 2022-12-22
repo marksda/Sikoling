@@ -10,7 +10,6 @@ import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -27,7 +26,6 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="RegisterDokumenData.findByNamaPerusahaan", query = "SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.nama LIKE :namaPerusahaan"),
 	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaan", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.id = :idPerusahaan")
 })
-@IdClass(RegisterDokumenDataId.class)
 public class RegisterDokumenData implements Serializable {
 
 	private static final long serialVersionUID = 781878194764826140L;

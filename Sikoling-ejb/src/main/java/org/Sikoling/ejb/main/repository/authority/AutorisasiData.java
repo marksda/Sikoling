@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,8 +31,8 @@ public class AutorisasiData implements Serializable {
 	@Column(name="user_name")
 	private String userName;
 
-    @JoinColumn(name = "person", referencedColumnName = "id")
-	@OneToOne(optional = false)
+    @JoinColumn(name = "person", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne(optional = false)
 	private PersonData personData;
 		
 	@JoinColumn(name = "hak_akses", referencedColumnName = "id", insertable = true, updatable = true)

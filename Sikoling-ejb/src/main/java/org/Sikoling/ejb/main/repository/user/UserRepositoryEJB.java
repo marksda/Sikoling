@@ -6,7 +6,7 @@ import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 import org.Sikoling.ejb.abstraction.entity.User;
-import org.Sikoling.ejb.abstraction.entity.UserAuthenticator;
+import org.Sikoling.ejb.abstraction.entity.Credential;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserJPA;
@@ -59,12 +59,12 @@ public class UserRepositoryEJB implements IUserRepository {
 	}
 
 	@Override
-	public ResponToken getToken(UserAuthenticator u) {
+	public ResponToken getToken(Credential u) {
 		return userRepositoryJPA.getToken(u);
 	}
 
 	@Override
-	public SimpleResponse addRegistrasi(UserAuthenticator userAuthenticator, Person person) {
+	public SimpleResponse addRegistrasi(Credential userAuthenticator, Person person) {
 		return userRepositoryJPA.addRegistrasi(userAuthenticator, person);
 	}
 	

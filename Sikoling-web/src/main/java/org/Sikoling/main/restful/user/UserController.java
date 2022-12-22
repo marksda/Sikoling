@@ -97,8 +97,8 @@ public class UserController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public ResponTokenDTO getToken(UserAuthenticatorDTO u) {
-		return new ResponTokenDTO(userService.getToken(u.toUserAuthenticator()));
+	public ResponTokenDTO getToken(CredentialDTO u) {
+		return new ResponTokenDTO(userService.getToken(u.toCredential()));
 	}
 	
 	@Path("refresh_token")
@@ -114,7 +114,7 @@ public class UserController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public SimpleResponseDTO setRegistrasi(RegistrasiDTO r) {
-		return new SimpleResponseDTO(userService.addRegistrasi(r.getAuth().toUserAuthenticator(), r.getPerson().toPerson()));
+		return new SimpleResponseDTO(userService.addRegistrasi(r.getCredential().toCredential(), r.getPerson().toPerson()));
 	}
 	
 }
