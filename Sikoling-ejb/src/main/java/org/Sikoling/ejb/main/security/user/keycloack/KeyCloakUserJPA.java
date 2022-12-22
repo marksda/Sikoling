@@ -310,8 +310,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 								
 								//data authority
 								AutorisasiData autorisasiData = new AutorisasiData();
-//								autorisasiData.setId(person.getNik());
-								autorisasiData.setIdLama(userData.getId());								
+//								autorisasiData.setId(person.getNik());					
 								
 								HakAksesData hakAksesData = new HakAksesData();
 								hakAksesData.setId("09");

@@ -9,8 +9,8 @@ import org.Sikoling.main.restful.person.PersonDTO;
 public class AuthorityDTO implements Serializable {
 
 	private static final long serialVersionUID = 6026401650478903435L;
+	private String id;
 	private PersonDTO person;
-	private String idLama;
 	private HakAksesDTO hakAkses;
 	private boolean statusInternal;
 	private boolean isVerified;
@@ -20,9 +20,9 @@ public class AuthorityDTO implements Serializable {
 	}
 	
 	public AuthorityDTO(Authority t) {
-		this.person = new PersonDTO(t.getPerson());
-		this.idLama = t.getIdLama();
-		this.hakAkses = new HakAksesDTO(t.getHakAkses());
+		this.id = t.getId();
+		this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
+		this.hakAkses = t.getHakAkses() != null ? new HakAksesDTO(t.getHakAkses()) : null;
 		this.statusInternal = t.isStatusInternal();
 		this.isVerified = t.isVerified();
 		this.userName = t.getUserName();
@@ -34,14 +34,6 @@ public class AuthorityDTO implements Serializable {
 
 	public void setPerson(PersonDTO person) {
 		this.person = person;
-	}
-
-	public String getIdLama() {
-		return idLama;
-	}
-
-	public void setIdLama(String idLama) {
-		this.idLama = idLama;
 	}
 
 	public HakAksesDTO getHakAkses() {
@@ -122,9 +114,9 @@ public class AuthorityDTO implements Serializable {
 	
 	public Authority toAuthority() {
 		return new Authority(
-				person.toPerson(), 
-				idLama, 
-				hakAkses.toHakAkses(), 
+				id,
+				person != null ? person.toPerson():null, 
+				hakAkses != null ? hakAkses.toHakAkses():null, 
 				statusInternal, 
 				isVerified, 
 				userName

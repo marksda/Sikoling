@@ -2,9 +2,8 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
 
-import org.Sikoling.ejb.main.repository.person.PersonData;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -15,32 +14,32 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="transaksi.tbl_person_perusahaan")
+@Table(name="transaksi.tbl_autority_perusahaan")
 @NamedQueries({
-	@NamedQuery(name="PersonPerusahaanData.findAll", query="SELECT d FROM PersonPerusahaanData d"),
-	@NamedQuery(name="PersonPerusahaanData.findByPemilik", query = "SELECT d FROM PersonPerusahaanData d WHERE d.person.id = :personId")
+	@NamedQuery(name="AutorityPerusahaanData.findAll", query="SELECT d FROM AutorityPerusahaanData d"),
+	@NamedQuery(name="AutorityPerusahaanData.findByPemilik", query = "SELECT d FROM AutorityPerusahaanData d WHERE d.person.id = :personId")
 })
-@IdClass(PersonPerusahaanDataId.class)
-public class PersonPerusahaanData implements Serializable {
+@IdClass(AutorityPerusahaanDataId.class)
+public class AutorityPerusahaanData implements Serializable {
 
 	private static final long serialVersionUID = -5441108494516995827L;
 	
 	@Id
-	@JoinColumn(name = "person", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name = "autority", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PersonData person;
+	private AutorisasiData userKepemilikanPerusahaan;
 	
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	private RegisterPerusahaanData perusahaan;
 
-	public PersonData getPerson() {
-		return person;
+	public AutorisasiData getUserKepemilikanPerusahaan() {
+		return userKepemilikanPerusahaan;
 	}
 
-	public void setPerson(PersonData person) {
-		this.person = person;
+	public void setUserKepemilikanPerusahaan(AutorisasiData userKepemilikanPerusahaan) {
+		this.userKepemilikanPerusahaan = userKepemilikanPerusahaan;
 	}
 
 	public RegisterPerusahaanData getPerusahaan() {
@@ -54,5 +53,6 @@ public class PersonPerusahaanData implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	
 }

@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
-import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
+import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
@@ -24,13 +24,13 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
-import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.AlamatPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.KontakPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
@@ -68,7 +68,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		entityManager.persist(registerDokumenData);
 		entityManager.flush();
 		
-		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
+		return convertRegisterDokumenDataToRegisterDokumen(entityManager.find(RegisterDokumenData.class, registerDokumenData.getId()));
 	}
 	
 	@Override
@@ -256,15 +256,16 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				);
 	}
 	
-	private Person covertPersonDataToPerson(PersonData d) {
-		return new Person(d.getId(), d.getNama(), null, null, null, null);
-	}
+//	private Person covertPersonDataToPerson(PersonData d) {
+//		return new Person(d.getId(), d.getNama(), null, null, null, null);
+//	}
 	
 	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
 		RegisterDokumen registerDokumen;
 		Dokumen dokumen;		
 		MasterDokumenData masterDokumenData = d.getDokumenData();
 		KategoriDokumenData kategoriDokumenData = masterDokumenData.getKategoriDokumenData();
+		AutorisasiData uploaderData = d.getUploader();
 		
 		switch (d.getDokumenData().getId()) {
 		case "010301":
@@ -297,12 +298,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							kategoriDokumenData.getParent()), 
 					detailAttributeDokumenJson
 					);
+			
+			Authority uploader = new Authority(
+					uploaderData.getId(), 
+					null, 
+					null, 
+					uploaderData.getStatusInternal(), 
+					uploaderData.getIsVerified(), 
+					uploaderData.getUserName()
+					);
+			
 			registerDokumen = new RegisterDokumen(
+					d.getId(),
 					dokumen, 
 					convertPerusahaanDataToPerusahaan(d.getPerusahaanData()),
 					d.getLokasiFile(), 
 					d.getTanggalRegistrasi(), 
-					covertPersonDataToPerson(d.getUploader())
+					uploader
 					);
 			break;
 		default:
@@ -328,9 +340,13 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		registerDokumenData.setTanggalRegistrasi(t.getTanggalRegistrasi());	
 		
-		PersonData uploader = new PersonData();
-		uploader.setId(t.getUploader().getNik());
-		registerDokumenData.setUploader(uploader);		
+		
+		Authority uploader = t.getUploader();
+		AutorisasiData uploaderData = new AutorisasiData();
+		uploaderData.setId(uploader.getId());
+		uploaderData.setUserName(uploader.getUserName());
+		
+		registerDokumenData.setUploader(uploaderData);		
 
 		switch (dokumen.getId()) {
 		case "010301":

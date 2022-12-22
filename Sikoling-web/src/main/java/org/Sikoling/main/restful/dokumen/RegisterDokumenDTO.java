@@ -5,29 +5,47 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
-import org.Sikoling.main.restful.person.PersonDTO;
+import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
 
 public class RegisterDokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = 1384518698621127848L;
+	private String id;
 	private DokumenDTO dokumen;
 	private PerusahaanDTO perusahaan;
 	private String lokasiFile;
 	private LocalDate tanggalRegistrasi;
-	private PersonDTO uploader;
+	private AuthorityDTO uploader;
 	
 	public RegisterDokumenDTO() {
 	}
 	
 	public RegisterDokumenDTO(RegisterDokumen t) {		
+		this.id = t.getId();
 		this.dokumen = new DokumenDTO(t.getDokumen());
 		this.perusahaan = new PerusahaanDTO(t.getPerusahaan());
 		this.lokasiFile = t.getLokasiFile();
 		this.tanggalRegistrasi = t.getTanggalRegistrasi();
-		this.uploader = new PersonDTO(t.getUploader());
+		this.uploader = new AuthorityDTO(t.getUploader());
 	}
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public AuthorityDTO getUploader() {
+		return uploader;
+	}
+
+	public void setUploader(AuthorityDTO uploader) {
+		this.uploader = uploader;
+	}
+
 	public DokumenDTO getDokumen() {
 		return dokumen;
 	}
@@ -58,14 +76,6 @@ public class RegisterDokumenDTO implements Serializable {
 
 	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
 		this.tanggalRegistrasi = tanggalRegistrasi;
-	}
-
-	public PersonDTO getUploader() {
-		return uploader;
-	}
-
-	public void setUploader(PersonDTO uploader) {
-		this.uploader = uploader;
 	}
 
 	public static long getSerialversionuid() {
@@ -122,11 +132,12 @@ public class RegisterDokumenDTO implements Serializable {
 
 	public RegisterDokumen toRegisterDokumen() {
 		return new RegisterDokumen(
+				id,
 				dokumen.toDokumen(),
 				perusahaan.toPerusahaan(),
 				lokasiFile, 
 				tanggalRegistrasi, 
-				uploader.toPerson()
+				uploader.toAuthority()
 				);
 	}
 }

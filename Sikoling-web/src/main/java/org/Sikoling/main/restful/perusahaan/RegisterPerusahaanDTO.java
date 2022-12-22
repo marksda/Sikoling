@@ -4,23 +4,25 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.main.restful.person.PersonDTO;
+import org.Sikoling.main.restful.authority.AuthorityDTO;
 
 public class RegisterPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 2393298210508926234L;
+	private String id;
 	private LocalDate tanggalRegistrasi;
-	private PersonDTO kreator;
-	private PersonDTO verifikator;
+	private AuthorityDTO kreator;
+	private AuthorityDTO verifikator;
 	private PerusahaanDTO perusahaan;
 	
 	public RegisterPerusahaanDTO() {
 	}
 	
 	public RegisterPerusahaanDTO(RegisterPerusahaan t) {
+		this.id = t.getId();
 		this.tanggalRegistrasi = t.getTanggalRegistrasi();
-		this.kreator = t.getKreator() != null ? new PersonDTO(t.getKreator()) : null;
-		this.verifikator = t.getVerifikator() != null ? new PersonDTO(t.getVerifikator()) : null;
+		this.kreator = t.getKreator() != null ? new AuthorityDTO(t.getKreator()) : null;
+		this.verifikator = t.getVerifikator() != null ? new AuthorityDTO(t.getVerifikator()) : null;
 		this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 	}
 
@@ -32,19 +34,19 @@ public class RegisterPerusahaanDTO implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public PersonDTO getKreator() {
+	public AuthorityDTO getKreator() {
 		return kreator;
 	}
 
-	public void setKreator(PersonDTO kreator) {
+	public void setKreator(AuthorityDTO kreator) {
 		this.kreator = kreator;
 	}
 
-	public PersonDTO getVerifikator() {
+	public AuthorityDTO getVerifikator() {
 		return verifikator;
 	}
 
-	public void setVerifikator(PersonDTO verifikator) {
+	public void setVerifikator(AuthorityDTO verifikator) {
 		this.verifikator = verifikator;
 	}
 
@@ -59,12 +61,19 @@ public class RegisterPerusahaanDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+		
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	@Override
 	public int hashCode() {
 		int hash = 91;
 		hash = 131 * hash + Objects.hashCode(perusahaan.getId());
-		hash = 131 * hash + Objects.hashCode(kreator.getNik());
 		return hash;
 	}
 
@@ -103,9 +112,10 @@ public class RegisterPerusahaanDTO implements Serializable {
 	
 	public RegisterPerusahaan toRegisterPerusahaan() {
 		return new RegisterPerusahaan(
+				id,
 				tanggalRegistrasi, 
-				kreator.toPerson(), 
-				verifikator != null?verifikator.toPerson():null, 
+				kreator != null ? kreator.toAuthority() : null, 
+				verifikator != null ? verifikator.toAuthority() : null, 
 				perusahaan.toPerusahaan()
 				);
 	}

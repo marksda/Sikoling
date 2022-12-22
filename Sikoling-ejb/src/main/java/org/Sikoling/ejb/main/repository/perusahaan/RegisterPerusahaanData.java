@@ -6,10 +6,10 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
-import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
@@ -18,7 +18,8 @@ import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 @NamedQueries({
 	@NamedQuery(name="RegisterPerusahaanData.findAll", query="SELECT p FROM RegisterPerusahaanData p"),
 	@NamedQuery(name="RegisterPerusahaanData.findByQueryNama", query="SELECT p FROM RegisterPerusahaanData p WHERE p.nama LIKE :nama"),
-	@NamedQuery(name="RegisterPerusahaanData.findByIdKreator", query="SELECT p FROM RegisterPerusahaanData p WHERE p.kreator.id = :idKreator")
+	@NamedQuery(name="RegisterPerusahaanData.findByIdKreator", query="SELECT p FROM RegisterPerusahaanData p WHERE p.kreator.id = :idKreator"),
+	@NamedQuery(name="RegisterPerusahaanData.findByNpwp", query="SELECT p FROM RegisterPerusahaanData p WHERE p.npwp = :npwp")
 })
 public class RegisterPerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
@@ -31,15 +32,15 @@ public class RegisterPerusahaanData implements Serializable {
 	@Embedded
 	private AlamatPerusahaanData alamatPerusahaanData;
 	
-	@JoinColumn(name="model_perizinan", referencedColumnName = "id", insertable = true, updatable = false)
+	@JoinColumn(name="model_perizinan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private ModelPerizinanData modelPerizinanData;
 	
-	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = true, updatable = false)
+	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private SkalaUsahaData skalaUsahaData;
 		
-	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = true, updatable = false)
+	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private PelakuUsahaData pelakuUsahaData; 
 	
@@ -49,31 +50,33 @@ public class RegisterPerusahaanData implements Serializable {
 	@Embedded
 	private KontakPerusahaanData kontakPerusahaanData;
 	
-	@JoinColumn(name="kreator", referencedColumnName = "id", insertable = true, updatable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
-	private PersonData kreator;
+	@JoinColumn(name="kreator", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private AutorisasiData kreator;
 	
-	@JoinColumn(name="verifikator", referencedColumnName = "id", insertable = true, updatable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
-	private PersonData verifikator;
+	@JoinColumn(name="verifikator", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private AutorisasiData verifikator;
 	
 	@Column(name="tanggal_registrasi")
 	private LocalDate tanggalRegistrasi;	
 	
-	@OneToMany(mappedBy="perusahaanData")
+	private String npwp;
+	
+	@OneToMany(mappedBy="perusahaanData", fetch = FetchType.LAZY)
 	private List<RegisterDokumenData> daftarRegisterDokumenData;	
 
-	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private List<PersonPerusahaanData> daftarPersonPerusahaanData;
+	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
+	private List<AutorityPerusahaanData> daftarPersonPerusahaanData;
 	
 	public RegisterPerusahaanData() {
 	}
 	
-	public PersonData getVerifikator() {
+	public AutorisasiData getVerifikator() {
 		return verifikator;
 	}
 
-	public void setVerifikator(PersonData verifikator) {
+	public void setVerifikator(AutorisasiData verifikator) {
 		this.verifikator = verifikator;
 	}
 
@@ -85,19 +88,19 @@ public class RegisterPerusahaanData implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public PersonData getKreator() {
+	public AutorisasiData getKreator() {
 		return kreator;
 	}
 
-	public void setKreator(PersonData kreator) {
+	public void setKreator(AutorisasiData kreator) {
 		this.kreator = kreator;
 	}
 
-	public List<PersonPerusahaanData> getDaftarPersonPerusahaanData() {
+	public List<AutorityPerusahaanData> getDaftarPersonPerusahaanData() {
 		return daftarPersonPerusahaanData;
 	}
 
-	public void setDaftarPersonPerusahaanData(List<PersonPerusahaanData> daftarPersonPerusahaanData) {
+	public void setDaftarPersonPerusahaanData(List<AutorityPerusahaanData> daftarPersonPerusahaanData) {
 		this.daftarPersonPerusahaanData = daftarPersonPerusahaanData;
 	}
 	
@@ -175,6 +178,14 @@ public class RegisterPerusahaanData implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public String getNpwp() {
+		return npwp;
+	}
+
+	public void setNpwp(String npwp) {
+		this.npwp = npwp;
 	}
 	
 }

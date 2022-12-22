@@ -20,17 +20,26 @@ public class PersonDTO implements Serializable {
 	}
 	
 	public PersonDTO(Person person) {		
-		this.nik = person.getNik();
-		this.nama = person.getNama();
-		this.jenisKelamin = person.getSex() != null ? new JenisKelaminDTO(person.getSex()) : null;
-		this.alamat = person.getAlamat() != null ? new AlamatPersonDTO(person.getAlamat()) : null;
-		this.kontak = person.getKontak() != null ? new KontakPersonDTO(person.getKontak()) : null;
-		this.scanKTP = person.getScanKTP();
+		if(person != null) {
+			this.nik = person.getNik();
+			this.nama = person.getNama();
+			this.jenisKelamin = person.getSex() != null ? new JenisKelaminDTO(person.getSex()) : null;
+			this.alamat = person.getAlamat() != null ? new AlamatPersonDTO(person.getAlamat()) : null;
+			this.kontak = person.getKontak() != null ? new KontakPersonDTO(person.getKontak()) : null;
+			this.scanKTP = person.getScanKTP();
+		}
+		else {
+			this.nik = null;
+			this.nama = null;
+			this.jenisKelamin = null;
+			this.alamat = null;
+			this.kontak = null;
+			this.scanKTP = null;
+		}
 	}
 	
 	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatPersonDTO alamat, KontakPersonDTO kontak,
 			String scanKTP) {
-		super();
 		this.nik = nik;
 		this.nama = nama;
 		this.jenisKelamin = sex;
@@ -127,6 +136,11 @@ public class PersonDTO implements Serializable {
 	}
 
 	public Person toPerson() {
-		return new Person(nik, nama, jenisKelamin.toJenisKelamin(), alamat.toAlamat(), scanKTP, kontak.toKontak());
+		if(nik != null) {
+			return new Person(nik, nama, jenisKelamin.toJenisKelamin(), alamat.toAlamat(), scanKTP, kontak.toKontak());
+		}
+		else {
+			return null;
+		}
 	}
 }

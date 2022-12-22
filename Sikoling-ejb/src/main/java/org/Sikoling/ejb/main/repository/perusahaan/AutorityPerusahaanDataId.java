@@ -3,21 +3,21 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PersonPerusahaanDataId implements Serializable {
+public class AutorityPerusahaanDataId implements Serializable {
 
 	private static final long serialVersionUID = 5171532190891483206L;
-	private String person;
+	private String autority;
 	private String perusahaan;
 	
-	public PersonPerusahaanDataId() {
+	public AutorityPerusahaanDataId() {
+	}
+	
+	public String getAutority() {
+		return autority;
 	}
 
-	public String getPerson() {
-		return person;
-	}
-
-	public void setPerson(String person) {
-		this.person = person;
+	public void setAutority(String autority) {
+		this.autority = autority;
 	}
 
 	public String getPerusahaan() {
@@ -34,7 +34,7 @@ public class PersonPerusahaanDataId implements Serializable {
 	
 	public int hashCode() {
 		int hash = 131;
-        hash = 111 * hash + Objects.hashCode(this.person);
+        hash = 111 * hash + Objects.hashCode(this.autority);
         hash = 111 * hash + Objects.hashCode(this.perusahaan);
         return hash;
 	}
@@ -54,9 +54,9 @@ public class PersonPerusahaanDataId implements Serializable {
             return false;
         }
         
-        final PersonPerusahaanDataId other = (PersonPerusahaanDataId) obj;
+        final AutorityPerusahaanDataId other = (AutorityPerusahaanDataId) obj;
         
-        if (!this.person.equals(other.getPerson())) {
+        if (!this.autority.equals(other.getAutority())) {
             return false;
         }  
         

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.main.repository.person.PersonData;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.Column;
@@ -33,7 +33,9 @@ public class RegisterDokumenData implements Serializable {
 	private static final long serialVersionUID = 781878194764826140L;
 		
 	@Id
-	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = false)
+	private String id;
+	
+	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private RegisterPerusahaanData perusahaanData;
 	
@@ -47,7 +49,7 @@ public class RegisterDokumenData implements Serializable {
 	
 	@JoinColumn(name = "uploader", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
-	private PersonData uploader;
+	private AutorisasiData uploader;
 	
 	@Column(name="lokasi_file")
 	private String lokasiFile;
@@ -56,6 +58,14 @@ public class RegisterDokumenData implements Serializable {
 	private RegisterDokumenOssData dokumenOssData;
 	
 	public RegisterDokumenData() {
+	}
+
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public RegisterPerusahaanData getPerusahaanData() {
@@ -82,11 +92,11 @@ public class RegisterDokumenData implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public PersonData getUploader() {
+	public AutorisasiData getUploader() {
 		return uploader;
 	}
 
-	public void setUploader(PersonData uploader) {
+	public void setUploader(AutorisasiData uploader) {
 		this.uploader = uploader;
 	}
 

@@ -6,19 +6,25 @@ import java.util.Objects;
 
 public class RegisterDokumen implements Serializable {	
 	private static final long serialVersionUID = 5607669072989245707L;
+	private final String id;
 	private final Dokumen dokumen;
 	private final Perusahaan perusahaan;
 	private final String lokasiFile;
 	private final LocalDate tanggalRegistrasi;
-	private final Person uploader;
+	private final Authority uploader;
 	
-	public RegisterDokumen(Dokumen dokumen, Perusahaan perusahaan, String lokasiFile, LocalDate tanggalRegistrasi,
-			Person uploader) {
+	public RegisterDokumen(String id, Dokumen dokumen, Perusahaan perusahaan, String lokasiFile,
+			LocalDate tanggalRegistrasi, Authority uploader) {
+		this.id = id;
 		this.dokumen = dokumen;
 		this.perusahaan = perusahaan;
 		this.lokasiFile = lokasiFile;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.uploader = uploader;
+	}
+	
+	public String getId() {
+		return id;
 	}
 
 	public String getLokasiFile() {
@@ -37,7 +43,7 @@ public class RegisterDokumen implements Serializable {
 		return perusahaan;
 	}
 
-	public Person getUploader() {
+	public Authority getUploader() {
 		return uploader;
 	}
 

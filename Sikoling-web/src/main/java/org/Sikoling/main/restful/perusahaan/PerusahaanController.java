@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
-import org.Sikoling.main.restful.person.PersonDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -45,14 +45,19 @@ public class PerusahaanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) {		
-		Authority authority = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		RegisterPerusahaanDTO registerPerusahaanDTO = new RegisterPerusahaanDTO();
-		registerPerusahaanDTO.setTanggalRegistrasi(LocalDate.now());
-		PersonDTO kreator = new PersonDTO(authority.getPerson());
-		registerPerusahaanDTO.setKreator(kreator);
-		registerPerusahaanDTO.setPerusahaan(d);
+		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
-		return new RegisterPerusahaanDTO(registerPerusahaanService.save(registerPerusahaanDTO.toRegisterPerusahaan()));
+		return new RegisterPerusahaanDTO(
+				registerPerusahaanService.save(
+						new RegisterPerusahaan(
+								null, 
+								LocalDate.now(), 
+								kreator, 
+								null, 
+								d.toPerusahaan()
+								)
+						)
+				);
 	}
 	
 	@PUT

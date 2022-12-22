@@ -26,14 +26,16 @@ public class AutorisasiData implements Serializable {
 
 	private static final long serialVersionUID = 2467589981792742907L;
 	
-	@Id
-	@OneToOne
+	@Id	
+	private String id;
+	
+	@Column(name="user_name")
+	private String userName;
+
     @JoinColumn(name = "person", referencedColumnName = "id")
+	@OneToOne(optional = false)
 	private PersonData personData;
-	
-	@Column(name="id_lama")
-	private String idLama;
-	
+		
 	@JoinColumn(name = "hak_akses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private HakAksesData hakAkses;
@@ -43,10 +45,7 @@ public class AutorisasiData implements Serializable {
 	
 	@Column(name="is_verified")
 	private Boolean isVerified;
-	
-	@Column(name="user_name")
-	private String userName;
-		
+			
 	public String getUserName() {
 		return userName;
 	}
@@ -74,20 +73,12 @@ public class AutorisasiData implements Serializable {
 	public AutorisasiData() {
 	}
 
-//	public String getId() {
-//		return id;
-//	}
-//
-//	public void setId(String id) {
-//		this.id = id;
-//	}
-
-	public String getIdLama() {
-		return idLama;
+	public String getId() {
+		return id;
 	}
 
-	public void setIdLama(String idLama) {
-		this.idLama = idLama;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public HakAksesData getHakAkses() {
@@ -105,7 +96,7 @@ public class AutorisasiData implements Serializable {
 	public void setStatusInternal(Boolean statusInternal) {
 		this.statusInternal = statusInternal;
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

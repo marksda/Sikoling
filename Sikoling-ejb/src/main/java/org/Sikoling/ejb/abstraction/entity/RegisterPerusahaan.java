@@ -7,17 +7,23 @@ import java.util.Objects;
 public class RegisterPerusahaan implements Serializable {
 
 	private static final long serialVersionUID = -4021307873874947821L;
+	private final String id;
 	private final LocalDate tanggalRegistrasi;
-	private final Person kreator;
-	private final Person verifikator;
+	private final Authority kreator;
+	private final Authority verifikator;
 	private final Perusahaan perusahaan;
 	
-	public RegisterPerusahaan(LocalDate tanggalRegistrasi, Person kreator, Person verifikator, Perusahaan perusahaan) {
-		super();
+	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Authority kreator, 
+			Authority verifikator, Perusahaan perusahaan) {
+		this.id = id;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.kreator = kreator;
 		this.verifikator = verifikator;
 		this.perusahaan = perusahaan;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public static long getSerialversionuid() {
@@ -28,11 +34,11 @@ public class RegisterPerusahaan implements Serializable {
 		return tanggalRegistrasi;
 	}
 
-	public Person getKreator() {
+	public Authority getKreator() {
 		return kreator;
 	}
 
-	public Person getVerifikator() {
+	public Authority getVerifikator() {
 		return verifikator;
 	}
 
@@ -44,7 +50,7 @@ public class RegisterPerusahaan implements Serializable {
 	public int hashCode() {
 		int hash = 91;
 		hash = 131 * hash + Objects.hashCode(perusahaan.getId());
-		hash = 131 * hash + Objects.hashCode(kreator.getNik());
+		hash = 131 * hash + Objects.hashCode(kreator.getId());
 		return hash;
 	}
 

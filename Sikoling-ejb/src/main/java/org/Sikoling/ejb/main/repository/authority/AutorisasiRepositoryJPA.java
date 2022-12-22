@@ -158,10 +158,8 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		hakAksesData.setNama(hakAkses.getNama());
 		hakAksesData.setKeterangan(hakAkses.getKeterangan());
 		
-//		autorisasiData.setId(t.getId());
-		autorisasiData.setIdLama(t.getIdLama());
+
 		autorisasiData.setPersonData(personData);
-		autorisasiData.setIdLama(t.getIdLama());
 		autorisasiData.setHakAkses(hakAksesData);
 		autorisasiData.setStatusInternal(t.isStatusInternal());
 		autorisasiData.setIsVerified(t.isVerified());
@@ -202,8 +200,12 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				d.getHakAkses().getKeterangan());
 		
 		return new Authority(
-				person, d.getIdLama(), hakAkses, 
-				d.getStatusInternal(), d.getIsVerified(), d.getUserName());
+				d.getId(),
+				person, 
+				hakAkses, 
+				d.getStatusInternal(), 
+				d.getIsVerified(), 
+				d.getUserName());
 	}
 
 	

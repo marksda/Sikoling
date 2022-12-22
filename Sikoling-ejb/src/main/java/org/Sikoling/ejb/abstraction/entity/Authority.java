@@ -6,18 +6,18 @@ import java.util.Objects;
 public class Authority implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
+	private final String id;
 	private final Person person;
-	private final String idLama;
 	private final HakAkses hakAkses;
 	private final boolean statusInternal;
 	private final boolean isVerified;
 	private final String userName;
 	
 	public Authority(
-			Person person, String idLama, HakAkses hakAkses, 
+			String id, Person person, HakAkses hakAkses, 
 			boolean statusInternal, boolean isVerified,	String userName) {
+		this.id = id;
 		this.person = person;
-		this.idLama = idLama;
 		this.hakAkses = hakAkses;
 		this.statusInternal = statusInternal;
 		this.isVerified = isVerified;
@@ -27,13 +27,13 @@ public class Authority implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public String getId() {
+		return id;
+	}
 
 	public Person getPerson() {
 		return person;
-	}
-
-	public String getIdLama() {
-		return idLama;
 	}
 
 	public HakAkses getHakAkses() {
