@@ -210,7 +210,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 					.getSingleResult();
 	        
 	        token = new Token(
-	        		autorisasiData.getPersonData().getId(), 
+	        		autorisasiData.getId(), 
 	        		getClaim(claims, "given_name"), //+ " " + getClaim(claims, "family_name"), 
 	        		getClaim(claims, "email"), 
 	        		map.get("access_token"), 
@@ -253,7 +253,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 				.getSingleResult();
         
 		Token token = new Token(
-        		autorisasiData.getPersonData().getId(), 
+        		autorisasiData.getId(), 
         		getClaim(claims, "given_name"), 
         		getClaim(claims, "email"), 
         		map.get("access_token"), 

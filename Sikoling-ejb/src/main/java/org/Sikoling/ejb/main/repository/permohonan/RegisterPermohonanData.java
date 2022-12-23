@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Table(name="transaksi.tbl_permohonan")
 @NamedQueries({
 	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p"),
-	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p WHERE p.npwp = :npwp")
+	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p WHERE p.autorisasiData.personData.id = :npwp")
 })
 public class RegisterPermohonanData implements Serializable {
 
@@ -27,18 +27,18 @@ public class RegisterPermohonanData implements Serializable {
 	@Id
 	private String id;
 	
-	@JoinColumn(name="kategori_permohonan", referencedColumnName = "id", insertable = true, updatable = false)
+	@JoinColumn(name="kategori_permohonan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private KategoriPermohonanData kategoriPermohonanData;
+	private KategoriPermohonanData kategoriPermohonanData;	
 	
 	@Column(name="tanggal_registrasi")
 	private LocalDate tanggalRegistrasi;	
 	
-	@JoinColumn(name="perusahaan", referencedColumnName = "id", insertable = true, updatable = false)
+	@JoinColumn(name="perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private PerusahaanData perusahaanData;
 	
-	@JoinColumn(name="pengakses", referencedColumnName = "user_name", insertable = true, updatable = false)
+	@JoinColumn(name="pengakses", referencedColumnName = "user_name", insertable = true, updatable = true)
 	@ManyToOne
 	private AutorisasiData autorisasiData;
 

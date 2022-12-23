@@ -75,14 +75,14 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 	
 	@Override
-	public DeleteResponse deleteLinkKepemilikanPerusahaan(String idAutority, String idPerusahaan) {
+	public DeleteResponse deleteLinkKepemilikanPerusahaan(String idAutority, String idRegisterPerusahaan) {
 		AutorityPerusahaanDataId id = new AutorityPerusahaanDataId();
 		id.setAutority(idAutority);
-		id.setPerusahaan(idPerusahaan);
+		id.setPerusahaan(idRegisterPerusahaan);
 		
-		AutorityPerusahaanData personPerusahaanData = entityManager.find(AutorityPerusahaanData.class, id);
-		entityManager.remove(personPerusahaanData);			
-		return new DeleteResponse(true, idPerusahaan);
+		AutorityPerusahaanData autorityPerusahaanData = entityManager.find(AutorityPerusahaanData.class, id);
+		entityManager.remove(autorityPerusahaanData);			
+		return new DeleteResponse(true, idRegisterPerusahaan);
 	}
 	
 	@Override
@@ -175,7 +175,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				);
 		
 		Perusahaan perusahaan = t.getPerusahaan();
-		registerPerusahaanData.setId(perusahaan.getId());
 		registerPerusahaanData.setNama(perusahaan.getNama());		
 				
 		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
@@ -365,13 +364,13 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 //		}		
 		
 		AutorisasiData kreatorData = d.getKreator();
-		Authority kreator = new Authority(
+		Authority kreator = kreatorData != null ? new Authority(
 				kreatorData.getId(),
 				null, 
 				null, 
 				false, 
 				false, 
-				null);
+				null) : null;
 		
 		AutorisasiData verifikatorData = d.getVerifikator();
 		Authority verifikator = verifikatorData != null ? new Authority(
@@ -390,7 +389,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				kreator, 
 				verifikator, 
 				new Perusahaan( 
-						d.getId(), 
+						d.getNpwp(), 
 						d.getNama(), 
 						modelPerizinan, 
 						skalaUsaha, 
@@ -414,9 +413,9 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 
 	@Override
-	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
-		return entityManager.createNamedQuery("PersonPerusahaanData.findByPemilik", AutorityPerusahaanData.class)
-				.setParameter("personId", idLinkKepemilikan)
+	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idAutorisasi) {
+		return entityManager.createNamedQuery("AutorityPerusahaanData.findByPemilik", AutorityPerusahaanData.class)
+				.setParameter("idAutorisasi", idAutorisasi)
 				.getResultList()
 				.stream()
 				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))
@@ -439,15 +438,15 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		int tahun = LocalDate.now().getYear();
 		String hasil;
 		
-		Query q = entityManager.createQuery("SELECT count(p.id) jml "
-				+ "FROM master.tbl_perusahaan p "
-				+ "WHERE date_part('year', p.tanggal_registrasi) = :tahun");
+		Query q = entityManager.createQuery("SELECT COUNT(p.id) "
+				+ "FROM RegisterPerusahaanData p "
+				+ "WHERE EXTRACT(YEAR FROM p.tanggalRegistrasi) = :tahun");
 		
 		q.setParameter("tahun", tahun);
 		
 		try {
-			int idBaru = (int) q.getSingleResult() + 1;
-			hasil = LPad(Integer.toString(idBaru), 4, '0');
+			Long idBaru = (Long) q.getSingleResult() + 1;
+			hasil = LPad(Long.toString(idBaru), 4, '0');
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {			
 			hasil = "0001";			
@@ -456,7 +455,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 	
 	private String LPad(String str, Integer length, char car) {
-		  return (str + String.format("%" + length + "s", "").replace(" ", String.valueOf(car))).substring(0, length);
+		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
 	}
 	
 }
