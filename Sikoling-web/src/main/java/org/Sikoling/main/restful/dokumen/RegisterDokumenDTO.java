@@ -22,12 +22,14 @@ public class RegisterDokumenDTO implements Serializable {
 	}
 	
 	public RegisterDokumenDTO(RegisterDokumen t) {		
-		this.id = t.getId();
-		this.dokumen = new DokumenDTO(t.getDokumen());
-		this.perusahaan = new PerusahaanDTO(t.getPerusahaan());
-		this.lokasiFile = t.getLokasiFile();
-		this.tanggalRegistrasi = t.getTanggalRegistrasi();
-		this.uploader = new AuthorityDTO(t.getUploader());
+		if(t != null) {
+			this.id = t.getId();
+			this.dokumen = t.getDokumen() != null ? new DokumenDTO(t.getDokumen()) : null;
+			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
+			this.lokasiFile = t.getLokasiFile();
+			this.tanggalRegistrasi = t.getTanggalRegistrasi();
+			this.uploader = t.getUploader() != null ? new AuthorityDTO(t.getUploader()) : null;
+		}
 	}
 	
 	public String getId() {
@@ -133,11 +135,11 @@ public class RegisterDokumenDTO implements Serializable {
 	public RegisterDokumen toRegisterDokumen() {
 		return new RegisterDokumen(
 				id,
-				dokumen.toDokumen(),
-				perusahaan.toPerusahaan(),
+				dokumen != null ? dokumen.toDokumen() : null,
+				perusahaan != null ? perusahaan.toPerusahaan() : null,
 				lokasiFile, 
 				tanggalRegistrasi, 
-				uploader.toAuthority()
+				uploader != null ? uploader.toAuthority() : null
 				);
 	}
 }

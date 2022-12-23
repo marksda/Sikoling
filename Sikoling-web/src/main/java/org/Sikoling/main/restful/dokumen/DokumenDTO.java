@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Dokumen;
 
+import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
 public class DokumenDTO implements Serializable {
@@ -19,10 +20,12 @@ public class DokumenDTO implements Serializable {
 	}
 	
 	public DokumenDTO(Dokumen dokumen) {
-		this.id = dokumen.getId();
-		this.nama = dokumen.getNama();
-		this.kategoriDokumen = new KategoriDokumenDTO(dokumen.getKategoriDokumen());	
-		this.detailAttributeDokumen = dokumen.getDetailAttributeDokumen();
+		if(dokumen != null) {
+			this.id = dokumen.getId();
+			this.nama = dokumen.getNama();
+			this.kategoriDokumen = dokumen.getKategoriDokumen() != null ? new KategoriDokumenDTO(dokumen.getKategoriDokumen()) : null;	
+			this.detailAttributeDokumen = dokumen.getDetailAttributeDokumen() != null ? dokumen.getDetailAttributeDokumen() : Json.createObjectBuilder().build();
+		}
 	}
 	
 	public String getId() {
@@ -101,7 +104,12 @@ public class DokumenDTO implements Serializable {
 	}
 
 	public Dokumen toDokumen() {
-		return new Dokumen(id, nama, kategoriDokumen.toKategoriDokumen(), detailAttributeDokumen);
+		return new Dokumen(
+				id, 
+				nama, 
+				kategoriDokumen != null ? kategoriDokumen.toKategoriDokumen() : null, 
+				detailAttributeDokumen
+				);
 	}
 
 }

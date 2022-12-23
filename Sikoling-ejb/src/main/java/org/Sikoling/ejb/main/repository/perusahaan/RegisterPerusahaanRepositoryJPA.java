@@ -347,6 +347,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 //							);
 //					
 //					registerDokumen = new RegisterDokumen(
+//							item.getId(),
 //							dokumen,
 //							null, 
 //							item.getLokasiFile(), 

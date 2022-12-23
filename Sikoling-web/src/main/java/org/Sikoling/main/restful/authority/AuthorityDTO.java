@@ -20,12 +20,14 @@ public class AuthorityDTO implements Serializable {
 	}
 	
 	public AuthorityDTO(Authority t) {
-		this.id = t.getId();
-		this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
-		this.hakAkses = t.getHakAkses() != null ? new HakAksesDTO(t.getHakAkses()) : null;
-		this.statusInternal = t.isStatusInternal();
-		this.isVerified = t.isVerified();
-		this.userName = t.getUserName();
+		if(t != null) {
+			this.id = t.getId();
+			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
+			this.hakAkses = t.getHakAkses() != null ? new HakAksesDTO(t.getHakAkses()) : null;
+			this.statusInternal = t.isStatusInternal();
+			this.isVerified = t.isVerified();
+			this.userName = t.getUserName();
+		}
 	}
 
 	public PersonDTO getPerson() {

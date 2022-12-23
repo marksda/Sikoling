@@ -19,11 +19,13 @@ public class RegisterPerusahaanDTO implements Serializable {
 	}
 	
 	public RegisterPerusahaanDTO(RegisterPerusahaan t) {
-		this.id = t.getId();
-		this.tanggalRegistrasi = t.getTanggalRegistrasi();
-		this.kreator = t.getKreator() != null ? new AuthorityDTO(t.getKreator()) : null;
-		this.verifikator = t.getVerifikator() != null ? new AuthorityDTO(t.getVerifikator()) : null;
-		this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
+		if(t != null) {
+			this.id = t.getId();
+			this.tanggalRegistrasi = t.getTanggalRegistrasi();
+			this.kreator = t.getKreator() != null ? new AuthorityDTO(t.getKreator()) : null;
+			this.verifikator = t.getVerifikator() != null ? new AuthorityDTO(t.getVerifikator()) : null;
+			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
+		}
 	}
 
 	public LocalDate getTanggalRegistrasi() {
