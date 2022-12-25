@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.dokumen;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;

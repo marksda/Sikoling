@@ -446,7 +446,9 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		q.setParameter("tahun", tahun);
 		
 		try {
-			Long idBaru = (Long) q.getSingleResult() + 1;
+			hasil = (String) q.getSingleResult();
+			hasil = hasil.substring(0, 4);
+			Long idBaru = Long.valueOf(hasil)  + 1;
 			hasil = LPad(Long.toString(idBaru), 4, '0');
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {			

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
 import jakarta.persistence.EntityManager;

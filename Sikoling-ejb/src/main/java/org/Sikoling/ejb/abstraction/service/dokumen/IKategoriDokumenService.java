@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.KategoriDokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 
 public interface IKategoriDokumenService {
 	KategoriDokumen save(KategoriDokumen kategoriDokumen);

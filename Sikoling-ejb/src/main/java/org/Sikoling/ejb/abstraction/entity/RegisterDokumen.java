@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+
 public class RegisterDokumen implements Serializable {	
 	private static final long serialVersionUID = 5607669072989245707L;
 	private final String id;

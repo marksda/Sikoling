@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.AktaPemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPemrakarsa;
 
 public class AktaPemrakarsaDTO implements Serializable {
 

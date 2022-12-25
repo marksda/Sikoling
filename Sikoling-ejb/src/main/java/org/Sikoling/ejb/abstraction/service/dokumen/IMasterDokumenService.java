@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
 public interface IMasterDokumenService {
 	Dokumen save(Dokumen dokumen);

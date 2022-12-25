@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.entity;
+package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,12 +13,15 @@ public class Dokumen implements Serializable {
 	private final KategoriDokumen kategoriDokumen;
 	private final JsonObject detailAttributeDokumen;
 	
+
 	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen) {
+		super();
 		this.id = id;
 		this.nama = nama;
 		this.kategoriDokumen = kategoriDokumen;
 		this.detailAttributeDokumen = detailAttributeDokumen;
 	}
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

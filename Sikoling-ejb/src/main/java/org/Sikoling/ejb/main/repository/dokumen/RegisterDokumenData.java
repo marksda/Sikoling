@@ -13,6 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
@@ -56,7 +57,8 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(mappedBy = "registerDokumenData", fetch = FetchType.LAZY)
 	private RegisterDokumenOssData dokumenOssData;
 	
-	@OneToOne(mappedBy = "registerDokumenData", fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY) 
+	@MapsId
 	private SuratArahanData suratArahanData;
 	
 	public RegisterDokumenData() {
@@ -121,7 +123,15 @@ public class RegisterDokumenData implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+		
+	public SuratArahanData getSuratArahanData() {
+		return suratArahanData;
+	}
+
+	public void setSuratArahanData(SuratArahanData suratArahanData) {
+		this.suratArahanData = suratArahanData;
+	}
+
 	public int hashCode() {
 		int hash = 71;
 		hash = 13 * hash + Objects.hashCode(this.perusahaanData.getId());

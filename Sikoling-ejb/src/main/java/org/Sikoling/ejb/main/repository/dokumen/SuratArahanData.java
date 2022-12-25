@@ -6,10 +6,8 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,9 +20,7 @@ public class SuratArahanData implements Serializable {
 	private static final long serialVersionUID = -3597035130639423972L;
 	
 	@Id
-	@JoinColumn(name = "id", referencedColumnName = "id", insertable = true, updatable = true)
-	@OneToOne
-	private RegisterDokumenData registerDokumenData;
+	private String id;
 	
 	@Column(name = "no_surat")
 	private String noSurat;

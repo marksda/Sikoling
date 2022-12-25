@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.entity;
+package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
 
