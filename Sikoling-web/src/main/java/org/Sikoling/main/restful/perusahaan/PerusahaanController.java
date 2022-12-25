@@ -182,7 +182,6 @@ public class PerusahaanController {
 	
 	@Path("kepemilikan/{idLinkKepemilikan}")
 	@GET
-//    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
