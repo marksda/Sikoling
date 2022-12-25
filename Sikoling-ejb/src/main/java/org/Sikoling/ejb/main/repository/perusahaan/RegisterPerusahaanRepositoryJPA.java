@@ -439,7 +439,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		int tahun = LocalDate.now().getYear();
 		String hasil;
 		
-		Query q = entityManager.createQuery("SELECT COUNT(p.id) "
+		Query q = entityManager.createQuery("SELECT MAX(p.id) "
 				+ "FROM RegisterPerusahaanData p "
 				+ "WHERE EXTRACT(YEAR FROM p.tanggalRegistrasi) = :tahun");
 		

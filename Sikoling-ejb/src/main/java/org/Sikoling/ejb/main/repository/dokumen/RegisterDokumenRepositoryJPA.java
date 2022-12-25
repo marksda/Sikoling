@@ -387,11 +387,11 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		q.setParameter("tahun", tahun);
 		
 		try {
-			int idBaru = (int) q.getSingleResult() + 1;
-			hasil = LPad(Integer.toString(idBaru), 4, '0');
+			Long idBaru = (Long) q.getSingleResult() + 1;
+			hasil = LPad(Long.toString(idBaru), 6, '0');
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {	
-			hasil = "0001";			
+			hasil = "000001";			
 			return hasil.concat(Integer.toString(tahun));
 		}		
 	}
