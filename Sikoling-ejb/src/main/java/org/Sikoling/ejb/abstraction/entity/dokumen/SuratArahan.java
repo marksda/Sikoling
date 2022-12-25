@@ -2,6 +2,7 @@ package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import jakarta.json.JsonObject;
 
@@ -43,7 +44,53 @@ public class SuratArahan extends Dokumen implements Serializable {
 
 	public String getPerihalSurat() {
 		return perihalSurat;
+	}	
+
+	@Override
+	public int hashCode() {
+		int hash = 117;
+        hash = 121 * hash + Objects.hashCode(this.noSurat);
+        hash = 121 * hash + Objects.hashCode(this.tanggalSurat.toString());
+        return hash;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final SuratArahan other = (SuratArahan) obj;
+        
+        if (!this.getId().equalsIgnoreCase(other.getId())) {
+            return false;
+        }
+        
+        if (!this.noSurat.equalsIgnoreCase(other.getNoSurat())) {
+            return false;
+        }
+
+        return true;
+	}
+
+	@Override
+	public String toString() {
+		return "SuratArahan{"
+				.concat("id=")
+				.concat(this.getId())
+				.concat(", nomor=")
+				.concat(this.noSurat)
+				.concat(", tanggal=")
+				.concat(tanggalSurat.toString())
+				.concat("}");
+	}
+		
 }

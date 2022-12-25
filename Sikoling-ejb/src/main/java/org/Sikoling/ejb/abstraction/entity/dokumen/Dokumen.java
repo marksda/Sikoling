@@ -13,7 +13,6 @@ public class Dokumen implements Serializable {
 	private final KategoriDokumen kategoriDokumen;
 	private final JsonObject detailAttributeDokumen;
 	
-
 	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen) {
 		super();
 		this.id = id;
@@ -21,7 +20,6 @@ public class Dokumen implements Serializable {
 		this.kategoriDokumen = kategoriDokumen;
 		this.detailAttributeDokumen = detailAttributeDokumen;
 	}
-
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

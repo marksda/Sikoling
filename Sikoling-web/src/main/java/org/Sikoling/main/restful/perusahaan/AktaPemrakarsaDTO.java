@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPemrakarsa;
+import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 
 public class AktaPemrakarsaDTO implements Serializable {
 
@@ -16,7 +16,7 @@ public class AktaPemrakarsaDTO implements Serializable {
 	public AktaPemrakarsaDTO() {		
 	}
 	
-	public AktaPemrakarsaDTO(AktaPemrakarsa aktaPemrakarsa) {
+	public AktaPemrakarsaDTO(AktaPendirian aktaPemrakarsa) {
 		this.nomor = aktaPemrakarsa.getNomor();
 		this.tanggal = aktaPemrakarsa.getTanggal();
 		this.namaNotaris = aktaPemrakarsa.getNamaNotaris();
@@ -102,7 +102,7 @@ public class AktaPemrakarsaDTO implements Serializable {
 		return "AktaPemrakarsaDTO{" + "nomor=" + nomor + ", namaNotaris=" + namaNotaris + ", tanggal=" + tanggal.toString() + "}";	  
 	}
 
-	public AktaPemrakarsa toAktaPemrakarsa() {
-		return new AktaPemrakarsa(nomor, tanggal, namaNotaris);
+	public AktaPendirian toAktaPemrakarsa() {
+		return new AktaPendirian(nomor, tanggal, namaNotaris);
 	}
 }

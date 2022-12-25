@@ -4,21 +4,30 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.Sikoling.ejb.abstraction.entity.Jabatan;
+import org.Sikoling.ejb.abstraction.entity.Person;
 
-public class AktaPemrakarsa implements Serializable {
+import jakarta.json.JsonObject;
 
-	private static final long serialVersionUID = -3186081818421591782L;
+
+public class AktaPendirian extends Dokumen implements Serializable {
+	private static final long serialVersionUID = -3186081818421591782L;	
 	private final String nomor;
 	private final Date tanggal;
 	private final String namaNotaris;
+	private final Person penanggungJawab;
+	private final Jabatan jabatanPenanggungJawab;
 	
-	public AktaPemrakarsa(String nomor, Date tanggal, String namaNotaris) {
-		super();
+	public AktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen,
+			String nomor, Date tanggal, String namaNotaris, Person penanggungJawab, Jabatan jabatanPenanggungJawab) {
+		super(id, nama, kategoriDokumen, detailAttributeDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.namaNotaris = namaNotaris;
-	}
-
+		this.penanggungJawab = penanggungJawab;
+		this.jabatanPenanggungJawab = jabatanPenanggungJawab;
+	}	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -35,11 +44,18 @@ public class AktaPemrakarsa implements Serializable {
 		return namaNotaris;
 	}
 
+	public Person getPenanggungJawab() {
+		return penanggungJawab;
+	}
+
+	public Jabatan getJabatanPenanggungJawab() {
+		return jabatanPenanggungJawab;
+	}
+
 	public int hashCode() {
 		int hash = 17;
         hash = 121 * hash + Objects.hashCode(this.nomor);
         hash = 121 * hash + Objects.hashCode(this.tanggal.toString());
-        hash = 121 * hash + Objects.hashCode(this.nomor);
         return hash;
 	}
 
@@ -57,7 +73,7 @@ public class AktaPemrakarsa implements Serializable {
             return false;
         }
         
-        final AktaPemrakarsa other = (AktaPemrakarsa) obj;
+        final AktaPendirian other = (AktaPendirian) obj;
         
         if (!this.nomor.equalsIgnoreCase(other.nomor)) {
             return false;
@@ -76,7 +92,14 @@ public class AktaPemrakarsa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AktaPemrakarsa{" + "nomor=" + nomor + ", namaNotaris=" + namaNotaris + ", tanggal=" + tanggal.toString() + "}";
+		return "AktaPemrakarsa{"
+				.concat("id=")
+				.concat(this.getId())
+				.concat(", nomor=")
+				.concat(this.nomor)
+				.concat(", tanggal=")
+				.concat(tanggal.toString())
+				.concat("}");
 	}
 		
 }
