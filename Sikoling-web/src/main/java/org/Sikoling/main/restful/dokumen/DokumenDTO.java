@@ -2,11 +2,7 @@ package org.Sikoling.main.restful.dokumen;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
 
 public class DokumenDTO implements Serializable {
 
@@ -14,7 +10,6 @@ public class DokumenDTO implements Serializable {
 	private String id;
 	private String nama;
 	private KategoriDokumenDTO kategoriDokumen;
-	private JsonObject detailAttributeDokumen;
 	
 	public DokumenDTO() {
 	}
@@ -24,7 +19,6 @@ public class DokumenDTO implements Serializable {
 			this.id = dokumen.getId();
 			this.nama = dokumen.getNama();
 			this.kategoriDokumen = dokumen.getKategoriDokumen() != null ? new KategoriDokumenDTO(dokumen.getKategoriDokumen()) : null;	
-			this.detailAttributeDokumen = dokumen.getDetailAttributeDokumen() != null ? dokumen.getDetailAttributeDokumen() : Json.createObjectBuilder().build();
 		}
 	}
 	
@@ -50,14 +44,6 @@ public class DokumenDTO implements Serializable {
 
 	public void setKategoriDokumen(KategoriDokumenDTO kategoriDokumen) {
 		this.kategoriDokumen = kategoriDokumen;
-	}
-
-	public JsonObject getDetailAttributeDokumen() {
-		return detailAttributeDokumen;
-	}
-
-	public void setDetailAttributeDokumen(JsonObject detailAttributeDokumen) {
-		this.detailAttributeDokumen = detailAttributeDokumen;
 	}
 
 	public static long getSerialversionuid() {
@@ -107,8 +93,7 @@ public class DokumenDTO implements Serializable {
 		return new Dokumen(
 				id, 
 				nama, 
-				kategoriDokumen != null ? kategoriDokumen.toKategoriDokumen() : null, 
-				detailAttributeDokumen
+				kategoriDokumen != null ? kategoriDokumen.toKategoriDokumen() : null
 				);
 	}
 

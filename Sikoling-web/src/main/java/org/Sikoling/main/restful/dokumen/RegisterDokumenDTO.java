@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
 
@@ -24,7 +26,13 @@ public class RegisterDokumenDTO implements Serializable {
 	public RegisterDokumenDTO(RegisterDokumen t) {		
 		if(t != null) {
 			this.id = t.getId();
-			this.dokumen = t.getDokumen() != null ? new DokumenDTO(t.getDokumen()) : null;
+			Dokumen dokumen = t.getDokumen() != null ? t.getDokumen() : null;
+			if(dokumen instanceof SuratArahan) {
+				this.dokumen = new SuratArahanDTO((SuratArahan) dokumen);
+			}
+			else {
+				this.dokumen = null;
+			}
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 			this.lokasiFile = t.getLokasiFile();
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();

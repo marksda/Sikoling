@@ -45,7 +45,7 @@ public class RegisterPerusahaanData implements Serializable {
 	private PelakuUsahaData pelakuUsahaData; 
 	
 	@Column(name="status_verifikasi")
-	private boolean statusVerifikasi;
+	private Boolean statusVerifikasi;
 	
 	@Embedded
 	private KontakPerusahaanData kontakPerusahaanData;
@@ -152,11 +152,11 @@ public class RegisterPerusahaanData implements Serializable {
 		this.pelakuUsahaData = pelakuUsahaData;
 	}
 
-	public boolean getStatusVerifikasi() {
+	public Boolean getStatusVerifikasi() {
 		return statusVerifikasi;
 	}
 
-	public void setStatusVerifikasi(boolean statusVerifikasi) {
+	public void setStatusVerifikasi(Boolean statusVerifikasi) {
 		this.statusVerifikasi = statusVerifikasi;
 	}
 

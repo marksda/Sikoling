@@ -15,11 +15,11 @@ public class Perusahaan implements Serializable {
 	private final Alamat alamat;
 	private final Kontak kontak;
 	private final List<RegisterDokumen> daftarRegisterDokumen;
-	private final boolean statusVerifikasi;
+	private final Boolean statusVerifikasi;
 
 	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
 			PelakuUsaha pelakuUsaha, Alamat alamat, Kontak kontak, List<RegisterDokumen> daftarRegisterDokumen,
-			boolean statusVerifikasi) {
+			Boolean statusVerifikasi) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -68,7 +68,7 @@ public class Perusahaan implements Serializable {
 		return daftarRegisterDokumen;
 	}
 
-	public boolean isStatusVerifikasi() {
+	public Boolean isStatusVerifikasi() {
 		return statusVerifikasi;
 	}
 	

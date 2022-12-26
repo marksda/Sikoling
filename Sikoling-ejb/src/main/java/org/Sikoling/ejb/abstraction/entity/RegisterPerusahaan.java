@@ -48,9 +48,8 @@ public class RegisterPerusahaan implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		int hash = 91;
-		hash = 131 * hash + Objects.hashCode(perusahaan.getId());
-		hash = 131 * hash + Objects.hashCode(kreator.getId());
+		int hash = 41;
+		hash = 131 * hash + Objects.hashCode(id);
 		return hash;
 	}
 
@@ -69,7 +68,7 @@ public class RegisterPerusahaan implements Serializable {
         }
         
         final RegisterPerusahaan other = (RegisterPerusahaan) obj;
-        if ( !this.perusahaan.getId().equals(other.getPerusahaan().getId()) ) {
+        if ( !this.id.equals(other.getId()) ) {
             return false;
         }
         
@@ -78,8 +77,8 @@ public class RegisterPerusahaan implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RegisterPerusahaan { npwp="
-				.concat(perusahaan.getId())
+		return "RegisterPerusahaan { id="
+				.concat(id)
 				.concat(", nama=")
 				.concat(perusahaan.getNama())
 				.concat(". tanggal registrasi =")

@@ -9,7 +9,7 @@ public class SuratArahan extends Dokumen implements Serializable {
 	private final String noSurat;
 	private final LocalDate tanggalSurat;
 	private final String perihalSurat;
-	private String uraianKegiatan;	
+	private final String uraianKegiatan;	
 	
 	public SuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, 
 			String noSurat, LocalDate tanggalSurat, String perihalSurat, String uraianKegiatan) {
@@ -22,10 +22,6 @@ public class SuratArahan extends Dokumen implements Serializable {
 
 	public String getUraianKegiatan() {
 		return uraianKegiatan;
-	}
-
-	public void setUraianKegiatan(String uraianKegiatan) {
-		this.uraianKegiatan = uraianKegiatan;
 	}
 
 	public static long getSerialversionuid() {
