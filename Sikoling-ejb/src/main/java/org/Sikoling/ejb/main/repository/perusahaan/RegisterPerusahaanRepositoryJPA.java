@@ -151,22 +151,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		
 	}
 	
-//	private Set<RegisterKbliData> convertJsonArrayKbliToDaftarRegisterKbliData(JsonArray daftarKbli) {
-//		Iterator<JsonValue> iteratorDaftarKbli = daftarKbli.iterator();
-//		
-//		Set<RegisterKbliData> daftarKbliData = new HashSet<RegisterKbliData>();
-//		while (iteratorDaftarKbli.hasNext()) {
-//			 JsonObject kbliJsonObject = iteratorDaftarKbli.next().asJsonObject();
-//			 RegisterKbliData registerKbliData = new RegisterKbliData();
-//			 KbliData kbliData = new KbliData();
-//			 kbliData.setId(kbliJsonObject.getString("kode"));
-//			 registerKbliData.setKbliData(kbliData);				 
-//			 daftarKbliData.add(registerKbliData);
-//		}
-//		
-//		return daftarKbliData;
-//	}
-	
 	private RegisterPerusahaanData convertRegisterPerusahaanToRegisterPerusahaanData(RegisterPerusahaan t) {	
 		
 		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();	
@@ -422,19 +406,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))
 				.collect(Collectors.toList());
 	}
-		
-//	private boolean isEksisData(String npwp) {
-//		int hasil = entityManager.createNamedQuery("RegisterPerusahaanData.findByNpwp", RegisterPerusahaanData.class)
-//				.setParameter("npwp", npwp)
-//				.getFirstResult();
-//		if(hasil == 0) {
-//			return false;
-//		}
-//		else {
-//			return true;
-//		}
-//	}
-		
+			
 	private String getGenerateIdRegisterPerusahaan() {
 		int tahun = LocalDate.now().getYear();
 		String hasil;

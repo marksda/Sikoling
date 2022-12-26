@@ -33,5 +33,52 @@ public class SuratArahanData implements Serializable {
 	
 	@Column(name = "uraian_kegiatan")
 	private String uraianKegiatan;
+
+	public SuratArahanData() {
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNoSurat() {
+		return noSurat;
+	}
+
+	public void setNoSurat(String noSurat) {
+		this.noSurat = noSurat;
+	}
+
+	public LocalDate getTanggalSurat() {
+		return tanggalSurat;
+	}
+
+	public void setTanggalSurat(LocalDate tanggalSurat) {
+		this.tanggalSurat = tanggalSurat;
+	}
+
+	public String getPerihalSurat() {
+		return perihalSurat;
+	}
+
+	public void setPerihalSurat(String perihalSurat) {
+		this.perihalSurat = perihalSurat;
+	}
+
+	public String getUraianKegiatan() {
+		return uraianKegiatan;
+	}
+
+	public void setUraianKegiatan(String uraianKegiatan) {
+		this.uraianKegiatan = uraianKegiatan;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 }

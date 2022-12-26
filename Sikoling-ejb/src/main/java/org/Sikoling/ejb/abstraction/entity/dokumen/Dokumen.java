@@ -3,22 +3,17 @@ package org.Sikoling.ejb.abstraction.entity.dokumen;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.json.JsonObject;
-
 public class Dokumen implements Serializable {
 	
 	private static final long serialVersionUID = -1869365745189974891L;
 	private final String id;
 	private final String nama;	
 	private final KategoriDokumen kategoriDokumen;
-	private final JsonObject detailAttributeDokumen;
 	
-	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen) {
-		super();
+	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen) {
 		this.id = id;
 		this.nama = nama;
 		this.kategoriDokumen = kategoriDokumen;
-		this.detailAttributeDokumen = detailAttributeDokumen;
 	}
 
 	public static long getSerialversionuid() {
@@ -35,10 +30,6 @@ public class Dokumen implements Serializable {
 
 	public KategoriDokumen getKategoriDokumen() {
 		return kategoriDokumen;
-	}
-		
-	public JsonObject getDetailAttributeDokumen() {
-		return detailAttributeDokumen;
 	}
 
 	public int hashCode() {

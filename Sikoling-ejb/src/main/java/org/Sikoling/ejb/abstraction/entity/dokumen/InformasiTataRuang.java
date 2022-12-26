@@ -4,17 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import jakarta.json.JsonObject;
-
 public class InformasiTataRuang extends Dokumen implements Serializable {
 
-private static final long serialVersionUID = 6100682151404501478L;
+	private static final long serialVersionUID = 6100682151404501478L;
 	private final String nomor;
 	private final LocalDate tanggal;
-	
-	public InformasiTataRuang(String id, String nama, KategoriDokumen kategoriDokumen,
-			JsonObject detailAttributeDokumen, String nomor, LocalDate tanggal) {
-		super(id, nama, kategoriDokumen, detailAttributeDokumen);
+
+	public InformasiTataRuang(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
+			LocalDate tanggal) {
+		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 	}

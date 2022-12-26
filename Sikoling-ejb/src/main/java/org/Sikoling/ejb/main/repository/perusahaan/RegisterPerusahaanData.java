@@ -152,7 +152,7 @@ public class RegisterPerusahaanData implements Serializable {
 		this.pelakuUsahaData = pelakuUsahaData;
 	}
 
-	public boolean isStatusVerifikasi() {
+	public boolean getStatusVerifikasi() {
 		return statusVerifikasi;
 	}
 

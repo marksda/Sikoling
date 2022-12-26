@@ -7,9 +7,6 @@ import java.util.Objects;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.Person;
 
-import jakarta.json.JsonObject;
-
-
 public class AktaPendirian extends Dokumen implements Serializable {
 	private static final long serialVersionUID = -3186081818421591782L;	
 	private final String nomor;
@@ -18,16 +15,16 @@ public class AktaPendirian extends Dokumen implements Serializable {
 	private final Person penanggungJawab;
 	private final Jabatan jabatanPenanggungJawab;
 	
-	public AktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen,
-			String nomor, Date tanggal, String namaNotaris, Person penanggungJawab, Jabatan jabatanPenanggungJawab) {
-		super(id, nama, kategoriDokumen, detailAttributeDokumen);
+	public AktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, Date tanggal,
+			String namaNotaris, Person penanggungJawab, Jabatan jabatanPenanggungJawab) {
+		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.namaNotaris = namaNotaris;
 		this.penanggungJawab = penanggungJawab;
 		this.jabatanPenanggungJawab = jabatanPenanggungJawab;
-	}	
-	
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

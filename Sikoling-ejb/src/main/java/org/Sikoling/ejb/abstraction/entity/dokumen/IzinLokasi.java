@@ -4,17 +4,21 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.Sikoling.ejb.abstraction.entity.Alamat;
 
-public class RekomendasiUKLUPL extends Dokumen implements Serializable {
-	
-	private static final long serialVersionUID = 1698034215951652720L;
+public class IzinLokasi extends Dokumen implements Serializable {
+
+	private static final long serialVersionUID = -989821650490601749L;
 	private final String nomor;
 	private final LocalDate tanggal;
+	private final Alamat lokasiKegiatan;	
 	
-	public RekomendasiUKLUPL(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal) {
+	public IzinLokasi(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
+			Alamat lokasiKegiatan) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
+		this.lokasiKegiatan = lokasiKegiatan;
 	}
 
 	public static long getSerialversionuid() {
@@ -27,7 +31,12 @@ public class RekomendasiUKLUPL extends Dokumen implements Serializable {
 
 	public LocalDate getTanggal() {
 		return tanggal;
-	}	
+	}
+
+	public Alamat getLokasiKegiatan() {
+		return lokasiKegiatan;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -51,7 +60,7 @@ public class RekomendasiUKLUPL extends Dokumen implements Serializable {
             return false;
         }
         
-        final RekomendasiUKLUPL other = (RekomendasiUKLUPL) obj;
+        final IzinLokasi other = (IzinLokasi) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -66,11 +75,12 @@ public class RekomendasiUKLUPL extends Dokumen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RekomendasiUKLUPL{ id=" 
+		return "IzinLokasi{ id=" 
 				.concat(this.getId())
 				.concat(", nomor=")
 				.concat(nomor)
 				.concat("}");
 	}
+	
 	
 }

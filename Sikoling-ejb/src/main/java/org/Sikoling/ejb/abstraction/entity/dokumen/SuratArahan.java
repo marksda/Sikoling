@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import jakarta.json.JsonObject;
-
 public class SuratArahan extends Dokumen implements Serializable {
 	private static final long serialVersionUID = 751126801061108282L;
 	private final String noSurat;
@@ -13,9 +11,9 @@ public class SuratArahan extends Dokumen implements Serializable {
 	private final String perihalSurat;
 	private String uraianKegiatan;	
 	
-	public SuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, JsonObject detailAttributeDokumen,
+	public SuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, 
 			String noSurat, LocalDate tanggalSurat, String perihalSurat, String uraianKegiatan) {
-		super(id, nama, kategoriDokumen, detailAttributeDokumen);
+		super(id, nama, kategoriDokumen);
 		this.noSurat = noSurat;
 		this.tanggalSurat = tanggalSurat;
 		this.perihalSurat = perihalSurat;

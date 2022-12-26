@@ -103,6 +103,7 @@ public class AktaPemrakarsaDTO implements Serializable {
 	}
 
 	public AktaPendirian toAktaPemrakarsa() {
-		return new AktaPendirian(nomor, tanggal, namaNotaris);
+//		return new AktaPendirian(nomor, tanggal, namaNotaris);
+		return null;
 	}
 }

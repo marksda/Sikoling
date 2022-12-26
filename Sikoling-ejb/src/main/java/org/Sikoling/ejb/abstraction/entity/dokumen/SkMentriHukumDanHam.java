@@ -4,21 +4,17 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import jakarta.json.JsonObject;
-
 public class SkMentriHukumDanHam extends Dokumen implements Serializable {
 	
-	private static final long serialVersionUID = 1335670893256866084L;
-	
+	private static final long serialVersionUID = 1335670893256866084L;	
 	private final String nomor;
 	private final LocalDate tanggal;
 	private final Long modalDasar;
 	private final Long modalDitempatkan;
 	
-	public SkMentriHukumDanHam(String id, String nama, KategoriDokumen kategoriDokumen,
-			JsonObject detailAttributeDokumen, String nomor, LocalDate tanggal, Long modalDasar,
-			Long modalDitempatkan) {
-		super(id, nama, kategoriDokumen, detailAttributeDokumen);
+	public SkMentriHukumDanHam(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
+			Long modalDasar, Long modalDitempatkan) {
+		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.modalDasar = modalDasar;

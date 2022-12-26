@@ -83,7 +83,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 												kategoriDokumenData.getId(), 
 												kategoriDokumenData.getNama(), 
 												kategoriDokumenData.getParent());
-		return new Dokumen(d.getId(), d.getNama(), kategoriDokumen, null);
+		return new Dokumen(d.getId(), d.getNama(), kategoriDokumen);
 	}
 	
 	private MasterDokumenData convertDokumenToDokumenData(Dokumen t) {

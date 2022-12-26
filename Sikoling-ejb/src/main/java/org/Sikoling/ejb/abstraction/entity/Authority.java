@@ -9,13 +9,13 @@ public class Authority implements Serializable {
 	private final String id;
 	private final Person person;
 	private final HakAkses hakAkses;
-	private final boolean statusInternal;
-	private final boolean isVerified;
+	private final Boolean statusInternal;
+	private final Boolean isVerified;
 	private final String userName;
 	
 	public Authority(
 			String id, Person person, HakAkses hakAkses, 
-			boolean statusInternal, boolean isVerified,	String userName) {
+			Boolean statusInternal, Boolean isVerified,	String userName) {
 		this.id = id;
 		this.person = person;
 		this.hakAkses = hakAkses;
@@ -40,11 +40,11 @@ public class Authority implements Serializable {
 		return hakAkses;
 	}
 
-	public boolean isStatusInternal() {
+	public Boolean isStatusInternal() {
 		return statusInternal;
 	}
 
-	public boolean isVerified() {
+	public Boolean isVerified() {
 		return isVerified;
 	}
 

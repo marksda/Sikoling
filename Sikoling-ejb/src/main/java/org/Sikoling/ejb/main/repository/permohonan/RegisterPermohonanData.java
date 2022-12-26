@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
-import org.Sikoling.ejb.main.repository.perusahaan.PerusahaanData;
+import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,7 +39,7 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@JoinColumn(name="perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PerusahaanData perusahaanData;
+	private RegisterPerusahaanData perusahaanData;
 	
 	@JoinColumn(name="pengakses", referencedColumnName = "user_name", insertable = true, updatable = true)
 	@ManyToOne
@@ -82,11 +83,11 @@ public class RegisterPermohonanData implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public PerusahaanData getPerusahaanData() {
+	public RegisterPerusahaanData getPerusahaanData() {
 		return perusahaanData;
 	}
 
-	public void setPerusahaanData(PerusahaanData perusahaanData) {
+	public void setPerusahaanData(RegisterPerusahaanData perusahaanData) {
 		this.perusahaanData = perusahaanData;
 	}
 
