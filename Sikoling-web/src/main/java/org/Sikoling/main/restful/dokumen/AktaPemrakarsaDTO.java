@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.perusahaan;
+package org.Sikoling.main.restful.dokumen;
 
 import java.io.Serializable;
 import java.util.Date;
