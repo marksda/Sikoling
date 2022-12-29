@@ -1,67 +1,87 @@
 package org.Sikoling.main.restful.dokumen;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+import org.Sikoling.main.restful.perusahaan.PegawaiDTO;
 
-public class AktaPemrakarsaDTO implements Serializable {
+public class AktaPendirianDTO extends DokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = 6255749816920528800L;
 	private String nomor;
-	private Date tanggal;
+	private LocalDate tanggal;
 	private String namaNotaris;
+	private PegawaiDTO pegawai;
 	
-	public AktaPemrakarsaDTO() {		
+	public AktaPendirianDTO() {		
 	}
 	
-	public AktaPemrakarsaDTO(AktaPendirian aktaPemrakarsa) {
-		this.nomor = aktaPemrakarsa.getNomor();
-		this.tanggal = aktaPemrakarsa.getTanggal();
-		this.namaNotaris = aktaPemrakarsa.getNamaNotaris();
+	public AktaPendirianDTO(AktaPendirian t) {
+		super(t != null ? new Dokumen(
+				t.getId(), 
+				t.getNama(), 
+				null
+				) : null);
+		
+		if(t != null) {
+			this.nomor = t.getNomor();
+			this.tanggal = t.getTanggal();
+			this.namaNotaris = t.getNamaNotaris();
+		}		
 	}
-	
-	public AktaPemrakarsaDTO(String nomor, Date tanggal, String namaNotaris) {
-		super();
-		this.nomor = nomor;
-		this.tanggal = tanggal;
-		this.namaNotaris = namaNotaris;
-	}
-
+		
 	public String getNomor() {
 		return nomor;
 	}
 
+	
 	public void setNomor(String nomor) {
 		this.nomor = nomor;
 	}
 
-	public Date getTanggal() {
+	
+	public LocalDate getTanggal() {
 		return tanggal;
 	}
 
-	public void setTanggal(Date tanggal) {
+	
+	public void setTanggal(LocalDate tanggal) {
 		this.tanggal = tanggal;
 	}
 
+	
 	public String getNamaNotaris() {
 		return namaNotaris;
 	}
 
+	
 	public void setNamaNotaris(String namaNotaris) {
 		this.namaNotaris = namaNotaris;
 	}
 
+	
+	public PegawaiDTO getPegawai() {
+		return pegawai;
+	}
+
+	
+	public void setPegawai(PegawaiDTO pegawai) {
+		this.pegawai = pegawai;
+	}
+
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
+	}
+
 	
+	@Override
 	public int hashCode() {
-		int hash = 19;
-        hash = 121 * hash + Objects.hashCode(this.nomor);
-        hash = 121 * hash + Objects.hashCode(this.tanggal.toString());
-        hash = 121 * hash + Objects.hashCode(this.nomor);
+		int hash = 191;
+        hash = 121 * hash + Objects.hashCode(this.getId());
         return hash;
 	}
 
@@ -80,17 +100,9 @@ public class AktaPemrakarsaDTO implements Serializable {
             return false;
         }
         
-        final AktaPemrakarsaDTO other = (AktaPemrakarsaDTO) obj;
+        final AktaPendirianDTO other = (AktaPendirianDTO) obj;
         
-        if (!this.nomor.equalsIgnoreCase(other.nomor)) {
-            return false;
-        }
-        
-        if (!Objects.equals(this.tanggal, other.tanggal)) {
-            return false;
-        }
-        
-        if (!this.namaNotaris.equalsIgnoreCase(other.namaNotaris)) {
+        if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
         }
 
@@ -102,8 +114,15 @@ public class AktaPemrakarsaDTO implements Serializable {
 		return "AktaPemrakarsaDTO{" + "nomor=" + nomor + ", namaNotaris=" + namaNotaris + ", tanggal=" + tanggal.toString() + "}";	  
 	}
 
-	public AktaPendirian toAktaPemrakarsa() {
-//		return new AktaPendirian(nomor, tanggal, namaNotaris);
-		return null;
+	public AktaPendirian toAktaPendirian() {
+		return new AktaPendirian(
+				namaNotaris, 
+				namaNotaris, 
+				null, 
+				nomor, 
+				tanggal, 
+				namaNotaris, 
+				null
+				);
 	}
 }

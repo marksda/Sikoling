@@ -11,6 +11,7 @@ import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
@@ -37,6 +38,8 @@ import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaD
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
@@ -412,11 +415,48 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 	
 	private Pegawai convertPegawaiDataToPegawai(PegawaiData d) {
-		JabatanData jabatanData = d.getJabatanData() != null ? d.getJabatanData() : null;
+		JabatanData jabatanData = d.getJabatanData();
+		PersonData personData = d.getPersonData();
+		AlamatPersonData alamatPersonData = personData != null ? personData.getAlamat() : null;
+		Alamat alamat = null;
+		
+		if(alamatPersonData != null) {
+			Propinsi propinsi = alamatPersonData.getPropinsi() != null ?
+					new Propinsi(
+							alamatPersonData.getPropinsi().getId(), 
+							alamatPersonData.getPropinsi().getNama()
+							) : null;
+			Kabupaten kabupaten = alamatPersonData.getKabupaten() != null ?
+					new Kabupaten(
+							 alamatPersonData.getKabupaten().getId(), 
+							 alamatPersonData.getKabupaten().getNama()
+							 ) : null;
+			Kecamatan kecamatan = alamatPersonData.getKecamatan() != null ?
+					new Kecamatan(
+							alamatPersonData.getKecamatan().getId(), 
+							alamatPersonData.getKecamatan().getNama()
+							) : null;
+			Desa desa = alamatPersonData.getDesa() != null ?
+					new Desa(
+							alamatPersonData.getDesa().getId(), 
+							alamatPersonData.getDesa().getNama()
+							) : null;
+			
+			alamat = new Alamat(propinsi, kabupaten, kecamatan, desa, alamatPersonData.getDetailAlamat());
+		}
 		
 		return new Pegawai(
 				d.getId(), 
 				null, 
+				personData != null ?
+						new Person(
+								personData.getId(), 
+								personData.getNama(), 
+								null, 
+								alamat, 
+								null, 
+								null
+								) : null,
 				jabatanData != null ?
 						new Jabatan(
 								jabatanData.getId(), 

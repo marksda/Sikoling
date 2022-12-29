@@ -8,12 +8,18 @@ public class Pegawai implements Serializable {
 	private static final long serialVersionUID = -7780214246997693171L;
 	private final String id;
 	private final Perusahaan perusahaan;
+	private final Person person;
 	private final Jabatan jabatan;
 	
-	public Pegawai(String id, Perusahaan perusahaan, Jabatan jabatan) {
+	public Pegawai(String id, Perusahaan perusahaan, Person person, Jabatan jabatan) {
 		this.id = id;
 		this.perusahaan = perusahaan;
+		this.person = person;
 		this.jabatan = jabatan;
+	}
+	
+	public Person getPerson() {
+		return person;
 	}
 
 	public static long getSerialversionuid() {
