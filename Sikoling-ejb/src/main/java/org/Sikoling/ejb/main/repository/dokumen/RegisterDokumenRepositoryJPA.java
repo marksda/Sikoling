@@ -7,13 +7,18 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Jabatan;
+import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -217,6 +222,51 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							)
 					);
 		}
+		else if(d.getAktaPendirianData() != null) {
+			AktaPendirianData aktaPendirianData = d.getAktaPendirianData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new AktaPendirian(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							aktaPendirianData.getNomor(), 
+							aktaPendirianData.getTanggal(), 
+							aktaPendirianData.getNotaris(), 
+							aktaPendirianData.getPenanggungJawabData() != null ?
+									convertPegawaiDataToPegawai(
+											aktaPendirianData.getPenanggungJawabData()
+											) : null
+							), 
+					new Perusahaan(
+							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNama(), 
+							null, 
+							null, 
+							new PelakuUsaha(
+									pelakuUsahaData.getId(), 
+									pelakuUsahaData.getNama(), 
+									pelakuUsahaData.getSingkatan(), 
+									null
+									), 
+							null, 
+							null, 
+							null, 
+							registerPerusahaanData.getStatusVerifikasi()
+							), 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
 		else {
 			return null;
 		}
@@ -249,7 +299,18 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			suratArahanData.setPerihalSurat(suratArahan.getPerihalSurat());
 			suratArahanData.setUraianKegiatan(suratArahan.getUraianKegiatan());
 			registerDokumenData.setSuratArahanData(null);
-		}		
+		}
+		else if(dokumen instanceof AktaPendirian) {
+			AktaPendirian aktaPendirian = (AktaPendirian) dokumen;
+			AktaPendirianData aktaPendirianData = new AktaPendirianData();			
+			aktaPendirianData.setNomor(aktaPendirian.getNomor());
+			aktaPendirianData.setTanggal(aktaPendirian.getTanggal());
+			aktaPendirianData.setNotaris(aktaPendirian.getNamaNotaris());
+			PegawaiData pegawaiData = new PegawaiData();
+			pegawaiData.setId(aktaPendirian.getPenanggungJawab().getId());
+			aktaPendirianData.setPenanggungJawabData(pegawaiData);
+			registerDokumenData.setAktaPendirianData(aktaPendirianData);
+		}
 		
 		return registerDokumenData;
 	}
@@ -285,6 +346,20 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	private String LPad(String str, Integer length, char car) {
 		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
+	}
+	
+	private Pegawai convertPegawaiDataToPegawai(PegawaiData d) {
+		JabatanData jabatanData = d.getJabatanData() != null ? d.getJabatanData() : null;
+		
+		return new Pegawai(
+				d.getId(), 
+				null, 
+				jabatanData != null ?
+						new Jabatan(
+								jabatanData.getId(), 
+								jabatanData.getNama()
+								) : null
+				);
 	}
 	
 }

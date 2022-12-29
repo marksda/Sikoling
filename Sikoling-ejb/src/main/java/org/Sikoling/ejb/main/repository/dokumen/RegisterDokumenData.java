@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -57,11 +58,23 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(mappedBy = "registerDokumenData", fetch = FetchType.LAZY)
 	private RegisterDokumenOssData dokumenOssData;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private SuratArahanData suratArahanData;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	private AktaPendirianData aktaPendirianData;
+
 	public RegisterDokumenData() {
+	}
+	
+	public AktaPendirianData getAktaPendirianData() {
+		return aktaPendirianData;
+	}
+
+	public void setAktaPendirianData(AktaPendirianData aktaPendirianData) {
+		this.aktaPendirianData = aktaPendirianData;
 	}
 
 	public String getId() {

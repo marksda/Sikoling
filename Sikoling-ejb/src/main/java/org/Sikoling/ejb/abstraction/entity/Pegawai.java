@@ -68,6 +68,5 @@ public class Pegawai implements Serializable {
 				.concat(this.getId())
 				.concat("}");
 	}
-		
 
 }

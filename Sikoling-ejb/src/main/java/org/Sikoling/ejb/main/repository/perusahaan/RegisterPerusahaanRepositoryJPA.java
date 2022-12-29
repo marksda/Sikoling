@@ -9,24 +9,29 @@ import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
+import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
+import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
+import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.SuratArahanData;
+import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
@@ -371,10 +376,55 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							)
 					);
 		}
+		else if(d.getAktaPendirianData() != null) {
+			AktaPendirianData aktaPendirianData = d.getAktaPendirianData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new AktaPendirian(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							aktaPendirianData.getNomor(), 
+							aktaPendirianData.getTanggal(), 
+							aktaPendirianData.getNotaris(), 
+							aktaPendirianData.getPenanggungJawabData() != null ?
+									convertPegawaiDataToPegawai(
+											aktaPendirianData.getPenanggungJawabData()
+											) : null
+							), 
+					null, 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
 		else {
 			return null;
 		}
 	}
+	
+	private Pegawai convertPegawaiDataToPegawai(PegawaiData d) {
+		JabatanData jabatanData = d.getJabatanData() != null ? d.getJabatanData() : null;
+		
+		return new Pegawai(
+				d.getId(), 
+				null, 
+				jabatanData != null ?
+						new Jabatan(
+								jabatanData.getId(), 
+								jabatanData.getNama()
+								) : null
+				);
+	}
+	
 }
 
 	

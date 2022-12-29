@@ -10,15 +10,8 @@ public class Jabatan implements Serializable {
 	private final String nama;
 	
 	public Jabatan(String id, String nama) {
-		super();
 		this.id = id;
 		this.nama = nama;
-	}
-	
-	public Jabatan(String id) {
-		super();
-		this.id = id;
-		this.nama = "";
 	}
 
 	public String getId() {

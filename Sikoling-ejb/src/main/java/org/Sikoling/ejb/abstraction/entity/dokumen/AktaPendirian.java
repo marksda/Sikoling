@@ -1,7 +1,7 @@
 package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
@@ -10,12 +10,12 @@ public class AktaPendirian extends Dokumen implements Serializable {
 	
 	private static final long serialVersionUID = -3186081818421591782L;	
 	private final String nomor;
-	private final Date tanggal;
+	private final LocalDate tanggal;
 	private final String namaNotaris;
 	private final Pegawai penanggungJawab;
 	
 	public AktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
-			Date tanggal, String namaNotaris, Pegawai penanggungJawab) {
+			LocalDate tanggal, String namaNotaris, Pegawai penanggungJawab) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
@@ -31,7 +31,7 @@ public class AktaPendirian extends Dokumen implements Serializable {
 		return nomor;
 	}
 
-	public Date getTanggal() {
+	public LocalDate getTanggal() {
 		return tanggal;
 	}
 
