@@ -14,62 +14,59 @@ public class RegisterPermohonan implements Serializable {
 	private final KategoriPermohonan kategoriPermohonan;
 	private final LocalDate tanggalRegistrasi;
 	private final Perusahaan perusahaan;
-	private final Authority pengakses;
+	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
 	private final StatusTahapPemberkasan statusPermohonan;
-	private final List<Dokumen> daftarDokumen;
-	
+	private final List<Dokumen> daftarDokumenSyarat;
+	private final List<Dokumen> daftarDokumenHasil;
+//	private final List<LogPermohonan> daftarLogPermohonan;
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			Perusahaan perusahaan, Authority pengakses, StatusWali statusWaliPengurusPermohonan,
-			StatusTahapPemberkasan statusPermohonan, List<Dokumen> daftarDokumen) {
+			Perusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			StatusTahapPemberkasan statusPermohonan, List<Dokumen> daftarDokumenSyarat,
+			List<Dokumen> daftarDokumenHasil) {
 		super();
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.perusahaan = perusahaan;
-		this.pengakses = pengakses;
+		this.pengurusPermohonan = pengurusPermohonan;
 		this.statusWaliPengurusPermohonan = statusWaliPengurusPermohonan;
 		this.statusPermohonan = statusPermohonan;
-		this.daftarDokumen = daftarDokumen;
+		this.daftarDokumenSyarat = daftarDokumenSyarat;
+		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	public String getId() {
 		return id;
 	}
-
 	public KategoriPermohonan getKategoriPermohonan() {
 		return kategoriPermohonan;
 	}
-
 	public LocalDate getTanggalRegistrasi() {
 		return tanggalRegistrasi;
 	}
-
 	public Perusahaan getPerusahaan() {
 		return perusahaan;
 	}
-
-	public Authority getPengakses() {
-		return pengakses;
+	public Authority getPengurusPermohonan() {
+		return pengurusPermohonan;
 	}
-
 	public StatusWali getStatusWaliPengurusPermohonan() {
 		return statusWaliPengurusPermohonan;
 	}
-
 	public StatusTahapPemberkasan getStatusPermohonan() {
 		return statusPermohonan;
 	}
-
-	public List<Dokumen> getDaftarDokumen() {
-		return daftarDokumen;
+	public List<Dokumen> getDaftarDokumenSyarat() {
+		return daftarDokumenSyarat;
+	}
+	public List<Dokumen> getDaftarDokumenHasil() {
+		return daftarDokumenHasil;
 	}
 	
 	
- 
+	
 
 }

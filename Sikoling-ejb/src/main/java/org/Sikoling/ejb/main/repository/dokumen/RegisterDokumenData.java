@@ -7,17 +7,16 @@ import java.util.Objects;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -58,8 +57,8 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(mappedBy = "registerDokumenData", fetch = FetchType.LAZY)
 	private RegisterDokumenOssData dokumenOssData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@MapsId
+	@OneToOne
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private SuratArahanData suratArahanData;
 	
 	public RegisterDokumenData() {

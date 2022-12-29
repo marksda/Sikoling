@@ -12,8 +12,8 @@ public class AuthorityDTO implements Serializable {
 	private String id;
 	private PersonDTO person;
 	private HakAksesDTO hakAkses;
-	private boolean statusInternal;
-	private boolean isVerified;
+	private Boolean statusInternal;
+	private Boolean isVerified;
 	private String userName;
 	
 	public AuthorityDTO() {
@@ -24,8 +24,8 @@ public class AuthorityDTO implements Serializable {
 			this.id = t.getId();
 			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
 			this.hakAkses = t.getHakAkses() != null ? new HakAksesDTO(t.getHakAkses()) : null;
-			this.statusInternal = t.isStatusInternal();
-			this.isVerified = t.isVerified();
+			this.statusInternal = t.isStatusInternal() != null ? t.isStatusInternal() : false;
+			this.isVerified = t.isVerified() != null ? t.isVerified() : false;
 			this.userName = t.getUserName();
 		}
 	}
@@ -54,11 +54,11 @@ public class AuthorityDTO implements Serializable {
 		this.statusInternal = statusInternal;
 	}
 
-	public boolean isVerified() {
+	public Boolean isVerified() {
 		return isVerified;
 	}
 
-	public void setVerified(boolean isVerified) {
+	public void setVerified(Boolean isVerified) {
 		this.isVerified = isVerified;
 	}
 
@@ -109,18 +109,16 @@ public class AuthorityDTO implements Serializable {
 		return "AuthorityDTO {"
 				.concat("userName=")
 				.concat(userName)
-				.concat(", nama asli=")
-				.concat(person.getNama())
 				.concat("}");
 	}
 	
 	public Authority toAuthority() {
 		return new Authority(
-				id,
+				id != null ? id: null,
 				person != null ? person.toPerson():null, 
 				hakAkses != null ? hakAkses.toHakAkses():null, 
-				statusInternal, 
-				isVerified, 
+				statusInternal !=null ? statusInternal:null, 
+				isVerified != null ? isVerified:null, 
 				userName
 				);
 	}

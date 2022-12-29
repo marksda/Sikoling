@@ -94,8 +94,7 @@ public class RegisterDokumenDTO implements Serializable {
 
 	public int hashCode() {
 		int hash = 183;
-        hash = 171 * hash + Objects.hashCode(dokumen.getId());
-        hash = 171 * hash + Objects.hashCode(perusahaan.getId());
+        hash = 171 * hash + Objects.hashCode(id);
         return hash;
 	}
 	

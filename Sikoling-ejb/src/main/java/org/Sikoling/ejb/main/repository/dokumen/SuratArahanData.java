@@ -33,7 +33,7 @@ public class SuratArahanData implements Serializable {
 	
 	@Column(name = "uraian_kegiatan")
 	private String uraianKegiatan;
-
+	
 	public SuratArahanData() {
 	}
 
@@ -76,7 +76,7 @@ public class SuratArahanData implements Serializable {
 	public void setUraianKegiatan(String uraianKegiatan) {
 		this.uraianKegiatan = uraianKegiatan;
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
