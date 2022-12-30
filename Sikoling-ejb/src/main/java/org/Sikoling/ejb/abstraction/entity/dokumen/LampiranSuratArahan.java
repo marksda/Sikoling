@@ -4,42 +4,31 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class SuratArahan extends Dokumen implements Serializable {
-	private static final long serialVersionUID = 751126801061108282L;
-	private final String noSurat;
-	private final LocalDate tanggalSurat;
-	private final String perihalSurat;
-	private final String uraianKegiatan;	
-	
-	public SuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, 
-			String noSurat, LocalDate tanggalSurat, String perihalSurat, String uraianKegiatan) {
-		super(id, nama, kategoriDokumen);
-		this.noSurat = noSurat;
-		this.tanggalSurat = tanggalSurat;
-		this.perihalSurat = perihalSurat;
-		this.uraianKegiatan = uraianKegiatan;
-	}
+public class LampiranSuratArahan extends Dokumen implements Serializable {
 
-	public String getUraianKegiatan() {
-		return uraianKegiatan;
+	private static final long serialVersionUID = -2283805623827974300L;
+	private final String noSuratArahan;
+	private final LocalDate tanggalSuratArahan;
+	
+	public LampiranSuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, String noSuratArahan,
+			LocalDate tanggalSuratArahan) {
+		super(id, nama, kategoriDokumen);
+		this.noSuratArahan = noSuratArahan;
+		this.tanggalSuratArahan = tanggalSuratArahan;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getNoSurat() {
-		return noSurat;
+	public String getNoSuratArahan() {
+		return noSuratArahan;
 	}
 
-	public LocalDate getTanggalSurat() {
-		return tanggalSurat;
+	public LocalDate getTanggalSuratArahan() {
+		return tanggalSuratArahan;
 	}
-
-	public String getPerihalSurat() {
-		return perihalSurat;
-	}	
-
+	
 	@Override
 	public int hashCode() {
 		int hash = 117;
@@ -61,7 +50,7 @@ public class SuratArahan extends Dokumen implements Serializable {
             return false;
         }
         
-        final SuratArahan other = (SuratArahan) obj;
+        final LampiranSuratArahan other = (LampiranSuratArahan) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -76,10 +65,12 @@ public class SuratArahan extends Dokumen implements Serializable {
 				.concat("id=")
 				.concat(this.getId())
 				.concat(", nomor=")
-				.concat(this.noSurat)
+				.concat(this.noSuratArahan)
 				.concat(", tanggal=")
-				.concat(tanggalSurat.toString())
+				.concat(this.tanggalSuratArahan.toString())
 				.concat("}");
 	}
 		
+	
+
 }

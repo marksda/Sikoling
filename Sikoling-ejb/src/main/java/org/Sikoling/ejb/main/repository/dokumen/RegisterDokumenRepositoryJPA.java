@@ -19,6 +19,7 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -275,6 +276,46 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							)
 					);
 		}
+		else if(d.getLampiranSuratArahanData() != null) {
+			LampiranSuratArahanData lampiranSuratArahanData = d.getLampiranSuratArahanData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new LampiranSuratArahan(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							lampiranSuratArahanData.getNoSurat(), 
+							lampiranSuratArahanData.getTanggalSurat()
+							), 
+					new Perusahaan(
+							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNama(), 
+							null, 
+							null, 
+							new PelakuUsaha(
+									pelakuUsahaData.getId(), 
+									pelakuUsahaData.getNama(), 
+									pelakuUsahaData.getSingkatan(), 
+									null
+									), 
+							null, 
+							null, 
+							null, 
+							registerPerusahaanData.getStatusVerifikasi()
+							), 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
 		else {
 			return null;
 		}
@@ -308,6 +349,14 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			suratArahanData.setUraianKegiatan(suratArahan.getUraianKegiatan());
 			registerDokumenData.setSuratArahanData(null);
 		}
+		else if(dokumen instanceof LampiranSuratArahan) {
+			LampiranSuratArahan lampiranSuratArahan = (LampiranSuratArahan) dokumen;
+			LampiranSuratArahanData lampiranSuratArahanData = new LampiranSuratArahanData();			
+			lampiranSuratArahanData.setNoSurat(lampiranSuratArahan.getNoSuratArahan());
+			lampiranSuratArahanData.setTanggalSurat(lampiranSuratArahan.getTanggalSuratArahan());
+			
+			registerDokumenData.setLampiranSuratArahanData(lampiranSuratArahanData);
+		}
 		else if(dokumen instanceof AktaPendirian) {
 			AktaPendirian aktaPendirian = (AktaPendirian) dokumen;
 			AktaPendirianData aktaPendirianData = new AktaPendirianData();			
@@ -319,6 +368,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			aktaPendirianData.setPenanggungJawabData(pegawaiData);
 			registerDokumenData.setAktaPendirianData(aktaPendirianData);
 		}
+
 		
 		return registerDokumenData;
 	}

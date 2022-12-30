@@ -7,6 +7,7 @@ import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -32,7 +33,7 @@ public class PegawaiData implements Serializable {
 	private PersonData personData;
 	
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private RegisterPerusahaanData registerPerusahaanData;
 	
 	@JoinColumn(name = "jabatan", referencedColumnName = "id", insertable = true, updatable = true)

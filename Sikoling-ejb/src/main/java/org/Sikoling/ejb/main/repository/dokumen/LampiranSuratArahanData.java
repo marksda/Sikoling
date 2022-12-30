@@ -11,30 +11,24 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="transaksi.tbl_surat_arahan")
+@Table(name="transaksi.tbl_lampiran_surat_arahan")
 @NamedQueries({
-	@NamedQuery(name="SuratArahanData.findAll", query="SELECT d FROM SuratArahanData d")
+	@NamedQuery(name="LampiranSuratArahanData.findAll", query="SELECT d FROM LampiranSuratArahanData d")
 })
-public class SuratArahanData implements Serializable {
+public class LampiranSuratArahanData implements Serializable {
 
-	private static final long serialVersionUID = -3597035130639423972L;
+	private static final long serialVersionUID = -3360026058786209938L;
 	
 	@Id
 	private String id;
 	
-	@Column(name = "nomor")
+	@Column(name = "nomor_surat_keterangan")
 	private String noSurat;
 	
-	@Column(name = "tanggal")
+	@Column(name = "tanggal_surat_keterangan")
 	private LocalDate tanggalSurat;
-	
-	@Column(name = "perihal")
-	private String perihalSurat;
-	
-	@Column(name = "uraian_kegiatan")
-	private String uraianKegiatan;
-	
-	public SuratArahanData() {
+
+	public LampiranSuratArahanData() {
 	}
 
 	public String getId() {
@@ -61,24 +55,9 @@ public class SuratArahanData implements Serializable {
 		this.tanggalSurat = tanggalSurat;
 	}
 
-	public String getPerihalSurat() {
-		return perihalSurat;
-	}
-
-	public void setPerihalSurat(String perihalSurat) {
-		this.perihalSurat = perihalSurat;
-	}
-
-	public String getUraianKegiatan() {
-		return uraianKegiatan;
-	}
-
-	public void setUraianKegiatan(String uraianKegiatan) {
-		this.uraianKegiatan = uraianKegiatan;
-	}
-	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	
 }

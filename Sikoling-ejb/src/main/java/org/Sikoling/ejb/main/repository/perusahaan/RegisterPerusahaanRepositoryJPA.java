@@ -24,11 +24,13 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
+import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
+import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.SuratArahanData;
@@ -395,6 +397,31 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 									convertPegawaiDataToPegawai(
 											aktaPendirianData.getPenanggungJawabData()
 											) : null
+							), 
+					null, 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
+		else if(d.getLampiranSuratArahanData() != null) {
+			LampiranSuratArahanData lampiranSuratArahanData = d.getLampiranSuratArahanData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new LampiranSuratArahan(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							lampiranSuratArahanData.getNoSurat(), 
+							lampiranSuratArahanData.getTanggalSurat()
 							), 
 					null, 
 					null, 

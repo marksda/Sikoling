@@ -37,7 +37,7 @@ public class RegisterDokumenData implements Serializable {
 	private String id;
 	
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private RegisterPerusahaanData perusahaanData;
 	
 	@Id
@@ -64,11 +64,23 @@ public class RegisterDokumenData implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	private LampiranSuratArahanData lampiranSuratArahanData;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private AktaPendirianData aktaPendirianData;
 
 	public RegisterDokumenData() {
 	}
-	
+			
+	public LampiranSuratArahanData getLampiranSuratArahanData() {
+		return lampiranSuratArahanData;
+	}
+
+	public void setLampiranSuratArahanData(LampiranSuratArahanData lampiranSuratArahanData) {
+		this.lampiranSuratArahanData = lampiranSuratArahanData;
+	}
+
 	public AktaPendirianData getAktaPendirianData() {
 		return aktaPendirianData;
 	}

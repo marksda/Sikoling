@@ -6,19 +6,18 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
+import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
 
-public class SuratArahanDTO extends DokumenDTO implements Serializable {
-	private static final long serialVersionUID = -2092369169865137960L;
-	private String noSurat;
-	private LocalDate tanggalSurat;
-	private String perihalSurat;
-	private String uraianKegiatan;
+public class LampiranSuratArahanDTO extends DokumenDTO implements Serializable {
+
+	private static final long serialVersionUID = -6467139467208051665L;
+	private String noSuratArahan;
+	private LocalDate tanggalSuratArahan;
 	
-	public SuratArahanDTO() {
+	public LampiranSuratArahanDTO() {
 	}
 	
-	public SuratArahanDTO(SuratArahan t) {
+	public LampiranSuratArahanDTO(LampiranSuratArahan t) {
 		super(t != null ? new Dokumen(
 				t.getId(), 
 				t.getNama(), 
@@ -26,43 +25,25 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
 				) : null
 			);
 		if(t != null) {
-			this.noSurat = t.getNoSurat();
-			this.perihalSurat = t.getPerihalSurat();
-			this.tanggalSurat = t.getTanggalSurat();
-			this.uraianKegiatan = t.getUraianKegiatan();
+			this.noSuratArahan = t.getNoSuratArahan();
+			this.tanggalSuratArahan = t.getTanggalSuratArahan();
 		}
 	}
 
-	public String getNoSurat() {
-		return noSurat;
+	public String getNoSuratArahan() {
+		return noSuratArahan;
 	}
 
-	public void setNoSurat(String noSurat) {
-		this.noSurat = noSurat;
+	public void setNoSuratArahan(String noSuratArahan) {
+		this.noSuratArahan = noSuratArahan;
 	}
 
-	public LocalDate getTanggalSurat() {
-		return tanggalSurat;
+	public LocalDate getTanggalSuratArahan() {
+		return tanggalSuratArahan;
 	}
 
-	public void setTanggalSurat(LocalDate tanggalSurat) {
-		this.tanggalSurat = tanggalSurat;
-	}
-
-	public String getPerihalSurat() {
-		return perihalSurat;
-	}
-
-	public void setPerihalSurat(String perihalSurat) {
-		this.perihalSurat = perihalSurat;
-	}
-
-	public String getUraianKegiatan() {
-		return uraianKegiatan;
-	}
-
-	public void setUraianKegiatan(String uraianKegiatan) {
-		this.uraianKegiatan = uraianKegiatan;
+	public void setTanggalSuratArahan(LocalDate tanggalSuratArahan) {
+		this.tanggalSuratArahan = tanggalSuratArahan;
 	}
 
 	public static long getSerialversionuid() {
@@ -91,7 +72,7 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
             return false;
         }
         
-        final SuratArahanDTO other = (SuratArahanDTO) obj;
+        final LampiranSuratArahanDTO other = (LampiranSuratArahanDTO) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -102,18 +83,18 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "SuratArahanDTO{id="
+		return "LampiranSuratArahanDTO{id="
 				.concat(this.getId())
 				.concat(", nama=")
 				.concat(this.getNama())
 				.concat(", noSurat=")
-				.concat(this.getNoSurat())
+				.concat(this.getNoSuratArahan())
 				.concat("}");	  
 	}
 
-	public SuratArahan toSuratArahan() {
+	public LampiranSuratArahan toLampiranSuratArahan() {
 		KategoriDokumenDTO kategoriDokumenDTO = this.getKategoriDokumen();
-		return new SuratArahan(
+		return new LampiranSuratArahan(
 				this.getId(), 
 				this.getNama(), 
 				kategoriDokumenDTO != null ? new KategoriDokumen(
@@ -121,10 +102,8 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
 						kategoriDokumenDTO.getNama(), 
 						kategoriDokumenDTO.getParent()
 						) : null, 
-				this.noSurat, 
-				this.tanggalSurat, 
-				this.perihalSurat, 
-				this.uraianKegiatan
+				this.noSuratArahan, 
+				this.tanggalSuratArahan
 				);
 	}
 

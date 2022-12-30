@@ -16,7 +16,6 @@ public class KategoriPermohonanRepositoryJPA implements IKategoriPermohonanRepos
 		this.entityManager = entityManager;
 	}
 	
-
 	@Override
 	public List<KategoriPermohonan> getAll() {
 		return entityManager.createNamedQuery("KategoriPermohonanData.findAll", KategoriPermohonanData.class)
@@ -64,8 +63,6 @@ public class KategoriPermohonanRepositoryJPA implements IKategoriPermohonanRepos
 		
 		return kategoriPermohonanData;		
 	}
-
-
 	
 	@Override
 	public DeleteResponse delete(String id) {
