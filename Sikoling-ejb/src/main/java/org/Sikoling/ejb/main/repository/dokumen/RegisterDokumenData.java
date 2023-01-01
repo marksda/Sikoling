@@ -10,7 +10,6 @@ import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -55,9 +54,6 @@ public class RegisterDokumenData implements Serializable {
 	@Column(name="lokasi_file")
 	private String lokasiFile;
 	
-	@OneToOne(mappedBy = "registerDokumenData", fetch = FetchType.LAZY)
-	private RegisterDokumenOssData dokumenOssData;
-	
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private SuratArahanData suratArahanData;
@@ -77,10 +73,22 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private RekomendasiDPLHData rekomendasiDPLHData;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	private NibOssData nibOssData;
 
 	public RegisterDokumenData() {
 	}
 			
+	public NibOssData getNibOssData() {
+		return nibOssData;
+	}
+
+	public void setNibOssData(NibOssData nibOssData) {
+		this.nibOssData = nibOssData;
+	}
+
 	public RekomendasiDPLHData getRekomendasiDPLHData() {
 		return rekomendasiDPLHData;
 	}
@@ -159,14 +167,6 @@ public class RegisterDokumenData implements Serializable {
 
 	public void setLokasiFile(String lokasiFile) {
 		this.lokasiFile = lokasiFile;
-	}
-
-	public RegisterDokumenOssData getDokumenOssData() {
-		return dokumenOssData;
-	}
-
-	public void setDokumenOssData(RegisterDokumenOssData dokumenOssData) {
-		this.dokumenOssData = dokumenOssData;
 	}
 
 	public static long getSerialversionuid() {

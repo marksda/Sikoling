@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 
 import jakarta.persistence.EntityManager;
@@ -46,28 +46,13 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 	@Override
 	public DeleteResponse delete(String nib, String kode) {
 		RegisterKbliDataId id = new RegisterKbliDataId();
-		id.setKbliData(kode);
-		id.setRegisterDokumenOssData(nib);
+		id.setNib(nib);
+		id.setKbli(kode);
 		
 		RegisterKbliData registerKbliData = entityManager.find(RegisterKbliData.class, id);
 		entityManager.remove(registerKbliData);
 		
 		return new DeleteResponse(true, nib.concat("-").concat(kode));
-	}
-
-	@Override
-	public RegisterKbli updateById(String nib, String kode, RegisterKbli registerKbli) {
-		RegisterKbliData updateData = convertRegisterKbliToRegisterKbliData(registerKbli);
-		
-		RegisterKbliDataId id = new RegisterKbliDataId();
-		id.setKbliData(kode);
-		id.setRegisterDokumenOssData(nib);
-		
-		RegisterKbliData registerKbliData = entityManager.find(RegisterKbliData.class, id);
-		registerKbliData.setKbliData(updateData.getKbliData());
-		registerKbliData.setRegisterDokumenOssData(updateData.getDokumenOssData());
-		
-		return null;
 	}
 
 	@Override
@@ -153,19 +138,17 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 
 	private RegisterKbli convertRegisterKbliDataToRegisterKbli(RegisterKbliData d) {
 		return new RegisterKbli(
-				d.getDokumenOssData().getNib(), 
-				d.getKbliData().getId()
+				d.getNib(), 
+				d.getKbli(),
+				d.getNama()
 				);
 	}
 	
 	private RegisterKbliData convertRegisterKbliToRegisterKbliData(RegisterKbli t) {
 		RegisterKbliData registerKbliData = new RegisterKbliData();
-		RegisterDokumenOssData registerDokumenOssData = new RegisterDokumenOssData();
-		registerDokumenOssData.setNib(t.getNib());		
-		registerKbliData.setRegisterDokumenOssData(registerDokumenOssData);
-		KbliData kbliData = new KbliData();
-		kbliData.setId(t.getKode());	
-		registerKbliData.setKbliData(kbliData);
+		registerKbliData.setNib(t.getIdNib());
+		registerKbliData.setKbli(t.getIdKbli());
+		registerKbliData.setNama(t.getNama());
 		
 		return registerKbliData;
 	}

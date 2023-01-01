@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 
 public class RegisterKbliService implements IRegisterKbliService {
@@ -27,11 +27,6 @@ public class RegisterKbliService implements IRegisterKbliService {
 	@Override
 	public DeleteResponse delete(String nib, String kode) {
 		return registerKbliRepository.delete(nib, kode);
-	}
-
-	@Override
-	public RegisterKbli updateById(String nib, String kode, RegisterKbli registerKbli) {
-		return registerKbliRepository.updateById(nib, kode, registerKbli);
 	}
 
 	@Override

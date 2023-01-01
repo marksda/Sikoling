@@ -8,6 +8,7 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
@@ -45,6 +46,9 @@ public class RegisterDokumenDTO implements Serializable {
 			}
 			else if(dokumen instanceof RekomendasiDPLH) {
 				this.dokumen = new RekomendasiDPLHDTO((RekomendasiDPLH) dokumen);
+			}
+			else if(dokumen instanceof NibOss) {
+				this.dokumen = new NibOssDTO((NibOss) dokumen);
 			}
 			else {
 				this.dokumen = null;
@@ -109,6 +113,7 @@ public class RegisterDokumenDTO implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Override
 	public int hashCode() {
 		int hash = 183;
         hash = 171 * hash + Objects.hashCode(id);
@@ -174,6 +179,9 @@ public class RegisterDokumenDTO implements Serializable {
 			}
 			else if(this.dokumen instanceof RekomendasiDPLHDTO) {
 				dokumen = ((RekomendasiDPLHDTO) this.dokumen).toRekomendasiDPLH();
+			}
+			else if(this.dokumen instanceof NibOssDTO) {
+				dokumen = ((NibOssDTO) this.dokumen).toNibOss();
 			}
 		}
 		

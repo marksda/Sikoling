@@ -7,36 +7,37 @@ import java.util.Objects;
 public class RegisterKbliDataId implements Serializable {
 
 	private static final long serialVersionUID = -8172764954864064795L;
-	private String registerDokumenOssData;
-	private String kbliData;
+	private String nib;
+	private String kbli;
 	
 	public RegisterKbliDataId() {
 	}
 	
-	public String getRegisterDokumenOssData() {
-		return registerDokumenOssData;
+	public String getNib() {
+		return nib;
 	}
 
-	public void setRegisterDokumenOssData(String registerDokumenOssData) {
-		this.registerDokumenOssData = registerDokumenOssData;
+	public void setNib(String nib) {
+		this.nib = nib;
 	}
 
-	public String getKbliData() {
-		return kbliData;
+	public String getKbli() {
+		return kbli;
 	}
-
-	public void setKbliData(String kbliData) {
-		this.kbliData = kbliData;
+	
+	public void setKbli(String kbli) {
+		this.kbli = kbli;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+	@Override
 	public int hashCode() {
 		int hash = 131;
-        hash = 191 * hash + Objects.hashCode(this.registerDokumenOssData);
-        hash = 191 * hash + Objects.hashCode(this.kbliData);
+        hash = 171 * hash + Objects.hashCode(this.nib);
+        hash = 171 * hash + Objects.hashCode(this.kbli);
         return hash;
 	}
 	
@@ -57,11 +58,11 @@ public class RegisterKbliDataId implements Serializable {
         
         final RegisterKbliDataId other = (RegisterKbliDataId) obj;
         
-        if (!this.registerDokumenOssData.equalsIgnoreCase(other.getRegisterDokumenOssData())) {
+        if (!this.nib.equalsIgnoreCase(other.getNib())) {
             return false;
         }  
         
-        if (!this.kbliData.equalsIgnoreCase(other.getKbliData())) {
+        if (!this.kbli.equalsIgnoreCase(other.getKbli())) {
             return false;
         }  
 

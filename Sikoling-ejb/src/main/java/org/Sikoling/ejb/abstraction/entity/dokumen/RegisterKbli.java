@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.entity;
+package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,30 +6,37 @@ import java.util.Objects;
 public class RegisterKbli implements Serializable {
 
 	private static final long serialVersionUID = 2998858268709853490L;
-	private final String nib;
-	private final String kode;
-		
-	public RegisterKbli(String nib, String kode) {
-		this.nib = nib;
-		this.kode = kode;
-	}
-
+	private final String idNib;
+	private final String idKbli;
+	private final String nama;
+	
+	public RegisterKbli(String idNib, String idKbli, String nama) {
+		super();
+		this.idNib = idNib;
+		this.idKbli = idKbli;
+		this.nama = nama;
+	}	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getNib() {
-		return nib;
+	public String getIdNib() {
+		return idNib;
 	}
 
-	public String getKode() {
-		return kode;
+	public String getIdKbli() {
+		return idKbli;
+	}
+
+	public String getNama() {
+		return nama;
 	}
 
 	public int hashCode() {
 		int hash = 17;
-		hash = 131 * hash + Objects.hashCode(this.nib);
-        hash = 131 * hash + Objects.hashCode(this.kode);
+		hash = 131 * hash + Objects.hashCode(idNib);
+        hash = 131 * hash + Objects.hashCode(idKbli);
         return hash;
 	}
 
@@ -50,11 +57,11 @@ public class RegisterKbli implements Serializable {
         
         final RegisterKbli other = (RegisterKbli) obj;
         
-        if (!this.nib.equalsIgnoreCase(other.getNib())) {
+        if (!this.idNib.equalsIgnoreCase(other.getIdNib())) {
             return false;
         }
         
-        if (!this.kode.equalsIgnoreCase(other.getKode())) {
+        if (!this.idKbli.equalsIgnoreCase(other.getIdKbli())) {
             return false;
         }
 
@@ -63,7 +70,11 @@ public class RegisterKbli implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RegisterKbli{ nib=" + nib + ", kode=" + kode +  "}";	  
+		return "RegisterKbli{ idNib=" 
+				.concat(idNib)
+				.concat(", idKbli=")
+				.concat(idKbli)
+				.concat("}");	  
 	}
 
 

@@ -3,13 +3,12 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 
 public interface IRegisterKbliService {
 	RegisterKbli save(RegisterKbli registerKbli);
 	RegisterKbli update(RegisterKbli registerKbli);	
 	DeleteResponse delete(String nib, String kode);
-	RegisterKbli updateById(String nib, String kode, RegisterKbli registerKbli);
 	List<RegisterKbli> getAll();
 	List<RegisterKbli> getAllByPage(Integer page, Integer pageSize);
 	List<RegisterKbli> getByNama(String nama);

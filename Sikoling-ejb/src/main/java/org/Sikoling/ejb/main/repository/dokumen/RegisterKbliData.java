@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -13,7 +14,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="transaksi.tbl_register_kbli_2020")
+@Table(name="transaksi.tbl_nib_kbli")
 @NamedQueries({
 	@NamedQuery(name="RegisterKbliData.findAll", query="SELECT d FROM RegisterKbliData d"),
 	@NamedQuery(name="RegisterKbliData.findByNama", query="SELECT d FROM RegisterKbliData d WHERE d.kbliData.nama = :nama"),
@@ -26,43 +27,63 @@ public class RegisterKbliData implements Serializable {
 	private static final long serialVersionUID = -1341807963805050449L;
 	
 	@Id
-	@JoinColumn(name = "register_dokumen_oss", referencedColumnName = "nib", insertable = true, updatable = false)
-	@ManyToOne(optional = false)
-	private RegisterDokumenOssData registerDokumenOssData;
+	private String nib;
 		
 	@Id
-	@JoinColumn(name = "kode", referencedColumnName = "id", insertable = true, updatable = false)
-	@ManyToOne(optional = false)
-	private KbliData kbliData;
+	private String kbli;
+	
+	private String nama;
+	
+	@JoinColumn(name = "nib", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private NibOssData nibOssData;
 	
 	public RegisterKbliData() {
-	}
-		
-	public RegisterDokumenOssData getDokumenOssData() {
-		return registerDokumenOssData;
+	}	
+	
+	public String getNib() {
+		return nib;
 	}
 
-	public void setRegisterDokumenOssData(RegisterDokumenOssData registerDokumenOssData) {
-		this.registerDokumenOssData = registerDokumenOssData;
-	}
+
 	
-	public KbliData getKbliData() {
-		return kbliData;
+	public void setNib(String nib) {
+		this.nib = nib;
 	}
+
+
 	
-	public void setKbliData(KbliData kbliData) {
-		this.kbliData = kbliData;
+	public String getKbli() {
+		return kbli;
 	}
+
+
 	
+	public void setKbli(String kbli) {
+		this.kbli = kbli;
+	}
+
+
+		
+	public String getNama() {
+		return nama;
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
+
+
 	@Override
 	public int hashCode() {
-		int hash = 83;
-		hash = 137 * hash + Objects.hashCode(this.registerDokumenOssData.getNib());
-		hash = 137 * hash + Objects.hashCode(this.kbliData.getId());
+		int hash = 813;
+		hash = 137 * hash + Objects.hashCode(this.nib);
+		hash = 137 * hash + Objects.hashCode(this.kbli);
 		return hash;
 	}
 
@@ -82,8 +103,11 @@ public class RegisterKbliData implements Serializable {
         
         final RegisterKbliData other = (RegisterKbliData) obj;
         
-        if ( !(this.registerDokumenOssData.getNib().equals(other.registerDokumenOssData.getNib()) && 
-        		this.kbliData.getId().equals(other.kbliData.getId())) ) {
+        if (!this.nib.equals(other.getNib()))  {
+            return false;
+        }
+        
+        if (!this.kbli.equals(other.getKbli()))  {
             return false;
         }
         
@@ -92,7 +116,13 @@ public class RegisterKbliData implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RegisterKbliData{" + "nib=" + registerDokumenOssData.getNib() + ", kode=" + kbliData.getId() + "}";
+		return "RegisterKbliData{nib="
+				.concat(this.nib)
+				.concat(", kbi=")
+				.concat(this.kbli)
+				.concat(", nama=")
+				.concat(nama)
+				.concat("}");	  
 	}
 
 }

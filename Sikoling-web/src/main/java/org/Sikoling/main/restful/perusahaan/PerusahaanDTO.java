@@ -120,6 +120,7 @@ public class PerusahaanDTO implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Override
 	public int hashCode() {
 		int hash = 113;
         hash = 171 * hash + Objects.hashCode(this.id);

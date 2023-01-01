@@ -6,63 +6,59 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
+import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
 
-public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
+public class NibOssDTO extends DokumenDTO implements Serializable {
 
-	private static final long serialVersionUID = -3450087905995320522L;
-	private String noSurat;
-	private LocalDate tanggalSurat;
-	private String perihalSurat;
+	private static final long serialVersionUID = -1573998338773596635L;
+	private String nomor;
+	private LocalDate tanggal;
+//	private Lis
 	
-	public RekomendasiDPLHDTO() {
+	public NibOssDTO() {
 	}
 	
-	public RekomendasiDPLHDTO(RekomendasiDPLH t) {
+	public NibOssDTO(NibOss t) {
 		super(t != null ? new Dokumen(
 				t.getId(), 
 				t.getNama(), 
 				null
-				) : null);
-
+				) : null
+			);
 		if(t != null) {
-			this.noSurat = t.getNomor();
-			this.tanggalSurat = t.getTanggal();
-			this.perihalSurat = t.getPerihal();
+			this.nomor = t.getNomor();
+			this.tanggal = t.getTanggal();
 		}
 	}
+
 	
-	public String getNoSurat() {
-		return noSurat;
+	public String getNomor() {
+		return nomor;
+	}
+
+	
+	public void setNomor(String nomor) {
+		this.nomor = nomor;
 	}
 	
-	public void setNoSurat(String noSurat) {
-		this.noSurat = noSurat;
+
+	public LocalDate getTanggal() {
+		return tanggal;
 	}
 	
-	public LocalDate getTanggalSurat() {
-		return tanggalSurat;
+
+	public void setTanggal(LocalDate tanggal) {
+		this.tanggal = tanggal;
 	}
 	
-	public void setTanggalSurat(LocalDate tanggalSurat) {
-		this.tanggalSurat = tanggalSurat;
-	}
-	
-	public String getPerihalSurat() {
-		return perihalSurat;
-	}
-	
-	public void setPerihalSurat(String perihalSurat) {
-		this.perihalSurat = perihalSurat;
-	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		int hash = 173;
+		int hash = 1073;
         hash = 171 * hash + Objects.hashCode(this.getId());
         return hash;
 	}
@@ -82,7 +78,7 @@ public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
             return false;
         }
         
-        final RekomendasiDPLHDTO other = (RekomendasiDPLHDTO) obj;
+        final NibOssDTO other = (NibOssDTO) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -93,19 +89,18 @@ public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "RekomendasiDPLHDTO{id="
+		return "NibOssDTO{id="
 				.concat(this.getId())
 				.concat(", nama=")
 				.concat(this.getNama())
-				.concat(", noSurat=")
-				.concat(this.getNoSurat())
+				.concat(", nomor=")
+				.concat(this.getNomor())
 				.concat("}");	  
 	}
 
-	
-	public RekomendasiDPLH toRekomendasiDPLH() {
+	public NibOss toNibOss() {
 		KategoriDokumenDTO kategoriDokumenDTO = this.getKategoriDokumen();
-		return new RekomendasiDPLH(
+		return new NibOss(
 				this.getId(), 
 				this.getNama(), 
 				kategoriDokumenDTO != null ? new KategoriDokumen(
@@ -113,9 +108,9 @@ public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
 						kategoriDokumenDTO.getNama(), 
 						kategoriDokumenDTO.getParent()
 						) : null, 
-				noSurat, 
-				tanggalSurat, 
-				perihalSurat
+				this.nomor, 
+				this.tanggal
 				);
 	}
+
 }

@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.dokumen;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 
 public class RegisterKbliDTO implements Serializable {
 

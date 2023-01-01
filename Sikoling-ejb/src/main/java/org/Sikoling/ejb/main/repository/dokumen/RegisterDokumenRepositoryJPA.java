@@ -1,6 +1,8 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,8 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
@@ -169,22 +173,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
 				.collect(Collectors.toList());
 	}
-		
-//	private Set<RegisterKbliData> convertJsonArrayKbliToDaftarRegisterKbliData(JsonArray daftarKbli) {
-//		Iterator<JsonValue> iteratorDaftarKbli = daftarKbli.iterator();
-//		
-//		Set<RegisterKbliData> daftarKbliData = new HashSet<RegisterKbliData>();
-//		while (iteratorDaftarKbli.hasNext()) {
-//			 JsonObject kbliJsonObject = iteratorDaftarKbli.next().asJsonObject();
-//			 RegisterKbliData registerKbliData = new RegisterKbliData();
-//			 KbliData kbliData = new KbliData();
-//			 kbliData.setId(kbliJsonObject.getString("kode"));
-//			 registerKbliData.setKbliData(kbliData);				 
-//			 daftarKbliData.add(registerKbliData);
-//		}
-//		
-//		return daftarKbliData;
-//	}
 	
 	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
 		MasterDokumenData masterDokumenData = d.getDokumenData();
@@ -400,6 +388,47 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							)
 					);
 		}
+		else if(d.getNibOssData() != null) {
+			NibOssData nibOssData = d.getNibOssData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new NibOss(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							nibOssData.getNomor(), 
+							nibOssData.getTanggalPenetapan(),
+							toDaftarRegisterKbli(nibOssData.getDaftarKbli())
+							), 
+					new Perusahaan(
+							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNama(), 
+							null, 
+							null, 
+							new PelakuUsaha(
+									pelakuUsahaData.getId(), 
+									pelakuUsahaData.getNama(), 
+									pelakuUsahaData.getSingkatan(), 
+									null
+									), 
+							null, 
+							null, 
+							null, 
+							registerPerusahaanData.getStatusVerifikasi()
+							), 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
 		else {
 			return null;
 		}
@@ -469,6 +498,14 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			rekomendasiDPLHData.setPerihalSurat(rekomendasiDPLH.getPerihal());
 			
 			registerDokumenData.setRekomendasiDPLHData(rekomendasiDPLHData);
+		}
+		else if(dokumen instanceof NibOss) {
+			NibOss nibOss = (NibOss) dokumen;
+			NibOssData nibOssData = new NibOssData();			
+			nibOssData.setNomor(nibOss.getNomor());
+			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
+			
+			registerDokumenData.setNibOssData(nibOssData);
 		}
 
 		
@@ -557,6 +594,29 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 								jabatanData.getNama()
 								) : null
 				);
+	}
+		
+	private List<RegisterKbli> toDaftarRegisterKbli(List<RegisterKbliData> d) {
+		if(!d.isEmpty()) {
+			List<RegisterKbli> daftarKbli = new ArrayList<>();
+			Iterator<RegisterKbliData> iter = d.iterator();
+			
+			RegisterKbli item;
+			while (iter.hasNext()) {
+				RegisterKbliData registerKbliData = (RegisterKbliData) iter.next();
+				item = new RegisterKbli(
+						registerKbliData.getNib(), 
+						registerKbliData.getKbli(), 
+						registerKbliData.getNama()
+						);
+				daftarKbli.add(item);
+			}
+			
+			return daftarKbli;
+		}
+		else {
+			return null;
+		}
 	}
 	
 }

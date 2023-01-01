@@ -8,7 +8,7 @@ import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenRepositoryJPA;
-import org.Sikoling.ejb.main.repository.dokumen.KbliRepositoryJPA;
+import org.Sikoling.ejb.main.repository.dokumen.Kbli2020RepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterKbliRepositoryJPA;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesRepositoryJPA;
@@ -159,8 +159,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KbliRepositoryJPA getKbliRepositoryJPA(EntityManager entityManager) {
-		return new KbliRepositoryJPA(entityManager);
+	public Kbli2020RepositoryJPA getKbliRepositoryJPA(EntityManager entityManager) {
+		return new Kbli2020RepositoryJPA(entityManager);
 	}
 	
 	@Produces

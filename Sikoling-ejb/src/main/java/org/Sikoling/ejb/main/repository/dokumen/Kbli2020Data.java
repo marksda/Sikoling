@@ -9,12 +9,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_kbli_2020")
 @NamedQueries({
-	@NamedQuery(name="KbliData.findAll", query = "SELECT d FROM KbliData d"),
-	@NamedQuery(name="KbliData.findByNama", query = "SELECT d FROM KbliData d WHERE d.nama LIKE :nama"),
-	@NamedQuery(name="KbliData.findByKode", query = "SELECT d FROM KbliData d WHERE d.id LIKE :kode"),
-	@NamedQuery(name="KbliData.findByKategori", query = "SELECT d FROM KbliData d WHERE d.kategori = :kategori")
+	@NamedQuery(name="Kbli2020Data.findAll", query = "SELECT d FROM Kbli2020Data d"),
+	@NamedQuery(name="Kbli2020Data.findByNama", query = "SELECT d FROM Kbli2020Data d WHERE d.nama LIKE :nama"),
+	@NamedQuery(name="Kbli2020Data.findByKode", query = "SELECT d FROM Kbli2020Data d WHERE d.id LIKE :kode"),
+	@NamedQuery(name="Kbli2020Data.findByKategori", query = "SELECT d FROM Kbli2020Data d WHERE d.kategori = :kategori")
 })
-public class KbliData {
+public class Kbli2020Data {
 	
 	@Id
 	private String id;
@@ -23,7 +23,7 @@ public class KbliData {
 	
 	private String kategori;
 	
-	public KbliData() {
+	public Kbli2020Data() {
 	}
 
 	public String getId() {
