@@ -17,9 +17,9 @@ import jakarta.persistence.Table;
 @Table(name="transaksi.tbl_nib_kbli")
 @NamedQueries({
 	@NamedQuery(name="RegisterKbliData.findAll", query="SELECT d FROM RegisterKbliData d"),
-	@NamedQuery(name="RegisterKbliData.findByNama", query="SELECT d FROM RegisterKbliData d WHERE d.kbliData.nama = :nama"),
-	@NamedQuery(name="RegisterKbliData.findByKode", query="SELECT d FROM RegisterKbliData d WHERE d.kbliData.id LIKE :kode"),
-	@NamedQuery(name="RegisterKbliData.findByNib", query = "SELECT d FROM RegisterKbliData d WHERE d.registerDokumenOssData.nib = :nib")
+	@NamedQuery(name="RegisterKbliData.findByNama", query="SELECT d FROM RegisterKbliData d WHERE d.nama = :nama"),
+	@NamedQuery(name="RegisterKbliData.findByKode", query="SELECT d FROM RegisterKbliData d WHERE d.kbli LIKE :kode"),
+	@NamedQuery(name="RegisterKbliData.findByNib", query = "SELECT d FROM RegisterKbliData d WHERE d.nib = :nib")
 })
 @IdClass(RegisterKbliDataId.class)
 public class RegisterKbliData implements Serializable {

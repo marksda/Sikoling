@@ -8,20 +8,20 @@ import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="transaksi.tbl_permohonan")
+@Table(name="transaksi.tbl_register_permohonan")
 @NamedQueries({
 	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p"),
-	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p WHERE p.autorisasiData.id = :idPengakses")
+	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p "
+			+ "WHERE p.autorisasiData.id = :idPengakses")
 })
 public class RegisterPermohonanData implements Serializable {
 
@@ -34,7 +34,7 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private KategoriPermohonanData kategoriPermohonanData;	
 	
-	@Column(name="tanggal_registrasi")
+	@Column(name="tanggal_registrasi", insertable = true, updatable = true)
 	private LocalDate tanggalRegistrasi;	
 	
 	@JoinColumn(name="perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
@@ -53,7 +53,7 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private StatusTahapPemberkasanData statusTahapPemberkasanData;
 	
-	@OneToOne(mappedBy = "registerPermohonanData", fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private PermohonanSuratArahanData permohonanSuratArahanData;
 
 	public RegisterPermohonanData() {

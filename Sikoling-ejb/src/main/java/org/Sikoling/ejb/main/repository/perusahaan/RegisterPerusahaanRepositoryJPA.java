@@ -25,6 +25,8 @@ import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
@@ -33,6 +35,7 @@ import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.NibOssData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RekomendasiDPLHData;
 import org.Sikoling.ejb.main.repository.dokumen.RekomendasiUKLUPLData;
@@ -556,6 +559,36 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							rekomendasiDPLHData.getTanggalSurat(),
 							rekomendasiDPLHData.getPerihalSurat()
 							), 
+					null, 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
+		else if(d.getNibOssData() != null) {
+			NibOssData nibOssData = d.getNibOssData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new NibOss(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							nibOssData.getNomor(), 
+							nibOssData.getTanggalPenetapan(),
+							nibOssData.getDaftarKbli() != null ?
+									nibOssData.getDaftarKbli()
+									.stream()
+									.map(i -> new RegisterKbli(null, null, null))
+									.collect(Collectors.toList()) : null
+							),
 					null, 
 					null, 
 					d.getTanggalRegistrasi(), 

@@ -13,7 +13,7 @@ public class RegisterPermohonan implements Serializable {
 	private final String id;
 	private final KategoriPermohonan kategoriPermohonan;
 	private final LocalDate tanggalRegistrasi;
-	private final Perusahaan perusahaan;
+	private final RegisterPerusahaan perusahaan;
 	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
 	private final StatusTahapPemberkasan statusPermohonan;
@@ -21,7 +21,7 @@ public class RegisterPermohonan implements Serializable {
 	private final List<Dokumen> daftarDokumenHasil;
 //	private final List<LogPermohonan> daftarLogPermohonan;
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			Perusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
 			StatusTahapPemberkasan statusPermohonan, List<Dokumen> daftarDokumenSyarat,
 			List<Dokumen> daftarDokumenHasil) {
 		super();
@@ -47,7 +47,7 @@ public class RegisterPermohonan implements Serializable {
 	public LocalDate getTanggalRegistrasi() {
 		return tanggalRegistrasi;
 	}
-	public Perusahaan getPerusahaan() {
+	public RegisterPerusahaan getPerusahaan() {
 		return perusahaan;
 	}
 	public Authority getPengurusPermohonan() {
