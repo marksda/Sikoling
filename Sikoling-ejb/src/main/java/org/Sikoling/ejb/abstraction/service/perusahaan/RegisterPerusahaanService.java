@@ -75,5 +75,10 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 		return perusahaanRepository.deleteLinkKepemilikanPerusahaan(idPerson, idPerusahaan);
 	}
 
+	@Override
+	public List<RegisterPerusahaan> getByIdLinkKepemilikanTanpaRegisterDokumen(String idLinkKepemilikan) {
+		return perusahaanRepository.getByIdLinkKepemilikanTanpaRegisterDokumen(idLinkKepemilikan);
+	}
+
 	
 }

@@ -70,7 +70,5 @@ public class LampiranSuratArahan extends Dokumen implements Serializable {
 				.concat(this.tanggalSuratArahan.toString())
 				.concat("}");
 	}
-		
 	
-
 }

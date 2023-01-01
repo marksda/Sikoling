@@ -192,4 +192,16 @@ public class PerusahaanController {
 				.collect(Collectors.toList());
 	}
 	
+	@Path("kepemilikan/tanpa_dokumen/{idLinkKepemilikan}")
+	@GET
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<RegisterPerusahaanDTO> getByIdLinkKepemilikanTanpaDokumen(@PathParam("idLinkKepemilikan") String idLinkKepemilikan) {
+		return registerPerusahaanService.getByIdLinkKepemilikanTanpaRegisterDokumen(idLinkKepemilikan)
+				.stream()
+				.map(t -> new RegisterPerusahaanDTO(t))
+				.collect(Collectors.toList());
+	}
+	
 }

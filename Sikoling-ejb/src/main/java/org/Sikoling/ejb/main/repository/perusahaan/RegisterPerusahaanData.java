@@ -63,7 +63,7 @@ public class RegisterPerusahaanData implements Serializable {
 	
 	private String npwp;
 	
-	@OneToMany(mappedBy="perusahaanData", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="perusahaanData", fetch = FetchType.LAZY)
 	private List<RegisterDokumenData> daftarRegisterDokumenData;	
 
 	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)

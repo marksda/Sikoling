@@ -20,6 +20,8 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -316,6 +318,88 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							)
 					);
 		}
+		else if(d.getRekomendasiUKLUPLData() != null) {
+			RekomendasiUKLUPLData rekomendasiUKLUPLData = d.getRekomendasiUKLUPLData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new RekomendasiUKLUPL(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							rekomendasiUKLUPLData.getNoSurat(), 
+							rekomendasiUKLUPLData.getTanggalSurat(),
+							rekomendasiUKLUPLData.getPerihalSurat()
+							), 
+					new Perusahaan(
+							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNama(), 
+							null, 
+							null, 
+							new PelakuUsaha(
+									pelakuUsahaData.getId(), 
+									pelakuUsahaData.getNama(), 
+									pelakuUsahaData.getSingkatan(), 
+									null
+									), 
+							null, 
+							null, 
+							null, 
+							registerPerusahaanData.getStatusVerifikasi()
+							), 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
+		else if(d.getRekomendasiDPLHData() != null) {
+			RekomendasiDPLHData rekomendasiDPLHData = d.getRekomendasiDPLHData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new RekomendasiUKLUPL(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							rekomendasiDPLHData.getNoSurat(), 
+							rekomendasiDPLHData.getTanggalSurat(),
+							rekomendasiDPLHData.getPerihalSurat()
+							), 
+					new Perusahaan(
+							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNama(), 
+							null, 
+							null, 
+							new PelakuUsaha(
+									pelakuUsahaData.getId(), 
+									pelakuUsahaData.getNama(), 
+									pelakuUsahaData.getSingkatan(), 
+									null
+									), 
+							null, 
+							null, 
+							null, 
+							registerPerusahaanData.getStatusVerifikasi()
+							), 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
 		else {
 			return null;
 		}
@@ -367,6 +451,24 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			pegawaiData.setId(aktaPendirian.getPenanggungJawab().getId());
 			aktaPendirianData.setPenanggungJawabData(pegawaiData);
 			registerDokumenData.setAktaPendirianData(aktaPendirianData);
+		}
+		else if(dokumen instanceof RekomendasiUKLUPL) {
+			RekomendasiUKLUPL rekomendasiUKLUPL = (RekomendasiUKLUPL) dokumen;
+			RekomendasiUKLUPLData rekomendasiUKLUPLData = new RekomendasiUKLUPLData();			
+			rekomendasiUKLUPLData.setNoSurat(rekomendasiUKLUPL.getNomor());
+			rekomendasiUKLUPLData.setTanggalSurat(rekomendasiUKLUPL.getTanggal());
+			rekomendasiUKLUPLData.setPerihalSurat(rekomendasiUKLUPL.getPerihal());
+			
+			registerDokumenData.setRekomendasiUKLUPLData(rekomendasiUKLUPLData);
+		}
+		else if(dokumen instanceof RekomendasiDPLH) {
+			RekomendasiDPLH rekomendasiDPLH = (RekomendasiDPLH) dokumen;
+			RekomendasiDPLHData rekomendasiDPLHData = new RekomendasiDPLHData();			
+			rekomendasiDPLHData.setNoSurat(rekomendasiDPLH.getNomor());
+			rekomendasiDPLHData.setTanggalSurat(rekomendasiDPLH.getTanggal());
+			rekomendasiDPLHData.setPerihalSurat(rekomendasiDPLH.getPerihal());
+			
+			registerDokumenData.setRekomendasiDPLHData(rekomendasiDPLHData);
 		}
 
 		

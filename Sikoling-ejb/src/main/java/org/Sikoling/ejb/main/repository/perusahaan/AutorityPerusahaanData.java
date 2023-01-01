@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -26,7 +27,7 @@ public class AutorityPerusahaanData implements Serializable {
 	
 	@Id
 	@JoinColumn(name = "autority", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private AutorisasiData autority;
 	
 	@Id
@@ -53,6 +54,5 @@ public class AutorityPerusahaanData implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 }

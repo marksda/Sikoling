@@ -37,7 +37,7 @@ public class RegisterDokumenData implements Serializable {
 	private String id;
 	
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	private RegisterPerusahaanData perusahaanData;
 	
 	@Id
@@ -69,10 +69,34 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private AktaPendirianData aktaPendirianData;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	private RekomendasiUKLUPLData rekomendasiUKLUPLData;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	private RekomendasiDPLHData rekomendasiDPLHData;
 
 	public RegisterDokumenData() {
 	}
 			
+	public RekomendasiDPLHData getRekomendasiDPLHData() {
+		return rekomendasiDPLHData;
+	}
+
+	public void setRekomendasiDPLHData(RekomendasiDPLHData rekomendasiDPLHData) {
+		this.rekomendasiDPLHData = rekomendasiDPLHData;
+	}
+	
+	public RekomendasiUKLUPLData getRekomendasiUKLUPLData() {
+		return rekomendasiUKLUPLData;
+	}
+
+	public void setRekomendasiUKLUPLData(RekomendasiUKLUPLData rekomendasiUKLUPLData) {
+		this.rekomendasiUKLUPLData = rekomendasiUKLUPLData;
+	}
+
 	public LampiranSuratArahanData getLampiranSuratArahanData() {
 		return lampiranSuratArahanData;
 	}

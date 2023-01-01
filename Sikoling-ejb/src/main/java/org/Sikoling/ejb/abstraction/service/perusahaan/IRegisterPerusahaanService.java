@@ -18,4 +18,5 @@ public interface IRegisterPerusahaanService {
 	List<RegisterPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize);
 	List<RegisterPerusahaan> getByIdKreator(String idKreator);
 	List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan);
+	List<RegisterPerusahaan> getByIdLinkKepemilikanTanpaRegisterDokumen(String idLinkKepemilikan);
 }

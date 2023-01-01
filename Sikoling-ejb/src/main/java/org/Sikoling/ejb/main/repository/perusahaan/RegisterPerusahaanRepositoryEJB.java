@@ -78,6 +78,10 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
 		return registerPerusahaanRepository.getByIdLinkKepemilikan(idLinkKepemilikan);
 	}
-
+	
+	@Override
+	public List<RegisterPerusahaan> getByIdLinkKepemilikanTanpaRegisterDokumen(String idLinkKepemilikan) {
+		return registerPerusahaanRepository.getByIdLinkKepemilikanTanpaRegisterDokumen(idLinkKepemilikan);
+	}
 	
 }

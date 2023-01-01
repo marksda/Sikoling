@@ -4,34 +4,33 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+public class RekomendasiDPLH extends Dokumen implements Serializable {
 
-public class RekomendasiUKLUPL extends Dokumen implements Serializable {
-	
-	private static final long serialVersionUID = 1698034215951652720L;
+	private static final long serialVersionUID = -926660558566246710L;
 	private final String nomor;
 	private final LocalDate tanggal;
 	private final String perihal;
 	
-	public RekomendasiUKLUPL(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
+	public RekomendasiDPLH(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
 			String perihal) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.perihal = perihal;
-	}	
-	
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	public String getNomor() {
 		return nomor;
 	}
-	
+
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
-	
+
 	public String getPerihal() {
 		return perihal;
 	}
@@ -63,21 +62,17 @@ public class RekomendasiUKLUPL extends Dokumen implements Serializable {
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
         }
-        
-        if (!this.nomor.equalsIgnoreCase(other.nomor)) {
-            return false;
-        }
 
         return true;
 	}
 
 	@Override
 	public String toString() {
-		return "RekomendasiUKLUPL{ id=" 
+		return "RekomendasiDPLH{ id=" 
 				.concat(this.getId())
 				.concat(", nomor=")
 				.concat(nomor)
 				.concat("}");
 	}
-	
+
 }

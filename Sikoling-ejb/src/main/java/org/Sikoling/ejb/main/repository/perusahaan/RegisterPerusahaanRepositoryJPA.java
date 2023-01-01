@@ -25,6 +25,7 @@ import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -33,6 +34,8 @@ import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.RekomendasiDPLHData;
+import org.Sikoling.ejb.main.repository.dokumen.RekomendasiUKLUPLData;
 import org.Sikoling.ejb.main.repository.dokumen.SuratArahanData;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
@@ -324,6 +327,84 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaan(t.getPerusahaan()))
 				.collect(Collectors.toList());
 	}
+	
+	public RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaanTanpaRegisterDokumen(RegisterPerusahaanData d) {
+		ModelPerizinan modelPerizinan = d.getModelPerizinanData() != null ? new ModelPerizinan(
+				d.getModelPerizinanData().getId(), d.getModelPerizinanData().getNama(), 
+				d.getModelPerizinanData().getSingkatan()) : null;	
+		
+		SkalaUsaha skalaUsaha = d.getSkalaUsahaData() != null ? new SkalaUsaha(
+				d.getSkalaUsahaData().getId(), d.getSkalaUsahaData().getNama(), 
+				d.getSkalaUsahaData().getSingkatan()) : null;
+		
+		KategoriPelakuUsaha kategoriPelakuUsaha = d.getPelakuUsahaData() != null ? new KategoriPelakuUsaha(
+				d.getPelakuUsahaData().getKategoriPelakuUsahaData().getId(), 
+				d.getPelakuUsahaData().getKategoriPelakuUsahaData().getNama()) : null;
+		
+		PelakuUsaha pelakuUsaha = d.getPelakuUsahaData() != null ? new PelakuUsaha(
+				d.getPelakuUsahaData().getId(), d.getPelakuUsahaData().getNama(), d.getPelakuUsahaData().getSingkatan(), kategoriPelakuUsaha) : null;
+		
+		Alamat alamatPerusahaan = d.getAlamatPerusahaanData() != null ? new Alamat(
+				d.getAlamatPerusahaanData().getPropinsiData() != null ? new Propinsi(d.getAlamatPerusahaanData().getPropinsiData().getId(), d.getAlamatPerusahaanData().getPropinsiData().getNama()) : null,
+				d.getAlamatPerusahaanData().getKabupatenData() != null ? new Kabupaten(d.getAlamatPerusahaanData().getKabupatenData().getId(), d.getAlamatPerusahaanData().getKabupatenData().getNama()) : null,
+				d.getAlamatPerusahaanData().getKecamatanData() != null ? new Kecamatan(d.getAlamatPerusahaanData().getKecamatanData().getId(), d.getAlamatPerusahaanData().getKecamatanData().getNama()) : null,
+				d.getAlamatPerusahaanData().getDesaData() != null ? new Desa(d.getAlamatPerusahaanData().getDesaData().getId(), d.getAlamatPerusahaanData().getDesaData().getNama()) : null,
+				d.getAlamatPerusahaanData().getKeterangan()) : null;
+		
+		Kontak kontakPerusahaan = d.getKontakPerusahaanData() != null ? new Kontak(
+				d.getKontakPerusahaanData().getTelepone() != null ? d.getKontakPerusahaanData().getTelepone() : null, 
+				d.getKontakPerusahaanData().getFax() != null ? d.getKontakPerusahaanData().getFax() : null, 
+				d.getKontakPerusahaanData().getEmail() != null ? d.getKontakPerusahaanData().getEmail() : null) : null;
+		
+		
+		AutorisasiData kreatorData = d.getKreator();
+		Authority kreator = kreatorData != null ? new Authority(
+				kreatorData.getId(),
+				null, 
+				null, 
+				null, 
+				null, 
+				kreatorData.getUserName()) : null;
+		
+		AutorisasiData verifikatorData = d.getVerifikator();
+		Authority verifikator = verifikatorData != null ? new Authority(
+				verifikatorData.getId(), 
+				null, 
+				null, 
+				verifikatorData.getStatusInternal(),
+				verifikatorData.getIsVerified(), 
+				verifikatorData.getUserName()
+				) : null;
+		
+		
+		return new RegisterPerusahaan(
+				d.getId(),
+				d.getTanggalRegistrasi(), 
+				kreator, 
+				verifikator, 
+				new Perusahaan( 
+						d.getNpwp(), 
+						d.getNama(), 
+						modelPerizinan, 
+						skalaUsaha, 
+						pelakuUsaha, 
+						alamatPerusahaan, 
+						kontakPerusahaan, 
+						null, 
+						d.getStatusVerifikasi()
+						)
+				);
+	}
+	
+	@Override
+	public List<RegisterPerusahaan> getByIdLinkKepemilikanTanpaRegisterDokumen(String idAutorisasi) {
+		return entityManager.createNamedQuery("AutorityPerusahaanData.findByPemilik", AutorityPerusahaanData.class)
+				.setParameter("idAutorisasi", idAutorisasi)
+				.getResultList()
+				.stream()
+				.map(t -> convertRegisterPerusahaanDataToRegisterPerusahaanTanpaRegisterDokumen(t.getPerusahaan()))
+				.collect(Collectors.toList());
+	}
 			
 	private String getGenerateIdRegisterPerusahaan() {
 		int tahun = LocalDate.now().getYear();
@@ -422,6 +503,58 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							lampiranSuratArahanData.getNoSurat(), 
 							lampiranSuratArahanData.getTanggalSurat()
+							), 
+					null, 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
+		else if(d.getRekomendasiUKLUPLData() != null) {
+			RekomendasiUKLUPLData rekomendasiUKLUPLData = d.getRekomendasiUKLUPLData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new RekomendasiUKLUPL(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							rekomendasiUKLUPLData.getNoSurat(), 
+							rekomendasiUKLUPLData.getTanggalSurat(),
+							rekomendasiUKLUPLData.getPerihalSurat()
+							), 
+					null, 
+					null, 
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							)
+					);
+		}
+		else if(d.getRekomendasiDPLHData() != null) {
+			RekomendasiDPLHData rekomendasiDPLHData = d.getRekomendasiDPLHData();
+			
+			return new RegisterDokumen(
+					d.getId(), 
+					new RekomendasiUKLUPL(
+							masterDokumenData.getId(), 
+							masterDokumenData.getNama(), 
+							null, 
+							rekomendasiDPLHData.getNoSurat(), 
+							rekomendasiDPLHData.getTanggalSurat(),
+							rekomendasiDPLHData.getPerihalSurat()
 							), 
 					null, 
 					null, 
