@@ -8,41 +8,54 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 public class RegisterKbliDTO implements Serializable {
 
 	private static final long serialVersionUID = -4442022463611044537L;
-	private String nib;
-	private String kode;
+	private String idNib;
+	private String idKbli;
+	private String nama;
 	
 	public RegisterKbliDTO() {
 	}
 	
 	public RegisterKbliDTO(RegisterKbli t) {
-		this.nib = t.getNib();
-		this.kode = t.getKode();
+		if(t!= null) {
+			this.idNib = t.getIdNib();
+			this.idKbli = t.getIdKbli();
+			this.nama = t.getNama();
+		}
+	}	
+	
+	public String getIdNib() {
+		return idNib;
 	}
 
-	public String getNib() {
-		return nib;
+	public void setIdNib(String idNib) {
+		this.idNib = idNib;
 	}
 
-	public void setNib(String nib) {
-		this.nib = nib;
+	public String getIdKbli() {
+		return idKbli;
 	}
 
-	public String getKode() {
-		return kode;
+	public void setIdKbli(String idKbli) {
+		this.idKbli = idKbli;
 	}
 
-	public void setKode(String kode) {
-		this.kode = kode;
+	public String getNama() {
+		return nama;
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	@Override
 	public int hashCode() {
 		int hash = 137;
-		hash = 171 * hash + Objects.hashCode(this.nib);
-        hash = 171 * hash + Objects.hashCode(this.kode);
+		hash = 171 * hash + Objects.hashCode(idNib);
+        hash = 171 * hash + Objects.hashCode(idKbli);
         return hash;
 	}
 	
@@ -63,28 +76,25 @@ public class RegisterKbliDTO implements Serializable {
         
         final RegisterKbliDTO other = (RegisterKbliDTO) obj;
         
-        if (!this.nib.equalsIgnoreCase(other.getNib())) {
+        if ( !(this.idNib.equalsIgnoreCase(other.getIdNib()) 
+        		&& this.idKbli.equalsIgnoreCase(other.getIdKbli())) ) {
             return false;
-        }     
-        
-        if (!this.kode.equalsIgnoreCase(other.getKode())) {
-            return false;
-        }  
+        }
 
         return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "RegisterKbliDTO{nib="
-				.concat(nib)
-				.concat(", kode = ")
-				.concat(kode)
+		return "RegisterKbliDTO{idNib="
+				.concat(idNib)
+				.concat(", idKbli = ")
+				.concat(idKbli)
 				.concat("}");	  
 	}
 
 	public RegisterKbli toRegisterKbli() {
-		return new RegisterKbli(nib, kode);
+		return new RegisterKbli(idNib, idKbli, nama);
 	}
 	
 	

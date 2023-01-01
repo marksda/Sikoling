@@ -2,7 +2,9 @@ package org.Sikoling.main.restful.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
@@ -13,7 +15,7 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 	private static final long serialVersionUID = -1573998338773596635L;
 	private String nomor;
 	private LocalDate tanggal;
-//	private Lis
+	private List<RegisterKbliDTO> daftarKbli;
 	
 	public NibOssDTO() {
 	}
@@ -28,6 +30,9 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 		if(t != null) {
 			this.nomor = t.getNomor();
 			this.tanggal = t.getTanggal();
+			this.daftarKbli = t.getDaftarKbli() != null ? 
+					t.getDaftarKbli().stream()
+					.map(i -> new RegisterKbliDTO(i)).collect(Collectors.toList()) : null;
 		}
 	}
 
@@ -50,7 +55,15 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 	public void setTanggal(LocalDate tanggal) {
 		this.tanggal = tanggal;
 	}
-	
+			
+
+	public List<RegisterKbliDTO> getDaftarKbli() {
+		return daftarKbli;
+	}
+
+	public void setDaftarKbli(List<RegisterKbliDTO> daftarKbli) {
+		this.daftarKbli = daftarKbli;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -108,8 +121,10 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 						kategoriDokumenDTO.getNama(), 
 						kategoriDokumenDTO.getParent()
 						) : null, 
-				this.nomor, 
-				this.tanggal
+				nomor, 
+				tanggal,
+				daftarKbli != null ? daftarKbli.stream().map(i -> i.toRegisterKbli())
+						.collect(Collectors.toList()) : null
 				);
 	}
 
