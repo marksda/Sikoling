@@ -40,7 +40,7 @@ public class RegisterKbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public RegisterKbliDTO update(@PathParam("nib") String nib, @PathParam("kode") String kode, RegisterKbliDTO t) {
-		return new RegisterKbliDTO(registerKbliService.updateById(nib, kode, t.toRegisterKbli()));
+		return new RegisterKbliDTO(registerKbliService.update(t.toRegisterKbli()));
 	}
 	
 	@Path("id/{nib}/{kode}")
