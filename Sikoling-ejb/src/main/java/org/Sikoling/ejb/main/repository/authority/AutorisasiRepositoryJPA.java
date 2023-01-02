@@ -170,24 +170,33 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 	
 	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
+		PropinsiData propinsiData = d.getPersonData().getAlamat().getPropinsi();
+		KabupatenData kabupatenData = d.getPersonData().getAlamat().getKabupaten();
+		KecamatanData kecamatanData = d.getPersonData().getAlamat().getKecamatan();
+		DesaData desaData = d.getPersonData().getAlamat().getDesa();
+		
 
 		Person person = new Person(
 				d.getPersonData().getId(), 
 				d.getPersonData().getNama(), 
 				new JenisKelamin(d.getPersonData().getSex().getId(), d.getPersonData().getSex().getNama()), 
 				new Alamat(
-						new Propinsi(
-								d.getPersonData().getAlamat().getPropinsi().getId(), 
-								d.getPersonData().getAlamat().getPropinsi().getNama()), 
-						new Kabupaten(
-								d.getPersonData().getAlamat().getKabupaten().getId(),
-								d.getPersonData().getAlamat().getKabupaten().getNama()), 
-						new Kecamatan(
-								d.getPersonData().getAlamat().getKecamatan().getId(),
-								d.getPersonData().getAlamat().getKecamatan().getNama()) , 
-						new Desa(
-								d.getPersonData().getAlamat().getDesa().getId(), 
-								d.getPersonData().getAlamat().getDesa().getNama()), 
+						propinsiData != null ?
+								new Propinsi(
+										propinsiData.getId(), 
+										propinsiData.getNama()):null, 
+						kabupatenData != null ?
+								new Kabupaten(
+										kabupatenData.getId(),
+										kabupatenData.getNama()):null, 
+						kecamatanData != null ?
+								new Kecamatan(
+									kecamatanData.getId(),
+									kecamatanData.getNama()):null , 
+						desaData != null ?
+								new Desa(
+									desaData.getId(), 
+									desaData.getNama()):null, 
 						d.getPersonData().getAlamat().getDetailAlamat()), 
 				d.getPersonData().getScanKtp(), 
 				new Kontak(

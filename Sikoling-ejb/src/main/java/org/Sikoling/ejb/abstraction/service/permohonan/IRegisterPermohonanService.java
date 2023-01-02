@@ -1,10 +1,14 @@
-package org.Sikoling.ejb.abstraction.repository;
+package org.Sikoling.ejb.abstraction.service.permohonan;
 
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.RegisterPermohonan;
 
-public interface IRegisterPermohonanRepository extends IRepository<RegisterPermohonan> {
+public interface IRegisterPermohonanService {
+	
+	RegisterPermohonan save(RegisterPermohonan t);
+	RegisterPermohonan update(RegisterPermohonan t);
+	List<RegisterPermohonan> getAll();
 	List<RegisterPermohonan> getAllByPage(Integer page, Integer pageSize);
 	List<RegisterPermohonan> getByIdPengakses(String idPengakses);
 	List<RegisterPermohonan> getByIdPerusahaan(String idPerusahaan);

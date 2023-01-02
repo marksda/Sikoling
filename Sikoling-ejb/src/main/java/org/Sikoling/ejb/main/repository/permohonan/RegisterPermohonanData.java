@@ -21,7 +21,9 @@ import jakarta.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p"),
 	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p "
-			+ "WHERE p.autorisasiData.id = :idPengakses")
+			+ "WHERE p.autorisasiData.id = :idPengakses"),
+	@NamedQuery(name="RegisterPermohonanData.findByPerusahaan", query="SELECT p FROM RegisterPermohonanData p "
+			+ "WHERE p.perusahaanData.id = :idRegisterPerusahaan")
 })
 public class RegisterPermohonanData implements Serializable {
 
@@ -57,6 +59,14 @@ public class RegisterPermohonanData implements Serializable {
 	private PermohonanSuratArahanData permohonanSuratArahanData;
 
 	public RegisterPermohonanData() {
+	}
+	
+	public PermohonanSuratArahanData getPermohonanSuratArahanData() {
+		return permohonanSuratArahanData;
+	}
+
+	public void setPermohonanSuratArahanData(PermohonanSuratArahanData permohonanSuratArahanData) {
+		this.permohonanSuratArahanData = permohonanSuratArahanData;
 	}
 
 	public String getId() {
@@ -119,4 +129,5 @@ public class RegisterPermohonanData implements Serializable {
 		return serialVersionUID;
 	}
 
+	 
 }

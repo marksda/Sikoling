@@ -18,12 +18,12 @@ public class RegisterPermohonan implements Serializable {
 	private final StatusWali statusWaliPengurusPermohonan;
 	private final StatusTahapPemberkasan statusPermohonan;
 	private final List<Dokumen> daftarDokumenSyarat;
-	private final List<Dokumen> daftarDokumenHasil;
-//	private final List<LogPermohonan> daftarLogPermohonan;
+	private final List<Dokumen> daftarDokumenHasil;	
+	
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			StatusTahapPemberkasan statusPermohonan, List<Dokumen> daftarDokumenSyarat,
-			List<Dokumen> daftarDokumenHasil) {
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan,
+			StatusWali statusWaliPengurusPermohonan, StatusTahapPemberkasan statusPermohonan,
+			List<Dokumen> daftarDokumenSyarat, List<Dokumen> daftarDokumenHasil) {
 		super();
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
@@ -35,33 +35,43 @@ public class RegisterPermohonan implements Serializable {
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	public String getId() {
 		return id;
 	}
+	
 	public KategoriPermohonan getKategoriPermohonan() {
 		return kategoriPermohonan;
 	}
+	
 	public LocalDate getTanggalRegistrasi() {
 		return tanggalRegistrasi;
 	}
+	
 	public RegisterPerusahaan getPerusahaan() {
 		return perusahaan;
 	}
+	
 	public Authority getPengurusPermohonan() {
 		return pengurusPermohonan;
 	}
+	
 	public StatusWali getStatusWaliPengurusPermohonan() {
 		return statusWaliPengurusPermohonan;
 	}
+	
 	public StatusTahapPemberkasan getStatusPermohonan() {
 		return statusPermohonan;
 	}
+	
 	public List<Dokumen> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
+	
 	public List<Dokumen> getDaftarDokumenHasil() {
 		return daftarDokumenHasil;
 	}

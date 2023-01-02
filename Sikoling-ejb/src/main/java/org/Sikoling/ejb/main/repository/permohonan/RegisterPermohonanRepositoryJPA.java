@@ -24,8 +24,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 
 	public RegisterPermohonanRepositoryJPA(EntityManager entityManager) {
 		this.entityManager = entityManager;
-	}
-	
+	}	
 
 	@Override
 	public List<RegisterPermohonan> getAll() {
@@ -49,38 +48,40 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 
 	@Override
 	public RegisterPermohonan update(RegisterPermohonan t) {
-		// TODO Auto-generated method stub
+		RegisterPermohonanData registerPermohonanData = convertRegisterPermohonanToRegisterPermohonanData(t);
+		registerPermohonanData = entityManager.merge(registerPermohonanData);
 		return null;
 	}
 
 	@Override
 	public List<RegisterPermohonan> getAllByPage(Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByQueryNama(String nama) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.createNamedQuery("RegisterPermohonanData.findAll", RegisterPermohonanData.class)
+				.setMaxResults(pageSize)
+				.setFirstResult((page-1)*pageSize)
+				.getResultList()
+				.stream()
+				.map(t -> convertRegisterPermohonanDataToRegisterPermohonan(t))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<RegisterPermohonan> getByIdPengakses(String idPengakses) {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.createNamedQuery("RegisterPermohonanData.findByPengakses", RegisterPermohonanData.class)
+				.setParameter("idPengakses", idPengakses)
+				.getResultList()
+				.stream()
+				.map(t -> convertRegisterPermohonanDataToRegisterPermohonan(t))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<RegisterPermohonan> getByIdPerusahaan(String idPerusahaan) {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.createNamedQuery("RegisterPermohonanData.findByPerusahaan", RegisterPermohonanData.class)
+				.setParameter("idRegisterPerusahaan", idPerusahaan)
+				.getResultList()
+				.stream()
+				.map(t -> convertRegisterPermohonanDataToRegisterPermohonan(t))
+				.collect(Collectors.toList());
 	}
 
 	private RegisterPermohonan convertRegisterPermohonanDataToRegisterPermohonan(RegisterPermohonanData d) {
@@ -162,6 +163,29 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	
 	private RegisterPermohonanData convertRegisterPermohonanToRegisterPermohonanData(RegisterPermohonan t) {
 		RegisterPermohonanData registerPermohonanData = new RegisterPermohonanData();
+		registerPermohonanData.setId(t.getId());
+		
+		KategoriPermohonanData kategoriPermohonanData = new KategoriPermohonanData();
+		kategoriPermohonanData.setId(t.getKategoriPermohonan().getId());
+		registerPermohonanData.setKategoriPermohonanData(kategoriPermohonanData);
+		
+		registerPermohonanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
+		
+		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();
+		registerPerusahaanData.setId(t.getPerusahaan().getId());
+		registerPermohonanData.setPerusahaanData(registerPerusahaanData);
+		
+		AutorisasiData pengaksesData = new AutorisasiData();
+		pengaksesData.setId(t.getPengurusPermohonan().getId());
+		registerPermohonanData.setAutorisasiData(pengaksesData);
+		
+		KategoriPengurusPermohonanData kategoriPengurusPermohonanData = new KategoriPengurusPermohonanData();		
+		kategoriPengurusPermohonanData.setId(t.getStatusWaliPengurusPermohonan().getId());
+		registerPermohonanData.setKategoriPengurusPermohonanData(kategoriPengurusPermohonanData);
+		
+		StatusTahapPemberkasanData statusTahapPemberkasanData = new StatusTahapPemberkasanData();
+		statusTahapPemberkasanData.setId(t.getStatusPermohonan().getId());
+		registerPermohonanData.setStatusTahapPemberkasanData(statusTahapPemberkasanData);		
 		
 		return registerPermohonanData;
 	}
