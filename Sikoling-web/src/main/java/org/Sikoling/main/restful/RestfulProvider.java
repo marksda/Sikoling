@@ -24,6 +24,7 @@ import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
+import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
@@ -71,7 +72,9 @@ import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanService;
+import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanService;
+import org.Sikoling.ejb.abstraction.service.permohonan.RegisterPermohonanService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
@@ -230,6 +233,12 @@ public class RestfulProvider {
 	public IKategoriPermohonanService getKategoriPermohonanService(
 			@Infrastructure IKategoriPermohonanRepository kategoriPermohonanRepository) {
 		return new KategoriPermohonanService(kategoriPermohonanRepository);
+	}
+	
+	@Produces
+	public IRegisterPermohonanService getRegisterPermohonanService(
+			@Infrastructure IRegisterPermohonanRepository registerPermohonanRepository) {
+		return new RegisterPermohonanService(registerPermohonanRepository);
 	}
 	
 	@Produces

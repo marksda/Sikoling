@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -46,6 +47,11 @@ public class RegisterPermohonanRepositoryEJB implements IRegisterPermohonanRepos
 	@Override
 	public List<RegisterPermohonan> getByIdPerusahaan(String idPerusahaan) {
 		return registerPermohonanRepository.getByIdPerusahaan(idPerusahaan);
+	}
+
+	@Override
+	public DeleteResponse delete(String id) {
+		return registerPermohonanRepository.delete(id);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
@@ -188,5 +189,13 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		registerPermohonanData.setStatusTahapPemberkasanData(statusTahapPemberkasanData);		
 		
 		return registerPermohonanData;
+	}
+
+	
+	@Override
+	public DeleteResponse delete(String id) {
+		RegisterPermohonanData registerPermohonanData = entityManager.find(RegisterPermohonanData.class, id);
+		entityManager.remove(registerPermohonanData);			
+		return new DeleteResponse(true, id);
 	}
 }
