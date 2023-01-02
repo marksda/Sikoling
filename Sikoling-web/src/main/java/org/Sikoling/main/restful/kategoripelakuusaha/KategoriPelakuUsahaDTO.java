@@ -15,8 +15,10 @@ public class KategoriPelakuUsahaDTO implements Serializable {
 	}
 	
 	public KategoriPelakuUsahaDTO(KategoriPelakuUsaha t) {
-		this.id = t.getId();
-		this.nama = t.getNama();
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+		}
 	}
 
 	public String getId() {
