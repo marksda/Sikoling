@@ -1,9 +1,14 @@
-package org.Sikoling.ejb.abstraction.entity;
+package org.Sikoling.ejb.abstraction.entity.permohonan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
+import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.StatusTahapPemberkasan;
+import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
 public class RegisterPermohonan implements Serializable {

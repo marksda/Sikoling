@@ -8,10 +8,10 @@ import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
-import org.Sikoling.ejb.abstraction.entity.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
+import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
@@ -141,12 +141,12 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		KategoriPengurusPermohonanData statusPengurus = d.getKategoriPengurusPermohonanData();
 		StatusWali statusWali = statusPengurus != null ?
 				new StatusWali(statusPengurus.getId(), statusPengurus.getNama()) : null;
-		StatusTahapPemberkasanData statusTahapPemberkasanData = d.getStatusTahapPemberkasanData();
-		StatusTahapPemberkasan statusTahapPemberkasan = statusTahapPemberkasanData != null ?
+		PosisiTahapPemberkasanData posisiTahapPemberkasanData = d.getPosisiTahapPemberkasanData();
+		StatusTahapPemberkasan statusTahapPemberkasan = posisiTahapPemberkasanData != null ?
 				new StatusTahapPemberkasan(
-						statusTahapPemberkasanData.getId(), 
-						statusTahapPemberkasanData.getNama(), 
-						statusTahapPemberkasanData.getKeterangan()
+						posisiTahapPemberkasanData.getId(), 
+						posisiTahapPemberkasanData.getNama(), 
+						posisiTahapPemberkasanData.getKeterangan()
 						) : null;
 		
 		return new RegisterPermohonan(
@@ -184,9 +184,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		kategoriPengurusPermohonanData.setId(t.getStatusWaliPengurusPermohonan().getId());
 		registerPermohonanData.setKategoriPengurusPermohonanData(kategoriPengurusPermohonanData);
 		
-		StatusTahapPemberkasanData statusTahapPemberkasanData = new StatusTahapPemberkasanData();
-		statusTahapPemberkasanData.setId(t.getStatusPermohonan().getId());
-		registerPermohonanData.setStatusTahapPemberkasanData(statusTahapPemberkasanData);		
+		PosisiTahapPemberkasanData posisiTahapPemberkasanData = new PosisiTahapPemberkasanData();
+		posisiTahapPemberkasanData.setId(t.getStatusPermohonan().getId());
+		registerPermohonanData.setPosisiTahapPemberkasanData(posisiTahapPemberkasanData);		
 		
 		return registerPermohonanData;
 	}

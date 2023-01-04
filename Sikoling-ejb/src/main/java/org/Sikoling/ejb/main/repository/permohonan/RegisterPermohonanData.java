@@ -51,9 +51,9 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private KategoriPengurusPermohonanData kategoriPengurusPermohonanData;
 	
-	@JoinColumn(name="status_tahap_pemberkasan", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name="posisi_tahap_pemberkasan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private StatusTahapPemberkasanData statusTahapPemberkasanData;
+	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
 	
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private PermohonanSuratArahanData permohonanSuratArahanData;
@@ -117,12 +117,12 @@ public class RegisterPermohonanData implements Serializable {
 		this.kategoriPengurusPermohonanData = kategoriPengurusPermohonanData;
 	}
 
-	public StatusTahapPemberkasanData getStatusTahapPemberkasanData() {
-		return statusTahapPemberkasanData;
+	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanData() {
+		return posisiTahapPemberkasanData;
 	}
 
-	public void setStatusTahapPemberkasanData(StatusTahapPemberkasanData statusTahapPemberkasanData) {
-		this.statusTahapPemberkasanData = statusTahapPemberkasanData;
+	public void setPosisiTahapPemberkasanData(PosisiTahapPemberkasanData posisiTahapPemberkasanData) {
+		this.posisiTahapPemberkasanData = posisiTahapPemberkasanData;
 	}
 
 	public static long getSerialversionuid() {

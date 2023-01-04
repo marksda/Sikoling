@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.RegisterPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 
 public class RegisterPermohonanService implements IRegisterPermohonanService {

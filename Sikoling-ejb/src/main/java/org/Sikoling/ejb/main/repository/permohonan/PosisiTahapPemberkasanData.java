@@ -11,9 +11,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_status_tahap_pemberkasan")
 @NamedQueries({
-	@NamedQuery(name="StatusTahapPemberkasanData.findAll", query="SELECT p FROM StatusTahapPemberkasanData p")
+	@NamedQuery(name="PosisiTahapPemberkasanData.findAll", query="SELECT p FROM StatusTahapPemberkasanData p")
 })
-public class StatusTahapPemberkasanData implements Serializable {
+public class PosisiTahapPemberkasanData implements Serializable {
 
 	private static final long serialVersionUID = -1953183406580036213L;
 	
@@ -24,7 +24,7 @@ public class StatusTahapPemberkasanData implements Serializable {
 	
 	private String keterangan;
 
-	public StatusTahapPemberkasanData() {
+	public PosisiTahapPemberkasanData() {
 	}
 
 	public String getId() {
