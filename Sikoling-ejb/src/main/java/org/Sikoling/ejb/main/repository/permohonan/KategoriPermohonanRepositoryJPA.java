@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
 import jakarta.persistence.EntityManager;
 

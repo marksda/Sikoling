@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 

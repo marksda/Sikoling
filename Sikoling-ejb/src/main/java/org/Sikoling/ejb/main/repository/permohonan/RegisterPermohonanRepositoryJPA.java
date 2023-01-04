@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;

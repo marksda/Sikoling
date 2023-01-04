@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;

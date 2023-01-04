@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 
 public interface IKategoriPermohonanService {
 	DeleteResponse delete(String id);

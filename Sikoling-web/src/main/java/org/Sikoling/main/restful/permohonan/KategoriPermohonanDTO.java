@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 
 public class KategoriPermohonanDTO implements Serializable {
 

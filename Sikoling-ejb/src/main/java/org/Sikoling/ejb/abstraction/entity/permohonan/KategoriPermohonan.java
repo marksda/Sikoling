@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.entity;
+package org.Sikoling.ejb.abstraction.entity.permohonan;
 
 import java.io.Serializable;
 import java.util.Objects;
