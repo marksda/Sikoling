@@ -7,7 +7,6 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.ejb.abstraction.entity.StatusTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
@@ -21,13 +20,13 @@ public class RegisterPermohonan implements Serializable {
 	private final RegisterPerusahaan perusahaan;
 	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
-	private final StatusTahapPemberkasan statusPermohonan;
+	private final PosisiTahapPemberkasan posisiBerkas;
 	private final List<Dokumen> daftarDokumenSyarat;
 	private final List<Dokumen> daftarDokumenHasil;	
 	
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan,
-			StatusWali statusWaliPengurusPermohonan, StatusTahapPemberkasan statusPermohonan,
+			StatusWali statusWaliPengurusPermohonan, PosisiTahapPemberkasan posisiBerkas,
 			List<Dokumen> daftarDokumenSyarat, List<Dokumen> daftarDokumenHasil) {
 		super();
 		this.id = id;
@@ -36,7 +35,7 @@ public class RegisterPermohonan implements Serializable {
 		this.perusahaan = perusahaan;
 		this.pengurusPermohonan = pengurusPermohonan;
 		this.statusWaliPengurusPermohonan = statusWaliPengurusPermohonan;
-		this.statusPermohonan = statusPermohonan;
+		this.posisiBerkas = posisiBerkas;
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
@@ -69,8 +68,8 @@ public class RegisterPermohonan implements Serializable {
 		return statusWaliPengurusPermohonan;
 	}
 	
-	public StatusTahapPemberkasan getStatusPermohonan() {
-		return statusPermohonan;
+	public PosisiTahapPemberkasan getPosisiBerkas() {
+		return posisiBerkas;
 	}
 	
 	public List<Dokumen> getDaftarDokumenSyarat() {

@@ -9,9 +9,9 @@ import org.Sikoling.ejb.abstraction.entity.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.ejb.abstraction.entity.StatusTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
@@ -142,8 +142,8 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		StatusWali statusWali = statusPengurus != null ?
 				new StatusWali(statusPengurus.getId(), statusPengurus.getNama()) : null;
 		PosisiTahapPemberkasanData posisiTahapPemberkasanData = d.getPosisiTahapPemberkasanData();
-		StatusTahapPemberkasan statusTahapPemberkasan = posisiTahapPemberkasanData != null ?
-				new StatusTahapPemberkasan(
+		PosisiTahapPemberkasan statusTahapPemberkasan = posisiTahapPemberkasanData != null ?
+				new PosisiTahapPemberkasan(
 						posisiTahapPemberkasanData.getId(), 
 						posisiTahapPemberkasanData.getNama(), 
 						posisiTahapPemberkasanData.getKeterangan()
@@ -185,7 +185,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		registerPermohonanData.setKategoriPengurusPermohonanData(kategoriPengurusPermohonanData);
 		
 		PosisiTahapPemberkasanData posisiTahapPemberkasanData = new PosisiTahapPemberkasanData();
-		posisiTahapPemberkasanData.setId(t.getStatusPermohonan().getId());
+		posisiTahapPemberkasanData.setId(t.getPosisiBerkas().getId());
 		registerPermohonanData.setPosisiTahapPemberkasanData(posisiTahapPemberkasanData);		
 		
 		return registerPermohonanData;

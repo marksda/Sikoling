@@ -20,7 +20,7 @@ public class RegisterPermohonanDTO implements Serializable {
 	private RegisterPerusahaanDTO registerPerusahaan;
 	private AuthorityDTO pengurusPermohonan;
 	private StatusWaliDTO statusWali;
-	private StatusTahapPemberkasanDTO statusTahapPemberkasan;
+	private PosisiTahapPemberkasanDTO statusTahapPemberkasan;
 	private List<DokumenDTO> daftarDokumenSyarat;
 	private List<DokumenDTO> daftarDokumenHasil;
 	
@@ -39,8 +39,8 @@ public class RegisterPermohonanDTO implements Serializable {
 					new AuthorityDTO(t.getPengurusPermohonan()) : null;
 			this.statusWali = t.getStatusWaliPengurusPermohonan() != null ?
 					new StatusWaliDTO(t.getStatusWaliPengurusPermohonan()) : null;
-			this.statusTahapPemberkasan = t.getStatusPermohonan() != null ?
-					new StatusTahapPemberkasanDTO(t.getStatusPermohonan()) : null;
+			this.statusTahapPemberkasan = t.getPosisiBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPosisiBerkas()) : null;
 			this.daftarDokumenSyarat = t.getDaftarDokumenSyarat() != null ?
 					t.getDaftarDokumenSyarat()
 					.stream()
@@ -105,12 +105,12 @@ public class RegisterPermohonanDTO implements Serializable {
 	}
 
 	
-	public StatusTahapPemberkasanDTO getStatusTahapPemberkasan() {
+	public PosisiTahapPemberkasanDTO getStatusTahapPemberkasan() {
 		return statusTahapPemberkasan;
 	}
 
 	
-	public void setStatusTahapPemberkasan(StatusTahapPemberkasanDTO statusTahapPemberkasan) {
+	public void setStatusTahapPemberkasan(PosisiTahapPemberkasanDTO statusTahapPemberkasan) {
 		this.statusTahapPemberkasan = statusTahapPemberkasan;
 	}
 

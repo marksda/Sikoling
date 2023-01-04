@@ -3,19 +3,19 @@ package org.Sikoling.main.restful.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.StatusTahapPemberkasan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 
-public class StatusTahapPemberkasanDTO implements Serializable {
+public class PosisiTahapPemberkasanDTO implements Serializable {
 
 	private static final long serialVersionUID = -3798209031452631389L;
 	private String id;
 	private String nama;
 	private String keterangan;
 	
-	public StatusTahapPemberkasanDTO() {
+	public PosisiTahapPemberkasanDTO() {
 	}
 	
-	public StatusTahapPemberkasanDTO(StatusTahapPemberkasan t) {
+	public PosisiTahapPemberkasanDTO(PosisiTahapPemberkasan t) {
 		if( t != null) {
 			this.id = t.getId();
 			this.nama = t.getNama();
@@ -72,7 +72,7 @@ public class StatusTahapPemberkasanDTO implements Serializable {
             return false;
         }
         
-        final StatusTahapPemberkasanDTO other = (StatusTahapPemberkasanDTO) obj;
+        final PosisiTahapPemberkasanDTO other = (PosisiTahapPemberkasanDTO) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;
@@ -91,8 +91,8 @@ public class StatusTahapPemberkasanDTO implements Serializable {
 				.concat("}");
 	}
 	
-	public StatusTahapPemberkasan toStatusTahapPemberkasan() {
-		return new StatusTahapPemberkasan(
+	public PosisiTahapPemberkasan toStatusTahapPemberkasan() {
+		return new PosisiTahapPemberkasan(
 				id, 
 				nama, 
 				keterangan

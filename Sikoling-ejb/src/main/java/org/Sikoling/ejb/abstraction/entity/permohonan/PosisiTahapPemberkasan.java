@@ -1,16 +1,16 @@
-package org.Sikoling.ejb.abstraction.entity;
+package org.Sikoling.ejb.abstraction.entity.permohonan;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class StatusTahapPemberkasan implements Serializable {
+public class PosisiTahapPemberkasan implements Serializable {
 
 	private static final long serialVersionUID = 3807325442231744559L;
 	private final String id;
 	private final String nama;
 	private final String keterangan;
 	
-	public StatusTahapPemberkasan(String id, String nama, String keterangan) {
+	public PosisiTahapPemberkasan(String id, String nama, String keterangan) {
 		this.id = id;
 		this.nama = nama;
 		this.keterangan = keterangan;
@@ -54,7 +54,7 @@ public class StatusTahapPemberkasan implements Serializable {
             return false;
         }
         
-        final StatusTahapPemberkasan other = (StatusTahapPemberkasan) obj;
+        final PosisiTahapPemberkasan other = (PosisiTahapPemberkasan) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;
