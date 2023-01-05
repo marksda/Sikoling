@@ -192,7 +192,7 @@ public class RegisterPermohonanDTO implements Serializable {
 				statusWali != null ?
 						statusWali.toStatusWali() : null,
 				statusTahapPemberkasan != null ?
-						statusTahapPemberkasan.toStatusTahapPemberkasan() : null, 
+						statusTahapPemberkasan.toPosisiTahapPemberkasan() : null, 
 				daftarDokumenSyarat != null ?
 						daftarDokumenSyarat.stream()
 						.map(i -> i.toDokumen())

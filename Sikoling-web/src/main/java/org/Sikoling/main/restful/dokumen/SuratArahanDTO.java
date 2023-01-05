@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 
 public class SuratArahanDTO extends DokumenDTO implements Serializable {
@@ -116,11 +115,8 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
 		return new SuratArahan(
 				this.getId(), 
 				this.getNama(), 
-				kategoriDokumenDTO != null ? new KategoriDokumen(
-						kategoriDokumenDTO.getId(), 
-						kategoriDokumenDTO.getNama(), 
-						kategoriDokumenDTO.getParent()
-						) : null, 
+				kategoriDokumenDTO != null ? 
+						kategoriDokumenDTO.toKategoriDokumen() : null, 
 				this.noSurat, 
 				this.tanggalSurat, 
 				this.perihalSurat, 

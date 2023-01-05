@@ -91,7 +91,7 @@ public class PosisiTahapPemberkasanDTO implements Serializable {
 				.concat("}");
 	}
 	
-	public PosisiTahapPemberkasan toStatusTahapPemberkasan() {
+	public PosisiTahapPemberkasan toPosisiTahapPemberkasan() {
 		return new PosisiTahapPemberkasan(
 				id, 
 				nama, 

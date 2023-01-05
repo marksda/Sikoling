@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
+import org.Sikoling.ejb.abstraction.repository.IFlowLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
@@ -65,6 +66,8 @@ import org.Sikoling.ejb.abstraction.service.kategoriproduk.IKategoriProdukServic
 import org.Sikoling.ejb.abstraction.service.kategoriproduk.KategoriProdukService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
+import org.Sikoling.ejb.abstraction.service.log.FlowLogService;
+import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.PelakuUsahaService;
@@ -239,6 +242,12 @@ public class RestfulProvider {
 	public IRegisterPermohonanService getRegisterPermohonanService(
 			@Infrastructure IRegisterPermohonanRepository registerPermohonanRepository) {
 		return new RegisterPermohonanService(registerPermohonanRepository);
+	}
+	
+	@Produces
+	public IFlowLogService getFlowLogService(
+			@Infrastructure IFlowLogRepository flowLogRepository) {
+		return new FlowLogService(flowLogRepository);
 	}
 	
 	@Produces
