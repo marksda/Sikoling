@@ -9,9 +9,9 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="master.tbl_status_tahap_pemberkasan")
+@Table(name="master.tbl_posisi_tahap_pemberkasan")
 @NamedQueries({
-	@NamedQuery(name="PosisiTahapPemberkasanData.findAll", query="SELECT p FROM StatusTahapPemberkasanData p")
+	@NamedQuery(name="PosisiTahapPemberkasanData.findAll", query="SELECT p FROM PosisiTahapPemberkasanData p")
 })
 public class PosisiTahapPemberkasanData implements Serializable {
 

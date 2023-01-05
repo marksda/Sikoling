@@ -68,6 +68,5 @@ public class RegisterKbliDataId implements Serializable {
 
         return true;
 	}
-	
-	
+		
 }

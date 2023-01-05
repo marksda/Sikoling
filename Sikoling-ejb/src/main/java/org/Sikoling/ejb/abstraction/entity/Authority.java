@@ -52,6 +52,7 @@ public class Authority implements Serializable {
 		return userName;
 	}
 	
+	@Override
 	public int hashCode() {
 		int hash = 71;
 		hash = 171 * hash + Objects.hashCode(this.person.getNik());
@@ -90,8 +91,6 @@ public class Authority implements Serializable {
 				.concat("hakAKses=")
 				.concat(this.hakAkses.getNama())
 				.concat("}");
-	}	
-
-	
+	}
 
 }

@@ -2,7 +2,6 @@ package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
@@ -19,11 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_register_permohonan")
 @NamedQueries({
-	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p"),
-	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p "
-			+ "WHERE p.autorisasiData.id = :idPengakses"),
-	@NamedQuery(name="RegisterPermohonanData.findByPerusahaan", query="SELECT p FROM RegisterPermohonanData p "
-			+ "WHERE p.perusahaanData.id = :idRegisterPerusahaan")
+	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p")
 })
 public class RegisterPermohonanData implements Serializable {
 
@@ -57,6 +52,9 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private PermohonanSuratArahanData permohonanSuratArahanData;
+	
+//	@OneToMany(mappedBy = "registerPermohonan", fetch = FetchType.LAZY)
+//	private List<FlowLogPermohonanData> daftarFlowLogPermohonanData;
 
 	public RegisterPermohonanData() {
 	}

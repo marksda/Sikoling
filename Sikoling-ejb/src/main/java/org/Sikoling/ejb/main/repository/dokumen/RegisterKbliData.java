@@ -44,26 +44,18 @@ public class RegisterKbliData implements Serializable {
 	public String getNib() {
 		return nib;
 	}
-
-
 	
 	public void setNib(String nib) {
 		this.nib = nib;
 	}
-
-
 	
 	public String getKbli() {
 		return kbli;
 	}
-
-
 	
 	public void setKbli(String kbli) {
 		this.kbli = kbli;
 	}
-
-
 		
 	public String getNama() {
 		return nama;
@@ -77,8 +69,6 @@ public class RegisterKbliData implements Serializable {
 		return serialVersionUID;
 	}
 	
-
-
 	@Override
 	public int hashCode() {
 		int hash = 813;

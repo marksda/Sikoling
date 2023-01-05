@@ -6,18 +6,24 @@ import java.time.LocalDate;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_flow_log")
 @NamedQueries({
-	@NamedQuery(name="FlowLogData.findAll", query="SELECT p FROM FlowLogData p")
+	@NamedQuery(name="FlowLogData.findAll", query="SELECT p FROM FlowLogData p"),
+	@NamedQuery(name="FlowLogData.findByIdPengakses", 
+		query="SELECT d FROM FlowLogData d WHERE d.pengaksesData.id = :idPengakses"),
+	@NamedQuery(name="FlowLogData.findByIdKategoriLog", 
+		query="SELECT d FROM FlowLogData d WHERE d.kategoriLogData.id = :idKategoriLog"),
 })
 public class FlowLogData implements Serializable {
 
@@ -41,6 +47,9 @@ public class FlowLogData implements Serializable {
 	@JoinColumn(name = "pengakses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private AutorisasiData pengaksesData;
+	
+	@OneToOne(mappedBy = "flowLog", cascade = CascadeType.PERSIST)
+	private FlowLogPermohonanData flowLogPermohonanData;
 
 	public FlowLogData() {
 	}
@@ -91,6 +100,14 @@ public class FlowLogData implements Serializable {
 
 	public void setPengaksesData(AutorisasiData pengaksesData) {
 		this.pengaksesData = pengaksesData;
+	}
+	
+	public FlowLogPermohonanData getFlowLogPermohonanData() {
+		return flowLogPermohonanData;
+	}
+
+	public void setFlowLogPermohonanData(FlowLogPermohonanData flowLogPermohonanData) {
+		this.flowLogPermohonanData = flowLogPermohonanData;
 	}
 
 	public static long getSerialversionuid() {

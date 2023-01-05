@@ -17,6 +17,7 @@ import org.Sikoling.ejb.main.repository.kabupaten.KabupatenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanRepositoryJPA;
+import org.Sikoling.ejb.main.repository.log.FlowLogRepositoryJPA;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
@@ -192,5 +193,10 @@ public class RepositoryProvider {
 	@Produces
 	public RegisterPermohonanRepositoryJPA getRegisterPermohonanRepositoryJPA(EntityManager entityManager) {
 		return new RegisterPermohonanRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public FlowLogRepositoryJPA getFlowLogRepositoryJPA(EntityManager entityManager) {
+		return new FlowLogRepositoryJPA(entityManager);
 	}
 }
