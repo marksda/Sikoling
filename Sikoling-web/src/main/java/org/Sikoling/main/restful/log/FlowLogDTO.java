@@ -22,7 +22,7 @@ public class FlowLogDTO implements Serializable {
 	}
 	
 	public FlowLogDTO(FlowLog t) {
-		if(t != null) {
+		if(t != null) {			
 			this.id = t.getId();
 			this.tanggal = t.getTanggal();
 			this.kategoriFlowLog = t.getKategoriFlowLog() != null ?

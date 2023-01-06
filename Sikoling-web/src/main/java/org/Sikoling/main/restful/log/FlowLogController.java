@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
 import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
@@ -103,7 +104,14 @@ public class FlowLogController {
 	public List<FlowLogDTO> getByIdUser(@PathParam("idUser") String idUser) {
 		return flowLogService.getByIdPengakses(idUser)
 				.stream()
-				.map(t -> new FlowLogDTO(t))
+				.map(t -> {
+					if(t instanceof FlowLogPermohonan) {
+						return new FlowLogPermohonanDTO((FlowLogPermohonan) t);
+					}
+					else {
+						return new FlowLogDTO(t);
+					}
+				})
 				.collect(Collectors.toList());
 	}
 	
