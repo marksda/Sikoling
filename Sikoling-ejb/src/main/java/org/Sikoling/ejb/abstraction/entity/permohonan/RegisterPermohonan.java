@@ -78,8 +78,4 @@ public class RegisterPermohonan implements Serializable {
 	public List<Dokumen> getDaftarDokumenHasil() {
 		return daftarDokumenHasil;
 	}
-	
-	
-	
-
 }

@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.bidangusaha;
 
 import java.io.Serializable;
+import java.util.Objects;
 import jakarta.persistence.*;
 
 
@@ -36,6 +37,46 @@ public class BidangUsahaData implements Serializable {
 
 	public void setNama(String nama) {
 		this.nama = nama;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 1217;
+		hash = 13 * hash + Objects.hashCode(this.id);
+		hash = 13 * hash + Objects.hashCode(this.nama);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final BidangUsahaData other = (BidangUsahaData) obj;
+        
+        if (!this.id.equals(other.id)) {
+            return false;
+        }
+        
+        if (!this.nama.equals(other.nama)) {
+            return false;
+        }
+        
+        return true;
+	}
+
+	@Override
+	public String toString() {
+		return "BidangUsahaData{" + "id=" + id + "nama=" + nama + "}";
 	}
 
 }
