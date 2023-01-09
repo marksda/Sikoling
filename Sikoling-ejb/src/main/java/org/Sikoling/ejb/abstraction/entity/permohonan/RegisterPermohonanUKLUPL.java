@@ -27,13 +27,16 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 	private final Double luasTanah;
 	private final KordinatGeografis kordinatGeografis;
 	private final BatasLokasi batasLokasi;
-	
+	private final LocalDate tanggalTinjauLapangan;
+	private final LocalDate tanggalPembahasan;
+
 	public RegisterPermohonanUKLUPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
 			PosisiTahapPemberkasan posisiBerkas, List<Dokumen> daftarDokumenSyarat, List<Dokumen> daftarDokumenHasil,
 			StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha,
 			int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita, Double luasTanah,
-			KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi) {
+			KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi, LocalDate tanggalTinjauLapangan,
+			LocalDate tanggalPembahasan) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
 				posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
 		this.status = status;
@@ -45,10 +48,20 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 		this.luasTanah = luasTanah;
 		this.kordinatGeografis = kordinatGeografis;
 		this.batasLokasi = batasLokasi;
+		this.tanggalTinjauLapangan = tanggalTinjauLapangan;
+		this.tanggalPembahasan = tanggalPembahasan;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public LocalDate getTanggalTinjauLapangan() {
+		return tanggalTinjauLapangan;
+	}
+
+	public LocalDate getTanggalPembahasan() {
+		return tanggalPembahasan;
 	}
 
 	public StatusPermohonanUKLUPL getStatus() {
