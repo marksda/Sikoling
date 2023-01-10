@@ -51,7 +51,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	public RegisterPermohonan update(RegisterPermohonan t) {
 		RegisterPermohonanData registerPermohonanData = convertRegisterPermohonanToRegisterPermohonanData(t);
 		registerPermohonanData = entityManager.merge(registerPermohonanData);
-		return null;
+		return convertRegisterPermohonanDataToRegisterPermohonan(
+				entityManager.find(RegisterPermohonanData.class, registerPermohonanData.getId())
+				);
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanRepositoryJ
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanRepositoryJPA;
+import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanSuratArahanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanRepositoryJPA;
@@ -188,6 +189,11 @@ public class RepositoryProvider {
 	@Produces
 	public KategoriPermohonanRepositoryJPA getKategoriPermohonanRepositoryJPA(EntityManager entityManager) {
 		return new KategoriPermohonanRepositoryJPA(entityManager);
+	}
+	
+	@Produces
+	public KategoriPermohonanSuratArahanRepositoryJPA getKategoriPermohonanSuratArahanRepositoryJPA(EntityManager entityManager) {
+		return new KategoriPermohonanSuratArahanRepositoryJPA(entityManager);
 	}
 	
 	@Produces

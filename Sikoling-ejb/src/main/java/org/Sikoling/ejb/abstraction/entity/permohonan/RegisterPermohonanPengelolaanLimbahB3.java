@@ -16,7 +16,6 @@ public class RegisterPermohonanPengelolaanLimbahB3 implements Serializable {
 	
 	public RegisterPermohonanPengelolaanLimbahB3(JenisPermohonanPengelolaanLimbahB3 jenisPermohonan,
 			StatusPermohonanPengelolaanLimbahB3 status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha) {
-		super();
 		this.jenisPermohonan = jenisPermohonan;
 		this.status = status;
 		this.bidangUsaha = bidangUsaha;

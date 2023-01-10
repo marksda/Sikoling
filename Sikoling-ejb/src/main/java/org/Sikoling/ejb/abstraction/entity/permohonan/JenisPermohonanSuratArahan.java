@@ -3,15 +3,16 @@ package org.Sikoling.ejb.abstraction.entity.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class StatusPermohonanPengelolaanLimbahB3 implements Serializable {
+public class JenisPermohonanSuratArahan implements Serializable {
 
-	private static final long serialVersionUID = -6920618009260820954L;
+	private static final long serialVersionUID = -2686761379390064420L;
 	private final String id;
-	private final String nama;
+	private final String keterangan;
 	
-	public StatusPermohonanPengelolaanLimbahB3(String id, String nama) {
+	public JenisPermohonanSuratArahan(String id, String keterangan) {
+		super();
 		this.id = id;
-		this.nama = nama;
+		this.keterangan = keterangan;
 	}
 
 	public static long getSerialversionuid() {
@@ -22,8 +23,8 @@ public class StatusPermohonanPengelolaanLimbahB3 implements Serializable {
 		return id;
 	}
 
-	public String getNama() {
-		return nama;
+	public String getKeterangan() {
+		return keterangan;
 	}
 	
 	@Override
@@ -47,7 +48,7 @@ public class StatusPermohonanPengelolaanLimbahB3 implements Serializable {
             return false;
         }
         
-        final StatusPermohonanPengelolaanLimbahB3 other = (StatusPermohonanPengelolaanLimbahB3) obj;
+        final JenisPermohonanSuratArahan other = (JenisPermohonanSuratArahan) obj;
         
         if (!id.equals(other.getId())) {
             return false;
@@ -58,10 +59,10 @@ public class StatusPermohonanPengelolaanLimbahB3 implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StatusPermohonanPengelolaanLimbahB3{id=" 
+		return "JenisPermohonanSuratArahan{id=" 
 				.concat(id)
-				.concat("nama=")
-				.concat(nama)
+				.concat("keterangan=")
+				.concat(keterangan)
 				.concat("}");
 	}	
 
