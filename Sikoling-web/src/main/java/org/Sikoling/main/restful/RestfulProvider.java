@@ -12,6 +12,7 @@ import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
+import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanSuratArahahanRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
@@ -75,8 +76,10 @@ import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanService;
+import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanSuratArahanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanService;
+import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanSuratArahanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.RegisterPermohonanService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
@@ -248,6 +251,12 @@ public class RestfulProvider {
 	public IFlowLogService getFlowLogService(
 			@Infrastructure IFlowLogRepository flowLogRepository) {
 		return new FlowLogService(flowLogRepository);
+	}
+	
+	@Produces
+	public IKategoriPermohonanSuratArahanService getKategoriPermohonanSuratArahanService(
+			@Infrastructure IKategoriPermohonanSuratArahahanRepository kategoriPermohonanSuratArahahanRepository) {
+		return new KategoriPermohonanSuratArahanService(kategoriPermohonanSuratArahahanRepository);
 	}
 	
 	@Produces

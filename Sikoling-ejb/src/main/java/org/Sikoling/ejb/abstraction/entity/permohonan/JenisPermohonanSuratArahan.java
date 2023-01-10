@@ -10,7 +10,6 @@ public class JenisPermohonanSuratArahan implements Serializable {
 	private final String keterangan;
 	
 	public JenisPermohonanSuratArahan(String id, String keterangan) {
-		super();
 		this.id = id;
 		this.keterangan = keterangan;
 	}
