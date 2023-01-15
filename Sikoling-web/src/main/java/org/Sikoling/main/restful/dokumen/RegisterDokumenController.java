@@ -3,7 +3,10 @@ package org.Sikoling.main.restful.dokumen;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
+import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -21,7 +24,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.SecurityContext;
 
 @Stateless
 @LocalBean
@@ -31,12 +36,18 @@ public class RegisterDokumenController {
 	@Inject
 	private IRegisterDokumenService registerDokumenService;
 	
+	@Inject
+	private IAuthorityService authorityService;
+	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterDokumenDTO save(RegisterDokumenDTO d) {		
+	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) {		
+		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		d.setUploader(new AuthorityDTO(kreator));
+		
 		return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
 	}
 	

@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IKbliService;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -53,6 +56,8 @@ public class KbliController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public List<KbliDTO> getAll() {
 		return kbliService.getAll()
 				.stream()

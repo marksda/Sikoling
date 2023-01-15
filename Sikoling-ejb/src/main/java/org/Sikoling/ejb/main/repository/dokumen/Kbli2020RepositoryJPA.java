@@ -96,7 +96,7 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 
 	@Override
 	public List<Kbli2020> getByKode(String kode) {
-		kode = "%" + kode + "%";
+		kode = kode + "%";
 		return entityManager.createNamedQuery("Kbli2020Data.findByKode", Kbli2020Data.class)
 				.setParameter("kode", kode)
 				.getResultList()

@@ -441,8 +441,12 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		registerDokumenData.setId(
 				t.getId() != null ? t.getId() : getGenerateIdRegisterDokumen()
 				);		
-		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();
-		registerPerusahaanData.setId(t.getPerusahaan().getId());
+//		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();		
+//		registerPerusahaanData.setId(t.getPerusahaan().getId());
+		RegisterPerusahaanData registerPerusahaanData = entityManager.createNamedQuery("RegisterPerusahaanData.findByNpwp", RegisterPerusahaanData.class)
+				.setParameter("npwp", t.getPerusahaan().getId())
+				.getSingleResult();
+				
 		registerDokumenData.setPerusahaanData(registerPerusahaanData);		
 		MasterDokumenData masterDokumenData = new MasterDokumenData();
 		masterDokumenData.setId(dokumen.getId());

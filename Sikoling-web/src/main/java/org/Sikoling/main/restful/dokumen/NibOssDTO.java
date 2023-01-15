@@ -35,28 +35,23 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 					.map(i -> new RegisterKbliDTO(i)).collect(Collectors.toList()) : null;
 		}
 	}
-
 	
 	public String getNomor() {
 		return nomor;
 	}
-
 	
 	public void setNomor(String nomor) {
 		this.nomor = nomor;
 	}
 	
-
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
 	
-
 	public void setTanggal(LocalDate tanggal) {
 		this.tanggal = tanggal;
 	}
 			
-
 	public List<RegisterKbliDTO> getDaftarKbli() {
 		return daftarKbli;
 	}
