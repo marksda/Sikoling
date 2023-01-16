@@ -2,12 +2,15 @@ package org.Sikoling.main.restful;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.apache.commons.io.IOUtils;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -27,7 +30,7 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-		return RegisterDokumenDTO.class == type;
+		return type == RegisterDokumenDTO.class;
 	}
 
 	@Override
@@ -35,11 +38,11 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		
-		byte[] array = new byte[100];
-		entityStream.read(array);
-		String data = new String(array);
+		StringWriter writer = new StringWriter();
+		IOUtils.copy(entityStream, writer, "UTF-8");
+		String theString = writer.toString();
 		
-		JsonParser jsonParser = Json.createParser(entityStream);
+		JsonParser jsonParser = Json.createParser(new StringReader(theString));
 		JsonObject jsonObject = jsonParser.getObject();
 		String id = jsonObject.getString("id");
 		
