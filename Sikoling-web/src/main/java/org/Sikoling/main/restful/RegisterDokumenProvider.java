@@ -27,13 +27,18 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-		return DokumenDTO.class == type;
+		return RegisterDokumenDTO.class == type;
 	}
 
 	@Override
 	public RegisterDokumenDTO readFrom(Class<RegisterDokumenDTO> type, Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
+		
+		byte[] array = new byte[100];
+		entityStream.read(array);
+		String data = new String(array);
+		
 		JsonParser jsonParser = Json.createParser(entityStream);
 		JsonObject jsonObject = jsonParser.getObject();
 		String id = jsonObject.getString("id");
