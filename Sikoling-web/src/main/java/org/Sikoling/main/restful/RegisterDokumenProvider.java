@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
+import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -22,7 +23,7 @@ import jakarta.ws.rs.ext.Provider;
 
 @Provider
 @Consumes("application/json")
-public class DokumenProvider implements MessageBodyReader<DokumenDTO> {
+public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokumenDTO> {
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
@@ -30,7 +31,7 @@ public class DokumenProvider implements MessageBodyReader<DokumenDTO> {
 	}
 
 	@Override
-	public DokumenDTO readFrom(Class<DokumenDTO> type, Type genericType, Annotation[] annotations, MediaType mediaType,
+	public RegisterDokumenDTO readFrom(Class<RegisterDokumenDTO> type, Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		JsonParser jsonParser = Json.createParser(entityStream);
@@ -50,8 +51,11 @@ public class DokumenProvider implements MessageBodyReader<DokumenDTO> {
 			break;
 		}
 		
+		RegisterDokumenDTO registerDokumenDTO = new RegisterDokumenDTO();
+		registerDokumenDTO.setDokumen(d);
 		
-		return d;
+		
+		return registerDokumenDTO;
 	}
 
 }
