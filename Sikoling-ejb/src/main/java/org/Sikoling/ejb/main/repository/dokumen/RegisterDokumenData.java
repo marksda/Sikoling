@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,7 +37,6 @@ public class RegisterDokumenData implements Serializable {
 	@ManyToOne(optional = false)
 	private RegisterPerusahaanData perusahaanData;
 	
-	@Id
 	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = false)
 	@ManyToOne(optional = false)
 	private MasterDokumenData dokumenData;
@@ -54,28 +51,22 @@ public class RegisterDokumenData implements Serializable {
 	@Column(name="lokasi_file")
 	private String lokasiFile;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "registerDokumenData")
 	private SuratArahanData suratArahanData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "registerDokumenData")
 	private LampiranSuratArahanData lampiranSuratArahanData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "registerDokumenData")
 	private AktaPendirianData aktaPendirianData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "registerDokumenData")
 	private RekomendasiUKLUPLData rekomendasiUKLUPLData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "registerDokumenData")
 	private RekomendasiDPLHData rekomendasiDPLHData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "registerDokumenData")	
 	private NibOssData nibOssData;
 
 	public RegisterDokumenData() {

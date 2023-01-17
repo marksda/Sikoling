@@ -9,6 +9,7 @@ import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
@@ -36,6 +37,11 @@ public class AktaPendirianData implements Serializable {
 	@OneToOne(optional = false)
 	private PegawaiData penanggungJawabData;
 
+	@MapsId
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private RegisterDokumenData registerDokumenData;
+	
 	public AktaPendirianData() {
 	}
 
@@ -79,6 +85,14 @@ public class AktaPendirianData implements Serializable {
 		this.penanggungJawabData = penanggungJawabData;
 	}
 
+	public RegisterDokumenData getRegisterDokumenData() {
+		return registerDokumenData;
+	}
+
+	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
+		this.registerDokumenData = registerDokumenData;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -90,7 +104,6 @@ public class AktaPendirianData implements Serializable {
 		return hash;
 	}
 	
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

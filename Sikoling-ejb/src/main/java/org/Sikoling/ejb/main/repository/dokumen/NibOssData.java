@@ -10,9 +10,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,6 +38,11 @@ public class NibOssData implements Serializable {
 
 	@OneToMany(mappedBy = "nibOssData", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<RegisterKbliData> daftarKbli;
+	
+	@MapsId
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private RegisterDokumenData registerDokumenData;
 	
 	public NibOssData() {
 	}
@@ -69,6 +77,14 @@ public class NibOssData implements Serializable {
 
 	public void setDaftarKbli(List<RegisterKbliData> daftarKbli) {
 		this.daftarKbli = daftarKbli;
+	}
+	
+	public RegisterDokumenData getRegisterDokumenData() {
+		return registerDokumenData;
+	}
+
+	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
+		this.registerDokumenData = registerDokumenData;
 	}
 
 	public static long getSerialversionuid() {
@@ -108,7 +124,7 @@ public class NibOssData implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "SuratArahanDTO{id="
+		return "NibOssData{id="
 				.concat(this.getId())
 				.concat(", nomor=")
 				.concat(this.getNomor())

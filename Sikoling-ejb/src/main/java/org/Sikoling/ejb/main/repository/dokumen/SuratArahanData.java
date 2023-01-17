@@ -6,8 +6,11 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,6 +36,11 @@ public class SuratArahanData implements Serializable {
 	
 	@Column(name = "uraian_kegiatan")
 	private String uraianKegiatan;
+	
+	@MapsId
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private RegisterDokumenData registerDokumenData;
 	
 	public SuratArahanData() {
 	}
@@ -77,6 +85,14 @@ public class SuratArahanData implements Serializable {
 		this.uraianKegiatan = uraianKegiatan;
 	}
 	
+	public RegisterDokumenData getRegisterDokumenData() {
+		return registerDokumenData;
+	}
+
+	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
+		this.registerDokumenData = registerDokumenData;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

@@ -506,7 +506,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		else if(dokumen instanceof NibOss) {
 			NibOss nibOss = (NibOss) dokumen;
 			NibOssData nibOssData = new NibOssData();			
-			nibOssData.setId(registerDokumenData.getId());
+//			nibOssData.setId(registerDokumenData.getId());
 			nibOssData.setNomor(nibOss.getNomor());
 			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
 			

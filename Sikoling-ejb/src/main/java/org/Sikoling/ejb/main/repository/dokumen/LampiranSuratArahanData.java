@@ -6,8 +6,11 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,7 +30,11 @@ public class LampiranSuratArahanData implements Serializable {
 	
 	@Column(name = "tanggal_surat_keterangan")
 	private LocalDate tanggalSurat;
-
+	
+	@MapsId
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private RegisterDokumenData registerDokumenData;
 	public LampiranSuratArahanData() {
 	}
 
@@ -53,6 +60,14 @@ public class LampiranSuratArahanData implements Serializable {
 
 	public void setTanggalSurat(LocalDate tanggalSurat) {
 		this.tanggalSurat = tanggalSurat;
+	}
+
+	public RegisterDokumenData getRegisterDokumenData() {
+		return registerDokumenData;
+	}
+
+	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
+		this.registerDokumenData = registerDokumenData;
 	}
 
 	public static long getSerialversionuid() {
