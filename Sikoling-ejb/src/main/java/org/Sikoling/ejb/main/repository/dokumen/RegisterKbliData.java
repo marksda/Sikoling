@@ -34,7 +34,7 @@ public class RegisterKbliData implements Serializable {
 	
 	private String nama;
 	
-	@JoinColumn(name = "nib", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private NibOssData nibOssData;
 	

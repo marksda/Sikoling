@@ -509,7 +509,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 //			nibOssData.setId(registerDokumenData.getId());
 			nibOssData.setNomor(nibOss.getNomor());
 			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
-			
+			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));
 			registerDokumenData.setNibOssData(nibOssData);
 		}
 
@@ -618,6 +618,28 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			}
 			
 			return daftarKbli;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	private List<RegisterKbliData> toDaftarRegisterKbliData(List<RegisterKbli> t) {
+		if(!t.isEmpty()) {
+			List<RegisterKbliData> daftarKbliData = new ArrayList<>();
+			Iterator<RegisterKbli> iter = t.iterator();
+			
+			RegisterKbliData item;
+			while (iter.hasNext()) {
+				RegisterKbli registerKbli = (RegisterKbli) iter.next();
+				item = new RegisterKbliData();
+				item.setNib(registerKbli.getIdNib());
+				item.setKbli(registerKbli.getIdKbli());
+				item.setNama(registerKbli.getNama());
+				daftarKbliData.add(item);
+			}
+			
+			return daftarKbliData;
 		}
 		else {
 			return null;
