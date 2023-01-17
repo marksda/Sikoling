@@ -2,15 +2,13 @@ package org.Sikoling.main.restful;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
-import org.apache.commons.io.IOUtils;
+import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -40,21 +38,23 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 			throws IOException, WebApplicationException {
 		
 		RegisterDokumenDTO registerDokumenDTO = new RegisterDokumenDTO();
-		DokumenDTO d = null;
 		Jsonb jsonb = JsonbBuilder.create();
 		
 		JsonParser jsonParser = Json.createParser(entityStream);
 		while (jsonParser.hasNext()) {
 		     Event event = jsonParser.next();
-		     if (event == JsonParser.Event.KEY_NAME ) {		    	 
+		     if (event == JsonParser.Event.KEY_NAME ) {	
+		    	 
 		         String key = jsonParser.getString();
 		         event = jsonParser.next();
+				 JsonObject jsonObject = jsonParser.getObject();
+				 
 		         if (key.equals("dokumen")) {
-					 JsonObject jsonDokumenObject = jsonParser.getObject();
-					 String id = jsonDokumenObject.getString("id");
+	     			 DokumenDTO d = null;
+					 String id = jsonObject.getString("id");
 					 switch (id) {
 					 case "010301":
-						d = jsonb.fromJson(jsonDokumenObject.toString(), NibOssDTO.class);
+						d = jsonb.fromJson(jsonObject.toString(), NibOssDTO.class);
 						registerDokumenDTO.setDokumen(d); 
 						break;
 					 default:
@@ -62,25 +62,14 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 						break;
 					}
 		         }
+		         else if(key.equals("perusahaan")) {
+		        	 PerusahaanDTO perusahaanDTO = jsonb.fromJson(jsonObject.toString(), PerusahaanDTO.class);
+		        	 registerDokumenDTO.setPerusahaan(perusahaanDTO);
+		         }
+		         
 		     }
-		 }
-		
-//		Jsonb jsonb = JsonbBuilder.create();
-//		
-//		DokumenDTO d;
-//		
-//		switch (id) {
-//		case "010301":
-//			d = jsonb.fromJson(entityStream, NibOssDTO.class);
-//			break;
-//		default:
-//			d = null;
-//			break;
-//		}
-		
-//		RegisterDokumenDTO registerDokumenDTO = new RegisterDokumenDTO();
-//		registerDokumenDTO.setDokumen(d);
-		
+		     
+		 }		
 		
 		return registerDokumenDTO;
 	}

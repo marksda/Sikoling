@@ -164,11 +164,11 @@ public class PerusahaanDTO implements Serializable {
 		return new Perusahaan(
 				id, 
 				nama, 
-				modelPerizinan.toModelPerizinan(),
-				skalaUsaha.toSkalaUsaha(),
-				pelakuUsaha.toPelakuUsaha(),
+				modelPerizinan != null ? modelPerizinan.toModelPerizinan() : null,
+				skalaUsaha != null ? skalaUsaha.toSkalaUsaha() : null,
+						pelakuUsaha != null ? pelakuUsaha.toPelakuUsaha() : null,
 				alamat.toAlamat(),
-				kontak.toKontak(),
+				kontak != null ? kontak.toKontak() : null,
 				daftarRegisterDokumen != null ? 
 						daftarRegisterDokumen.stream()
 						.map(item -> item.toRegisterDokumen())

@@ -95,8 +95,6 @@ public class RegisterKbliDTO implements Serializable {
 
 	public RegisterKbli toRegisterKbli() {
 		return new RegisterKbli(idNib, idKbli, nama);
-	}
-	
-	
+	}	
 
 }

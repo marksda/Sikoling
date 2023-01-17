@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.dokumen;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,8 @@ public class RegisterDokumenController {
 	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) {		
 		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setUploader(new AuthorityDTO(kreator));
+		LocalDate tanggalRegistrasi = LocalDate.now();
+		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
 		return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
 	}
