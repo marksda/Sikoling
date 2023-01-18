@@ -111,7 +111,7 @@ public class NibOssData implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "NibOssData{nomot="
+		return "NibOssData{nomor="
 				.concat(nomor)
 				.concat(", tanggalPenetapan=")
 				.concat(this.getTanggalPenetapan().toString())
