@@ -517,7 +517,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			NibOssData nibOssData = new NibOssData();		
 			nibOssData.setNomor(nibOss.getNomor());
 			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
-			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));			
+			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));		
 			registerDokumenData.setNibOssData(nibOssData);
 		}
 
