@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,12 +36,12 @@ public class NibOssData implements Serializable {
 	@Column(name = "tanggal")
 	private LocalDate tanggalPenetapan;
 
-	@OneToMany(mappedBy = "nibOssData", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "nibOssData", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private List<RegisterKbliData> daftarKbli;
 	
 	@MapsId
 	@OneToOne
-	@JoinColumn(name = "id", referencedColumnName = "id")
+	@JoinColumn(name = "id", referencedColumnName = "id", insertable = true, updatable = true)
 	private RegisterDokumenData registerDokumenData;
 	
 	public NibOssData() {

@@ -3,10 +3,10 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -32,20 +32,20 @@ public class RegisterDokumenData implements Serializable {
 		
 	@Id
 	private String id;
-	
+
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private RegisterPerusahaanData perusahaanData;
 	
-	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = false)
-	@ManyToOne(optional = false)
+	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
 	private MasterDokumenData dokumenData;
 	
 	@Column(name="tanggal_registrasi")
 	private LocalDate tanggalRegistrasi;
 	
-	@JoinColumn(name = "uploader", referencedColumnName = "id", insertable = true, updatable = false)
-	@ManyToOne(optional = false)
+	@JoinColumn(name = "uploader", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
 	private AutorisasiData uploader;
 	
 	@Column(name="lokasi_file")
@@ -66,7 +66,7 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(mappedBy = "registerDokumenData")
 	private RekomendasiDPLHData rekomendasiDPLHData;
 	
-	@OneToOne(mappedBy = "registerDokumenData")	
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)	
 	private NibOssData nibOssData;
 
 	public RegisterDokumenData() {

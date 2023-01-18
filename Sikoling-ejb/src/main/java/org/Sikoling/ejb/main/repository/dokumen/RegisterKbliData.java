@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -32,10 +33,11 @@ public class RegisterKbliData implements Serializable {
 	@Id
 	private String kbli;
 	
-	private String nama;
+	private String nama;	
 	
-	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = false, updatable = false)
+	@MapsId
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = false, updatable = false)
 	private NibOssData nibOssData;
 	
 	public RegisterKbliData() {
