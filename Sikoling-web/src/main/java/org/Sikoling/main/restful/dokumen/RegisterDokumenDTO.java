@@ -24,6 +24,7 @@ public class RegisterDokumenDTO implements Serializable {
 	private String lokasiFile;
 	private LocalDate tanggalRegistrasi;
 	private AuthorityDTO uploader;
+	private Boolean statusVerified;
 	
 	public RegisterDokumenDTO() {
 	}
@@ -58,6 +59,7 @@ public class RegisterDokumenDTO implements Serializable {
 			this.lokasiFile = t.getLokasiFile();
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
 			this.uploader = t.getUploader() != null ? new AuthorityDTO(t.getUploader()) : null;
+			this.statusVerified = t.getStatusVerified() != null ? t.getStatusVerified() : null;
 		}
 	}
 	
@@ -107,6 +109,14 @@ public class RegisterDokumenDTO implements Serializable {
 
 	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
 		this.tanggalRegistrasi = tanggalRegistrasi;
+	}
+
+	public Boolean getStatusVerified() {
+		return statusVerified;
+	}
+
+	public void setStatusVerified(Boolean statusVerified) {
+		this.statusVerified = statusVerified;
 	}
 
 	public static long getSerialversionuid() {
@@ -191,7 +201,8 @@ public class RegisterDokumenDTO implements Serializable {
 				perusahaan != null ? perusahaan.toPerusahaan() : null,
 				lokasiFile, 
 				tanggalRegistrasi, 
-				uploader != null ? uploader.toAuthority() : null
+				uploader != null ? uploader.toAuthority() : null,
+				statusVerified != null ? statusVerified.booleanValue() : null	
 				);
 	}
 	

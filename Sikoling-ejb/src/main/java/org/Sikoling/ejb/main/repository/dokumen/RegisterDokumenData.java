@@ -41,15 +41,18 @@ public class RegisterDokumenData implements Serializable {
 	@ManyToOne
 	private MasterDokumenData dokumenData;
 	
-	@Column(name="tanggal_registrasi")
+	@Column(name="tanggal_registrasi", insertable = true, updatable = true)
 	private LocalDate tanggalRegistrasi;
 	
 	@JoinColumn(name = "uploader", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private AutorisasiData uploader;
 	
-	@Column(name="lokasi_file")
+	@Column(name="lokasi_file", insertable = true, updatable = true)
 	private String lokasiFile;
+	
+	@Column(name = "is_validated", insertable = true, updatable = true)
+	private Boolean statusVerified;
 	
 	@OneToOne(mappedBy = "registerDokumenData")
 	private SuratArahanData suratArahanData;
@@ -158,6 +161,14 @@ public class RegisterDokumenData implements Serializable {
 
 	public void setLokasiFile(String lokasiFile) {
 		this.lokasiFile = lokasiFile;
+	}
+
+	public Boolean getStatusVerified() {
+		return statusVerified;
+	}
+
+	public void setStatusVerified(Boolean statusVerified) {
+		this.statusVerified = statusVerified;
 	}
 
 	public static long getSerialversionuid() {

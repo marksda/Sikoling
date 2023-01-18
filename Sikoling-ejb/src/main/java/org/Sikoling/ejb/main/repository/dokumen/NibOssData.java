@@ -11,7 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -28,31 +27,19 @@ public class NibOssData implements Serializable {
 	private static final long serialVersionUID = 8612019941448379437L;
 
 	@Id
-	private String id;
-	
-	@Column(unique=true)
 	private String nomor;
 	
 	@Column(name = "tanggal")
 	private LocalDate tanggalPenetapan;
+	
+	@OneToOne
+	@JoinColumn(name = "register_dokumen", referencedColumnName = "id", insertable = true, updatable = true)
+	private RegisterDokumenData registerDokumenData;
 
-	@OneToMany(mappedBy = "nibOssData", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "nib", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private List<RegisterKbliData> daftarKbli;
 	
-	@MapsId
-	@OneToOne
-	@JoinColumn(name = "id", referencedColumnName = "id", insertable = true, updatable = true)
-	private RegisterDokumenData registerDokumenData;
-	
 	public NibOssData() {
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getNomor() {
@@ -94,7 +81,7 @@ public class NibOssData implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 713;
-        hash = 171 * hash + Objects.hashCode(this.getId());
+        hash = 171 * hash + Objects.hashCode(nomor);
         return hash;
 	}
 	
@@ -115,7 +102,7 @@ public class NibOssData implements Serializable {
         
         final NibOssData other = (NibOssData) obj;
         
-        if (!this.getId().equalsIgnoreCase(other.getId())) {
+        if (!nomor.equalsIgnoreCase(other.getNomor())) {
             return false;
         }        
 
@@ -124,10 +111,8 @@ public class NibOssData implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "NibOssData{id="
-				.concat(this.getId())
-				.concat(", nomor=")
-				.concat(this.getNomor())
+		return "NibOssData{nomot="
+				.concat(nomor)
 				.concat(", tanggalPenetapan=")
 				.concat(this.getTanggalPenetapan().toString())
 				.concat("}");	  

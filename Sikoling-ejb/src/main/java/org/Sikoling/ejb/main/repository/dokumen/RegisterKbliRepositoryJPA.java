@@ -138,17 +138,21 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 
 	private RegisterKbli convertRegisterKbliDataToRegisterKbli(RegisterKbliData d) {
 		return new RegisterKbli(
-				d.getNib(), 
-				d.getKbli(),
-				d.getNama()
+				d.getNib().getNomor(), 
+				d.getKbli().getId(),
+				d.getKbli().getNama()
 				);
 	}
 	
 	private RegisterKbliData convertRegisterKbliToRegisterKbliData(RegisterKbli t) {
 		RegisterKbliData registerKbliData = new RegisterKbliData();
-		registerKbliData.setNib(t.getIdNib());
-		registerKbliData.setKbli(t.getIdKbli());
-		registerKbliData.setNama(t.getNama());
+		NibOssData nibOssData = new NibOssData();
+		nibOssData.setNomor(t.getIdNib());
+		registerKbliData.setNib(nibOssData);
+		
+		Kbli2020Data kbli2020Data = new Kbli2020Data();
+		kbli2020Data.setId(t.getIdKbli());
+		registerKbliData.setKbli(kbli2020Data);
 		
 		return registerKbliData;
 	}

@@ -218,7 +218,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getAktaPendirianData() != null) {
@@ -263,7 +264,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getLampiranSuratArahanData() != null) {
@@ -303,7 +305,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getRekomendasiUKLUPLData() != null) {
@@ -344,7 +347,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getRekomendasiDPLHData() != null) {
@@ -385,7 +389,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getNibOssData() != null) {
@@ -426,7 +431,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else {
@@ -441,21 +447,24 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		registerDokumenData.setId(
 				t.getId() != null ? t.getId() : getGenerateIdRegisterDokumen()
 				);		
-//		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();		
-//		registerPerusahaanData.setId(t.getPerusahaan().getId());
+
 		RegisterPerusahaanData registerPerusahaanData = entityManager.createNamedQuery("RegisterPerusahaanData.findByNpwp", RegisterPerusahaanData.class)
 				.setParameter("npwp", t.getPerusahaan().getId())
-				.getSingleResult();
-				
-		registerDokumenData.setPerusahaanData(registerPerusahaanData);		
+				.getSingleResult();				
+		registerDokumenData.setPerusahaanData(registerPerusahaanData);	
+		
 		MasterDokumenData masterDokumenData = new MasterDokumenData();
 		masterDokumenData.setId(dokumen.getId());
 		registerDokumenData.setDokumenData(masterDokumenData);
+		
 		registerDokumenData.setTanggalRegistrasi(t.getTanggalRegistrasi());	
+		
 		Authority uploader = t.getUploader();
 		AutorisasiData uploaderData = new AutorisasiData();
 		uploaderData.setId(uploader.getId());		
 		registerDokumenData.setUploader(uploaderData);		
+		
+		registerDokumenData.setStatusVerified(t.getStatusVerified());
 				
 		if(dokumen instanceof SuratArahan) {
 			SuratArahan suratArahan = (SuratArahan) dokumen;
@@ -505,11 +514,10 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		}
 		else if(dokumen instanceof NibOss) {
 			NibOss nibOss = (NibOss) dokumen;
-			NibOssData nibOssData = new NibOssData();			
-			nibOssData.setId(registerDokumenData.getId());
+			NibOssData nibOssData = new NibOssData();		
 			nibOssData.setNomor(nibOss.getNomor());
 			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
-			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));
+			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));			
 			registerDokumenData.setNibOssData(nibOssData);
 		}
 
@@ -610,9 +618,9 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			while (iter.hasNext()) {
 				RegisterKbliData registerKbliData = (RegisterKbliData) iter.next();
 				item = new RegisterKbli(
-						registerKbliData.getNib(), 
-						registerKbliData.getKbli(), 
-						registerKbliData.getNama()
+						registerKbliData.getNib().getNomor(), 
+						registerKbliData.getKbli().getId(), 
+						registerKbliData.getKbli().getNama()
 						);
 				daftarKbli.add(item);
 			}
@@ -633,9 +641,14 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			while (iter.hasNext()) {
 				RegisterKbli registerKbli = (RegisterKbli) iter.next();
 				item = new RegisterKbliData();
-				item.setNib(registerKbli.getIdNib());
-				item.setKbli(registerKbli.getIdKbli());
-				item.setNama(registerKbli.getNama());
+				
+				NibOssData nibOssData = new NibOssData();
+				nibOssData.setNomor(registerKbli.getIdNib());
+				item.setNib(nibOssData);
+				
+				Kbli2020Data kbli2020Data = new Kbli2020Data();
+				kbli2020Data.setId(registerKbli.getIdKbli());
+				item.setKbli(kbli2020Data);
 				daftarKbliData.add(item);
 			}
 			

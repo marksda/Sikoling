@@ -4,12 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -28,48 +26,42 @@ public class RegisterKbliData implements Serializable {
 	private static final long serialVersionUID = -1341807963805050449L;
 	
 	@Id
-	private String nib;
+	@ManyToOne
+	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = true, updatable = true)
+	private NibOssData nib;
 		
 	@Id
-	private String kbli;
-	
-	private String nama;	
-	
-	@MapsId
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = true, updatable = true)
-	private NibOssData nibOssData;
+	@ManyToOne
+	@JoinColumn(name = "kbli", referencedColumnName = "id", insertable = true, updatable = true)
+	private Kbli2020Data kbli;
 	
 	public RegisterKbliData() {
-	}	
-	
-	public String getNib() {
+	}
+
+	public NibOssData getNib() {
 		return nib;
 	}
+
 	
-	public void setNib(String nib) {
+	public void setNib(NibOssData nib) {
 		this.nib = nib;
 	}
+
 	
-	public String getKbli() {
+	public Kbli2020Data getKbli() {
 		return kbli;
 	}
+
 	
-	public void setKbli(String kbli) {
+	public void setKbli(Kbli2020Data kbli) {
 		this.kbli = kbli;
 	}
-		
-	public String getNama() {
-		return nama;
-	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	
 	@Override
 	public int hashCode() {
@@ -95,11 +87,11 @@ public class RegisterKbliData implements Serializable {
         
         final RegisterKbliData other = (RegisterKbliData) obj;
         
-        if (!this.nib.equals(other.getNib()))  {
+        if (!nib.getNomor().equals(other.nib.getNomor()))  {
             return false;
         }
         
-        if (!this.kbli.equals(other.getKbli()))  {
+        if (!this.kbli.getId().equals(other.kbli.getId()))  {
             return false;
         }
         
@@ -109,11 +101,9 @@ public class RegisterKbliData implements Serializable {
 	@Override
 	public String toString() {
 		return "RegisterKbliData{nib="
-				.concat(this.nib)
+				.concat(nib.getNomor())
 				.concat(", kbi=")
-				.concat(this.kbli)
-				.concat(", nama=")
-				.concat(nama)
+				.concat(kbli.getId())
 				.concat("}");	  
 	}
 

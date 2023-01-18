@@ -11,7 +11,6 @@ public class RegisterKbli implements Serializable {
 	private final String nama;
 	
 	public RegisterKbli(String idNib, String idKbli, String nama) {
-		super();
 		this.idNib = idNib;
 		this.idKbli = idKbli;
 		this.nama = nama;

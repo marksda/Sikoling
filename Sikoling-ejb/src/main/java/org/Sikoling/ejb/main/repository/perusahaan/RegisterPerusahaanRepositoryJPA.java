@@ -462,7 +462,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getAktaPendirianData() != null) {
@@ -492,7 +493,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getLampiranSuratArahanData() != null) {
@@ -517,7 +519,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getRekomendasiUKLUPLData() != null) {
@@ -543,7 +546,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getRekomendasiDPLHData() != null) {
@@ -569,7 +573,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else if(d.getNibOssData() != null) {
@@ -599,7 +604,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							null, 
 							null, 
 							uploaderData.getUserName()
-							)
+							),
+					d.getStatusVerified()
 					);
 		}
 		else {
