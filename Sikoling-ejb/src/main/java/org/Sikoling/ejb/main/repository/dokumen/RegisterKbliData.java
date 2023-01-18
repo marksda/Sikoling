@@ -37,7 +37,7 @@ public class RegisterKbliData implements Serializable {
 	
 	@MapsId
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = false, updatable = false)
+	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = true, updatable = true)
 	private NibOssData nibOssData;
 	
 	public RegisterKbliData() {
