@@ -50,6 +50,10 @@ public class RegisterDokumenData implements Serializable {
 	@Column(name="lokasi_file", insertable = true, updatable = true)
 	private String lokasiFile;
 	
+	@JoinColumn(name = "status_dokumen", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private StatusDokumenData statusDokumen;
+	
 	@Column(name = "is_validated", insertable = true, updatable = true)
 	private Boolean statusVerified;
 	
@@ -168,6 +172,14 @@ public class RegisterDokumenData implements Serializable {
 
 	public void setStatusVerified(Boolean statusVerified) {
 		this.statusVerified = statusVerified;
+	}
+
+	public StatusDokumenData getStatusDokumen() {
+		return statusDokumen;
+	}
+
+	public void setStatusDokumen(StatusDokumenData statusDokumen) {
+		this.statusDokumen = statusDokumen;
 	}
 
 	public static long getSerialversionuid() {

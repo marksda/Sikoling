@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 
 public class RegisterDokumen implements Serializable {	
 	private static final long serialVersionUID = 5607669072989245707L;
@@ -12,17 +13,18 @@ public class RegisterDokumen implements Serializable {
 	private final Dokumen dokumen;
 	private final Perusahaan perusahaan;
 	private final String lokasiFile;
+	private final StatusDokumen statusDokumen;
 	private final LocalDate tanggalRegistrasi;
 	private final Authority uploader;
 	private final Boolean statusVerified;
-	
+
 	public RegisterDokumen(String id, Dokumen dokumen, Perusahaan perusahaan, String lokasiFile,
-			LocalDate tanggalRegistrasi, Authority uploader, Boolean statusVerified) {
-		super();
+			StatusDokumen statusDokumen, LocalDate tanggalRegistrasi, Authority uploader, Boolean statusVerified) {
 		this.id = id;
 		this.dokumen = dokumen;
 		this.perusahaan = perusahaan;
 		this.lokasiFile = lokasiFile;
+		this.statusDokumen = statusDokumen;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.uploader = uploader;
 		this.statusVerified = statusVerified;
@@ -34,6 +36,10 @@ public class RegisterDokumen implements Serializable {
 
 	public String getLokasiFile() {
 		return lokasiFile;
+	}
+
+	public StatusDokumen getStatusDokumen() {
+		return statusDokumen;
 	}
 
 	public LocalDate getTanggalRegistrasi() {

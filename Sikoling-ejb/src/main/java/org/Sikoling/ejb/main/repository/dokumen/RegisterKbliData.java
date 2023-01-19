@@ -41,27 +41,22 @@ public class RegisterKbliData implements Serializable {
 	public NibOssData getNib() {
 		return nib;
 	}
-
 	
 	public void setNib(NibOssData nib) {
 		this.nib = nib;
 	}
-
 	
 	public Kbli2020Data getKbli() {
 		return kbli;
 	}
-
 	
 	public void setKbli(Kbli2020Data kbli) {
 		this.kbli = kbli;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {

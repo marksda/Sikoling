@@ -22,6 +22,7 @@ public class RegisterDokumenDTO implements Serializable {
 	private DokumenDTO dokumen;
 	private PerusahaanDTO perusahaan;
 	private String lokasiFile;
+	private StatusDokumenDTO statusDokumen;
 	private LocalDate tanggalRegistrasi;
 	private AuthorityDTO uploader;
 	private Boolean statusVerified;
@@ -57,6 +58,7 @@ public class RegisterDokumenDTO implements Serializable {
 			
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 			this.lokasiFile = t.getLokasiFile();
+			this.statusDokumen = t.getStatusDokumen() != null ? new StatusDokumenDTO(t.getStatusDokumen()) : null;
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
 			this.uploader = t.getUploader() != null ? new AuthorityDTO(t.getUploader()) : null;
 			this.statusVerified = t.getStatusVerified() != null ? t.getStatusVerified() : null;
@@ -200,9 +202,10 @@ public class RegisterDokumenDTO implements Serializable {
 				dokumen,
 				perusahaan != null ? perusahaan.toPerusahaan() : null,
 				lokasiFile, 
+				statusDokumen != null ? statusDokumen.toStatusDokumen() : null,
 				tanggalRegistrasi, 
 				uploader != null ? uploader.toAuthority() : null,
-				statusVerified != null ? statusVerified.booleanValue() : null	
+				statusVerified != null ? statusVerified.booleanValue() : null						
 				);
 	}
 	

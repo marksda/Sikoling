@@ -28,6 +28,7 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
+import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -454,6 +455,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							), 
 					null, 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -485,6 +488,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							), 
 					null, 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -511,6 +516,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							), 
 					null, 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -538,6 +545,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							), 
 					null, 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -565,6 +574,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							), 
 					null, 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -596,6 +607,8 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							),
 					null, 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 

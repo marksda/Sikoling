@@ -26,6 +26,7 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
+import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -242,6 +243,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -288,6 +291,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -329,6 +334,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -371,6 +378,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -413,6 +422,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -455,6 +466,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
 					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
 							null, 
@@ -495,6 +508,11 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		AutorisasiData uploaderData = new AutorisasiData();
 		uploaderData.setId(uploader.getId());		
 		registerDokumenData.setUploader(uploaderData);		
+		
+		
+		StatusDokumenData statusDokumenData = new StatusDokumenData();		
+		statusDokumenData.setId(t.getStatusDokumen() != null ? t.getStatusDokumen().getId() : null);
+		registerDokumenData.setStatusDokumen(statusDokumenData);
 		
 		registerDokumenData.setStatusVerified(t.getStatusVerified());
 				
