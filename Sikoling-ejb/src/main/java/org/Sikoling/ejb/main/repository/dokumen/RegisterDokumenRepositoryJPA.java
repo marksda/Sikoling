@@ -58,7 +58,40 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	@Override
 	public RegisterDokumen save(RegisterDokumen t) {
 		RegisterDokumenData registerDokumenData = convertRegisterDokumenToRegisterDokumenData(t);
-		entityManager.persist(registerDokumenData);			
+		Dokumen dokumen = t.getDokumen();
+		if(dokumen instanceof SuratArahan) {
+			registerDokumenData.setSuratArahanData(null);
+			entityManager.persist(registerDokumenData);	
+		}
+		else if(dokumen instanceof LampiranSuratArahan) {			
+			registerDokumenData.setLampiranSuratArahanData(null);
+			entityManager.persist(registerDokumenData);	
+		}
+		else if(dokumen instanceof AktaPendirian) {
+			registerDokumenData.setAktaPendirianData(null);
+			entityManager.persist(registerDokumenData);	
+		}
+		else if(dokumen instanceof RekomendasiUKLUPL) {
+			registerDokumenData.setRekomendasiUKLUPLData(null);
+			entityManager.persist(registerDokumenData);	
+		}
+		else if(dokumen instanceof RekomendasiDPLH) {			
+			registerDokumenData.setRekomendasiDPLHData(null);
+			entityManager.persist(registerDokumenData);	
+		}
+		else if(dokumen instanceof NibOss) {			
+			NibOssData nibOssData = registerDokumenData.getNibOssData();
+			RegisterDokumenData regDokData = new RegisterDokumenData();
+			regDokData.setId(registerDokumenData.getId());
+			nibOssData.setRegisterDokumenData(regDokData);
+
+			registerDokumenData.setNibOssData(null);
+			
+			entityManager.persist(registerDokumenData);	
+			entityManager.persist(nibOssData);
+		}
+		
+//		entityManager.persist(registerDokumenData);	
 		entityManager.flush();		
 		return convertRegisterDokumenDataToRegisterDokumen(entityManager.find(RegisterDokumenData.class, registerDokumenData.getId()));
 	}
@@ -465,61 +498,60 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		registerDokumenData.setStatusVerified(t.getStatusVerified());
 				
-//		if(dokumen instanceof SuratArahan) {
-//			SuratArahan suratArahan = (SuratArahan) dokumen;
-//			SuratArahanData suratArahanData = new SuratArahanData();
-//			suratArahanData.setNoSurat(suratArahan.getNoSurat());
-//			suratArahanData.setTanggalSurat(suratArahan.getTanggalSurat());
-//			suratArahanData.setPerihalSurat(suratArahan.getPerihalSurat());
-//			suratArahanData.setUraianKegiatan(suratArahan.getUraianKegiatan());
-//			registerDokumenData.setSuratArahanData(null);
-//		}
-//		else if(dokumen instanceof LampiranSuratArahan) {
-//			LampiranSuratArahan lampiranSuratArahan = (LampiranSuratArahan) dokumen;
-//			LampiranSuratArahanData lampiranSuratArahanData = new LampiranSuratArahanData();			
-//			lampiranSuratArahanData.setNoSurat(lampiranSuratArahan.getNoSuratArahan());
-//			lampiranSuratArahanData.setTanggalSurat(lampiranSuratArahan.getTanggalSuratArahan());
-//			
-//			registerDokumenData.setLampiranSuratArahanData(lampiranSuratArahanData);
-//		}
-//		else if(dokumen instanceof AktaPendirian) {
-//			AktaPendirian aktaPendirian = (AktaPendirian) dokumen;
-//			AktaPendirianData aktaPendirianData = new AktaPendirianData();			
-//			aktaPendirianData.setNomor(aktaPendirian.getNomor());
-//			aktaPendirianData.setTanggal(aktaPendirian.getTanggal());
-//			aktaPendirianData.setNotaris(aktaPendirian.getNamaNotaris());
-//			PegawaiData pegawaiData = new PegawaiData();
-//			pegawaiData.setId(aktaPendirian.getPenanggungJawab().getId());
-//			aktaPendirianData.setPenanggungJawabData(pegawaiData);
-//			registerDokumenData.setAktaPendirianData(aktaPendirianData);
-//		}
-//		else if(dokumen instanceof RekomendasiUKLUPL) {
-//			RekomendasiUKLUPL rekomendasiUKLUPL = (RekomendasiUKLUPL) dokumen;
-//			RekomendasiUKLUPLData rekomendasiUKLUPLData = new RekomendasiUKLUPLData();			
-//			rekomendasiUKLUPLData.setNoSurat(rekomendasiUKLUPL.getNomor());
-//			rekomendasiUKLUPLData.setTanggalSurat(rekomendasiUKLUPL.getTanggal());
-//			rekomendasiUKLUPLData.setPerihalSurat(rekomendasiUKLUPL.getPerihal());
-//			
-//			registerDokumenData.setRekomendasiUKLUPLData(rekomendasiUKLUPLData);
-//		}
-//		else if(dokumen instanceof RekomendasiDPLH) {
-//			RekomendasiDPLH rekomendasiDPLH = (RekomendasiDPLH) dokumen;
-//			RekomendasiDPLHData rekomendasiDPLHData = new RekomendasiDPLHData();			
-//			rekomendasiDPLHData.setNoSurat(rekomendasiDPLH.getNomor());
-//			rekomendasiDPLHData.setTanggalSurat(rekomendasiDPLH.getTanggal());
-//			rekomendasiDPLHData.setPerihalSurat(rekomendasiDPLH.getPerihal());
-//			
-//			registerDokumenData.setRekomendasiDPLHData(rekomendasiDPLHData);
-//		}
-//		else if(dokumen instanceof NibOss) {
-//			NibOss nibOss = (NibOss) dokumen;
-//			NibOssData nibOssData = new NibOssData();		
-//			nibOssData.setNomor(nibOss.getNomor());
-//			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
-//			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));		
-//			registerDokumenData.setNibOssData(nibOssData);
-//		}
-
+		if(dokumen instanceof SuratArahan) {
+			SuratArahan suratArahan = (SuratArahan) dokumen;
+			SuratArahanData suratArahanData = new SuratArahanData();
+			suratArahanData.setNoSurat(suratArahan.getNoSurat());
+			suratArahanData.setTanggalSurat(suratArahan.getTanggalSurat());
+			suratArahanData.setPerihalSurat(suratArahan.getPerihalSurat());
+			suratArahanData.setUraianKegiatan(suratArahan.getUraianKegiatan());
+			registerDokumenData.setSuratArahanData(null);
+		}
+		else if(dokumen instanceof LampiranSuratArahan) {
+			LampiranSuratArahan lampiranSuratArahan = (LampiranSuratArahan) dokumen;
+			LampiranSuratArahanData lampiranSuratArahanData = new LampiranSuratArahanData();			
+			lampiranSuratArahanData.setNoSurat(lampiranSuratArahan.getNoSuratArahan());
+			lampiranSuratArahanData.setTanggalSurat(lampiranSuratArahan.getTanggalSuratArahan());
+			
+			registerDokumenData.setLampiranSuratArahanData(lampiranSuratArahanData);
+		}
+		else if(dokumen instanceof AktaPendirian) {
+			AktaPendirian aktaPendirian = (AktaPendirian) dokumen;
+			AktaPendirianData aktaPendirianData = new AktaPendirianData();			
+			aktaPendirianData.setNomor(aktaPendirian.getNomor());
+			aktaPendirianData.setTanggal(aktaPendirian.getTanggal());
+			aktaPendirianData.setNotaris(aktaPendirian.getNamaNotaris());
+			PegawaiData pegawaiData = new PegawaiData();
+			pegawaiData.setId(aktaPendirian.getPenanggungJawab().getId());
+			aktaPendirianData.setPenanggungJawabData(pegawaiData);
+			registerDokumenData.setAktaPendirianData(aktaPendirianData);
+		}
+		else if(dokumen instanceof RekomendasiUKLUPL) {
+			RekomendasiUKLUPL rekomendasiUKLUPL = (RekomendasiUKLUPL) dokumen;
+			RekomendasiUKLUPLData rekomendasiUKLUPLData = new RekomendasiUKLUPLData();			
+			rekomendasiUKLUPLData.setNoSurat(rekomendasiUKLUPL.getNomor());
+			rekomendasiUKLUPLData.setTanggalSurat(rekomendasiUKLUPL.getTanggal());
+			rekomendasiUKLUPLData.setPerihalSurat(rekomendasiUKLUPL.getPerihal());
+			
+			registerDokumenData.setRekomendasiUKLUPLData(rekomendasiUKLUPLData);
+		}
+		else if(dokumen instanceof RekomendasiDPLH) {
+			RekomendasiDPLH rekomendasiDPLH = (RekomendasiDPLH) dokumen;
+			RekomendasiDPLHData rekomendasiDPLHData = new RekomendasiDPLHData();			
+			rekomendasiDPLHData.setNoSurat(rekomendasiDPLH.getNomor());
+			rekomendasiDPLHData.setTanggalSurat(rekomendasiDPLH.getTanggal());
+			rekomendasiDPLHData.setPerihalSurat(rekomendasiDPLH.getPerihal());
+			
+			registerDokumenData.setRekomendasiDPLHData(rekomendasiDPLHData);
+		}
+		else if(dokumen instanceof NibOss) {
+			NibOss nibOss = (NibOss) dokumen;
+			NibOssData nibOssData = new NibOssData();		
+			nibOssData.setNomor(nibOss.getNomor());
+			nibOssData.setTanggalPenetapan(nibOss.getTanggal());
+			nibOssData.setDaftarKbli(toDaftarRegisterKbliData(nibOss.getDaftarKbli()));		
+			registerDokumenData.setNibOssData(nibOssData);
+		}
 		
 		return registerDokumenData;
 	}
