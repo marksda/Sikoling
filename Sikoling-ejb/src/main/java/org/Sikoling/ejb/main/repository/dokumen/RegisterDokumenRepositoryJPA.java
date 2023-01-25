@@ -91,8 +91,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			entityManager.persist(registerDokumenData);	
 			entityManager.persist(nibOssData);
 		}
-		
-//		entityManager.persist(registerDokumenData);	
+
 		entityManager.flush();		
 		return convertRegisterDokumenDataToRegisterDokumen(entityManager.find(RegisterDokumenData.class, registerDokumenData.getId()));
 	}

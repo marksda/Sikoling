@@ -50,6 +50,7 @@ public class RegisterDokumenController {
 		d.setUploader(new AuthorityDTO(kreator));
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
+		d.setStatusVerified(Boolean.FALSE);
 		
 		return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
 	}
