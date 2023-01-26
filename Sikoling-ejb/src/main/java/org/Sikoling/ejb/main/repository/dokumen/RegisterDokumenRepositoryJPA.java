@@ -510,7 +510,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		
 		StatusDokumenData statusDokumenData = new StatusDokumenData();		
-		statusDokumenData.setId(t.getStatusDokumen() != null ? t.getStatusDokumen().getId() : null);
+		statusDokumenData.setId(t.getStatusDokumen() != null ? t.getStatusDokumen().getId() : "2");
 		registerDokumenData.setStatusDokumen(statusDokumenData);
 		
 		registerDokumenData.setStatusVerified(t.getStatusVerified());
