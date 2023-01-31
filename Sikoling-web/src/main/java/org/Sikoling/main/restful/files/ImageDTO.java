@@ -11,7 +11,6 @@ public class ImageDTO {
 	}
 
 	public ImageDTO(String imageUrl, String namaFile) {
-		super();
 		this.imageUrl = imageUrl;
 		this.namaFile = namaFile;
 	}

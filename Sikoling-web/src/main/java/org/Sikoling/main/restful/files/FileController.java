@@ -108,11 +108,14 @@ public class FileController {
 		return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
 	
+	@Path("sec/{subPath}/{id}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@RequiredAuthorization
 	public ImageDTO uploadFile(
+			@PathParam("subPath") String subPath, 
+			@PathParam("id") String id,
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "other");
