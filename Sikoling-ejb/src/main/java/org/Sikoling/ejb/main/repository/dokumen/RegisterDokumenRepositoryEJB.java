@@ -84,4 +84,10 @@ public class RegisterDokumenRepositoryEJB implements IRegisterDokumenRepository 
 		return RegisterDokumenRepository.delete(id);
 	}
 
+	
+	@Override
+	public RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen) {
+		return RegisterDokumenRepository.getByIdRegisterDokumen(idRegisterDokumen);
+	}
+
 }

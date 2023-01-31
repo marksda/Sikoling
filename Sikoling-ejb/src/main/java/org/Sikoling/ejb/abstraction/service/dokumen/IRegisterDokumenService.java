@@ -19,4 +19,5 @@ public interface IRegisterDokumenService {
 	List<RegisterDokumen> getByNamaDokumenAndPage(String namaDokumen, Integer page, Integer pageSize);	
 	List<RegisterDokumen> getByIdDokumen(String idDokumen);
 	List<RegisterDokumen> getByIdDokumenAndPage(String idDokumen, Integer page, Integer pageSize);
+	RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen);
 }

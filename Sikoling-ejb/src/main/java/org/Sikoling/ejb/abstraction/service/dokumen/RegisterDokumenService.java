@@ -79,4 +79,10 @@ public class RegisterDokumenService implements IRegisterDokumenService {
 		return registerDokumenRepository.delete(id);
 	}
 
+	
+	@Override
+	public RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen) {
+		return registerDokumenRepository.getByIdRegisterDokumen(idRegisterDokumen);
+	}
+
 }

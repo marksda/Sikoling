@@ -274,7 +274,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 											) : null
 							), 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
@@ -317,7 +317,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							lampiranSuratArahanData.getTanggalSurat()
 							), 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
@@ -361,7 +361,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							rekomendasiUKLUPLData.getPerihalSurat()
 							), 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
@@ -405,7 +405,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							rekomendasiDPLHData.getPerihalSurat()
 							), 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
@@ -449,7 +449,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							toDaftarRegisterKbli(nibOssData.getDaftarKbli())
 							), 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
@@ -484,7 +484,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					d.getId(), 
 					null, 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
@@ -737,6 +737,13 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		else {
 			return null;
 		}
+	}
+
+	
+	@Override
+	public RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen) {
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, idRegisterDokumen);
+		return registerDokumenData != null ? convertRegisterDokumenDataToRegisterDokumen(registerDokumenData):null;
 	}
 	
 }

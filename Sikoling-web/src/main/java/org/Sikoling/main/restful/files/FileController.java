@@ -11,6 +11,8 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -42,6 +44,9 @@ public class FileController {
 	
 	@Inject
 	private IRegisterDokumenService registerDokumenService;
+	
+//	@Inject
+//	private IRegisterPerusahaanService registerPerusahaanService;
 	
 	//uploading file with no security
 	@Path("nosec/{subPath}/{id}")
@@ -118,6 +123,7 @@ public class FileController {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public ImageDTO uploadFile(
 			@PathParam("npwp") String npwp,
 			@PathParam("id") String id,
@@ -132,9 +138,12 @@ public class FileController {
 				.concat(File.separator)
 				.concat(fileKey);
 		
-		RegisterDokumen registerDokumen = new RegisterDokumen(id, null, null, fileKey, null, null, null, null);
+		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(id);
 		
-		registerDokumenService.update(registerDokumen);
+		RegisterDokumen registerDokumenBaru = new RegisterDokumen(
+				id, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), fileKey, null, null, null, null);
+		
+		registerDokumenService.update(registerDokumenBaru);
         
         return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
