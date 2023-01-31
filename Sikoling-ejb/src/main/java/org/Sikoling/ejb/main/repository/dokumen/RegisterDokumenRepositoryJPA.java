@@ -93,7 +93,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		}
 
 		entityManager.flush();		
-		return convertRegisterDokumenDataToRegisterDokumen(entityManager.find(RegisterDokumenData.class, registerDokumenData.getId()));
+		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
+//		return convertRegisterDokumenDataToRegisterDokumen(entityManager.find(RegisterDokumenData.class, registerDokumenData.getId()));
 	}
 	
 	@Override
@@ -480,7 +481,39 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					);
 		}
 		else {
-			return null;
+			return new RegisterDokumen(
+					d.getId(), 
+					null, 
+					new Perusahaan(
+							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNama(), 
+							null, 
+							null, 
+							new PelakuUsaha(
+									pelakuUsahaData.getId(), 
+									pelakuUsahaData.getNama(), 
+									pelakuUsahaData.getSingkatan(), 
+									null
+									), 
+							null, 
+							null, 
+							null, 
+							registerPerusahaanData.getStatusVerifikasi()
+							), 
+					null, 
+					d.getStatusDokumen() != null ? new StatusDokumen(
+							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
+					d.getTanggalRegistrasi(), 
+					new Authority(
+							null, 
+							null, 
+							null, 
+							null, 
+							null, 
+							uploaderData.getUserName()
+							),
+					d.getStatusVerified()
+					);
 		}
 	}
 	
