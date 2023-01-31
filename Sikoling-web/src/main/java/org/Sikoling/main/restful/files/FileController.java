@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
+import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
@@ -37,6 +39,9 @@ public class FileController {
 	
 	@Inject
 	private IStorageService storageService;	
+	
+	@Inject
+	private IRegisterDokumenService registerDokumenService;
 	
 	//uploading file with no security
 	@Path("nosec/{subPath}/{id}")
@@ -108,19 +113,30 @@ public class FileController {
 		return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
 	
-	@Path("sec/{subPath}/{id}")
+	@Path("sec/dok/{npwp}/{id}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@RequiredAuthorization
 	public ImageDTO uploadFile(
-			@PathParam("subPath") String subPath, 
+			@PathParam("npwp") String npwp,
 			@PathParam("id") String id,
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
-		String fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, "other");
+		String pathLocation = "dok"
+        		.concat(File.separator)
+        		.concat(npwp);
+		String fileKey = storageService.save(id.concat("-").concat(fileDetail.getFileName()), uploadedInputStream, pathLocation);
+		String urlLocatorFeedBack = "sec/dok/"
+				.concat(npwp)
+				.concat(File.separator)
+				.concat(fileKey);
+		
+		RegisterDokumen registerDokumen = new RegisterDokumen(id, null, null, fileKey, null, null, null, null);
+		
+		registerDokumenService.update(registerDokumen);
         
-        return new ImageDTO(uriInfo.getBaseUri() + "files/other/" + fileKey, fileKey);
+        return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
 	
 	@Path("nosec/{subPath}/{fileKey}")

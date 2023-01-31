@@ -94,7 +94,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 
 		entityManager.flush();		
 		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
-//		return convertRegisterDokumenDataToRegisterDokumen(entityManager.find(RegisterDokumenData.class, registerDokumenData.getId()));
 	}
 	
 	@Override
@@ -227,7 +226,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							suratArahanData.getUraianKegiatan()
 							), 
 					new Perusahaan(
-							registerPerusahaanData.getId(), 
+							registerPerusahaanData.getNpwp(), 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
