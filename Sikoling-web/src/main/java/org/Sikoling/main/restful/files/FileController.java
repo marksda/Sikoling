@@ -11,6 +11,8 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
