@@ -211,6 +211,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		AutorisasiData uploaderData = d.getUploader();
 		RegisterPerusahaanData registerPerusahaanData = d.getPerusahaanData();
 		PelakuUsahaData pelakuUsahaData = registerPerusahaanData.getPelakuUsahaData();
+		
+		NibOssData nibOssData = d.getNibOssData();
 		 
 		if(d.getSuratArahanData() != null) {
 			SuratArahanData suratArahanData = d.getSuratArahanData();
@@ -435,8 +437,8 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					d.getStatusVerified()
 					);
 		}
-		else if(d.getNibOssData() != null) {
-			NibOssData nibOssData = d.getNibOssData();
+		else if(nibOssData != null) {
+//			NibOssData nibOssData = d.getNibOssData();
 			
 			return new RegisterDokumen(
 					d.getId(), 
@@ -738,7 +740,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			return null;
 		}
 	}
-
 	
 	@Override
 	public RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen) {

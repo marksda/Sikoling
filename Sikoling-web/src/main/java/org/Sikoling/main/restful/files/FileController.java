@@ -129,6 +129,7 @@ public class FileController {
 			@PathParam("id") String id,
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
+		
 		String pathLocation = "dok"
         		.concat(File.separator)
         		.concat(npwp);

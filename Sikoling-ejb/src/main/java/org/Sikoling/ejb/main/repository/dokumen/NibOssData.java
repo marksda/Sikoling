@@ -31,9 +31,9 @@ public class NibOssData implements Serializable {
 	
 	@Column(name = "tanggal")
 	private LocalDate tanggalPenetapan;
-	
-	@OneToOne
+
 	@JoinColumn(name = "register_dokumen", referencedColumnName = "id", insertable = true, updatable = true)
+	@OneToOne
 	private RegisterDokumenData registerDokumenData;
 
 	@OneToMany(mappedBy = "nib", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
