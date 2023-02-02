@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,7 @@ import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepository {
 	
@@ -166,7 +168,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	
 	private RegisterPermohonanData convertRegisterPermohonanToRegisterPermohonanData(RegisterPermohonan t) {
 		RegisterPermohonanData registerPermohonanData = new RegisterPermohonanData();
-		registerPermohonanData.setId(t.getId());
+		registerPermohonanData.setId(
+				t.getId() != null ? t.getId() : getGenerateIdRegisterPermohonan()
+				);
 		
 		KategoriPermohonanData kategoriPermohonanData = new KategoriPermohonanData();
 		kategoriPermohonanData.setId(t.getKategoriPermohonan().getId());
@@ -192,7 +196,6 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		
 		return registerPermohonanData;
 	}
-
 	
 	@Override
 	public DeleteResponse delete(String id) {
@@ -200,4 +203,31 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		entityManager.remove(registerPermohonanData);			
 		return new DeleteResponse(true, id);
 	}
+	
+	private String getGenerateIdRegisterPermohonan() {
+		int tahun = LocalDate.now().getYear();
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(rd.id) "
+				+ "FROM RegisterPermohonanData rd "
+				+ "WHERE EXTRACT(YEAR FROM rd.tanggalRegistrasi) = :tahun");
+		
+		q.setParameter("tahun", tahun);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			hasil = hasil.substring(0, 6);
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 6, '0');
+			return hasil.concat(Integer.toString(tahun));
+		} catch (Exception e) {	
+			hasil = "000001";			
+			return hasil.concat(Integer.toString(tahun));
+		}		
+	}
+	
+	private String LPad(String str, Integer length, char car) {
+		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
+	}
+	
 }

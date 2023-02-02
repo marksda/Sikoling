@@ -23,7 +23,8 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="RegisterDokumenData.findByNamaDokumen", query = "SELECT d FROM RegisterDokumenData d WHERE d.dokumenData.nama LIKE :namaDokumen"),
 	@NamedQuery(name="RegisterDokumenData.findByIdDokumen", query="SELECT d FROM RegisterDokumenData d WHERE d.dokumenData.id = :idDokumen"),
 	@NamedQuery(name="RegisterDokumenData.findByNamaPerusahaan", query = "SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.nama LIKE :namaPerusahaan"),
-	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaan", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.id = :idPerusahaan")
+	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaan", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.id = :idPerusahaan"),
+	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaanAndIdDokumen", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.id = :idPerusahaan AND d.dokumenData.id = :idDokumen")
 })
 public class RegisterDokumenData implements Serializable {
 

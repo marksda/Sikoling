@@ -459,7 +459,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -492,7 +492,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -520,7 +520,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -549,7 +549,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -578,7 +578,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -611,7 +611,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 

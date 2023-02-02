@@ -232,23 +232,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null, 
 							null, 
 							null, 
 							null, 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
-					null, 
+					d.getLokasiFile(), 
 					d.getStatusDokumen() != null ? new StatusDokumen(
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(), 
 							null, 
 							null, 
 							null, 
@@ -280,23 +280,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null, 
 							null, 
 							null, 
 							null, 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
-					null, 
+					d.getLokasiFile(), 
 					d.getStatusDokumen() != null ? new StatusDokumen(
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -323,23 +323,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null, 
 							null, 
 							null, 
 							null, 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
-					null, 
+					d.getLokasiFile(), 
 					d.getStatusDokumen() != null ? new StatusDokumen(
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -367,23 +367,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null,
 							null, 
 							null, 
 							null, 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
-					null, 
+					d.getLokasiFile(), 
 					d.getStatusDokumen() != null ? new StatusDokumen(
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -411,23 +411,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null,
 							null, 
 							null, 
 							null, 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
-					null, 
+					d.getLokasiFile(), 
 					d.getStatusDokumen() != null ? new StatusDokumen(
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -455,23 +455,23 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null,
 							null, 
 							null, 
 							null, 
 							registerPerusahaanData.getStatusVerifikasi()
 							), 
-					null, 
+					d.getLokasiFile(), 
 					d.getStatusDokumen() != null ? new StatusDokumen(
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -490,12 +490,12 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							registerPerusahaanData.getNama(), 
 							null, 
 							null, 
-							new PelakuUsaha(
+							pelakuUsahaData != null ? new PelakuUsaha(
 									pelakuUsahaData.getId(), 
 									pelakuUsahaData.getNama(), 
 									pelakuUsahaData.getSingkatan(), 
 									null
-									), 
+								) : null,
 							null, 
 							null, 
 							null, 
@@ -506,7 +506,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
 					d.getTanggalRegistrasi(), 
 					new Authority(
-							null, 
+							uploaderData.getId(),
 							null, 
 							null, 
 							null, 
@@ -542,6 +542,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		uploaderData.setId(uploader.getId());		
 		registerDokumenData.setUploader(uploaderData);		
 		
+		registerDokumenData.setLokasiFile(t.getLokasiFile());
 		
 		StatusDokumenData statusDokumenData = new StatusDokumenData();		
 		statusDokumenData.setId(t.getStatusDokumen() != null ? t.getStatusDokumen().getId() : "2");
@@ -743,7 +744,11 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	@Override
 	public RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen) {
-		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, idRegisterDokumen);
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, idRegisterDokumen);	
+		NibOssData nibOssData = entityManager.createNamedQuery("NibOssData.findByIdRegistrasi", NibOssData.class)
+				.setParameter("idRegister", idRegisterDokumen)
+				.getSingleResult();
+		registerDokumenData.setNibOssData(nibOssData);
 		return registerDokumenData != null ? convertRegisterDokumenDataToRegisterDokumen(registerDokumenData):null;
 	}
 	

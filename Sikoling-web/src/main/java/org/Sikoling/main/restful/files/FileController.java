@@ -136,13 +136,15 @@ public class FileController {
 		String fileKey = storageService.save(id.concat("-").concat(fileDetail.getFileName()), uploadedInputStream, pathLocation);
 		String urlLocatorFeedBack = "sec/dok/"
 				.concat(npwp)
-				.concat(File.separator)
+				.concat("/")
 				.concat(fileKey);
 		
 		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(id);
 		
 		RegisterDokumen registerDokumenBaru = new RegisterDokumen(
-				id, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), fileKey, null, null, null, null);
+				id, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), 
+				fileKey, registerDokumen.getStatusDokumen(), registerDokumen.getTanggalRegistrasi(), 
+				registerDokumen.getUploader(), registerDokumen.getStatusVerified());
 		
 		registerDokumenService.update(registerDokumenBaru);
         

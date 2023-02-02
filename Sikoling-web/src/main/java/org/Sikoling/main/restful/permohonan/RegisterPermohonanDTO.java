@@ -53,88 +53,79 @@ public class RegisterPermohonanDTO implements Serializable {
 					.collect(Collectors.toList()) : null;
 		}
 	}
-
 	
 	public String getId() {
 		return id;
 	}
-
 	
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	
 	public KategoriPermohonanDTO getKategoriPermohonan() {
 		return kategoriPermohonan;
 	}
-
 	
 	public void setKategoriPermohonan(KategoriPermohonanDTO kategoriPermohonan) {
 		this.kategoriPermohonan = kategoriPermohonan;
 	}
-
 	
 	public LocalDate getTanggalRegistrasi() {
 		return tanggalRegistrasi;
 	}
-
 	
 	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
-
 	
 	public RegisterPerusahaanDTO getRegisterPerusahaan() {
 		return registerPerusahaan;
 	}
-
 	
 	public void setRegisterPerusahaan(RegisterPerusahaanDTO registerPerusahaan) {
 		this.registerPerusahaan = registerPerusahaan;
 	}
-
 	
 	public AuthorityDTO getPengurusPermohonan() {
 		return pengurusPermohonan;
 	}
-
 	
 	public void setPengurusPermohonan(AuthorityDTO pengurusPermohonan) {
 		this.pengurusPermohonan = pengurusPermohonan;
 	}
-
 	
 	public PosisiTahapPemberkasanDTO getStatusTahapPemberkasan() {
 		return statusTahapPemberkasan;
 	}
-
 	
 	public void setStatusTahapPemberkasan(PosisiTahapPemberkasanDTO statusTahapPemberkasan) {
 		this.statusTahapPemberkasan = statusTahapPemberkasan;
 	}
-
 	
 	public List<DokumenDTO> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
-
 	
 	public void setDaftarDokumenSyarat(List<DokumenDTO> daftarDokumenSyarat) {
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 	}
-
 	
 	public List<DokumenDTO> getDaftarDokumenHasil() {
 		return daftarDokumenHasil;
 	}
-
 	
 	public void setDaftarDokumenHasil(List<DokumenDTO> daftarDokumenHasil) {
 		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
-
 	
+	public StatusWaliDTO getStatusWali() {
+		return statusWali;
+	}
+
+	public void setStatusWali(StatusWaliDTO statusWali) {
+		this.statusWali = statusWali;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}	

@@ -1,9 +1,15 @@
 package org.Sikoling.main.restful.permohonan;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.StatusWali;
+import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
+import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
+import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -21,12 +27,16 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.SecurityContext;
 
 @Stateless
 @LocalBean
 @Path("register_permohonan")
 public class PermohonanController {
+	@Inject
+	private IAuthorityService authorityService;
 	
 	@Inject 
 	private IRegisterPermohonanService registerPermohonanService;
@@ -36,7 +46,14 @@ public class PermohonanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPermohonanDTO save(RegisterPermohonanDTO d) {
+	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) {
+		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		d.setPengurusPermohonan(new AuthorityDTO(kreator));
+		d.setStatusWali(new StatusWaliDTO(new StatusWali("01", null)));
+		d.setStatusTahapPemberkasan(new PosisiTahapPemberkasanDTO(new PosisiTahapPemberkasan("0", null, null)));
+		LocalDate tanggalRegistrasi = LocalDate.now();
+		d.setTanggalRegistrasi(tanggalRegistrasi);
+		
 		return new RegisterPermohonanDTO(
 				registerPermohonanService.save(d.toRegisterPermohonan())
 				);

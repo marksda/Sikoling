@@ -1,6 +1,6 @@
 package org.Sikoling.ejb.abstraction.entity.permohonan;
 
-import java.io.Serializable;
+import java.io.Serializable;	
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
