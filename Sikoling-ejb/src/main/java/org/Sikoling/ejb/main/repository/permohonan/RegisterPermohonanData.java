@@ -38,7 +38,7 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private RegisterPerusahaanData perusahaanData;
 	
-	@JoinColumn(name="pengakses", referencedColumnName = "user_name", insertable = true, updatable = true)
+	@JoinColumn(name="pengakses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private AutorisasiData autorisasiData;
 	
