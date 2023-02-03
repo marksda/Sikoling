@@ -54,7 +54,7 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
 	
-	@OneToMany(mappedBy = "registerDokumen")
+	@OneToMany(mappedBy = "registerPermohonan")
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
 	
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
