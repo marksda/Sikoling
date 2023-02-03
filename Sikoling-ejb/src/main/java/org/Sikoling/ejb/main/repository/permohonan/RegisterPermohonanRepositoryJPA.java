@@ -185,7 +185,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		registerPermohonanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
 		
 		RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();
-		registerPerusahaanData.setId(t.getPerusahaan().getId());
+		registerPerusahaanData.setId(t.getPerusahaan().getId());		
 		registerPermohonanData.setPerusahaanData(registerPerusahaanData);
 		
 		AutorisasiData pengaksesData = new AutorisasiData();
@@ -200,7 +200,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		posisiTahapPemberkasanData.setId(t.getPosisiBerkas().getId());
 		registerPermohonanData.setPosisiTahapPemberkasanData(posisiTahapPemberkasanData);	
 		
-		registerPermohonanData.setDaftarDokumenSyarat(toDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat()));
+		registerPermohonanData.setDaftarDokumenSyarat(toDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat(), registerPermohonanData));
 		
 		return registerPermohonanData;
 	}
@@ -212,18 +212,19 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		return new DeleteResponse(true, id);
 	}
 	
-	private List<DokumenPersyaratanPermohonanData> toDaftarDokumenPersyaratanData(List<RegisterDokumen> d) {
+	private List<DokumenPersyaratanPermohonanData> toDaftarDokumenPersyaratanData(List<RegisterDokumen> d, RegisterPermohonanData registerPermohonanData) {
 		List<DokumenPersyaratanPermohonanData> daftarDokumenPersyaratanPermohonan = new ArrayList<>();
 		Iterator<RegisterDokumen> iter = d.iterator();
 		
 		DokumenPersyaratanPermohonanData item;
 		while (iter.hasNext()) {
 			RegisterDokumen registerDokumen = (RegisterDokumen) iter.next();
-			RegisterDokumenData registerPermohonanData = new RegisterDokumenData();
-			registerPermohonanData.setId(registerDokumen.getId());			
+			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
+			registerDokumenData.setId(registerDokumen.getId());			
 			
 			item = new DokumenPersyaratanPermohonanData();
-			item.setRegisterDokumen(registerPermohonanData);
+			item.setRegisterDokumen(registerDokumenData);
+			item.setRegisterPermohonan(registerPermohonanData);
 			
 			daftarDokumenPersyaratanPermohonan.add(item);
 		}

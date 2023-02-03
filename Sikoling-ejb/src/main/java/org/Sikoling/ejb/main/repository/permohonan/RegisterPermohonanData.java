@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -54,7 +55,7 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
 	
-	@OneToMany(mappedBy = "registerPermohonan")
+	@OneToMany(mappedBy = "registerPermohonan", cascade = CascadeType.ALL)
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
 	
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
@@ -166,7 +167,7 @@ public class RegisterPermohonanData implements Serializable {
         
         final RegisterPermohonanData other = (RegisterPermohonanData) obj;
         
-        if (!this.id.equalsIgnoreCase(other.getId())) {
+        if (!id.equals(other.getId())) {
             return false;
         }        
 
