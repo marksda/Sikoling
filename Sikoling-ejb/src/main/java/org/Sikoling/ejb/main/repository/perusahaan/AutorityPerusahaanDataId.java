@@ -67,6 +67,4 @@ public class AutorityPerusahaanDataId implements Serializable {
         return true;
 	}
 	
-	
-
 }

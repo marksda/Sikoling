@@ -1,6 +1,8 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +10,7 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
@@ -15,6 +18,7 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
@@ -44,9 +48,11 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		entityManager.persist(registerPermohonanData);
 		entityManager.flush();
 		
-		return convertRegisterPermohonanDataToRegisterPermohonan(
-				entityManager.find(RegisterPermohonanData.class, registerPermohonanData.getId())
-				);
+		return convertRegisterPermohonanDataToRegisterPermohonan(registerPermohonanData);
+		
+//		return convertRegisterPermohonanDataToRegisterPermohonan(
+//				entityManager.find(RegisterPermohonanData.class, registerPermohonanData.getId())
+//				);
 	}
 
 	@Override
@@ -192,7 +198,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		
 		PosisiTahapPemberkasanData posisiTahapPemberkasanData = new PosisiTahapPemberkasanData();
 		posisiTahapPemberkasanData.setId(t.getPosisiBerkas().getId());
-		registerPermohonanData.setPosisiTahapPemberkasanData(posisiTahapPemberkasanData);		
+		registerPermohonanData.setPosisiTahapPemberkasanData(posisiTahapPemberkasanData);	
+		
+		registerPermohonanData.setDaftarDokumenSyarat(toDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat()));
 		
 		return registerPermohonanData;
 	}
@@ -202,6 +210,25 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		RegisterPermohonanData registerPermohonanData = entityManager.find(RegisterPermohonanData.class, id);
 		entityManager.remove(registerPermohonanData);			
 		return new DeleteResponse(true, id);
+	}
+	
+	private List<DokumenPersyaratanPermohonanData> toDaftarDokumenPersyaratanData(List<RegisterDokumen> d) {
+		List<DokumenPersyaratanPermohonanData> daftarDokumenPersyaratanPermohonan = new ArrayList<>();
+		Iterator<RegisterDokumen> iter = d.iterator();
+		
+		DokumenPersyaratanPermohonanData item;
+		while (iter.hasNext()) {
+			RegisterDokumen registerDokumen = (RegisterDokumen) iter.next();
+			RegisterDokumenData registerPermohonanData = new RegisterDokumenData();
+			registerPermohonanData.setId(registerDokumen.getId());			
+			
+			item = new DokumenPersyaratanPermohonanData();
+			item.setRegisterDokumen(registerPermohonanData);
+			
+			daftarDokumenPersyaratanPermohonan.add(item);
+		}
+		
+		return daftarDokumenPersyaratanPermohonan;
 	}
 	
 	private String getGenerateIdRegisterPermohonan() {

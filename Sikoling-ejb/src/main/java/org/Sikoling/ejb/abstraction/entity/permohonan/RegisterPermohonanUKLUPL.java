@@ -10,9 +10,9 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.BatasLokasi;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KordinatGeografis;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
 
 public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Serializable {	
@@ -32,11 +32,11 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 
 	public RegisterPermohonanUKLUPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			PosisiTahapPemberkasan posisiBerkas, List<Dokumen> daftarDokumenSyarat, List<Dokumen> daftarDokumenHasil,
-			StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha,
-			int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita, Double luasTanah,
-			KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi, LocalDate tanggalTinjauLapangan,
-			LocalDate tanggalPembahasan) {
+			PosisiTahapPemberkasan posisiBerkas, List<RegisterDokumen> daftarDokumenSyarat,
+			List<RegisterDokumen> daftarDokumenHasil, StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha,
+			String namaUsaha, Alamat lokasiUsaha, int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita,
+			Double luasTanah, KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi,
+			LocalDate tanggalTinjauLapangan, LocalDate tanggalPembahasan) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
 				posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
 		this.status = status;

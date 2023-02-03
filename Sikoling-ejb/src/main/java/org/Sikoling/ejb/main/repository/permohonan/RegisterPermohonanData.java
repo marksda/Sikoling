@@ -2,6 +2,9 @@ package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
@@ -12,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -49,6 +53,9 @@ public class RegisterPermohonanData implements Serializable {
 	@JoinColumn(name="posisi_tahap_pemberkasan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
+	
+	@OneToMany(mappedBy = "registerDokumen")
+	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
 	
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 	private PermohonanSuratArahanData permohonanSuratArahanData;
@@ -123,8 +130,54 @@ public class RegisterPermohonanData implements Serializable {
 		this.posisiTahapPemberkasanData = posisiTahapPemberkasanData;
 	}
 
+	public List<DokumenPersyaratanPermohonanData> getDaftarDokumenSyarat() {
+		return daftarDokumenSyarat;
+	}
+
+	public void setDaftarDokumenSyarat(List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat) {
+		this.daftarDokumenSyarat = daftarDokumenSyarat;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}	
+
+	@Override
+	public int hashCode() {
+		int hash = 713;
+        hash = 1071 * hash + Objects.hashCode(id);
+        return hash;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final RegisterPermohonanData other = (RegisterPermohonanData) obj;
+        
+        if (!this.id.equalsIgnoreCase(other.getId())) {
+            return false;
+        }        
+
+        return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "RegisterPermohonanData{id="
+				.concat(id)
+				.concat("}");	  
 	}
 	 
 }

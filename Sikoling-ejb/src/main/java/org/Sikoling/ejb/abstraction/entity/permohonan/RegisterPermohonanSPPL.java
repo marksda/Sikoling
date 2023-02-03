@@ -10,9 +10,9 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KapasitasSkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
 
 public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serializable {
@@ -27,12 +27,12 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	private final String izinYangDimiliki;
 	private final String keteranganKegiatan;
 	private final Alamat lokasiUsaha;
-	
+
 	public RegisterPermohonanSPPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			PosisiTahapPemberkasan posisiBerkas, List<Dokumen> daftarDokumenSyarat, List<Dokumen> daftarDokumenHasil,
-			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli2020 jenisUsaha,
-			Person penanggungJawab, String namaUsaha, String kriteria, String izinYangDimiliki,
+			PosisiTahapPemberkasan posisiBerkas, List<RegisterDokumen> daftarDokumenSyarat,
+			List<RegisterDokumen> daftarDokumenHasil, KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha,
+			Kbli2020 jenisUsaha, Person penanggungJawab, String namaUsaha, String kriteria, String izinYangDimiliki,
 			String keteranganKegiatan, Alamat lokasiUsaha) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
 				posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);

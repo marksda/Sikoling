@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
-import org.Sikoling.main.restful.dokumen.DokumenDTO;
+import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 public class RegisterPermohonanDTO implements Serializable {
@@ -21,8 +21,8 @@ public class RegisterPermohonanDTO implements Serializable {
 	private AuthorityDTO pengurusPermohonan;
 	private StatusWaliDTO statusWali;
 	private PosisiTahapPemberkasanDTO statusTahapPemberkasan;
-	private List<DokumenDTO> daftarDokumenSyarat;
-	private List<DokumenDTO> daftarDokumenHasil;
+	private List<RegisterDokumenDTO> daftarDokumenSyarat;
+	private List<RegisterDokumenDTO> daftarDokumenHasil;
 	
 	public RegisterPermohonanDTO() {
 	}
@@ -44,12 +44,12 @@ public class RegisterPermohonanDTO implements Serializable {
 			this.daftarDokumenSyarat = t.getDaftarDokumenSyarat() != null ?
 					t.getDaftarDokumenSyarat()
 					.stream()
-					.map(i -> new DokumenDTO(i))
+					.map(i -> new RegisterDokumenDTO(i))
 					.collect(Collectors.toList()) : null;
 			this.daftarDokumenHasil = t.getDaftarDokumenHasil() != null ?
 					t.getDaftarDokumenHasil()
 					.stream()
-					.map(i -> new DokumenDTO(i))
+					.map(i -> new RegisterDokumenDTO(i))
 					.collect(Collectors.toList()) : null;
 		}
 	}
@@ -102,19 +102,19 @@ public class RegisterPermohonanDTO implements Serializable {
 		this.statusTahapPemberkasan = statusTahapPemberkasan;
 	}
 	
-	public List<DokumenDTO> getDaftarDokumenSyarat() {
+	public List<RegisterDokumenDTO> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
 	
-	public void setDaftarDokumenSyarat(List<DokumenDTO> daftarDokumenSyarat) {
+	public void setDaftarDokumenSyarat(List<RegisterDokumenDTO> daftarDokumenSyarat) {
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 	}
 	
-	public List<DokumenDTO> getDaftarDokumenHasil() {
+	public List<RegisterDokumenDTO> getDaftarDokumenHasil() {
 		return daftarDokumenHasil;
 	}
 	
-	public void setDaftarDokumenHasil(List<DokumenDTO> daftarDokumenHasil) {
+	public void setDaftarDokumenHasil(List<RegisterDokumenDTO> daftarDokumenHasil) {
 		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
 	
@@ -186,11 +186,11 @@ public class RegisterPermohonanDTO implements Serializable {
 						statusTahapPemberkasan.toPosisiTahapPemberkasan() : null, 
 				daftarDokumenSyarat != null ?
 						daftarDokumenSyarat.stream()
-						.map(i -> i.toDokumen())
+						.map(i -> i.toRegisterDokumen())
 						.collect(Collectors.toList()) : null, 
 				daftarDokumenHasil != null ?
 						daftarDokumenHasil.stream()
-						.map(i -> i.toDokumen())
+						.map(i -> i.toRegisterDokumen())
 						.collect(Collectors.toList()): null
 				);
 	}

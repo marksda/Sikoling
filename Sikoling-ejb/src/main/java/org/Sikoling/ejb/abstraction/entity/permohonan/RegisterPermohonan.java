@@ -3,11 +3,12 @@ package org.Sikoling.ejb.abstraction.entity.permohonan;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
 public class RegisterPermohonan implements Serializable {
 
@@ -20,14 +21,13 @@ public class RegisterPermohonan implements Serializable {
 	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
 	private final PosisiTahapPemberkasan posisiBerkas;
-	private final List<Dokumen> daftarDokumenSyarat;
-	private final List<Dokumen> daftarDokumenHasil;	
+	private final List<RegisterDokumen> daftarDokumenSyarat;
+	private final List<RegisterDokumen> daftarDokumenHasil;	
 	
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan,
 			StatusWali statusWaliPengurusPermohonan, PosisiTahapPemberkasan posisiBerkas,
-			List<Dokumen> daftarDokumenSyarat, List<Dokumen> daftarDokumenHasil) {
-		super();
+			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
 		this.tanggalRegistrasi = tanggalRegistrasi;
@@ -71,11 +71,46 @@ public class RegisterPermohonan implements Serializable {
 		return posisiBerkas;
 	}
 	
-	public List<Dokumen> getDaftarDokumenSyarat() {
+	public List<RegisterDokumen> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
 	
-	public List<Dokumen> getDaftarDokumenHasil() {
+	public List<RegisterDokumen> getDaftarDokumenHasil() {
 		return daftarDokumenHasil;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 1731;
+		hash = 141 * hash + Objects.hashCode(id);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final RegisterPermohonan other = (RegisterPermohonan) obj;
+        if ( !this.id.equals(other.getId()) ) {
+            return false;
+        }
+        
+        return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RegisterPermohonan{" + "id=" + id + "}";
+	}
+	
 }
