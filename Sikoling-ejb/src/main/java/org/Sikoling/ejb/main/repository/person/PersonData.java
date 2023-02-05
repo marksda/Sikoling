@@ -1,6 +1,9 @@
 package org.Sikoling.ejb.main.repository.person;
 
 import java.io.Serializable;
+
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import jakarta.persistence.*;
 
@@ -21,7 +24,7 @@ public class PersonData implements Serializable {
 	private String nama;
 	
 	@Embedded
-	private AlamatPersonData alamat;
+	private AlamatData alamat;
 
 	@Column(name="scan_ktp")
 	private String scanKtp;
@@ -31,7 +34,7 @@ public class PersonData implements Serializable {
 	private JenisKelaminData sex;
 
 	@Embedded
-	private KontakPersonData kontak;
+	private KontakData kontak;
 	
 	public PersonData() {
 	}
@@ -72,19 +75,19 @@ public class PersonData implements Serializable {
 		this.sex = sex;
 	}
 
-	public KontakPersonData getKontak() {
+	public KontakData getKontak() {
 		return this.kontak;
 	}
 
-	public void setKontak(KontakPersonData kontak) {
+	public void setKontak(KontakData kontak) {
 		this.kontak = kontak;
 	}
 
-	public AlamatPersonData getAlamat() {
+	public AlamatData getAlamat() {
 		return alamat;
 	}
 
-	public void setAlamat(AlamatPersonData alamat) {
+	public void setAlamat(AlamatData alamat) {
 		this.alamat = alamat;
 	}
 	

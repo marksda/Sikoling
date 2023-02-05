@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.person;
+package org.Sikoling.ejb.main.repository.alamat;
 
 import java.io.Serializable;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 
 
 @Embeddable
-public class AlamatPersonData implements Serializable {
+public class AlamatData implements Serializable {
 	
 	private static final long serialVersionUID = -8334774162037892428L;
 
@@ -33,7 +33,7 @@ public class AlamatPersonData implements Serializable {
 	@ManyToOne
 	private PropinsiData propinsi;
 
-	public AlamatPersonData() {
+	public AlamatData() {
 	}
 
 	public DesaData getDesa() {

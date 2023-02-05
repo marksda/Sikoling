@@ -29,10 +29,10 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
-import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
@@ -644,7 +644,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	private Pegawai convertPegawaiDataToPegawai(PegawaiData d) {
 		JabatanData jabatanData = d.getJabatanData();
 		PersonData personData = d.getPersonData();
-		AlamatPersonData alamatPersonData = personData != null ? personData.getAlamat() : null;
+		AlamatData alamatPersonData = personData != null ? personData.getAlamat() : null;
 		Alamat alamat = null;
 		
 		if(alamatPersonData != null) {

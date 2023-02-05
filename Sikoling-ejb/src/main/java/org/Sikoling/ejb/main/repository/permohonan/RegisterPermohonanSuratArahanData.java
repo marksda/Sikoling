@@ -2,8 +2,6 @@ package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.io.Serializable;
 
-import org.Sikoling.ejb.main.repository.dokumen.SuratArahanData;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -18,7 +16,7 @@ import jakarta.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="PermohonanSuratArahanData.findAll", query="SELECT p FROM RegisterPermohonanData p")
 })
-public class PermohonanSuratArahanData implements Serializable {
+public class RegisterPermohonanSuratArahanData implements Serializable {
 
 	private static final long serialVersionUID = -674363634713953137L;
 	
@@ -31,11 +29,7 @@ public class PermohonanSuratArahanData implements Serializable {
 	@ManyToOne
 	private KategoriSuratArahanData kategoriSuratArahanData;
 	
-	@JoinColumn(name = "surat_arahan", referencedColumnName = "id")
-	@OneToOne
-	private SuratArahanData suratArahanData;
-
-	public PermohonanSuratArahanData() {
+	public RegisterPermohonanSuratArahanData() {
 	}
 
 	public RegisterPermohonanData getRegisterPermohonanData() {
@@ -52,14 +46,6 @@ public class PermohonanSuratArahanData implements Serializable {
 
 	public void setKategoriSuratArahanData(KategoriSuratArahanData kategoriSuratArahanData) {
 		this.kategoriSuratArahanData = kategoriSuratArahanData;
-	}
-
-	public SuratArahanData getSuratArahanData() {
-		return suratArahanData;
-	}
-
-	public void setSuratArahanData(SuratArahanData suratArahanData) {
-		this.suratArahanData = suratArahanData;
 	}
 
 	public static long getSerialversionuid() {

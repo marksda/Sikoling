@@ -1,18 +1,18 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.kontak;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
 
 
 @Embeddable
-public class KontakPerusahaanData implements Serializable {
+public class KontakData implements Serializable {
 
 	private static final long serialVersionUID = -2623776256607009635L;
 	private String telepone;
 	private String fax;
 	private String email;
 	
-	public KontakPerusahaanData() {
+	public KontakData() {
 		super();
 	}
 

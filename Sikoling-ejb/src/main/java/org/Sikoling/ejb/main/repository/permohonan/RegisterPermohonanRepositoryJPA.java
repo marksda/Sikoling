@@ -6,21 +6,43 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
+import org.Sikoling.ejb.abstraction.entity.Kabupaten;
+import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.ejb.abstraction.entity.Kontak;
+import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
+import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
+import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
+import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
+import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
+import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
+import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -96,68 +118,15 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	}
 
 	private RegisterPermohonan convertRegisterPermohonanDataToRegisterPermohonan(RegisterPermohonanData d) {
-		KategoriPermohonanData kategoriPermohonanData = d.getKategoriPermohonanData();
-		KategoriPermohonan kategoriPermohonan = kategoriPermohonanData != null ?
-				new KategoriPermohonan(
-						kategoriPermohonanData.getId(), 
-						kategoriPermohonanData.getNama()
-						) : null;
-				
-		RegisterPerusahaanData registerPerusahaanData = d.getPerusahaanData();
-		RegisterPerusahaan registerPerusahaan = null;
 		
+		KategoriPermohonan kategoriPermohonan = convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData());
+		RegisterPerusahaan registerPerusahaan = convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData());
+		Authority pengurusPermohonan = convertAutorisasiDataToAuthority(d.getAutorisasiData());
+		StatusWali statusWali = convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData());		
+		Person penanggungJawabPermohonan = convertPersonDataToPerson(d.getPenanggungJawab());				
+		PosisiTahapPemberkasan statusTahapPemberkasan = convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanData());
 		
-		if(registerPerusahaanData != null) {
-			PelakuUsahaData pelakuUsahaData = registerPerusahaanData.getPelakuUsahaData();		
-			PelakuUsaha pelakuUsaha = pelakuUsahaData != null ? 
-					new PelakuUsaha(	
-							pelakuUsahaData.getId(), 
-							pelakuUsahaData.getNama(), 
-							pelakuUsahaData.getSingkatan(), 
-							null						
-							) : null;
-			Perusahaan perusahaan = new Perusahaan(
-					registerPerusahaanData.getNpwp(), 
-					registerPerusahaanData.getNama(), 
-					null, 
-					null, 
-					pelakuUsaha, 
-					null, 
-					null, 
-					null, 
-					null
-					);
-			
-			registerPerusahaan =  new RegisterPerusahaan(
-					registerPerusahaanData.getId(),
-					registerPerusahaanData.getTanggalRegistrasi(), 
-					null, 
-					null, 
-					perusahaan
-					);
-		}
-		
-		AutorisasiData autorisasiData = d.getAutorisasiData();
-		Authority pengurusPermohonan = autorisasiData != null ?
-				new Authority(
-						autorisasiData.getId(), 
-						null, 
-						null, 
-						null, 
-						null, 
-						autorisasiData.getUserName()
-						) : null;
-		
-		KategoriPengurusPermohonanData statusPengurus = d.getKategoriPengurusPermohonanData();
-		StatusWali statusWali = statusPengurus != null ?
-				new StatusWali(statusPengurus.getId(), statusPengurus.getNama()) : null;
-		PosisiTahapPemberkasanData posisiTahapPemberkasanData = d.getPosisiTahapPemberkasanData();
-		PosisiTahapPemberkasan statusTahapPemberkasan = posisiTahapPemberkasanData != null ?
-				new PosisiTahapPemberkasan(
-						posisiTahapPemberkasanData.getId(), 
-						posisiTahapPemberkasanData.getNama(), 
-						posisiTahapPemberkasanData.getKeterangan()
-						) : null;
+		List<RegisterDokumen> daftarRegisterDokumenSyarat = convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat());
 		
 		return new RegisterPermohonan(
 				d.getId(), 
@@ -166,8 +135,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 				registerPerusahaan, 
 				pengurusPermohonan, 
 				statusWali, 
+				penanggungJawabPermohonan,
 				statusTahapPemberkasan, 
-				null, 
+				daftarRegisterDokumenSyarat, 
 				null
 				);
 	}
@@ -200,7 +170,13 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		posisiTahapPemberkasanData.setId(t.getPosisiBerkas().getId());
 		registerPermohonanData.setPosisiTahapPemberkasanData(posisiTahapPemberkasanData);	
 		
-		registerPermohonanData.setDaftarDokumenSyarat(toDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat(), registerPermohonanData));
+		PersonData penanggungJawabPermohonanData = new PersonData();
+		penanggungJawabPermohonanData.setId(t.getPenanggungJawabPermohonan().getNik());
+		registerPermohonanData.setPenanggungJawab(penanggungJawabPermohonanData);
+		
+		registerPermohonanData.setDaftarDokumenSyarat(
+				convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat(), registerPermohonanData)
+				);
 		
 		return registerPermohonanData;
 	}
@@ -211,27 +187,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		entityManager.remove(registerPermohonanData);			
 		return new DeleteResponse(true, id);
 	}
-	
-	private List<DokumenPersyaratanPermohonanData> toDaftarDokumenPersyaratanData(List<RegisterDokumen> d, RegisterPermohonanData registerPermohonanData) {
-		List<DokumenPersyaratanPermohonanData> daftarDokumenPersyaratanPermohonan = new ArrayList<>();
-		Iterator<RegisterDokumen> iter = d.iterator();
 		
-		DokumenPersyaratanPermohonanData item;
-		while (iter.hasNext()) {
-			RegisterDokumen registerDokumen = (RegisterDokumen) iter.next();
-			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
-			registerDokumenData.setId(registerDokumen.getId());			
-			
-			item = new DokumenPersyaratanPermohonanData();
-			item.setRegisterDokumen(registerDokumenData);
-			item.setRegisterPermohonan(registerPermohonanData);
-			
-			daftarDokumenPersyaratanPermohonan.add(item);
-		}
-		
-		return daftarDokumenPersyaratanPermohonan;
-	}
-	
 	private String getGenerateIdRegisterPermohonan() {
 		int tahun = LocalDate.now().getYear();
 		String hasil;
@@ -257,5 +213,288 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	private String LPad(String str, Integer length, char car) {
 		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
 	}
+
+	private List<DokumenPersyaratanPermohonanData> convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(List<RegisterDokumen> d, RegisterPermohonanData registerPermohonanData) {
+		List<DokumenPersyaratanPermohonanData> daftarDokumenPersyaratanPermohonan = new ArrayList<DokumenPersyaratanPermohonanData>();
+		Iterator<RegisterDokumen> iter = d.iterator();
+		
+		DokumenPersyaratanPermohonanData item;
+		while (iter.hasNext()) {
+			RegisterDokumen registerDokumen = (RegisterDokumen) iter.next();
+			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
+			registerDokumenData.setId(registerDokumen.getId());			
+			
+			item = new DokumenPersyaratanPermohonanData();
+			item.setRegisterDokumen(registerDokumenData);
+			item.setRegisterPermohonan(registerPermohonanData);
+			
+			daftarDokumenPersyaratanPermohonan.add(item);
+		}
+		
+		return daftarDokumenPersyaratanPermohonan;
+	}
 	
+	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
+		RegisterDokumen registerDokumen = null;
+		
+//		if(d != null) {
+//			NibOssData nibOssData = d.getNibOssData();
+//			if(nibOssData != null) {
+//				NibOss dokumen = null;
+//				
+//				registerDokumen = new RegisterDokumen(
+//						d.getId(), 
+//						null, 
+//						null, 
+//						null, 
+//						null, 
+//						null, 
+//						null, 
+//						null
+//						);	
+//			}			
+//			
+//		}
+		
+		return registerDokumen;
+	}
+	
+	private List<RegisterDokumen> convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(List<DokumenPersyaratanPermohonanData> d) {
+		List<RegisterDokumen> daftarRegisterDokumen = new ArrayList<RegisterDokumen>();
+		Iterator<DokumenPersyaratanPermohonanData> iter = d.iterator();
+		
+		DokumenPersyaratanPermohonanData dokumenPersyaratanPermohonanData = null;
+		RegisterDokumen item;
+		while (iter.hasNext()) {
+			dokumenPersyaratanPermohonanData = (DokumenPersyaratanPermohonanData) iter.next();		
+			
+			item = convertRegisterDokumenDataToRegisterDokumen(dokumenPersyaratanPermohonanData.getRegisterDokumen());
+
+			daftarRegisterDokumen.add(item);
+		}
+		
+		return daftarRegisterDokumen;
+	}
+			
+	private KategoriPermohonan convertKategoriPermohonanDataToKategoriPermohonan(KategoriPermohonanData d) {
+		KategoriPermohonan kategoriPermohonan = null;
+		
+		if(d != null) {
+			kategoriPermohonan = new KategoriPermohonan(d.getId(), d.getNama());
+		}
+		
+		return kategoriPermohonan;
+	}
+	
+	private StatusWali convertKategoriPengurusPermohonanDataToStatusWali(KategoriPengurusPermohonanData d) {
+		StatusWali statusWali = null;
+				
+		if(d != null) {
+			statusWali = new StatusWali(d.getId(), d.getNama());
+		}
+		
+		return statusWali;
+	}
+	
+	private Propinsi convertPropinsiDataToPropinsi(PropinsiData d) {
+		Propinsi propinsi = null;
+		
+		if(d != null) {
+			propinsi = new Propinsi(d.getId(), d.getNama());
+		}
+		
+		return propinsi;		
+	}
+	
+	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData d) {
+		Kabupaten kabupaten = null;
+		
+		if(d != null) {
+			kabupaten = new Kabupaten(d.getId(), d.getNama());
+		}
+		
+		return kabupaten;		
+	}
+
+	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData d) {
+		Kecamatan kecamatan = null;
+		
+		if(d != null) {
+			kecamatan = new Kecamatan(d.getId(), d.getNama());
+		}
+		
+		return kecamatan;		
+	}
+	
+	private Desa convertDesaDataToDesa(DesaData d) {
+		Desa desa = null;
+		
+		if(d != null) {
+			desa = new Desa(d.getId(), d.getNama());
+		}
+		
+		return desa;		
+	}
+
+	private Alamat convertAlamatDataToAlamat(AlamatData d) {
+		Alamat alamat = null;
+		
+		if( d != null) {
+			alamat = new Alamat(
+					convertPropinsiDataToPropinsi(d.getPropinsi()), 
+					convertKabupatenDataToKabupaten(d.getKabupaten()), 
+					convertKecamatanDataToKecamatan(d.getKecamatan()), 
+					convertDesaDataToDesa(d.getDesa()), 
+					d.getDetailAlamat()
+					);					
+		}
+		
+		return alamat;
+	}
+	
+	private Kontak convertKontakDataToKontak(KontakData d) {
+		Kontak kontak = null;
+		
+		if(d != null) {
+			kontak = new Kontak(
+					d.getTelepone(), 
+					d.getFax(), 
+					d.getEmail()
+					);
+		}
+		
+		return kontak;
+	}
+	
+	private Person convertPersonDataToPerson(PersonData d) {
+		Person person = null;
+		
+		if(d != null) {
+			JenisKelaminData jenisKelaminData = d.getSex();
+			JenisKelamin jenisKelamin = jenisKelaminData != null ?
+					new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama()) : null;
+			
+			Alamat alamat = convertAlamatDataToAlamat(d.getAlamat());
+			
+			Kontak kontak = convertKontakDataToKontak(d.getKontak());
+			
+			person = new Person(
+					d.getId(), 
+					d.getNama(), 
+					jenisKelamin, 
+					alamat, 
+					d.getScanKtp(), 
+					kontak
+					);
+		}
+		
+		return person;
+	}
+	
+	private PosisiTahapPemberkasan convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(PosisiTahapPemberkasanData d) {
+		PosisiTahapPemberkasan statusTahapPemberkasan = null;
+		
+		if(d != null) {
+			statusTahapPemberkasan = new PosisiTahapPemberkasan(
+					d.getId(), 
+					d.getNama(), 
+					d.getKeterangan()
+					); 
+		}
+		
+		return statusTahapPemberkasan;
+	}
+	
+	private Authority convertAutorisasiDataToAuthority(AutorisasiData d) {
+		Authority authority = null;
+		
+		if(d != null) {
+			authority = new Authority(
+					d.getId(), 
+					null, 
+					null, 
+					null, 
+					null, 
+					null
+					);
+		}
+		
+		return authority;
+	}
+		
+	private ModelPerizinan convertModelPerizinanDataToModelPerizinan(ModelPerizinanData d) {
+		ModelPerizinan modelPerizinan = null;
+		
+		if(d != null) {
+			modelPerizinan = new ModelPerizinan(d.getId(), d.getNama(), d.getSingkatan());
+		}
+		
+		return modelPerizinan;
+	}
+	
+	private SkalaUsaha convertSkalaUsahaDataToSkalaUsaha(SkalaUsahaData d) {
+		SkalaUsaha skalaUsaha = null;
+		
+		if(d != null) {
+			skalaUsaha = new SkalaUsaha(d.getId(), d.getNama(), d.getSingkatan());
+		}
+		
+		return skalaUsaha;
+	}
+	
+	private KategoriPelakuUsaha convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(KategoriPelakuUsahaData d) {
+		KategoriPelakuUsaha kategoriPelakuUsaha = null;
+				
+		if(d != null) {
+			kategoriPelakuUsaha = new KategoriPelakuUsaha(d.getId(), d.getNama());
+		}
+		
+		return kategoriPelakuUsaha;
+	}
+	
+	private PelakuUsaha convertPelakuUsahaDataToPelakuUsaha(PelakuUsahaData d) {
+		PelakuUsaha pelakuUsaha = null;
+		KategoriPelakuUsaha kategoriPelakuUsaha = convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(d.getKategoriPelakuUsahaData());
+		
+		if(d != null) {
+			pelakuUsaha = new PelakuUsaha(d.getId(), d.getNama(), d.getSingkatan(), kategoriPelakuUsaha);
+		}
+		
+		return pelakuUsaha;
+	}
+	
+	private RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {
+		RegisterPerusahaan registerPerusahaan = null; 
+		Authority kreator = convertAutorisasiDataToAuthority(d.getKreator());
+		Authority verifikator = convertAutorisasiDataToAuthority(d.getVerifikator());
+		ModelPerizinan modelPerizinan = convertModelPerizinanDataToModelPerizinan(d.getModelPerizinanData());
+		SkalaUsaha skalaUsaha = convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData());
+		PelakuUsaha pelakuUsaha = convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsahaData());
+		Alamat alamat = convertAlamatDataToAlamat(d.getAlamatPerusahaanData());
+		Kontak kontak = convertKontakDataToKontak(d.getKontakPerusahaanData());
+		
+		Perusahaan perusahaan = new Perusahaan(
+				d.getNpwp(), 
+				d.getNama(), 
+				modelPerizinan, 
+				skalaUsaha, 
+				pelakuUsaha, 
+				alamat, 
+				kontak, 
+				null, 
+				d.getStatusVerifikasi()
+				);
+		
+		if( d != null) {
+			registerPerusahaan = new RegisterPerusahaan(
+					d.getId(), 
+					d.getTanggalRegistrasi(), 
+					kreator, 
+					verifikator, 
+					perusahaan
+					);
+		}
+		
+		return registerPerusahaan;
+	}
 }

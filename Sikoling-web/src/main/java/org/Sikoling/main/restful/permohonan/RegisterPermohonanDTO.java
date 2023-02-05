@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.Sikoling.main.restful.person.PersonDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 public class RegisterPermohonanDTO implements Serializable {
@@ -20,6 +21,7 @@ public class RegisterPermohonanDTO implements Serializable {
 	private RegisterPerusahaanDTO registerPerusahaan;
 	private AuthorityDTO pengurusPermohonan;
 	private StatusWaliDTO statusWali;
+	private PersonDTO penanggungJawabPermohonan;
 	private PosisiTahapPemberkasanDTO statusTahapPemberkasan;
 	private List<RegisterDokumenDTO> daftarDokumenSyarat;
 	private List<RegisterDokumenDTO> daftarDokumenHasil;
@@ -39,6 +41,8 @@ public class RegisterPermohonanDTO implements Serializable {
 					new AuthorityDTO(t.getPengurusPermohonan()) : null;
 			this.statusWali = t.getStatusWaliPengurusPermohonan() != null ?
 					new StatusWaliDTO(t.getStatusWaliPengurusPermohonan()) : null;
+			this.penanggungJawabPermohonan = t.getPenanggungJawabPermohonan() != null ?
+					new PersonDTO(t.getPenanggungJawabPermohonan()) : null;
 			this.statusTahapPemberkasan = t.getPosisiBerkas() != null ?
 					new PosisiTahapPemberkasanDTO(t.getPosisiBerkas()) : null;
 			this.daftarDokumenSyarat = t.getDaftarDokumenSyarat() != null ?
@@ -182,6 +186,8 @@ public class RegisterPermohonanDTO implements Serializable {
 						pengurusPermohonan.toAuthority() : null, 
 				statusWali != null ?
 						statusWali.toStatusWali() : null,
+				penanggungJawabPermohonan != null ?
+						penanggungJawabPermohonan.toPerson() : null,
 				statusTahapPemberkasan != null ?
 						statusTahapPemberkasan.toPosisiTahapPemberkasan() : null, 
 				daftarDokumenSyarat != null ?

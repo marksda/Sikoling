@@ -29,13 +29,13 @@ import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.Credential;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
-import org.Sikoling.ejb.main.repository.person.KontakPersonData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
@@ -64,7 +64,6 @@ public class KeyCloakUserJPA implements IUserRepository {
 
 	public KeyCloakUserJPA(Keycloak keycloak, String realm, EntityManager entityManager, 
 			String tokenURL, Client client, ITokenValidationService tokenValidationService) {
-		super();
 		this.keycloak = keycloak;
 		this.realm = realm;
 		this.entityManager = entityManager;
@@ -391,7 +390,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 		DesaData desaData = new DesaData();
 		desaData.setId(person.getAlamat().getDesa().getId());
 		
-		AlamatPersonData alamatPersonData = new AlamatPersonData();
+		AlamatData alamatPersonData = new AlamatData();
 		alamatPersonData.setPropinsi(propinsiData);
 		alamatPersonData.setKabupaten(kabupatenData);
 		alamatPersonData.setKecamatan(kecamatanData);
@@ -404,7 +403,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 		jenisKelaminData.setId(person.getSex().getId());
 		personData.setSex(jenisKelaminData);
 		
-		KontakPersonData kontakPersonData = new KontakPersonData();
+		KontakData kontakPersonData = new KontakData();
 		kontakPersonData.setTelepone(person.getKontak().getTelepone());
 		kontakPersonData.setEmail(person.getKontak().getEmail());
 		personData.setKontak(kontakPersonData);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.CascadeType;
@@ -55,11 +56,15 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
 	
+	@JoinColumn(name="penanggung_jawab", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private PersonData penanggungJawab;
+	
 	@OneToMany(mappedBy = "registerPermohonan", cascade = CascadeType.ALL)
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
 	
 	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-	private PermohonanSuratArahanData permohonanSuratArahanData;
+	private RegisterPermohonanSuratArahanData permohonanSuratArahanData;
 	
 //	@OneToMany(mappedBy = "registerPermohonan", fetch = FetchType.LAZY)
 //	private List<FlowLogPermohonanData> daftarFlowLogPermohonanData;
@@ -67,11 +72,11 @@ public class RegisterPermohonanData implements Serializable {
 	public RegisterPermohonanData() {
 	}
 	
-	public PermohonanSuratArahanData getPermohonanSuratArahanData() {
+	public RegisterPermohonanSuratArahanData getPermohonanSuratArahanData() {
 		return permohonanSuratArahanData;
 	}
 
-	public void setPermohonanSuratArahanData(PermohonanSuratArahanData permohonanSuratArahanData) {
+	public void setPermohonanSuratArahanData(RegisterPermohonanSuratArahanData permohonanSuratArahanData) {
 		this.permohonanSuratArahanData = permohonanSuratArahanData;
 	}
 
@@ -137,6 +142,14 @@ public class RegisterPermohonanData implements Serializable {
 
 	public void setDaftarDokumenSyarat(List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat) {
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
+	}
+
+	public PersonData getPenanggungJawab() {
+		return penanggungJawab;
+	}
+
+	public void setPenanggungJawab(PersonData penanggungJawab) {
+		this.penanggungJawab = penanggungJawab;
 	}
 
 	public static long getSerialversionuid() {

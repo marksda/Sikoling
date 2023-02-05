@@ -31,6 +31,7 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
@@ -45,9 +46,9 @@ import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
-import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
@@ -184,20 +185,20 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		Perusahaan perusahaan = t.getPerusahaan();
 		registerPerusahaanData.setNama(perusahaan.getNama());		
 				
-		AlamatPerusahaanData alamatPerusahaanData = new AlamatPerusahaanData();
-		alamatPerusahaanData.setKeterangan(perusahaan.getAlamat().getKeterangan());
+		AlamatData alamatPerusahaanData = new AlamatData();
+		alamatPerusahaanData.setDetailAlamat(perusahaan.getAlamat().getKeterangan());
 		DesaData desaData = new DesaData();
 		desaData.setId(perusahaan.getAlamat().getDesa().getId());
-		alamatPerusahaanData.setDesaData(desaData);
+		alamatPerusahaanData.setDesa(desaData);
 		KecamatanData kecamatanData = new KecamatanData();
 		kecamatanData.setId(perusahaan.getAlamat().getKecamatan().getId());
-		alamatPerusahaanData.setKecamatanData(kecamatanData);
+		alamatPerusahaanData.setKecamatan(kecamatanData);
 		KabupatenData kabupatenData = new KabupatenData();
 		kabupatenData.setId(perusahaan.getAlamat().getKabupaten().getId());
-		alamatPerusahaanData.setKabupatenData(kabupatenData);
+		alamatPerusahaanData.setKabupaten(kabupatenData);
 		PropinsiData propinsiData = new PropinsiData();
 		propinsiData.setId(perusahaan.getAlamat().getPropinsi().getId());
-		alamatPerusahaanData.setPropinsiData(propinsiData);
+		alamatPerusahaanData.setPropinsi(propinsiData);
 		registerPerusahaanData.setAlamatPerusahaanData(alamatPerusahaanData);
 		
 		ModelPerizinanData modelPerizinanData = new ModelPerizinanData();
@@ -217,7 +218,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		pelakuUsahaData.setKategoriPelakuUsahaData(kategoriPelakuUsahaData);
 		registerPerusahaanData.setPelakuUsahaData(pelakuUsahaData);
 		
-		KontakPerusahaanData kontakPerusahaanData = new KontakPerusahaanData();
+		KontakData kontakPerusahaanData = new KontakData();
 		kontakPerusahaanData.setEmail(perusahaan.getKontak().getEmail());
 		kontakPerusahaanData.setFax(perusahaan.getKontak().getFax());
 		kontakPerusahaanData.setTelepone(perusahaan.getKontak().getTelepone());	
@@ -254,11 +255,11 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				d.getPelakuUsahaData().getId(), d.getPelakuUsahaData().getNama(), d.getPelakuUsahaData().getSingkatan(), kategoriPelakuUsaha) : null;
 		
 		Alamat alamatPerusahaan = d.getAlamatPerusahaanData() != null ? new Alamat(
-				d.getAlamatPerusahaanData().getPropinsiData() != null ? new Propinsi(d.getAlamatPerusahaanData().getPropinsiData().getId(), d.getAlamatPerusahaanData().getPropinsiData().getNama()) : null,
-				d.getAlamatPerusahaanData().getKabupatenData() != null ? new Kabupaten(d.getAlamatPerusahaanData().getKabupatenData().getId(), d.getAlamatPerusahaanData().getKabupatenData().getNama()) : null,
-				d.getAlamatPerusahaanData().getKecamatanData() != null ? new Kecamatan(d.getAlamatPerusahaanData().getKecamatanData().getId(), d.getAlamatPerusahaanData().getKecamatanData().getNama()) : null,
-				d.getAlamatPerusahaanData().getDesaData() != null ? new Desa(d.getAlamatPerusahaanData().getDesaData().getId(), d.getAlamatPerusahaanData().getDesaData().getNama()) : null,
-				d.getAlamatPerusahaanData().getKeterangan()) : null;
+				d.getAlamatPerusahaanData().getPropinsi() != null ? new Propinsi(d.getAlamatPerusahaanData().getPropinsi().getId(), d.getAlamatPerusahaanData().getPropinsi().getNama()) : null,
+				d.getAlamatPerusahaanData().getKabupaten() != null ? new Kabupaten(d.getAlamatPerusahaanData().getKabupaten().getId(), d.getAlamatPerusahaanData().getKabupaten().getNama()) : null,
+				d.getAlamatPerusahaanData().getKecamatan() != null ? new Kecamatan(d.getAlamatPerusahaanData().getKecamatan().getId(), d.getAlamatPerusahaanData().getKecamatan().getNama()) : null,
+				d.getAlamatPerusahaanData().getDesa() != null ? new Desa(d.getAlamatPerusahaanData().getDesa().getId(), d.getAlamatPerusahaanData().getDesa().getNama()) : null,
+				d.getAlamatPerusahaanData().getDetailAlamat()) : null;
 		
 		Kontak kontakPerusahaan = d.getKontakPerusahaanData() != null ? new Kontak(
 				d.getKontakPerusahaanData().getTelepone() != null ? d.getKontakPerusahaanData().getTelepone() : null, 
@@ -349,11 +350,11 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				d.getPelakuUsahaData().getId(), d.getPelakuUsahaData().getNama(), d.getPelakuUsahaData().getSingkatan(), kategoriPelakuUsaha) : null;
 		
 		Alamat alamatPerusahaan = d.getAlamatPerusahaanData() != null ? new Alamat(
-				d.getAlamatPerusahaanData().getPropinsiData() != null ? new Propinsi(d.getAlamatPerusahaanData().getPropinsiData().getId(), d.getAlamatPerusahaanData().getPropinsiData().getNama()) : null,
-				d.getAlamatPerusahaanData().getKabupatenData() != null ? new Kabupaten(d.getAlamatPerusahaanData().getKabupatenData().getId(), d.getAlamatPerusahaanData().getKabupatenData().getNama()) : null,
-				d.getAlamatPerusahaanData().getKecamatanData() != null ? new Kecamatan(d.getAlamatPerusahaanData().getKecamatanData().getId(), d.getAlamatPerusahaanData().getKecamatanData().getNama()) : null,
-				d.getAlamatPerusahaanData().getDesaData() != null ? new Desa(d.getAlamatPerusahaanData().getDesaData().getId(), d.getAlamatPerusahaanData().getDesaData().getNama()) : null,
-				d.getAlamatPerusahaanData().getKeterangan()) : null;
+				d.getAlamatPerusahaanData().getPropinsi() != null ? new Propinsi(d.getAlamatPerusahaanData().getPropinsi().getId(), d.getAlamatPerusahaanData().getPropinsi().getNama()) : null,
+				d.getAlamatPerusahaanData().getKabupaten() != null ? new Kabupaten(d.getAlamatPerusahaanData().getKabupaten().getId(), d.getAlamatPerusahaanData().getKabupaten().getNama()) : null,
+				d.getAlamatPerusahaanData().getKecamatan() != null ? new Kecamatan(d.getAlamatPerusahaanData().getKecamatan().getId(), d.getAlamatPerusahaanData().getKecamatan().getNama()) : null,
+				d.getAlamatPerusahaanData().getDesa() != null ? new Desa(d.getAlamatPerusahaanData().getDesa().getId(), d.getAlamatPerusahaanData().getDesa().getNama()) : null,
+				d.getAlamatPerusahaanData().getDetailAlamat()) : null;
 		
 		Kontak kontakPerusahaan = d.getKontakPerusahaanData() != null ? new Kontak(
 				d.getKontakPerusahaanData().getTelepone() != null ? d.getKontakPerusahaanData().getTelepone() : null, 
@@ -629,7 +630,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	private Pegawai convertPegawaiDataToPegawai(PegawaiData d) {
 		JabatanData jabatanData = d.getJabatanData();
 		PersonData personData = d.getPersonData();
-		AlamatPersonData alamatPersonData = personData != null ? personData.getAlamat() : null;
+		AlamatData alamatPersonData = personData != null ? personData.getAlamat() : null;
 		Alamat alamat = null;
 		
 		if(alamatPersonData != null) {

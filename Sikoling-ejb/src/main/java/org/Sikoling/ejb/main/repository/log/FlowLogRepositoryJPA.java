@@ -177,6 +177,7 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 						registerPerusahaan, 
 						pengakses, 
 						null, 
+						null,
 						posisiTahapPemberkasan, 
 						null, 
 						null) : null;

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
@@ -20,13 +21,14 @@ public class RegisterPermohonan implements Serializable {
 	private final RegisterPerusahaan perusahaan;
 	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
+	private final Person penanggungJawabPermohonan;
 	private final PosisiTahapPemberkasan posisiBerkas;
 	private final List<RegisterDokumen> daftarDokumenSyarat;
-	private final List<RegisterDokumen> daftarDokumenHasil;	
+	private final List<RegisterDokumen> daftarDokumenHasil;		
 	
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Authority pengurusPermohonan,
-			StatusWali statusWaliPengurusPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			Person penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
@@ -34,6 +36,7 @@ public class RegisterPermohonan implements Serializable {
 		this.perusahaan = perusahaan;
 		this.pengurusPermohonan = pengurusPermohonan;
 		this.statusWaliPengurusPermohonan = statusWaliPengurusPermohonan;
+		this.penanggungJawabPermohonan = penanggungJawabPermohonan;
 		this.posisiBerkas = posisiBerkas;
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 		this.daftarDokumenHasil = daftarDokumenHasil;
@@ -67,6 +70,10 @@ public class RegisterPermohonan implements Serializable {
 		return statusWaliPengurusPermohonan;
 	}
 	
+	public Person getPenanggungJawabPermohonan() {
+		return penanggungJawabPermohonan;
+	}
+
 	public PosisiTahapPemberkasan getPosisiBerkas() {
 		return posisiBerkas;
 	}

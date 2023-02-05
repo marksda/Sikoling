@@ -12,9 +12,11 @@ import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 
@@ -34,7 +36,8 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		PersonData personData = convertPersonToPersonData(t);
 		entityManager.persist(personData);
 		entityManager.flush();
-		return convertPersonDataToPerson(personData);
+//		return convertPersonDataToPerson(personData);
+		return convertPersonDataToPerson(entityManager.find(PersonData.class, personData.getId()));
 	}
 
 	@Override
@@ -105,7 +108,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		DesaData desaData = new DesaData();
 		desaData.setId(person.getAlamat().getDesa().getId());
 		
-		AlamatPersonData alamatPersonData = new AlamatPersonData();
+		AlamatData alamatPersonData = new AlamatData();
 		alamatPersonData.setPropinsi(propinsiData);
 		alamatPersonData.setKabupaten(kabupatenData);
 		alamatPersonData.setKecamatan(kecamatanData);
@@ -118,7 +121,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		jenisKelaminData.setId(person.getSex().getId());
 		personData.setSex(jenisKelaminData);
 		
-		KontakPersonData kontakPersonData = new KontakPersonData();
+		KontakData kontakPersonData = new KontakData();
 		kontakPersonData.setTelepone(person.getKontak().getTelepone());
 		kontakPersonData.setEmail(person.getKontak().getEmail());
 		personData.setKontak(kontakPersonData);
@@ -128,18 +131,98 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		return personData;
 	}
 	
-	private Person convertPersonDataToPerson(PersonData personData) {
-		PersonData data = entityManager.find(PersonData.class, personData.getId());
-		return new Person(
-				data.getId(), data.getNama(),
-				new JenisKelamin(data.getSex().getId(), data.getSex().getNama()),
-				new Alamat(
-						new Propinsi(data.getAlamat().getPropinsi().getId(), data.getAlamat().getPropinsi().getNama()), 
-						new Kabupaten(data.getAlamat().getKabupaten().getId(), data.getAlamat().getKabupaten().getNama()),
-						new Kecamatan(data.getAlamat().getKecamatan().getId(), data.getAlamat().getKecamatan().getNama()), 
-						new Desa(data.getAlamat().getDesa().getId(), data.getAlamat().getDesa().getNama()), 
-						data.getAlamat().getDetailAlamat()), 
-				data.getScanKtp(),
-				new Kontak(data.getKontak().getTelepone(), null, data.getKontak().getEmail()));
+	private Propinsi convertPropinsiDataToPropinsi(PropinsiData d) {
+		Propinsi propinsi = null;
+		
+		if(d != null) {
+			propinsi = new Propinsi(d.getId(), d.getNama());
+		}
+		
+		return propinsi;		
+	}
+	
+	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData d) {
+		Kabupaten kabupaten = null;
+		
+		if(d != null) {
+			kabupaten = new Kabupaten(d.getId(), d.getNama());
+		}
+		
+		return kabupaten;		
+	}
+
+	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData d) {
+		Kecamatan kecamatan = null;
+		
+		if(d != null) {
+			kecamatan = new Kecamatan(d.getId(), d.getNama());
+		}
+		
+		return kecamatan;		
+	}
+	
+	private Desa convertDesaDataToDesa(DesaData d) {
+		Desa desa = null;
+		
+		if(d != null) {
+			desa = new Desa(d.getId(), d.getNama());
+		}
+		
+		return desa;		
+	}
+	
+	private Alamat convertAlamatDataToAlamat(AlamatData d) {
+		Alamat alamat = null;
+		
+		if( d != null) {
+			alamat = new Alamat(
+					convertPropinsiDataToPropinsi(d.getPropinsi()), 
+					convertKabupatenDataToKabupaten(d.getKabupaten()), 
+					convertKecamatanDataToKecamatan(d.getKecamatan()), 
+					convertDesaDataToDesa(d.getDesa()), 
+					d.getDetailAlamat()
+					);					
+		}
+		
+		return alamat;
+	}	
+	
+	private Kontak convertKontakDataToKontak(KontakData d) {
+		Kontak kontak = null;
+		
+		if(d != null) {
+			kontak = new Kontak(
+					d.getTelepone(), 
+					d.getFax(), 
+					d.getEmail()
+					);
+		}
+		
+		return kontak;
+	}
+	
+	private Person convertPersonDataToPerson(PersonData d) {
+		Person person = null;
+		
+		if(d != null) {
+			JenisKelaminData jenisKelaminData = d.getSex();
+			JenisKelamin jenisKelamin = jenisKelaminData != null ?
+					new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama()) : null;
+			
+			Alamat alamat = convertAlamatDataToAlamat(d.getAlamat());
+			
+			Kontak kontak = convertKontakDataToKontak(d.getKontak());
+			
+			person = new Person(
+					d.getId(), 
+					d.getNama(), 
+					jenisKelamin, 
+					alamat, 
+					d.getScanKtp(), 
+					kontak
+					);
+		}
+		
+		return person;
 	}
 }

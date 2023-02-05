@@ -10,6 +10,7 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.BatasLokasi;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KordinatGeografis;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.StatusWali;
@@ -32,13 +33,14 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 
 	public RegisterPermohonanUKLUPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			PosisiTahapPemberkasan posisiBerkas, List<RegisterDokumen> daftarDokumenSyarat,
-			List<RegisterDokumen> daftarDokumenHasil, StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha,
-			String namaUsaha, Alamat lokasiUsaha, int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita,
-			Double luasTanah, KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi,
-			LocalDate tanggalTinjauLapangan, LocalDate tanggalPembahasan) {
+			Person penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
+			StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha,
+			int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita, Double luasTanah,
+			KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi, LocalDate tanggalTinjauLapangan,
+			LocalDate tanggalPembahasan) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
-				posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
+				penanggungJawabPermohonan, posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
 		this.status = status;
 		this.bidangUsaha = bidangUsaha;
 		this.namaUsaha = namaUsaha;

@@ -16,11 +16,11 @@ import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.person.AlamatPersonData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 
@@ -119,7 +119,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		personData.setId(person.getNik());		
 		personData.setNama(person.getNama());
 		
-		AlamatPersonData alamatPersonData = new AlamatPersonData();
+		AlamatData alamatPersonData = new AlamatData();
 		Alamat alamat = person.getAlamat();
 		
 		PropinsiData propinsiData = new PropinsiData();

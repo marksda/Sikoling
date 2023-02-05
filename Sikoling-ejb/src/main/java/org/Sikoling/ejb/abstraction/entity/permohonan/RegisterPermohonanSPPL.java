@@ -27,15 +27,16 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	private final String izinYangDimiliki;
 	private final String keteranganKegiatan;
 	private final Alamat lokasiUsaha;
-
+	
 	public RegisterPermohonanSPPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			PosisiTahapPemberkasan posisiBerkas, List<RegisterDokumen> daftarDokumenSyarat,
-			List<RegisterDokumen> daftarDokumenHasil, KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha,
-			Kbli2020 jenisUsaha, Person penanggungJawab, String namaUsaha, String kriteria, String izinYangDimiliki,
+			Person penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
+			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli2020 jenisUsaha,
+			Person penanggungJawab, String namaUsaha, String kriteria, String izinYangDimiliki,
 			String keteranganKegiatan, Alamat lokasiUsaha) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
-				posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
+				penanggungJawabPermohonan, posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
 		this.kapasitasSkalaUsaha = kapasitasSkalaUsaha;
 		this.bidangUsaha = bidangUsaha;
 		this.jenisUsaha = jenisUsaha;

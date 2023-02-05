@@ -6,8 +6,10 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
@@ -30,7 +32,7 @@ public class RegisterPerusahaanData implements Serializable {
 	private String nama;
 	
 	@Embedded
-	private AlamatPerusahaanData alamatPerusahaanData;
+	private AlamatData alamatPerusahaanData;
 	
 	@JoinColumn(name="model_perizinan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
@@ -48,7 +50,7 @@ public class RegisterPerusahaanData implements Serializable {
 	private Boolean statusVerifikasi;
 	
 	@Embedded
-	private KontakPerusahaanData kontakPerusahaanData;
+	private KontakData kontakPerusahaanData;
 	
 	@JoinColumn(name="kreator", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
@@ -120,11 +122,11 @@ public class RegisterPerusahaanData implements Serializable {
 		this.nama = nama;
 	}
 
-	public AlamatPerusahaanData getAlamatPerusahaanData() {
+	public AlamatData getAlamatPerusahaanData() {
 		return alamatPerusahaanData;
 	}
 
-	public void setAlamatPerusahaanData(AlamatPerusahaanData alamatPerusahaanData) {
+	public void setAlamatPerusahaanData(AlamatData alamatPerusahaanData) {
 		this.alamatPerusahaanData = alamatPerusahaanData;
 	}
 
@@ -160,11 +162,11 @@ public class RegisterPerusahaanData implements Serializable {
 		this.statusVerifikasi = statusVerifikasi;
 	}
 
-	public KontakPerusahaanData getKontakPerusahaanData() {
+	public KontakData getKontakPerusahaanData() {
 		return kontakPerusahaanData;
 	}
 
-	public void setKontakPerusahaanData(KontakPerusahaanData kontakPerusahaanData) {
+	public void setKontakPerusahaanData(KontakData kontakPerusahaanData) {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
 
