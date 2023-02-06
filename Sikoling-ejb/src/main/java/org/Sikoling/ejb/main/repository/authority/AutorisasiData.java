@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.authority;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
@@ -33,11 +34,11 @@ public class AutorisasiData implements Serializable {
 	private String userName;
 
     @JoinColumn(name = "person", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private PersonData personData;
 		
 	@JoinColumn(name = "hak_akses", referencedColumnName = "id", insertable = true, updatable = true)
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private HakAksesData hakAkses;
 	
 	@Column(name="status_internal")
@@ -101,4 +102,41 @@ public class AutorisasiData implements Serializable {
 		return serialVersionUID;
 	}
 
+	public int hashCode() {
+		int hash = 7103;
+        hash = 1071 * hash + Objects.hashCode(id);
+        return hash;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+		
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final AutorisasiData other = (AutorisasiData) obj;
+        
+        if (!id.equals(other.getId())) {
+            return false;
+        }        
+
+        return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "AutorisasiData{id="
+				.concat(id)
+				.concat("}");	  
+	}
+	 
 }

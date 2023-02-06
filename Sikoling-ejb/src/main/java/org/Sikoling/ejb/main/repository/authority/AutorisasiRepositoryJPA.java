@@ -21,8 +21,10 @@ import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
+import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
+import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 
 import jakarta.persistence.EntityManager;
 
@@ -169,52 +171,134 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		return autorisasiData;
 	}
 	
-	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
-		PropinsiData propinsiData = d.getPersonData().getAlamat().getPropinsi();
-		KabupatenData kabupatenData = d.getPersonData().getAlamat().getKabupaten();
-		KecamatanData kecamatanData = d.getPersonData().getAlamat().getKecamatan();
-		DesaData desaData = d.getPersonData().getAlamat().getDesa();
+	private Propinsi convertPropinsiDataToPropinsi(PropinsiData d) {
+		Propinsi propinsi = null;
 		
+		if(d != null) {
+			propinsi = new Propinsi(d.getId(), d.getNama());
+		}
+		
+		return propinsi;		
+	}
+	
+	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData d) {
+		Kabupaten kabupaten = null;
+		
+		if(d != null) {
+			kabupaten = new Kabupaten(d.getId(), d.getNama());
+		}
+		
+		return kabupaten;		
+	}
 
-		Person person = new Person(
-				d.getPersonData().getId(), 
-				d.getPersonData().getNama(), 
-				new JenisKelamin(d.getPersonData().getSex().getId(), d.getPersonData().getSex().getNama()), 
-				new Alamat(
-						propinsiData != null ?
-								new Propinsi(
-										propinsiData.getId(), 
-										propinsiData.getNama()):null, 
-						kabupatenData != null ?
-								new Kabupaten(
-										kabupatenData.getId(),
-										kabupatenData.getNama()):null, 
-						kecamatanData != null ?
-								new Kecamatan(
-									kecamatanData.getId(),
-									kecamatanData.getNama()):null , 
-						desaData != null ?
-								new Desa(
-									desaData.getId(), 
-									desaData.getNama()):null, 
-						d.getPersonData().getAlamat().getDetailAlamat()), 
-				d.getPersonData().getScanKtp(), 
-				new Kontak(
-						d.getPersonData().getKontak().getTelepone(),
-						null,
-						d.getPersonData().getKontak().getEmail()));
-		HakAkses hakAkses = new HakAkses(
-				d.getHakAkses().getId(), 
-				d.getHakAkses().getNama(), 
-				d.getHakAkses().getKeterangan());
+	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData d) {
+		Kecamatan kecamatan = null;
 		
-		return new Authority(
-				d.getId(),
-				person, 
-				hakAkses, 
-				d.getStatusInternal(), 
-				d.getIsVerified(), 
-				d.getUserName());
+		if(d != null) {
+			kecamatan = new Kecamatan(d.getId(), d.getNama());
+		}
+		
+		return kecamatan;		
+	}
+	
+	private Desa convertDesaDataToDesa(DesaData d) {
+		Desa desa = null;
+		
+		if(d != null) {
+			desa = new Desa(d.getId(), d.getNama());
+		}
+		
+		return desa;		
+	}
+
+	private Alamat convertAlamatDataToAlamat(AlamatData d) {
+		Alamat alamat = null;
+		
+		if( d != null) {
+			alamat = new Alamat(
+					convertPropinsiDataToPropinsi(d.getPropinsi()), 
+					convertKabupatenDataToKabupaten(d.getKabupaten()), 
+					convertKecamatanDataToKecamatan(d.getKecamatan()), 
+					convertDesaDataToDesa(d.getDesa()), 
+					d.getDetailAlamat()
+					);					
+		}
+		
+		return alamat;
+	}	
+	
+	private Kontak convertKontakDataToKontak(KontakData d) {
+		Kontak kontak = null;
+		
+		if(d != null) {
+			kontak = new Kontak(
+					d.getTelepone(), 
+					d.getFax(), 
+					d.getEmail()
+					);
+		}
+		
+		return kontak;
+	}
+	
+	private Person convertPersonDataToPerson(PersonData d) {
+		Person person = null;
+		
+		if(d != null) {
+			JenisKelaminData jenisKelaminData = d.getSex();
+			JenisKelamin jenisKelamin = jenisKelaminData != null ?
+					new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama()) : null;
+			
+			Alamat alamat = convertAlamatDataToAlamat(d.getAlamat());
+			
+			Kontak kontak = convertKontakDataToKontak(d.getKontak());
+			
+			person = new Person(
+					d.getId(), 
+					d.getNama(), 
+					jenisKelamin, 
+					alamat, 
+					d.getScanKtp(), 
+					kontak
+					);
+		}
+		
+		return person;
+	}
+	
+	private HakAkses convertHakAksesDataToHakAkses(HakAksesData d) {
+		HakAkses hakAkses = null;
+				
+		if( d != null) {
+			hakAkses = new HakAkses(d.getId(), d.getNama(), d.getKeterangan());
+		}
+		
+		return hakAkses;
+	}
+	
+	private Authority convertAutorisasiDataToAuthority(AutorisasiData d) {
+		Authority authority = null;
+		Person person = convertPersonDataToPerson(d.getPersonData());
+		HakAkses hakAkses = convertHakAksesDataToHakAkses(d.getHakAkses());
+		
+		if(d != null) {
+			authority = new Authority(
+					d.getId(), 
+					person, 
+					hakAkses, 
+					d.getStatusInternal(), 
+					d.getIsVerified(), 
+					d.getUserName()
+					);
+		}
+		
+		return authority;
+	}
+	
+	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
+		
+		Authority authority = convertAutorisasiDataToAuthority(d);		
+		return authority;
 	}
 
 	
