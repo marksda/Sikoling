@@ -3,6 +3,8 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
+
 public class Wali implements Serializable {
 
 	private static final long serialVersionUID = 2775584601268906714L;

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
 import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
 import org.Sikoling.main.restful.authority.AuthorityDTO;

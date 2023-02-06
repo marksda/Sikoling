@@ -12,7 +12,6 @@ import org.Sikoling.ejb.abstraction.entity.KapasitasSkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.ejb.abstraction.entity.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
 
 public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serializable {
