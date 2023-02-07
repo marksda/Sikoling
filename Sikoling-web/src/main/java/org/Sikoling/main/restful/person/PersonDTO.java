@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.main.restful.alamat.AlamatDTO;
+import org.Sikoling.main.restful.alamat.KontakDTO;
 import org.Sikoling.main.restful.sex.JenisKelaminDTO;
 
 public class PersonDTO implements Serializable {
@@ -12,8 +14,8 @@ public class PersonDTO implements Serializable {
 	private String nik;
 	private String nama;
 	private JenisKelaminDTO jenisKelamin;
-	private AlamatPersonDTO alamat;
-	private KontakPersonDTO kontak;
+	private AlamatDTO alamat;
+	private KontakDTO kontak;
 	private String scanKTP;
 	
 	public PersonDTO() {		
@@ -24,8 +26,8 @@ public class PersonDTO implements Serializable {
 			this.nik = person.getNik();
 			this.nama = person.getNama();
 			this.jenisKelamin = person.getSex() != null ? new JenisKelaminDTO(person.getSex()) : null;
-			this.alamat = person.getAlamat() != null ? new AlamatPersonDTO(person.getAlamat()) : null;
-			this.kontak = person.getKontak() != null ? new KontakPersonDTO(person.getKontak()) : null;
+			this.alamat = person.getAlamat() != null ? new AlamatDTO(person.getAlamat()) : null;
+			this.kontak = person.getKontak() != null ? new KontakDTO(person.getKontak()) : null;
 			this.scanKTP = person.getScanKTP();
 		}
 		else {
@@ -38,7 +40,7 @@ public class PersonDTO implements Serializable {
 		}
 	}
 	
-	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatPersonDTO alamat, KontakPersonDTO kontak,
+	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatDTO alamat, KontakDTO kontak,
 			String scanKTP) {
 		this.nik = nik;
 		this.nama = nama;
@@ -72,19 +74,19 @@ public class PersonDTO implements Serializable {
 		this.jenisKelamin = sex;
 	}
 
-	public AlamatPersonDTO getAlamat() {
+	public AlamatDTO getAlamat() {
 		return alamat;
 	}
 
-	public void setAlamat(AlamatPersonDTO alamat) {
+	public void setAlamat(AlamatDTO alamat) {
 		this.alamat = alamat;
 	}
 
-	public KontakPersonDTO getKontak() {
+	public KontakDTO getKontak() {
 		return kontak;
 	}
 
-	public void setKontak(KontakPersonDTO kontak) {
+	public void setKontak(KontakDTO kontak) {
 		this.kontak = kontak;
 	}
 

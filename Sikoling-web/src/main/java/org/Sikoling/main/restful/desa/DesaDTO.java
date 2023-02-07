@@ -15,15 +15,12 @@ public class DesaDTO implements Serializable {
 	}
 	
 	public DesaDTO(Desa desa) {
-		this.id = desa.getId();
-		this.nama = desa.getNama();
+		if(desa != null) {
+			this.id = desa.getId();
+			this.nama = desa.getNama();
+		}		
 	}
-	
-	public DesaDTO(String id, String nama) {
-		this.id = id;
-		this.nama = nama;
-	}
-	
+		
 	public String getId() {
 		return id;
 	}

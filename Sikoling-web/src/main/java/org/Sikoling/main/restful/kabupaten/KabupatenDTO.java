@@ -15,8 +15,10 @@ public class KabupatenDTO implements Serializable {
 	}
 	
 	public KabupatenDTO(Kabupaten kabupaten) {
-		this.id = kabupaten.getId();
-		this.nama = kabupaten.getNama();
+		if(kabupaten != null) {
+			this.id = kabupaten.getId();
+			this.nama = kabupaten.getNama();
+		}		
 	}
 
 	public String getId() {

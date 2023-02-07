@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
+import org.Sikoling.main.restful.alamat.AlamatDTO;
+import org.Sikoling.main.restful.alamat.KontakDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
 import org.Sikoling.main.restful.pelakuusaha.PelakuUsahaDTO;
@@ -19,8 +21,8 @@ public class PerusahaanDTO implements Serializable {
 	private ModelPerizinanDTO modelPerizinan;
 	private SkalaUsahaDTO skalaUsaha;
 	private PelakuUsahaDTO pelakuUsaha;
-	private AlamatPerusahaanDTO alamat;
-	private KontakPerusahaanDTO kontak;
+	private AlamatDTO alamat;
+	private KontakDTO kontak;
 	private List<RegisterDokumenDTO> daftarRegisterDokumen;
 	private Boolean statusVerifikasi;
 	
@@ -28,14 +30,14 @@ public class PerusahaanDTO implements Serializable {
 	}
 	
 	public PerusahaanDTO(Perusahaan t) {
-		if( t != null) {
+		if( t != null) {			
 			this.id = t.getId();
 			this.nama = t.getNama();
 			this.modelPerizinan = t.getModelPerizinan() != null ? new ModelPerizinanDTO(t.getModelPerizinan()) : null;
 			this.skalaUsaha = t.getSkalaUsaha() != null ? new SkalaUsahaDTO(t.getSkalaUsaha()) : null;
 			this.pelakuUsaha = t.getPelakuUsaha() != null ? new PelakuUsahaDTO(t.getPelakuUsaha()) : null;
-			this.alamat = t.getAlamat() != null ? new AlamatPerusahaanDTO(t.getAlamat()) : null;
-			this.kontak = t.getKontak() != null ? new KontakPerusahaanDTO(t.getKontak()) : null;
+			this.alamat = t.getAlamat() != null ? new AlamatDTO(t.getAlamat()) : null;
+			this.kontak = t.getKontak() != null ? new KontakDTO(t.getKontak()) : null;
 			this.daftarRegisterDokumen = t.getDaftarRegisterDokumen() != null? t.getDaftarRegisterDokumen()
 									.stream()
 									.map(item -> new RegisterDokumenDTO(item))
@@ -84,19 +86,19 @@ public class PerusahaanDTO implements Serializable {
 		this.pelakuUsaha = pelakuUsaha;
 	}
 
-	public AlamatPerusahaanDTO getAlamat() {
+	public AlamatDTO getAlamat() {
 		return alamat;
 	}
 
-	public void setAlamat(AlamatPerusahaanDTO alamat) {
+	public void setAlamat(AlamatDTO alamat) {
 		this.alamat = alamat;
 	}
 
-	public KontakPerusahaanDTO getKontak() {
+	public KontakDTO getKontak() {
 		return kontak;
 	}
 
-	public void setKontak(KontakPerusahaanDTO kontak) {
+	public void setKontak(KontakDTO kontak) {
 		this.kontak = kontak;
 	}
 

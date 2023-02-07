@@ -1,28 +1,31 @@
-package org.Sikoling.main.restful.person;
+package org.Sikoling.main.restful.alamat;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 
-public class KontakPersonDTO implements Serializable {
+public class KontakDTO implements Serializable {
 
 	private static final long serialVersionUID = -3805707147101223655L;
 	private String telepone;
+	private String fax;
 	private String email;
 	
-	public KontakPersonDTO() {		
+	public KontakDTO() {		
 	}
 	
-	public KontakPersonDTO(Kontak kontak) {	
-		this.telepone = kontak.getTelepone();
-		this.email = kontak.getEmail();
-	}
-	
-	public KontakPersonDTO(String telepone, String email) {
-		super();
-		this.telepone = telepone;
-		this.email = email;
+	public KontakDTO(Kontak kontak) {	
+		if(kontak != null) {
+			this.telepone = kontak.getTelepone();
+			this.fax = kontak.getFax();
+			this.email = kontak.getEmail();
+		}
+		else {
+			this.telepone = null;
+			this.fax = null;
+			this.email = null;
+		}
 	}
 
 	public String getTelepone() {
@@ -39,6 +42,14 @@ public class KontakPersonDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 
 	public static long getSerialversionuid() {
@@ -67,7 +78,7 @@ public class KontakPersonDTO implements Serializable {
             return false;
         }
         
-        final KontakPersonDTO other = (KontakPersonDTO) obj;
+        final KontakDTO other = (KontakDTO) obj;
         
         if (this.telepone != other.telepone) {
             return false;

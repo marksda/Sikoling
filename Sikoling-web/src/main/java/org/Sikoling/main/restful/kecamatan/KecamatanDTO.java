@@ -14,13 +14,11 @@ public class KecamatanDTO implements Serializable {
 	public KecamatanDTO() {		
 	}
 	
-	public KecamatanDTO(String id) {
-		this.id = id;
-	}
-	
 	public KecamatanDTO(Kecamatan kecamatan) {
-		this.id = kecamatan.getId();
-		this.nama = kecamatan.getNama();
+		if(kecamatan != null) {
+			this.id = kecamatan.getId();
+			this.nama = kecamatan.getNama();
+		}		
 	}
 
 	public String getId() {

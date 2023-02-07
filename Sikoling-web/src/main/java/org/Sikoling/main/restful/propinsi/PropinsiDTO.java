@@ -11,18 +11,14 @@ public class PropinsiDTO implements Serializable {
 	private String id;
 	private String nama;
 	
-	public PropinsiDTO() {
-		
-	}
-
-	public PropinsiDTO(String id, String nama) {
-		this.id = id;
-		this.nama = nama;
+	public PropinsiDTO() {		
 	}
 	
 	public PropinsiDTO(Propinsi propinsi) {
-		this.id = propinsi.getId();
-		this.nama = propinsi.getNama();
+		if(propinsi != null) {
+			this.id = propinsi.getId();
+			this.nama = propinsi.getNama();
+		}		
 	}
 
 	public Propinsi toPropinsi() {
