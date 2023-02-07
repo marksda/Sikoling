@@ -41,7 +41,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
 				.getResultList()
 				.stream()
-				.map(d -> convertAutorisasiDataToAutorisasi(d))
+				.map(d -> convertAutorisasiDataToAuthority(d))
 				.collect(Collectors.toList());
 	}
 
@@ -50,14 +50,14 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		AutorisasiData autorisasiData = convertAutorisasiToAutorisasiData(t);
 		entityManager.persist(autorisasiData);
 		entityManager.flush();
-		return convertAutorisasiDataToAutorisasi(autorisasiData);
+		return convertAutorisasiDataToAuthority(autorisasiData);
 	}
 
 	@Override
 	public Authority update(Authority t) {
 		AutorisasiData autorisasiData = convertAutorisasiToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
-		return convertAutorisasiDataToAutorisasi(autorisasiData);
+		return convertAutorisasiDataToAuthority(autorisasiData);
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(d -> convertAutorisasiDataToAutorisasi(d))
+				.map(d -> convertAutorisasiDataToAuthority(d))
 				.collect(Collectors.toList());
 	}
 
@@ -85,7 +85,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(d -> convertAutorisasiDataToAutorisasi(d))
+				.map(d -> convertAutorisasiDataToAuthority(d))
 				.collect(Collectors.toList());
 	}
 
@@ -98,7 +98,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(d -> convertAutorisasiDataToAutorisasi(d))
+				.map(d -> convertAutorisasiDataToAuthority(d))
 				.collect(Collectors.toList());
 	}
 
@@ -109,7 +109,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				.setParameter("userName", userName).getSingleResult()
 				)
 				.orElse(null);
-		return data != null ? convertAutorisasiDataToAutorisasi(data):null;				
+		return data != null ? convertAutorisasiDataToAuthority(data):null;				
 	}
 	
 	private AutorisasiData convertAutorisasiToAutorisasiData(Authority t) {
@@ -295,11 +295,10 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		return authority;
 	}
 	
-	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
-		
-		Authority authority = convertAutorisasiDataToAuthority(d);		
-		return authority;
-	}
-
+//	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
+//		
+//		Authority authority = convertAutorisasiDataToAuthority(d);		
+//		return authority;
+//	}
 	
 }

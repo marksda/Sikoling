@@ -91,6 +91,15 @@ public class PersonRepositoryJPA implements IPersonRepository {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public Person getByNik(String nik) {
+		return convertPersonDataToPerson(
+					entityManager.createNamedQuery("PersonData.findById", PersonData.class)
+						.setParameter("nik", nik)
+						.getSingleResult()
+				);
+	}
+	
 	private PersonData convertPersonToPersonData(Person person) {
 		PersonData personData = new PersonData();
 		personData.setId(person.getNik());
@@ -225,4 +234,6 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		
 		return person;
 	}
+
+	
 }

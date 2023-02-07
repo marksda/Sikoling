@@ -5,5 +5,8 @@
    version="3.0">
 	<persistence-unit name="Sikoling-unit" transaction-type="JTA">
 		<jta-data-source>jdbc/postgresql</jta-data-source>
+		<properties>
+			<property name="eclipselink.logging.level" value="FINEST"/>
+		</properties>
 	</persistence-unit>
 </persistence>

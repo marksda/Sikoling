@@ -3,6 +3,7 @@ package org.Sikoling.main.restful.person;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -12,6 +13,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -81,4 +83,13 @@ public class PersonController {
 				.collect(Collectors.toList());
 	}
 
+	@Path("nik/{noNik}")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public PersonDTO getByNik(@PathParam("noNik") String noNik) {
+		Person person = personService.getByNik(noNik);
+		
+		return  person != null ? new PersonDTO(person) : null;
+	}
 }

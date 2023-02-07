@@ -44,4 +44,10 @@ public class PersonService implements IPersonService {
 		return personRepository.getByNamaAndPage(nama, page, pageSize);
 	}
 
+	
+	@Override
+	public Person getByNik(String nik) {
+		return personRepository.getByNik(nik);
+	}
+
 }

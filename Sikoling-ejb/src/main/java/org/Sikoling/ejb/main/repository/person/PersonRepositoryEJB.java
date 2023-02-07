@@ -48,4 +48,10 @@ public class PersonRepositoryEJB implements IPersonRepository {
 		return personRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
 	}
 
+	
+	@Override
+	public Person getByNik(String nik) {
+		return personRepositoryJPA.getByNik(nik);
+	}
+
 }

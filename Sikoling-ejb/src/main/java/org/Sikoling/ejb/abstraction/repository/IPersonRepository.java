@@ -7,4 +7,5 @@ public interface IPersonRepository extends IRepository<Person> {
 	List<Person> getAllByPage(Integer page, Integer pageSize);
 	List<Person> getByNama(String nama);
 	List<Person> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+	Person getByNik(String nik);
 }
