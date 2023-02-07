@@ -54,6 +54,11 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
+	public DataConverter getDataConverter() {
+		return new DataConverter();
+	}
+	
+	@Produces
 	public PropinsiRepositoryJPA getPropinsiRepositoryJPA(EntityManager entityManager) {
 		return new PropinsiRepositoryJPA(entityManager);
 	}
@@ -118,8 +123,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public RegisterPerusahaanRepositoryJPA getRegisterPerusahaanRepositoryJPA(EntityManager entityManager) {
-		return new RegisterPerusahaanRepositoryJPA(entityManager);
+	public RegisterPerusahaanRepositoryJPA getRegisterPerusahaanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new RegisterPerusahaanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

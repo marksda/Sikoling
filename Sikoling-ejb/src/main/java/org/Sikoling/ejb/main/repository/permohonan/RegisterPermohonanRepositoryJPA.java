@@ -10,6 +10,7 @@ import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
@@ -23,6 +24,10 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
+import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
@@ -31,7 +36,11 @@ import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
+import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.SuratArahanData;
+import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
@@ -234,27 +243,70 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		return daftarDokumenPersyaratanPermohonan;
 	}
 	
+	private KategoriDokumen convertKategoriDokumenDataToKategoriDokumen(KategoriDokumenData d) {
+		KategoriDokumen kategoriDokumen = null;
+		
+		if(d != null) {
+			kategoriDokumen = new KategoriDokumen(d.getId(), d.getNama(), d.getParent());
+		}
+		
+		return kategoriDokumen;
+	}
+	
+	private Dokumen convertMasterDokumenDataToDokumen(MasterDokumenData d) {
+		Dokumen dokumen = null;
+		
+		if(d != null) {
+			KategoriDokumen kategoriDokumen = convertKategoriDokumenDataToKategoriDokumen(d.getKategoriDokumenData());
+			dokumen = new Dokumen(d.getId(), d.getNama(), kategoriDokumen);
+		}
+		
+		return dokumen;
+	}
+	
+	private SuratArahan convertSuratArahanDataToSuratArahan(Dokumen dok, SuratArahanData d) {
+		SuratArahan suratArahan = null;
+		
+		if(d != null) {
+			suratArahan = new SuratArahan(
+					dok.getId(), 
+					dok.getNama(), 
+					dok.getKategoriDokumen(), 
+					d.getNoSurat(), 
+					d.getTanggalSurat(), 
+					d.getPerihalSurat(), 
+					d.getUraianKegiatan()
+					);
+		}
+		
+		return suratArahan;
+	}
+	
 	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
 		RegisterDokumen registerDokumen = null;
 		
-//		if(d != null) {
-//			NibOssData nibOssData = d.getNibOssData();
-//			if(nibOssData != null) {
-//				NibOss dokumen = null;
-//				
-//				registerDokumen = new RegisterDokumen(
-//						d.getId(), 
-//						null, 
-//						null, 
-//						null, 
-//						null, 
-//						null, 
-//						null, 
-//						null
-//						);	
-//			}			
-//			
-//		}
+		if(d != null) {			
+			SuratArahan suratArahan = convertSuratArahanDataToSuratArahan(
+					convertMasterDokumenDataToDokumen(d.getDokumenData()), 
+					d.getSuratArahanData()
+					);			
+			Authority authority = convertAutorisasiDataToAuthority(d.getUploader());			
+			RegisterPerusahaan registerPerusahaan = convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData());
+			
+			if(suratArahan != null) {
+				registerDokumen = new RegisterDokumen(
+						d.getId(), 
+						suratArahan, 
+						null, 
+						null, 
+						d.getStatusDokumen() != null ? new StatusDokumen(
+								d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
+						d.getTanggalRegistrasi(), 
+						authority,
+						d.getStatusVerified()
+						);
+			}
+		}
 		
 		return registerDokumen;
 	}
@@ -405,17 +457,27 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		return statusTahapPemberkasan;
 	}
 	
+	private HakAkses convertHakAksesDataToHakAkses(HakAksesData d) {
+		HakAkses hakAkses = null;
+		
+		if(d != null) {
+			hakAkses = new HakAkses(d.getId(), d.getNama(), d.getKeterangan());
+		}
+		
+		return hakAkses;
+	}
+	
 	private Authority convertAutorisasiDataToAuthority(AutorisasiData d) {
 		Authority authority = null;
 		
 		if(d != null) {
 			authority = new Authority(
 					d.getId(), 
-					null, 
-					null, 
-					null, 
-					null, 
-					null
+					convertPersonDataToPerson(d.getPerson()), 
+					convertHakAksesDataToHakAkses(d.getHakAkses()), 
+					d.getStatusInternal(), 
+					d.getIsVerified(), 
+					d.getUserName()
 					);
 		}
 		
@@ -454,13 +516,26 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	
 	private PelakuUsaha convertPelakuUsahaDataToPelakuUsaha(PelakuUsahaData d) {
 		PelakuUsaha pelakuUsaha = null;
-		KategoriPelakuUsaha kategoriPelakuUsaha = convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(d.getKategoriPelakuUsahaData());
 		
 		if(d != null) {
+			KategoriPelakuUsaha kategoriPelakuUsaha = convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(d.getKategoriPelakuUsaha());
 			pelakuUsaha = new PelakuUsaha(d.getId(), d.getNama(), d.getSingkatan(), kategoriPelakuUsaha);
 		}
 		
 		return pelakuUsaha;
+	}
+	
+	private List<RegisterDokumen> convertDaftarRegisterDokumenDataToDaftarRegisterDokumen(List<RegisterDokumenData> d) {
+		List<RegisterDokumen> daftarRegisterDokumen = null;
+		
+		if(d != null) {
+			daftarRegisterDokumen = new ArrayList<RegisterDokumen>();
+			for(RegisterDokumenData item : d) {		
+				daftarRegisterDokumen.add(convertRegisterDokumenDataToRegisterDokumen(item));
+			}
+		}
+		
+		return daftarRegisterDokumen;		
 	}
 	
 	private RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {
@@ -469,9 +544,10 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		Authority verifikator = convertAutorisasiDataToAuthority(d.getVerifikator());
 		ModelPerizinan modelPerizinan = convertModelPerizinanDataToModelPerizinan(d.getModelPerizinanData());
 		SkalaUsaha skalaUsaha = convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData());
-		PelakuUsaha pelakuUsaha = convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsahaData());
+		PelakuUsaha pelakuUsaha = convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsaha());
 		Alamat alamat = convertAlamatDataToAlamat(d.getAlamatPerusahaanData());
 		Kontak kontak = convertKontakDataToKontak(d.getKontakPerusahaanData());
+		List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumen(d.getDaftarRegisterDokumenData());
 		
 		Perusahaan perusahaan = new Perusahaan(
 				d.getNpwp(), 
@@ -481,7 +557,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 				pelakuUsaha, 
 				alamat, 
 				kontak, 
-				null, 
+				daftarRegisterDokumen, 
 				d.getStatusVerifikasi()
 				);
 		
@@ -497,4 +573,5 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		
 		return registerPerusahaan;
 	}
+
 }

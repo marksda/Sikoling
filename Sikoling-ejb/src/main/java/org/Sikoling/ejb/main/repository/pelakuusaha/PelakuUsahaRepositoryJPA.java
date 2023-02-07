@@ -124,7 +124,7 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 	}
 	
 	private PelakuUsaha convertPelakuUsahaDataToPelakuUsaha(PelakuUsahaData d) {
-		KategoriPelakuUsaha kategoriPelakuUsaha = new KategoriPelakuUsaha(d.getKategoriPelakuUsahaData().getId(), d.getKategoriPelakuUsahaData().getNama());
+		KategoriPelakuUsaha kategoriPelakuUsaha = new KategoriPelakuUsaha(d.getKategoriPelakuUsaha().getId(), d.getKategoriPelakuUsaha().getNama());
 		
 		return new PelakuUsaha(d.getId(), d.getNama(), d.getSingkatan(), kategoriPelakuUsaha);
 	}
@@ -140,7 +140,7 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 		kategoriPelakuUsahaData.setId(kategoriPelakuUsaha.getId());
 		kategoriPelakuUsahaData.setNama(kategoriPelakuUsaha.getNama());
 		
-		pelakuUsahaData.setKategoriPelakuUsahaData(kategoriPelakuUsahaData);
+		pelakuUsahaData.setKategoriPelakuUsaha(kategoriPelakuUsahaData);
 		
 		return pelakuUsahaData;
 		

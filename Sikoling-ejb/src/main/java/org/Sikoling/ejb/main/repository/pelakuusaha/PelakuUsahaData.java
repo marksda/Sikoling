@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="PelakuUsahaData.findAll", query="SELECT p FROM PelakuUsahaData p"),
 	@NamedQuery(name="PelakuUsahaData.findByQueryNama", query="SELECT p FROM PelakuUsahaData p WHERE p.nama LIKE :nama"),
-	@NamedQuery(name="PelakuUsahaData.findByKategoriPelakuUsaha", query="SELECT p FROM PelakuUsahaData p WHERE p.kategoriPelakuUsahaData.id = :idKategoriPelakuUsaha")
+	@NamedQuery(name="PelakuUsahaData.findByKategoriPelakuUsaha", query="SELECT p FROM PelakuUsahaData p WHERE p.kategoriPelakuUsaha.id = :idKategoriPelakuUsaha")
 })
 public class PelakuUsahaData implements Serializable {
 
@@ -32,7 +32,7 @@ public class PelakuUsahaData implements Serializable {
 	
 	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private KategoriPelakuUsahaData kategoriPelakuUsahaData;
+	private KategoriPelakuUsahaData kategoriPelakuUsaha;
 
 	public PelakuUsahaData() {
 	}
@@ -61,12 +61,12 @@ public class PelakuUsahaData implements Serializable {
 		this.singkatan = singkatan;
 	}
 
-	public KategoriPelakuUsahaData getKategoriPelakuUsahaData() {
-		return kategoriPelakuUsahaData;
+	public KategoriPelakuUsahaData getKategoriPelakuUsaha() {
+		return kategoriPelakuUsaha;
 	}
 
-	public void setKategoriPelakuUsahaData(KategoriPelakuUsahaData kategoriPelakuUsahaData) {
-		this.kategoriPelakuUsahaData = kategoriPelakuUsahaData;
+	public void setKategoriPelakuUsaha(KategoriPelakuUsahaData kategoriPelakuUsaha) {
+		this.kategoriPelakuUsaha = kategoriPelakuUsaha;
 	}
 
 	public static long getSerialversionuid() {

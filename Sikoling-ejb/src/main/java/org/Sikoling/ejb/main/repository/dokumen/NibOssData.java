@@ -114,8 +114,6 @@ public class NibOssData implements Serializable {
 	public String toString() {
 		return "NibOssData{nomor="
 				.concat(nomor)
-				.concat(", tanggalPenetapan=")
-				.concat(this.getTanggalPenetapan().toString())
 				.concat("}");	  
 	}
 

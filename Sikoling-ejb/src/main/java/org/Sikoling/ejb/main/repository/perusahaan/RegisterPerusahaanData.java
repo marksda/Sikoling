@@ -44,7 +44,7 @@ public class RegisterPerusahaanData implements Serializable {
 		
 	@JoinColumn(name="pelaku_usaha", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
-	private PelakuUsahaData pelakuUsahaData; 
+	private PelakuUsahaData pelakuUsaha; 
 	
 	@Column(name="status_verifikasi")
 	private Boolean statusVerifikasi;
@@ -146,12 +146,12 @@ public class RegisterPerusahaanData implements Serializable {
 		this.skalaUsahaData = skalaUsahaData;
 	}
 
-	public PelakuUsahaData getPelakuUsahaData() {
-		return pelakuUsahaData;
+	public PelakuUsahaData getPelakuUsaha() {
+		return pelakuUsaha;
 	}
 
-	public void setPelakuUsahaData(PelakuUsahaData pelakuUsahaData) {
-		this.pelakuUsahaData = pelakuUsahaData;
+	public void setPelakuUsaha(PelakuUsahaData pelakuUsaha) {
+		this.pelakuUsaha = pelakuUsaha;
 	}
 
 	public Boolean getStatusVerifikasi() {

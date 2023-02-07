@@ -5,6 +5,10 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -87,9 +91,10 @@ public class PersonController {
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PersonDTO getByNik(@PathParam("noNik") String noNik) {
-		Person person = personService.getByNik(noNik);
-		
+		Person person = personService.getByNik(noNik);		
 		return  person != null ? new PersonDTO(person) : null;
 	}
 }

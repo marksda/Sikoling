@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @Table(name="master.tbl_autorisasi")
 @NamedQueries({
 	@NamedQuery(name="AutorisasiData.findAll", query="SELECT u FROM AutorisasiData u"),
-	@NamedQuery(name="AutorisasiData.findByNama", query="SELECT u FROM AutorisasiData u WHERE u.personData.nama like :nama"),
+	@NamedQuery(name="AutorisasiData.findByNama", query="SELECT u FROM AutorisasiData u WHERE u.person.nama like :nama"),
 	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.userName = :userName")	
 })
 public class AutorisasiData implements Serializable {
@@ -35,7 +35,7 @@ public class AutorisasiData implements Serializable {
 
     @JoinColumn(name = "person", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	private PersonData personData;
+	private PersonData person;
 		
 	@JoinColumn(name = "hak_akses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -63,12 +63,12 @@ public class AutorisasiData implements Serializable {
 		this.isVerified = isVerified;
 	}
 
-	public PersonData getPersonData() {
-		return personData;
+	public PersonData getPerson() {
+		return person;
 	}
 
-	public void setPersonData(PersonData personData) {
-		this.personData = personData;
+	public void setPerson(PersonData personData) {
+		this.person = personData;
 	}
 
 	public AutorisasiData() {

@@ -139,7 +139,7 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 			RegisterPerusahaanData registerPerusahaanData = registerPermohonanData != null ?
 					registerPermohonanData.getPerusahaanData() : null;
 			PelakuUsahaData pelakuUsahaData = registerPerusahaanData != null ? 
-					registerPerusahaanData.getPelakuUsahaData() : null;
+					registerPerusahaanData.getPelakuUsaha() : null;
 			PelakuUsaha pelakuUsaha = pelakuUsahaData != null ?
 					new PelakuUsaha(
 							pelakuUsahaData.getId(), 

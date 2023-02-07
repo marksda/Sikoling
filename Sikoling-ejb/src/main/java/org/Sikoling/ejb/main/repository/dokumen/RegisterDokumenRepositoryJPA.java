@@ -210,7 +210,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		MasterDokumenData masterDokumenData = d.getDokumenData();
 		AutorisasiData uploaderData = d.getUploader();
 		RegisterPerusahaanData registerPerusahaanData = d.getPerusahaanData();
-		PelakuUsahaData pelakuUsahaData = registerPerusahaanData.getPelakuUsahaData();
+		PelakuUsahaData pelakuUsahaData = registerPerusahaanData.getPelakuUsaha();
 		
 		NibOssData nibOssData = d.getNibOssData();
 		 
