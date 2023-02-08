@@ -13,14 +13,14 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
-import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
+import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 public class RegisterDokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = 1384518698621127848L;
 	private String id;
 	private DokumenDTO dokumen;
-	private PerusahaanDTO perusahaan;
+	private RegisterPerusahaanDTO perusahaan;
 	private String lokasiFile;
 	private StatusDokumenDTO statusDokumen;
 	private LocalDate tanggalRegistrasi;
@@ -56,7 +56,7 @@ public class RegisterDokumenDTO implements Serializable {
 				this.dokumen = null;
 			}
 			
-			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
+			this.perusahaan = t.getPerusahaan() != null ? new RegisterPerusahaanDTO(t.getPerusahaan()) : null;
 			this.lokasiFile = t.getLokasiFile();
 			this.statusDokumen = t.getStatusDokumen() != null ? new StatusDokumenDTO(t.getStatusDokumen()) : null;
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
@@ -89,11 +89,11 @@ public class RegisterDokumenDTO implements Serializable {
 		this.dokumen = dokumen;
 	}
 
-	public PerusahaanDTO getPerusahaan() {
+	public RegisterPerusahaanDTO getPerusahaan() {
 		return perusahaan;
 	}
 
-	public void setPerusahaan(PerusahaanDTO perusahaan) {
+	public void setPerusahaan(RegisterPerusahaanDTO perusahaan) {
 		this.perusahaan = perusahaan;
 	}
 
@@ -166,10 +166,8 @@ public class RegisterDokumenDTO implements Serializable {
 				.concat(dokumen.getId())
 				.concat(", namaDokumen=")
 				.concat(dokumen.getNama())
-				.concat(", idPerusahaan=")
+				.concat(", idRegisterPerusahaan=")
 				.concat(perusahaan.getId())
-				.concat(", namaPerusahaan=")
-				.concat(perusahaan.getNama())
 				.concat("}");	  
 	}
 
@@ -200,7 +198,7 @@ public class RegisterDokumenDTO implements Serializable {
 		return new RegisterDokumen(
 				id,
 				dokumen,
-				perusahaan != null ? perusahaan.toPerusahaan() : null,
+				perusahaan != null ? perusahaan.toRegisterPerusahaan() : null,
 				lokasiFile, 
 				statusDokumen != null ? statusDokumen.toStatusDokumen() : null,
 				tanggalRegistrasi, 

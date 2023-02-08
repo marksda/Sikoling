@@ -55,8 +55,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public DataConverter getDataConverter() {
-		return new DataConverter();
+	public DataConverter getDataConverter(EntityManager entityManager) {
+		return new DataConverter(entityManager);
 	}
 	
 	@Produces
@@ -214,12 +214,12 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public RegisterPermohonanRepositoryJPA getRegisterPermohonanRepositoryJPA(EntityManager entityManager) {
-		return new RegisterPermohonanRepositoryJPA(entityManager);
+	public RegisterPermohonanRepositoryJPA getRegisterPermohonanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new RegisterPermohonanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
-	public FlowLogRepositoryJPA getFlowLogRepositoryJPA(EntityManager entityManager) {
-		return new FlowLogRepositoryJPA(entityManager);
+	public FlowLogRepositoryJPA getFlowLogRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new FlowLogRepositoryJPA(entityManager, dataConverter);
 	}
 }

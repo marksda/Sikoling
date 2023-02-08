@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
@@ -33,11 +34,19 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
+import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
+import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
+import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.Kbli2020Data;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.NibOssData;
@@ -53,8 +62,16 @@ import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
+import org.Sikoling.ejb.main.repository.log.FlowLogData;
+import org.Sikoling.ejb.main.repository.log.FlowLogPermohonanData;
+import org.Sikoling.ejb.main.repository.log.KategoriLogData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.KategoriPengurusPermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
+import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
@@ -592,6 +609,112 @@ public class DataConverter {
 		return pegawai;		
 	}
 	
+	public KategoriPermohonan convertKategoriPermohonanDataToKategoriPermohonan(KategoriPermohonanData d) {
+		KategoriPermohonan kategoriPermohonan = null;
+		
+		if(d != null) {
+			kategoriPermohonan = new KategoriPermohonan(d.getId(), d.getNama());
+		}
+		
+		return kategoriPermohonan;
+	}
+	
+	public StatusWali convertKategoriPengurusPermohonanDataToStatusWali(KategoriPengurusPermohonanData d) {
+		StatusWali statusWali = null;
+		
+		if(d != null) {
+			statusWali = new StatusWali(d.getId(), d.getNama());
+		}
+		
+		return statusWali;
+	}
+	
+	public PosisiTahapPemberkasan convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(PosisiTahapPemberkasanData d) {
+		PosisiTahapPemberkasan statusTahapPemberkasan = null;
+		
+		if(d != null) {
+			statusTahapPemberkasan = new PosisiTahapPemberkasan(
+					d.getId(), 
+					d.getNama(), 
+					d.getKeterangan()
+					); 
+		}
+		
+		return statusTahapPemberkasan;
+	}
+	
+	public List<RegisterDokumen> convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(List<DokumenPersyaratanPermohonanData> d) {
+		List<RegisterDokumen> daftarRegisterDokumen = new ArrayList<RegisterDokumen>();
+		Iterator<DokumenPersyaratanPermohonanData> iter = d.iterator();
+		
+		DokumenPersyaratanPermohonanData dokumenPersyaratanPermohonanData = null;
+		RegisterDokumen item;
+		while (iter.hasNext()) {
+			dokumenPersyaratanPermohonanData = (DokumenPersyaratanPermohonanData) iter.next();					
+			item = convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(dokumenPersyaratanPermohonanData.getRegisterDokumen());
+			daftarRegisterDokumen.add(item);
+		}
+		
+		return daftarRegisterDokumen;
+	}
+	
+	public RegisterPermohonan convertRegisterPermohonanDataToRegisterPermohonan(RegisterPermohonanData d) {
+		RegisterPermohonan registerPermohonan = null;
+		
+		if(d != null) {			
+			registerPermohonan = new RegisterPermohonan(
+										d.getId(), 
+										convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
+										d.getTanggalRegistrasi(), 
+										convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData()), 
+										convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
+										convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
+										convertPersonDataToPerson(d.getPenanggungJawab()),
+										convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanData()), 
+										convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
+										null
+										);
+		}
+		
+		return registerPermohonan;
+		
+	}
+
+	public KategoriFlowLog convertKategoriFlowLogDataToKategoriFlowLog(KategoriLogData d) {
+		KategoriFlowLog kategoriFlowLog = null;
+		
+		if(d != null) {			
+			kategoriFlowLog = new KategoriFlowLog(d.getNama(), d.getNama());
+		}
+		
+		return kategoriFlowLog;
+		
+	}
+	
+	public FlowLog convertFlowLogDataToFlowLog(FlowLogData d) {
+		FlowLog flowLog = null;
+		
+		if(d != null) {
+			KategoriFlowLog kategoriFlowLog = convertKategoriFlowLogDataToKategoriFlowLog(d.getKategoriLogData());
+			
+			if(kategoriFlowLog.getId().equals("1")) {
+				flowLog = new FlowLogPermohonan(
+						d.getId(), 
+						d.getTanggal(), 
+						kategoriFlowLog, 
+						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanData()), 
+						d.getKeterangan(), 
+						convertAutorisasiDataToAuthority(d.getPengaksesData()), 
+						convertRegisterPermohonanDataToRegisterPermohonan(d.getFlowLogPermohonanData().getRegisterPermohonan())
+						);
+			}
+			
+			
+		}
+		
+		return flowLog;	
+	}
+
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanDataToJabatan(Jabatan t) {
@@ -818,7 +941,8 @@ public class DataConverter {
 		PegawaiPerusahaanData pegawaiPerusahaanData = new PegawaiPerusahaanData();
 		
 		if(t != null) {
-			pegawaiPerusahaanData.setId(t.getId());
+			String id = t.getId();
+			pegawaiPerusahaanData.setId(id != null ? id: getGenerateIdPegawaiPerusahaan(t.getPerusahaan().getId(), t.getJabatan().getId(), t.getPerson().getNik()));
 			pegawaiPerusahaanData.setPersonData(convertPersonToPersonData(t.getPerson()));
 			pegawaiPerusahaanData.setRegisterPerusahaanData(convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()));
 			pegawaiPerusahaanData.setJabatanData(convertJabatanDataToJabatan(t.getJabatan()));			
@@ -910,6 +1034,54 @@ public class DataConverter {
 		return rekomendasiDPLHData;
 	}
 	
+	public RegisterKbliData convertRegisterKbliToRegisterKbliData(RegisterKbli t) {
+		RegisterKbliData registerKbliData = null;
+		
+		if(t != null) {
+			registerKbliData = new RegisterKbliData();
+			NibOssData nibOssData = new NibOssData();
+			nibOssData.setNomor(t.getIdNib());
+			registerKbliData.setNib(nibOssData);
+			
+			Kbli2020Data kbli2020Data = new Kbli2020Data();
+			kbli2020Data.setId(t.getIdKbli());			
+			registerKbliData.setKbli(kbli2020Data);
+			
+		}
+		
+		return registerKbliData;
+	}
+	
+	public List<RegisterKbliData> convertDaftarRegisterKbliToDaftarRegisterKbliData(List<RegisterKbli> t) {
+		List<RegisterKbliData> daftarRegisterKbliData = null;
+		
+		if(t != null) {
+			daftarRegisterKbliData = new ArrayList<RegisterKbliData>();
+			for(RegisterKbli item : t) {		
+				RegisterKbliData registerKbliData = convertRegisterKbliToRegisterKbliData(item);
+				if(registerKbliData != null) {
+					daftarRegisterKbliData.add(registerKbliData);
+				}				
+			}
+		}
+		
+		return daftarRegisterKbliData;
+	}
+	
+	public NibOssData convertNibOssToNibOssData(NibOss t, String idRegisterDokumen) {
+		NibOssData nibOssData = null;
+		
+		if(t != null) {
+			List<RegisterKbliData> daftarRegisterKbliData = convertDaftarRegisterKbliToDaftarRegisterKbliData(t.getDaftarKbli());
+			nibOssData = new NibOssData();
+			nibOssData.setNomor(t.getNomor());
+			nibOssData.setTanggalPenetapan(t.getTanggal());
+			nibOssData.setDaftarKbli(daftarRegisterKbliData);
+		}
+		
+		return nibOssData;
+	}
+		
 	public RegisterDokumenData convertRegisterDokumenToRegisterDokumenData(RegisterDokumen t) {
 		RegisterDokumenData registerDokumenData = null;
 		
@@ -956,6 +1128,127 @@ public class DataConverter {
 		return registerDokumenData;
 	}
 		
+	public KategoriPermohonanData convertKategoriPermohonanToKategoriPermohonanData(KategoriPermohonan t) {
+		KategoriPermohonanData kategoriPermohonanData = null;
+		
+		if(t != null) {
+			kategoriPermohonanData = new KategoriPermohonanData();
+			kategoriPermohonanData.setId(t.getId());
+			kategoriPermohonanData.setNama(t.getNama());
+		}
+		
+		return kategoriPermohonanData;
+	}
+	
+	public KategoriPengurusPermohonanData convertStatusWaliToKategoriPengurusPermohonanData(StatusWali t) {
+		KategoriPengurusPermohonanData KategoriPengurusPermohonanData = null;
+		
+		if(t != null) {
+			KategoriPengurusPermohonanData = new KategoriPengurusPermohonanData();
+			KategoriPengurusPermohonanData.setId(t.getId());
+			KategoriPengurusPermohonanData.setNama(t.getNama());
+		}
+		
+		return KategoriPengurusPermohonanData;
+	}
+	
+	public PosisiTahapPemberkasanData convertStatusTahapPemberkasanToStatusTahapPemberkasanData(PosisiTahapPemberkasan t) {
+		PosisiTahapPemberkasanData posisiTahapPemberkasanData = null;
+		
+		if(t != null) {
+			posisiTahapPemberkasanData = new PosisiTahapPemberkasanData();
+			posisiTahapPemberkasanData.setId(t.getId());
+			posisiTahapPemberkasanData.setNama(t.getNama());
+			posisiTahapPemberkasanData.setKeterangan(t.getKeterangan());
+		}
+		
+		return posisiTahapPemberkasanData;
+	}
+	
+	public List<DokumenPersyaratanPermohonanData> convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(List<RegisterDokumen> t, RegisterPermohonanData registerPermohonanData) {
+		List<DokumenPersyaratanPermohonanData> daftarDokumenPersyaratanPermohonan = null;
+		
+		if(t != null) {
+			daftarDokumenPersyaratanPermohonan = new ArrayList<DokumenPersyaratanPermohonanData>();
+			for(RegisterDokumen item : t) {		
+				RegisterDokumenData registerDokumenData = convertRegisterDokumenToRegisterDokumenData(item);
+				if(registerDokumenData != null) {
+					DokumenPersyaratanPermohonanData dokumenPersyaratanPermohonanData = new DokumenPersyaratanPermohonanData();
+					dokumenPersyaratanPermohonanData.setRegisterDokumen(registerDokumenData);
+					dokumenPersyaratanPermohonanData.setRegisterPermohonan(registerPermohonanData);
+					daftarDokumenPersyaratanPermohonan.add(dokumenPersyaratanPermohonanData);
+				}				
+			}
+			
+		}
+		
+		return daftarDokumenPersyaratanPermohonan;
+	}
+		
+	public RegisterPermohonanData convertRegisterPermohonanToRegisterPermohonanData(RegisterPermohonan t) {
+		RegisterPermohonanData registerPermohonanData = null;
+		
+		if(t != null) {
+			String id = t.getId();
+			registerPermohonanData = new RegisterPermohonanData();
+			registerPermohonanData.setId(id != null ? id : getGenerateIdRegisterPermohonan());
+			registerPermohonanData.setKategoriPermohonanData(
+					convertKategoriPermohonanToKategoriPermohonanData(t.getKategoriPermohonan()));			
+			registerPermohonanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
+			registerPermohonanData.setPerusahaanData(convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()));
+			registerPermohonanData.setAutorisasiData(convertAuthorityToAutorisasiData(t.getPengurusPermohonan()));
+			registerPermohonanData.setKategoriPengurusPermohonanData(
+					convertStatusWaliToKategoriPengurusPermohonanData(t.getStatusWaliPengurusPermohonan()));
+			registerPermohonanData.setPosisiTahapPemberkasanData(
+					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPosisiBerkas()));	
+			registerPermohonanData.setPenanggungJawab(convertPersonToPersonData(t.getPenanggungJawabPermohonan()));			
+			registerPermohonanData.setDaftarDokumenSyarat(
+					convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat(), registerPermohonanData)
+					);
+		}
+		
+		return registerPermohonanData;
+	}
+	
+	public KategoriLogData convertKategoriFlowLogToKategoriFlowLogData(KategoriFlowLog t) {
+		KategoriLogData kategoriLogData = null;
+		
+		if(t != null) {			
+			kategoriLogData = new KategoriLogData();
+			kategoriLogData.setId(t.getId());
+			kategoriLogData.setNama(t.getNama());
+		}
+		
+		return kategoriLogData;		
+	}
+	
+	public FlowLogData convertFlowLogToFlowLogData(FlowLog t) {
+		FlowLogData flowLogData = new FlowLogData();
+		
+		if(t != null) {
+			String id = t.getId();
+			KategoriLogData kategoriLogData = convertKategoriFlowLogToKategoriFlowLogData(t.getKategoriFlowLog());
+			
+			if(kategoriLogData.getId().equals("1")) {
+				FlowLogPermohonan flowLogPermohonan = (FlowLogPermohonan) t;
+				flowLogData = new FlowLogData();
+				flowLogData.setId(id != null ? id : getGenerateIdFlowLogData());
+				flowLogData.setTanggal(flowLogPermohonan.getTanggal());
+				flowLogData.setKategoriLogData(kategoriLogData);
+				flowLogData.setPosisiTahapPemberkasanData(
+						convertStatusTahapPemberkasanToStatusTahapPemberkasanData(flowLogPermohonan.getPosisiTahapPemberkasan()));
+				flowLogData.setKeterangan(flowLogPermohonan.getKeterangan());
+				flowLogData.setPengaksesData(convertAuthorityToAutorisasiData(flowLogPermohonan.getPengakses()));
+				FlowLogPermohonanData flowLogPermohonanData = new FlowLogPermohonanData();
+				flowLogPermohonanData.setFlowLog(flowLogData);
+				flowLogPermohonanData.setRegisterPermohonan(convertRegisterPermohonanToRegisterPermohonanData(flowLogPermohonan.getRegisterPermohonan()));
+				flowLogData.setFlowLogPermohonanData(flowLogPermohonanData);
+			}
+		}
+		
+		return flowLogData;
+	}
+	
 	/*----------id generator function---------------*/
 	private String getGenerateIdRegisterPerusahaan() {
 		int tahun = LocalDate.now().getYear();
@@ -997,6 +1290,54 @@ public class DataConverter {
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {	
 			hasil = "000001";			
+			return hasil.concat(Integer.toString(tahun));
+		}		
+	}
+	
+	private String getGenerateIdRegisterPermohonan() {
+		int tahun = LocalDate.now().getYear();
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(rd.id) "
+				+ "FROM RegisterPermohonanData rd "
+				+ "WHERE EXTRACT(YEAR FROM rd.tanggalRegistrasi) = :tahun");
+		
+		q.setParameter("tahun", tahun);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			hasil = hasil.substring(0, 6);
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 6, '0');
+			return hasil.concat(Integer.toString(tahun));
+		} catch (Exception e) {	
+			hasil = "000001";			
+			return hasil.concat(Integer.toString(tahun));
+		}		
+	}
+	
+	private String getGenerateIdPegawaiPerusahaan(String idRegisterPerusahaan, String idJabatan, String nik) {
+		return idRegisterPerusahaan.concat(idJabatan).concat(nik);
+	}
+	
+	private String getGenerateIdFlowLogData() {
+		int tahun = LocalDate.now().getYear();
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(fl.id) "
+				+ "FROM FlowLogData fl "
+				+ "WHERE EXTRACT(YEAR FROM fl.tanggal) = :tahun");
+		
+		q.setParameter("tahun", tahun);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			hasil = hasil.substring(0, 7);
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 7, '0');
+			return hasil.concat(Integer.toString(tahun));
+		} catch (Exception e) {			
+			hasil = "0000001";			
 			return hasil.concat(Integer.toString(tahun));
 		}		
 	}

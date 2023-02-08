@@ -24,7 +24,6 @@ public class PerusahaanDTO implements Serializable {
 	private AlamatDTO alamat;
 	private KontakDTO kontak;
 	private List<RegisterDokumenDTO> daftarRegisterDokumen;
-	private Boolean statusVerifikasi;
 	
 	public PerusahaanDTO() {		
 	}
@@ -42,7 +41,6 @@ public class PerusahaanDTO implements Serializable {
 									.stream()
 									.map(item -> new RegisterDokumenDTO(item))
 									.collect(Collectors.toList()) : null;
-			this.statusVerifikasi = t.isStatusVerifikasi() != null ? t.isStatusVerifikasi() : null;
 		}
 	}	
 	
@@ -110,14 +108,6 @@ public class PerusahaanDTO implements Serializable {
 		this.daftarRegisterDokumen = daftarRegisterDokumen;
 	}
 
-	public Boolean isStatusVerifikasi() {
-		return statusVerifikasi;
-	}
-
-	public void setStatusVerifikasi(Boolean statusVerifikasi) {
-		this.statusVerifikasi = statusVerifikasi;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -175,8 +165,7 @@ public class PerusahaanDTO implements Serializable {
 						daftarRegisterDokumen.stream()
 						.map(item -> item.toRegisterDokumen())
 						.collect(Collectors.toList())
-						: null, 
-				statusVerifikasi
+						: null
 				);
 	}	
 }

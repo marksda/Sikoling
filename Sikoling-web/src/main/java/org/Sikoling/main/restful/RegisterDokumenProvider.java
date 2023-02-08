@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
-import org.Sikoling.main.restful.perusahaan.PerusahaanDTO;
+import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -63,7 +63,7 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 					}
 		         }
 		         else if(key.equals("perusahaan")) {
-		        	 PerusahaanDTO perusahaanDTO = jsonb.fromJson(jsonObject.toString(), PerusahaanDTO.class);
+		        	 RegisterPerusahaanDTO perusahaanDTO = jsonb.fromJson(jsonObject.toString(), RegisterPerusahaanDTO.class);
 		        	 registerDokumenDTO.setPerusahaan(perusahaanDTO);
 		         }
 		         
