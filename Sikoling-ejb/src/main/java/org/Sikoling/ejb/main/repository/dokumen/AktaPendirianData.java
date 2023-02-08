@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
+import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -35,7 +35,7 @@ public class AktaPendirianData implements Serializable {
 	
 	@JoinColumn(name = "penanggung_jawab_perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@OneToOne(optional = false)
-	private PegawaiData penanggungJawabData;
+	private PegawaiPerusahaanData penanggungJawabData;
 
 	@MapsId
 	@OneToOne
@@ -77,11 +77,11 @@ public class AktaPendirianData implements Serializable {
 		this.notaris = notaris;
 	}
 
-	public PegawaiData getPenanggungJawabData() {
+	public PegawaiPerusahaanData getPenanggungJawabData() {
 		return penanggungJawabData;
 	}
 
-	public void setPenanggungJawabData(PegawaiData penanggungJawabData) {
+	public void setPenanggungJawabData(PegawaiPerusahaanData penanggungJawabData) {
 		this.penanggungJawabData = penanggungJawabData;
 	}
 

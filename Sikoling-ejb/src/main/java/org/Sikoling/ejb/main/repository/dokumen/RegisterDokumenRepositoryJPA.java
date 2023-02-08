@@ -29,12 +29,13 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.StatusDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
+import org.Sikoling.ejb.main.repository.DataConverter;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
+import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -42,65 +43,36 @@ import jakarta.persistence.Query;
 public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository {
 
 	private final EntityManager entityManager;	
+	private final DataConverter dataConverter;
 	
-	public RegisterDokumenRepositoryJPA(EntityManager entityManager) {
+	public RegisterDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
+		this.dataConverter = dataConverter;
 	}
-	
+
 	@Override
 	public List<RegisterDokumen> getAll() {
 		return entityManager.createNamedQuery("RegisterDokumenData.findAll", RegisterDokumenData.class)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public RegisterDokumen save(RegisterDokumen t) {
-		RegisterDokumenData registerDokumenData = convertRegisterDokumenToRegisterDokumenData(t);
-		Dokumen dokumen = t.getDokumen();
-		if(dokumen instanceof SuratArahan) {
-			registerDokumenData.setSuratArahanData(null);
-			entityManager.persist(registerDokumenData);	
-		}
-		else if(dokumen instanceof LampiranSuratArahan) {			
-			registerDokumenData.setLampiranSuratArahanData(null);
-			entityManager.persist(registerDokumenData);	
-		}
-		else if(dokumen instanceof AktaPendirian) {
-			registerDokumenData.setAktaPendirianData(null);
-			entityManager.persist(registerDokumenData);	
-		}
-		else if(dokumen instanceof RekomendasiUKLUPL) {
-			registerDokumenData.setRekomendasiUKLUPLData(null);
-			entityManager.persist(registerDokumenData);	
-		}
-		else if(dokumen instanceof RekomendasiDPLH) {			
-			registerDokumenData.setRekomendasiDPLHData(null);
-			entityManager.persist(registerDokumenData);	
-		}
-		else if(dokumen instanceof NibOss) {			
-			NibOssData nibOssData = registerDokumenData.getNibOssData();
-			RegisterDokumenData regDokData = new RegisterDokumenData();
-			regDokData.setId(registerDokumenData.getId());
-			nibOssData.setRegisterDokumenData(regDokData);
-
-			registerDokumenData.setNibOssData(null);
-			
-			entityManager.persist(registerDokumenData);	
-			entityManager.persist(nibOssData);
-		}
-
-		entityManager.flush();		
-		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
+	public RegisterDokumen save(RegisterDokumen t) {		
+		RegisterDokumenData registerDokumenData = dataConverter.convertRegisterDokumenToRegisterDokumenData(t);
+		registerDokumenData.setId(getGenerateIdRegisterDokumen());
+		entityManager.persist(registerDokumenData);
+		entityManager.flush();
+		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 	}
 	
 	@Override
 	public RegisterDokumen update(RegisterDokumen t) {
-		RegisterDokumenData registerDokumenData = convertRegisterDokumenToRegisterDokumenData(t);
+		RegisterDokumenData registerDokumenData = dataConverter.convertRegisterDokumenToRegisterDokumenData(t);
 		registerDokumenData = entityManager.merge(registerDokumenData);
-		return convertRegisterDokumenDataToRegisterDokumen(registerDokumenData);
+		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 	}
 	
 	@Override
@@ -110,7 +82,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertRegisterDokumenDataToRegisterDokumen(t))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}
 	
@@ -121,7 +93,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setParameter("namaPerusahaan", namaPerusahaan)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}
 	
@@ -134,7 +106,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertRegisterDokumenDataToRegisterDokumen(t))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}	
 	
@@ -144,7 +116,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setParameter("idPerusahaan", idPerusahaan)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}	
 	
@@ -156,7 +128,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertRegisterDokumenDataToRegisterDokumen(t))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}	
 	
@@ -167,7 +139,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setParameter("namaDokumen", namaDokumen)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}	
 	
@@ -180,7 +152,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}	
 	
@@ -190,7 +162,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setParameter("idDokumen", idDokumen)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}
 		
@@ -202,322 +174,10 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(d -> convertRegisterDokumenDataToRegisterDokumen(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}
-	
-	private RegisterDokumen convertRegisterDokumenDataToRegisterDokumen(RegisterDokumenData d) {
-		MasterDokumenData masterDokumenData = d.getDokumenData();
-		AutorisasiData uploaderData = d.getUploader();
-		RegisterPerusahaanData registerPerusahaanData = d.getPerusahaanData();
-		PelakuUsahaData pelakuUsahaData = registerPerusahaanData.getPelakuUsaha();
-		
-		NibOssData nibOssData = d.getNibOssData();
-		 
-		if(d.getSuratArahanData() != null) {
-			SuratArahanData suratArahanData = d.getSuratArahanData();
-			return new RegisterDokumen(
-					d.getId(), 
-					new SuratArahan(
-							masterDokumenData.getId(), 
-							masterDokumenData.getNama(), 
-							null, 
-							suratArahanData.getNoSurat(), 
-							suratArahanData.getTanggalSurat(), 
-							suratArahanData.getPerihalSurat(), 
-							suratArahanData.getUraianKegiatan()
-							), 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null, 
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					d.getLokasiFile(), 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(), 
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-		else if(d.getAktaPendirianData() != null) {
-			AktaPendirianData aktaPendirianData = d.getAktaPendirianData();
-			
-			return new RegisterDokumen(
-					d.getId(), 
-					new AktaPendirian(
-							masterDokumenData.getId(), 
-							masterDokumenData.getNama(), 
-							null, 
-							aktaPendirianData.getNomor(), 
-							aktaPendirianData.getTanggal(), 
-							aktaPendirianData.getNotaris(), 
-							aktaPendirianData.getPenanggungJawabData() != null ?
-									convertPegawaiDataToPegawai(
-											aktaPendirianData.getPenanggungJawabData()
-											) : null
-							), 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null, 
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					d.getLokasiFile(), 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(),
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-		else if(d.getLampiranSuratArahanData() != null) {
-			LampiranSuratArahanData lampiranSuratArahanData = d.getLampiranSuratArahanData();
-			
-			return new RegisterDokumen(
-					d.getId(), 
-					new LampiranSuratArahan(
-							masterDokumenData.getId(), 
-							masterDokumenData.getNama(), 
-							null, 
-							lampiranSuratArahanData.getNoSurat(), 
-							lampiranSuratArahanData.getTanggalSurat()
-							), 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null, 
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					d.getLokasiFile(), 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(),
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-		else if(d.getRekomendasiUKLUPLData() != null) {
-			RekomendasiUKLUPLData rekomendasiUKLUPLData = d.getRekomendasiUKLUPLData();
-			
-			return new RegisterDokumen(
-					d.getId(), 
-					new RekomendasiUKLUPL(
-							masterDokumenData.getId(), 
-							masterDokumenData.getNama(), 
-							null, 
-							rekomendasiUKLUPLData.getNoSurat(), 
-							rekomendasiUKLUPLData.getTanggalSurat(),
-							rekomendasiUKLUPLData.getPerihalSurat()
-							), 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null,
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					d.getLokasiFile(), 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(),
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-		else if(d.getRekomendasiDPLHData() != null) {
-			RekomendasiDPLHData rekomendasiDPLHData = d.getRekomendasiDPLHData();
-			
-			return new RegisterDokumen(
-					d.getId(), 
-					new RekomendasiUKLUPL(
-							masterDokumenData.getId(), 
-							masterDokumenData.getNama(), 
-							null, 
-							rekomendasiDPLHData.getNoSurat(), 
-							rekomendasiDPLHData.getTanggalSurat(),
-							rekomendasiDPLHData.getPerihalSurat()
-							), 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null,
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					d.getLokasiFile(), 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(),
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-		else if(nibOssData != null) {
-//			NibOssData nibOssData = d.getNibOssData();
-			
-			return new RegisterDokumen(
-					d.getId(), 
-					new NibOss(
-							masterDokumenData.getId(), 
-							masterDokumenData.getNama(), 
-							null, 
-							nibOssData.getNomor(), 
-							nibOssData.getTanggalPenetapan(),
-							toDaftarRegisterKbli(nibOssData.getDaftarKbli())
-							), 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null,
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					d.getLokasiFile(), 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(),
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-		else {
-			return new RegisterDokumen(
-					d.getId(), 
-					null, 
-					new Perusahaan(
-							registerPerusahaanData.getNpwp(), 
-							registerPerusahaanData.getNama(), 
-							null, 
-							null, 
-							pelakuUsahaData != null ? new PelakuUsaha(
-									pelakuUsahaData.getId(), 
-									pelakuUsahaData.getNama(), 
-									pelakuUsahaData.getSingkatan(), 
-									null
-								) : null,
-							null, 
-							null, 
-							null, 
-							registerPerusahaanData.getStatusVerifikasi()
-							), 
-					null, 
-					d.getStatusDokumen() != null ? new StatusDokumen(
-							d.getStatusDokumen().getId(), d.getStatusDokumen().getNama()) : null,
-					d.getTanggalRegistrasi(), 
-					new Authority(
-							uploaderData.getId(),
-							null, 
-							null, 
-							null, 
-							null, 
-							uploaderData.getUserName()
-							),
-					d.getStatusVerified()
-					);
-		}
-	}
-	
+
 	private RegisterDokumenData convertRegisterDokumenToRegisterDokumenData(RegisterDokumen t) {
 		Dokumen dokumen = t.getDokumen();
 		
@@ -573,7 +233,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			aktaPendirianData.setNomor(aktaPendirian.getNomor());
 			aktaPendirianData.setTanggal(aktaPendirian.getTanggal());
 			aktaPendirianData.setNotaris(aktaPendirian.getNamaNotaris());
-			PegawaiData pegawaiData = new PegawaiData();
+			PegawaiPerusahaanData pegawaiData = new PegawaiPerusahaanData();
 			pegawaiData.setId(aktaPendirian.getPenanggungJawab().getId());
 			aktaPendirianData.setPenanggungJawabData(pegawaiData);
 			registerDokumenData.setAktaPendirianData(aktaPendirianData);
@@ -641,7 +301,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
 	}
 	
-	private Pegawai convertPegawaiDataToPegawai(PegawaiData d) {
+	private Pegawai convertPegawaiDataToPegawai(PegawaiPerusahaanData d) {
 		JabatanData jabatanData = d.getJabatanData();
 		PersonData personData = d.getPersonData();
 		AlamatData alamatPersonData = personData != null ? personData.getAlamat() : null;

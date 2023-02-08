@@ -54,7 +54,8 @@ public class PerusahaanController {
 								LocalDate.now(), 
 								kreator, 
 								null, 
-								d.toPerusahaan()
+								d.toPerusahaan(),
+								false
 								)
 						)
 				);

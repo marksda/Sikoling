@@ -540,34 +540,28 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	
 	private RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {
 		RegisterPerusahaan registerPerusahaan = null; 
-		Authority kreator = convertAutorisasiDataToAuthority(d.getKreator());
-		Authority verifikator = convertAutorisasiDataToAuthority(d.getVerifikator());
-		ModelPerizinan modelPerizinan = convertModelPerizinanDataToModelPerizinan(d.getModelPerizinanData());
-		SkalaUsaha skalaUsaha = convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData());
-		PelakuUsaha pelakuUsaha = convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsaha());
-		Alamat alamat = convertAlamatDataToAlamat(d.getAlamatPerusahaanData());
-		Kontak kontak = convertKontakDataToKontak(d.getKontakPerusahaanData());
-		List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumen(d.getDaftarRegisterDokumenData());
-		
-		Perusahaan perusahaan = new Perusahaan(
-				d.getNpwp(), 
-				d.getNama(), 
-				modelPerizinan, 
-				skalaUsaha, 
-				pelakuUsaha, 
-				alamat, 
-				kontak, 
-				daftarRegisterDokumen, 
-				d.getStatusVerifikasi()
-				);
 		
 		if( d != null) {
+			List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumen(d.getDaftarRegisterDokumenData());
+			
+			Perusahaan perusahaan = new Perusahaan(
+					d.getNpwp(), 
+					d.getNama(), 
+					convertModelPerizinanDataToModelPerizinan(d.getModelPerizinanData()), 
+					convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData()), 
+					convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsaha()), 
+					convertAlamatDataToAlamat(d.getAlamatPerusahaanData()), 
+					convertKontakDataToKontak(d.getKontakPerusahaanData()), 
+					daftarRegisterDokumen
+					);
+			
 			registerPerusahaan = new RegisterPerusahaan(
 					d.getId(), 
 					d.getTanggalRegistrasi(), 
-					kreator, 
-					verifikator, 
-					perusahaan
+					convertAutorisasiDataToAuthority(d.getKreator()), 
+					convertAutorisasiDataToAuthority(d.getVerifikator()), 
+					perusahaan,
+					d.getStatusVerifikasi()
 					);
 		}
 		

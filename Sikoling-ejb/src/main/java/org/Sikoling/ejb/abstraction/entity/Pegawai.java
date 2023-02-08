@@ -7,11 +7,11 @@ public class Pegawai implements Serializable {
 
 	private static final long serialVersionUID = -7780214246997693171L;
 	private final String id;
-	private final Perusahaan perusahaan;
+	private final RegisterPerusahaan perusahaan;
 	private final Person person;
 	private final Jabatan jabatan;
 	
-	public Pegawai(String id, Perusahaan perusahaan, Person person, Jabatan jabatan) {
+	public Pegawai(String id, RegisterPerusahaan perusahaan, Person person, Jabatan jabatan) {
 		this.id = id;
 		this.perusahaan = perusahaan;
 		this.person = person;
@@ -30,7 +30,7 @@ public class Pegawai implements Serializable {
 		return id;
 	}
 
-	public Perusahaan getPerusahaan() {
+	public RegisterPerusahaan getPerusahaan() {
 		return perusahaan;
 	}
 

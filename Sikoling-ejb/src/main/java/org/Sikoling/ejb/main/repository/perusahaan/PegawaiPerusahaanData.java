@@ -19,9 +19,10 @@ import jakarta.persistence.Table;
 @Table(name="transaksi.tbl_pegawai_perusahaan")
 @NamedQueries({
 	@NamedQuery(name="PegawaiData.findAll", query="SELECT d FROM PegawaiData d"),
-	@NamedQuery(name="PegawaiData.findByIdPerusahaan", query="SELECT d FROM PegawaiData d WHERE d.registerPerusahaanData.npwp = :npwpPerusahaan")
+	@NamedQuery(name="PegawaiData.findByQueryNama", query="SELECT d FROM PegawaiData d WHERE d.personData.nama LIKE :nama"),
+	@NamedQuery(name="PegawaiData.findByIdPerusahaan", query="SELECT d FROM PegawaiData d WHERE d.registerPerusahaanData.id = :idRegisterPerusahaan")
 })
-public class PegawaiData implements Serializable {
+public class PegawaiPerusahaanData implements Serializable {
 
 	private static final long serialVersionUID = -5313775851019211468L;
 	
@@ -40,7 +41,7 @@ public class PegawaiData implements Serializable {
 	@ManyToOne(optional = false)
 	private JabatanData jabatanData;
 
-	public PegawaiData() {
+	public PegawaiPerusahaanData() {
 	}
 
 	public String getId() {
@@ -78,7 +79,6 @@ public class PegawaiData implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -86,7 +86,6 @@ public class PegawaiData implements Serializable {
 		hash = 1371 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -102,7 +101,7 @@ public class PegawaiData implements Serializable {
             return false;
         }
         
-        final PegawaiData other = (PegawaiData) obj;
+        final PegawaiPerusahaanData other = (PegawaiPerusahaanData) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;

@@ -11,14 +11,14 @@ public class RegisterDokumen implements Serializable {
 	private static final long serialVersionUID = 5607669072989245707L;
 	private final String id;
 	private final Dokumen dokumen;
-	private final Perusahaan perusahaan;
+	private final RegisterPerusahaan perusahaan;
 	private final String lokasiFile;
 	private final StatusDokumen statusDokumen;
 	private final LocalDate tanggalRegistrasi;
 	private final Authority uploader;
 	private final Boolean statusVerified;
 
-	public RegisterDokumen(String id, Dokumen dokumen, Perusahaan perusahaan, String lokasiFile,
+	public RegisterDokumen(String id, Dokumen dokumen, RegisterPerusahaan perusahaan, String lokasiFile,
 			StatusDokumen statusDokumen, LocalDate tanggalRegistrasi, Authority uploader, Boolean statusVerified) {
 		this.id = id;
 		this.dokumen = dokumen;
@@ -50,7 +50,7 @@ public class RegisterDokumen implements Serializable {
 		return dokumen;
 	}
 
-	public Perusahaan getPerusahaan() {
+	public RegisterPerusahaan getPerusahaan() {
 		return perusahaan;
 	}
 

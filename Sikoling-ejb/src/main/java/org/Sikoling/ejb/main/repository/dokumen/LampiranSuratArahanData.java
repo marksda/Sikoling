@@ -35,6 +35,7 @@ public class LampiranSuratArahanData implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private RegisterDokumenData registerDokumenData;
+	
 	public LampiranSuratArahanData() {
 	}
 

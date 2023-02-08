@@ -12,14 +12,16 @@ public class RegisterPerusahaan implements Serializable {
 	private final Authority kreator;
 	private final Authority verifikator;
 	private final Perusahaan perusahaan;
+	private final Boolean statusVerifikasi;	
 	
-	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Authority kreator, 
-			Authority verifikator, Perusahaan perusahaan) {
+	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Authority kreator, Authority verifikator,
+			Perusahaan perusahaan, Boolean statusVerifikasi) {
 		this.id = id;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.kreator = kreator;
 		this.verifikator = verifikator;
 		this.perusahaan = perusahaan;
+		this.statusVerifikasi = statusVerifikasi;
 	}
 
 	public String getId() {
@@ -45,6 +47,11 @@ public class RegisterPerusahaan implements Serializable {
 	public Perusahaan getPerusahaan() {
 		return perusahaan;
 	}
+	
+	public Boolean getStatusVerifikasi() {
+		return statusVerifikasi;
+	}
+
 	
 	@Override
 	public int hashCode() {

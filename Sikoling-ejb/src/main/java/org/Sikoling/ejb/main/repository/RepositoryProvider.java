@@ -26,6 +26,7 @@ import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanSuratArahan
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.StatusPengurusPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
+import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
@@ -128,6 +129,11 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
+	public PegawaiPerusahaanRepositoryJPA getPegawaiPerusahaanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new PegawaiPerusahaanRepositoryJPA(entityManager, dataConverter);
+	}
+	
+	@Produces
 	public KategoriProdukRepositoryJPA getKategoriProdukRepositoryJPA(EntityManager entityManager) {
 		return new KategoriProdukRepositoryJPA(entityManager);
 	}
@@ -178,8 +184,8 @@ public class RepositoryProvider {
 	}
 		
 	@Produces
-	public RegisterDokumenRepositoryJPA getRegisterDokumenRepositoryJPA(EntityManager entityManager) {
-		return new RegisterDokumenRepositoryJPA(entityManager);
+	public RegisterDokumenRepositoryJPA getRegisterDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new RegisterDokumenRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
