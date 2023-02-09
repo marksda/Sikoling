@@ -24,7 +24,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_register_permohonan")
 @NamedQueries({
-	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p")
+	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p"),
+	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p WHERE p.autorisasiData.id = :idKreator")
 })
 public class RegisterPermohonanData implements Serializable {
 

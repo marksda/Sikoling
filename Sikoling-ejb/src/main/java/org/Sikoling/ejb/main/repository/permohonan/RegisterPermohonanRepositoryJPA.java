@@ -58,7 +58,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	@Override
 	public List<RegisterPermohonan> getByIdPengakses(String idPengakses) {
 		return entityManager.createNamedQuery("RegisterPermohonanData.findByPengakses", RegisterPermohonanData.class)
-				.setParameter("idPengakses", idPengakses)
+				.setParameter("idKreator", idPengakses)
 				.getResultList()
 				.stream()
 				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))

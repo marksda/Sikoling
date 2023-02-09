@@ -118,6 +118,34 @@ public class FileController {
 		return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
 	
+	@Path("nosec/{subPath}/{fileKey}")
+    @GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    public InputStream loadFile(@PathParam("subPath") String subPath, @PathParam("fileKey") String fileKey) throws IOException {
+        return storageService.load(subPath, fileKey);
+    }
+	
+	@Path("nosecure/dok/{npwp}/{fileKey}")
+    @GET
+    @Produces("application/pdf")
+    public InputStream loadFileNoSecure(@PathParam("npwp") String npwp, @PathParam("fileKey") String fileKey) throws IOException {
+		String subPath = "dok"
+        		.concat(File.separator)
+        		.concat(npwp);
+		return storageService.load(subPath, fileKey);
+    }
+	
+	@Path("sec/dok/{npwp}/{fileKey}")
+    @GET
+    @RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public InputStream loadFileSecure(@PathParam("npwp") String npwp, @PathParam("fileKey") String fileKey) throws IOException {
+		String subPath = "dok"
+        		.concat(File.separator)
+        		.concat(npwp);
+		return storageService.load(subPath, fileKey);
+    }
+	
 	@Path("sec/dok/{npwp}/{id}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -151,11 +179,6 @@ public class FileController {
         return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
 	
-	@Path("nosec/{subPath}/{fileKey}")
-    @GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    public InputStream loadFile(@PathParam("subPath") String subPath, @PathParam("fileKey") String fileKey) throws IOException {
-        return storageService.load(subPath, fileKey);
-    }
+	
 	
 }

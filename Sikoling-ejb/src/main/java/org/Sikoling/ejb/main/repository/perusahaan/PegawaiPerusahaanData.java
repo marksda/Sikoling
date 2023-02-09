@@ -18,9 +18,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_pegawai_perusahaan")
 @NamedQueries({
-	@NamedQuery(name="PegawaiData.findAll", query="SELECT d FROM PegawaiData d"),
-	@NamedQuery(name="PegawaiData.findByQueryNama", query="SELECT d FROM PegawaiData d WHERE d.personData.nama LIKE :nama"),
-	@NamedQuery(name="PegawaiData.findByIdPerusahaan", query="SELECT d FROM PegawaiData d WHERE d.registerPerusahaanData.id = :idRegisterPerusahaan")
+	@NamedQuery(name="PegawaiPerusahaanData.findAll", query="SELECT d FROM PegawaiPerusahaanData d"),
+	@NamedQuery(name="PegawaiPerusahaanData.findByQueryNama", query="SELECT d FROM PegawaiPerusahaanData d WHERE d.personData.nama LIKE :nama"),
+	@NamedQuery(name="PegawaiPerusahaanData.findByIdPerusahaan", query="SELECT d FROM PegawaiPerusahaanData d WHERE d.registerPerusahaanData.id = :idRegisterPerusahaan")
 })
 public class PegawaiPerusahaanData implements Serializable {
 

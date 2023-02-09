@@ -19,7 +19,6 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 		this.dataConverter = dataConverter;
 	}
 	
-
 	@Override
 	public List<Pegawai> getAll() {
 		return entityManager.createNamedQuery("PegawaiPerusahaanData.findAll", PegawaiPerusahaanData.class)

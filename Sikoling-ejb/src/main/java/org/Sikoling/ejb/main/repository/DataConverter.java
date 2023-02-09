@@ -478,7 +478,7 @@ public class DataConverter {
 			registerDokumen = new RegisterDokumen(
 					d.getId(), 
 					dokumen, 
-					convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData()), 
+					convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
 					d.getLokasiFile(), 
 					convertStatusDokumenDataToStatusDokumen(d.getStatusDokumen()),
 					d.getTanggalRegistrasi(), 
@@ -666,7 +666,7 @@ public class DataConverter {
 										d.getId(), 
 										convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
 										d.getTanggalRegistrasi(), 
-										convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData()), 
+										convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
 										convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
 										convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
 										convertPersonDataToPerson(d.getPenanggungJawab()),
