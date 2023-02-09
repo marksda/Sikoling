@@ -19,6 +19,7 @@ import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
+import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
@@ -72,6 +73,8 @@ import org.Sikoling.ejb.abstraction.service.log.FlowLogService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
+import org.Sikoling.ejb.abstraction.service.pegawai.IPegawaiPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.pegawai.PegawaiPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.PelakuUsahaService;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabService;
@@ -266,6 +269,12 @@ public class RestfulProvider {
 	public IStatusWaliService getStatusWaliService(
 			@Infrastructure IStatusWaliRepository statusWaliRepository) {
 		return new StatusWaliService(statusWaliRepository);
+	}
+	
+	@Produces
+	public IPegawaiPerusahaanService getPegawaiPerusahaanService(
+			@Infrastructure IPegawaiPerusahaanRepository pegawaiPerusahaanRepository) {
+		return new PegawaiPerusahaanService(pegawaiPerusahaanRepository);
 	}
 	
 	@Produces

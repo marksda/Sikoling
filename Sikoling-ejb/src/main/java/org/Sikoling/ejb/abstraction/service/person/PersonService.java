@@ -10,7 +10,6 @@ public class PersonService implements IPersonService {
 	private final IPersonRepository personRepository;
 
 	public PersonService(IPersonRepository personRepository) {
-		super();
 		this.personRepository = personRepository;
 	}
 
