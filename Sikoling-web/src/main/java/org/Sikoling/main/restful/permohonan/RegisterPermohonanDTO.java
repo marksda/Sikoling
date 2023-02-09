@@ -200,4 +200,5 @@ public class RegisterPermohonanDTO implements Serializable {
 						.collect(Collectors.toList()): null
 				);
 	}
+	
 }
