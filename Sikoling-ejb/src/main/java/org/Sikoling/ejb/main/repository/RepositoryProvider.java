@@ -90,8 +90,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public JabatanRepositoryJPA getJabatanRepositoryJPA(EntityManager entityManager) {
-		return new JabatanRepositoryJPA(entityManager);
+	public JabatanRepositoryJPA getJabatanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new JabatanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

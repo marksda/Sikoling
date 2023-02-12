@@ -10,7 +10,7 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.BatasLokasi;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KordinatGeografis;
-import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 
@@ -29,10 +29,10 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 	private final BatasLokasi batasLokasi;
 	private final LocalDate tanggalTinjauLapangan;
 	private final LocalDate tanggalPembahasan;
-
+	
 	public RegisterPermohonanUKLUPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			Person penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha,
 			int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita, Double luasTanah,

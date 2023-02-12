@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 
@@ -20,14 +20,14 @@ public class RegisterPermohonan implements Serializable {
 	private final RegisterPerusahaan perusahaan;
 	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
-	private final Person penanggungJawabPermohonan;
+	private final Pegawai penanggungJawabPermohonan;
 	private final PosisiTahapPemberkasan posisiBerkas;
 	private final List<RegisterDokumen> daftarDokumenSyarat;
 	private final List<RegisterDokumen> daftarDokumenHasil;		
 	
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			Person penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
@@ -69,7 +69,7 @@ public class RegisterPermohonan implements Serializable {
 		return statusWaliPengurusPermohonan;
 	}
 	
-	public Person getPenanggungJawabPermohonan() {
+	public Pegawai getPenanggungJawabPermohonan() {
 		return penanggungJawabPermohonan;
 	}
 

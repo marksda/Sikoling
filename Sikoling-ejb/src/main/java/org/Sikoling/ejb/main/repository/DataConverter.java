@@ -669,7 +669,7 @@ public class DataConverter {
 										convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
 										convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
 										convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
-										convertPersonDataToPerson(d.getPenanggungJawab()),
+										convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
 										convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanData()), 
 										convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
 										null
@@ -717,7 +717,7 @@ public class DataConverter {
 
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
-	public JabatanData convertJabatanDataToJabatan(Jabatan t) {
+	public JabatanData convertJabatanToJabatanData(Jabatan t) {
 		JabatanData jabatanData = null;
 		
 		if(t != null) {
@@ -945,7 +945,7 @@ public class DataConverter {
 			pegawaiPerusahaanData.setId(id != null ? id: getGenerateIdPegawaiPerusahaan(t.getPerusahaan().getId(), t.getJabatan().getId(), t.getPerson().getNik()));
 			pegawaiPerusahaanData.setPersonData(convertPersonToPersonData(t.getPerson()));
 			pegawaiPerusahaanData.setRegisterPerusahaanData(convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()));
-			pegawaiPerusahaanData.setJabatanData(convertJabatanDataToJabatan(t.getJabatan()));			
+			pegawaiPerusahaanData.setJabatanData(convertJabatanToJabatanData(t.getJabatan()));			
 		}
 		
 		return pegawaiPerusahaanData;
@@ -1201,7 +1201,7 @@ public class DataConverter {
 					convertStatusWaliToKategoriPengurusPermohonanData(t.getStatusWaliPengurusPermohonan()));
 			registerPermohonanData.setPosisiTahapPemberkasanData(
 					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPosisiBerkas()));	
-			registerPermohonanData.setPenanggungJawab(convertPersonToPersonData(t.getPenanggungJawabPermohonan()));			
+			registerPermohonanData.setPenanggungJawab(convertPegawaiPerusahaanToPegawaiPerusahaanData(t.getPenanggungJawabPermohonan()));			
 			registerPermohonanData.setDaftarDokumenSyarat(
 					convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat(), registerPermohonanData)
 					);
@@ -1248,7 +1248,7 @@ public class DataConverter {
 		
 		return flowLogData;
 	}
-	
+		
 	/*----------id generator function---------------*/
 	private String getGenerateIdRegisterPerusahaan() {
 		int tahun = LocalDate.now().getYear();

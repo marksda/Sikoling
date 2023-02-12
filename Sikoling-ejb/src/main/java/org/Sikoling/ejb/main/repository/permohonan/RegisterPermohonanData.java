@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
-import org.Sikoling.ejb.main.repository.person.PersonData;
+import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.CascadeType;
@@ -59,7 +59,7 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@JoinColumn(name="penanggung_jawab", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PersonData penanggungJawab;
+	private PegawaiPerusahaanData penanggungJawab;
 	
 	@OneToMany(mappedBy = "registerPermohonan", cascade = CascadeType.ALL)
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
@@ -145,11 +145,11 @@ public class RegisterPermohonanData implements Serializable {
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 	}
 
-	public PersonData getPenanggungJawab() {
+	public PegawaiPerusahaanData getPenanggungJawab() {
 		return penanggungJawab;
 	}
 
-	public void setPenanggungJawab(PersonData penanggungJawab) {
+	public void setPenanggungJawab(PegawaiPerusahaanData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 

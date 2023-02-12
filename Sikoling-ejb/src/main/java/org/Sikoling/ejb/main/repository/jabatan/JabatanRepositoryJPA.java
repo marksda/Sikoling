@@ -5,30 +5,33 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
+import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 
 public class JabatanRepositoryJPA implements IJabatanRepository {
 	
 	private final EntityManager entityManager;
+	private final DataConverter dataConverter;
 
-	public JabatanRepositoryJPA(EntityManager entityManager) {
-		super();
+	public JabatanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
+		this.dataConverter = dataConverter;
 	}
 
 	@Override
 	public Jabatan save(Jabatan t) {
-		JabatanData jabatanData = convertJabatanToJabatanData(t);
+		JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(t);
 		entityManager.persist(jabatanData);
 		entityManager.flush();
-		return convertJabatanDataToJabatan(jabatanData);
+		return dataConverter.convertJabatanDataToJabatan(jabatanData);
 	}
 
 	@Override
 	public Jabatan update(Jabatan t) {
-		JabatanData jabatanData = convertJabatanToJabatanData(t);
+		JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(t);
 		jabatanData = entityManager.merge(jabatanData);
-		return convertJabatanDataToJabatan(jabatanData);
+		return dataConverter.convertJabatanDataToJabatan(jabatanData);
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 		return entityManager.createNamedQuery("JabatanData.findAll", JabatanData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertJabatanDataToJabatan(t))
+				.map(t -> dataConverter.convertJabatanDataToJabatan(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -47,7 +50,7 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertJabatanDataToJabatan(t))
+				.map(d -> dataConverter.convertJabatanDataToJabatan(d))
 				.collect(Collectors.toList());
 	}
 
@@ -58,7 +61,7 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 				.setParameter("nama", nama)
 				.getResultList()
 				.stream()
-				.map(t -> convertJabatanDataToJabatan(t))
+				.map(d -> dataConverter.convertJabatanDataToJabatan(d))
 				.collect(Collectors.toList());
 	}
 
@@ -71,18 +74,8 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 				.setFirstResult((page-1)*pageSize)
 				.getResultList()
 				.stream()
-				.map(t -> convertJabatanDataToJabatan(t))
+				.map(d -> dataConverter.convertJabatanDataToJabatan(d))
 				.collect(Collectors.toList());
 	}
-
-	private JabatanData convertJabatanToJabatanData(Jabatan jabatan) {
-		JabatanData jabatanData = new JabatanData();
-		jabatanData.setId(jabatan.getId());
-		jabatanData.setNama(jabatan.getNama());
-		return jabatanData;
-	}
 	
-	private Jabatan convertJabatanDataToJabatan(JabatanData jabatanData) {
-		return new Jabatan(jabatanData.getId(), jabatanData.getNama());
-	}
 }

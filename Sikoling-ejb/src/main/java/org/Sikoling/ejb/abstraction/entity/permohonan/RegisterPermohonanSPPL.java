@@ -9,6 +9,7 @@ import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KapasitasSkalaUsaha;
+import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -29,7 +30,7 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	
 	public RegisterPermohonanSPPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			Person penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli2020 jenisUsaha,
 			Person penanggungJawab, String namaUsaha, String kriteria, String izinYangDimiliki,
