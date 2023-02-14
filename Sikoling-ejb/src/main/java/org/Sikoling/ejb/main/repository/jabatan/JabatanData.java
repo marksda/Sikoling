@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="master.tbl_jabatan")
 @NamedQueries({
-	@NamedQuery(name="JabatanData.findAll", query="SELECT j FROM JabatanData j"),
+	@NamedQuery(name="JabatanData.findAll", query="SELECT j FROM JabatanData j ORDER BY j.nama ASC"),
 	@NamedQuery(name="JabatanData.findByNama", query="SELECT j FROM JabatanData j WHERE j.nama LIKE :nama")
 })
 public class JabatanData implements Serializable {

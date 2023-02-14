@@ -93,11 +93,14 @@ public class PersonRepositoryJPA implements IPersonRepository {
 
 	@Override
 	public Person getByNik(String nik) {
-		return convertPersonDataToPerson(
-					entityManager.createNamedQuery("PersonData.findById", PersonData.class)
-						.setParameter("nik", nik)
-						.getSingleResult()
-				);
+		try {
+			PersonData hasil = entityManager.createNamedQuery("PersonData.findById", PersonData.class)
+					.setParameter("nik", nik)
+					.getSingleResult();
+			return convertPersonDataToPerson(hasil);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	private PersonData convertPersonToPersonData(Person person) {

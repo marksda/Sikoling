@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+import org.Sikoling.ejb.main.repository.person.PersonData;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanRepository {
 	
@@ -31,6 +33,18 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 	@Override
 	public Pegawai save(Pegawai t) {
 		PegawaiPerusahaanData pegawaiPerusahaanData = dataConverter.convertPegawaiPerusahaanToPegawaiPerusahaanData(t);
+		PersonData personData = null;
+		
+		try {
+			personData = entityManager.createNamedQuery("PersonData.findById", PersonData.class)
+					.setParameter("nik", pegawaiPerusahaanData.getPersonData().getId())
+					.getSingleResult();
+		} catch (NoResultException e) {
+			personData = pegawaiPerusahaanData.getPersonData();
+			entityManager.persist(personData);
+			entityManager.flush();
+		}
+						
 		entityManager.persist(pegawaiPerusahaanData);
 		entityManager.flush();
 		
