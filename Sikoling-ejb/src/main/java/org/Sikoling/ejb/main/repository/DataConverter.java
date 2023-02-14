@@ -609,6 +609,21 @@ public class DataConverter {
 		return pegawai;		
 	}
 	
+	public Pegawai convertPegawaiPerusahaanDataToPegawaiPerusahaanWithOutRegisterPerusahaan(PegawaiPerusahaanData d) {
+		Pegawai pegawai = null;
+		
+		if(d != null) {
+			pegawai = new Pegawai(
+					d.getId(), 
+					null, 
+					convertPersonDataToPerson(d.getPersonData()), 
+					convertJabatanDataToJabatan(d.getJabatanData())
+					);
+		}
+		
+		return pegawai;		
+	}
+	
 	public KategoriPermohonan convertKategoriPermohonanDataToKategoriPermohonan(KategoriPermohonanData d) {
 		KategoriPermohonan kategoriPermohonan = null;
 		

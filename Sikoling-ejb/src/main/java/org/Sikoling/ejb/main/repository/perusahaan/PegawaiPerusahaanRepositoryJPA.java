@@ -99,7 +99,7 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 				.setParameter("idRegisterPerusahaan", idRegisterPerusahaan)
 				.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaan(d))
+				.map(d -> dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaanWithOutRegisterPerusahaan(d))
 				.collect(Collectors.toList());
 	}
 

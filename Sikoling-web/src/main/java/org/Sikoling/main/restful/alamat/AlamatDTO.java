@@ -23,10 +23,14 @@ public class AlamatDTO implements Serializable {
 	
 	public AlamatDTO(Alamat alamat) {
 		if(alamat != null) {
-			this.propinsi = new PropinsiDTO(alamat.getPropinsi());
-			this.kabupaten = new KabupatenDTO(alamat.getKabupaten());
-			this.kecamatan = new KecamatanDTO(alamat.getKecamatan());
-			this.desa = new DesaDTO(alamat.getDesa());
+			this.propinsi = alamat.getPropinsi() != null ?
+					new PropinsiDTO(alamat.getPropinsi()) : null;
+			this.kabupaten = alamat.getKabupaten() != null ?
+					new KabupatenDTO(alamat.getKabupaten()) : null;
+			this.kecamatan = alamat.getKecamatan() != null ?
+					new KecamatanDTO(alamat.getKecamatan()) : null;
+			this.desa = alamat.getDesa() != null ? 
+					new DesaDTO(alamat.getDesa()) : null;
 			this.keterangan = alamat.getKeterangan();
 		}
 		else {
@@ -138,7 +142,13 @@ public class AlamatDTO implements Serializable {
 	}
 	
 	public Alamat toAlamat() {
-		return new Alamat(propinsi.toPropinsi(), kabupaten.toKabupaten(), kecamatan.toKecamatan(), desa.toDesa(), keterangan);
+		return new Alamat(
+				propinsi != null ? propinsi.toPropinsi() : null, 
+				kabupaten != null ? kabupaten.toKabupaten() : null, 
+				kecamatan != null ? kecamatan.toKecamatan() : null, 
+				desa != null ? desa.toDesa() : null, 
+				keterangan
+				);
 	}
 
 }
