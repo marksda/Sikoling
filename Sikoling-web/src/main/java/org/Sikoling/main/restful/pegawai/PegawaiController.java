@@ -94,10 +94,14 @@ public class PegawaiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public List<PegawaiPerusahaanDTO> getByIdRegisterPerusahaan(@PathParam("id") String id) {
-		return pegawaiPerusahaanService.getByRegisterPerusahaan(id)
+		List<PegawaiPerusahaanDTO> daftarPegawaiDTO =  
+				pegawaiPerusahaanService.getByRegisterPerusahaan(id)
 				.stream()
 				.map(t -> new PegawaiPerusahaanDTO(t))
 				.collect(Collectors.toList());
+		
+				
+		return daftarPegawaiDTO;
 	}
 
 }

@@ -139,7 +139,13 @@ public class PersonDTO implements Serializable {
 
 	public Person toPerson() {
 		if(nik != null) {
-			return new Person(nik, nama, jenisKelamin.toJenisKelamin(), alamat.toAlamat(), scanKTP, kontak.toKontak());
+			return new Person(
+					nik, 
+					nama, 
+					jenisKelamin.toJenisKelamin(), 
+					alamat.toAlamat(), 
+					scanKTP, 
+					kontak.toKontak());
 		}
 		else {
 			return null;
