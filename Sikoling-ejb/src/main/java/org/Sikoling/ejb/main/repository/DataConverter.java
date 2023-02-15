@@ -1092,6 +1092,9 @@ public class DataConverter {
 			nibOssData.setNomor(t.getNomor());
 			nibOssData.setTanggalPenetapan(t.getTanggal());
 			nibOssData.setDaftarKbli(daftarRegisterKbliData);
+			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
+			registerDokumenData.setId(idRegisterDokumen);
+			nibOssData.setRegisterDokumenData(registerDokumenData);
 		}
 		
 		return nibOssData;
