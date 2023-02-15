@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -73,7 +74,7 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(mappedBy = "registerDokumenData")
 	private RekomendasiDPLHData rekomendasiDPLHData;
 	
-	@OneToOne(mappedBy = "registerDokumenData")	
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)	
 	private NibOssData nibOssData;
 
 	public RegisterDokumenData() {

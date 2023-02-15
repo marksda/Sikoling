@@ -87,12 +87,12 @@ public class AlamatDTO implements Serializable {
 	}
 	
 	public int hashCode() {
-		int hash = 11;
-        hash = 59 * hash + Objects.hashCode(propinsi.getId());
-        hash = 59 * hash + Objects.hashCode(this.kabupaten.toString());
-        hash = 59 * hash + Objects.hashCode(this.kecamatan.toString());
-        hash = 59 * hash + Objects.hashCode(this.desa.toString());
-        hash = 59 * hash + Objects.hashCode(this.keterangan);
+		int hash = 117;
+        hash = 59 * hash + Objects.hashCode(propinsi != null ? propinsi.getId():"123");
+        hash = 59 * hash + Objects.hashCode(kabupaten != null ? kabupaten.getId():"123");
+        hash = 59 * hash + Objects.hashCode(kecamatan != null ? kecamatan.getId():"123");
+        hash = 59 * hash + Objects.hashCode(desa != null ? desa.getId():"123");
+        hash = 59 * hash + Objects.hashCode(keterangan != null ? keterangan:"123");
         return hash;
 	}
 

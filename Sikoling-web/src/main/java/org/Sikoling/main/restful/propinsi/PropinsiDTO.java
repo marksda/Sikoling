@@ -47,9 +47,9 @@ public class PropinsiDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.nama);
+		int hash = 751;
+        hash = 71 * hash + Objects.hashCode(id );
+        hash = 71 * hash + Objects.hashCode(nama);
         return hash;
 	}
 
@@ -80,6 +80,11 @@ public class PropinsiDTO implements Serializable {
 
 	@Override
 	public String toString() {
+		if(id == null) {
+			return null;
+		}
+			
+			
 		return "PropinsiDTO{" + "id=" + this.id + ", nama=" + this.nama + "}";	    
 	}
 	

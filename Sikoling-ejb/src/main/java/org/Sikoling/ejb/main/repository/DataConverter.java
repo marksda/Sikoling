@@ -1135,7 +1135,7 @@ public class DataConverter {
 				registerDokumenData.setRekomendasiDPLHData(convertRekomendasiDPLHToRekomendasiDPLHData((RekomendasiDPLH) dokumen, registerDokumenData.getId()));
 			}
 			else if(dokumen instanceof NibOss) {
-				registerDokumenData.setNibOssData(null);
+				registerDokumenData.setNibOssData(convertNibOssToNibOssData((NibOss) dokumen, registerDokumenData.getId()));
 			}
 			
 		}

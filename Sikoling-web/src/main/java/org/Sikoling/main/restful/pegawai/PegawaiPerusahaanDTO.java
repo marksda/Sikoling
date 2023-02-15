@@ -30,47 +30,38 @@ public class PegawaiPerusahaanDTO implements Serializable {
 					new JabatanDTO(t.getJabatan()) : null;
 		}
 	}
-
 	
 	public String getId() {
 		return id;
 	}
-
 	
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	
 	public RegisterPerusahaanDTO getPerusahaan() {
 		return perusahaan;
 	}
-
 	
 	public void setPerusahaan(RegisterPerusahaanDTO perusahaan) {
 		this.perusahaan = perusahaan;
 	}
-
 	
 	public PersonDTO getPerson() {
 		return person;
 	}
-
 	
 	public void setPerson(PersonDTO person) {
 		this.person = person;
 	}
-
 	
 	public JabatanDTO getJabatan() {
 		return jabatan;
 	}
-
 	
 	public void setJabatan(JabatanDTO jabatan) {
 		this.jabatan = jabatan;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
