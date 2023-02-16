@@ -40,6 +40,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	public RegisterDokumen update(RegisterDokumen t) {
 		RegisterDokumenData registerDokumenData = dataConverter.convertRegisterDokumenToRegisterDokumenData(t);
 		registerDokumenData = entityManager.merge(registerDokumenData);
+		entityManager.flush();
 		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 	}
 	
