@@ -168,7 +168,7 @@ public class FileController {
 				.concat("/")
 				.concat(fileKey);
 		
-		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(idRegPerusahaan);
+		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(idRegDokumen);
 		
 		RegisterDokumen registerDokumenBaru = new RegisterDokumen(
 				idRegDokumen, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), 
