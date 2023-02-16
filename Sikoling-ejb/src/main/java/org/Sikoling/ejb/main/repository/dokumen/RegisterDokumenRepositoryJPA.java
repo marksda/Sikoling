@@ -84,7 +84,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				.setParameter("idPerusahaan", idPerusahaan)
 				.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(d))
 				.collect(Collectors.toList());
 	}	
 	

@@ -57,6 +57,10 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 						d = jsonb.fromJson(jsonObject.toString(), NibOssDTO.class);
 						registerDokumenDTO.setDokumen(d); 
 						break;
+					 case "010101":
+							d = jsonb.fromJson(jsonObject.toString(), NibOssDTO.class);
+							registerDokumenDTO.setDokumen(d); 
+							break;
 					 default:
 						d = null;
 						break;

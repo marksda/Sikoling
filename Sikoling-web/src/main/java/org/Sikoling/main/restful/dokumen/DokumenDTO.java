@@ -19,7 +19,6 @@ public class DokumenDTO implements Serializable {
 			this.id = dokumen.getId();
 			this.nama = dokumen.getNama();
 			this.kategoriDokumen = dokumen.getKategoriDokumen() != null ? new KategoriDokumenDTO(dokumen.getKategoriDokumen()) : null;	
-			
 		}
 	}
 	

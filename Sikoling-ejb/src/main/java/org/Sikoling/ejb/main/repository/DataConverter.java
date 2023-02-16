@@ -1015,7 +1015,10 @@ public class DataConverter {
 			aktaPendirianData.setNomor(t.getNomor());
 			aktaPendirianData.setTanggal(t.getTanggal());
 			aktaPendirianData.setNotaris(t.getNamaNotaris());
-			aktaPendirianData.setPenanggungJawabData(convertPegawaiPerusahaanToPegawaiPerusahaanData(t.getPenanggungJawab()));			
+			aktaPendirianData.setPenanggungJawabData(convertPegawaiPerusahaanToPegawaiPerusahaanData(t.getPenanggungJawab()));
+			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
+			registerDokumenData.setId(idRegisterDokumen);
+			aktaPendirianData.setRegisterDokumenData(registerDokumenData);
 		}
 		
 		return aktaPendirianData;

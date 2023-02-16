@@ -59,19 +59,19 @@ public class RegisterDokumenData implements Serializable {
 	@Column(name = "is_validated", insertable = true, updatable = true)
 	private Boolean statusVerified;
 	
-	@OneToOne(mappedBy = "registerDokumenData")
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
 	private SuratArahanData suratArahanData;
 	
-	@OneToOne(mappedBy = "registerDokumenData")
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
 	private LampiranSuratArahanData lampiranSuratArahanData;
 	
-	@OneToOne(mappedBy = "registerDokumenData")
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
 	private AktaPendirianData aktaPendirianData;
 	
-	@OneToOne(mappedBy = "registerDokumenData")
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
 	private RekomendasiUKLUPLData rekomendasiUKLUPLData;
 	
-	@OneToOne(mappedBy = "registerDokumenData")
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
 	private RekomendasiDPLHData rekomendasiDPLHData;
 	
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)	

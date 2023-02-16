@@ -14,7 +14,7 @@ public class AktaPendirianDTO extends DokumenDTO implements Serializable {
 	private String nomor;
 	private LocalDate tanggal;
 	private String namaNotaris;
-	private PegawaiDTO pegawai;
+	private PegawaiDTO penanggungJawab;
 	
 	public AktaPendirianDTO() {		
 	}
@@ -26,57 +26,54 @@ public class AktaPendirianDTO extends DokumenDTO implements Serializable {
 				null
 				) : null);
 		
-		if(t != null) {
+		if(t != null) {			
 			this.nomor = t.getNomor();
 			this.tanggal = t.getTanggal();
 			this.namaNotaris = t.getNamaNotaris();
+			this.penanggungJawab = t.getPenanggungJawab() != null ? 
+					new PegawaiDTO(t.getPenanggungJawab()) : null;
+			this.setKategoriDokumen(
+					t.getKategoriDokumen() != null ?
+							new KategoriDokumenDTO(t.getKategoriDokumen()) : null
+					);
 		}		
 	}
 		
 	public String getNomor() {
 		return nomor;
 	}
-
 	
 	public void setNomor(String nomor) {
 		this.nomor = nomor;
 	}
-
 	
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
-
 	
 	public void setTanggal(LocalDate tanggal) {
 		this.tanggal = tanggal;
 	}
-
 	
 	public String getNamaNotaris() {
 		return namaNotaris;
 	}
-
 	
 	public void setNamaNotaris(String namaNotaris) {
 		this.namaNotaris = namaNotaris;
 	}
-
 	
-	public PegawaiDTO getPegawai() {
-		return pegawai;
+	public PegawaiDTO getPenanggungJawab() {
+		return penanggungJawab;
 	}
-
 	
-	public void setPegawai(PegawaiDTO pegawai) {
-		this.pegawai = pegawai;
+	public void setPenanggungJawab(PegawaiDTO penanggungJawab) {
+		this.penanggungJawab = penanggungJawab;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	
 	@Override
 	public int hashCode() {

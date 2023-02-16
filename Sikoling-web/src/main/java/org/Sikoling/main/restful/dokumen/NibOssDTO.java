@@ -33,6 +33,10 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 			this.daftarKbli = t.getDaftarKbli() != null ? 
 					t.getDaftarKbli().stream()
 					.map(i -> new RegisterKbliDTO(i)).collect(Collectors.toList()) : null;
+			this.setKategoriDokumen(
+					t.getKategoriDokumen() != null ?
+							new KategoriDokumenDTO(t.getKategoriDokumen()) : null
+					);
 		}
 	}
 	

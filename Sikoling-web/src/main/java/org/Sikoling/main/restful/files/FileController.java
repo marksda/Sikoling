@@ -152,7 +152,7 @@ public class FileController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public ImageDTO uploadFile(
+	public ImageDTO uploadFileSecure(
 			@PathParam("npwp") String npwp,
 			@PathParam("id") String id,
 			@FormDataParam("file") InputStream uploadedInputStream,
