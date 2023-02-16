@@ -54,9 +54,10 @@ public class PermohonanController {
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
-		return new RegisterPermohonanDTO(
-				registerPermohonanService.save(d.toRegisterPermohonan())
-				);
+//		return new RegisterPermohonanDTO(
+//				registerPermohonanService.save(d.toRegisterPermohonan())
+//				);
+		return null;
 	}
 	
 	@PUT

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
 
 public class NibOssDTO extends DokumenDTO implements Serializable {
@@ -21,22 +19,18 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 	}
 	
 	public NibOssDTO(NibOss t) {
-		super(t != null ? new Dokumen(
-				t.getId(), 
-				t.getNama(), 
-				null
-				) : null
-			);
+		super();
 		if(t != null) {
+			this.setId(t.getId());
+			this.setNama(t.getNama());
+			KategoriDokumenDTO kategoriDokumenDTO = t.getKategoriDokumen() != null ?
+					new KategoriDokumenDTO(t.getKategoriDokumen()) : null;
+			this.setKategoriDokumen(kategoriDokumenDTO);
 			this.nomor = t.getNomor();
 			this.tanggal = t.getTanggal();
 			this.daftarKbli = t.getDaftarKbli() != null ? 
 					t.getDaftarKbli().stream()
 					.map(i -> new RegisterKbliDTO(i)).collect(Collectors.toList()) : null;
-			this.setKategoriDokumen(
-					t.getKategoriDokumen() != null ?
-							new KategoriDokumenDTO(t.getKategoriDokumen()) : null
-					);
 		}
 	}
 	
@@ -111,19 +105,18 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 	}
 
 	public NibOss toNibOss() {
-		KategoriDokumenDTO kategoriDokumenDTO = this.getKategoriDokumen();
 		return new NibOss(
 				this.getId(), 
 				this.getNama(), 
-				kategoriDokumenDTO != null ? new KategoriDokumen(
-						kategoriDokumenDTO.getId(), 
-						kategoriDokumenDTO.getNama(), 
-						kategoriDokumenDTO.getParent()
-						) : null, 
-				nomor, 
-				tanggal,
-				daftarKbli != null ? daftarKbli.stream().map(i -> i.toRegisterKbli())
-						.collect(Collectors.toList()) : null
+				this.getKategoriDokumen() != null ? 
+						this.getKategoriDokumen().toKategoriDokumen() : null, 
+				this.nomor, 
+				this.tanggal,
+				this.daftarKbli != null ? 
+						this.daftarKbli
+							.stream()
+							.map(i -> i.toRegisterKbli())
+							.collect(Collectors.toList()) : null
 				);
 	}
 

@@ -105,7 +105,7 @@ public class PegawaiPerusahaanDTO implements Serializable {
 				.concat("}");
 	}	
 
-	public Pegawai toPegawai() {
+	public Pegawai toPegawaiPerusahaan() {
 		return new Pegawai(
 				id, 
 				perusahaan != null ? perusahaan.toRegisterPerusahaan() : null, 

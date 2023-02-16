@@ -10,13 +10,13 @@ import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 
-public class RegisterPermohonanSuratArahan extends RegisterPermohonan implements Serializable {
+public class RegisterPermohonanArahan extends RegisterPermohonan implements Serializable {
 	
 	private static final long serialVersionUID = -5728955961609566242L;
 	private final JenisPermohonanSuratArahan jenisPermohonanSuratArahan;
 	private final String uraianKegiatan;
 	
-	public RegisterPermohonanSuratArahan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
+	public RegisterPermohonanArahan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
@@ -60,7 +60,7 @@ public class RegisterPermohonanSuratArahan extends RegisterPermohonan implements
             return false;
         }
         
-        final RegisterPermohonanSuratArahan other = (RegisterPermohonanSuratArahan) obj;
+        final RegisterPermohonanArahan other = (RegisterPermohonanArahan) obj;
         if ( !this.getId().equals(other.getId()) ) {
             return false;
         }

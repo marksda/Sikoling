@@ -81,22 +81,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	@Override
 	public List<RegisterDokumen> getByIdPerusahaan(String idPerusahaan) {
-//		List<RegisterDokumen> outPut = new ArrayList<RegisterDokumen>();
-//		try {
-//			List<RegisterDokumenData> hasil = entityManager.createNamedQuery("RegisterDokumenData.findByIdPerusahaan", RegisterDokumenData.class)
-//					.setParameter("idPerusahaan", idPerusahaan)
-//					.getResultList();
-//			ListIterator<RegisterDokumenData> iterator = hasil.listIterator();
-//			while (iterator.hasNext()) {
-//	            RegisterDokumenData d = iterator.next();
-//	            outPut.add(dataConverter.convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(d));
-//	        }
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.getMessage();
-//		}
-//		
-//		return null;
 		
 		return entityManager.createNamedQuery("RegisterDokumenData.findByIdPerusahaan", RegisterDokumenData.class)
 				.setParameter("idPerusahaan", idPerusahaan)
@@ -174,6 +158,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	@Override
 	public RegisterDokumen getByIdRegisterDokumen(String idRegisterDokumen) {
 		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, idRegisterDokumen);			
+		
 		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 	}
 	

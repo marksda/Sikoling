@@ -35,14 +35,14 @@ public class PegawaiController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PegawaiPerusahaanDTO save(PegawaiPerusahaanDTO d) {		
-		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.save(d.toPegawai()));
+		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.save(d.toPegawaiPerusahaan()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public PegawaiPerusahaanDTO update(PegawaiPerusahaanDTO d) {
-		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.update(d.toPegawai()));
+		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.update(d.toPegawaiPerusahaan()));
 	}
 	
 	@GET

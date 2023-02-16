@@ -41,10 +41,10 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 		Jsonb jsonb = JsonbBuilder.create();
 		
 		JsonParser jsonParser = Json.createParser(entityStream);
+		
 		while (jsonParser.hasNext()) {
 		     Event event = jsonParser.next();
-		     if (event == JsonParser.Event.KEY_NAME ) {	
-		    	 
+		     if (event == JsonParser.Event.KEY_NAME ) {			    	 
 		         String key = jsonParser.getString();
 		         event = jsonParser.next();
 				 JsonObject jsonObject = jsonParser.getObject();
