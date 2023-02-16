@@ -146,31 +146,32 @@ public class FileController {
 		return storageService.load(subPath, fileKey);
     }
 	
-	@Path("sec/dok/{npwp}/{id}")
+	@Path("sec/dok/{idRegPerusahaan}/{npwp}/{idRegDokumen}")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public ImageDTO uploadFileSecure(
+			@PathParam("idRegPerusahaan") String idRegPerusahaan,
 			@PathParam("npwp") String npwp,
-			@PathParam("id") String id,
+			@PathParam("idRegDokumen") String idRegDokumen,
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 		
 		String pathLocation = "dok"
         		.concat(File.separator)
         		.concat(npwp);
-		String fileKey = storageService.save(id.concat("-").concat(fileDetail.getFileName()), uploadedInputStream, pathLocation);
+		String fileKey = storageService.save(idRegDokumen.concat("-").concat(fileDetail.getFileName()), uploadedInputStream, pathLocation);
 		String urlLocatorFeedBack = "sec/dok/"
 				.concat(npwp)
 				.concat("/")
 				.concat(fileKey);
 		
-		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(id);
+		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(idRegPerusahaan);
 		
 		RegisterDokumen registerDokumenBaru = new RegisterDokumen(
-				id, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), 
+				idRegDokumen, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), 
 				fileKey, registerDokumen.getStatusDokumen(), registerDokumen.getTanggalRegistrasi(), 
 				registerDokumen.getUploader(), registerDokumen.getStatusVerified());
 		
