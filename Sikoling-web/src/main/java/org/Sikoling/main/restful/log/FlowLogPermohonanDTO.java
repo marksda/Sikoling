@@ -3,11 +3,11 @@ package org.Sikoling.main.restful.log;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
-import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
-import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
+import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
+import org.Sikoling.main.restful.permohonan.RegisterPermohonanArahanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanDTO;
 
 public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
@@ -19,49 +19,32 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 	}
 	
 	public FlowLogPermohonanDTO(FlowLogPermohonan t) {
-		super(t != null ? new FlowLog(
-				t.getId(), 
-				t.getTanggal(), 
-				t.getKategoriFlowLog() != null ?
-						new KategoriFlowLog(
-								t.getKategoriFlowLog().getId(), 
-								t.getKategoriFlowLog().getNama()
-								) : null, 
-				t.getPosisiTahapPemberkasan() != null ?
-						new PosisiTahapPemberkasan(
-								t.getPosisiTahapPemberkasan().getId(), 
-								t.getPosisiTahapPemberkasan().getNama(), 
-								t.getPosisiTahapPemberkasan().getKeterangan()
-								) : null, 
-				t.getKeterangan(), 
-				t.getPengakses() != null ?
-						new Authority(
-								t.getPengakses().getId(), 
-								null, 
-								null, 
-								null, 
-								null, 
-								t.getPengakses().getUserName()
-								) : null
-				) : null
-			);
-		
+		super();		
 		if(t != null) {
+			this.setId(t.getId());
+			this.setTanggal(t.getTanggal());
+			KategoriFlowLogDTO kategoriFlowLogDTO = t.getKategoriFlowLog() != null ?
+					new KategoriFlowLogDTO(t.getKategoriFlowLog()) : null;
+			this.setKategoriFlowLog(kategoriFlowLogDTO);
+			PosisiTahapPemberkasanDTO posisiTahapPemberkasanDTO = t.getPosisiTahapPemberkasan() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPosisiTahapPemberkasan()) :null;
+			this.setPosisiTahapPemberkasan(posisiTahapPemberkasanDTO);
+			this.setKeterangan(t.getKeterangan());
+			AuthorityDTO pengakses = t.getPengakses() != null ?
+					new AuthorityDTO(t.getPengakses()) : null;
+			this.setPengakses(pengakses);
 			this.registerPermohonan = t.getRegisterPermohonan() != null ?
 					new RegisterPermohonanDTO(t.getRegisterPermohonan()) : null;
 		}
 	}
-
 	
 	public RegisterPermohonanDTO getRegisterPermohonan() {
 		return registerPermohonan;
 	}
-
 	
 	public void setRegisterPermohonan(RegisterPermohonanDTO registerPermohonan) {
 		this.registerPermohonan = registerPermohonan;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -110,6 +93,13 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 	}
 
 	public FlowLogPermohonan toFlowLogPermohonan() {
+		RegisterPermohonan registerPermohonan = null;
+		
+		if(this.registerPermohonan instanceof RegisterPermohonanArahanDTO) {
+			RegisterPermohonanArahanDTO s = (RegisterPermohonanArahanDTO) this.registerPermohonan;
+			registerPermohonan = s.toRegisterPermohonanArahan();
+		}
+		
 		return new FlowLogPermohonan(
 				this.getId(), 
 				this.getTanggal(), 
@@ -120,8 +110,7 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 				this.getKeterangan(), 
 				this.getPengakses() != null ?
 						this.getPengakses().toAuthority() : null, 
-				this.registerPermohonan != null ?
-						this.registerPermohonan.toRegisterPermohonan() : null
+				this.registerPermohonan != null ? registerPermohonan : null
 				);
 	}
 }

@@ -13,17 +13,23 @@ public class FlowLog implements Serializable {
 	private final String id;
 	private final LocalDate tanggal;
 	private final KategoriFlowLog kategoriFlowLog;
-	private final PosisiTahapPemberkasan posisiTahapPemberkasan;
+	private final PosisiTahapPemberkasan pengirimBerkas;
+	private final PosisiTahapPemberkasan penerimaBerkas;
+	private final StatusFlowLog statusFlowLog;
 	private final String keterangan;
 	private final Authority pengakses;
 	
-	public FlowLog(String id, LocalDate tanggal, KategoriFlowLog kategoriFlowLog,
-			PosisiTahapPemberkasan posisiTahapPemberkasan, String keterangan, Authority pengakses) {
-		super();
+	
+
+	public FlowLog(String id, LocalDate tanggal, KategoriFlowLog kategoriFlowLog, PosisiTahapPemberkasan pengirimBerkas,
+			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, String keterangan,
+			Authority pengakses) {
 		this.id = id;
 		this.tanggal = tanggal;
 		this.kategoriFlowLog = kategoriFlowLog;
-		this.posisiTahapPemberkasan = posisiTahapPemberkasan;
+		this.pengirimBerkas = pengirimBerkas;
+		this.penerimaBerkas = penerimaBerkas;
+		this.statusFlowLog = statusFlowLog;
 		this.keterangan = keterangan;
 		this.pengakses = pengakses;
 	}
@@ -44,10 +50,6 @@ public class FlowLog implements Serializable {
 		return kategoriFlowLog;
 	}
 
-	public PosisiTahapPemberkasan getPosisiTahapPemberkasan() {
-		return posisiTahapPemberkasan;
-	}
-
 	public String getKeterangan() {
 		return keterangan;
 	}
@@ -56,6 +58,21 @@ public class FlowLog implements Serializable {
 		return pengakses;
 	}
 	
+	public PosisiTahapPemberkasan getPengirimBerkas() {
+		return pengirimBerkas;
+	}
+	
+
+	public PosisiTahapPemberkasan getPenerimaBerkas() {
+		return penerimaBerkas;
+	}
+	
+
+	public StatusFlowLog getStatusFlowLog() {
+		return statusFlowLog;
+	}
+	
+
 	@Override
 	public int hashCode() {
 		int hash = 1171;

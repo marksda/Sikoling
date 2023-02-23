@@ -9,6 +9,7 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 
 public class RegisterPermohonan implements Serializable {
 
@@ -21,14 +22,18 @@ public class RegisterPermohonan implements Serializable {
 	private final Authority pengurusPermohonan;
 	private final StatusWali statusWaliPengurusPermohonan;
 	private final Pegawai penanggungJawabPermohonan;
-	private final PosisiTahapPemberkasan posisiBerkas;
+	private final PosisiTahapPemberkasan pengirimBerkas;
+	private final PosisiTahapPemberkasan penerimaBerkas;
+	private final StatusFlowLog statusFlowLog;
 	private final List<RegisterDokumen> daftarDokumenSyarat;
-	private final List<RegisterDokumen> daftarDokumenHasil;		
-	
+	private final List<RegisterDokumen> daftarDokumenHasil;	
+
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
+			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
+			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
+		super();
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
 		this.tanggalRegistrasi = tanggalRegistrasi;
@@ -36,11 +41,13 @@ public class RegisterPermohonan implements Serializable {
 		this.pengurusPermohonan = pengurusPermohonan;
 		this.statusWaliPengurusPermohonan = statusWaliPengurusPermohonan;
 		this.penanggungJawabPermohonan = penanggungJawabPermohonan;
-		this.posisiBerkas = posisiBerkas;
+		this.pengirimBerkas = pengirimBerkas;
+		this.penerimaBerkas = penerimaBerkas;
+		this.statusFlowLog = statusFlowLog;
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -72,11 +79,7 @@ public class RegisterPermohonan implements Serializable {
 	public Pegawai getPenanggungJawabPermohonan() {
 		return penanggungJawabPermohonan;
 	}
-
-	public PosisiTahapPemberkasan getPosisiBerkas() {
-		return posisiBerkas;
-	}
-	
+		
 	public List<RegisterDokumen> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
@@ -84,6 +87,21 @@ public class RegisterPermohonan implements Serializable {
 	public List<RegisterDokumen> getDaftarDokumenHasil() {
 		return daftarDokumenHasil;
 	}
+
+	public PosisiTahapPemberkasan getPengirimBerkas() {
+		return pengirimBerkas;
+	}
+	
+
+	public PosisiTahapPemberkasan getPenerimaBerkas() {
+		return penerimaBerkas;
+	}
+	
+
+	public StatusFlowLog getStatusFlowLog() {
+		return statusFlowLog;
+	}
+	
 
 	@Override
 	public int hashCode() {

@@ -2,7 +2,9 @@ package org.Sikoling.ejb.main.repository.permohonan;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -22,12 +24,15 @@ public class RegisterPermohonanSuratArahanData implements Serializable {
 	
 	@Id
 	@JoinColumn(name="id", referencedColumnName = "id", insertable = true, updatable = true)
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private RegisterPermohonanData registerPermohonanData;
 	
 	@JoinColumn(name = "kategori_surat_arahan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private KategoriSuratArahanData kategoriSuratArahanData;
+	
+	@Column(name = "uraian_kegiatan")
+	private String uraianKegiatan;
 	
 	public RegisterPermohonanSuratArahanData() {
 	}
@@ -46,6 +51,14 @@ public class RegisterPermohonanSuratArahanData implements Serializable {
 
 	public void setKategoriSuratArahanData(KategoriSuratArahanData kategoriSuratArahanData) {
 		this.kategoriSuratArahanData = kategoriSuratArahanData;
+	}
+
+	public String getUraianKegiatan() {
+		return uraianKegiatan;
+	}
+
+	public void setUraianKegiatan(String uraianKegiatan) {
+		this.uraianKegiatan = uraianKegiatan;
 	}
 
 	public static long getSerialversionuid() {

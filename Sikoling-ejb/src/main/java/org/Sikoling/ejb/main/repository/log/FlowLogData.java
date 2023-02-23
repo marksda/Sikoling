@@ -38,9 +38,17 @@ public class FlowLogData implements Serializable {
 	@ManyToOne
 	private KategoriLogData kategoriLogData;
 	
-	@JoinColumn(name = "posisi_tahap_pemberkasan", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name = "posisi_tahap_pemberkasan_pengirim", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
+	private PosisiTahapPemberkasanData posisiTahapPemberkasanPengirimData;
+	
+	@JoinColumn(name = "posisi_tahap_pemberkasan_penerima", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private PosisiTahapPemberkasanData posisiTahapPemberkasanPenerimaData;
+	
+	@JoinColumn(name="status_flow", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private StatusFlowData statusFlowData;
 	
 	private String keterangan;
 	
@@ -78,14 +86,6 @@ public class FlowLogData implements Serializable {
 		this.kategoriLogData = kategoriLogData;
 	}
 
-	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanData() {
-		return posisiTahapPemberkasanData;
-	}
-
-	public void setPosisiTahapPemberkasanData(PosisiTahapPemberkasanData posisiTahapPemberkasanData) {
-		this.posisiTahapPemberkasanData = posisiTahapPemberkasanData;
-	}
-
 	public String getKeterangan() {
 		return keterangan;
 	}
@@ -108,6 +108,30 @@ public class FlowLogData implements Serializable {
 
 	public void setFlowLogPermohonanData(FlowLogPermohonanData flowLogPermohonanData) {
 		this.flowLogPermohonanData = flowLogPermohonanData;
+	}
+
+	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanPengirimData() {
+		return posisiTahapPemberkasanPengirimData;
+	}
+
+	public void setPosisiTahapPemberkasanPengirimData(PosisiTahapPemberkasanData posisiTahapPemberkasanPengirimData) {
+		this.posisiTahapPemberkasanPengirimData = posisiTahapPemberkasanPengirimData;
+	}
+
+	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanPenerimaData() {
+		return posisiTahapPemberkasanPenerimaData;
+	}
+
+	public void setPosisiTahapPemberkasanPenerimaData(PosisiTahapPemberkasanData posisiTahapPemberkasanPenerimaData) {
+		this.posisiTahapPemberkasanPenerimaData = posisiTahapPemberkasanPenerimaData;
+	}
+
+	public StatusFlowData getStatusFlowData() {
+		return statusFlowData;
+	}
+
+	public void setStatusFlowData(StatusFlowData statusFlowData) {
+		this.statusFlowData = statusFlowData;
 	}
 
 	public static long getSerialversionuid() {

@@ -14,9 +14,10 @@ public class FlowLogPermohonan extends FlowLog implements Serializable {
 	private final RegisterPermohonan registerPermohonan;
 	
 	public FlowLogPermohonan(String id, LocalDate tanggal, KategoriFlowLog kategoriFlowLog,
-			PosisiTahapPemberkasan posisiTahapPemberkasan, String keterangan, Authority pengakses,
+			PosisiTahapPemberkasan pengirimBerkas, PosisiTahapPemberkasan penerimaBerkas, 
+			StatusFlowLog statusFlowLog, String keterangan, Authority pengakses,
 			RegisterPermohonan registerPermohonan) {
-		super(id, tanggal, kategoriFlowLog, posisiTahapPemberkasan, keterangan, pengakses);
+		super(id, tanggal, kategoriFlowLog, pengirimBerkas, penerimaBerkas, statusFlowLog, keterangan, pengakses);
 		this.registerPermohonan = registerPermohonan;
 	}
 

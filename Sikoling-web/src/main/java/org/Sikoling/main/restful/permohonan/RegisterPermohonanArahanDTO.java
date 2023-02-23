@@ -68,27 +68,22 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 			this.uraianKegiatan = t.getUraianKegiatan();
 		}
 	}
-
 	
 	public JenisPermohonanSuratArahanDTO getJenisPermohonanSuratArahan() {
 		return jenisPermohonanSuratArahan;
 	}
-
 	
 	public void setJenisPermohonanSuratArahan(JenisPermohonanSuratArahanDTO jenisPermohonanSuratArahan) {
 		this.jenisPermohonanSuratArahan = jenisPermohonanSuratArahan;
 	}
-
 	
 	public String getUraianKegiatan() {
 		return uraianKegiatan;
 	}
-
 	
 	public void setUraianKegiatan(String uraianKegiatan) {
 		this.uraianKegiatan = uraianKegiatan;
 	}
-
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;

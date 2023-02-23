@@ -37,9 +37,12 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
+import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
+import org.Sikoling.ejb.abstraction.entity.permohonan.JenisPermohonanSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
@@ -65,13 +68,16 @@ import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.log.FlowLogData;
 import org.Sikoling.ejb.main.repository.log.FlowLogPermohonanData;
 import org.Sikoling.ejb.main.repository.log.KategoriLogData;
+import org.Sikoling.ejb.main.repository.log.StatusFlowData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPengurusPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.KategoriSuratArahanData;
 import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanSuratArahanData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
@@ -676,19 +682,29 @@ public class DataConverter {
 	public RegisterPermohonan convertRegisterPermohonanDataToRegisterPermohonan(RegisterPermohonanData d) {
 		RegisterPermohonan registerPermohonan = null;
 		
-		if(d != null) {			
-			registerPermohonan = new RegisterPermohonan(
-										d.getId(), 
-										convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
-										d.getTanggalRegistrasi(), 
-										convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
-										convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
-										convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
-										convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
-										convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanData()), 
-										convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
-										null
-										);
+		if(d != null) {	
+			switch (d.getKategoriPermohonanData().getId()) {
+			case "01":
+				registerPermohonan = new RegisterPermohonanArahan(
+						d.getId(), 
+						convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
+						d.getTanggalRegistrasi(), 
+						convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
+						convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
+						convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
+						convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
+						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()),
+						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()),
+						convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()),
+						convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
+						null, 
+						convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(d.getPermohonanSuratArahanData().getKategoriSuratArahanData()), 
+						d.getPermohonanSuratArahanData().getUraianKegiatan()
+						);
+				break;
+			default:
+				break;
+			}
 		}
 		
 		return registerPermohonan;
@@ -699,7 +715,7 @@ public class DataConverter {
 		KategoriFlowLog kategoriFlowLog = null;
 		
 		if(d != null) {			
-			kategoriFlowLog = new KategoriFlowLog(d.getNama(), d.getNama());
+			kategoriFlowLog = new KategoriFlowLog(d.getId(), d.getNama());
 		}
 		
 		return kategoriFlowLog;
@@ -717,7 +733,9 @@ public class DataConverter {
 						d.getId(), 
 						d.getTanggal(), 
 						kategoriFlowLog, 
-						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanData()), 
+						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()), 
+						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()), 
+						convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()),
 						d.getKeterangan(), 
 						convertAutorisasiDataToAuthority(d.getPengaksesData()), 
 						convertRegisterPermohonanDataToRegisterPermohonan(d.getFlowLogPermohonanData().getRegisterPermohonan())
@@ -729,7 +747,28 @@ public class DataConverter {
 		
 		return flowLog;	
 	}
+	
 
+	public JenisPermohonanSuratArahan convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(KategoriSuratArahanData d) {
+		JenisPermohonanSuratArahan jenisPermohonanSuratArahan = null;
+		
+		if(d != null) {
+			jenisPermohonanSuratArahan = new JenisPermohonanSuratArahan(d.getId(), d.getNama());
+		}
+		
+		return jenisPermohonanSuratArahan;		
+	}
+	
+	public StatusFlowLog convertStatusFlowDataToStatusFlowLog(StatusFlowData d) {
+		StatusFlowLog statusFlowLog = null;
+		
+		if(d != null) {
+			statusFlowLog = new StatusFlowLog(d.getId(), d.getKeterangan());
+		}
+		
+		return statusFlowLog;		
+	}
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -1186,6 +1225,30 @@ public class DataConverter {
 		return posisiTahapPemberkasanData;
 	}
 	
+	public KategoriSuratArahanData convertJenisPermohonanSuratArahanToKategoriSuratArahanData(JenisPermohonanSuratArahan t) {
+		KategoriSuratArahanData kategoriSuratArahanData = null;
+		
+		if(t != null) {
+			kategoriSuratArahanData = new KategoriSuratArahanData();
+			kategoriSuratArahanData.setId(t.getId());
+			kategoriSuratArahanData.setNama(t.getKeterangan());
+		}
+		
+		return kategoriSuratArahanData;		
+	}
+	
+	public StatusFlowData convertStatusFlowLogToStatusFlowData(StatusFlowLog t) {
+		StatusFlowData statusFlowData = null;
+		
+		if(t != null) {
+			statusFlowData = new StatusFlowData();
+			statusFlowData.setId(t.getId());
+			statusFlowData.setKeterangan(t.getNama());
+		}
+		
+		return statusFlowData;		
+	}
+	
 	public List<DokumenPersyaratanPermohonanData> convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(List<RegisterDokumen> t, RegisterPermohonanData registerPermohonanData) {
 		List<DokumenPersyaratanPermohonanData> daftarDokumenPersyaratanPermohonan = null;
 		
@@ -1210,8 +1273,8 @@ public class DataConverter {
 		RegisterPermohonanData registerPermohonanData = null;
 		
 		if(t != null) {
-			String id = t.getId();
 			registerPermohonanData = new RegisterPermohonanData();
+			String id = t.getId();
 			registerPermohonanData.setId(id != null ? id : getGenerateIdRegisterPermohonan());
 			registerPermohonanData.setKategoriPermohonanData(
 					convertKategoriPermohonanToKategoriPermohonanData(t.getKategoriPermohonan()));			
@@ -1220,12 +1283,30 @@ public class DataConverter {
 			registerPermohonanData.setAutorisasiData(convertAuthorityToAutorisasiData(t.getPengurusPermohonan()));
 			registerPermohonanData.setKategoriPengurusPermohonanData(
 					convertStatusWaliToKategoriPengurusPermohonanData(t.getStatusWaliPengurusPermohonan()));
-			registerPermohonanData.setPosisiTahapPemberkasanData(
-					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPosisiBerkas()));	
+			registerPermohonanData.setPosisiTahapPemberkasanPengirimData(
+					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPengirimBerkas())
+					);
+			registerPermohonanData.setPosisiTahapPemberkasanPenerimaData(
+					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPenerimaBerkas())
+					);
+			registerPermohonanData.setStatusFlowData(convertStatusFlowLogToStatusFlowData(t.getStatusFlowLog()));
 			registerPermohonanData.setPenanggungJawab(convertPegawaiPerusahaanToPegawaiPerusahaanData(t.getPenanggungJawabPermohonan()));			
 			registerPermohonanData.setDaftarDokumenSyarat(
 					convertDaftarRegisterDokumenToDaftarDokumenPersyaratanData(t.getDaftarDokumenSyarat(), registerPermohonanData)
 					);
+			switch (t.getKategoriPermohonan().getId()) {
+			case "01":
+				RegisterPermohonanArahan s = (RegisterPermohonanArahan) t;
+				RegisterPermohonanSuratArahanData registerPermohonanSuratArahanData = new RegisterPermohonanSuratArahanData();
+				registerPermohonanSuratArahanData.setKategoriSuratArahanData(convertJenisPermohonanSuratArahanToKategoriSuratArahanData(s.getJenisPermohonanSuratArahan()));
+				registerPermohonanSuratArahanData.setUraianKegiatan(s.getUraianKegiatan());
+				registerPermohonanSuratArahanData.setRegisterPermohonanData(registerPermohonanData);
+				registerPermohonanData.setPermohonanSuratArahanData(registerPermohonanSuratArahanData);
+				break;
+			default:
+				break;
+			}
+			
 		}
 		
 		return registerPermohonanData;
@@ -1256,8 +1337,13 @@ public class DataConverter {
 				flowLogData.setId(id != null ? id : getGenerateIdFlowLogData());
 				flowLogData.setTanggal(flowLogPermohonan.getTanggal());
 				flowLogData.setKategoriLogData(kategoriLogData);
-				flowLogData.setPosisiTahapPemberkasanData(
-						convertStatusTahapPemberkasanToStatusTahapPemberkasanData(flowLogPermohonan.getPosisiTahapPemberkasan()));
+				flowLogData.setPosisiTahapPemberkasanPengirimData(
+						convertStatusTahapPemberkasanToStatusTahapPemberkasanData(flowLogPermohonan.getPengirimBerkas())
+				);
+				flowLogData.setPosisiTahapPemberkasanPenerimaData(
+						convertStatusTahapPemberkasanToStatusTahapPemberkasanData(flowLogPermohonan.getPenerimaBerkas())
+						);
+				flowLogData.setStatusFlowData(convertStatusFlowLogToStatusFlowData(flowLogPermohonan.getStatusFlowLog()));
 				flowLogData.setKeterangan(flowLogPermohonan.getKeterangan());
 				flowLogData.setPengaksesData(convertAuthorityToAutorisasiData(flowLogPermohonan.getPengakses()));
 				FlowLogPermohonanData flowLogPermohonanData = new FlowLogPermohonanData();

@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.KordinatGeografis;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 
 
 public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Serializable {	
@@ -32,14 +33,14 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 	
 	public RegisterPermohonanUKLUPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
-			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
+			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
+			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha,
 			int jumlahTenagaKerjaPria, int jumlahTenagaKerjaWanita, Double luasTanah,
 			KordinatGeografis kordinatGeografis, BatasLokasi batasLokasi, LocalDate tanggalTinjauLapangan,
 			LocalDate tanggalPembahasan) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
-				penanggungJawabPermohonan, posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
+				penanggungJawabPermohonan, pengirimBerkas, penerimaBerkas, statusFlowLog, daftarDokumenSyarat, daftarDokumenHasil);
 		this.status = status;
 		this.bidangUsaha = bidangUsaha;
 		this.namaUsaha = namaUsaha;

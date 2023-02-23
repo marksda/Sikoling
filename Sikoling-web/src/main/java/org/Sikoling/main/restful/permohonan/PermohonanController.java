@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
+import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
+import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -38,6 +40,9 @@ public class PermohonanController {
 	@Inject
 	private IAuthorityService authorityService;
 	
+	@Inject
+	private IFlowLogService flowLogService;
+	
 	@Inject 
 	private IRegisterPermohonanService registerPermohonanService;
 	
@@ -47,17 +52,39 @@ public class PermohonanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) {
-		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setPengurusPermohonan(new AuthorityDTO(kreator));
-		d.setStatusWali(new StatusWaliDTO(new StatusWali("01", null)));
-		d.setStatusTahapPemberkasan(new PosisiTahapPemberkasanDTO(new PosisiTahapPemberkasan("0", null, null)));
+		Authority pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		AuthorityDTO pengurusPermohonanDto = new AuthorityDTO(pengurusPermohonan);
+		d.setPengurusPermohonan(pengurusPermohonanDto);
+		PosisiTahapPemberkasanDTO posisiTahapPemberkasanDTO = new PosisiTahapPemberkasanDTO();
+		posisiTahapPemberkasanDTO.setId("0");
+		d.setStatusTahapPemberkasan(posisiTahapPemberkasanDTO);
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
-//		return new RegisterPermohonanDTO(
-//				registerPermohonanService.save(d.toRegisterPermohonan())
-//				);
-		return null;
+		if(d instanceof RegisterPermohonanArahanDTO) {
+			RegisterPermohonanArahanDTO s = (RegisterPermohonanArahanDTO) d;	
+			RegisterPermohonanArahan registerPermohonanArahan = (RegisterPermohonanArahan) registerPermohonanService.save(s.toRegisterPermohonanArahan());
+			
+			FlowLogPermohonanDTO flowLogPermohonanDTO = new FlowLogPermohonanDTO();
+			flowLogPermohonanDTO.setId(null);
+			flowLogPermohonanDTO.setTanggal(tanggalRegistrasi);
+			KategoriFlowLogDTO kategoriFlowLogDTO = new KategoriFlowLogDTO();
+			kategoriFlowLogDTO.setId("1");
+			kategoriFlowLogDTO.setNama("Permohonan");
+			flowLogPermohonanDTO.setKategoriFlowLog(kategoriFlowLogDTO);
+			flowLogPermohonanDTO.setPosisiTahapPemberkasan(posisiTahapPemberkasanDTO);
+			flowLogPermohonanDTO.setKeterangan(null);
+			flowLogPermohonanDTO.setPengakses(pengurusPermohonanDto);
+			flowLogPermohonanDTO.setRegisterPermohonan(
+					new RegisterPermohonanArahanDTO(registerPermohonanArahan)
+					);			
+			flowLogService.save(flowLogPermohonanDTO.toFlowLogPermohonan());
+			
+			return new RegisterPermohonanArahanDTO(registerPermohonanArahan);
+		}
+		else {
+			return null;
+		}		
 	}
 	
 	@PUT

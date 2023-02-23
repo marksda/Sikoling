@@ -6,19 +6,21 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.log.StatusFlowData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -53,18 +55,27 @@ public class RegisterPermohonanData implements Serializable {
 	@ManyToOne
 	private KategoriPengurusPermohonanData kategoriPengurusPermohonanData;
 	
-	@JoinColumn(name="posisi_tahap_pemberkasan", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name="posisi_tahap_pemberkasan_pengirim", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PosisiTahapPemberkasanData posisiTahapPemberkasanData;
+	private PosisiTahapPemberkasanData posisiTahapPemberkasanPengirimData;
+	
+	@JoinColumn(name="posisi_tahap_pemberkasan_penerima", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private PosisiTahapPemberkasanData posisiTahapPemberkasanPenerimaData;
 	
 	@JoinColumn(name="penanggung_jawab", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private PegawaiPerusahaanData penanggungJawab;
 	
+	@JoinColumn(name="status_flow", referencedColumnName = "id", insertable = true, updatable = true)
+	@ManyToOne
+	private StatusFlowData statusFlowData;
+	
 	@OneToMany(mappedBy = "registerPermohonan", cascade = CascadeType.ALL)
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
 	
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+//	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "registerPermohonanData", cascade = CascadeType.ALL)
 	private RegisterPermohonanSuratArahanData permohonanSuratArahanData;
 	
 //	@OneToMany(mappedBy = "registerPermohonan", fetch = FetchType.LAZY)
@@ -129,14 +140,6 @@ public class RegisterPermohonanData implements Serializable {
 		this.kategoriPengurusPermohonanData = kategoriPengurusPermohonanData;
 	}
 
-	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanData() {
-		return posisiTahapPemberkasanData;
-	}
-
-	public void setPosisiTahapPemberkasanData(PosisiTahapPemberkasanData posisiTahapPemberkasanData) {
-		this.posisiTahapPemberkasanData = posisiTahapPemberkasanData;
-	}
-
 	public List<DokumenPersyaratanPermohonanData> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
@@ -151,6 +154,30 @@ public class RegisterPermohonanData implements Serializable {
 
 	public void setPenanggungJawab(PegawaiPerusahaanData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
+	}
+
+	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanPengirimData() {
+		return posisiTahapPemberkasanPengirimData;
+	}
+
+	public void setPosisiTahapPemberkasanPengirimData(PosisiTahapPemberkasanData posisiTahapPemberkasanPengirimData) {
+		this.posisiTahapPemberkasanPengirimData = posisiTahapPemberkasanPengirimData;
+	}
+
+	public PosisiTahapPemberkasanData getPosisiTahapPemberkasanPenerimaData() {
+		return posisiTahapPemberkasanPenerimaData;
+	}
+
+	public void setPosisiTahapPemberkasanPenerimaData(PosisiTahapPemberkasanData posisiTahapPemberkasanPenerimaData) {
+		this.posisiTahapPemberkasanPenerimaData = posisiTahapPemberkasanPenerimaData;
+	}
+
+	public StatusFlowData getStatusFlowData() {
+		return statusFlowData;
+	}
+
+	public void setStatusFlowData(StatusFlowData statusFlowData) {
+		this.statusFlowData = statusFlowData;
 	}
 
 	public static long getSerialversionuid() {

@@ -9,6 +9,7 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 
 public class RegisterPermohonanArahan extends RegisterPermohonan implements Serializable {
 	
@@ -18,11 +19,11 @@ public class RegisterPermohonanArahan extends RegisterPermohonan implements Seri
 	
 	public RegisterPermohonanArahan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
-			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan posisiBerkas,
-			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
+			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
+			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			JenisPermohonanSuratArahan jenisPermohonanSuratArahan, String uraianKegiatan) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
-				penanggungJawabPermohonan, posisiBerkas, daftarDokumenSyarat, daftarDokumenHasil);
+				penanggungJawabPermohonan, pengirimBerkas, penerimaBerkas, statusFlowLog, daftarDokumenSyarat, daftarDokumenHasil);
 		this.jenisPermohonanSuratArahan = jenisPermohonanSuratArahan;
 		this.uraianKegiatan = uraianKegiatan;
 	}
