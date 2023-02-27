@@ -12,6 +12,7 @@ import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanServic
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
+import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -55,9 +56,16 @@ public class PermohonanController {
 		Authority pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		AuthorityDTO pengurusPermohonanDto = new AuthorityDTO(pengurusPermohonan);
 		d.setPengurusPermohonan(pengurusPermohonanDto);
-		PosisiTahapPemberkasanDTO posisiTahapPemberkasanDTO = new PosisiTahapPemberkasanDTO();
-		posisiTahapPemberkasanDTO.setId("0");
-		d.setStatusTahapPemberkasan(posisiTahapPemberkasanDTO);
+		PosisiTahapPemberkasanDTO pengirimBerkasDTO = new PosisiTahapPemberkasanDTO();
+		pengirimBerkasDTO.setId("0");
+		d.setPengirimBerkas(pengirimBerkasDTO);
+		PosisiTahapPemberkasanDTO penerimaBerkasDTO = new PosisiTahapPemberkasanDTO();
+		pengirimBerkasDTO.setId("1");
+		d.setPenerimaBerkas(penerimaBerkasDTO);
+		StatusFlowLogDTO statusFlowLogDTO = new StatusFlowLogDTO();
+		statusFlowLogDTO.setId("4");
+		statusFlowLogDTO.setNama("BERKAS DI DLHK");
+		d.setStatusFlowLog(statusFlowLogDTO);		
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
@@ -72,7 +80,9 @@ public class PermohonanController {
 			kategoriFlowLogDTO.setId("1");
 			kategoriFlowLogDTO.setNama("Permohonan");
 			flowLogPermohonanDTO.setKategoriFlowLog(kategoriFlowLogDTO);
-			flowLogPermohonanDTO.setPosisiTahapPemberkasan(posisiTahapPemberkasanDTO);
+			flowLogPermohonanDTO.setPengirimBerkas(pengirimBerkasDTO);
+			flowLogPermohonanDTO.setPenerimaBerkas(penerimaBerkasDTO);
+			flowLogPermohonanDTO.setStatusFlowLog(statusFlowLogDTO);
 			flowLogPermohonanDTO.setKeterangan(null);
 			flowLogPermohonanDTO.setPengakses(pengurusPermohonanDto);
 			flowLogPermohonanDTO.setRegisterPermohonan(

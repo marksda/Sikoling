@@ -12,6 +12,7 @@ import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
 import org.Sikoling.main.restful.permohonan.JenisPermohonanSuratArahanDTO;
 import org.Sikoling.main.restful.permohonan.KategoriPermohonanDTO;
@@ -61,7 +62,9 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		PegawaiPerusahaanDTO pegawaiPerusahaanDTO = null;
 		RegisterPerusahaanDTO registerPerusahaanDTO = null;
 		AuthorityDTO pengurusPermohonanDTO = null;
-		PosisiTahapPemberkasanDTO posisiTahapPemberkasanDTO = null;
+		PosisiTahapPemberkasanDTO pengirimBerkasDTO = null;
+		PosisiTahapPemberkasanDTO penerimaBerkasDTO = null;
+		StatusFlowLogDTO statusFlowLogDTO =null;
 		StatusWaliDTO statusWaliDTO = null;
 		LocalDate tanggalRegistrasi = null;
 		List<RegisterDokumenDTO> daftarDokumenSyarat = null;
@@ -129,13 +132,31 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 						pengurusPermohonanDTO = null;
 					}		
 					break;	
-				case "statusTahapPemberkasan":
+				case "pengirimBerkas":
 					event = parser.next();
 					try {
 						jsonObject = parser.getObject();
-						posisiTahapPemberkasanDTO = jsonb.fromJson(jsonObject.toString(), PosisiTahapPemberkasanDTO.class);
+						pengirimBerkasDTO = jsonb.fromJson(jsonObject.toString(), PosisiTahapPemberkasanDTO.class);
 					} catch (Exception e) {
-						posisiTahapPemberkasanDTO = null;
+						pengirimBerkasDTO = null;
+					}		
+					break;	
+				case "penerimaBerkas":
+					event = parser.next();
+					try {
+						jsonObject = parser.getObject();
+						penerimaBerkasDTO = jsonb.fromJson(jsonObject.toString(), PosisiTahapPemberkasanDTO.class);
+					} catch (Exception e) {
+						penerimaBerkasDTO = null;
+					}		
+					break;	
+				case "statusFlowLog":
+					event = parser.next();
+					try {
+						jsonObject = parser.getObject();
+						statusFlowLogDTO = jsonb.fromJson(jsonObject.toString(), StatusFlowLogDTO.class);
+					} catch (Exception e) {
+						statusFlowLogDTO = null;
 					}		
 					break;	
 				case "statusWali":
@@ -202,7 +223,9 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 			dt.setPengurusPermohonan(pengurusPermohonanDTO);
 			dt.setStatusWali(statusWaliDTO);
 			dt.setPenanggungJawabPermohonan(pegawaiPerusahaanDTO);
-			dt.setStatusTahapPemberkasan(posisiTahapPemberkasanDTO);
+			dt.setPengirimBerkas(pengirimBerkasDTO);
+			dt.setPenerimaBerkas(penerimaBerkasDTO);
+			dt.setStatusFlowLog(statusFlowLogDTO);
 			dt.setDaftarDokumenSyarat(daftarDokumenSyarat);
 			dt.setDaftarDokumenHasil(daftarDokumenHasil);
 			dt.setJenisPermohonanSuratArahan(jenisPermohonanSuratArahanDTO);

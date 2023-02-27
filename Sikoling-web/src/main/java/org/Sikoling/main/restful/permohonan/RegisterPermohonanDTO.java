@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
@@ -22,7 +23,9 @@ public class RegisterPermohonanDTO implements Serializable {
 	private AuthorityDTO pengurusPermohonan;
 	private StatusWaliDTO statusWali;
 	private PegawaiPerusahaanDTO penanggungJawabPermohonan;
-	private PosisiTahapPemberkasanDTO statusTahapPemberkasan;
+	private PosisiTahapPemberkasanDTO pengirimBerkas;
+	private PosisiTahapPemberkasanDTO penerimaBerkas;
+	private StatusFlowLogDTO statusFlowLog;
 	private List<RegisterDokumenDTO> daftarDokumenSyarat;
 	private List<RegisterDokumenDTO> daftarDokumenHasil;
 	
@@ -43,8 +46,12 @@ public class RegisterPermohonanDTO implements Serializable {
 					new StatusWaliDTO(t.getStatusWaliPengurusPermohonan()) : null;
 			this.penanggungJawabPermohonan = t.getPenanggungJawabPermohonan() != null ?
 					new PegawaiPerusahaanDTO(t.getPenanggungJawabPermohonan()) : null;
-			this.statusTahapPemberkasan = t.getPosisiBerkas() != null ?
-					new PosisiTahapPemberkasanDTO(t.getPosisiBerkas()) : null;
+			this.pengirimBerkas = t.getPengirimBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()) : null;
+			this.penerimaBerkas = t.getPenerimaBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPenerimaBerkas()) : null;
+			this.statusFlowLog = t.getStatusFlowLog() != null ?
+					new StatusFlowLogDTO(t.getStatusFlowLog()) : null;
 			this.daftarDokumenSyarat = t.getDaftarDokumenSyarat() != null ?
 					t.getDaftarDokumenSyarat()
 					.stream()
@@ -97,15 +104,23 @@ public class RegisterPermohonanDTO implements Serializable {
 	public void setPengurusPermohonan(AuthorityDTO pengurusPermohonan) {
 		this.pengurusPermohonan = pengurusPermohonan;
 	}
-	
-	public PosisiTahapPemberkasanDTO getStatusTahapPemberkasan() {
-		return statusTahapPemberkasan;
+		
+	public PosisiTahapPemberkasanDTO getPengirimBerkas() {
+		return pengirimBerkas;
 	}
-	
-	public void setStatusTahapPemberkasan(PosisiTahapPemberkasanDTO statusTahapPemberkasan) {
-		this.statusTahapPemberkasan = statusTahapPemberkasan;
+
+	public void setPengirimBerkas(PosisiTahapPemberkasanDTO pengirimBerkas) {
+		this.pengirimBerkas = pengirimBerkas;
 	}
-	
+
+	public PosisiTahapPemberkasanDTO getPenerimaBerkas() {
+		return penerimaBerkas;
+	}
+
+	public void setPenerimaBerkas(PosisiTahapPemberkasanDTO penerimaBerkas) {
+		this.penerimaBerkas = penerimaBerkas;
+	}
+
 	public List<RegisterDokumenDTO> getDaftarDokumenSyarat() {
 		return daftarDokumenSyarat;
 	}
@@ -136,6 +151,14 @@ public class RegisterPermohonanDTO implements Serializable {
 
 	public void setPenanggungJawabPermohonan(PegawaiPerusahaanDTO penanggungJawabPermohonan) {
 		this.penanggungJawabPermohonan = penanggungJawabPermohonan;
+	}
+
+	public StatusFlowLogDTO getStatusFlowLog() {
+		return statusFlowLog;
+	}
+
+	public void setStatusFlowLog(StatusFlowLogDTO statusFlowLog) {
+		this.statusFlowLog = statusFlowLog;
 	}
 
 	public static long getSerialversionuid() {
@@ -196,8 +219,12 @@ public class RegisterPermohonanDTO implements Serializable {
 						statusWali.toStatusWali() : null,
 				penanggungJawabPermohonan != null ?
 						penanggungJawabPermohonan.toPegawaiPerusahaan() : null,
-				statusTahapPemberkasan != null ?
-						statusTahapPemberkasan.toPosisiTahapPemberkasan() : null, 
+				pengirimBerkas != null ?
+						pengirimBerkas.toPosisiTahapPemberkasan() : null, 
+				penerimaBerkas != null ?
+						penerimaBerkas.toPosisiTahapPemberkasan() : null,	
+				statusFlowLog != null ?
+						statusFlowLog.toStatusFlowLog() : null,
 				daftarDokumenSyarat != null ?
 						daftarDokumenSyarat.stream()
 						.map(i -> i.toRegisterDokumen())

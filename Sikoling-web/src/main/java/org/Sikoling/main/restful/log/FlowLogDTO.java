@@ -14,7 +14,9 @@ public class FlowLogDTO implements Serializable {
 	private String id;
 	private LocalDate tanggal;
 	private KategoriFlowLogDTO kategoriFlowLog;
-	private PosisiTahapPemberkasanDTO posisiTahapPemberkasan;
+	private PosisiTahapPemberkasanDTO pengirimBerkas;
+	private PosisiTahapPemberkasanDTO penerimaBerkas;
+	private StatusFlowLogDTO statusFlowLog;
 	private String keterangan;
 	private AuthorityDTO pengakses;
 	
@@ -27,8 +29,12 @@ public class FlowLogDTO implements Serializable {
 			this.tanggal = t.getTanggal();
 			this.kategoriFlowLog = t.getKategoriFlowLog() != null ?
 					new KategoriFlowLogDTO(t.getKategoriFlowLog()) : null;
-			this.posisiTahapPemberkasan = t.getPosisiTahapPemberkasan() != null ?
-					new PosisiTahapPemberkasanDTO(t.getPosisiTahapPemberkasan()) : null;
+			this.pengirimBerkas = t.getPengirimBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()) : null;
+			this.penerimaBerkas = t.getPenerimaBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPenerimaBerkas()) : null;
+			this.statusFlowLog = t.getStatusFlowLog() != null ?
+					new StatusFlowLogDTO(t.getStatusFlowLog()) : null;
 			this.keterangan = t.getKeterangan();
 			this.pengakses = t.getPengakses() != null ?
 					new AuthorityDTO(t.getPengakses()) : null;
@@ -58,13 +64,29 @@ public class FlowLogDTO implements Serializable {
 	public void setKategoriFlowLog(KategoriFlowLogDTO kategoriFlowLog) {
 		this.kategoriFlowLog = kategoriFlowLog;
 	}
-
-	public PosisiTahapPemberkasanDTO getPosisiTahapPemberkasan() {
-		return posisiTahapPemberkasan;
+	
+	public PosisiTahapPemberkasanDTO getPengirimBerkas() {
+		return pengirimBerkas;
 	}
 
-	public void setPosisiTahapPemberkasan(PosisiTahapPemberkasanDTO posisiTahapPemberkasan) {
-		this.posisiTahapPemberkasan = posisiTahapPemberkasan;
+	public void setPengirimBerkas(PosisiTahapPemberkasanDTO pengirimBerkas) {
+		this.pengirimBerkas = pengirimBerkas;
+	}
+
+	public PosisiTahapPemberkasanDTO getPenerimaBerkas() {
+		return penerimaBerkas;
+	}
+
+	public void setPenerimaBerkas(PosisiTahapPemberkasanDTO penerimaBerkas) {
+		this.penerimaBerkas = penerimaBerkas;
+	}
+
+	public StatusFlowLogDTO getStatusFlowLog() {
+		return statusFlowLog;
+	}
+
+	public void setStatusFlowLog(StatusFlowLogDTO statusFlowLog) {
+		this.statusFlowLog = statusFlowLog;
 	}
 
 	public String getKeterangan() {
@@ -132,7 +154,12 @@ public class FlowLogDTO implements Serializable {
 				id, 
 				tanggal, 
 				kategoriFlowLog != null ? kategoriFlowLog.toKategoriFlowLog() : null, 
-				posisiTahapPemberkasan != null ? posisiTahapPemberkasan.toPosisiTahapPemberkasan() : null, 
+				pengirimBerkas != null ?
+						pengirimBerkas.toPosisiTahapPemberkasan() : null, 
+				penerimaBerkas != null ?
+						penerimaBerkas.toPosisiTahapPemberkasan() : null,	
+				statusFlowLog != null ?
+						statusFlowLog.toStatusFlowLog() : null,
 				keterangan, 
 				pengakses != null ? pengakses.toAuthority() : null
 				);

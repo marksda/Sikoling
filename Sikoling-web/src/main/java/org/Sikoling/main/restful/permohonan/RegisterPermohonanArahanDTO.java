@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
@@ -45,9 +46,17 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 					new PegawaiPerusahaanDTO(t.getPenanggungJawabPermohonan()) : null;
 			this.setPenanggungJawabPermohonan(pegawaiPerusahaanDTO);
 			
-			PosisiTahapPemberkasanDTO posisiTahapPemberkasanDTO = t.getPosisiBerkas() != null ?
-					new PosisiTahapPemberkasanDTO(t.getPosisiBerkas()) : null;
-			this.setStatusTahapPemberkasan(posisiTahapPemberkasanDTO);
+			PosisiTahapPemberkasanDTO pengirimBerkas = t.getPengirimBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()) : null;
+			this.setPengirimBerkas(pengirimBerkas);
+			
+			PosisiTahapPemberkasanDTO penerimaBerkas = t.getPenerimaBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPenerimaBerkas()) : null;
+			this.setPenerimaBerkas(penerimaBerkas);
+			
+			StatusFlowLogDTO statusFlowLog = t.getStatusFlowLog() != null ?
+					new StatusFlowLogDTO(t.getStatusFlowLog()) : null;
+			this.setStatusFlowLog(statusFlowLog);
 			
 			List<RegisterDokumenDTO> daftarDokumenSyarat = t.getDaftarDokumenSyarat() != null ?
 					t.getDaftarDokumenSyarat()
@@ -143,8 +152,12 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 						this.getStatusWali().toStatusWali() : null, 
 				this.getPenanggungJawabPermohonan() != null ?
 						this.getPenanggungJawabPermohonan().toPegawaiPerusahaan() : null, 
-				this.getStatusTahapPemberkasan() != null ?
-						this.getStatusTahapPemberkasan().toPosisiTahapPemberkasan() : null, 
+				this.getPengirimBerkas() != null ?
+						this.getPengirimBerkas().toPosisiTahapPemberkasan() : null, 
+				this.getPenerimaBerkas() != null ?
+						this.getPenerimaBerkas().toPosisiTahapPemberkasan() : null,	
+				this.getStatusFlowLog() != null ?
+								this.getStatusFlowLog().toStatusFlowLog() : null, 
 				this.getDaftarDokumenSyarat() != null ?
 						this.getDaftarDokumenSyarat()
 							.stream()

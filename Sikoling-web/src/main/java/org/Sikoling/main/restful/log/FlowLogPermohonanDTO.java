@@ -26,9 +26,19 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 			KategoriFlowLogDTO kategoriFlowLogDTO = t.getKategoriFlowLog() != null ?
 					new KategoriFlowLogDTO(t.getKategoriFlowLog()) : null;
 			this.setKategoriFlowLog(kategoriFlowLogDTO);
-			PosisiTahapPemberkasanDTO posisiTahapPemberkasanDTO = t.getPosisiTahapPemberkasan() != null ?
-					new PosisiTahapPemberkasanDTO(t.getPosisiTahapPemberkasan()) :null;
-			this.setPosisiTahapPemberkasan(posisiTahapPemberkasanDTO);
+			
+			PosisiTahapPemberkasanDTO pengirimBerkas = t.getPengirimBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()) : null;
+			this.setPengirimBerkas(pengirimBerkas);
+			
+			PosisiTahapPemberkasanDTO penerimaBerkas = t.getPenerimaBerkas() != null ?
+					new PosisiTahapPemberkasanDTO(t.getPenerimaBerkas()) : null;
+			this.setPenerimaBerkas(penerimaBerkas);
+			
+			StatusFlowLogDTO statusFlowLog = t.getStatusFlowLog() != null ?
+					new StatusFlowLogDTO(t.getStatusFlowLog()) : null;
+			this.setStatusFlowLog(statusFlowLog);
+			
 			this.setKeterangan(t.getKeterangan());
 			AuthorityDTO pengakses = t.getPengakses() != null ?
 					new AuthorityDTO(t.getPengakses()) : null;
@@ -104,9 +114,13 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 				this.getId(), 
 				this.getTanggal(), 
 				this.getKategoriFlowLog() != null ? 
-						this.getKategoriFlowLog().toKategoriFlowLog() : null, 
-				this.getPosisiTahapPemberkasan() != null ?
-						this.getPosisiTahapPemberkasan().toPosisiTahapPemberkasan() : null, 
+				this.getKategoriFlowLog().toKategoriFlowLog() : null, 
+				this.getPengirimBerkas() != null ?
+						this.getPengirimBerkas().toPosisiTahapPemberkasan() : null, 
+				this.getPenerimaBerkas() != null ?
+						this.getPenerimaBerkas().toPosisiTahapPemberkasan() : null,	
+				this.getStatusFlowLog() != null ?
+								this.getStatusFlowLog().toStatusFlowLog() : null,  
 				this.getKeterangan(), 
 				this.getPengakses() != null ?
 						this.getPengakses().toAuthority() : null, 
