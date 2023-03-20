@@ -27,6 +27,11 @@ import jakarta.persistence.Table;
 @Table(name="transaksi.tbl_register_permohonan")
 @NamedQueries({
 	@NamedQuery(name="RegisterPermohonanData.findAll", query="SELECT p FROM RegisterPermohonanData p"),
+	@NamedQuery(name="RegisterPermohonanData.findByPerusahaan", query="SELECT p FROM RegisterPermohonanData p WHERE p.perusahaanData.id = :idPerusahaan"),
+	@NamedQuery(name="RegisterPermohonanData.findByPengirim", query="SELECT p FROM RegisterPermohonanData p WHERE p.posisiTahapPemberkasanPengirimData.id = :idPengirim"),
+	@NamedQuery(name="RegisterPermohonanData.findByPenerima", query="SELECT p FROM RegisterPermohonanData p WHERE p.posisiTahapPemberkasanPenerimaData.id = :idPenerima"),
+	@NamedQuery(name="RegisterPermohonanData.findByPenerimaAtauPenerima", query="SELECT p FROM RegisterPermohonanData p WHERE p.posisiTahapPemberkasanPengirimData.id = :idPengirim OR p.posisiTahapPemberkasanPenerimaData.id = :idPenerima"),
+	@NamedQuery(name="RegisterPermohonanData.findByPenerimaAtauPenerimaOnProcess", query="SELECT p FROM RegisterPermohonanData p WHERE (p.posisiTahapPemberkasanPengirimData.id = :idPengirim OR p.posisiTahapPemberkasanPenerimaData.id = :idPenerima) AND p.statusFlowData IN :daftarIdFlow"),
 	@NamedQuery(name="RegisterPermohonanData.findByPengakses", query="SELECT p FROM RegisterPermohonanData p WHERE p.autorisasiData.id = :idKreator")
 })
 public class RegisterPermohonanData implements Serializable {
@@ -75,7 +80,7 @@ public class RegisterPermohonanData implements Serializable {
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
 	
 //	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "registerPermohonanData", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "registerPermohonanData", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private RegisterPermohonanSuratArahanData permohonanSuratArahanData;
 	
 //	@OneToMany(mappedBy = "registerPermohonan", fetch = FetchType.LAZY)

@@ -685,22 +685,24 @@ public class DataConverter {
 		if(d != null) {	
 			switch (d.getKategoriPermohonanData().getId()) {
 			case "01":
-				registerPermohonan = new RegisterPermohonanArahan(
-						d.getId(), 
-						convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
-						d.getTanggalRegistrasi(), 
-						convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
-						convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
-						convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
-						convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
-						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()),
-						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()),
-						convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()),
-						convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
-						null, 
-						convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(d.getPermohonanSuratArahanData().getKategoriSuratArahanData()), 
-						d.getPermohonanSuratArahanData().getUraianKegiatan()
-						);
+				if(d.getPermohonanSuratArahanData() != null) {
+					registerPermohonan = new RegisterPermohonanArahan(
+							d.getId(), 
+							convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
+							d.getTanggalRegistrasi(), 
+							convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
+							convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
+							convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
+							convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
+							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()),
+							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()),
+							convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()),
+							convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
+							null, 
+							convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(d.getPermohonanSuratArahanData().getKategoriSuratArahanData()), 
+							d.getPermohonanSuratArahanData().getUraianKegiatan()
+							);
+				}				
 				break;
 			default:
 				break;

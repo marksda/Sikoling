@@ -54,4 +54,28 @@ public class RegisterPermohonanRepositoryEJB implements IRegisterPermohonanRepos
 		return registerPermohonanRepository.delete(id);
 	}
 
+	
+	@Override
+	public List<RegisterPermohonan> getByIdPenerima(String idPenerima) {
+		return registerPermohonanRepository.getByIdPenerima(idPenerima);
+	}
+	
+
+	@Override
+	public List<RegisterPermohonan> getByIdPengirim(String idPengirim) {
+		return registerPermohonanRepository.getByIdPengirim(idPengirim);
+	}
+	
+
+	@Override
+	public List<RegisterPermohonan> getByIdPengirimAtauPenerima(String idPengirim, String idPenerima) {
+		return registerPermohonanRepository.getByIdPengirimAtauPenerima(idPengirim, idPenerima);
+	}
+
+	
+	@Override
+	public List<RegisterPermohonan> getByIdPengirimAtauPenerimaOnProcess(String idPengirim, String idPenerima) {
+		return registerPermohonanRepository.getByIdPengirimAtauPenerimaOnProcess(idPengirim, idPenerima);
+	}
+
 }

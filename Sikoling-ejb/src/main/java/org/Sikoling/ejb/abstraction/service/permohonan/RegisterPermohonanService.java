@@ -43,11 +43,34 @@ public class RegisterPermohonanService implements IRegisterPermohonanService {
 	public List<RegisterPermohonan> getByIdPerusahaan(String idPerusahaan) {
 		return registerPermohonanRepository.getByIdPerusahaan(idPerusahaan);
 	}
-
 	
 	@Override
 	public DeleteResponse delete(String id) {
 		return registerPermohonanRepository.delete(id);
+	}
+
+	
+	@Override
+	public List<RegisterPermohonan> getByIdPenerima(String idPenerima) {
+		return registerPermohonanRepository.getByIdPenerima(idPenerima);
+	}
+
+	
+	@Override
+	public List<RegisterPermohonan> getByIdPengirim(String idPengirim) {
+		return registerPermohonanRepository.getByIdPengirim(idPengirim);
+	}
+	
+
+	@Override
+	public List<RegisterPermohonan> getByIdPengirimAtauIdPenerima(String idPengirim, String idPenerima) {
+		return registerPermohonanRepository.getByIdPengirimAtauPenerima(idPengirim, idPenerima);
+	}
+
+	
+	@Override
+	public List<RegisterPermohonan> getByIdPengirimAtauPenerimaOnProcess(String idPengirim, String idPenerima) {
+		return registerPermohonanRepository.getByIdPengirimAtauPenerimaOnProcess(idPengirim, idPenerima);
 	}
 
 }

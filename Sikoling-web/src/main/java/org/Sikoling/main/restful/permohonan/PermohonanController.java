@@ -60,7 +60,7 @@ public class PermohonanController {
 		pengirimBerkasDTO.setId("0");
 		d.setPengirimBerkas(pengirimBerkasDTO);
 		PosisiTahapPemberkasanDTO penerimaBerkasDTO = new PosisiTahapPemberkasanDTO();
-		pengirimBerkasDTO.setId("1");
+		penerimaBerkasDTO.setId("1");
 		d.setPenerimaBerkas(penerimaBerkasDTO);
 		StatusFlowLogDTO statusFlowLogDTO = new StatusFlowLogDTO();
 		statusFlowLogDTO.setId("4");
@@ -83,7 +83,7 @@ public class PermohonanController {
 			flowLogPermohonanDTO.setPengirimBerkas(pengirimBerkasDTO);
 			flowLogPermohonanDTO.setPenerimaBerkas(penerimaBerkasDTO);
 			flowLogPermohonanDTO.setStatusFlowLog(statusFlowLogDTO);
-			flowLogPermohonanDTO.setKeterangan(null);
+			flowLogPermohonanDTO.setKeterangan("Berkas permohonan berhasil dimasukkan");
 			flowLogPermohonanDTO.setPengakses(pengurusPermohonanDto);
 			flowLogPermohonanDTO.setRegisterPermohonan(
 					new RegisterPermohonanArahanDTO(registerPermohonanArahan)
@@ -160,7 +160,50 @@ public class PermohonanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public List<RegisterPermohonanDTO> getByIdPerusahaan(@PathParam("idRegister") String idRegister) {
-		return registerPermohonanService.getByIdPengakses(idRegister)
+		return registerPermohonanService.getByIdPerusahaan(idRegister)
+				.stream()
+				.map(t -> new RegisterPermohonanDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("penerima/{idPenerima}")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<RegisterPermohonanDTO> getByIdPenerima(@PathParam("idPenerima") String idPenerima,
+			@QueryParam("pageNumber") Integer pageNumber, @QueryParam("pageSize") Integer pageSize,
+			@QueryParam("orderBy") List<String> orderBy
+			
+			) {
+		return registerPermohonanService.getByIdPenerima(idPenerima)
+				.stream()
+				.map(t -> new RegisterPermohonanDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("pengirim/{idPengirim}")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<RegisterPermohonanDTO> getByIdPengirim(@PathParam("idPengirim") String idPengirim) {
+		return registerPermohonanService.getByIdPengirim(idPengirim)
+				.stream()
+				.map(t -> new RegisterPermohonanDTO(t))
+				.collect(Collectors.toList());
+	}
+	
+	@Path("pengirim_penerima_on_proses/{idPengirim}/{idPenerima}")
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<RegisterPermohonanDTO> getByIdPengirimAtauIdPenerima(@PathParam("idPengirim") String idPengirim, @PathParam("idPenerima") String idPenerima) {
+		return registerPermohonanService.getByIdPengirimAtauPenerimaOnProcess(idPengirim, idPenerima)
 				.stream()
 				.map(t -> new RegisterPermohonanDTO(t))
 				.collect(Collectors.toList());
