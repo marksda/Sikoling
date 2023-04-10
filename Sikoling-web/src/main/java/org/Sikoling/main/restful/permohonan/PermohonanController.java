@@ -13,6 +13,9 @@ import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
+import org.Sikoling.main.restful.queryparams.FilterDTO;
+import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
+import org.Sikoling.main.restful.queryparams.SortOrderDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -23,6 +26,7 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -120,12 +124,35 @@ public class PermohonanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getAll() {
-		return registerPermohonanService.getAll()
+	public List<RegisterPermohonanDTO> getDaftarPermohonan(
+			@DefaultValue("0") @QueryParam("pageNumber") Integer pageNumber,
+			@DefaultValue("0") @QueryParam("pageSize") Integer pageSize,
+			@QueryParam("filters") List<FilterDTO> filters,
+			@QueryParam("sortOrders") List<SortOrderDTO> sortOrders
+			) {
+		QueryParamFiltersDTO queryParamFiltersDTO = new QueryParamFiltersDTO();
+		queryParamFiltersDTO.setPageNumber(pageNumber);
+		queryParamFiltersDTO.setPageSize(pageSize);
+		queryParamFiltersDTO.setFilters(filters);
+		queryParamFiltersDTO.setSortOrders(sortOrders);
+		
+		return registerPermohonanService.getDaftarPermohonan(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new RegisterPermohonanDTO(t))
 				.collect(Collectors.toList());
 	}
+
+//	@GET
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Produces({MediaType.APPLICATION_JSON})
+//	@RequiredAuthorization
+//	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+//	public List<RegisterPermohonanDTO> getAll() {
+//		return registerPermohonanService.getAll()
+//				.stream()
+//				.map(t -> new RegisterPermohonanDTO(t))
+//				.collect(Collectors.toList());
+//	}
 	
 	@Path("page")
 	@GET

@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.main.repository;
 
 import java.util.Properties;
-
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
@@ -23,6 +22,7 @@ import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanSuratArahanRepositoryJPA;
+import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.StatusPengurusPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
@@ -221,5 +221,10 @@ public class RepositoryProvider {
 	@Produces
 	public FlowLogRepositoryJPA getFlowLogRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		return new FlowLogRepositoryJPA(entityManager, dataConverter);
+	}
+	
+	@Produces
+	public PosisiTahapPemberkasanRepositoryJPA getPosisiTahapPemberkasanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new PosisiTahapPemberkasanRepositoryJPA(entityManager, dataConverter);
 	}
 }

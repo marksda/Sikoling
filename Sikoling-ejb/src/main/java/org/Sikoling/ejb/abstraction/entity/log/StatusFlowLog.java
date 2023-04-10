@@ -67,5 +67,4 @@ public class StatusFlowLog implements Serializable {
 				.concat("}");
 	}	
 
-
 }

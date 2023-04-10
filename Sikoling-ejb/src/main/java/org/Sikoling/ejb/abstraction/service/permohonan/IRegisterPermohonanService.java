@@ -3,6 +3,7 @@ package org.Sikoling.ejb.abstraction.service.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 
 public interface IRegisterPermohonanService {
@@ -17,4 +18,5 @@ public interface IRegisterPermohonanService {
 	List<RegisterPermohonan> getByIdPengirim(String idPengirim);
 	List<RegisterPermohonan> getByIdPengirimAtauIdPenerima(String idPengirim, String idPenerima);
 	List<RegisterPermohonan> getByIdPengirimAtauPenerimaOnProcess(String idPengirim, String idPenerima);
+	List<RegisterPermohonan> getDaftarPermohonan(QueryParamFilters queryParamFilters);
 }

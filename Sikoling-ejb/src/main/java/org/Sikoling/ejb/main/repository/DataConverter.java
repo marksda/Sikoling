@@ -750,7 +750,6 @@ public class DataConverter {
 		return flowLog;	
 	}
 	
-
 	public JenisPermohonanSuratArahan convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(KategoriSuratArahanData d) {
 		JenisPermohonanSuratArahan jenisPermohonanSuratArahan = null;
 		
@@ -770,7 +769,7 @@ public class DataConverter {
 		
 		return statusFlowLog;		
 	}
-	
+
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {

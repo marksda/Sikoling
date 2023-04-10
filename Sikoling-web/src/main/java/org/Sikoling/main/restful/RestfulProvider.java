@@ -23,6 +23,7 @@ import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
+import org.Sikoling.ejb.abstraction.repository.IPosisiTahapPemberkasanRepository;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
@@ -81,10 +82,12 @@ import org.Sikoling.ejb.abstraction.service.penanggungjawab.IPenanggungJawabServ
 import org.Sikoling.ejb.abstraction.service.penanggungjawab.PenanggungJawabService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanSuratArahanService;
+import org.Sikoling.ejb.abstraction.service.permohonan.IPosisiTahapPemberkasanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IStatusWaliService;
 import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanSuratArahanService;
+import org.Sikoling.ejb.abstraction.service.permohonan.PosisiTahapPemberkasanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.RegisterPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.StatusWaliService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
@@ -290,4 +293,9 @@ public class RestfulProvider {
 		return new DiskStorageService(properties.getProperty("STORAGE_PATH"));
 	}
 	
+	@Produces
+	public IPosisiTahapPemberkasanService getPosisiTahapPemberkasanService(
+			@Infrastructure IPosisiTahapPemberkasanRepository posisiTahapPemberkasanRepository) {
+		return new PosisiTahapPemberkasanService(posisiTahapPemberkasanRepository);
+	}
 }
