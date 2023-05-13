@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 @LocalBean
-@Path("	")
+@Path("posisi_tahap_Pemberkasan")
 public class PosisiTahapPemberkasanController {
 	
 	@Inject

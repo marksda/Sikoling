@@ -13,9 +13,7 @@ import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
-import org.Sikoling.main.restful.queryparams.FilterDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.queryparams.SortOrderDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -24,19 +22,21 @@ import org.Sikoling.main.restful.security.Role;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.SecurityContext;
+import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
@@ -120,117 +120,16 @@ public class PermohonanController {
 	}
 	
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getDaftarPermohonan(
-			@DefaultValue("0") @QueryParam("pageNumber") Integer pageNumber,
-			@DefaultValue("0") @QueryParam("pageSize") Integer pageSize,
-			@QueryParam("filters") List<FilterDTO> filters,
-			@QueryParam("sortOrders") List<SortOrderDTO> sortOrders
-			) {
-		QueryParamFiltersDTO queryParamFiltersDTO = new QueryParamFiltersDTO();
-		queryParamFiltersDTO.setPageNumber(pageNumber);
-		queryParamFiltersDTO.setPageSize(pageSize);
-		queryParamFiltersDTO.setFilters(filters);
-		queryParamFiltersDTO.setSortOrders(sortOrders);
+	public List<RegisterPermohonanDTO> getDaftarPermohonan(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
 		return registerPermohonanService.getDaftarPermohonan(queryParamFiltersDTO.toQueryParamFilters())
-				.stream()
-				.map(t -> new RegisterPermohonanDTO(t))
-				.collect(Collectors.toList());
-	}
-
-//	@GET
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    @Produces({MediaType.APPLICATION_JSON})
-//	@RequiredAuthorization
-//	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-//	public List<RegisterPermohonanDTO> getAll() {
-//		return registerPermohonanService.getAll()
-//				.stream()
-//				.map(t -> new RegisterPermohonanDTO(t))
-//				.collect(Collectors.toList());
-//	}
-	
-	@Path("page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerPermohonanService.getAllByPage(page, pageSize)
-				.stream()
-				.map(t -> new RegisterPermohonanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("user/{idUser}")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getByIdUser(@PathParam("idUser") String idUser) {
-		return registerPermohonanService.getByIdPengakses(idUser)
-				.stream()
-				.map(t -> new RegisterPermohonanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("perusahaan/{idRegister}")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getByIdPerusahaan(@PathParam("idRegister") String idRegister) {
-		return registerPermohonanService.getByIdPerusahaan(idRegister)
-				.stream()
-				.map(t -> new RegisterPermohonanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("penerima/{idPenerima}")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getByIdPenerima(@PathParam("idPenerima") String idPenerima,
-			@QueryParam("pageNumber") Integer pageNumber, @QueryParam("pageSize") Integer pageSize,
-			@QueryParam("orderBy") List<String> orderBy
-			
-			) {
-		return registerPermohonanService.getByIdPenerima(idPenerima)
-				.stream()
-				.map(t -> new RegisterPermohonanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("pengirim/{idPengirim}")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getByIdPengirim(@PathParam("idPengirim") String idPengirim) {
-		return registerPermohonanService.getByIdPengirim(idPengirim)
-				.stream()
-				.map(t -> new RegisterPermohonanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("pengirim_penerima_on_proses/{idPengirim}/{idPenerima}")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getByIdPengirimAtauIdPenerima(@PathParam("idPengirim") String idPengirim, @PathParam("idPenerima") String idPenerima) {
-		return registerPermohonanService.getByIdPengirimAtauPenerimaOnProcess(idPengirim, idPenerima)
 				.stream()
 				.map(t -> new RegisterPermohonanDTO(t))
 				.collect(Collectors.toList());

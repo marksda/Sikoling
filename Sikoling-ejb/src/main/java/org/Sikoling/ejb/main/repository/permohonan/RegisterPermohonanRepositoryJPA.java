@@ -55,37 +55,6 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	}
 
 	@Override
-	public List<RegisterPermohonan> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("RegisterPermohonanData.findAll", RegisterPermohonanData.class)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByIdPengakses(String idPengakses) {
-		return entityManager.createNamedQuery("RegisterPermohonanData.findByPengakses", RegisterPermohonanData.class)
-				.setParameter("idKreator", idPengakses)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByIdPerusahaan(String idPerusahaan) {
-		return entityManager.createNamedQuery("RegisterPermohonanData.findByPerusahaan", RegisterPermohonanData.class)
-				.setParameter("idRegisterPerusahaan", idPerusahaan)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
 	public DeleteResponse delete(String id) {
 		RegisterPermohonanData registerPermohonanData = entityManager.find(RegisterPermohonanData.class, id);
 		entityManager.remove(registerPermohonanData);			
@@ -93,98 +62,12 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	}
 	
 	@Override
-	public List<RegisterPermohonan> getByIdPenerima(String idPenerima) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<RegisterPermohonanData> cq = cb.createQuery(RegisterPermohonanData.class);
-		Root<RegisterPermohonanData> root = cq.from(RegisterPermohonanData.class);
-		cq.select(root).where(cb.equal(root.get("posisiTahapPemberkasanPenerimaData").get("id"), idPenerima).isNotNull());
-		
-//		Predicate[] predicates = new Predicate[2];
-//	    predicates[0] = cb.equal(root.get("firstName"), "John");
-//	    predicates[1] = cb.between(root.get("id"), 1, 2);
-//	    
-//	    criteria.select(root).where(predicates);    
-	    
-//		cq.where(
-//			cb.like(
-//				cb.lower(root.get("perusahaanData").get("nama")), 
-//				"%"+idPenerima.toLowerCase()+"%"
-//			)				
-//		);
-		
-//		Predicate predicateForBlueColor
-//		  = criteriaBuilder.equal(itemRoot.get("color"), "red");
-//		Predicate predicateForGradeA
-//		  = criteriaBuilder.equal(itemRoot.get("grade"), "D");
-//		Predicate predicateForBlueColorAndGradeA
-//		  = criteriaBuilder.and(predicateForBlueColor, predicateForGradeA);
-//
-//		Predicate predicateForRedColor
-//		  = criteriaBuilder.equal(itemRoot.get("color"), "blue");
-//		Predicate predicateForGradeB
-//		  = criteriaBuilder.equal(itemRoot.get("grade"), "B");
-//		Predicate predicateForRedColorAndGradeB
-//		  = criteriaBuilder.and(predicateForRedColor, predicateForGradeB);
-//
-//		Predicate finalPredicate
-//		  = criteriaBuilder
-//		  .or(predicateForBlueColorAndGradeA, predicateForRedColorAndGradeB);
-//		criteriaQuery.where(finalPredicate);
-		
-		TypedQuery<RegisterPermohonanData> q = entityManager.createQuery(cq);
-		return q.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-		
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByIdPengirim(String idPengirim) {
-		return entityManager.createNamedQuery("RegisterPermohonanData.findByPengirim", RegisterPermohonanData.class)
-				.setParameter("idPengirim", idPengirim)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByIdPengirimAtauPenerima(String idPengirim, String idPenerima) {
-		return entityManager.createNamedQuery("RegisterPermohonanData.findByPenerimaAtauPenerima", RegisterPermohonanData.class)
-				.setParameter("idPengirim", idPengirim)
-				.setParameter("idPenerima", idPenerima)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<RegisterPermohonan> getByIdPengirimAtauPenerimaOnProcess(String idPengirim, String idPenerima) {
-		List<String> daftarIdFlow = new ArrayList<String>();
-		daftarIdFlow.add("0");
-		daftarIdFlow.add("1");
-		daftarIdFlow.add("3");
-		daftarIdFlow.add("4");
-		
-		return entityManager.createNamedQuery("RegisterPermohonanData.findByPenerimaAtauPenerimaOnProcess", RegisterPermohonanData.class)
-				.setParameter("idPengirim", idPengirim)
-				.setParameter("idPenerima", idPenerima)
-				.setParameter("daftarIdFlow", daftarIdFlow)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
 	public List<RegisterPermohonan> getDaftarPermohonan(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<RegisterPermohonanData> cq = cb.createQuery(RegisterPermohonanData.class);
 		Root<RegisterPermohonanData> root = cq.from(RegisterPermohonanData.class);		
 		
-//		where clause
+		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
 		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
 		
@@ -210,7 +93,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 			case "kategori_pengurus_permohonan":
 				daftarPredicate.add(cb.equal(root.get("kategoriPengurusPermohonanData").get("id"), filter.getValue()));
 				break;
-			case "posisi_tahap_pemberkasan_pengiriman":
+			case "posisi_tahap_pemberkasan_pengirim":
 				daftarPredicate.add(cb.equal(root.get("posisiTahapPemberkasanPengirimData").get("id"), filter.getValue()));
 				break;
 			case "posisi_tahap_pemberkasan_penerima":
@@ -234,7 +117,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 			cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
 		}	
 				
-//		sort clause
+		// sort clause
 		Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
 		
 		while (iterSort.hasNext()) {
@@ -288,7 +171,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 					cq.orderBy(cb.desc(root.get("kategoriPengurusPermohonanData").get("id")));
 				}
 				break;
-			case "posisi_tahap_pemberkasan_pengiriman":
+			case "posisi_tahap_pemberkasan_pengirim":
 				if(sort.getValue().equals("ASC")) {
 					cq.orderBy(cb.asc(root.get("posisiTahapPemberkasanPengirimData").get("id")));
 				}
@@ -326,10 +209,10 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 		}
 		
 		TypedQuery<RegisterPermohonanData> q = null;		
-		if(queryParamFilters.getPageSize() != null) {
+		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { //limit query result
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
-					.setFirstResult((queryParamFilters.getPageSize()-1)*queryParamFilters.getPageSize());
+					.setFirstResult((queryParamFilters.getPageNumber()-1)*queryParamFilters.getPageSize());
 		}
 		else {
 			q = entityManager.createQuery(cq);
