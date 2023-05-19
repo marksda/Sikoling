@@ -702,7 +702,23 @@ public class DataConverter {
 							convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(d.getPermohonanSuratArahanData().getKategoriSuratArahanData()), 
 							d.getPermohonanSuratArahanData().getUraianKegiatan()
 							);
-				}				
+				}	
+				else {
+					registerPermohonan = new RegisterPermohonan(
+							d.getId(), 
+							convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
+							d.getTanggalRegistrasi(), 
+							convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
+							convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
+							convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
+							convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()), 
+							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()), 
+							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()), 
+							convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()), 
+							convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
+							null
+							);							
+				}
 				break;
 			default:
 				break;

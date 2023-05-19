@@ -3,11 +3,7 @@ package org.Sikoling.main.restful.log;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
-import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.ejb.abstraction.service.log.IKategoriLogService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
@@ -30,30 +26,32 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
-@Path("flow_log")
-public class FlowLogController {
-
+@Path("kategori_log")
+public class KategoriFlowLogController {
 	@Inject
-	private IFlowLogService flowLogService;
+	private IKategoriLogService kategoriLogService;
 	
-	@Inject
-	private IAuthorityService authorityService;
+	@GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<KategoriFlowLogDTO> getAll() {
+		return kategoriLogService.getAll()
+				.stream()
+				.map(t -> new KategoriFlowLogDTO(t))
+				.collect(Collectors.toList());
+	}
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) {
-		Authority pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setPengakses(new AuthorityDTO(pengakses));		
-		
-		return new FlowLogDTO(flowLogService.save(d.toFlowLog()));
+	public KategoriFlowLogDTO save(KategoriFlowLogDTO d) {		
+		return new KategoriFlowLogDTO(kategoriLogService.save(d.toKategoriFlowLog()));
 	}
 	
 	@PUT
@@ -61,8 +59,8 @@ public class FlowLogController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public FlowLogDTO update(FlowLogDTO d) {
-		return new FlowLogDTO(flowLogService.update(d.toFlowLog()));
+	public KategoriFlowLogDTO update(KategoriFlowLogDTO d) {		
+		return new KategoriFlowLogDTO(kategoriLogService.update(d.toKategoriFlowLog()));
 	}
 	
 	@Path("{id}")
@@ -71,44 +69,24 @@ public class FlowLogController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(flowLogService.delete(id));
+		return new DeleteResponseDTO(kategoriLogService.delete(id));
 	}
 	
+	@Path("qparams")
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<FlowLogDTO> getDaftarFlowLog(@Context UriInfo info) {
+	public List<KategoriFlowLogDTO> getDaftarKategoriLog(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return flowLogService.getDaftarFlowLog(queryParamFiltersDTO.toQueryParamFilters())
+		return kategoriLogService.getDaftarKategoriLog(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> {
-					if(t.getKategoriFlowLog().getId().equals("1")) {
-						FlowLogPermohonanDTO flowLogPermohonanDTO = new FlowLogPermohonanDTO((FlowLogPermohonan) t);
-						return flowLogPermohonanDTO;
-					}
-					else {
-						return new FlowLogDTO(t);
-					}					
-				})
+				.map(t -> new KategoriFlowLogDTO(t))
 				.collect(Collectors.toList());
 	}
 	
-	@Path("count")
-	@GET
-    @Produces({MediaType.TEXT_PLAIN})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountFlowLog(@Context UriInfo info) {
-		MultivaluedMap<String, String> map = info.getQueryParameters();
-		String queryParamsStr = map.getFirst("filters");
-		Jsonb jsonb = JsonbBuilder.create();
-		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
-		
-		return flowLogService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
-	}
 }

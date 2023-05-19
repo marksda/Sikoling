@@ -223,5 +223,65 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
 				.collect(Collectors.toList());
 	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<RegisterPermohonanData> root = cq.from(RegisterPermohonanData.class);		
 		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "kategori_permohonan":
+				daftarPredicate.add(cb.equal(root.get("kategoriPermohonanData").get("id"), filter.getValue()));
+				break;
+			case "tanggal_registrasi":
+				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
+				break;
+			case "perusahaan":
+				daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "pengakses":
+				daftarPredicate.add(cb.equal(root.get("autorisasiData").get("id"), filter.getValue()));
+				break;
+			case "kategori_pengurus_permohonan":
+				daftarPredicate.add(cb.equal(root.get("kategoriPengurusPermohonanData").get("id"), filter.getValue()));
+				break;
+			case "posisi_tahap_pemberkasan_pengirim":
+				daftarPredicate.add(cb.equal(root.get("posisiTahapPemberkasanPengirimData").get("id"), filter.getValue()));
+				break;
+			case "posisi_tahap_pemberkasan_penerima":
+				daftarPredicate.add(cb.equal(root.get("posisiTahapPemberkasanPenerimaData").get("id"), filter.getValue()));
+				break;
+			case "penanggung_jawab":
+				daftarPredicate.add(cb.equal(root.get("penanggungJawab").get("id"), filter.getValue()));
+				break;
+			case "status_flow":
+				daftarPredicate.add(cb.equal(root.get("statusFlowData").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
+	}
+	
 }

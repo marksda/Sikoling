@@ -59,7 +59,6 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 		entityManager.remove(flowLogData);			
 		return new DeleteResponse(true, id);
 	}
-
 	
 	@Override
 	public List<FlowLog> getDaftarFlowLog(QueryParamFilters queryParamFilters) {
@@ -127,10 +126,10 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 				break;
 			case "tanggal":
 				if(sort.getValue().equals("ASC")) {
-					cq.orderBy(cb.asc(root.get("tanggalRegistrasi")));
+					cq.orderBy(cb.asc(root.get("tanggal")));
 				}
 				else {
-					cq.orderBy(cb.desc(root.get("tanggalRegistrasi")));
+					cq.orderBy(cb.desc(root.get("tanggal")));
 				}
 				break;
 			case "perusahaan":
@@ -201,6 +200,58 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 				.map(d -> dataConverter.convertFlowLogDataToFlowLog(d))
 				.collect(Collectors.toList());
 	}
-
 	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<FlowLogData> root = cq.from(FlowLogData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "tanggal":
+				daftarPredicate.add(cb.equal(root.get("tanggal"), filter.getValue()));
+				break;
+			case "perusahaan":
+				daftarPredicate.add(cb.like(cb.lower(root.get("flowLogPermohonanData").get("RegisterPermohonanData").get("perusahaanData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "kategori_log":
+				daftarPredicate.add(cb.equal(root.get("kategoriLogData").get("id"), filter.getValue()));
+				break;
+			case "posisi_tahap_pemberkasan_pengirim":
+				daftarPredicate.add(cb.equal(root.get("posisiTahapPemberkasanPengirimData").get("id"), filter.getValue()));
+				break;
+			case "posisi_tahap_pemberkasan_penerima":
+				daftarPredicate.add(cb.equal(root.get("posisiTahapPemberkasanPenerimaData").get("id"), filter.getValue()));
+				break;
+			case "status_flow":
+				daftarPredicate.add(cb.equal(root.get("statusFlowData").get("id"), filter.getValue()));
+				break;
+			case "pengakses":
+				daftarPredicate.add(cb.equal(root.get("autorisasiData").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
+	}
+		
 }

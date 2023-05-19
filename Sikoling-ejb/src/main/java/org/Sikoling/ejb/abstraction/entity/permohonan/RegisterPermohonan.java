@@ -33,7 +33,6 @@ public class RegisterPermohonan implements Serializable {
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
-		super();
 		this.id = id;
 		this.kategoriPermohonan = kategoriPermohonan;
 		this.tanggalRegistrasi = tanggalRegistrasi;

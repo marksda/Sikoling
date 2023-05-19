@@ -3,6 +3,7 @@ package org.Sikoling.ejb.abstraction.service.log;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
 import org.Sikoling.ejb.abstraction.repository.IFlowLogRepository;
@@ -30,10 +31,14 @@ public class FlowLogService implements IFlowLogService {
 		return flowLogRepository.update(t);
 	}
 
-	
 	@Override
 	public List<FlowLog> getDaftarFlowLog(QueryParamFilters queryParamFilters) {
 		return flowLogRepository.getDaftarFlowLog(queryParamFilters);
+	}
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return flowLogRepository.getCount(queryParamFilters);
 	}
 
 }
