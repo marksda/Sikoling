@@ -81,7 +81,7 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 				daftarPredicate.add(cb.equal(root.get("tanggal"), filter.getValue()));
 				break;
 			case "perusahaan":
-				daftarPredicate.add(cb.like(cb.lower(root.get("flowLogPermohonanData").get("RegisterPermohonanData").get("perusahaanData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("flowLogPermohonanData").get("registerPermohonan").get("perusahaanData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
 			case "kategori_log":
 				daftarPredicate.add(cb.equal(root.get("kategoriLogData").get("id"), filter.getValue()));
@@ -134,10 +134,10 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 				break;
 			case "perusahaan":
 				if(sort.getValue().equals("ASC")) {
-					cq.orderBy(cb.asc(root.get("flowLogPermohonanData").get("RegisterPermohonanData").get("perusahaanData").get("nama")));
+					cq.orderBy(cb.asc(root.get("flowLogPermohonanData").get("registerPermohonan").get("perusahaanData").get("nama")));
 				}
 				else {
-					cq.orderBy(cb.desc(root.get("flowLogPermohonanData").get("RegisterPermohonanData").get("perusahaanData").get("nama")));
+					cq.orderBy(cb.desc(root.get("flowLogPermohonanData").get("registerPermohonan").get("perusahaanData").get("nama")));
 				}
 				break;
 			case "kategori_log":
@@ -222,7 +222,7 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 				daftarPredicate.add(cb.equal(root.get("tanggal"), filter.getValue()));
 				break;
 			case "perusahaan":
-				daftarPredicate.add(cb.like(cb.lower(root.get("flowLogPermohonanData").get("RegisterPermohonanData").get("perusahaanData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("flowLogPermohonanData").get("registerPermohonan").get("perusahaanData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
 			case "kategori_log":
 				daftarPredicate.add(cb.equal(root.get("kategoriLogData").get("id"), filter.getValue()));

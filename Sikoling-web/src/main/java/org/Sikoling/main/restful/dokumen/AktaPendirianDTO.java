@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.main.restful.perusahaan.PegawaiDTO;
 
 public class AktaPendirianDTO extends DokumenDTO implements Serializable {
@@ -19,14 +18,10 @@ public class AktaPendirianDTO extends DokumenDTO implements Serializable {
 	public AktaPendirianDTO() {		
 	}
 	
-	public AktaPendirianDTO(AktaPendirian t) {
-		super(t != null ? new Dokumen(
-				t.getId(), 
-				t.getNama(), 
-				null
-				) : null);
-		
-		if(t != null) {			
+	public AktaPendirianDTO(AktaPendirian t) {		
+		if(t != null) {		
+			this.setId(t.getId());
+			this.setNama(t.getNama());
 			this.nomor = t.getNomor();
 			this.tanggal = t.getTanggal();
 			this.namaNotaris = t.getNamaNotaris();

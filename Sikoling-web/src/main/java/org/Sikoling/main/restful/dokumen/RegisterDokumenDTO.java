@@ -15,11 +15,14 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
+import jakarta.json.bind.annotation.JsonbTransient;
+
 public class RegisterDokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = 1384518698621127848L;
 	private String id;
 	private DokumenDTO dokumen;
+	@JsonbTransient
 	private RegisterPerusahaanDTO perusahaan;
 	private String lokasiFile;
 	private StatusDokumenDTO statusDokumen;

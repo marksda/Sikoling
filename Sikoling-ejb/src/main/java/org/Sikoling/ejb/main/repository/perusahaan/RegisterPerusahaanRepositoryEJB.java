@@ -3,6 +3,8 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -33,26 +35,6 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 	public RegisterPerusahaan update(RegisterPerusahaan t) {
 		return registerPerusahaanRepository.update(t);
 	}
-
-	@Override
-	public List<RegisterPerusahaan> getAllByPage(Integer page, Integer pageSize) {
-		return registerPerusahaanRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<RegisterPerusahaan> getByNama(String nama) {
-		return registerPerusahaanRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<RegisterPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return registerPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-
-	@Override
-	public RegisterPerusahaan getByNpwp(String npwp) {
-		return registerPerusahaanRepository.getByNpwp(npwp);
-	}
 	
 	@Override
 	public Boolean cekById(String id) {
@@ -70,18 +52,14 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 	}
 	
 	@Override
-	public List<RegisterPerusahaan> getByIdKreator(String personId) {
-		return registerPerusahaanRepository.getByIdKreator(personId);
+	public List<RegisterPerusahaan> getDaftarPerusahaan(QueryParamFilters queryParamFilters) {
+		return registerPerusahaanRepository.getDaftarPerusahaan(queryParamFilters);
 	}
 	
+
 	@Override
-	public List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan) {
-		return registerPerusahaanRepository.getByIdLinkKepemilikan(idLinkKepemilikan);
-	}
-	
-	@Override
-	public List<RegisterPerusahaan> getByIdLinkKepemilikanTanpaRegisterDokumen(String idLinkKepemilikan) {
-		return registerPerusahaanRepository.getByIdLinkKepemilikanTanpaRegisterDokumen(idLinkKepemilikan);
+	public Long getCount(List<Filter> queryParamFilters) {
+		return registerPerusahaanRepository.getCount(queryParamFilters);
 	}
 	
 }

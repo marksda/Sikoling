@@ -7,10 +7,13 @@ import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.main.restful.jabatan.JabatanDTO;
 import org.Sikoling.main.restful.person.PersonDTO;
 
+import jakarta.json.bind.annotation.JsonbTransient;
+
 public class PegawaiDTO implements Serializable {
 
 	private static final long serialVersionUID = -7179063872744229313L;
 	private String id;
+	@JsonbTransient
 	private RegisterPerusahaanDTO perusahaan;
 	private PersonDTO person;
 	private JabatanDTO jabatan;

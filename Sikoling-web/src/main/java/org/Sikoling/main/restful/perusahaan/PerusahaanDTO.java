@@ -37,10 +37,13 @@ public class PerusahaanDTO implements Serializable {
 			this.pelakuUsaha = t.getPelakuUsaha() != null ? new PelakuUsahaDTO(t.getPelakuUsaha()) : null;
 			this.alamat = t.getAlamat() != null ? new AlamatDTO(t.getAlamat()) : null;
 			this.kontak = t.getKontak() != null ? new KontakDTO(t.getKontak()) : null;
-			this.daftarRegisterDokumen = t.getDaftarRegisterDokumen() != null? t.getDaftarRegisterDokumen()
+			this.daftarRegisterDokumen = t.getDaftarRegisterDokumen() != null? 
+									t.getDaftarRegisterDokumen().size() > 0 ?
+									t.getDaftarRegisterDokumen()
 									.stream()
 									.map(item -> new RegisterDokumenDTO(item))
-									.collect(Collectors.toList()) : null;
+									.collect(Collectors.toList()) : null
+									: null;
 		}
 	}	
 	

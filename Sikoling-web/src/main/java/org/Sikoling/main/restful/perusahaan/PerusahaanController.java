@@ -7,6 +7,7 @@ import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
+import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -15,6 +16,8 @@ import org.Sikoling.main.restful.security.Role;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -26,7 +29,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.SecurityContext;
+import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
@@ -111,98 +116,30 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getAll() {
-		return registerPerusahaanService.getAll()
+	public List<RegisterPerusahaanDTO> getDaftarPerusahaan(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return registerPerusahaanService.getDaftarPerusahaan(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new RegisterPerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
-	@Path("id")
+	@Path("count")
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO getByNpwp(@QueryParam("id") String id) {
-		return new RegisterPerusahaanDTO(registerPerusahaanService.getByNpwp(id));
-	}
-	
-	@Path("page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerPerusahaanService.getAllByPage(page, pageSize)
-				.stream()
-				.map(t -> new RegisterPerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByNama(@QueryParam("nama") String nama) {
-		return registerPerusahaanService.getByNama(nama)
-				.stream()
-				.map(t -> new RegisterPerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByNamaAndPage(@QueryParam("nama") String nama,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerPerusahaanService.getByNamaAndPage(nama, page, pageSize)
-				.stream()
-				.map(t -> new RegisterPerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kreator/{idKreator}")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByIdPerson(@PathParam("idKreator") String idKreator) {
-		return registerPerusahaanService.getByIdKreator(idKreator)
-				.stream()
-				.map(t -> new RegisterPerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kepemilikan/{idLinkKepemilikan}")
-	@GET
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByIdLinkKepemilikan(@PathParam("idLinkKepemilikan") String idLinkKepemilikan) {
-		return registerPerusahaanService.getByIdLinkKepemilikan(idLinkKepemilikan)
-				.stream()
-				.map(t -> new RegisterPerusahaanDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kepemilikan/tanpa_dokumen/{idLinkKepemilikan}")
-	@GET
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPerusahaanDTO> getByIdLinkKepemilikanTanpaDokumen(@PathParam("idLinkKepemilikan") String idLinkKepemilikan) {
-		return registerPerusahaanService.getByIdLinkKepemilikanTanpaRegisterDokumen(idLinkKepemilikan)
-				.stream()
-				.map(t -> new RegisterPerusahaanDTO(t))
-				.collect(Collectors.toList());
+	public Long getCountDaftarPerusahaan(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return registerPerusahaanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

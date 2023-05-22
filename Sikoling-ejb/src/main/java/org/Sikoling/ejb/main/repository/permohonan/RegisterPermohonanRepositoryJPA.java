@@ -223,7 +223,6 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
