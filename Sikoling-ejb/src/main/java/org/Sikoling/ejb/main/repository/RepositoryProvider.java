@@ -190,13 +190,13 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public HakAksesRepositoryJPA getHakAksesRepositoryJPA(EntityManager entityManager) {
-		return new HakAksesRepositoryJPA(entityManager);
+	public HakAksesRepositoryJPA getHakAksesRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new HakAksesRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
-	public AutorisasiRepositoryJPA getAutorisasiRepositoryJPA(EntityManager entityManager) {
-		return new AutorisasiRepositoryJPA(entityManager);
+	public AutorisasiRepositoryJPA getAutorisasiRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new AutorisasiRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

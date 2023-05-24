@@ -119,6 +119,7 @@ public class DataConverter {
 		if(d != null) {
 			authority = new Authority(
 					d.getId(), 
+					d.getTanggalRegistrasi(),
 					convertPersonDataToPerson(d.getPerson()), 
 					convertHakAksesDataToHakAkses(d.getHakAkses()), 
 					d.getStatusInternal(), 
@@ -975,6 +976,7 @@ public class DataConverter {
 		if(t != null) {
 			autorisasiData = new AutorisasiData();
 			autorisasiData.setId(t.getId());
+			autorisasiData.setTanggalRegistrasi(t.getTanggal());
 			autorisasiData.setUserName(t.getUserName());
 			autorisasiData.setPerson(convertPersonToPersonData(t.getPerson()));
 			autorisasiData.setHakAkses(convertHakAksesToHakAksesData(t.getHakAkses()));

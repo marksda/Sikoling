@@ -1,6 +1,7 @@
 package org.Sikoling.ejb.main.repository.authority;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
@@ -46,6 +47,9 @@ public class AutorisasiData implements Serializable {
 	
 	@Column(name="is_verified")
 	private Boolean isVerified;
+	
+	@Column(name="tanggal_registrasi", insertable = true, updatable = true)
+	private LocalDate tanggalRegistrasi;	
 			
 	public String getUserName() {
 		return userName;
@@ -100,6 +104,14 @@ public class AutorisasiData implements Serializable {
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public LocalDate getTanggalRegistrasi() {
+		return tanggalRegistrasi;
+	}
+
+	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
+		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
 	public int hashCode() {

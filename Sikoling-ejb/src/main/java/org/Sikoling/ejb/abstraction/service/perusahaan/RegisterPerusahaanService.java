@@ -51,11 +51,9 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 		return perusahaanRepository.getDaftarPerusahaan(queryParamFilters);
 	}
 	
-
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
 		return perusahaanRepository.getCount(queryParamFilters);
 	}
-
 	
 }

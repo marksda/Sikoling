@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.hakakses;
+package org.Sikoling.ejb.abstraction.service.hakakses;
 
 import java.util.List;
 
@@ -7,23 +7,13 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IHakAksesRepository;
-import org.Sikoling.ejb.main.Infrastructure;
 
-import jakarta.ejb.Local;
-import jakarta.ejb.Stateless;
-import jakarta.inject.Inject;
-
-@Stateless
-@Local
-@Infrastructure
-public class HakAksesRepositoryEJB implements IHakAksesRepository {
+public class HakAksesService implements IHakAksesService {
 	
-	@Inject
-	private HakAksesRepositoryJPA hakAksesRepository;
-		
-	@Override
-	public List<HakAkses> getAll() {
-		return hakAksesRepository.getAll();
+	private final IHakAksesRepository hakAksesRepository;
+
+	public HakAksesService(IHakAksesRepository hakAksesRepository) {
+		this.hakAksesRepository = hakAksesRepository;
 	}
 
 	@Override
@@ -35,7 +25,7 @@ public class HakAksesRepositoryEJB implements IHakAksesRepository {
 	public HakAkses update(HakAkses t) {
 		return hakAksesRepository.update(t);
 	}
-	
+
 	@Override
 	public DeleteResponse delete(String id) {
 		return hakAksesRepository.delete(id);

@@ -1,6 +1,7 @@
 package org.Sikoling.main.restful.authority;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
@@ -10,6 +11,7 @@ public class AuthorityDTO implements Serializable {
 
 	private static final long serialVersionUID = 6026401650478903435L;
 	private String id;
+	private LocalDate tanggal;
 	private PersonDTO person;
 	private HakAksesDTO hakAkses;
 	private Boolean statusInternal;
@@ -22,6 +24,7 @@ public class AuthorityDTO implements Serializable {
 	public AuthorityDTO(Authority t) {
 		if(t != null) {
 			this.id = t.getId();
+			this.tanggal = t.getTanggal();
 			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
 			this.hakAkses = t.getHakAkses() != null ? new HakAksesDTO(t.getHakAkses()) : null;
 			this.statusInternal = t.isStatusInternal() != null ? t.isStatusInternal() : false;
@@ -70,6 +73,14 @@ public class AuthorityDTO implements Serializable {
 		this.userName = userName;
 	}
 
+	public LocalDate getTanggal() {
+		return tanggal;
+	}
+
+	public void setTanggal(LocalDate tanggal) {
+		this.tanggal = tanggal;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -115,6 +126,7 @@ public class AuthorityDTO implements Serializable {
 	public Authority toAuthority() {
 		return new Authority(
 				id != null ? id: null,
+				tanggal,
 				person != null ? person.toPerson():null, 
 				hakAkses != null ? hakAkses.toHakAkses():null, 
 				statusInternal !=null ? statusInternal:null, 

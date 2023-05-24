@@ -13,14 +13,7 @@ public interface IRegisterPerusahaanService {
 	RegisterPerusahaan save(RegisterPerusahaan t);
 	RegisterPerusahaan update(RegisterPerusahaan t);
 	Boolean cekById(String id);
-//	RegisterPerusahaan getByNpwp(String npwp);
 	List<RegisterPerusahaan> getAll();
-//	List<RegisterPerusahaan> getAllByPage(Integer page, Integer pageSize);
-//	List<RegisterPerusahaan> getByNama(String nama);
-//	List<RegisterPerusahaan> getByNamaAndPage(String nama, Integer page, Integer pageSize);
-//	List<RegisterPerusahaan> getByIdKreator(String idKreator);
-//	List<RegisterPerusahaan> getByIdLinkKepemilikan(String idLinkKepemilikan);
-//	List<RegisterPerusahaan> getByIdLinkKepemilikanTanpaRegisterDokumen(String idLinkKepemilikan);
 	List<RegisterPerusahaan> getDaftarPerusahaan(QueryParamFilters queryParamFilters);
 	Long getCount(List<Filter> queryParamFilters);
 }

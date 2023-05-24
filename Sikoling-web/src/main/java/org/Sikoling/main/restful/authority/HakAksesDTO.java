@@ -16,9 +16,11 @@ public class HakAksesDTO implements Serializable {
 	}
 	
 	public HakAksesDTO(HakAkses t) {
-		this.id = t.getId();
-		this.nama = t.getNama();
-		this.keterangan = t.getKeterangan();
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+			this.keterangan = t.getKeterangan();
+		}
 	}
 
 	public String getId() {

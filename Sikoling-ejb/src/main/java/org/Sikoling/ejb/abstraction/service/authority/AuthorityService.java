@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 
 public class AuthorityService implements IAuthorityService {
@@ -28,31 +30,20 @@ public class AuthorityService implements IAuthorityService {
 	public DeleteResponse delete(String id) {
 		return authorityRepository.delete(id);
 	}
-	
-	@Override
-	public List<Authority> getAll() {
-		return authorityRepository.getAll();
-	}
-
-	@Override
-	public List<Authority> getAllByPage(Integer page, Integer pageSize) {
-		return authorityRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<Authority> getByNama(String nama) {
-		return authorityRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<Authority> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return authorityRepository.getByNamaAndPage(nama, page, pageSize);
-	}
 
 	@Override
 	public Authority getByUserName(String userName) {
 		return authorityRepository.getByUserName(userName);
 	}
 
+	@Override
+	public List<Authority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
+		return authorityRepository.getDaftarAuthority(queryParamFilters);
+	}
+
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return authorityRepository.getCount(queryParamFilters);
+	}
 	
 }

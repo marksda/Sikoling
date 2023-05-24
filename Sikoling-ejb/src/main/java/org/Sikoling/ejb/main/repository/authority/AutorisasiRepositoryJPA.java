@@ -1,39 +1,33 @@
 package org.Sikoling.ejb.main.repository.authority;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.HakAkses;
-import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
-import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.ejb.abstraction.entity.Kecamatan;
-import org.Sikoling.ejb.abstraction.entity.Kontak;
-import org.Sikoling.ejb.abstraction.entity.Person;
-import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
-import org.Sikoling.ejb.main.repository.alamat.AlamatData;
-import org.Sikoling.ejb.main.repository.desa.DesaData;
-import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
-import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.kontak.KontakData;
-import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
-
+import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	
 	private final EntityManager entityManager;
+	private final DataConverter dataConverter;	
 
-	public AutorisasiRepositoryJPA(EntityManager entityManager) {
+	public AutorisasiRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
+		this.dataConverter = dataConverter;
 	}
 
 	@Override
@@ -41,23 +35,23 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
 				.getResultList()
 				.stream()
-				.map(d -> convertAutorisasiDataToAuthority(d))
+				.map(d -> dataConverter.convertAutorisasiDataToAuthority(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Authority save(Authority t) {
-		AutorisasiData autorisasiData = convertAutorisasiToAutorisasiData(t);
+		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		entityManager.persist(autorisasiData);
 		entityManager.flush();
-		return convertAutorisasiDataToAuthority(autorisasiData);
+		return dataConverter.convertAutorisasiDataToAuthority(autorisasiData);
 	}
 
 	@Override
 	public Authority update(Authority t) {
-		AutorisasiData autorisasiData = convertAutorisasiToAutorisasiData(t);
+		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
-		return convertAutorisasiDataToAuthority(autorisasiData);
+		return dataConverter.convertAutorisasiDataToAuthority(autorisasiData);
 	}
 	
 	@Override
@@ -68,237 +62,198 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 	
 	@Override
-	public List<Authority> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(d -> convertAutorisasiDataToAuthority(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Authority> getByNama(String nama) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
-				.setParameter("nama", nama)
-				.getResultList()
-				.stream()
-				.map(d -> convertAutorisasiDataToAuthority(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Authority> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("AutorisasiData.findByNama", AutorisasiData.class)
-				.setParameter("nama", nama)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(d -> convertAutorisasiDataToAuthority(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
 	public Authority getByUserName(String userName) {
 		AutorisasiData data = Optional.ofNullable(
 				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
 				.setParameter("userName", userName).getSingleResult()
 				)
 				.orElse(null);
-		return data != null ? convertAutorisasiDataToAuthority(data):null;				
-	}
-	
-	private AutorisasiData convertAutorisasiToAutorisasiData(Authority t) {
-		AutorisasiData autorisasiData = new AutorisasiData();
-		
-		PersonData personData = new PersonData();
-		Person person = t.getPerson();
-		
-		personData.setId(person.getNik());		
-		personData.setNama(person.getNama());
-		
-		AlamatData alamatPersonData = new AlamatData();
-		Alamat alamat = person.getAlamat();
-		
-		PropinsiData propinsiData = new PropinsiData();
-		Propinsi propinsi = alamat.getPropinsi();
-		propinsiData.setId(propinsi.getId());
-		propinsiData.setNama(propinsi.getNama());
-		
-		KabupatenData kabupatenData = new KabupatenData();
-		Kabupaten kabupaten = alamat.getKabupaten();
-		kabupatenData.setId(kabupaten.getId());
-		kabupatenData.setNama(kabupaten.getNama());
-		kabupatenData.setPropinsi(propinsiData);
-		
-		KecamatanData kecamatanData = new KecamatanData();
-		Kecamatan kecamatan = alamat.getKecamatan();
-		kecamatanData.setId(kecamatan.getId());
-		kecamatanData.setNama(kecamatan.getNama());
-		kecamatanData.setKabupaten(kabupatenData);
-		
-		DesaData desaData = new DesaData();
-		Desa desa = alamat.getDesa();
-		desaData.setId(desa.getId());
-		desaData.setNama(desa.getNama());
-		
-		alamatPersonData.setPropinsi(propinsiData);
-		alamatPersonData.setKabupaten(kabupatenData);
-		alamatPersonData.setKecamatan(kecamatanData);
-		alamatPersonData.setDesa(desaData);
-		alamatPersonData.setDetailAlamat(alamat.getKeterangan());		
-		
-		personData.setAlamat(alamatPersonData);
-		
-		HakAksesData hakAksesData = new HakAksesData();
-		HakAkses hakAkses = t.getHakAkses();
-		hakAksesData.setId(hakAkses.getId());
-		hakAksesData.setNama(hakAkses.getNama());
-		hakAksesData.setKeterangan(hakAkses.getKeterangan());
-		
-
-		autorisasiData.setPerson(personData);
-		autorisasiData.setHakAkses(hakAksesData);
-		autorisasiData.setStatusInternal(t.isStatusInternal());
-		autorisasiData.setIsVerified(t.isVerified());
-		autorisasiData.setUserName(t.getUserName());
-		
-		
-		return autorisasiData;
-	}
-	
-	private Propinsi convertPropinsiDataToPropinsi(PropinsiData d) {
-		Propinsi propinsi = null;
-		
-		if(d != null) {
-			propinsi = new Propinsi(d.getId(), d.getNama());
-		}
-		
-		return propinsi;		
-	}
-	
-	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData d) {
-		Kabupaten kabupaten = null;
-		
-		if(d != null) {
-			kabupaten = new Kabupaten(d.getId(), d.getNama());
-		}
-		
-		return kabupaten;		
+		return data != null ? dataConverter.convertAutorisasiDataToAuthority(data):null;				
 	}
 
-	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData d) {
-		Kecamatan kecamatan = null;
-		
-		if(d != null) {
-			kecamatan = new Kecamatan(d.getId(), d.getNama());
-		}
-		
-		return kecamatan;		
-	}
 	
-	private Desa convertDesaDataToDesa(DesaData d) {
-		Desa desa = null;
+	@Override
+	public List<Authority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<AutorisasiData> cq = cb.createQuery(AutorisasiData.class);
+		Root<AutorisasiData> root = cq.from(AutorisasiData.class);
 		
-		if(d != null) {
-			desa = new Desa(d.getId(), d.getNama());
-		}
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
 		
-		return desa;		
-	}
-
-	private Alamat convertAlamatDataToAlamat(AlamatData d) {
-		Alamat alamat = null;
-		
-		if( d != null) {
-			alamat = new Alamat(
-					convertPropinsiDataToPropinsi(d.getPropinsi()), 
-					convertKabupatenDataToKabupaten(d.getKabupaten()), 
-					convertKecamatanDataToKecamatan(d.getKecamatan()), 
-					convertDesaDataToDesa(d.getDesa()), 
-					d.getDetailAlamat()
-					);					
-		}
-		
-		return alamat;
-	}	
-	
-	private Kontak convertKontakDataToKontak(KontakData d) {
-		Kontak kontak = null;
-		
-		if(d != null) {
-			kontak = new Kontak(
-					d.getTelepone(), 
-					d.getFax(), 
-					d.getEmail()
-					);
-		}
-		
-		return kontak;
-	}
-	
-	private Person convertPersonDataToPerson(PersonData d) {
-		Person person = null;
-		
-		if(d != null) {
-			JenisKelaminData jenisKelaminData = d.getSex();
-			JenisKelamin jenisKelamin = jenisKelaminData != null ?
-					new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama()) : null;
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
 			
-			Alamat alamat = convertAlamatDataToAlamat(d.getAlamat());
-			
-			Kontak kontak = convertKontakDataToKontak(d.getKontak());
-			
-			person = new Person(
-					d.getId(), 
-					d.getNama(), 
-					jenisKelamin, 
-					alamat, 
-					d.getScanKtp(), 
-					kontak
-					);
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "tanggal":
+				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
+				break;
+			case "user_name":
+				daftarPredicate.add(cb.like(cb.lower(root.get("userName")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("person").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "nik":
+				daftarPredicate.add(cb.equal(root.get("person").get("id"), filter.getValue()));
+				break;
+			case "hak_akses":
+				daftarPredicate.add(cb.equal(root.get("hakAkses").get("id"), filter.getValue()));
+				break;
+			case "status_internal":
+				daftarPredicate.add(cb.equal(root.get("statusInternal"), filter.getValue()));
+				break;
+			case "is_verified":
+				daftarPredicate.add(cb.equal(root.get("isVerified"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
 		}
 		
-		return person;
-	}
-	
-	private HakAkses convertHakAksesDataToHakAkses(HakAksesData d) {
-		HakAkses hakAkses = null;
+		if(daftarPredicate.isEmpty()) {
+			cq.select(root);
+		}
+		else {
+			cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
 				
-		if( d != null) {
-			hakAkses = new HakAkses(d.getId(), d.getNama(), d.getKeterangan());
+		// sort clause
+		Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
+				
+		while (iterSort.hasNext()) {
+			SortOrder sort = (SortOrder) iterSort.next();
+			switch (sort.getFieldName()) {
+			case "id":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("id")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("id")));
+				}
+				break;
+			case "tanggal":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("id")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("id")));
+				}
+				break;
+			case "user_name":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("userName")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("userName")));
+				}
+				break;
+			case "nama":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("person").get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("person").get("nama")));
+				}
+				break;
+			case "hak_akses":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("hakAkses").get("id")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("hakAkses").get("id")));
+				}
+				break;	
+			case "status_internal":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("statusInternal")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("statusInternal")));
+				}
+				break;
+			case "is_verified":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("isVerified")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("isVerified")));
+				}
+				break;
+			default:
+				break;
+			}			
 		}
 		
-		return hakAkses;
-	}
-	
-	private Authority convertAutorisasiDataToAuthority(AutorisasiData d) {
-		Authority authority = null;
-		Person person = convertPersonDataToPerson(d.getPerson());
-		HakAkses hakAkses = convertHakAksesDataToHakAkses(d.getHakAkses());
-		
-		if(d != null) {
-			authority = new Authority(
-					d.getId(), 
-					person, 
-					hakAkses, 
-					d.getStatusInternal(), 
-					d.getIsVerified(), 
-					d.getUserName()
-					);
+		TypedQuery<AutorisasiData> q = null;		
+		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { //limit query result
+			q = entityManager.createQuery(cq)
+					.setMaxResults(queryParamFilters.getPageSize())
+					.setFirstResult((queryParamFilters.getPageNumber()-1)*queryParamFilters.getPageSize());
+		}
+		else {
+			q = entityManager.createQuery(cq);
 		}
 		
-		return authority;
+		return q.getResultList()
+				.stream()
+				.map(d -> dataConverter.convertAutorisasiDataToAuthority(d))
+				.collect(Collectors.toList());
 	}
+
 	
-//	private Authority convertAutorisasiDataToAutorisasi(AutorisasiData d) {
-//		
-//		Authority authority = convertAutorisasiDataToAuthority(d);		
-//		return authority;
-//	}
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<AutorisasiData> root = cq.from(AutorisasiData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "tanggal":
+				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
+				break;
+			case "user_name":
+				daftarPredicate.add(cb.like(cb.lower(root.get("userName")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "person":
+				daftarPredicate.add(cb.like(cb.lower(root.get("person").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "hak_akses":
+				daftarPredicate.add(cb.equal(root.get("hakAkses").get("id"), filter.getValue()));
+				break;
+			case "status_internal":
+				daftarPredicate.add(cb.equal(root.get("statusInternal"), filter.getValue()));
+				break;
+			case "is_verified":
+				daftarPredicate.add(cb.equal(root.get("isVerified"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
+	}
 	
 }

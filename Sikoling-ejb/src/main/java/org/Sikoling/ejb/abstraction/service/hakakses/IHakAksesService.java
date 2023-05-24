@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.repository;
+package org.Sikoling.ejb.abstraction.service.hakakses;
 
 import java.util.List;
 
@@ -7,8 +7,10 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
-public interface IHakAksesRepository extends IRepository<HakAkses> {
+public interface IHakAksesService {
+	HakAkses save(HakAkses t);
+	HakAkses update(HakAkses t);
 	DeleteResponse delete(String id);
 	List<HakAkses> getDaftarHakAkses(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	Long getCount(List<Filter> queryParamFilters);	
 }

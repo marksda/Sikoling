@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Authority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -40,24 +42,20 @@ public class AutorisasiRepositoryEJB implements IAuthorityRepository {
 	}
 	
 	@Override
-	public List<Authority> getAllByPage(Integer page, Integer pageSize) {
-		return autorisasiRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<Authority> getByNama(String nama) {
-		return autorisasiRepository.getByNama(nama);
-	}
-	
-	@Override
 	public Authority getByUserName(String userName) {
 		return autorisasiRepository.getByUserName(userName);
 	}
 
+	
 	@Override
-	public List<Authority> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return autorisasiRepository.getByNamaAndPage(nama, page, pageSize);
+	public List<Authority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
+		return autorisasiRepository.getDaftarAuthority(queryParamFilters);
 	}
+	
 
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return autorisasiRepository.getCount(queryParamFilters);
+	}
 	
 }

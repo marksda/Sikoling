@@ -1,22 +1,27 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Authority implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
 	private final String id;
+	private final LocalDate tanggal;
 	private final Person person;
 	private final HakAkses hakAkses;
 	private final Boolean statusInternal;
 	private final Boolean isVerified;
 	private final String userName;
 	
-	public Authority(
-			String id, Person person, HakAkses hakAkses, 
-			Boolean statusInternal, Boolean isVerified,	String userName) {
+	
+	
+	public Authority(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
+			Boolean isVerified, String userName) {
+		super();
 		this.id = id;
+		this.tanggal = tanggal;
 		this.person = person;
 		this.hakAkses = hakAkses;
 		this.statusInternal = statusInternal;
@@ -52,6 +57,11 @@ public class Authority implements Serializable {
 		return userName;
 	}
 	
+	public LocalDate getTanggal() {
+		return tanggal;
+	}
+	
+
 	@Override
 	public int hashCode() {
 		int hash = 71;

@@ -6,6 +6,7 @@ import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IFlowLogRepository;
+import org.Sikoling.ejb.abstraction.repository.IHakAksesRepository;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
@@ -56,6 +57,8 @@ import org.Sikoling.ejb.abstraction.service.dokumen.KbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterKbliService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
+import org.Sikoling.ejb.abstraction.service.hakakses.HakAksesService;
+import org.Sikoling.ejb.abstraction.service.hakakses.IHakAksesService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
 import org.Sikoling.ejb.abstraction.service.authority.AuthorityService;
@@ -239,6 +242,12 @@ public class RestfulProvider {
 	public IRegisterDokumenService getRegisterDokumenService(
 			@Infrastructure IRegisterDokumenRepository registerDokumenRepository) {
 		return new RegisterDokumenService(registerDokumenRepository);
+	}
+	
+	@Produces
+	public IHakAksesService getHakAksesService(
+			@Infrastructure IHakAksesRepository hakAksesRepository) {
+		return new HakAksesService(hakAksesRepository);
 	}
 	
 	@Produces
