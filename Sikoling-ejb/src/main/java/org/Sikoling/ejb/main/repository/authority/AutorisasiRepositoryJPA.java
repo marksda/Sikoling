@@ -70,7 +70,6 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				.orElse(null);
 		return data != null ? dataConverter.convertAutorisasiDataToAuthority(data):null;				
 	}
-
 	
 	@Override
 	public List<Authority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
@@ -204,7 +203,6 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				.map(d -> dataConverter.convertAutorisasiDataToAuthority(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
