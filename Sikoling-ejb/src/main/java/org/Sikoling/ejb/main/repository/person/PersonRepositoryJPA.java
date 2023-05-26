@@ -1,50 +1,47 @@
 package org.Sikoling.ejb.main.repository.person;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Alamat;
-import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
-import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.ejb.abstraction.entity.Kecamatan;
-import org.Sikoling.ejb.abstraction.entity.Kontak;
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
-import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
-import org.Sikoling.ejb.main.repository.alamat.AlamatData;
-import org.Sikoling.ejb.main.repository.desa.DesaData;
-import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
-import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
-import org.Sikoling.ejb.main.repository.kontak.KontakData;
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
-
+import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 public class PersonRepositoryJPA implements IPersonRepository {
 	
 	private final EntityManager entityManager;
+	private final DataConverter dataConverter;
 
-	public PersonRepositoryJPA(EntityManager entityManager) {
-		super();
+	public PersonRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
+		this.dataConverter = dataConverter;
 	}
 
 	@Override
 	public Person save(Person t) {
-		PersonData personData = convertPersonToPersonData(t);
+		PersonData personData = dataConverter.convertPersonToPersonData(t);
 		entityManager.persist(personData);
 		entityManager.flush();
-//		return convertPersonDataToPerson(personData);
-		return convertPersonDataToPerson(entityManager.find(PersonData.class, personData.getId()));
+		return dataConverter.convertPersonDataToPerson(personData);
 	}
 
 	@Override
 	public Person update(Person t) {
-		PersonData personData = convertPersonToPersonData(t);
+		PersonData personData = dataConverter.convertPersonToPersonData(t);
 		personData = entityManager.merge(personData);
-		return convertPersonDataToPerson(personData);
+		return dataConverter.convertPersonDataToPerson(personData);
 	}
 
 	@Override
@@ -52,191 +49,125 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		return entityManager.createNamedQuery("PersonData.findAll", PersonData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertPersonDataToPerson(t))
+				.map(d -> dataConverter.convertPersonDataToPerson(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Person> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("PersonData.findAll", PersonData.class)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertPersonDataToPerson(t))
-				.collect(Collectors.toList());
+	public DeleteResponse delete(String id) {
+		PersonData personData = entityManager.find(PersonData.class, id);
+		entityManager.remove(personData);			
+		return new DeleteResponse(true, id);
 	}
 
 	@Override
-	public List<Person> getByNama(String nama) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PersonData.findByNama", PersonData.class)
-				.setParameter("nama", nama)
-				.getResultList()
-				.stream()
-				.map(t -> convertPersonDataToPerson(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Person> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("PersonData.findByNama", PersonData.class)
-				.setParameter("nama", nama)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertPersonDataToPerson(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public Person getByNik(String nik) {
-		try {
-			PersonData hasil = entityManager.createNamedQuery("PersonData.findById", PersonData.class)
-					.setParameter("nik", nik)
-					.getSingleResult();
-			return convertPersonDataToPerson(hasil);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	
-	private PersonData convertPersonToPersonData(Person person) {
-		PersonData personData = new PersonData();
-		personData.setId(person.getNik());
-		personData.setNama(person.getNama());
+	public List<Person> getDaftarPerson(QueryParamFilters queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<PersonData> cq = cb.createQuery(PersonData.class);
+		Root<PersonData> root = cq.from(PersonData.class);
 		
-		PropinsiData propinsiData = new PropinsiData();
-		propinsiData.setId(person.getAlamat().getPropinsi().getId());
-		
-		KabupatenData kabupatenData = new KabupatenData();
-		kabupatenData.setId(person.getAlamat().getKabupaten().getId());
-		
-		KecamatanData kecamatanData = new KecamatanData();
-		kecamatanData.setId(person.getAlamat().getKecamatan().getId());
-		
-		DesaData desaData = new DesaData();
-		desaData.setId(person.getAlamat().getDesa().getId());
-		
-		AlamatData alamatPersonData = new AlamatData();
-		alamatPersonData.setPropinsi(propinsiData);
-		alamatPersonData.setKabupaten(kabupatenData);
-		alamatPersonData.setKecamatan(kecamatanData);
-		alamatPersonData.setDesa(desaData);
-		alamatPersonData.setDetailAlamat(person.getAlamat().getKeterangan());
-		
-		personData.setAlamat(alamatPersonData);
-		
-		JenisKelaminData jenisKelaminData = new JenisKelaminData();
-		jenisKelaminData.setId(person.getSex().getId());
-		personData.setSex(jenisKelaminData);
-		
-		KontakData kontakPersonData = new KontakData();
-		kontakPersonData.setTelepone(person.getKontak().getTelepone());
-		kontakPersonData.setEmail(person.getKontak().getEmail());
-		personData.setKontak(kontakPersonData);
-		
-		personData.setScanKtp(person.getScanKTP());
-		
-		return personData;
-	}
-	
-	private Propinsi convertPropinsiDataToPropinsi(PropinsiData d) {
-		Propinsi propinsi = null;
-		
-		if(d != null) {
-			propinsi = new Propinsi(d.getId(), d.getNama());
-		}
-		
-		return propinsi;		
-	}
-	
-	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData d) {
-		Kabupaten kabupaten = null;
-		
-		if(d != null) {
-			kabupaten = new Kabupaten(d.getId(), d.getNama());
-		}
-		
-		return kabupaten;		
-	}
-
-	private Kecamatan convertKecamatanDataToKecamatan(KecamatanData d) {
-		Kecamatan kecamatan = null;
-		
-		if(d != null) {
-			kecamatan = new Kecamatan(d.getId(), d.getNama());
-		}
-		
-		return kecamatan;		
-	}
-	
-	private Desa convertDesaDataToDesa(DesaData d) {
-		Desa desa = null;
-		
-		if(d != null) {
-			desa = new Desa(d.getId(), d.getNama());
-		}
-		
-		return desa;		
-	}
-	
-	private Alamat convertAlamatDataToAlamat(AlamatData d) {
-		Alamat alamat = null;
-		
-		if( d != null) {
-			alamat = new Alamat(
-					convertPropinsiDataToPropinsi(d.getPropinsi()), 
-					convertKabupatenDataToKabupaten(d.getKabupaten()), 
-					convertKecamatanDataToKecamatan(d.getKecamatan()), 
-					convertDesaDataToDesa(d.getDesa()), 
-					d.getDetailAlamat()
-					);					
-		}
-		
-		return alamat;
-	}	
-	
-	private Kontak convertKontakDataToKontak(KontakData d) {
-		Kontak kontak = null;
-		
-		if(d != null) {
-			kontak = new Kontak(
-					d.getTelepone(), 
-					d.getFax(), 
-					d.getEmail()
-					);
-		}
-		
-		return kontak;
-	}
-	
-	private Person convertPersonDataToPerson(PersonData d) {
-		Person person = null;
-		
-		if(d != null) {
-			JenisKelaminData jenisKelaminData = d.getSex();
-			JenisKelamin jenisKelamin = jenisKelaminData != null ?
-					new JenisKelamin(jenisKelaminData.getId(), jenisKelaminData.getNama()) : null;
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+				
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
 			
-			Alamat alamat = convertAlamatDataToAlamat(d.getAlamat());
-			
-			Kontak kontak = convertKontakDataToKontak(d.getKontak());
-			
-			person = new Person(
-					d.getId(), 
-					d.getNama(), 
-					jenisKelamin, 
-					alamat, 
-					d.getScanKtp(), 
-					kontak
-					);
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			default:
+				break;
+			}			
 		}
 		
-		return person;
+		if(daftarPredicate.isEmpty()) {
+			cq.select(root);
+		}
+		else {
+			cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+
+		// sort clause
+		Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
+				
+		while (iterSort.hasNext()) {
+			SortOrder sort = (SortOrder) iterSort.next();
+			switch (sort.getFieldName()) {
+			case "id":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("id")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("id")));
+				}
+				break;
+			case "perusahaan":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("nama")));
+				}
+				break;
+			default:
+				break;
+			}			
+		}
+				
+		TypedQuery<PersonData> q = null;		
+		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { //limit query result
+			q = entityManager.createQuery(cq)
+					.setMaxResults(queryParamFilters.getPageSize())
+					.setFirstResult((queryParamFilters.getPageNumber()-1)*queryParamFilters.getPageSize());
+		}
+		else {
+			q = entityManager.createQuery(cq);
+		}
+		
+		return q.getResultList()
+				.stream()
+				.map(d -> dataConverter.convertPersonDataToPerson(d))
+				.collect(Collectors.toList());
 	}
 
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<PersonData> root = cq.from(PersonData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
+	}
 	
 }

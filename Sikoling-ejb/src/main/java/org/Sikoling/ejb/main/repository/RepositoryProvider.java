@@ -145,8 +145,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public PersonRepositoryJPA getPersonRepositoryJPA(EntityManager entityManager) {
-		return new PersonRepositoryJPA(entityManager);
+	public PersonRepositoryJPA getPersonRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new PersonRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

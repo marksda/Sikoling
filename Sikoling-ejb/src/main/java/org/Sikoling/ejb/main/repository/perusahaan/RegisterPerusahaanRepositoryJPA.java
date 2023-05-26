@@ -81,7 +81,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			return true;
 		}		 
 	}
-
 	
 	@Override
 	public List<RegisterPerusahaan> getDaftarPerusahaan(QueryParamFilters queryParamFilters) {
@@ -99,6 +98,9 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			switch (filter.getFieldName()) {
 			case "id":
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "tanggal_registrasi":
+				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
 				break;
 			case "nama":
 				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
@@ -136,6 +138,14 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				}
 				else {
 					cq.orderBy(cb.desc(root.get("id")));
+				}
+				break;
+			case "tanggal_registrasi":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("tanggalRegistrasi")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("tanggalRegistrasi")));
 				}
 				break;
 			case "nama":
@@ -190,7 +200,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				.map(d -> dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
@@ -208,6 +217,9 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			switch (filter.getFieldName()) {
 			case "id":
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "tanggal_registrasi":
+				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
 				break;
 			case "nama":
 				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));

@@ -2,7 +2,10 @@ package org.Sikoling.ejb.abstraction.service.person;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 
 public class PersonService implements IPersonService {
@@ -28,25 +31,22 @@ public class PersonService implements IPersonService {
 		return personRepository.getAll();
 	}
 
-	@Override
-	public List<Person> getAllByPage(Integer page, Integer pageSize) {
-		return personRepository.getAllByPage(page, pageSize);
-	}
 
 	@Override
-	public List<Person> getByNama(String nama) {
-		return personRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<Person> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return personRepository.getByNamaAndPage(nama, page, pageSize);
+	public DeleteResponse delete(String id) {
+		return personRepository.delete(id);
 	}
 
 	
 	@Override
-	public Person getByNik(String nik) {
-		return personRepository.getByNik(nik);
+	public List<Person> getDaftarPerson(QueryParamFilters queryParamFilters) {
+		return personRepository.getDaftarPerson(queryParamFilters);
+	}
+	
+
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return personRepository.getCount(queryParamFilters);
 	}
 
 }

@@ -2,7 +2,10 @@ package org.Sikoling.ejb.main.repository.person;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -33,25 +36,23 @@ public class PersonRepositoryEJB implements IPersonRepository {
 		return personRepositoryJPA.update(t);
 	}
 
-	@Override
-	public List<Person> getAllByPage(Integer page, Integer pageSize) {
-		return personRepositoryJPA.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<Person> getByNama(String nama) {
-		return personRepositoryJPA.getByNama(nama);
-	}
-
-	@Override
-	public List<Person> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return personRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
-	}
-
 	
 	@Override
-	public Person getByNik(String nik) {
-		return personRepositoryJPA.getByNik(nik);
+	public DeleteResponse delete(String id) {
+		return personRepositoryJPA.delete(id);
 	}
+	
+
+	@Override
+	public List<Person> getDaftarPerson(QueryParamFilters queryParamFilters) {
+		return personRepositoryJPA.getDaftarPerson(queryParamFilters);
+	}
+	
+
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return personRepositoryJPA.getCount(queryParamFilters);
+	}
+
 
 }
