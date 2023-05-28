@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
-import org.Sikoling.ejb.main.repository.log.StatusFlowData;
+import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
@@ -74,7 +74,7 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@JoinColumn(name="status_flow", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private StatusFlowData statusFlowData;
+	private StatusFlowLogData statusFlowData;
 	
 	@OneToMany(mappedBy = "registerPermohonan", cascade = CascadeType.ALL)
 	private List<DokumenPersyaratanPermohonanData> daftarDokumenSyarat;
@@ -177,11 +177,11 @@ public class RegisterPermohonanData implements Serializable {
 		this.posisiTahapPemberkasanPenerimaData = posisiTahapPemberkasanPenerimaData;
 	}
 
-	public StatusFlowData getStatusFlowData() {
+	public StatusFlowLogData getStatusFlowData() {
 		return statusFlowData;
 	}
 
-	public void setStatusFlowData(StatusFlowData statusFlowData) {
+	public void setStatusFlowData(StatusFlowLogData statusFlowData) {
 		this.statusFlowData = statusFlowData;
 	}
 

@@ -81,8 +81,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public ModelPerizinanRepositoryJPA getModelPerizinanRepositoryJPA(EntityManager entityManager) {
-		return new ModelPerizinanRepositoryJPA(entityManager);
+	public ModelPerizinanRepositoryJPA getModelPerizinanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new ModelPerizinanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
@@ -150,18 +150,18 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KategoriPelakuUsahaRepositoryJPA getKategoriPelakuUsahaRepositoryJPA(EntityManager entityManager) {
-		return new KategoriPelakuUsahaRepositoryJPA(entityManager);
+	public KategoriPelakuUsahaRepositoryJPA getKategoriPelakuUsahaRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new KategoriPelakuUsahaRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
-	public PelakuUsahaRepositoryJPA getPelakuUsahaJPA(EntityManager entityManager) {
-		return new PelakuUsahaRepositoryJPA(entityManager);
+	public PelakuUsahaRepositoryJPA getPelakuUsahaJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new PelakuUsahaRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
-	public SkalaUsahaRepositoryJPA getSkalaUsahaRepositoryJPA(EntityManager entityManager) {
-		return new SkalaUsahaRepositoryJPA(entityManager);
+	public SkalaUsahaRepositoryJPA getSkalaUsahaRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new SkalaUsahaRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

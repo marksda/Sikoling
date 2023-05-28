@@ -4,20 +4,24 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
+import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
 
 public class KategoriPelakuUsahaDTO implements Serializable {
 
 	private static final long serialVersionUID = 8462185491153635603L;
 	private String id;
 	private String nama;
+	private SkalaUsahaDTO skalaUsaha;
 	
-	public KategoriPelakuUsahaDTO() {
+ 	public KategoriPelakuUsahaDTO() {
 	}
 	
 	public KategoriPelakuUsahaDTO(KategoriPelakuUsaha t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.nama = t.getNama();
+			this.skalaUsaha = t.getSkalaUsaha() != null ?
+					new SkalaUsahaDTO(t.getSkalaUsaha()) : null;
 		}
 	}
 
@@ -37,12 +41,24 @@ public class KategoriPelakuUsahaDTO implements Serializable {
 		this.nama = nama;
 	}
 
+	public SkalaUsahaDTO getSkalaUsaha() {
+		return skalaUsaha;
+	}
+
+	public void setSkalaUsaha(SkalaUsahaDTO skalaUsaha) {
+		this.skalaUsaha = skalaUsaha;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	public KategoriPelakuUsaha toKategoriPelakuUsaha() {
-		return new KategoriPelakuUsaha(id, nama);
+		return new KategoriPelakuUsaha(
+				this.id, 
+				this.nama,
+				this.skalaUsaha != null ? this.skalaUsaha.toSkalaUsaha() : null				
+				);
 	}
 	
 	public int hashCode() {

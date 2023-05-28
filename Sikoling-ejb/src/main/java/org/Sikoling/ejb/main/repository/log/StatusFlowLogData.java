@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="StatusFlowData.findAll", query="SELECT p FROM StatusFlowData p")
 })
-public class StatusFlowData implements Serializable {
+public class StatusFlowLogData implements Serializable {
 
 	private static final long serialVersionUID = -2041190065241750462L;
 	
@@ -23,7 +23,7 @@ public class StatusFlowData implements Serializable {
 	
 	private String keterangan;
 
-	public StatusFlowData() {
+	public StatusFlowLogData() {
 	}
 
 	public String getId() {
@@ -68,7 +68,7 @@ public class StatusFlowData implements Serializable {
             return false;
         }
         
-        final StatusFlowData other = (StatusFlowData) obj;
+        final StatusFlowLogData other = (StatusFlowLogData) obj;
         
         if (!id.equals(other.getId())) {
             return false;

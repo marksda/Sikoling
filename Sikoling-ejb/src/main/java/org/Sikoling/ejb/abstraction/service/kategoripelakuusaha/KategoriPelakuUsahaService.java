@@ -3,7 +3,9 @@ package org.Sikoling.ejb.abstraction.service.kategoripelakuusaha;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 
 public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices {
@@ -23,32 +25,6 @@ public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices 
 	public KategoriPelakuUsaha update(KategoriPelakuUsaha t) {
 		return kategoriPelakuUsahaRepository.update(t);
 	}
-
-	@Override
-	public List<KategoriPelakuUsaha> getALL() {
-		return kategoriPelakuUsahaRepository.getAll();
-	}
-
-	@Override
-	public List<KategoriPelakuUsaha> getAllByPage(Integer page, Integer pageSize) {
-		return kategoriPelakuUsahaRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<KategoriPelakuUsaha> getByNama(String nama) {
-		return kategoriPelakuUsahaRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<KategoriPelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kategoriPelakuUsahaRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-	
-	@Override
-	public List<KategoriPelakuUsaha> getALLBySkalaUsaha(String idSkalaUsaha) {
-		return kategoriPelakuUsahaRepository.getALLBySkalaUsaha(idSkalaUsaha);
-	}
-
 	
 	@Override
 	public KategoriPelakuUsaha updateById(String id, KategoriPelakuUsaha kategoriPelakuUsaha) {
@@ -58,6 +34,18 @@ public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices 
 	@Override
 	public DeleteResponse delete(String id) {
 		return kategoriPelakuUsahaRepository.delete(id);
+	}
+
+	
+	@Override
+	public List<KategoriPelakuUsaha> getDaftarKategoriPelakuUsaha(QueryParamFilters queryParamFilters) {
+		return kategoriPelakuUsahaRepository.getDaftarKategoriPelakuUsaha(queryParamFilters);
+	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return kategoriPelakuUsahaRepository.getCount(queryParamFilters);
 	}
 
 	

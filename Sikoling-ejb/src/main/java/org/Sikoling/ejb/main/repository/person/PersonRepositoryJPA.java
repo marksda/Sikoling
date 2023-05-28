@@ -74,7 +74,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 			Filter filter = (Filter) iterFilter.next();
 			
 			switch (filter.getFieldName()) {
-			case "id":
+			case "nik":
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
 				break;
 			case "nama":
@@ -98,7 +98,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		while (iterSort.hasNext()) {
 			SortOrder sort = (SortOrder) iterSort.next();
 			switch (sort.getFieldName()) {
-			case "id":
+			case "nik":
 				if(sort.getValue().equals("ASC")) {
 					cq.orderBy(cb.asc(root.get("id")));
 				}
@@ -106,7 +106,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 					cq.orderBy(cb.desc(root.get("id")));
 				}
 				break;
-			case "perusahaan":
+			case "nama":
 				if(sort.getValue().equals("ASC")) {
 					cq.orderBy(cb.asc(root.get("nama")));
 				}
@@ -149,7 +149,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 			Filter filter = (Filter) iterFilter.next();
 			
 			switch (filter.getFieldName()) {
-			case "id":
+			case "nik":
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
 				break;
 			case "nama":

@@ -51,6 +51,14 @@ public class KategoriPelakuUsahaData implements Serializable {
 		this.nama = nama;
 	}
 
+	public SkalaUsahaData getSkalaUsaha() {
+		return skalaUsaha;
+	}
+
+	public void setSkalaUsaha(SkalaUsahaData skalaUsaha) {
+		this.skalaUsaha = skalaUsaha;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}	

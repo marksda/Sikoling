@@ -49,17 +49,7 @@ public class PersonController {
 	public PersonDTO update(PersonDTO personDTO) {
 		return new PersonDTO(personService.update(personDTO.toPerson()));
 	}
-	
-//	@GET
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    @Produces({MediaType.APPLICATION_JSON})
-//	public List<PersonDTO> getAll() {
-//		return personService.getAll()
-//				.stream()
-//				.map(t -> new PersonDTO(t))
-//				.collect(Collectors.toList());
-//	}
-	
+		
 	@Path("{id}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})

@@ -68,7 +68,7 @@ import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.log.FlowLogData;
 import org.Sikoling.ejb.main.repository.log.FlowLogPermohonanData;
 import org.Sikoling.ejb.main.repository.log.KategoriLogData;
-import org.Sikoling.ejb.main.repository.log.StatusFlowData;
+import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
@@ -175,7 +175,11 @@ public class DataConverter {
 		KategoriPelakuUsaha kategoriPelakuUsaha = null;
 				
 		if(d != null) {
-			kategoriPelakuUsaha = new KategoriPelakuUsaha(d.getId(), d.getNama());
+			kategoriPelakuUsaha = new KategoriPelakuUsaha(
+					d.getId(), 
+					d.getNama(), 
+					convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsaha())
+					);
 		}
 		
 		return kategoriPelakuUsaha;
@@ -777,7 +781,7 @@ public class DataConverter {
 		return jenisPermohonanSuratArahan;		
 	}
 	
-	public StatusFlowLog convertStatusFlowDataToStatusFlowLog(StatusFlowData d) {
+	public StatusFlowLog convertStatusFlowDataToStatusFlowLog(StatusFlowLogData d) {
 		StatusFlowLog statusFlowLog = null;
 		
 		if(d != null) {
@@ -938,12 +942,15 @@ public class DataConverter {
 			kategoriPelakuUsahaData = new KategoriPelakuUsahaData();
 			kategoriPelakuUsahaData.setId(t.getId());
 			kategoriPelakuUsahaData.setNama(t.getNama());
+			SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
+			skalaUsahaData.setId(t.getSkalaUsaha().getId());			
+			kategoriPelakuUsahaData.setSkalaUsaha(skalaUsahaData);			
 		}
 		
 		return kategoriPelakuUsahaData;
 	}
 	
-	public PelakuUsahaData convertKategoriPelakuUsahaToKategoriPelakuUsahaData(PelakuUsaha t) {
+	public PelakuUsahaData convertPelakuUsahaToPelakuUsahaData(PelakuUsaha t) {
 		PelakuUsahaData pelakuUsahaData = null;
 		
 		if(t != null) {
@@ -998,7 +1005,7 @@ public class DataConverter {
 			registerPerusahaanData.setAlamatPerusahaanData(convertAlamatToAlamatData(t.getPerusahaan().getAlamat()));
 			registerPerusahaanData.setModelPerizinanData(convertModelPerizinanToModelPerizinanData(t.getPerusahaan().getModelPerizinan()));
 			registerPerusahaanData.setSkalaUsahaData(convertSkalaUsahaToSkalaUsahaData(t.getPerusahaan().getSkalaUsaha()));
-			registerPerusahaanData.setPelakuUsaha(convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t.getPerusahaan().getPelakuUsaha()));
+			registerPerusahaanData.setPelakuUsaha(convertPelakuUsahaToPelakuUsahaData(t.getPerusahaan().getPelakuUsaha()));
 			registerPerusahaanData.setStatusVerifikasi(t.getStatusVerifikasi());
 			registerPerusahaanData.setKontakPerusahaanData(convertKontakToKontakData(t.getPerusahaan().getKontak()));
 			registerPerusahaanData.setKreator(convertAuthorityToAutorisasiData(t.getKreator()));
@@ -1256,11 +1263,11 @@ public class DataConverter {
 		return kategoriSuratArahanData;		
 	}
 	
-	public StatusFlowData convertStatusFlowLogToStatusFlowData(StatusFlowLog t) {
-		StatusFlowData statusFlowData = null;
+	public StatusFlowLogData convertStatusFlowLogToStatusFlowData(StatusFlowLog t) {
+		StatusFlowLogData statusFlowData = null;
 		
 		if(t != null) {
-			statusFlowData = new StatusFlowData();
+			statusFlowData = new StatusFlowLogData();
 			statusFlowData.setId(t.getId());
 			statusFlowData.setKeterangan(t.getNama());
 		}

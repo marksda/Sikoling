@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
-import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 
-public interface IModelPerizinanRepository extends IRepository<ModelPerizinan> {
+public interface IStatusFlowLogRepository extends IRepository<StatusFlowLog> {
+	StatusFlowLog updateById(String id, StatusFlowLog statusFlowLog);
 	DeleteResponse delete(String id);
-	List<ModelPerizinan> getDaftarModelPerizinan(QueryParamFilters queryParamFilters);
+	List<StatusFlowLog> getDaftarStatusFlowLog(QueryParamFilters queryParamFilters);
 	Long getCount(List<Filter> queryParamFilters);
 }

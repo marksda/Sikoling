@@ -3,7 +3,9 @@ package org.Sikoling.ejb.main.repository.modelperizinan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -35,28 +37,20 @@ public class ModelPerizinanRepositoryEJB implements IModelPerizinanRepository {
 	}
 
 	@Override
-	public List<ModelPerizinan> getAllByPage(Integer page, Integer pageSize) {
-		return modelPerizinanRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<ModelPerizinan> getByNama(String nama) {
-		return modelPerizinanRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<ModelPerizinan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return modelPerizinanRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-	
-	@Override
-	public ModelPerizinan updateById(String id, ModelPerizinan modelPerizinan) {
-		return modelPerizinanRepository.updateById(id, modelPerizinan);
-	}
-	
-	@Override
 	public DeleteResponse delete(String id) {
 		return modelPerizinanRepository.delete(id);
+	}
+
+	
+	@Override
+	public List<ModelPerizinan> getDaftarModelPerizinan(QueryParamFilters queryParamFilters) {
+		return modelPerizinanRepository.getDaftarModelPerizinan(queryParamFilters);
+	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return modelPerizinanRepository.getCount(queryParamFilters);
 	}
 
 }

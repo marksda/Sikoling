@@ -8,11 +8,12 @@ public class KategoriPelakuUsaha implements Serializable {
 	private static final long serialVersionUID = -7606706066333265936L;
 	private final String id;
 	private final String nama;
+	private final SkalaUsaha skalaUsaha;
 	
-	public KategoriPelakuUsaha(String id, String nama) {
-		super();
+	public KategoriPelakuUsaha(String id, String nama, SkalaUsaha skalaUsaha) {
 		this.id = id;
 		this.nama = nama;
+		this.skalaUsaha = skalaUsaha;
 	}
 
 	public String getId() {
@@ -70,6 +71,11 @@ public class KategoriPelakuUsaha implements Serializable {
 				.concat(", nama=")
 				.concat(this.nama)
 				.concat("}");
+	}
+
+	
+	public SkalaUsaha getSkalaUsaha() {
+		return skalaUsaha;
 	}
 	
 }

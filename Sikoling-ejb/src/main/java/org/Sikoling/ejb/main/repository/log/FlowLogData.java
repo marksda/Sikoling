@@ -48,7 +48,7 @@ public class FlowLogData implements Serializable {
 	
 	@JoinColumn(name="status_flow", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private StatusFlowData statusFlowData;
+	private StatusFlowLogData statusFlowData;
 	
 	private String keterangan;
 	
@@ -126,11 +126,11 @@ public class FlowLogData implements Serializable {
 		this.posisiTahapPemberkasanPenerimaData = posisiTahapPemberkasanPenerimaData;
 	}
 
-	public StatusFlowData getStatusFlowData() {
+	public StatusFlowLogData getStatusFlowData() {
 		return statusFlowData;
 	}
 
-	public void setStatusFlowData(StatusFlowData statusFlowData) {
+	public void setStatusFlowData(StatusFlowLogData statusFlowData) {
 		this.statusFlowData = statusFlowData;
 	}
 
