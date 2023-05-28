@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.service.log;
+package org.Sikoling.ejb.main.repository.log;
 
 import java.util.List;
 
@@ -7,23 +7,33 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
+import org.Sikoling.ejb.main.Infrastructure;
 
-public class StatusFlowLogServices implements IStatusFlowLogServices {
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+
+@Stateless
+@LocalBean
+@Infrastructure
+public class StatusFlowLogRepositoryEJB implements IStatusFlowLogRepository {
 	
-	private final IStatusFlowLogRepository statusFlowLogRepository;
+	@Inject
+	private StatusFlowLogRepositoryJPA statusFlowLogRepository;
 
-	public StatusFlowLogServices(IStatusFlowLogRepository statusFlowLogRepository) {
-		this.statusFlowLogRepository = statusFlowLogRepository;
+	@Override
+	public List<StatusFlowLog> getAll() {
+		return statusFlowLogRepository.getAll();
 	}
 
 	@Override
-	public StatusFlowLog save(StatusFlowLog statusFlowLog) {
-		return statusFlowLogRepository.save(statusFlowLog);
+	public StatusFlowLog save(StatusFlowLog t) {
+		return statusFlowLogRepository.save(t);
 	}
 
 	@Override
-	public StatusFlowLog update(StatusFlowLog statusFlowLog) {
-		return statusFlowLogRepository.update(statusFlowLog);
+	public StatusFlowLog update(StatusFlowLog t) {
+		return statusFlowLogRepository.update(t);
 	}
 
 	@Override

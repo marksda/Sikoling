@@ -1,14 +1,13 @@
-package org.Sikoling.main.restful.skalausaha;
+package org.Sikoling.main.restful.log;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
+import org.Sikoling.ejb.abstraction.service.log.IStatusFlowLogServices;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -28,17 +27,17 @@ import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
-@Path("skala_usaha")
-public class SkalaUsahaController {
-
-	@Inject
-	private ISkalaUsahaService skalaUsahaService;
+@Path("status_flow_log")
+public class StatusFlowLogController {
 	
+	@Inject
+	private IStatusFlowLogServices statusFlowLogServices;
+
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public SkalaUsahaDTO save(SkalaUsahaDTO d) {
-        return new SkalaUsahaDTO(skalaUsahaService.save(d.toSkalaUsaha()));
+    public StatusFlowLogDTO save(StatusFlowLogDTO d) {
+        return new StatusFlowLogDTO(statusFlowLogServices.save(d.toStatusFlowLog()));
     }
 	
 	@PUT
@@ -46,16 +45,16 @@ public class SkalaUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public SkalaUsahaDTO update(SkalaUsahaDTO d) {		
-		return new SkalaUsahaDTO(skalaUsahaService.update(d.toSkalaUsaha()));
+	public StatusFlowLogDTO update(StatusFlowLogDTO d) {		
+		return new StatusFlowLogDTO(statusFlowLogServices.update(d.toStatusFlowLog()));
 	}
 	
 	@Path("id/{id}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public SkalaUsahaDTO updateById(@PathParam("id") String id, SkalaUsahaDTO d) {
-		return new SkalaUsahaDTO(skalaUsahaService.update(d.toSkalaUsaha()));
+	public StatusFlowLogDTO updateById(@PathParam("id") String id, StatusFlowLogDTO d) {
+		return new StatusFlowLogDTO(statusFlowLogServices.update(d.toStatusFlowLog()));
 	}
 	
 	@GET
@@ -63,15 +62,15 @@ public class SkalaUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<SkalaUsahaDTO> getDaftarSkalaUsaha(@Context UriInfo info) {
+	public List<StatusFlowLogDTO> getDaftarStatusFlowLog(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return skalaUsahaService.getDaftarSkalaUsaha(queryParamFiltersDTO.toQueryParamFilters())
+		return statusFlowLogServices.getDaftarStatusFlowLog(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> new SkalaUsahaDTO(t))
+				.map(t -> new StatusFlowLogDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -80,13 +79,14 @@ public class SkalaUsahaController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarSkalaUsaha(@Context UriInfo info) {
+	public Long getCountDaftarStatusFlowLog(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return skalaUsahaService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return statusFlowLogServices.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
+
 }

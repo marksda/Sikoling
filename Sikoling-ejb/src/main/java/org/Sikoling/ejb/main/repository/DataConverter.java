@@ -701,7 +701,7 @@ public class DataConverter {
 							convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()),
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()),
-							convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()),
+							convertStatusFlowLogDataToStatusFlowLog(d.getStatusFlowData()),
 							convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
 							null, 
 							convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(d.getPermohonanSuratArahanData().getKategoriSuratArahanData()), 
@@ -719,7 +719,7 @@ public class DataConverter {
 							convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()), 
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()), 
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()), 
-							convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()), 
+							convertStatusFlowLogDataToStatusFlowLog(d.getStatusFlowData()), 
 							convertDaftarDokumenPersyaratanPermohonanToDaftarRegisterDokumen(d.getDaftarDokumenSyarat()), 
 							null
 							);							
@@ -758,7 +758,7 @@ public class DataConverter {
 						kategoriFlowLog, 
 						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()), 
 						convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()), 
-						convertStatusFlowDataToStatusFlowLog(d.getStatusFlowData()),
+						convertStatusFlowLogDataToStatusFlowLog(d.getStatusFlowData()),
 						d.getKeterangan(), 
 						convertAutorisasiDataToAuthority(d.getPengaksesData()), 
 						convertRegisterPermohonanDataToRegisterPermohonan(d.getFlowLogPermohonanData().getRegisterPermohonan())
@@ -781,7 +781,7 @@ public class DataConverter {
 		return jenisPermohonanSuratArahan;		
 	}
 	
-	public StatusFlowLog convertStatusFlowDataToStatusFlowLog(StatusFlowLogData d) {
+	public StatusFlowLog convertStatusFlowLogDataToStatusFlowLog(StatusFlowLogData d) {
 		StatusFlowLog statusFlowLog = null;
 		
 		if(d != null) {

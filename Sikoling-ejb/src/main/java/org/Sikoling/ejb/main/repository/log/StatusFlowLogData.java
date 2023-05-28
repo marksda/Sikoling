@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_status_flow_jenis_log")
 @NamedQueries({
-	@NamedQuery(name="StatusFlowData.findAll", query="SELECT p FROM StatusFlowData p")
+	@NamedQuery(name="StatusFlowData.findAll", query="SELECT p FROM StatusFlowLogData p")
 })
 public class StatusFlowLogData implements Serializable {
 

@@ -45,7 +45,6 @@ public class FlowLogRepositoryEJB implements IFlowLogRepository {
 	public List<FlowLog> getDaftarFlowLog(QueryParamFilters queryParamFilters) {
 		return flowLogRepository.getDaftarFlowLog(queryParamFilters);
 	}
-
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {

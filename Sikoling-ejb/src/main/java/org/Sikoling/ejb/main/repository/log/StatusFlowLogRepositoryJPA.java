@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.skalausaha;
+package org.Sikoling.ejb.main.repository.log;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
+import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
+import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -19,65 +19,67 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
+public class StatusFlowLogRepositoryJPA implements IStatusFlowLogRepository {
 	
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;	
-	
-	public SkalaUsahaRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+
+	public StatusFlowLogRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
-	
+
 	@Override
-	public List<SkalaUsaha> getAll() {
-		return entityManager.createNamedQuery("SkalaUsahaData.findAll", SkalaUsahaData.class)
+	public List<StatusFlowLog> getAll() {
+		return entityManager.createNamedQuery("StatusFlowLogData", StatusFlowLogData.class)
 				.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertSkalaUsahaDataToSkalaUsaha(d))
+				.map(d -> dataConverter.convertStatusFlowLogDataToStatusFlowLog(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public SkalaUsaha save(SkalaUsaha t) {
-		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-		entityManager.persist(skalaUsahaData);
-		entityManager.flush();		
-		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
+	public StatusFlowLog save(StatusFlowLog t) {
+		StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
+		entityManager.persist(statusFlowLogData);
+		entityManager.flush();
+		
+		return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
 	}
-	
+
+	@Override
+	public StatusFlowLog update(StatusFlowLog t) {
+		StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
+		statusFlowLogData = entityManager.merge(statusFlowLogData);
+		
+		return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
+	}
+
+	@Override
+	public StatusFlowLog updateById(String id, StatusFlowLog statusFlowLog) {
+		String idBaru = statusFlowLog.getId();
+		StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(statusFlowLog);
+		statusFlowLogData.setId(id);
+		statusFlowLogData = entityManager.merge(statusFlowLogData);
+		if(!idBaru.equals(id)) {
+			statusFlowLogData.setId(idBaru);
+			entityManager.flush();
+		}
+		return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
+	}
+
 	@Override
 	public DeleteResponse delete(String id) {
-		SkalaUsahaData skalaUsahaData = entityManager.find(SkalaUsahaData.class, id);
-		entityManager.remove(skalaUsahaData);	
+		StatusFlowLogData statusFlowLogData = entityManager.find(StatusFlowLogData.class, id);
+		entityManager.remove(statusFlowLogData);	
 		return new DeleteResponse(true, id);
 	}
 
 	@Override
-	public SkalaUsaha update(SkalaUsaha t) {
-		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-		skalaUsahaData = entityManager.merge(skalaUsahaData);		
-		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
-	}
-	
-	@Override
-	public SkalaUsaha updateById(String id, SkalaUsaha skalaUsaha) {
-		String idBaru = skalaUsaha.getId();
-		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(skalaUsaha);
-		skalaUsahaData.setId(id);
-		skalaUsahaData = entityManager.merge(skalaUsahaData);
-		if(!idBaru.equals(id)) {
-			skalaUsahaData.setId(idBaru);
-			entityManager.flush();
-		}
-		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
-	}
-
-	@Override
-	public List<SkalaUsaha> getDaftarSkalaUsaha(QueryParamFilters queryParamFilters) {
+	public List<StatusFlowLog> getDaftarStatusFlowLog(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<SkalaUsahaData> cq = cb.createQuery(SkalaUsahaData.class);
-		Root<SkalaUsahaData> root = cq.from(SkalaUsahaData.class);		
+		CriteriaQuery<StatusFlowLogData> cq = cb.createQuery(StatusFlowLogData.class);
+		Root<StatusFlowLogData> root = cq.from(StatusFlowLogData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
@@ -91,10 +93,7 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
 				break;
 			case "nama":
-				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
-				break;
-			case "singkatan":
-				daftarPredicate.add(cb.like(cb.lower(root.get("singkatan")), "%"+filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("keterangan")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
 			default:
 				break;
@@ -124,18 +123,10 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 				break;
 			case "nama":
 				if(sort.getValue().equals("ASC")) {
-					cq.orderBy(cb.asc(root.get("nama")));
+					cq.orderBy(cb.asc(root.get("keterangan")));
 				}
 				else {
-					cq.orderBy(cb.desc(root.get("nama")));
-				}
-				break;
-			case "singkatan":
-				if(sort.getValue().equals("ASC")) {
-					cq.orderBy(cb.asc(root.get("singkatan")));
-				}
-				else {
-					cq.orderBy(cb.desc(root.get("singkatan")));
+					cq.orderBy(cb.desc(root.get("keterangan")));
 				}
 				break;
 			default:
@@ -143,7 +134,7 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 			}			
 		}
 		
-		TypedQuery<SkalaUsahaData> q = null;		
+		TypedQuery<StatusFlowLogData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { //limit query result
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
@@ -155,15 +146,15 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 		
 		return q.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertSkalaUsahaDataToSkalaUsaha(d))
+				.map(d -> dataConverter.convertStatusFlowLogDataToStatusFlowLog(d))
 				.collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<SkalaUsahaData> root = cq.from(SkalaUsahaData.class);		
+		Root<StatusFlowLogData> root = cq.from(StatusFlowLogData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();
@@ -177,10 +168,7 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
 				break;
 			case "nama":
-				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
-				break;
-			case "singkatan":
-				daftarPredicate.add(cb.like(cb.lower(root.get("singkatan")), "%"+filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("keterangan")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
 			default:
 				break;
@@ -196,5 +184,5 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-	
+
 }
