@@ -3,6 +3,7 @@ package org.Sikoling.ejb.abstraction.service.log;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 import org.Sikoling.ejb.abstraction.repository.IKategoriLogRepository;
@@ -38,6 +39,12 @@ public class KategoriLogService implements IKategoriLogService {
 	@Override
 	public List<KategoriFlowLog> getDaftarKategoriLog(QueryParamFilters queryParamFilters) {
 		return kategoriLogRepository.getDaftarKategoriLog(queryParamFilters);
+	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return kategoriLogRepository.getCount(queryParamFilters);
 	}
 
 	

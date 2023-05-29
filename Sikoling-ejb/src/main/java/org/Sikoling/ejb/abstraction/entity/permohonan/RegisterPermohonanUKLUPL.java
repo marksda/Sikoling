@@ -32,7 +32,7 @@ public class RegisterPermohonanUKLUPL extends RegisterPermohonan implements Seri
 	private final LocalDate tanggalPembahasan;
 	
 	public RegisterPermohonanUKLUPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			StatusPermohonanUKLUPL status, BidangUsaha bidangUsaha, String namaUsaha, Alamat lokasiUsaha,

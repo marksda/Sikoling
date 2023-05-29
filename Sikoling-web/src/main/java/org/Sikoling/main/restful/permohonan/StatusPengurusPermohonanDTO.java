@@ -3,18 +3,18 @@ package org.Sikoling.main.restful.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
 
-public class StatusWaliDTO implements Serializable {
+public class StatusPengurusPermohonanDTO implements Serializable {
 
 	private static final long serialVersionUID = -7023312516491392089L;
 	private String id;
 	private String nama;
 	
-	public StatusWaliDTO() {
+	public StatusPengurusPermohonanDTO() {
 	}
 	
-	public StatusWaliDTO(StatusWali t) {
+	public StatusPengurusPermohonanDTO(StatusPengurusPermohonan t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.nama = t.getNama();
@@ -62,7 +62,7 @@ public class StatusWaliDTO implements Serializable {
             return false;
         }
         
-        final StatusWaliDTO other = (StatusWaliDTO) obj;
+        final StatusPengurusPermohonanDTO other = (StatusPengurusPermohonanDTO) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;
@@ -73,7 +73,7 @@ public class StatusWaliDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StatusWaliDTO {"
+		return "StatusPengurusPermohonanDTO {"
 				.concat("id=")
 				.concat(id)
 				.concat(", nama=")
@@ -81,7 +81,7 @@ public class StatusWaliDTO implements Serializable {
 				.concat("}");
 	}
 
-	public StatusWali toStatusWali() {
-		return new StatusWali(id, nama);
+	public StatusPengurusPermohonan toStatusPengurusPermohonan() {
+		return new StatusPengurusPermohonan(id, nama);
 	}
 }

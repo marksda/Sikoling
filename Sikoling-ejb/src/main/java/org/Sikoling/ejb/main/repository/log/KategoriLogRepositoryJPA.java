@@ -137,4 +137,41 @@ public class KategoriLogRepositoryJPA implements IKategoriLogRepository {
 				.collect(Collectors.toList());
 	}
 
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<KategoriLogData> root = cq.from(KategoriLogData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("keterangan")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
+	}
+
 }

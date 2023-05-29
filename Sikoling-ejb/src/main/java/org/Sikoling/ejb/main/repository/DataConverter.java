@@ -43,7 +43,7 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusWali;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
@@ -72,12 +72,12 @@ import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
-import org.Sikoling.ejb.main.repository.permohonan.KategoriPengurusPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriSuratArahanData;
 import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanSuratArahanData;
+import org.Sikoling.ejb.main.repository.permohonan.StatusPengurusPermohonanData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
@@ -645,14 +645,14 @@ public class DataConverter {
 		return kategoriPermohonan;
 	}
 	
-	public StatusWali convertKategoriPengurusPermohonanDataToStatusWali(KategoriPengurusPermohonanData d) {
-		StatusWali statusWali = null;
+	public StatusPengurusPermohonan convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(StatusPengurusPermohonanData d) {
+		StatusPengurusPermohonan statusPengurusPermohonan = null;
 		
 		if(d != null) {
-			statusWali = new StatusWali(d.getId(), d.getNama());
+			statusPengurusPermohonan = new StatusPengurusPermohonan(d.getId(), d.getNama());
 		}
 		
-		return statusWali;
+		return statusPengurusPermohonan;
 	}
 	
 	public PosisiTahapPemberkasan convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(PosisiTahapPemberkasanData d) {
@@ -697,7 +697,7 @@ public class DataConverter {
 							d.getTanggalRegistrasi(), 
 							convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
 							convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
-							convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
+							convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d.getStatusPengurusPermohonanData()),
 							convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()),
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()),
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()),
@@ -715,7 +715,7 @@ public class DataConverter {
 							d.getTanggalRegistrasi(), 
 							convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
 							convertAutorisasiDataToAuthority(d.getAutorisasiData()), 
-							convertKategoriPengurusPermohonanDataToStatusWali(d.getKategoriPengurusPermohonanData()), 
+							convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d.getStatusPengurusPermohonanData()), 
 							convertPegawaiPerusahaanDataToPegawaiPerusahaan(d.getPenanggungJawab()), 
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()), 
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()), 
@@ -1226,16 +1226,16 @@ public class DataConverter {
 		return kategoriPermohonanData;
 	}
 	
-	public KategoriPengurusPermohonanData convertStatusWaliToKategoriPengurusPermohonanData(StatusWali t) {
-		KategoriPengurusPermohonanData KategoriPengurusPermohonanData = null;
+	public StatusPengurusPermohonanData convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(StatusPengurusPermohonan t) {
+		StatusPengurusPermohonanData statusPengurusPermohonanData = null;
 		
 		if(t != null) {
-			KategoriPengurusPermohonanData = new KategoriPengurusPermohonanData();
-			KategoriPengurusPermohonanData.setId(t.getId());
-			KategoriPengurusPermohonanData.setNama(t.getNama());
+			statusPengurusPermohonanData = new StatusPengurusPermohonanData();
+			statusPengurusPermohonanData.setId(t.getId());
+			statusPengurusPermohonanData.setNama(t.getNama());
 		}
 		
-		return KategoriPengurusPermohonanData;
+		return statusPengurusPermohonanData;
 	}
 	
 	public PosisiTahapPemberkasanData convertStatusTahapPemberkasanToStatusTahapPemberkasanData(PosisiTahapPemberkasan t) {
@@ -1307,8 +1307,8 @@ public class DataConverter {
 			registerPermohonanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
 			registerPermohonanData.setPerusahaanData(convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()));
 			registerPermohonanData.setAutorisasiData(convertAuthorityToAutorisasiData(t.getPengurusPermohonan()));
-			registerPermohonanData.setKategoriPengurusPermohonanData(
-					convertStatusWaliToKategoriPengurusPermohonanData(t.getStatusWaliPengurusPermohonan()));
+			registerPermohonanData.setStatusPengurusPermohonanData(
+					convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(t.getStatusPengurusPermohonan()));
 			registerPermohonanData.setPosisiTahapPemberkasanPengirimData(
 					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPengirimBerkas())
 					);

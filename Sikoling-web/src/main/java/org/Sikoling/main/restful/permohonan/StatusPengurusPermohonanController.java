@@ -1,20 +1,21 @@
-package org.Sikoling.main.restful.pelakuusaha;
+package org.Sikoling.main.restful.permohonan;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.pelakuusaha.IPelakuUsahaServices;
+import org.Sikoling.ejb.abstraction.service.permohonan.IStatusPengurusPermohonanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -28,41 +29,55 @@ import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
-@Path("pelaku_usaha")
-public class PelakuUsahaController {
-		
+@Path("status_pengurus_permohonan")
+public class StatusPengurusPermohonanController {
+	
 	@Inject
-	private IPelakuUsahaServices pelakuUsahaServices;
-		
+	private IStatusPengurusPermohonanService statusPengurusPermohonanService;
+	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public PelakuUsahaDTO save(PelakuUsahaDTO d) {		
-        return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toPelakuUsaha()));
+    public StatusPengurusPermohonanDTO save(StatusPengurusPermohonanDTO d) {
+        return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.save(d.toStatusPengurusPermohonan()));
     }
-		
-	@Path("{id}")
+	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PelakuUsahaDTO update(@PathParam("id") String id, PelakuUsahaDTO d) {		
-		return new PelakuUsahaDTO(pelakuUsahaServices.updateById(id, d.toPelakuUsaha()));
-	}		
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public StatusPengurusPermohonanDTO update(StatusPengurusPermohonanDTO d) {		
+		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.update(d.toStatusPengurusPermohonan()));
+	}
+	
+	@Path("{id}")
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public DeleteResponseDTO delete(@PathParam("id") String id) {
+		return new DeleteResponseDTO(statusPengurusPermohonanService.delete(id));
+	}
+
+	public StatusPengurusPermohonanDTO updateById(@PathParam("id") String id, StatusPengurusPermohonanDTO d) {
+		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.updateById(id, d.toStatusPengurusPermohonan()));
+	}	
 
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<PelakuUsahaDTO> getDaftarPelakuUsaha(@Context UriInfo info) {
+	public List<StatusPengurusPermohonanDTO> getDaftarStatusPengurusPermohonan(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return pelakuUsahaServices.getDaftarPelakuUsaha(queryParamFiltersDTO.toQueryParamFilters())
+		return statusPengurusPermohonanService.getDaftarStatusPengurusPermohonan(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> new PelakuUsahaDTO(t))
+				.map(t -> new StatusPengurusPermohonanDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -71,13 +86,13 @@ public class PelakuUsahaController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarKategoriPelakuUsaha(@Context UriInfo info) {
+	public Long getCountDaftarStatusPengurusPermohonan(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return pelakuUsahaServices.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return statusPengurusPermohonanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
-	
+		
 }

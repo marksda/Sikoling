@@ -20,7 +20,7 @@ public class RegisterPermohonan implements Serializable {
 	private final LocalDate tanggalRegistrasi;
 	private final RegisterPerusahaan perusahaan;
 	private final Authority pengurusPermohonan;
-	private final StatusWali statusWaliPengurusPermohonan;
+	private final StatusPengurusPermohonan statusPengurusPermohonan;
 	private final Pegawai penanggungJawabPermohonan;
 	private final PosisiTahapPemberkasan pengirimBerkas;
 	private final PosisiTahapPemberkasan penerimaBerkas;
@@ -29,7 +29,7 @@ public class RegisterPermohonan implements Serializable {
 	private final List<RegisterDokumen> daftarDokumenHasil;	
 
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
@@ -38,7 +38,7 @@ public class RegisterPermohonan implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.perusahaan = perusahaan;
 		this.pengurusPermohonan = pengurusPermohonan;
-		this.statusWaliPengurusPermohonan = statusWaliPengurusPermohonan;
+		this.statusPengurusPermohonan = statusWaliPengurusPermohonan;
 		this.penanggungJawabPermohonan = penanggungJawabPermohonan;
 		this.pengirimBerkas = pengirimBerkas;
 		this.penerimaBerkas = penerimaBerkas;
@@ -71,8 +71,8 @@ public class RegisterPermohonan implements Serializable {
 		return pengurusPermohonan;
 	}
 	
-	public StatusWali getStatusWaliPengurusPermohonan() {
-		return statusWaliPengurusPermohonan;
+	public StatusPengurusPermohonan getStatusPengurusPermohonan() {
+		return statusPengurusPermohonan;
 	}
 	
 	public Pegawai getPenanggungJawabPermohonan() {
@@ -91,17 +91,14 @@ public class RegisterPermohonan implements Serializable {
 		return pengirimBerkas;
 	}
 	
-
 	public PosisiTahapPemberkasan getPenerimaBerkas() {
 		return penerimaBerkas;
 	}
 	
-
 	public StatusFlowLog getStatusFlowLog() {
 		return statusFlowLog;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		int hash = 1731;

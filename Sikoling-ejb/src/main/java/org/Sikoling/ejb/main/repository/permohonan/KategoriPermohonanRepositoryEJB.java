@@ -3,6 +3,8 @@ package org.Sikoling.ejb.main.repository.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -35,13 +37,20 @@ public class KategoriPermohonanRepositoryEJB implements IKategoriPermohonanRepos
 	}
 
 	@Override
-	public List<KategoriPermohonan> getByNama(String nama) {
-		return kategoriPermohonanRepository.getByNama(nama);
-	}
-
-	@Override
 	public DeleteResponse delete(String id) {
 		return kategoriPermohonanRepository.delete(id);
+	}
+
+	
+	@Override
+	public List<KategoriPermohonan> getDaftarKategoriPermohonan(QueryParamFilters queryParamFilters) {
+		return kategoriPermohonanRepository.getDaftarKategoriPermohonan(queryParamFilters);
+	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return kategoriPermohonanRepository.getCount(queryParamFilters);
 	}
 
 }

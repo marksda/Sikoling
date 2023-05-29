@@ -89,4 +89,18 @@ public class KategoriFlowLogController {
 				.collect(Collectors.toList());
 	}
 	
+	@Path("count")
+	@GET
+    @Produces({MediaType.TEXT_PLAIN})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public Long getCountDaftarKategoriLog(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return kategoriLogService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+	}
+	
 }

@@ -18,11 +18,11 @@ public class RegisterPermohonanArahan extends RegisterPermohonan implements Seri
 	private final String uraianKegiatan;
 	
 	public RegisterPermohonanArahan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusPengurusPermohonan statusPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			JenisPermohonanSuratArahan jenisPermohonanSuratArahan, String uraianKegiatan) {
-		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
+		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusPengurusPermohonan,
 				penanggungJawabPermohonan, pengirimBerkas, penerimaBerkas, statusFlowLog, daftarDokumenSyarat, daftarDokumenHasil);
 		this.jenisPermohonanSuratArahan = jenisPermohonanSuratArahan;
 		this.uraianKegiatan = uraianKegiatan;

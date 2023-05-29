@@ -38,9 +38,9 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 					new AuthorityDTO(t.getPengurusPermohonan()) : null;
 			this.setPengurusPermohonan(pengurusPermohonan);
 			
-			StatusWaliDTO statusWaliDTO = t.getStatusWaliPengurusPermohonan() != null ?
-					new StatusWaliDTO(t.getStatusWaliPengurusPermohonan()) : null;
-			this.setStatusWali(statusWaliDTO);
+			StatusPengurusPermohonanDTO statusWaliDTO = t.getStatusPengurusPermohonan() != null ?
+					new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()) : null;
+			this.setStatusPengurusPermohonan(statusWaliDTO);
 			
 			PegawaiPerusahaanDTO pegawaiPerusahaanDTO = t.getPenanggungJawabPermohonan() != null ?
 					new PegawaiPerusahaanDTO(t.getPenanggungJawabPermohonan()) : null;
@@ -148,8 +148,8 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 						this.getRegisterPerusahaan().toRegisterPerusahaan() : null,
 				this.getPengurusPermohonan() != null ?
 						this.getPengurusPermohonan().toAuthority() : null, 
-				this.getStatusWali() != null ?
-						this.getStatusWali().toStatusWali() : null, 
+				this.getStatusPengurusPermohonan() != null ?
+						this.getStatusPengurusPermohonan().toStatusPengurusPermohonan() : null, 
 				this.getPenanggungJawabPermohonan() != null ?
 						this.getPenanggungJawabPermohonan().toPegawaiPerusahaan() : null, 
 				this.getPengirimBerkas() != null ?

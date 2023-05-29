@@ -75,7 +75,6 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 		
 		return dataConverter.convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
 	}
-
 	
 	@Override
 	public List<PelakuUsaha> getDaftarPelakuUsaha(QueryParamFilters queryParamFilters) {
@@ -102,6 +101,9 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 				break;
 			case "kategori_pelaku_usaha":
 				daftarPredicate.add(cb.equal(root.get("kategoriPelakuUsaha").get("id"), filter.getValue()));
+				break;
+			case "skala_usaha":
+				daftarPredicate.add(cb.equal(root.get("kategoriPelakuUsaha").get("skalaUsaha").get("id"), filter.getValue()));
 				break;
 			default:
 				break;
@@ -153,6 +155,14 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 					cq.orderBy(cb.desc(root.get("kategoriPelakuUsaha").get("nama")));
 				}
 				break;
+			case "skala_usaha":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("kategoriPelakuUsaha").get("skalaUsaha").get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("kategoriPelakuUsaha").get("skalaUsaha").get("nama")));
+				}
+				break;
 			default:
 				break;
 			}			
@@ -173,7 +183,6 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 				.map(d -> dataConverter.convertPelakuUsahaDataToPelakuUsaha(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
@@ -200,6 +209,9 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 				break;
 			case "kategori_pelaku_usaha":
 				daftarPredicate.add(cb.equal(root.get("kategoriPelakuUsaha").get("id"), filter.getValue()));
+				break;
+			case "skala_usaha":
+				daftarPredicate.add(cb.equal(root.get("kategoriPelakuUsaha").get("skalaUsaha").get("id"), filter.getValue()));
 				break;
 			default:
 				break;

@@ -19,7 +19,7 @@ import org.Sikoling.main.restful.permohonan.KategoriPermohonanDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanArahanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanDTO;
-import org.Sikoling.main.restful.permohonan.StatusWaliDTO;
+import org.Sikoling.main.restful.permohonan.StatusPengurusPermohonanDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 import jakarta.json.Json;
@@ -65,7 +65,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = null;
 		PosisiTahapPemberkasanDTO penerimaBerkasDTO = null;
 		StatusFlowLogDTO statusFlowLogDTO =null;
-		StatusWaliDTO statusWaliDTO = null;
+		StatusPengurusPermohonanDTO statusWaliDTO = null;
 		LocalDate tanggalRegistrasi = null;
 		List<RegisterDokumenDTO> daftarDokumenSyarat = null;
 		List<RegisterDokumenDTO> daftarDokumenHasil = null;
@@ -163,7 +163,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 					event = parser.next();
 					try {
 						jsonObject = parser.getObject();
-						statusWaliDTO = jsonb.fromJson(jsonObject.toString(), StatusWaliDTO.class);
+						statusWaliDTO = jsonb.fromJson(jsonObject.toString(), StatusPengurusPermohonanDTO.class);
 					} catch (Exception e) {
 						statusWaliDTO = null;
 					}		
@@ -221,7 +221,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 			dt.setTanggalRegistrasi(tanggalRegistrasi);
 			dt.setRegisterPerusahaan(registerPerusahaanDTO);
 			dt.setPengurusPermohonan(pengurusPermohonanDTO);
-			dt.setStatusWali(statusWaliDTO);
+			dt.setStatusPengurusPermohonan(statusWaliDTO);
 			dt.setPenanggungJawabPermohonan(pegawaiPerusahaanDTO);
 			dt.setPengirimBerkas(pengirimBerkasDTO);
 			dt.setPenerimaBerkas(penerimaBerkasDTO);

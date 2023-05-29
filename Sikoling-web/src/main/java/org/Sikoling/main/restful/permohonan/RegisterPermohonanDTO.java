@@ -21,7 +21,7 @@ public class RegisterPermohonanDTO implements Serializable {
 	private LocalDate tanggalRegistrasi;
 	private RegisterPerusahaanDTO registerPerusahaan;
 	private AuthorityDTO pengurusPermohonan;
-	private StatusWaliDTO statusWali;
+	private StatusPengurusPermohonanDTO statusPengurusPermohonan;
 	private PegawaiPerusahaanDTO penanggungJawabPermohonan;
 	private PosisiTahapPemberkasanDTO pengirimBerkas;
 	private PosisiTahapPemberkasanDTO penerimaBerkas;
@@ -42,8 +42,8 @@ public class RegisterPermohonanDTO implements Serializable {
 					new RegisterPerusahaanDTO(t.getPerusahaan()) : null;			
 			this.pengurusPermohonan = t.getPengurusPermohonan() != null ?
 					new AuthorityDTO(t.getPengurusPermohonan()) : null;
-			this.statusWali = t.getStatusWaliPengurusPermohonan() != null ?
-					new StatusWaliDTO(t.getStatusWaliPengurusPermohonan()) : null;
+			this.statusPengurusPermohonan = t.getStatusPengurusPermohonan() != null ?
+					new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()) : null;
 			this.penanggungJawabPermohonan = t.getPenanggungJawabPermohonan() != null ?
 					new PegawaiPerusahaanDTO(t.getPenanggungJawabPermohonan()) : null;
 			this.pengirimBerkas = t.getPengirimBerkas() != null ?
@@ -137,12 +137,12 @@ public class RegisterPermohonanDTO implements Serializable {
 		this.daftarDokumenHasil = daftarDokumenHasil;
 	}
 	
-	public StatusWaliDTO getStatusWali() {
-		return statusWali;
+	public StatusPengurusPermohonanDTO getStatusPengurusPermohonan() {
+		return statusPengurusPermohonan;
 	}
 
-	public void setStatusWali(StatusWaliDTO statusWali) {
-		this.statusWali = statusWali;
+	public void setStatusPengurusPermohonan(StatusPengurusPermohonanDTO statusPengurusPermohonan) {
+		this.statusPengurusPermohonan = statusPengurusPermohonan;
 	}
 
 	public PegawaiPerusahaanDTO getPenanggungJawabPermohonan() {
@@ -215,8 +215,8 @@ public class RegisterPermohonanDTO implements Serializable {
 						registerPerusahaan.toRegisterPerusahaan() : null, 
 				pengurusPermohonan != null ?
 						pengurusPermohonan.toAuthority() : null, 
-				statusWali != null ?
-						statusWali.toStatusWali() : null,
+				statusPengurusPermohonan != null ?
+						statusPengurusPermohonan.toStatusPengurusPermohonan() : null,
 				penanggungJawabPermohonan != null ?
 						penanggungJawabPermohonan.toPegawaiPerusahaan() : null,
 				pengirimBerkas != null ?

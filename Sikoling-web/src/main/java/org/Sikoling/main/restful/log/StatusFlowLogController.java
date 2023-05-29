@@ -54,7 +54,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public StatusFlowLogDTO updateById(@PathParam("id") String id, StatusFlowLogDTO d) {
-		return new StatusFlowLogDTO(statusFlowLogServices.update(d.toStatusFlowLog()));
+		return new StatusFlowLogDTO(statusFlowLogServices.updateById(id, d.toStatusFlowLog()));
 	}
 	
 	@GET

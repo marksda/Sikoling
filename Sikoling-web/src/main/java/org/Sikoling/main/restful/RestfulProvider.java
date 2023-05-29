@@ -33,7 +33,7 @@ import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
-import org.Sikoling.ejb.abstraction.repository.IStatusWaliRepository;
+import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.IUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
@@ -93,12 +93,12 @@ import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanServic
 import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanSuratArahanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IPosisiTahapPemberkasanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
-import org.Sikoling.ejb.abstraction.service.permohonan.IStatusWaliService;
+import org.Sikoling.ejb.abstraction.service.permohonan.IStatusPengurusPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.KategoriPermohonanSuratArahanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.PosisiTahapPemberkasanService;
 import org.Sikoling.ejb.abstraction.service.permohonan.RegisterPermohonanService;
-import org.Sikoling.ejb.abstraction.service.permohonan.StatusWaliService;
+import org.Sikoling.ejb.abstraction.service.permohonan.StatusPengurusPermohonanService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
@@ -272,7 +272,7 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IStatusFlowLogServices getFlowStatusFlowLogServices(
+	public IStatusFlowLogServices getStatusFlowLogServices(
 			@Infrastructure IStatusFlowLogRepository statusFlowLogRepository) {
 		return new StatusFlowLogServices(statusFlowLogRepository);
 	}
@@ -296,9 +296,9 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IStatusWaliService getStatusWaliService(
-			@Infrastructure IStatusWaliRepository statusWaliRepository) {
-		return new StatusWaliService(statusWaliRepository);
+	public IStatusPengurusPermohonanService getStatusWaliService(
+			@Infrastructure IStatusPengurusPermohonanRepository statusWaliRepository) {
+		return new StatusPengurusPermohonanService(statusWaliRepository);
 	}
 	
 	@Produces

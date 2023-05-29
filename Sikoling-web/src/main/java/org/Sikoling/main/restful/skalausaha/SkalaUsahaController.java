@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
+import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -15,6 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -55,7 +57,16 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	public SkalaUsahaDTO updateById(@PathParam("id") String id, SkalaUsahaDTO d) {
-		return new SkalaUsahaDTO(skalaUsahaService.update(d.toSkalaUsaha()));
+		return new SkalaUsahaDTO(skalaUsahaService.updateById(id, d.toSkalaUsaha()));
+	}
+	
+	@Path("{id}")
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public DeleteResponseDTO delete(@PathParam("id") String id) {
+		return new DeleteResponseDTO(skalaUsahaService.delete(id));
 	}
 	
 	@GET

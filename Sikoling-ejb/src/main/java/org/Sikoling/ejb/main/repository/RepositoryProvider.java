@@ -201,8 +201,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KategoriPermohonanRepositoryJPA getKategoriPermohonanRepositoryJPA(EntityManager entityManager) {
-		return new KategoriPermohonanRepositoryJPA(entityManager);
+	public KategoriPermohonanRepositoryJPA getKategoriPermohonanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new KategoriPermohonanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
@@ -211,8 +211,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public StatusPengurusPermohonanRepositoryJPA getStatusPengurusPermohonanRepositoryJPA(EntityManager entityManager) {
-		return new StatusPengurusPermohonanRepositoryJPA(entityManager);
+	public StatusPengurusPermohonanRepositoryJPA getStatusPengurusPermohonanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new StatusPengurusPermohonanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

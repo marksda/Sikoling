@@ -30,7 +30,7 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	private final Alamat lokasiUsaha;
 	
 	public RegisterPermohonanSPPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusWali statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Authority pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli2020 jenisUsaha,

@@ -58,7 +58,7 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@JoinColumn(name="kategori_pengurus_permohonan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private KategoriPengurusPermohonanData kategoriPengurusPermohonanData;
+	private StatusPengurusPermohonanData statusPengurusPermohonanData;
 	
 	@JoinColumn(name="posisi_tahap_pemberkasan_pengirim", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
@@ -137,12 +137,12 @@ public class RegisterPermohonanData implements Serializable {
 		this.autorisasiData = autorisasiData;
 	}
 
-	public KategoriPengurusPermohonanData getKategoriPengurusPermohonanData() {
-		return kategoriPengurusPermohonanData;
+	public StatusPengurusPermohonanData getStatusPengurusPermohonanData() {
+		return statusPengurusPermohonanData;
 	}
 
-	public void setKategoriPengurusPermohonanData(KategoriPengurusPermohonanData kategoriPengurusPermohonanData) {
-		this.kategoriPengurusPermohonanData = kategoriPengurusPermohonanData;
+	public void setStatusPengurusPermohonanData(StatusPengurusPermohonanData statusPengurusPermohonanData) {
+		this.statusPengurusPermohonanData = statusPengurusPermohonanData;
 	}
 
 	public List<DokumenPersyaratanPermohonanData> getDaftarDokumenSyarat() {
