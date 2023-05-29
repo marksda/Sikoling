@@ -296,9 +296,9 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IStatusPengurusPermohonanService getStatusWaliService(
-			@Infrastructure IStatusPengurusPermohonanRepository statusWaliRepository) {
-		return new StatusPengurusPermohonanService(statusWaliRepository);
+	public IStatusPengurusPermohonanService getStatusPengurusPermohonanService(
+			@Infrastructure IStatusPengurusPermohonanRepository statusPengurusPermohonanRepository) {
+		return new StatusPengurusPermohonanService(statusPengurusPermohonanRepository);
 	}
 	
 	@Produces

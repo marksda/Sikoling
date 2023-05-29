@@ -60,6 +60,10 @@ public class StatusPengurusPermohonanController {
 		return new DeleteResponseDTO(statusPengurusPermohonanService.delete(id));
 	}
 
+	@Path("id/{id}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
 	public StatusPengurusPermohonanDTO updateById(@PathParam("id") String id, StatusPengurusPermohonanDTO d) {
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.updateById(id, d.toStatusPengurusPermohonan()));
 	}	

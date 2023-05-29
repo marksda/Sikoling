@@ -10,42 +10,42 @@ import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanReposito
 
 public class StatusPengurusPermohonanService implements IStatusPengurusPermohonanService {
 	
-	private final IStatusPengurusPermohonanRepository statusWaliRepository;	
+	private final IStatusPengurusPermohonanRepository statusPengurusPermohonanRepository;	
 
-	public StatusPengurusPermohonanService(IStatusPengurusPermohonanRepository statusWaliRepository) {
-		this.statusWaliRepository = statusWaliRepository;
+	public StatusPengurusPermohonanService(IStatusPengurusPermohonanRepository statusPengurusPermohonanRepository) {
+		this.statusPengurusPermohonanRepository = statusPengurusPermohonanRepository;
 	}
 
 	@Override
 	public DeleteResponse delete(String id) {
-		return statusWaliRepository.delete(id);
+		return statusPengurusPermohonanRepository.delete(id);
 	}
 
 	@Override
-	public StatusPengurusPermohonan save(StatusPengurusPermohonan statusWali) {
-		return statusWaliRepository.save(statusWali);
+	public StatusPengurusPermohonan save(StatusPengurusPermohonan statusPengurusPermohonan) {
+		return statusPengurusPermohonanRepository.save(statusPengurusPermohonan);
 	}
 
 	@Override
-	public StatusPengurusPermohonan update(StatusPengurusPermohonan statusWali) {
-		return statusWaliRepository.update(statusWali);
+	public StatusPengurusPermohonan update(StatusPengurusPermohonan statusPengurusPermohonan) {
+		return statusPengurusPermohonanRepository.update(statusPengurusPermohonan);
 	}
 
 	
 	@Override
 	public List<StatusPengurusPermohonan> getDaftarStatusPengurusPermohonan(QueryParamFilters queryParamFilters) {
-		return statusWaliRepository.getDaftarStatusPengurusPermohonan(queryParamFilters);
+		return statusPengurusPermohonanRepository.getDaftarStatusPengurusPermohonan(queryParamFilters);
 	}
 
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
-		return statusWaliRepository.getCount(queryParamFilters);
+		return statusPengurusPermohonanRepository.getCount(queryParamFilters);
 	}
 
 	@Override
 	public StatusPengurusPermohonan updateById(String id, StatusPengurusPermohonan statusPengurusPermohonan) {
-		return statusWaliRepository.updateById(id, statusPengurusPermohonan);
+		return statusPengurusPermohonanRepository.updateById(id, statusPengurusPermohonan);
 	}
 	
 }
