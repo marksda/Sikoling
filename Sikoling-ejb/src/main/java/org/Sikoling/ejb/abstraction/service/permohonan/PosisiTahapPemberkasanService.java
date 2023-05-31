@@ -3,6 +3,8 @@ package org.Sikoling.ejb.abstraction.service.permohonan;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.repository.IPosisiTahapPemberkasanRepository;
 
@@ -29,9 +31,22 @@ public class PosisiTahapPemberkasanService implements IPosisiTahapPemberkasanSer
 		return posisiTahapPemberkasanRepository.update(t);
 	}
 
+
 	@Override
-	public List<PosisiTahapPemberkasan> getAll() {
-		return posisiTahapPemberkasanRepository.getAll();
+	public PosisiTahapPemberkasan updateById(String id, PosisiTahapPemberkasan posisiTahapPemberkasan) {
+		return posisiTahapPemberkasanRepository.updateById(id, posisiTahapPemberkasan);
+	}
+	
+
+	@Override
+	public List<PosisiTahapPemberkasan> getDaftarPosisiTahapPemberkasan(QueryParamFilters queryParamFilters) {
+		return posisiTahapPemberkasanRepository.getDaftarPosisiTahapPemberkasan(queryParamFilters);
+	}
+	
+
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return posisiTahapPemberkasanRepository.getCount(queryParamFilters);
 	}
 
 }

@@ -61,7 +61,6 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 		return new DeleteResponse(true, id);
 	}
 
-
 	@Override
 	public List<StatusPengurusPermohonan> getDaftarStatusPengurusPermohonan(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -136,7 +135,6 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 				.map(d -> dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
@@ -172,7 +170,6 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-
 	
 	@Override
 	public StatusPengurusPermohonan updateById(String id, StatusPengurusPermohonan statusPengurusPermohonan) {

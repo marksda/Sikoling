@@ -2,7 +2,10 @@ package org.Sikoling.ejb.main.repository.jabatan;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -33,19 +36,28 @@ public class JabatanRepositoryEJB implements IJabatanRepository {
 		return jabatanRepositoryJPA.update(t);
 	}
 
+	
 	@Override
-	public List<Jabatan> getAllByPage(Integer page, Integer pageSize) {
-		return jabatanRepositoryJPA.getAllByPage(page, pageSize);
+	public Jabatan updateById(String id, Jabatan jabatan) {
+		return jabatanRepositoryJPA.updateById(id, jabatan);
 	}
+	
 
 	@Override
-	public List<Jabatan> getByNama(String nama) {
-		return jabatanRepositoryJPA.getByNama(nama);
+	public DeleteResponse delete(String id) {
+		return jabatanRepositoryJPA.delete(id);
 	}
+	
 
 	@Override
-	public List<Jabatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return jabatanRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
+	public List<Jabatan> getDaftarJabatan(QueryParamFilters queryParamFilters) {
+		return jabatanRepositoryJPA.getDaftarJabatan(queryParamFilters);
 	}
+	
 
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return jabatanRepositoryJPA.getCount(queryParamFilters);
+	}
+	
 }

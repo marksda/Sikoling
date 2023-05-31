@@ -2,7 +2,10 @@ package org.Sikoling.ejb.abstraction.service.jabatan;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 
 public class JabatanService implements IJabatanService {
@@ -24,24 +27,28 @@ public class JabatanService implements IJabatanService {
 		return jabatanRepository.update(jabatan);
 	}
 
+	
 	@Override
-	public List<Jabatan> getAll() {
-		return jabatanRepository.getAll();
+	public Jabatan updateById(String id, Jabatan jabatan) {
+		return jabatanRepository.updateById(id, jabatan);
 	}
 
+	
 	@Override
-	public List<Jabatan> getAllByPage(Integer page, Integer pageSize) {
-		return jabatanRepository.getAllByPage(page, pageSize);
+	public DeleteResponse delete(String id) {
+		return jabatanRepository.delete(id);
 	}
 
+	
 	@Override
-	public List<Jabatan> getByNama(String nama) {
-		return jabatanRepository.getByNama(nama);
+	public List<Jabatan> getDaftarJabatan(QueryParamFilters queryParamFilters) {
+		return jabatanRepository.getDaftarJabatan(queryParamFilters);
 	}
 
+	
 	@Override
-	public List<Jabatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return jabatanRepository.getByNamaAndPage(nama, page, pageSize);
+	public Long getCount(List<Filter> queryParamFilters) {
+		return jabatanRepository.getCount(queryParamFilters);
 	}
-
+	
 }
