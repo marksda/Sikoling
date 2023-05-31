@@ -2,11 +2,14 @@ package org.Sikoling.ejb.abstraction.repository;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
 public interface IPegawaiPerusahaanRepository extends IRepository<Pegawai> {
-	List<Pegawai> getAllByPage(Integer page, Integer pageSize);
-	List<Pegawai> getByNama(String nama);
-	List<Pegawai> getByNamaAndPage(String nama, Integer page, Integer pageSize);
-	List<Pegawai> getByRegisterPerusahaan(String idRegisterPerusahaan);	
+	Pegawai updateById(String id, Pegawai pegawai);
+	DeleteResponse delete(String id);
+	List<Pegawai> getDaftarPegawai(QueryParamFilters queryParamFilters);
+	Long getCount(List<Filter> queryParamFilters);
 }

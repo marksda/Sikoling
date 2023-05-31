@@ -2,7 +2,10 @@ package org.Sikoling.ejb.abstraction.service.pegawai;
 
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 
 public class PegawaiPerusahaanService implements IPegawaiPerusahaanService {
@@ -23,29 +26,29 @@ public class PegawaiPerusahaanService implements IPegawaiPerusahaanService {
 		return pegawaiPerusahaanRepository.update(pegawai);
 	}
 
+	
 	@Override
-	public List<Pegawai> getAll() {
-		return pegawaiPerusahaanRepository.getAll();
+	public Pegawai updateById(String id, Pegawai pegawai) {
+		return pegawaiPerusahaanRepository.updateById(id, pegawai);
 	}
 
+	
 	@Override
-	public List<Pegawai> getAllByPage(Integer page, Integer pageSize) {
-		return pegawaiPerusahaanRepository.getAllByPage(page, pageSize);
+	public DeleteResponse delete(String id) {
+		return pegawaiPerusahaanRepository.delete(id);
 	}
 
+	
 	@Override
-	public List<Pegawai> getByNama(String nama) {
-		return pegawaiPerusahaanRepository.getByNama(nama);
+	public List<Pegawai> getDaftarPegawai(QueryParamFilters queryParamFilters) {
+		return pegawaiPerusahaanRepository.getDaftarPegawai(queryParamFilters);
 	}
 
+	
 	@Override
-	public List<Pegawai> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return pegawaiPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
+	public Long getCount(List<Filter> queryParamFilters) {
+		return pegawaiPerusahaanRepository.getCount(queryParamFilters);
 	}
 
-	@Override
-	public List<Pegawai> getByRegisterPerusahaan(String idRegisterPerusahaan) {
-		return pegawaiPerusahaanRepository.getByRegisterPerusahaan(idRegisterPerusahaan);
-	}
-
+	
 }
