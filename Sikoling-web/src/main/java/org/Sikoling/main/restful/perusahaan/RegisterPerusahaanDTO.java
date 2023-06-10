@@ -2,7 +2,10 @@ package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.main.restful.authority.AuthorityDTO;
 
@@ -15,6 +18,7 @@ public class RegisterPerusahaanDTO implements Serializable {
 	private AuthorityDTO verifikator;
 	private PerusahaanDTO perusahaan;
 	private Boolean statusVerifikasi;	
+	private List<AuthorityDTO> pengakses;
 	
 	public RegisterPerusahaanDTO() {
 	}
@@ -27,6 +31,11 @@ public class RegisterPerusahaanDTO implements Serializable {
 			this.verifikator = t.getVerifikator() != null ? new AuthorityDTO(t.getVerifikator()) : null;
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 			this.statusVerifikasi = t.getStatusVerifikasi();
+			this.pengakses = t.getPengakses() != null ?
+					t.getPengakses().stream()
+					.map(i -> new AuthorityDTO(i))
+					.collect(Collectors.toList()):null;
+					
 		}
 	}
 
@@ -81,6 +90,16 @@ public class RegisterPerusahaanDTO implements Serializable {
 	public void setStatusVerifikasi(Boolean statusVerifikasi) {
 		this.statusVerifikasi = statusVerifikasi;
 	}
+	
+	public List<AuthorityDTO> getPengakses() {
+		return pengakses;
+	}
+	
+
+	public void setPengakses(List<AuthorityDTO> pengakses) {
+		this.pengakses = pengakses;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -129,7 +148,11 @@ public class RegisterPerusahaanDTO implements Serializable {
 				kreator != null ? kreator.toAuthority() : null, 
 				verifikator != null ? verifikator.toAuthority() : null, 
 				perusahaan.toPerusahaan(),
-				statusVerifikasi
+				statusVerifikasi,
+				pengakses != null?
+						pengakses.stream()
+						.map(i -> i.toAuthority())
+						.collect(Collectors.toList()):null
 				);
 	}
 

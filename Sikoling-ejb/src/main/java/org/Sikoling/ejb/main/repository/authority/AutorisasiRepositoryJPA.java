@@ -92,7 +92,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
 				break;
 			case "user_name":
-				daftarPredicate.add(cb.like(cb.lower(root.get("userName")), "%"+filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("userName")), filter.getValue().toLowerCase()+"%"));
 				break;
 			case "nama":
 				daftarPredicate.add(cb.like(cb.lower(root.get("person").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
@@ -225,7 +225,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
 				break;
 			case "user_name":
-				daftarPredicate.add(cb.like(cb.lower(root.get("userName")), "%"+filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("userName")), filter.getValue().toLowerCase()+"%"));
 				break;
 			case "person":
 				daftarPredicate.add(cb.like(cb.lower(root.get("person").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));

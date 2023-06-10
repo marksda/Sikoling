@@ -69,43 +69,11 @@ public class RegisterPerusahaanData implements Serializable {
 	private List<RegisterDokumenData> daftarRegisterDokumenData;	
 
 	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
-	private List<AutorityPerusahaanData> daftarPersonPerusahaanData;
+	private List<AutorityPerusahaanData> daftarAutorityPerusahaanData;
 	
 	public RegisterPerusahaanData() {
 	}
-	
-	public AutorisasiData getVerifikator() {
-		return verifikator;
-	}
 
-	public void setVerifikator(AutorisasiData verifikator) {
-		this.verifikator = verifikator;
-	}
-
-	public LocalDate getTanggalRegistrasi() {
-		return tanggalRegistrasi;
-	}
-	
-	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
-		this.tanggalRegistrasi = tanggalRegistrasi;
-	}
-
-	public AutorisasiData getKreator() {
-		return kreator;
-	}
-
-	public void setKreator(AutorisasiData kreator) {
-		this.kreator = kreator;
-	}
-
-	public List<AutorityPerusahaanData> getDaftarPersonPerusahaanData() {
-		return daftarPersonPerusahaanData;
-	}
-
-	public void setDaftarPersonPerusahaanData(List<AutorityPerusahaanData> daftarPersonPerusahaanData) {
-		this.daftarPersonPerusahaanData = daftarPersonPerusahaanData;
-	}
-	
 	public String getId() {
 		return id;
 	}
@@ -170,6 +138,38 @@ public class RegisterPerusahaanData implements Serializable {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
 
+	public AutorisasiData getKreator() {
+		return kreator;
+	}
+
+	public void setKreator(AutorisasiData kreator) {
+		this.kreator = kreator;
+	}
+
+	public AutorisasiData getVerifikator() {
+		return verifikator;
+	}
+
+	public void setVerifikator(AutorisasiData verifikator) {
+		this.verifikator = verifikator;
+	}
+
+	public LocalDate getTanggalRegistrasi() {
+		return tanggalRegistrasi;
+	}
+
+	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
+		this.tanggalRegistrasi = tanggalRegistrasi;
+	}
+
+	public String getNpwp() {
+		return npwp;
+	}
+
+	public void setNpwp(String npwp) {
+		this.npwp = npwp;
+	}
+
 	public List<RegisterDokumenData> getDaftarRegisterDokumenData() {
 		return daftarRegisterDokumenData;
 	}
@@ -178,16 +178,16 @@ public class RegisterPerusahaanData implements Serializable {
 		this.daftarRegisterDokumenData = daftarRegisterDokumenData;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	public String getNpwp() {
-		return npwp;
+	public List<AutorityPerusahaanData> getDaftarAutorityPerusahaanData() {
+		return daftarAutorityPerusahaanData;
 	}
 
-	public void setNpwp(String npwp) {
-		this.npwp = npwp;
+	public void setDaftarAutorityPerusahaanData(List<AutorityPerusahaanData> daftarAutorityPerusahaanData) {
+		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

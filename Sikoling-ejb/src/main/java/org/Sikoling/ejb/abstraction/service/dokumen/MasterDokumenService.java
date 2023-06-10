@@ -3,6 +3,8 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 
@@ -25,26 +27,6 @@ public class MasterDokumenService implements IMasterDokumenService {
 	}
 
 	@Override
-	public List<Dokumen> getAll() {
-		return dokumenRepository.getAll();
-	}
-
-	@Override
-	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
-		return dokumenRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<Dokumen> getByNama(String nama) {
-		return dokumenRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return dokumenRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-	
-	@Override
 	public DeleteResponse delete(String Id) {
 		return dokumenRepository.delete(Id);
 	}
@@ -52,6 +34,18 @@ public class MasterDokumenService implements IMasterDokumenService {
 	@Override
 	public Dokumen updateById(String id, Dokumen dokumen) {
 		return dokumenRepository.updateById(id, dokumen);
+	}
+
+	
+	@Override
+	public List<Dokumen> getDaftarMasterDokumen(QueryParamFilters queryParamFilters) {
+		return dokumenRepository.getDaftarMasterDokumen(queryParamFilters);
+	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return dokumenRepository.getCount(queryParamFilters);
 	}
 
 }

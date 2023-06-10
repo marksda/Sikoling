@@ -108,6 +108,9 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 			case "id":
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
 				break;
+			case "nik":
+				daftarPredicate.add(cb.equal(root.get("personData").get("id"), filter.getValue()));
+				break;
 			case "nama":
 				daftarPredicate.add(cb.like(cb.lower(root.get("personData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
@@ -194,6 +197,9 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 			switch (filter.getFieldName()) {
 			case "id":
 				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nik":
+				daftarPredicate.add(cb.equal(root.get("personData").get("id"), filter.getValue()));
 				break;
 			case "nama":
 				daftarPredicate.add(cb.like(cb.lower(root.get("personData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));

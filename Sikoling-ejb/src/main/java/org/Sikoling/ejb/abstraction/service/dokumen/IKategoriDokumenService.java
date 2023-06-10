@@ -3,6 +3,8 @@ package org.Sikoling.ejb.abstraction.service.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 
 public interface IKategoriDokumenService {
@@ -10,8 +12,6 @@ public interface IKategoriDokumenService {
 	KategoriDokumen update(KategoriDokumen kategoriDokumen);
 	KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen);
 	DeleteResponse delete(String Id);
-	List<KategoriDokumen> getAll();
-	List<KategoriDokumen> getAllByPage(Integer page, Integer pageSize);
-	List<KategoriDokumen> getByNama(String nama);
-	List<KategoriDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize);	
+	List<KategoriDokumen> getDaftarKategoriDokumen(QueryParamFilters queryParamFilters);
+	Long getCount(List<Filter> queryParamFilters);	
 }

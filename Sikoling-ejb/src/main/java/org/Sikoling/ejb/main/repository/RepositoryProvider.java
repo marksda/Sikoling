@@ -166,18 +166,18 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KategoriDokumenRepositoryJPA getKategoriDokumenRepositoryJPA(EntityManager entityManager) {
-		return new KategoriDokumenRepositoryJPA(entityManager);
+	public KategoriDokumenRepositoryJPA getKategoriDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new KategoriDokumenRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
-	public MasterDokumenRepositoryJPA getDokumenRepositoryJPA(EntityManager entityManager) {
-		return new MasterDokumenRepositoryJPA(entityManager);
+	public MasterDokumenRepositoryJPA getDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new MasterDokumenRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
-	public Kbli2020RepositoryJPA getKbli2020RepositoryJPA(EntityManager entityManager) {
-		return new Kbli2020RepositoryJPA(entityManager);
+	public Kbli2020RepositoryJPA getKbli2020RepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new Kbli2020RepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

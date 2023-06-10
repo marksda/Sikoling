@@ -2,6 +2,7 @@ package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class RegisterPerusahaan implements Serializable {
@@ -13,15 +14,17 @@ public class RegisterPerusahaan implements Serializable {
 	private final Authority verifikator;
 	private final Perusahaan perusahaan;
 	private final Boolean statusVerifikasi;	
+	private final List<Authority> pengakses;
 	
 	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Authority kreator, Authority verifikator,
-			Perusahaan perusahaan, Boolean statusVerifikasi) {
+			Perusahaan perusahaan, Boolean statusVerifikasi, List<Authority> pengakses) {
 		this.id = id;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.kreator = kreator;
 		this.verifikator = verifikator;
 		this.perusahaan = perusahaan;
 		this.statusVerifikasi = statusVerifikasi;
+		this.pengakses = pengakses;
 	}
 
 	public String getId() {
@@ -51,8 +54,12 @@ public class RegisterPerusahaan implements Serializable {
 	public Boolean getStatusVerifikasi() {
 		return statusVerifikasi;
 	}
-
 	
+	public List<Authority> getPengakses() {
+		return pengakses;
+	}
+	
+
 	@Override
 	public int hashCode() {
 		int hash = 41;

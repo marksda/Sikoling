@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IKbliService;
+import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -20,8 +22,10 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
@@ -46,6 +50,14 @@ public class KbliController {
 		return new KbliDTO(kbliService.updateById(kode, t.toKbli()));
 	}
 	
+	@Path("id/{id}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public KbliDTO updateById(@PathParam("id") String id, KbliDTO d) {
+		return new KbliDTO(kbliService.updateById(id, d.toKbli()));
+	}
+	
 	@Path("{kode}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
@@ -58,91 +70,30 @@ public class KbliController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<KbliDTO> getAll() {
-		return kbliService.getAll()
+	public List<KbliDTO> getDaftarKbli(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return kbliService.getDaftarKbli2020(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new KbliDTO(t))
 				.collect(Collectors.toList());
 	}
 	
-	@Path("page")
+	@Path("count")
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kbliService.getAllByPage(page, pageSize)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
+    @Produces({MediaType.TEXT_PLAIN})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public Long getCountDaftarKbli(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return kbliService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
-	@Path("nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByNama(@QueryParam("nama") String nama) {
-		return kbliService.getByNama(nama)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByNamaAndPage(@QueryParam("nama") String nama,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kbliService.getByNamaAndPage(nama, page, pageSize)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kode")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByKode(@QueryParam("kode") String kode) {
-		return kbliService.getByKode(kode)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kode/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByKodeAndPage(@QueryParam("kode") String kode,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kbliService.getByKodeAndPage(kode, page, pageSize)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
-	}
-
-	@Path("kategori")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByKategori(@QueryParam("kategori") String kategori) {
-		return kbliService.getByKategori(kategori)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kategori/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KbliDTO> getByKategoriAndPage(@QueryParam("kategori") String kategori,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kbliService.getByKategoriAndPage(kategori, page, pageSize)
-				.stream()
-				.map(t -> new KbliDTO(t))
-				.collect(Collectors.toList());
-	}
-
 }

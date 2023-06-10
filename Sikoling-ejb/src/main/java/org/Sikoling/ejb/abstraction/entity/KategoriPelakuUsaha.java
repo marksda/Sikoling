@@ -72,7 +72,6 @@ public class KategoriPelakuUsaha implements Serializable {
 				.concat(this.nama)
 				.concat("}");
 	}
-
 	
 	public SkalaUsaha getSkalaUsaha() {
 		return skalaUsaha;

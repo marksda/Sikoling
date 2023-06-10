@@ -3,6 +3,8 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -35,22 +37,6 @@ public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository 
 	}
 
 	@Override
-	public List<KategoriDokumen> getAllByPage(Integer page, Integer pageSize) {
-		return kategoriDokumenPerusahaanRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<KategoriDokumen> getByNama(String nama) {
-		return kategoriDokumenPerusahaanRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<KategoriDokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kategoriDokumenPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-
-	
-	@Override
 	public DeleteResponse delete(String Id) {
 		return kategoriDokumenPerusahaanRepository.delete(Id);
 	}
@@ -58,6 +44,18 @@ public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository 
 	@Override
 	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
 		return kategoriDokumenPerusahaanRepository.updateById(id, kategoriDokumen);
+	}
+
+	
+	@Override
+	public List<KategoriDokumen> getDaftarKategoriDokumen(QueryParamFilters queryParamFilters) {
+		return kategoriDokumenPerusahaanRepository.getDaftarKategoriDokumen(queryParamFilters);
+	}
+
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return kategoriDokumenPerusahaanRepository.getCount(queryParamFilters);
 	}
 
 }

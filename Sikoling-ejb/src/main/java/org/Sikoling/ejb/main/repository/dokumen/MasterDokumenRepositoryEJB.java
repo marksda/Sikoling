@@ -3,6 +3,8 @@ package org.Sikoling.ejb.main.repository.dokumen;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
@@ -35,30 +37,23 @@ public class MasterDokumenRepositoryEJB implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
-		return dokumenPerusahaanRepository.getAllByPage(page, pageSize);
-	}
-
-	@Override
-	public List<Dokumen> getByNama(String nama) {
-		return dokumenPerusahaanRepository.getByNama(nama);
-	}
-
-	@Override
-	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return dokumenPerusahaanRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-
-	
-	@Override
 	public DeleteResponse delete(String Id) {
 		return dokumenPerusahaanRepository.delete(Id);
 	}
-
 	
 	@Override
 	public Dokumen updateById(String id, Dokumen dokumen) {
 		return dokumenPerusahaanRepository.updateById(id, dokumen);
+	}
+	
+	@Override
+	public List<Dokumen> getDaftarMasterDokumen(QueryParamFilters queryParamFilters) {
+		return dokumenPerusahaanRepository.getDaftarMasterDokumen(queryParamFilters);
+	}
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		return dokumenPerusahaanRepository.getCount(queryParamFilters);
 	}
 
 }

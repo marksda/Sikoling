@@ -2,11 +2,12 @@ package org.Sikoling.ejb.main.repository.authority;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-
+import org.Sikoling.ejb.main.repository.perusahaan.AutorityPerusahaanData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -50,6 +52,9 @@ public class AutorisasiData implements Serializable {
 	
 	@Column(name="tanggal_registrasi", insertable = true, updatable = true)
 	private LocalDate tanggalRegistrasi;	
+	
+	@OneToMany(mappedBy = "autority", fetch = FetchType.LAZY)
+	List<AutorityPerusahaanData> daftarAutorityPerusahaanData;
 			
 	public String getUserName() {
 		return userName;
@@ -112,6 +117,14 @@ public class AutorisasiData implements Serializable {
 
 	public void setTanggalRegistrasi(LocalDate tanggalRegistrasi) {
 		this.tanggalRegistrasi = tanggalRegistrasi;
+	}
+		
+	public List<AutorityPerusahaanData> getDaftarAutorityPerusahaanData() {
+		return daftarAutorityPerusahaanData;
+	}
+
+	public void setDaftarAutorityPerusahaanData(List<AutorityPerusahaanData> daftarAutorityPerusahaanData) {
+		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
 	}
 
 	public int hashCode() {

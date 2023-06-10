@@ -1,21 +1,33 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
-
+import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	private final EntityManager entityManager;	
+	private final DataConverter dataConverter;	
 	
-	public MasterDokumenRepositoryJPA(EntityManager entityManager) {
+	public MasterDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		super();
 		this.entityManager = entityManager;
+		this.dataConverter = dataConverter;
 	}
 
 	@Override
@@ -23,81 +35,25 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 		return entityManager.createNamedQuery("MasterDokumenData.findAll", MasterDokumenData.class)
 				.getResultList()
 				.stream()
-				.map(t -> convertDokumenDataToDokumen(t))
+				.map(d -> dataConverter.convertMasterDokumenDataToMasterDokumen(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Dokumen save(Dokumen t) {
-		MasterDokumenData detailDokumenPerusahaanData = convertDokumenToDokumenData(t);
+		MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
 		entityManager.persist(detailDokumenPerusahaanData);
 		entityManager.flush();
-		return convertDokumenDataToDokumen(detailDokumenPerusahaanData);
+		return dataConverter.convertMasterDokumenDataToMasterDokumen(detailDokumenPerusahaanData);
 	}
 
 	@Override
 	public Dokumen update(Dokumen t) {
-		MasterDokumenData detailDokumenPerusahaanData = convertDokumenToDokumenData(t);
+		MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
 		detailDokumenPerusahaanData = entityManager.merge(detailDokumenPerusahaanData);
-		return convertDokumenDataToDokumen(detailDokumenPerusahaanData);
+		return dataConverter.convertMasterDokumenDataToMasterDokumen(detailDokumenPerusahaanData);
 	}
 
-	@Override
-	public List<Dokumen> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("MasterDokumenData.findAll", MasterDokumenData.class)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertDokumenDataToDokumen(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Dokumen> getByNama(String nama) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("MasterDokumenData.findByNama", MasterDokumenData.class)
-				.setParameter("nama", nama)
-				.getResultList()
-				.stream()
-				.map(t -> convertDokumenDataToDokumen(t))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Dokumen> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		nama = "%" + nama + "%";
-		return entityManager.createNamedQuery("MasterDokumenData.findByNama", MasterDokumenData.class)
-				.setParameter("nama", nama)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertDokumenDataToDokumen(t))
-				.collect(Collectors.toList());
-	}
-	
-	private Dokumen convertDokumenDataToDokumen(MasterDokumenData d) {
-		KategoriDokumenData kategoriDokumenData = d.getKategoriDokumenData();
-		KategoriDokumen kategoriDokumen = new KategoriDokumen(
-												kategoriDokumenData.getId(), 
-												kategoriDokumenData.getNama(), 
-												kategoriDokumenData.getParent());
-		return new Dokumen(d.getId(), d.getNama(), kategoriDokumen);
-	}
-	
-	private MasterDokumenData convertDokumenToDokumenData(Dokumen t) {
-		MasterDokumenData dokumenData = new MasterDokumenData();
-		dokumenData.setId(t.getId());
-		dokumenData.setNama(t.getNama());
-		
-		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
-		kategoriDokumenData.setId(t.getKategoriDokumen().getId());
-		dokumenData.setKategoriDokumenData(kategoriDokumenData);
-		
-		return dokumenData;
-	}
-	
 	@Override
 	public DeleteResponse delete(String id) {
 		MasterDokumenData dokumenData = entityManager.find(MasterDokumenData.class, id);
@@ -108,14 +64,138 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	@Override
 	public Dokumen updateById(String id, Dokumen dokumen) {
 		String idBaru = dokumen.getId();
-		MasterDokumenData masterDokumenData = convertDokumenToDokumenData(dokumen);
+		MasterDokumenData masterDokumenData = dataConverter.convertMasterDokumenToMasterDokumenData(dokumen);
 		masterDokumenData.setId(id);
 		masterDokumenData = entityManager.merge(masterDokumenData);
 		if(!idBaru.equals(id)) {
 			masterDokumenData.setId(idBaru);
 		}
 		
-		return convertDokumenDataToDokumen(masterDokumenData);
+		return dataConverter.convertMasterDokumenDataToMasterDokumen(masterDokumenData);
+	}
+	
+	@Override
+	public List<Dokumen> getDaftarMasterDokumen(QueryParamFilters queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MasterDokumenData> cq = cb.createQuery(MasterDokumenData.class);
+		Root<MasterDokumenData> root = cq.from(MasterDokumenData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "kategori":
+				daftarPredicate.add(cb.equal(root.get("kategoriDokumenData").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(root);
+		}
+		else {
+			cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		// sort clause
+		Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
+				
+		while (iterSort.hasNext()) {
+			SortOrder sort = (SortOrder) iterSort.next();
+			switch (sort.getFieldName()) {
+			case "id":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("id")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("id")));
+				}
+				break;
+			case "nama":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("nama")));
+				}
+				break;
+			case "kategori":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("kategoriDokumenData").get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("kategoriDokumenData").get("nama")));
+				}
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		TypedQuery<MasterDokumenData> q = null;		
+		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
+			q = entityManager.createQuery(cq)
+					.setMaxResults(queryParamFilters.getPageSize())
+					.setFirstResult((queryParamFilters.getPageNumber()-1)*queryParamFilters.getPageSize());
+		}
+		else {
+			q = entityManager.createQuery(cq);
+		}
+		
+		return q.getResultList()
+				.stream()
+				.map(d -> dataConverter.convertMasterDokumenDataToMasterDokumen(d))
+				.collect(Collectors.toList());
+	}
+	
+	@Override
+	public Long getCount(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<MasterDokumenData> root = cq.from(MasterDokumenData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "kategori":
+				daftarPredicate.add(cb.equal(root.get("kategoriDokumenData").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
 	}
 
 }

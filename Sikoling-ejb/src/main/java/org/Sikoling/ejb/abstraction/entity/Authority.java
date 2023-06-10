@@ -15,8 +15,6 @@ public class Authority implements Serializable {
 	private final Boolean isVerified;
 	private final String userName;
 	
-	
-	
 	public Authority(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
 			Boolean isVerified, String userName) {
 		super();
