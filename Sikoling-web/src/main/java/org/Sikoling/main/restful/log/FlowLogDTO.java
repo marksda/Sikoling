@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
 
 public class FlowLogDTO implements Serializable {
@@ -18,7 +18,7 @@ public class FlowLogDTO implements Serializable {
 	private PosisiTahapPemberkasanDTO penerimaBerkas;
 	private StatusFlowLogDTO statusFlowLog;
 	private String keterangan;
-	private AuthorityDTO pengakses;
+	private AutorityDTO pengakses;
 	
 	public FlowLogDTO() {
 	}
@@ -37,7 +37,7 @@ public class FlowLogDTO implements Serializable {
 					new StatusFlowLogDTO(t.getStatusFlowLog()) : null;
 			this.keterangan = t.getKeterangan();
 			this.pengakses = t.getPengakses() != null ?
-					new AuthorityDTO(t.getPengakses()) : null;
+					new AutorityDTO(t.getPengakses()) : null;
 		}
 	}
 
@@ -97,11 +97,11 @@ public class FlowLogDTO implements Serializable {
 		this.keterangan = keterangan;
 	}
 
-	public AuthorityDTO getPengakses() {
+	public AutorityDTO getPengakses() {
 		return pengakses;
 	}
 
-	public void setPengakses(AuthorityDTO pengakses) {
+	public void setPengakses(AutorityDTO pengakses) {
 		this.pengakses = pengakses;
 	}
 

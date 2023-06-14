@@ -2,27 +2,27 @@ package org.Sikoling.ejb.abstraction.service.authority;
 
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
+import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
 
-public class AuthorityService implements IAuthorityService {
+public class AutorityService implements IAutorityService {
 	
-	private final IAuthorityRepository authorityRepository;
+	private final IAutorityRepository authorityRepository;
 
-	public AuthorityService(IAuthorityRepository authorityRepository) {
+	public AutorityService(IAutorityRepository authorityRepository) {
 		this.authorityRepository = authorityRepository;
 	}
 
 	@Override
-	public Authority save(Authority t) {
+	public Autority save(Autority t) {
 		return authorityRepository.save(t);
 	}
 
 	@Override
-	public Authority update(Authority t) {
+	public Autority update(Autority t) {
 		return authorityRepository.update(t);
 	}
 
@@ -32,12 +32,12 @@ public class AuthorityService implements IAuthorityService {
 	}
 
 	@Override
-	public Authority getByUserName(String userName) {
+	public Autority getByUserName(String userName) {
 		return authorityRepository.getByUserName(userName);
 	}
 
 	@Override
-	public List<Authority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
+	public List<Autority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
 		return authorityRepository.getDaftarAuthority(queryParamFilters);
 	}
 

@@ -1,15 +1,13 @@
 package org.Sikoling.ejb.abstraction.repository;
 
 import java.util.List;
-
+import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 
-public interface ISkalaUsahaRepository extends IRepository<SkalaUsaha> {
-	SkalaUsaha updateById(String id, SkalaUsaha skalaUsaha);
+public interface IAutorityPerusahaanRepository extends IRepository<AutorityPerusahaan> {
 	DeleteResponse delete(String id);
-	List<SkalaUsaha> getDaftarSkalaUsaha(QueryParamFilters queryParamFilters);
+	List<AutorityPerusahaan> getDaftarAutorityPerusahaan(QueryParamFilters queryParamFilters);
 	Long getCount(List<Filter> queryParamFilters);
 }

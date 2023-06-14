@@ -28,6 +28,7 @@ import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanReposit
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.StatusPengurusPermohonanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.person.PersonRepositoryJPA;
+import org.Sikoling.ejb.main.repository.perusahaan.AutorityPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanRepositoryJPA;
 import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
@@ -198,6 +199,11 @@ public class RepositoryProvider {
 	@Produces
 	public AutorisasiRepositoryJPA getAutorisasiRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		return new AutorisasiRepositoryJPA(entityManager, dataConverter);
+	}
+	
+	@Produces
+	public AutorityPerusahaanRepositoryJPA getAutorityPerusahaanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new AutorityPerusahaanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

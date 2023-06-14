@@ -3,11 +3,11 @@ package org.Sikoling.main.restful.log;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
@@ -42,7 +42,7 @@ public class FlowLogController {
 	private IFlowLogService flowLogService;
 	
 	@Inject
-	private IAuthorityService authorityService;
+	private IAutorityService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -50,8 +50,8 @@ public class FlowLogController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) {
-		Authority pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setPengakses(new AuthorityDTO(pengakses));		
+		Autority pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		d.setPengakses(new AutorityDTO(pengakses));		
 		
 		return new FlowLogDTO(flowLogService.save(d.toFlowLog()));
 	}

@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
@@ -20,7 +20,7 @@ public class RegisterPermohonanDTO implements Serializable {
 	private KategoriPermohonanDTO kategoriPermohonan;
 	private LocalDate tanggalRegistrasi;
 	private RegisterPerusahaanDTO registerPerusahaan;
-	private AuthorityDTO pengurusPermohonan;
+	private AutorityDTO pengurusPermohonan;
 	private StatusPengurusPermohonanDTO statusPengurusPermohonan;
 	private PegawaiPerusahaanDTO penanggungJawabPermohonan;
 	private PosisiTahapPemberkasanDTO pengirimBerkas;
@@ -41,7 +41,7 @@ public class RegisterPermohonanDTO implements Serializable {
 			this.registerPerusahaan = t.getPerusahaan() != null ?
 					new RegisterPerusahaanDTO(t.getPerusahaan()) : null;			
 			this.pengurusPermohonan = t.getPengurusPermohonan() != null ?
-					new AuthorityDTO(t.getPengurusPermohonan()) : null;
+					new AutorityDTO(t.getPengurusPermohonan()) : null;
 			this.statusPengurusPermohonan = t.getStatusPengurusPermohonan() != null ?
 					new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()) : null;
 			this.penanggungJawabPermohonan = t.getPenanggungJawabPermohonan() != null ?
@@ -97,11 +97,11 @@ public class RegisterPermohonanDTO implements Serializable {
 		this.registerPerusahaan = registerPerusahaan;
 	}
 	
-	public AuthorityDTO getPengurusPermohonan() {
+	public AutorityDTO getPengurusPermohonan() {
 		return pengurusPermohonan;
 	}
 	
-	public void setPengurusPermohonan(AuthorityDTO pengurusPermohonan) {
+	public void setPengurusPermohonan(AutorityDTO pengurusPermohonan) {
 		this.pengurusPermohonan = pengurusPermohonan;
 	}
 		

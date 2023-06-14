@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Authority implements Serializable {
+public class Autority implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
 	private final String id;
@@ -15,7 +15,7 @@ public class Authority implements Serializable {
 	private final Boolean isVerified;
 	private final String userName;
 	
-	public Authority(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
+	public Autority(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
 			Boolean isVerified, String userName) {
 		super();
 		this.id = id;
@@ -58,7 +58,6 @@ public class Authority implements Serializable {
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -81,7 +80,7 @@ public class Authority implements Serializable {
             return false;
         }
         
-        final Authority other = (Authority) obj;
+        final Autority other = (Autority) obj;
         
         if (!this.person.getNik().equals(other.person.getNik())) {
             return false;

@@ -1,13 +1,13 @@
-package org.Sikoling.main.restful.authority;
+package org.Sikoling.main.restful.autority;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.main.restful.person.PersonDTO;
 
-public class AuthorityDTO implements Serializable {
+public class AutorityDTO implements Serializable {
 
 	private static final long serialVersionUID = 6026401650478903435L;
 	private String id;
@@ -18,10 +18,10 @@ public class AuthorityDTO implements Serializable {
 	private Boolean isVerified;
 	private String userName;
 	
-	public AuthorityDTO() {
+	public AutorityDTO() {
 	}
 	
-	public AuthorityDTO(Authority t) {
+	public AutorityDTO(Autority t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.tanggal = t.getTanggal();
@@ -31,6 +31,22 @@ public class AuthorityDTO implements Serializable {
 			this.isVerified = t.isVerified() != null ? t.isVerified() : false;
 			this.userName = t.getUserName();
 		}
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public LocalDate getTanggal() {
+		return tanggal;
+	}
+
+	public void setTanggal(LocalDate tanggal) {
+		this.tanggal = tanggal;
 	}
 
 	public PersonDTO getPerson() {
@@ -49,19 +65,19 @@ public class AuthorityDTO implements Serializable {
 		this.hakAkses = hakAkses;
 	}
 
-	public boolean isStatusInternal() {
+	public Boolean getStatusInternal() {
 		return statusInternal;
 	}
 
-	public void setStatusInternal(boolean statusInternal) {
+	public void setStatusInternal(Boolean statusInternal) {
 		this.statusInternal = statusInternal;
 	}
 
-	public Boolean isVerified() {
+	public Boolean getIsVerified() {
 		return isVerified;
 	}
 
-	public void setVerified(Boolean isVerified) {
+	public void setIsVerified(Boolean isVerified) {
 		this.isVerified = isVerified;
 	}
 
@@ -71,14 +87,6 @@ public class AuthorityDTO implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	public LocalDate getTanggal() {
-		return tanggal;
-	}
-
-	public void setTanggal(LocalDate tanggal) {
-		this.tanggal = tanggal;
 	}
 
 	public static long getSerialversionuid() {
@@ -106,7 +114,7 @@ public class AuthorityDTO implements Serializable {
             return false;
         }
         
-        final AuthorityDTO other = (AuthorityDTO) obj;
+        final AutorityDTO other = (AutorityDTO) obj;
         
         if (!this.userName.equals(other.getUserName())) {
             return false;
@@ -123,8 +131,8 @@ public class AuthorityDTO implements Serializable {
 				.concat("}");
 	}
 	
-	public Authority toAuthority() {
-		return new Authority(
+	public Autority toAuthority() {
+		return new Autority(
 				id != null ? id: null,
 				tanggal,
 				person != null ? person.toPerson():null, 

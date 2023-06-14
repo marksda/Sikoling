@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -38,7 +38,7 @@ public class RegisterDokumenController {
 	private IRegisterDokumenService registerDokumenService;
 	
 	@Inject
-	private IAuthorityService authorityService;
+	private IAutorityService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -46,8 +46,8 @@ public class RegisterDokumenController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) {		
-		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setUploader(new AuthorityDTO(kreator));
+		Autority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		d.setUploader(new AutorityDTO(kreator));
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
 		d.setStatusVerified(Boolean.FALSE);

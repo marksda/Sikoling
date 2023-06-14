@@ -15,11 +15,11 @@ public class RegisterDokumen implements Serializable {
 	private final String lokasiFile;
 	private final StatusDokumen statusDokumen;
 	private final LocalDate tanggalRegistrasi;
-	private final Authority uploader;
+	private final Autority uploader;
 	private final Boolean statusVerified;
 
 	public RegisterDokumen(String id, Dokumen dokumen, RegisterPerusahaan perusahaan, String lokasiFile,
-			StatusDokumen statusDokumen, LocalDate tanggalRegistrasi, Authority uploader, Boolean statusVerified) {
+			StatusDokumen statusDokumen, LocalDate tanggalRegistrasi, Autority uploader, Boolean statusVerified) {
 		this.id = id;
 		this.dokumen = dokumen;
 		this.perusahaan = perusahaan;
@@ -54,7 +54,7 @@ public class RegisterDokumen implements Serializable {
 		return perusahaan;
 	}
 
-	public Authority getUploader() {
+	public Autority getUploader() {
 		return uploader;
 	}
 

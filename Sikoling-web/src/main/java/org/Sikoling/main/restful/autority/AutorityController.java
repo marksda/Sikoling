@@ -1,9 +1,9 @@
-package org.Sikoling.main.restful.authority;
+package org.Sikoling.main.restful.autority;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
@@ -32,25 +32,25 @@ import jakarta.ws.rs.core.UriInfo;
 @Stateless
 @LocalBean
 @Path("authority")
-public class AuthorityController {
+public class AutorityController {
 	
 	@Inject
-	private IAuthorityService authorityService;
+	private IAutorityService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public AuthorityDTO save(AuthorityDTO d) {
-		return new AuthorityDTO(authorityService.save(d.toAuthority()));
+	public AutorityDTO save(AutorityDTO d) {
+		return new AutorityDTO(authorityService.save(d.toAuthority()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public AuthorityDTO update(AuthorityDTO d) {
-		return new AuthorityDTO(authorityService.update(d.toAuthority()));
+	public AutorityDTO update(AutorityDTO d) {
+		return new AutorityDTO(authorityService.update(d.toAuthority()));
 	}
 	
 	@Path("{id}")
@@ -65,8 +65,8 @@ public class AuthorityController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	public AuthorityDTO getByIdPerson(@QueryParam("userName") String userName) {
-		return new AuthorityDTO(authorityService.getByUserName(userName));
+	public AutorityDTO getByIdPerson(@QueryParam("userName") String userName) {
+		return new AutorityDTO(authorityService.getByUserName(userName));
 	}
 	
 	@GET
@@ -74,7 +74,7 @@ public class AuthorityController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<AuthorityDTO> getDaftarAuthority(@Context UriInfo info) {
+	public List<AutorityDTO> getDaftarAuthority(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
@@ -82,7 +82,7 @@ public class AuthorityController {
 		
 		return authorityService.getDaftarAuthority(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> new AuthorityDTO(t))
+				.map(t -> new AutorityDTO(t))
 				.collect(Collectors.toList());
 	}
 	

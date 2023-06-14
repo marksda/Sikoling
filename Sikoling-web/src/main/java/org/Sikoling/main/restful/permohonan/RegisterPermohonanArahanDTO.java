@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
@@ -34,8 +34,8 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 					new RegisterPerusahaanDTO(t.getPerusahaan()) : null;
 			this.setRegisterPerusahaan(registerPerusahaanDTO);
 			
-			AuthorityDTO pengurusPermohonan = t.getPengurusPermohonan() != null ?
-					new AuthorityDTO(t.getPengurusPermohonan()) : null;
+			AutorityDTO pengurusPermohonan = t.getPengurusPermohonan() != null ?
+					new AutorityDTO(t.getPengurusPermohonan()) : null;
 			this.setPengurusPermohonan(pengurusPermohonan);
 			
 			StatusPengurusPermohonanDTO statusWaliDTO = t.getStatusPengurusPermohonan() != null ?

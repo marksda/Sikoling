@@ -2,23 +2,20 @@ package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 
 public class RegisterPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 2393298210508926234L;
 	private String id;
 	private LocalDate tanggalRegistrasi;
-	private AuthorityDTO kreator;
-	private AuthorityDTO verifikator;
+	private AutorityDTO kreator;
+	private AutorityDTO verifikator;
 	private PerusahaanDTO perusahaan;
 	private Boolean statusVerifikasi;	
-	private List<AuthorityDTO> pengakses;
+//	private List<AuthorityDTO> pengakses;
 	
 	public RegisterPerusahaanDTO() {
 	}
@@ -27,14 +24,14 @@ public class RegisterPerusahaanDTO implements Serializable {
 		if(t != null) {
 			this.id = t.getId();
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
-			this.kreator = t.getKreator() != null ? new AuthorityDTO(t.getKreator()) : null;
-			this.verifikator = t.getVerifikator() != null ? new AuthorityDTO(t.getVerifikator()) : null;
+			this.kreator = t.getKreator() != null ? new AutorityDTO(t.getKreator()) : null;
+			this.verifikator = t.getVerifikator() != null ? new AutorityDTO(t.getVerifikator()) : null;
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 			this.statusVerifikasi = t.getStatusVerifikasi();
-			this.pengakses = t.getPengakses() != null ?
-					t.getPengakses().stream()
-					.map(i -> new AuthorityDTO(i))
-					.collect(Collectors.toList()):null;
+//			this.pengakses = t.getPengakses() != null ?
+//					t.getPengakses().stream()
+//					.map(i -> new AuthorityDTO(i))
+//					.collect(Collectors.toList()):null;
 					
 		}
 	}
@@ -47,19 +44,19 @@ public class RegisterPerusahaanDTO implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public AuthorityDTO getKreator() {
+	public AutorityDTO getKreator() {
 		return kreator;
 	}
 
-	public void setKreator(AuthorityDTO kreator) {
+	public void setKreator(AutorityDTO kreator) {
 		this.kreator = kreator;
 	}
 
-	public AuthorityDTO getVerifikator() {
+	public AutorityDTO getVerifikator() {
 		return verifikator;
 	}
 
-	public void setVerifikator(AuthorityDTO verifikator) {
+	public void setVerifikator(AutorityDTO verifikator) {
 		this.verifikator = verifikator;
 	}
 
@@ -91,14 +88,14 @@ public class RegisterPerusahaanDTO implements Serializable {
 		this.statusVerifikasi = statusVerifikasi;
 	}
 	
-	public List<AuthorityDTO> getPengakses() {
-		return pengakses;
-	}
-	
-
-	public void setPengakses(List<AuthorityDTO> pengakses) {
-		this.pengakses = pengakses;
-	}
+//	public List<AuthorityDTO> getPengakses() {
+//		return pengakses;
+//	}
+//	
+//
+//	public void setPengakses(List<AuthorityDTO> pengakses) {
+//		this.pengakses = pengakses;
+//	}
 	
 
 	@Override
@@ -148,11 +145,11 @@ public class RegisterPerusahaanDTO implements Serializable {
 				kreator != null ? kreator.toAuthority() : null, 
 				verifikator != null ? verifikator.toAuthority() : null, 
 				perusahaan.toPerusahaan(),
-				statusVerifikasi,
-				pengakses != null?
-						pengakses.stream()
-						.map(i -> i.toAuthority())
-						.collect(Collectors.toList()):null
+				statusVerifikasi
+//				pengakses != null?
+//						pengakses.stream()
+//						.map(i -> i.toAuthority())
+//						.collect(Collectors.toList()):null
 				);
 	}
 

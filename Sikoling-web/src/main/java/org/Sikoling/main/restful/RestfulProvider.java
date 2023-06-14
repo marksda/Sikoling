@@ -2,7 +2,8 @@ package org.Sikoling.main.restful;
 
 import java.util.Properties;
 
-import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
+import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IFlowLogRepository;
@@ -62,8 +63,8 @@ import org.Sikoling.ejb.abstraction.service.hakakses.HakAksesService;
 import org.Sikoling.ejb.abstraction.service.hakakses.IHakAksesService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
-import org.Sikoling.ejb.abstraction.service.authority.AuthorityService;
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.service.authority.AutorityService;
+import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.BidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.IBidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
@@ -101,6 +102,8 @@ import org.Sikoling.ejb.abstraction.service.permohonan.RegisterPermohonanService
 import org.Sikoling.ejb.abstraction.service.permohonan.StatusPengurusPermohonanService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.AutorityPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.perusahaan.IAutorityPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.RegisterPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
@@ -254,9 +257,15 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IAuthorityService getAuthorityService(
-			@Infrastructure IAuthorityRepository authorityRepository) {
-		return new AuthorityService(authorityRepository);
+	public IAutorityService getAuthorityService(
+			@Infrastructure IAutorityRepository authorityRepository) {
+		return new AutorityService(authorityRepository);
+	}
+	
+	@Produces
+	public IAutorityPerusahaanService getAutorityPerusahaanService(
+			@Infrastructure IAutorityPerusahaanRepository autorityPerusahaanRepository) {
+		return new AutorityPerusahaanService(autorityPerusahaanRepository);
 	}
 	
 	@Produces

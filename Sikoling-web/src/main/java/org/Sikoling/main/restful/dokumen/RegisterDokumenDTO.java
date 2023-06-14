@@ -12,7 +12,7 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 import jakarta.json.bind.annotation.JsonbTransient;
@@ -27,7 +27,7 @@ public class RegisterDokumenDTO implements Serializable {
 	private String lokasiFile;
 	private StatusDokumenDTO statusDokumen;
 	private LocalDate tanggalRegistrasi;
-	private AuthorityDTO uploader;
+	private AutorityDTO uploader;
 	private Boolean statusVerified;
 	
 	public RegisterDokumenDTO() {
@@ -63,7 +63,7 @@ public class RegisterDokumenDTO implements Serializable {
 			this.lokasiFile = t.getLokasiFile();
 			this.statusDokumen = t.getStatusDokumen() != null ? new StatusDokumenDTO(t.getStatusDokumen()) : null;
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
-			this.uploader = t.getUploader() != null ? new AuthorityDTO(t.getUploader()) : null;
+			this.uploader = t.getUploader() != null ? new AutorityDTO(t.getUploader()) : null;
 			this.statusVerified = t.getStatusVerified() != null ? t.getStatusVerified() : null;
 		}
 	}
@@ -76,11 +76,11 @@ public class RegisterDokumenDTO implements Serializable {
 		this.id = id;
 	}
 
-	public AuthorityDTO getUploader() {
+	public AutorityDTO getUploader() {
 		return uploader;
 	}
 
-	public void setUploader(AuthorityDTO uploader) {
+	public void setUploader(AutorityDTO uploader) {
 		this.uploader = uploader;
 	}
 

@@ -3,9 +3,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.response.DeleteResponseDTO;
@@ -42,7 +42,7 @@ public class PerusahaanController {
 	private IRegisterPerusahaanService registerPerusahaanService;
 	
 	@Inject
-	private IAuthorityService authorityService;
+	private IAutorityService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -50,7 +50,7 @@ public class PerusahaanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) {		
-		Authority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Autority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
 		return new RegisterPerusahaanDTO(
 				registerPerusahaanService.save(
@@ -60,8 +60,7 @@ public class PerusahaanController {
 								kreator, 
 								null, 
 								d.toPerusahaan(),
-								false,
-								null
+								false
 								)
 						)
 				);
@@ -96,7 +95,7 @@ public class PerusahaanController {
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public DeleteResponseDTO deleteLinkKepemilikanPerusahaan(@PathParam("idRegisterPerusahaan") String idRegisterPerusahaan,
 			@Context SecurityContext securityContext) {
-		Authority pemilik = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Autority pemilik = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
 		return new DeleteResponseDTO(
 				registerPerusahaanService.deleteLinkKepemilikanPerusahaan(pemilik.getId(), idRegisterPerusahaan)

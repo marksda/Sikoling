@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.authority;
+package org.Sikoling.main.restful.autority;
 
 import java.util.List;
 import java.util.stream.Collectors;

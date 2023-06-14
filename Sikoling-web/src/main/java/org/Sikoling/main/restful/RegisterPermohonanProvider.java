@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
@@ -61,7 +61,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		KategoriPermohonanDTO kategoriPermohonanDTO = null;
 		PegawaiPerusahaanDTO pegawaiPerusahaanDTO = null;
 		RegisterPerusahaanDTO registerPerusahaanDTO = null;
-		AuthorityDTO pengurusPermohonanDTO = null;
+		AutorityDTO pengurusPermohonanDTO = null;
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = null;
 		PosisiTahapPemberkasanDTO penerimaBerkasDTO = null;
 		StatusFlowLogDTO statusFlowLogDTO =null;
@@ -127,7 +127,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 					event = parser.next();
 					try {
 						jsonObject = parser.getObject();
-						pengurusPermohonanDTO = jsonb.fromJson(jsonObject.toString(), AuthorityDTO.class);
+						pengurusPermohonanDTO = jsonb.fromJson(jsonObject.toString(), AutorityDTO.class);
 					} catch (Exception e) {
 						pengurusPermohonanDTO = null;
 					}		

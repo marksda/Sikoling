@@ -2,7 +2,6 @@ package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class RegisterPerusahaan implements Serializable {
@@ -10,21 +9,21 @@ public class RegisterPerusahaan implements Serializable {
 	private static final long serialVersionUID = -4021307873874947821L;
 	private final String id;
 	private final LocalDate tanggalRegistrasi;
-	private final Authority kreator;
-	private final Authority verifikator;
+	private final Autority kreator;
+	private final Autority verifikator;
 	private final Perusahaan perusahaan;
 	private final Boolean statusVerifikasi;	
-	private final List<Authority> pengakses;
+//	private final List<Autority> pengakses;
 	
-	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Authority kreator, Authority verifikator,
-			Perusahaan perusahaan, Boolean statusVerifikasi, List<Authority> pengakses) {
+	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Autority kreator, Autority verifikator,
+			Perusahaan perusahaan, Boolean statusVerifikasi) {
 		this.id = id;
 		this.tanggalRegistrasi = tanggalRegistrasi;
 		this.kreator = kreator;
 		this.verifikator = verifikator;
 		this.perusahaan = perusahaan;
 		this.statusVerifikasi = statusVerifikasi;
-		this.pengakses = pengakses;
+//		this.pengakses = pengakses;
 	}
 
 	public String getId() {
@@ -39,11 +38,11 @@ public class RegisterPerusahaan implements Serializable {
 		return tanggalRegistrasi;
 	}
 
-	public Authority getKreator() {
+	public Autority getKreator() {
 		return kreator;
 	}
 
-	public Authority getVerifikator() {
+	public Autority getVerifikator() {
 		return verifikator;
 	}
 
@@ -55,9 +54,9 @@ public class RegisterPerusahaan implements Serializable {
 		return statusVerifikasi;
 	}
 	
-	public List<Authority> getPengakses() {
-		return pengakses;
-	}
+//	public List<Autority> getPengakses() {
+//		return pengakses;
+//	}
 	
 
 	@Override

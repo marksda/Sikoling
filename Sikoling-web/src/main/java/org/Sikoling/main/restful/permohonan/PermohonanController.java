@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
-import org.Sikoling.ejb.abstraction.service.authority.IAuthorityService;
+import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
-import org.Sikoling.main.restful.authority.AuthorityDTO;
+import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
@@ -43,7 +43,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Path("register_permohonan")
 public class PermohonanController {
 	@Inject
-	private IAuthorityService authorityService;
+	private IAutorityService authorityService;
 	
 	@Inject
 	private IFlowLogService flowLogService;
@@ -57,8 +57,8 @@ public class PermohonanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) {
-		Authority pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		AuthorityDTO pengurusPermohonanDto = new AuthorityDTO(pengurusPermohonan);
+		Autority pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		AutorityDTO pengurusPermohonanDto = new AutorityDTO(pengurusPermohonan);
 		d.setPengurusPermohonan(pengurusPermohonanDto);
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = new PosisiTahapPemberkasanDTO();
 		pengirimBerkasDTO.setId("0");

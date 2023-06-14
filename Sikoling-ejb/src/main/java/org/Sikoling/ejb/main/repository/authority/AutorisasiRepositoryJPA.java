@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Authority;
+import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.repository.IAuthorityRepository;
+import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,7 +20,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class AutorisasiRepositoryJPA implements IAuthorityRepository {
+public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;	
@@ -31,27 +31,27 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 
 	@Override
-	public List<Authority> getAll() {
+	public List<Autority> getAll() {
 		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
 				.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertAutorisasiDataToAuthority(d))
+				.map(d -> dataConverter.convertAutorisasiDataToAutority(d))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Authority save(Authority t) {
+	public Autority save(Autority t) {
 		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		entityManager.persist(autorisasiData);
 		entityManager.flush();
-		return dataConverter.convertAutorisasiDataToAuthority(autorisasiData);
+		return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
 	}
 
 	@Override
-	public Authority update(Authority t) {
+	public Autority update(Autority t) {
 		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
-		return dataConverter.convertAutorisasiDataToAuthority(autorisasiData);
+		return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
 	}
 	
 	@Override
@@ -62,17 +62,17 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 	}
 	
 	@Override
-	public Authority getByUserName(String userName) {
+	public Autority getByUserName(String userName) {
 		AutorisasiData data = Optional.ofNullable(
 				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
 				.setParameter("userName", userName).getSingleResult()
 				)
 				.orElse(null);
-		return data != null ? dataConverter.convertAutorisasiDataToAuthority(data):null;				
+		return data != null ? dataConverter.convertAutorisasiDataToAutority(data):null;				
 	}
 	
 	@Override
-	public List<Authority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
+	public List<Autority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<AutorisasiData> cq = cb.createQuery(AutorisasiData.class);
 		Root<AutorisasiData> root = cq.from(AutorisasiData.class);
@@ -200,7 +200,7 @@ public class AutorisasiRepositoryJPA implements IAuthorityRepository {
 		
 		return q.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertAutorisasiDataToAuthority(d))
+				.map(d -> dataConverter.convertAutorisasiDataToAutority(d))
 				.collect(Collectors.toList());
 	}
 	
