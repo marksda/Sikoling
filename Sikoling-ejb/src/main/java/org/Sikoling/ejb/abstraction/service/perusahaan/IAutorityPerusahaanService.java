@@ -11,7 +11,8 @@ public interface IAutorityPerusahaanService {
 	List<AutorityPerusahaan> getALL();
 	AutorityPerusahaan save(AutorityPerusahaan autorityPerusahaan);
 	AutorityPerusahaan update(AutorityPerusahaan autorityPerusahaan);
-	DeleteResponse delete(String id);
+	AutorityPerusahaan updateById(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan dataBaru);
+	DeleteResponse delete(String idAutority, String idRegisterPerusahaan);
 	List<AutorityPerusahaan> getDaftarAutorityPerusahaan(QueryParamFilters queryParamFilters);
 	Long getCount(List<Filter> queryParamFilters);
 }

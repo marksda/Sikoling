@@ -32,8 +32,8 @@ public class AutorityPerusahaanService implements IAutorityPerusahaanService {
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return autorityPerusahaanRepository.delete(id);
+	public DeleteResponse delete(String idAutority, String idRegisterPerusahaan) {
+		return autorityPerusahaanRepository.delete(idAutority, idRegisterPerusahaan);
 	}
 
 	@Override
@@ -45,5 +45,13 @@ public class AutorityPerusahaanService implements IAutorityPerusahaanService {
 	public Long getCount(List<Filter> queryParamFilters) {
 		return autorityPerusahaanRepository.getCount(queryParamFilters);
 	}
+
+	@Override
+	public AutorityPerusahaan updateById(String idLamaAutority, String idLamaRegisterPerusahaan,
+			AutorityPerusahaan dataBaru) {
+		return autorityPerusahaanRepository.updateById(idLamaAutority, idLamaRegisterPerusahaan, dataBaru);
+	}
+
+	
 
 }

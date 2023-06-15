@@ -37,11 +37,6 @@ public class AutorityPerusahaanRepositoryEJB implements IAutorityPerusahaanRepos
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return autorityPerusahaanRepository.delete(id);
-	}
-
-	@Override
 	public List<AutorityPerusahaan> getDaftarAutorityPerusahaan(QueryParamFilters queryParamFilters) {
 		return autorityPerusahaanRepository.getDaftarAutorityPerusahaan(queryParamFilters);
 	}
@@ -49,5 +44,16 @@ public class AutorityPerusahaanRepositoryEJB implements IAutorityPerusahaanRepos
 	@Override
 	public Long getCount(List<Filter> queryParamFilters) {
 		return autorityPerusahaanRepository.getCount(queryParamFilters);
+	}
+
+	@Override
+	public DeleteResponse delete(String idAutority, String idRegisterPerusahaan) {
+		return autorityPerusahaanRepository.delete(idAutority, idRegisterPerusahaan);
+	}
+
+	@Override
+	public AutorityPerusahaan updateById(String idLamaAutority, String idLamaRegisterPerusahaan,
+			AutorityPerusahaan dataBaru) {
+		return autorityPerusahaanRepository.updateById(idLamaAutority, idLamaRegisterPerusahaan, dataBaru);
 	}
 }

@@ -90,4 +90,11 @@ public class AutorityPerusahaanDTO implements Serializable {
 				.concat("}");
 	}	
 	
+	public AutorityPerusahaan toAutorityPerusahaan() {
+		return new AutorityPerusahaan(
+				this.authority != null ? this.authority.toAuthority():null,
+				this.registerPerusahaan != null ? this.registerPerusahaan.toRegisterPerusahaan():null
+				);
+	}
+	
 }

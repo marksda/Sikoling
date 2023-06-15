@@ -12,6 +12,7 @@ import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -54,10 +55,30 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
+	public AutorityPerusahaan updateById(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan dataBaru) {
+		
+		AutorityPerusahaanDataId idLama = new AutorityPerusahaanDataId();
+		idLama.setAutority(idLamaAutority);
+		idLama.setPerusahaan(idLamaAutority);
+		
+		AutorityPerusahaanData data = entityManager.find(AutorityPerusahaanData.class, idLama);
+		
+		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(dataBaru.getAuthority());
+		data.setAutority(autorisasiData);
+		RegisterPerusahaanData registerPerusahaanData = dataConverter.convertRegisterPerusahaanToRegisterPerusahaanData(dataBaru.getRegisterPerusahaan());
+		data.setPerusahaan(registerPerusahaanData);
+		entityManager.flush();
+		return dataConverter.convertAutorityPerusahaanDataToAutorityPerusahaan(data);
+	}
+	
+	@Override
+	public DeleteResponse delete(String idAutority, String idRegisterPerusahaan) {
+		AutorityPerusahaanDataId id = new AutorityPerusahaanDataId();
+		id.setAutority(idAutority);
+		id.setPerusahaan(idRegisterPerusahaan);
 		AutorityPerusahaanData autorityPerusahaanData = entityManager.find(AutorityPerusahaanData.class, id);
 		entityManager.remove(autorityPerusahaanData);	
-		return new DeleteResponse(true, id);
+		return new DeleteResponse(true, id.toString());
 	}
 
 	@Override
@@ -170,4 +191,5 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 		return entityManager.createQuery(cq).getSingleResult();
 	}
 
+	
 }

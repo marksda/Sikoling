@@ -67,4 +67,8 @@ public class AutorityPerusahaanDataId implements Serializable {
         return true;
 	}
 	
+	@Override
+	public String toString() {
+		return autority.concat("_").concat(perusahaan);	  
+	}
 }
