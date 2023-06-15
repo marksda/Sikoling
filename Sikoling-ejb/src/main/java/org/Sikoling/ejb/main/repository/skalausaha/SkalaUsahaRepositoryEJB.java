@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.skalausaha;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
@@ -22,12 +22,7 @@ public class SkalaUsahaRepositoryEJB implements ISkalaUsahaRepository {
 	private SkalaUsahaRepositoryJPA skalaUsahaRepository;
 
 	@Override
-	public List<SkalaUsaha> getAll() {
-		return skalaUsahaRepository.getAll();
-	}
-
-	@Override
-	public SkalaUsaha save(SkalaUsaha t) {
+	public SkalaUsaha save(SkalaUsaha t) throws IOException {
 		return skalaUsahaRepository.save(t);
 	}
 
@@ -37,25 +32,23 @@ public class SkalaUsahaRepositoryEJB implements ISkalaUsahaRepository {
 	}
 
 	@Override
-	public SkalaUsaha updateById(String id, SkalaUsaha skalaUsaha) {
-		return skalaUsahaRepository.updateById(id, skalaUsaha);
-	}
-	
-	@Override
-	public DeleteResponse delete(String id) {
-		return skalaUsahaRepository.delete(id);
-	}
-
-	
-	@Override
-	public List<SkalaUsaha> getDaftarSkalaUsaha(QueryParamFilters queryParamFilters) {
-		return skalaUsahaRepository.getDaftarSkalaUsaha(queryParamFilters);
+	public SkalaUsaha delete(SkalaUsaha t) throws IOException {
+		return skalaUsahaRepository.delete(t);
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return skalaUsahaRepository.getCount(queryParamFilters);
+	public List<SkalaUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
+		return skalaUsahaRepository.getDaftarData(queryParamFilters);
 	}
-	
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return skalaUsahaRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public SkalaUsaha updateId(String idLama, SkalaUsaha t) throws IOException {
+		return skalaUsahaRepository.updateId(idLama, t);
+	}
 	
 }

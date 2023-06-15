@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.skalausaha;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
@@ -28,53 +28,57 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
-	
-	@Override
-	public List<SkalaUsaha> getAll() {
-		return entityManager.createNamedQuery("SkalaUsahaData.findAll", SkalaUsahaData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertSkalaUsahaDataToSkalaUsaha(d))
-				.collect(Collectors.toList());
-	}
 
 	@Override
-	public SkalaUsaha save(SkalaUsaha t) {
-		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-		entityManager.persist(skalaUsahaData);
-		entityManager.flush();		
-		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
-	}
-	
-	@Override
-	public DeleteResponse delete(String id) {
-		SkalaUsahaData skalaUsahaData = entityManager.find(SkalaUsahaData.class, id);
-		entityManager.remove(skalaUsahaData);	
-		return new DeleteResponse(true, id);
+	public SkalaUsaha save(SkalaUsaha t) throws IOException {
+		try {
+			SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
+			entityManager.persist(skalaUsahaData);
+			entityManager.flush();		
+			return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public SkalaUsaha update(SkalaUsaha t) {
 		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-		skalaUsahaData = entityManager.merge(skalaUsahaData);		
-		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
-	}
-	
-	@Override
-	public SkalaUsaha updateById(String id, SkalaUsaha skalaUsaha) {
-		String idBaru = skalaUsaha.getId();
-		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(skalaUsaha);
-		skalaUsahaData.setId(id);
-		skalaUsahaData = entityManager.merge(skalaUsahaData);
-		if(!idBaru.equals(id)) {
-			skalaUsahaData.setId(idBaru);
-			entityManager.flush();
-		}
-		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
+		SkalaUsahaData dataTermerge = entityManager.merge(skalaUsahaData);		
+		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(dataTermerge);
 	}
 
 	@Override
-	public List<SkalaUsaha> getDaftarSkalaUsaha(QueryParamFilters queryParamFilters) {
+	public SkalaUsaha updateId(String idLama, SkalaUsaha t) throws IOException {
+		SkalaUsahaData dataLama = entityManager.find(SkalaUsahaData.class, idLama);
+		if(dataLama != null) {
+			SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
+			entityManager.remove(dataLama);	
+			SkalaUsahaData dataTermerge = entityManager.merge(skalaUsahaData);
+			entityManager.flush();
+			return dataConverter.convertSkalaUsahaDataToSkalaUsaha(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+
+	@Override
+	public SkalaUsaha delete(SkalaUsaha t) throws IOException {
+		SkalaUsahaData skalaUsahaData = entityManager.find(SkalaUsahaData.class, t.getId());
+		if(skalaUsahaData != null) {
+			entityManager.remove(skalaUsahaData);	
+			entityManager.flush();
+			return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+
+	@Override
+	public List<SkalaUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<SkalaUsahaData> cq = cb.createQuery(SkalaUsahaData.class);
 		Root<SkalaUsahaData> root = cq.from(SkalaUsahaData.class);		
@@ -158,9 +162,9 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 				.map(d -> dataConverter.convertSkalaUsahaDataToSkalaUsaha(d))
 				.collect(Collectors.toList());
 	}
-	
+		
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<SkalaUsahaData> root = cq.from(SkalaUsahaData.class);		
@@ -195,6 +199,5 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 		}
 		
 		return entityManager.createQuery(cq).getSingleResult();
-	}
-	
+	}	
 }

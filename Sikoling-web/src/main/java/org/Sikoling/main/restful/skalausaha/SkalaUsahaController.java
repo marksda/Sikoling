@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.skalausaha;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -39,8 +39,8 @@ public class SkalaUsahaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public SkalaUsahaDTO save(SkalaUsahaDTO d) {
-        return new SkalaUsahaDTO(skalaUsahaService.save(d.toSkalaUsaha()));
+    public SkalaUsahaDTO save(SkalaUsahaDTO d) throws IOException {
+		return new SkalaUsahaDTO(skalaUsahaService.save(d.toSkalaUsaha()));
     }
 	
 	@PUT
@@ -52,21 +52,20 @@ public class SkalaUsahaController {
 		return new SkalaUsahaDTO(skalaUsahaService.update(d.toSkalaUsaha()));
 	}
 	
-	@Path("id/{id}")
+	@Path("id/{idLama}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public SkalaUsahaDTO updateById(@PathParam("id") String id, SkalaUsahaDTO d) {
-		return new SkalaUsahaDTO(skalaUsahaService.updateById(id, d.toSkalaUsaha()));
+	public SkalaUsahaDTO updateId(@PathParam("idLama") String idLama, SkalaUsahaDTO d) throws IOException {
+		return new SkalaUsahaDTO(skalaUsahaService.updateId(idLama, d.toSkalaUsaha()));
 	}
 	
-	@Path("{id}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(skalaUsahaService.delete(id));
+	public SkalaUsahaDTO delete(SkalaUsahaDTO d) throws IOException {
+		return new SkalaUsahaDTO(skalaUsahaService.delete(d.toSkalaUsaha()));
 	}
 	
 	@GET
@@ -74,13 +73,13 @@ public class SkalaUsahaController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<SkalaUsahaDTO> getDaftarSkalaUsaha(@Context UriInfo info) {
+	public List<SkalaUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return skalaUsahaService.getDaftarSkalaUsaha(queryParamFiltersDTO.toQueryParamFilters())
+		return skalaUsahaService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new SkalaUsahaDTO(t))
 				.collect(Collectors.toList());
@@ -91,13 +90,13 @@ public class SkalaUsahaController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarSkalaUsaha(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return skalaUsahaService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return skalaUsahaService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

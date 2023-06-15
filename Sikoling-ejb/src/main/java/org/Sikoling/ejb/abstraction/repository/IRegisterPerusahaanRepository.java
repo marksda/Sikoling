@@ -1,16 +1,12 @@
 package org.Sikoling.ejb.abstraction.repository;
 
-import java.util.List;
+import java.io.IOException;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Filter;
-import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 
 public interface IRegisterPerusahaanRepository extends IRepository<RegisterPerusahaan> {
-	Boolean cekById(String id);
-	DeleteResponse delete(String id);
-	DeleteResponse deleteLinkKepemilikanPerusahaan(String idAutority, String idRegisterPerusahaan);
-	List<RegisterPerusahaan> getDaftarPerusahaan(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);	
+//	Boolean cekById(String id);
+	RegisterPerusahaan deleteLinkKepemilikanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException;
+	RegisterPerusahaan addLinkKepemilanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException;
 }

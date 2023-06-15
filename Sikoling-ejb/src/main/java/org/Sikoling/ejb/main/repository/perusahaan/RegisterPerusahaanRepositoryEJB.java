@@ -1,8 +1,9 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -22,12 +23,7 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 	private RegisterPerusahaanRepositoryJPA registerPerusahaanRepository;
 
 	@Override
-	public List<RegisterPerusahaan> getAll() {		
-		return registerPerusahaanRepository.getAll();
-	}
-
-	@Override
-	public RegisterPerusahaan save(RegisterPerusahaan t) {
+	public RegisterPerusahaan save(RegisterPerusahaan t) throws IOException {
 		return registerPerusahaanRepository.save(t);
 	}
 
@@ -35,31 +31,31 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 	public RegisterPerusahaan update(RegisterPerusahaan t) {
 		return registerPerusahaanRepository.update(t);
 	}
-	
-	@Override
-	public Boolean cekById(String id) {
-		return registerPerusahaanRepository.cekById(id);
-	}
-	
-	@Override
-	public DeleteResponse delete(String id) {
-		return registerPerusahaanRepository.delete(id);
-	}
-	
-	@Override
-	public DeleteResponse deleteLinkKepemilikanPerusahaan(String idPerson, String idPerusahaan) {
-		return registerPerusahaanRepository.deleteLinkKepemilikanPerusahaan(idPerson, idPerusahaan);
-	}
-	
-	@Override
-	public List<RegisterPerusahaan> getDaftarPerusahaan(QueryParamFilters queryParamFilters) {
-		return registerPerusahaanRepository.getDaftarPerusahaan(queryParamFilters);
-	}
-	
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return registerPerusahaanRepository.getCount(queryParamFilters);
+	public RegisterPerusahaan delete(RegisterPerusahaan t) throws IOException {
+		return registerPerusahaanRepository.delete(t);
+	}
+
+	@Override
+	public List<RegisterPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return registerPerusahaanRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return registerPerusahaanRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(AutorityPerusahaan autorityPerusahaan)
+			throws IOException {
+		return registerPerusahaanRepository.deleteLinkKepemilikanPerusahaan(autorityPerusahaan);
+	}
+
+	@Override
+	public RegisterPerusahaan addLinkKepemilanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
+		return registerPerusahaanRepository.addLinkKepemilanPerusahaan(autorityPerusahaan);
 	}
 	
 }

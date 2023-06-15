@@ -1,8 +1,9 @@
 package org.Sikoling.ejb.abstraction.service.perusahaan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -10,50 +11,45 @@ import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 
 public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	
-	private final IRegisterPerusahaanRepository perusahaanRepository;
+	private final IRegisterPerusahaanRepository registerPerusahaanRepository;
 
 	public RegisterPerusahaanService(IRegisterPerusahaanRepository pemrakarsaRepository) {
-		this.perusahaanRepository = pemrakarsaRepository;
+		this.registerPerusahaanRepository = pemrakarsaRepository;
 	}
 
 	@Override
-	public RegisterPerusahaan save(RegisterPerusahaan t) {
-		return perusahaanRepository.save(t);
+	public RegisterPerusahaan save(RegisterPerusahaan t) throws IOException {
+		return registerPerusahaanRepository.save(t);
 	}
 
 	@Override
 	public RegisterPerusahaan update(RegisterPerusahaan t) {
-		return perusahaanRepository.update(t);
+		return registerPerusahaanRepository.update(t);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return perusahaanRepository.delete(id);
+	public RegisterPerusahaan delete(RegisterPerusahaan t) throws IOException {
+		return registerPerusahaanRepository.delete(t);
 	}
 
 	@Override
-	public List<RegisterPerusahaan> getAll() {
-		return perusahaanRepository.getAll();
+	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
+		return registerPerusahaanRepository.deleteLinkKepemilikanPerusahaan(autorityPerusahaan);
 	}
 
 	@Override
-	public Boolean cekById(String id) {
-		return perusahaanRepository.cekById(id);
+	public RegisterPerusahaan addLinkKepemilanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
+		return registerPerusahaanRepository.addLinkKepemilanPerusahaan(autorityPerusahaan);
 	}
-	
+
 	@Override
-	public DeleteResponse deleteLinkKepemilikanPerusahaan(String idPerson, String idPerusahaan) {
-		return perusahaanRepository.deleteLinkKepemilikanPerusahaan(idPerson, idPerusahaan);
+	public List<RegisterPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return registerPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
-	
+
 	@Override
-	public List<RegisterPerusahaan> getDaftarPerusahaan(QueryParamFilters queryParamFilters) {
-		return perusahaanRepository.getDaftarPerusahaan(queryParamFilters);
-	}
-	
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return perusahaanRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return registerPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
 	
 }

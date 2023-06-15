@@ -1,18 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.skalausaha;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 
 public interface ISkalaUsahaService {
-	List<SkalaUsaha> getALL();
-	SkalaUsaha save(SkalaUsaha skalaUsaha);
-	SkalaUsaha update(SkalaUsaha skalaUsaha);
-	SkalaUsaha updateById(String id, SkalaUsaha skalaUsaha);
-	DeleteResponse delete(String id);
-	List<SkalaUsaha> getDaftarSkalaUsaha(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	SkalaUsaha save(SkalaUsaha t) throws IOException;
+	SkalaUsaha update(SkalaUsaha t);
+	SkalaUsaha updateId(String idLama, SkalaUsaha t) throws IOException;
+	SkalaUsaha delete(SkalaUsaha t) throws IOException;
+	List<SkalaUsaha> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

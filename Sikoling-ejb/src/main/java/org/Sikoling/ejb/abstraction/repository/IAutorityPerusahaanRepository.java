@@ -5,7 +5,6 @@ import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 
 public interface IAutorityPerusahaanRepository extends IRepository<AutorityPerusahaan> {
 	DeleteResponse delete(String idAutority, String idRegisterPerusahaan);

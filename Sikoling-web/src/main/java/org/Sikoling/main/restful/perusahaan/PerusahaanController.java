@@ -1,4 +1,5 @@
 package org.Sikoling.main.restful.perusahaan;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +50,7 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) {		
+	public RegisterPerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {		
 		Autority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
 		return new RegisterPerusahaanDTO(
@@ -83,8 +84,8 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(registerPerusahaanService.delete(id));
+	public RegisterPerusahaanDTO delete(RegisterPerusahaanDTO d) throws IOException {
+		return new RegisterPerusahaanDTO(registerPerusahaanService.delete(d.toRegisterPerusahaan()));
 	}
 	
 	@Path("kepemilikan/{idRegisterPerusahaan}")
@@ -93,23 +94,21 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO deleteLinkKepemilikanPerusahaan(@PathParam("idRegisterPerusahaan") String idRegisterPerusahaan,
-			@Context SecurityContext securityContext) {
-		Autority pemilik = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+	public RegisterPerusahaanDTO deleteLinkKepemilikanPerusahaan(AutorityPerusahaanDTO d,
+			@Context SecurityContext securityContext) throws IOException {
+//		Autority pemilik = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
-		return new DeleteResponseDTO(
-				registerPerusahaanService.deleteLinkKepemilikanPerusahaan(pemilik.getId(), idRegisterPerusahaan)
-				);
+		return new RegisterPerusahaanDTO(registerPerusahaanService.deleteLinkKepemilikanPerusahaan(d.toAutorityPerusahaan()));
 	}
 	
-	@Path("is_eksis")
-	@GET
-    @Produces({MediaType.TEXT_PLAIN})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Boolean cekPerusahaan(@QueryParam("id") String id) {
-		return registerPerusahaanService.cekById(id);
-	}
+//	@Path("is_eksis")
+//	@GET
+//    @Produces({MediaType.TEXT_PLAIN})
+//	@RequiredAuthorization
+//	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+//	public Boolean cekPerusahaan(@QueryParam("id") String id) {
+//		return registerPerusahaanService.cekById(id);
+//	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
