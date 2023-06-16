@@ -8,6 +8,7 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
@@ -48,6 +49,7 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
@@ -138,7 +140,11 @@ public class DataConverter {
 		Desa desa = null;
 		
 		if(d != null) {
-			desa = new Desa(d.getId(), d.getNama());
+			desa = new Desa(
+					d.getId(), 
+					d.getNama(),
+					d.getKecamatan() != null ? convertKecamatanDataToKecamatan(d.getKecamatan()):null
+					);
 		}
 		
 		return desa;		
@@ -870,6 +876,16 @@ public class DataConverter {
 		return autorityPerusahaan;	
 	}
 
+	public BidangUsaha convertBidangUsahaDataToBidangUsaha(BidangUsahaData d) {
+		BidangUsaha bidangUsaha = null;
+		
+		if(d != null) {
+			bidangUsaha = new BidangUsaha(d.getId(), d.getNama());
+		}
+		
+		return bidangUsaha;
+	}
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -924,9 +940,11 @@ public class DataConverter {
 		DesaData desaData = null;
 		
 		if(t != null) {
+			KecamatanData kecamatanData = t.getKecamatan() != null ? convertKecamatanToKecamatanData(t.getKecamatan()):null;
 			desaData = new DesaData();
 			desaData.setId(t.getId());
 			desaData.setNama(t.getNama());
+			desaData.setKecamatan(kecamatanData);			
 		}
 		
 		return desaData;
@@ -1554,6 +1572,17 @@ public class DataConverter {
 		}
 		
 		return autorityPerusahaanData;	
+	}
+	
+	public BidangUsahaData convertBidangUsahaToBidangUsahaData(BidangUsaha t) {
+		BidangUsahaData bidangUsahaData = new BidangUsahaData();
+		
+		if(t != null) {
+			bidangUsahaData.setId(t.getId());
+			bidangUsahaData.setNama(t.getNama());
+		}
+		
+		return bidangUsahaData;
 	}
 	
 	/*----------id generator function---------------*/

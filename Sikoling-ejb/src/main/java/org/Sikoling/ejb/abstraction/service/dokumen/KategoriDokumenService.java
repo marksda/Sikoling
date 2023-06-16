@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
@@ -17,35 +17,33 @@ public class KategoriDokumenService implements IKategoriDokumenService {
 	}
 
 	@Override
-	public KategoriDokumen save(KategoriDokumen kategoriDokumen) {
-		return kategoriDokumenRepository.save(kategoriDokumen);
+	public KategoriDokumen save(KategoriDokumen t) throws IOException {
+		return kategoriDokumenRepository.save(t);
 	}
 
 	@Override
-	public KategoriDokumen update(KategoriDokumen kategoriDokumen) {
-		return kategoriDokumenRepository.update(kategoriDokumen);
+	public KategoriDokumen update(KategoriDokumen t) {
+		return kategoriDokumenRepository.update(t);
 	}
 
 	@Override
-	public DeleteResponse delete(String Id) {
-		return kategoriDokumenRepository.delete(Id);
-	}
-	
-	@Override
-	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
-		return kategoriDokumenRepository.updateById(id, kategoriDokumen);
+	public KategoriDokumen updateId(String idLama, KategoriDokumen t) throws IOException {
+		return kategoriDokumenRepository.updateId(idLama, t);
 	}
 
-	
 	@Override
-	public List<KategoriDokumen> getDaftarKategoriDokumen(QueryParamFilters queryParamFilters) {
-		return kategoriDokumenRepository.getDaftarKategoriDokumen(queryParamFilters);
+	public KategoriDokumen delete(KategoriDokumen t) throws IOException {
+		return kategoriDokumenRepository.delete(t);
 	}
 
-	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return kategoriDokumenRepository.getCount(queryParamFilters);
+	public List<KategoriDokumen> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriDokumenRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriDokumenRepository.getJumlahData(queryParamFilters);
 	}
 
 }

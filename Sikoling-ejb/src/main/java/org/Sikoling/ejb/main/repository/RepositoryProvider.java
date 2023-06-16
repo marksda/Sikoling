@@ -78,8 +78,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public DesaRepositoryJPA getDesaRepositoryJPA(EntityManager entityManager) {
-		return new DesaRepositoryJPA(entityManager);
+	public DesaRepositoryJPA getDesaRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new DesaRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
@@ -88,8 +88,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public BidangUsahaRepositoryJPA getBidangUsahaRepositoryJPA(EntityManager entityManager) {
-		return new BidangUsahaRepositoryJPA(entityManager);
+	public BidangUsahaRepositoryJPA getBidangUsahaRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new BidangUsahaRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

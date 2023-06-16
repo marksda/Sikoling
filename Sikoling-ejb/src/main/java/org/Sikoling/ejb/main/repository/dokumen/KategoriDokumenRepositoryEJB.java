@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
@@ -20,14 +20,9 @@ public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository 
 
 	@Inject
 	private KategoriDokumenRepositoryJPA kategoriDokumenPerusahaanRepository;
-	
-	@Override
-	public List<KategoriDokumen> getAll() {
-		return kategoriDokumenPerusahaanRepository.getAll();
-	}
 
 	@Override
-	public KategoriDokumen save(KategoriDokumen t) {
+	public KategoriDokumen save(KategoriDokumen t) throws IOException {
 		return kategoriDokumenPerusahaanRepository.save(t);
 	}
 
@@ -37,25 +32,24 @@ public class KategoriDokumenRepositoryEJB implements IKategoriDokumenRepository 
 	}
 
 	@Override
-	public DeleteResponse delete(String Id) {
-		return kategoriDokumenPerusahaanRepository.delete(Id);
+	public KategoriDokumen delete(KategoriDokumen t) throws IOException {
+		return kategoriDokumenPerusahaanRepository.delete(t);
 	}
 
 	@Override
-	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
-		return kategoriDokumenPerusahaanRepository.updateById(id, kategoriDokumen);
+	public List<KategoriDokumen> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriDokumenPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriDokumenPerusahaanRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public KategoriDokumen updateId(String idLama, KategoriDokumen t) throws IOException {
+		return kategoriDokumenPerusahaanRepository.updateId(idLama, t);
+	}
 	
-	@Override
-	public List<KategoriDokumen> getDaftarKategoriDokumen(QueryParamFilters queryParamFilters) {
-		return kategoriDokumenPerusahaanRepository.getDaftarKategoriDokumen(queryParamFilters);
-	}
-
-	
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return kategoriDokumenPerusahaanRepository.getCount(queryParamFilters);
-	}
 
 }

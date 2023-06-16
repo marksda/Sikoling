@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.abstraction.service.bidangusaha;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 
 public class BidangUsahaService implements IBidangUsahaService {
@@ -10,38 +13,37 @@ public class BidangUsahaService implements IBidangUsahaService {
 	private final IBidangUsahaRepository bidangUsahaRepository;
 
 	public BidangUsahaService(IBidangUsahaRepository bidangUsahaRepository) {
-		super();
 		this.bidangUsahaRepository = bidangUsahaRepository;
 	}
 
 	@Override
-	public BidangUsaha save(BidangUsaha bidangUsaha) {
-		return bidangUsahaRepository.save(bidangUsaha);
+	public BidangUsaha save(BidangUsaha t) throws IOException {
+		return bidangUsahaRepository.save(t);
 	}
 
 	@Override
-	public BidangUsaha update(BidangUsaha bidangUsaha) {
-		return bidangUsahaRepository.update(bidangUsaha);
+	public BidangUsaha update(BidangUsaha t) {
+		return bidangUsahaRepository.update(t);
 	}
 
 	@Override
-	public List<BidangUsaha> getAll() {
-		return bidangUsahaRepository.getAll();
+	public BidangUsaha updateId(String idLama, BidangUsaha t) throws IOException {
+		return bidangUsahaRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public List<BidangUsaha> getAllByPage(Integer page, Integer pageSize) {
-		return bidangUsahaRepository.getAllByPage(page, pageSize);
+	public BidangUsaha delete(BidangUsaha t) throws IOException {
+		return bidangUsahaRepository.delete(t);
 	}
 
 	@Override
-	public List<BidangUsaha> getByNama(String nama) {
-		return bidangUsahaRepository.getByNama(nama);
+	public List<BidangUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
+		return bidangUsahaRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<BidangUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return bidangUsahaRepository.getByNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return bidangUsahaRepository.getJumlahData(queryParamFilters);
 	}
 
 }

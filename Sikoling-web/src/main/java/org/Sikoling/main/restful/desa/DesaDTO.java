@@ -4,20 +4,24 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.main.restful.kecamatan.KecamatanDTO;
 
 public class DesaDTO implements Serializable {
 
 	private static final long serialVersionUID = 6969506465322300113L;
 	private String id;
 	private String nama;
+	private KecamatanDTO kecamatan;
 	
 	public DesaDTO() {
 	}
 	
-	public DesaDTO(Desa desa) {
-		if(desa != null) {
-			this.id = desa.getId();
-			this.nama = desa.getNama();
+	public DesaDTO(Desa t) {
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+			this.kecamatan = t.getKecamatan() != null ?
+					new KecamatanDTO(t.getKecamatan()):null;
 		}		
 	}
 		
@@ -37,6 +41,14 @@ public class DesaDTO implements Serializable {
 		this.nama = nama;
 	}
 	
+	public KecamatanDTO getKecamatan() {
+		return kecamatan;
+	}
+
+	public void setKecamatan(KecamatanDTO kecamatan) {
+		this.kecamatan = kecamatan;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -81,7 +93,11 @@ public class DesaDTO implements Serializable {
 	}
 
 	public Desa toDesa() {
-		return new Desa(id, nama);
+		return new Desa(
+				id, 
+				nama,
+				kecamatan != null ? kecamatan.toKecamatan():null
+				);
 	}
 
 }

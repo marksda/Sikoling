@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -27,53 +27,59 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 	public KategoriDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
-	}
+	}	
 
 	@Override
-	public List<KategoriDokumen> getAll() {
-			return entityManager.createNamedQuery("KategoriDokumenPerusahaanData.findAll", KategoriDokumenData.class)
-					.getResultList()
-					.stream()
-					.map(d -> dataConverter.convertKategoriDokumenDataToKategoriDokumen(d))
-					.collect(Collectors.toList());
-	}
-
-	@Override
-	public KategoriDokumen save(KategoriDokumen t) {
-		KategoriDokumenData kategoriDokumenPerusahaanData = dataConverter.convertKategoriDokumenToKategoriDokumenData(t);
-		entityManager.persist(kategoriDokumenPerusahaanData);
-		entityManager.flush();
-		
-		return dataConverter.convertKategoriDokumenDataToKategoriDokumen(kategoriDokumenPerusahaanData);
+	public KategoriDokumen save(KategoriDokumen t) throws IOException {
+		try {
+			KategoriDokumenData kategoriDokumenPerusahaanData = dataConverter.convertKategoriDokumenToKategoriDokumenData(t);
+			entityManager.persist(kategoriDokumenPerusahaanData);
+			entityManager.flush();			
+			return dataConverter.convertKategoriDokumenDataToKategoriDokumen(kategoriDokumenPerusahaanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public KategoriDokumen update(KategoriDokumen t) {
 		KategoriDokumenData kategoriDokumenPerusahaanData = dataConverter.convertKategoriDokumenToKategoriDokumenData(t);
-		kategoriDokumenPerusahaanData = entityManager.merge(kategoriDokumenPerusahaanData);		
-		return dataConverter.convertKategoriDokumenDataToKategoriDokumen(kategoriDokumenPerusahaanData);
+		KategoriDokumenData dataTermerge = entityManager.merge(kategoriDokumenPerusahaanData);	
+		entityManager.flush();
+		return dataConverter.convertKategoriDokumenDataToKategoriDokumen(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String Id) {
-		KategoriDokumen kategoriDokumen = entityManager.find(KategoriDokumen.class, Id);
-		entityManager.remove(kategoriDokumen);		
-		return new DeleteResponse(true, Id);
+	public KategoriDokumen updateId(String idLama, KategoriDokumen t) throws IOException {
+		KategoriDokumenData dataLama = entityManager.find(KategoriDokumenData.class, idLama);
+		
+		if(dataLama != null) {
+			KategoriDokumenData kategoriDokumenData = dataConverter.convertKategoriDokumenToKategoriDokumenData(t);
+			entityManager.remove(dataLama);	
+			KategoriDokumenData dataTermerge = entityManager.merge(kategoriDokumenData);
+			entityManager.flush();
+			return dataConverter.convertKategoriDokumenDataToKategoriDokumen(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 	
 	@Override
-	public KategoriDokumen updateById(String id, KategoriDokumen kategoriDokumen) {
-		KategoriDokumenData updateData = dataConverter.convertKategoriDokumenToKategoriDokumenData(kategoriDokumen);
-		KategoriDokumenData kategoriDokumenData = entityManager.find(KategoriDokumenData.class, id);
-		kategoriDokumenData.setId(updateData.getId());
-		kategoriDokumenData.setNama(updateData.getNama());
-		kategoriDokumenData.setParent(updateData.getNama());
-		kategoriDokumenData = entityManager.merge(kategoriDokumenData);
-		return dataConverter.convertKategoriDokumenDataToKategoriDokumen(kategoriDokumenData);
-	}
+	public KategoriDokumen delete(KategoriDokumen t) throws IOException {
+		KategoriDokumenData kategoriDokumenData = entityManager.find(KategoriDokumenData.class, t.getId());
+		if(kategoriDokumenData != null) {
+			entityManager.remove(kategoriDokumenData);	
+			entityManager.flush();
+			return dataConverter.convertKategoriDokumenDataToKategoriDokumen(kategoriDokumenData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}	
 	
 	@Override
-	public List<KategoriDokumen> getDaftarKategoriDokumen(QueryParamFilters queryParamFilters) {
+	public List<KategoriDokumen> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<KategoriDokumenData> cq = cb.createQuery(KategoriDokumenData.class);
 		Root<KategoriDokumenData> root = cq.from(KategoriDokumenData.class);		
@@ -156,7 +162,7 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<KategoriDokumenData> root = cq.from(KategoriDokumenData.class);		

@@ -1,13 +1,12 @@
 package org.Sikoling.ejb.main.repository.authority;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Autority;
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -31,48 +30,65 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 
 	@Override
-	public List<Autority> getAll() {
-		return entityManager.createNamedQuery("AutorisasiData.findAll", AutorisasiData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertAutorisasiDataToAutority(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public Autority save(Autority t) {
-		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
-		entityManager.persist(autorisasiData);
-		entityManager.flush();
-		return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
+	public Autority save(Autority t) throws IOException {
+		try {
+			AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
+			entityManager.persist(autorisasiData);
+			entityManager.flush();
+			return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public Autority update(Autority t) {
 		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
+		entityManager.flush();
 		return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
 	}
 	
 	@Override
-	public DeleteResponse delete(String id) {
-		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, id);
-		entityManager.remove(autorisasiData);
-		return new DeleteResponse(true, id);
+	public Autority updateId(String idLama, Autority t) throws IOException {
+		AutorisasiData dataLama = entityManager.find(AutorisasiData.class, idLama);
+		if(dataLama != null) {
+			AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
+			entityManager.remove(dataLama);	
+			AutorisasiData dataTermerge = entityManager.merge(autorisasiData);
+			entityManager.flush();
+			return dataConverter.convertAutorisasiDataToAutority(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 	
 	@Override
-	public Autority getByUserName(String userName) {
-		AutorisasiData data = Optional.ofNullable(
-				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
-				.setParameter("userName", userName).getSingleResult()
-				)
-				.orElse(null);
-		return data != null ? dataConverter.convertAutorisasiDataToAutority(data):null;				
+	public Autority delete(Autority t) throws IOException {
+		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, t.getId());
+		if(autorisasiData != null) {
+			entityManager.remove(autorisasiData);
+			entityManager.flush();
+			return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}		
 	}
 	
+//	@Override
+//	public Autority getByUserName(String userName) {
+//		AutorisasiData data = Optional.ofNullable(
+//				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+//				.setParameter("userName", userName).getSingleResult()
+//				)
+//				.orElse(null);
+//		return data != null ? dataConverter.convertAutorisasiDataToAutority(data):null;				
+//	}
+	
 	@Override
-	public List<Autority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
+	public List<Autority> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<AutorisasiData> cq = cb.createQuery(AutorisasiData.class);
 		Root<AutorisasiData> root = cq.from(AutorisasiData.class);
@@ -205,7 +221,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<AutorisasiData> root = cq.from(AutorisasiData.class);		

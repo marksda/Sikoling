@@ -1,9 +1,9 @@
 package org.Sikoling.ejb.main.repository.authority;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Autority;
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
@@ -22,12 +22,7 @@ public class AutorisasiRepositoryEJB implements IAutorityRepository {
 	private AutorisasiRepositoryJPA autorisasiRepository;
 
 	@Override
-	public List<Autority> getAll() {
-		return autorisasiRepository.getAll();
-	}
-
-	@Override
-	public Autority save(Autority t) {
+	public Autority save(Autority t) throws IOException {
 		return autorisasiRepository.save(t);
 	}
 
@@ -37,25 +32,23 @@ public class AutorisasiRepositoryEJB implements IAutorityRepository {
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return autorisasiRepository.delete(id);
-	}
-	
-	@Override
-	public Autority getByUserName(String userName) {
-		return autorisasiRepository.getByUserName(userName);
+	public Autority delete(Autority t) throws IOException {
+		return autorisasiRepository.delete(t);
 	}
 
-	
 	@Override
-	public List<Autority> getDaftarAuthority(QueryParamFilters queryParamFilters) {
-		return autorisasiRepository.getDaftarAuthority(queryParamFilters);
+	public List<Autority> getDaftarData(QueryParamFilters queryParamFilters) {
+		return autorisasiRepository.getDaftarData(queryParamFilters);
 	}
-	
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return autorisasiRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return autorisasiRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public Autority updateId(String idLama, Autority t) throws IOException {
+		return autorisasiRepository.updateId(idLama, t);
 	}
 	
 }

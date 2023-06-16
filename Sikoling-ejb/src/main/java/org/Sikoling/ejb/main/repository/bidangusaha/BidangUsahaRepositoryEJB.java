@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.main.repository.bidangusaha;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -19,12 +22,7 @@ public class BidangUsahaRepositoryEJB implements IBidangUsahaRepository {
 	private BidangUsahaRepositoryJPA bidangUsahaRepository;
 
 	@Override
-	public List<BidangUsaha> getAll() {
-		return bidangUsahaRepository.getAll();
-	}
-
-	@Override
-	public BidangUsaha save(BidangUsaha t) {
+	public BidangUsaha save(BidangUsaha t) throws IOException {
 		return bidangUsahaRepository.save(t);
 	}
 
@@ -34,18 +32,24 @@ public class BidangUsahaRepositoryEJB implements IBidangUsahaRepository {
 	}
 
 	@Override
-	public List<BidangUsaha> getAllByPage(Integer page, Integer pageSize) {
-		return bidangUsahaRepository.getAllByPage(page, pageSize);
+	public BidangUsaha delete(BidangUsaha t) throws IOException {
+		return bidangUsahaRepository.delete(t);
 	}
 
 	@Override
-	public List<BidangUsaha> getByNama(String nama) {
-		return bidangUsahaRepository.getByNama(nama);
+	public List<BidangUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
+		return bidangUsahaRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<BidangUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return bidangUsahaRepository.getByNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return bidangUsahaRepository.getJumlahData(queryParamFilters);
 	}
+
+	@Override
+	public BidangUsaha updateId(String idLama, BidangUsaha t) throws IOException {
+		return bidangUsahaRepository.updateId(idLama, t);
+	}
+
 
 }

@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.abstraction.service.desa;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Desa;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 
 public class DesaService implements IDesaService {
@@ -10,59 +13,37 @@ public class DesaService implements IDesaService {
 	private final IDesaRepository desaRepository;
 
 	public DesaService(IDesaRepository desaRepository) {
-		super();
 		this.desaRepository = desaRepository;
 	}
 
 	@Override
-	public Desa save(Desa desa, String idKecamatan) {
-		return desaRepository.save(desa, idKecamatan);
+	public Desa save(Desa t) throws IOException {
+		return desaRepository.save(t);
 	}
 
 	@Override
-	public Desa update(Desa desa, String idKecamatan) {
-		return desaRepository.update(desa, idKecamatan);
+	public Desa update(Desa t) {
+		return desaRepository.update(t);
 	}
 
 	@Override
-	public List<Desa> getAll() {
-		return desaRepository.getAll();
+	public Desa updateId(String idLama, Desa t) throws IOException {
+		return desaRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public List<Desa> getAllByPage(Integer page, Integer pageSize) {
-		return desaRepository.getAllByPage(page, pageSize);
+	public Desa delete(Desa t) throws IOException {
+		return desaRepository.delete(t);
 	}
 
 	@Override
-	public List<Desa> getByNama(String nama) {
-		return desaRepository.getByNama(nama);
+	public List<Desa> getDaftarData(QueryParamFilters queryParamFilters) {
+		return desaRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<Desa> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return desaRepository.getByNamaAndPage(nama, page, pageSize);
-	}
-
-	@Override
-	public List<Desa> getByKecamatan(String idKecamatan) {
-		return desaRepository.getByKecamatan(idKecamatan);
-	}
-
-	@Override
-	public List<Desa> getByKecamatanAndPage(String idKecamatan, Integer page, Integer pageSize) {
-		return desaRepository.getByKecamatanAndPage(idKecamatan, page, pageSize);
-	}
-
-	@Override
-	public List<Desa> getByKecamatanAndNama(String idKecamatan, String nama) {
-		return desaRepository.getByKecamatanAndNama(idKecamatan, nama);
-	}
-
-	@Override
-	public List<Desa> getByKecamatanAndNamaAndPage(String idKecamatan, String nama, Integer page,
-			Integer pageSize) {
-		return desaRepository.getByKecamatanAndNamaAndPage(idKecamatan, nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return desaRepository.getJumlahData(queryParamFilters);
 	}
 
 }

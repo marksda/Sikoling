@@ -19,8 +19,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
-	
+public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {	
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;	
 	
@@ -45,7 +44,8 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 	@Override
 	public SkalaUsaha update(SkalaUsaha t) {
 		SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-		SkalaUsahaData dataTermerge = entityManager.merge(skalaUsahaData);		
+		SkalaUsahaData dataTermerge = entityManager.merge(skalaUsahaData);	
+		entityManager.flush();
 		return dataConverter.convertSkalaUsahaDataToSkalaUsaha(dataTermerge);
 	}
 

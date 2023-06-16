@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IKbliService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -38,31 +38,29 @@ public class KbliController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KbliDTO save(KbliDTO t) {
+	public KbliDTO save(KbliDTO t) throws IOException {
 		return new KbliDTO(kbliService.save(t.toKbli()));
 	}
 	
-	@Path("{kode}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KbliDTO update(@PathParam("kode") String kode, KbliDTO t) {
-		return new KbliDTO(kbliService.updateById(kode, t.toKbli()));
+	public KbliDTO update(KbliDTO t) {
+		return new KbliDTO(kbliService.update(t.toKbli()));
 	}
 	
-	@Path("id/{id}")
+	@Path("id/{idLama}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KbliDTO updateById(@PathParam("id") String id, KbliDTO d) {
-		return new KbliDTO(kbliService.updateById(id, d.toKbli()));
+	public KbliDTO updatId(@PathParam("idLama") String idLama, KbliDTO d) throws IOException {
+		return new KbliDTO(kbliService.updateId(idLama, d.toKbli()));
 	}
 	
-	@Path("{kode}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@PathParam("kode") String kode) {
-		return new DeleteResponseDTO(kbliService.delete(kode));
+	public KbliDTO delete(KbliDTO d) throws IOException {
+		return new KbliDTO(kbliService.delete(d.toKbli()));
 	}
 	
 	@GET
@@ -70,13 +68,13 @@ public class KbliController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<KbliDTO> getDaftarKbli(@Context UriInfo info) {
+	public List<KbliDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return kbliService.getDaftarKbli2020(queryParamFiltersDTO.toQueryParamFilters())
+		return kbliService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new KbliDTO(t))
 				.collect(Collectors.toList());
@@ -87,13 +85,13 @@ public class KbliController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarKbli(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return kbliService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return kbliService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }
