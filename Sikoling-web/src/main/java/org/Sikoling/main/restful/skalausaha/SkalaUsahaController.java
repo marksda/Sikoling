@@ -39,6 +39,8 @@ public class SkalaUsahaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
     public SkalaUsahaDTO save(SkalaUsahaDTO d) throws IOException {
 		return new SkalaUsahaDTO(skalaUsahaService.save(d.toSkalaUsaha()));
     }
@@ -56,11 +58,14 @@ public class SkalaUsahaController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public SkalaUsahaDTO updateId(@PathParam("idLama") String idLama, SkalaUsahaDTO d) throws IOException {
 		return new SkalaUsahaDTO(skalaUsahaService.updateId(idLama, d.toSkalaUsaha()));
 	}
 	
 	@DELETE
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})

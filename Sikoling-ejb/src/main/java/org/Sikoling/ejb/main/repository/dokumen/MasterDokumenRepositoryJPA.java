@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -25,57 +25,64 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	private final DataConverter dataConverter;	
 	
 	public MasterDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
-		super();
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
 
 	@Override
-	public List<Dokumen> getAll() {
-		return entityManager.createNamedQuery("MasterDokumenData.findAll", MasterDokumenData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertMasterDokumenDataToMasterDokumen(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public Dokumen save(Dokumen t) {
-		MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
-		entityManager.persist(detailDokumenPerusahaanData);
-		entityManager.flush();
-		return dataConverter.convertMasterDokumenDataToMasterDokumen(detailDokumenPerusahaanData);
+	public Dokumen save(Dokumen t) throws IOException {
+		try {
+			MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
+			entityManager.persist(detailDokumenPerusahaanData);
+			entityManager.flush();
+			return dataConverter.convertMasterDokumenDataToMasterDokumen(detailDokumenPerusahaanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public Dokumen update(Dokumen t) {
 		MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
-		detailDokumenPerusahaanData = entityManager.merge(detailDokumenPerusahaanData);
-		return dataConverter.convertMasterDokumenDataToMasterDokumen(detailDokumenPerusahaanData);
+		MasterDokumenData dataTermerge = entityManager.merge(detailDokumenPerusahaanData);
+		entityManager.flush();
+		return dataConverter.convertMasterDokumenDataToMasterDokumen(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		MasterDokumenData dokumenData = entityManager.find(MasterDokumenData.class, id);
-		entityManager.remove(dokumenData);
-		return new DeleteResponse(true, id);
+	public Dokumen updateId(String idLama, Dokumen t) throws IOException {
+		MasterDokumenData dataLama = entityManager.find(MasterDokumenData.class, t.getId());
+		if(dataLama != null) {			
+			MasterDokumenData masterDokumenData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
+			entityManager.remove(dataLama);
+			MasterDokumenData dataTermerge = entityManager.merge(masterDokumenData);
+			entityManager.flush();
+			
+			return dataConverter.convertMasterDokumenDataToMasterDokumen(dataTermerge);
+		} 
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public Dokumen updateById(String id, Dokumen dokumen) {
-		String idBaru = dokumen.getId();
-		MasterDokumenData masterDokumenData = dataConverter.convertMasterDokumenToMasterDokumenData(dokumen);
-		masterDokumenData.setId(id);
-		masterDokumenData = entityManager.merge(masterDokumenData);
-		if(!idBaru.equals(id)) {
-			masterDokumenData.setId(idBaru);
+	public Dokumen delete(Dokumen t) throws IOException {
+		MasterDokumenData dokumenData = entityManager.find(MasterDokumenData.class, t.getId());
+		
+		if(dokumenData != null) {
+			entityManager.remove(dokumenData);
+			entityManager.flush();
+			return dataConverter.convertMasterDokumenDataToMasterDokumen(dokumenData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
 		}
 		
-		return dataConverter.convertMasterDokumenDataToMasterDokumen(masterDokumenData);
 	}
 	
 	@Override
-	public List<Dokumen> getDaftarMasterDokumen(QueryParamFilters queryParamFilters) {
+	public List<Dokumen> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MasterDokumenData> cq = cb.createQuery(MasterDokumenData.class);
 		Root<MasterDokumenData> root = cq.from(MasterDokumenData.class);		
@@ -161,7 +168,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<MasterDokumenData> root = cq.from(MasterDokumenData.class);		

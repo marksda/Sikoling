@@ -38,6 +38,8 @@ public class KategoriDokumenController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KategoriDokumenDTO save(KategoriDokumenDTO d) throws IOException {
 		return new KategoriDokumenDTO(kategoriDokumenService.save(d.toKategoriDokumen()));
 	}
@@ -45,6 +47,8 @@ public class KategoriDokumenController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KategoriDokumenDTO update(KategoriDokumenDTO d) {
 		return new KategoriDokumenDTO(kategoriDokumenService.update(d.toKategoriDokumen()));
 	}
@@ -53,12 +57,17 @@ public class KategoriDokumenController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KategoriDokumenDTO updateId(@PathParam("idLama") String idLama, KategoriDokumenDTO d) throws IOException {
 		return new KategoriDokumenDTO(kategoriDokumenService.updateId(idLama, d.toKategoriDokumen()));
 	}
 	
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KategoriDokumenDTO delete(KategoriDokumenDTO d) throws IOException {
 		return new KategoriDokumenDTO(kategoriDokumenService.delete(d.toKategoriDokumen()));
 	}

@@ -38,6 +38,8 @@ public class KbliController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KbliDTO save(KbliDTO t) throws IOException {
 		return new KbliDTO(kbliService.save(t.toKbli()));
 	}
@@ -45,6 +47,8 @@ public class KbliController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KbliDTO update(KbliDTO t) {
 		return new KbliDTO(kbliService.update(t.toKbli()));
 	}
@@ -53,12 +57,17 @@ public class KbliController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KbliDTO updatId(@PathParam("idLama") String idLama, KbliDTO d) throws IOException {
 		return new KbliDTO(kbliService.updateId(idLama, d.toKbli()));
 	}
 	
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public KbliDTO delete(KbliDTO d) throws IOException {
 		return new KbliDTO(kbliService.delete(d.toKbli()));
 	}

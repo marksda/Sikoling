@@ -1,14 +1,19 @@
 package org.Sikoling.main.restful.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterKbliService;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
-
+import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -17,8 +22,10 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
@@ -31,113 +38,70 @@ public class RegisterKbliController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public RegisterKbliDTO save(RegisterKbliDTO t) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterKbliDTO save(RegisterKbliDTO t) throws IOException {
 		return new RegisterKbliDTO(registerKbliService.save(t.toRegisterKbli()));
 	}
 	
-	@Path("id/{nib}/{kode}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public RegisterKbliDTO update(@PathParam("nib") String nib, @PathParam("kode") String kode, RegisterKbliDTO t) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterKbliDTO update(RegisterKbliDTO t) {
 		return new RegisterKbliDTO(registerKbliService.update(t.toRegisterKbli()));
 	}
 	
-	@Path("id/{nib}/{kode}")
+	@Path("id/{idNibLama}/{idKbliLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterKbliDTO updateId(@PathParam("idNibLama") String idNibLama, 
+			@PathParam("idKbliLama") String idKbliLama, RegisterKbliDTO d) throws IOException {
+		return new RegisterKbliDTO(registerKbliService.updateId(idNibLama, idKbliLama, d.toRegisterKbli()));
+	}
+	
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@PathParam("nib") String nib, @PathParam("kode") String kode) {
-		return new DeleteResponseDTO(registerKbliService.delete(nib, kode));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterKbliDTO delete(RegisterKbliDTO d) throws IOException {
+		return new RegisterKbliDTO(registerKbliService.delete(d.toRegisterKbli()));
 	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getAll() {
-		return registerKbliService.getAll()
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<RegisterKbliDTO> getDaftarData(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return registerKbliService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new RegisterKbliDTO(t))
 				.collect(Collectors.toList());
 	}
 	
-	@Path("page")
+	@Path("count")
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerKbliService.getAllByPage(page, pageSize)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByNama(@QueryParam("nama") String nama) {
-		return registerKbliService.getByNama(nama)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByNamaAndPage(@QueryParam("nama") String nama,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerKbliService.getByNamaAndPage(nama, page, pageSize)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kode")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByKode(@QueryParam("kode") String kode) {
-		return registerKbliService.getByKode(kode)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("kode/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByKodeAndPage(@QueryParam("kode") String kode,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerKbliService.getByKodeAndPage(kode, page, pageSize)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nib")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByNib(@QueryParam("nib") String nib) {
-		return registerKbliService.getByNib(nib)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nib/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<RegisterKbliDTO> getByNibAndPage(@QueryParam("nib") String nib,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return registerKbliService.getByNibAndPage(nib, page, pageSize)
-				.stream()
-				.map(t -> new RegisterKbliDTO(t))
-				.collect(Collectors.toList());
+    @Produces({MediaType.TEXT_PLAIN})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public Long getJumlahData(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return registerKbliService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 
 }

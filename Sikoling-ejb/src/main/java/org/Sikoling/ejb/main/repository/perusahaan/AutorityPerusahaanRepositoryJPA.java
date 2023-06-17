@@ -59,7 +59,7 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 		
 		AutorityPerusahaanDataId idLama = new AutorityPerusahaanDataId();
 		idLama.setAutority(idLamaAutority);
-		idLama.setPerusahaan(idLamaAutority);
+		idLama.setPerusahaan(idLamaRegisterPerusahaan);
 		
 		AutorityPerusahaanData data = entityManager.find(AutorityPerusahaanData.class, idLama);
 		

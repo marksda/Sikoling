@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
@@ -20,14 +20,9 @@ public class MasterDokumenRepositoryEJB implements IMasterDokumenRepository {
 
 	@Inject
 	private MasterDokumenRepositoryJPA dokumenPerusahaanRepository;
-	
-	@Override
-	public List<Dokumen> getAll() {
-		return dokumenPerusahaanRepository.getAll();
-	}
 
 	@Override
-	public Dokumen save(Dokumen t) {
+	public Dokumen save(Dokumen t) throws IOException {
 		return dokumenPerusahaanRepository.save(t);
 	}
 
@@ -37,23 +32,25 @@ public class MasterDokumenRepositoryEJB implements IMasterDokumenRepository {
 	}
 
 	@Override
-	public DeleteResponse delete(String Id) {
-		return dokumenPerusahaanRepository.delete(Id);
+	public Dokumen delete(Dokumen t) throws IOException {
+		return dokumenPerusahaanRepository.delete(t);
+	}
+
+	@Override
+	public List<Dokumen> getDaftarData(QueryParamFilters queryParamFilters) {
+		return dokumenPerusahaanRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return dokumenPerusahaanRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public Dokumen updateId(String idLama, Dokumen t) throws IOException {
+		return dokumenPerusahaanRepository.updateId(idLama, t);
 	}
 	
-	@Override
-	public Dokumen updateById(String id, Dokumen dokumen) {
-		return dokumenPerusahaanRepository.updateById(id, dokumen);
-	}
 	
-	@Override
-	public List<Dokumen> getDaftarMasterDokumen(QueryParamFilters queryParamFilters) {
-		return dokumenPerusahaanRepository.getDaftarMasterDokumen(queryParamFilters);
-	}
-	
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return dokumenPerusahaanRepository.getCount(queryParamFilters);
-	}
 
 }

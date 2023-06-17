@@ -574,6 +574,5 @@ public class KeyCloakUserJPA implements IUserRepository {
         
 		return userRepresentation;
 	}
-
 		
 }

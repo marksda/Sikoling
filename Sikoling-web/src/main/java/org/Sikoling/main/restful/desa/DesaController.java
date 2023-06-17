@@ -38,6 +38,8 @@ public class DesaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public DesaDTO save(DesaDTO d) throws IOException {
 		return new DesaDTO(desaService.save(d.toDesa()));
 	}
@@ -45,6 +47,8 @@ public class DesaController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public DesaDTO update(DesaDTO d) {
 		return new DesaDTO(desaService.update(d.toDesa()));
 	}
@@ -53,11 +57,14 @@ public class DesaController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public DesaDTO updateId(@PathParam("idLama") String idLama, DesaDTO d) throws IOException {
 		return new DesaDTO(desaService.updateId(idLama, d.toDesa()));
 	}
 	
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})

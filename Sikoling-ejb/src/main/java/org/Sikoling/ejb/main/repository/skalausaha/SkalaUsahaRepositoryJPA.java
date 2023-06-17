@@ -37,8 +37,7 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 			return dataConverter.convertSkalaUsahaDataToSkalaUsaha(skalaUsahaData);
 		} catch (Exception e) {
 			throw new IOException("data sudah ada");
-		}
-		
+		}		
 	}
 
 	@Override

@@ -38,6 +38,8 @@ public class BidangUsahaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public BidangUsahaDTO save(BidangUsahaDTO d) throws IOException {
 		return new BidangUsahaDTO(bidangUsahaService.save(d.toBidangUsaha()));
 	}
@@ -45,6 +47,8 @@ public class BidangUsahaController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public BidangUsahaDTO update(BidangUsahaDTO d) {
 		return new BidangUsahaDTO(bidangUsahaService.update(d.toBidangUsaha()));
 	}
@@ -53,11 +57,14 @@ public class BidangUsahaController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public BidangUsahaDTO updateId(@PathParam("idLama") String idLama, BidangUsahaDTO d) throws IOException {
 		return new BidangUsahaDTO(bidangUsahaService.updateId(idLama, d.toBidangUsaha()));
 	}
 	
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})

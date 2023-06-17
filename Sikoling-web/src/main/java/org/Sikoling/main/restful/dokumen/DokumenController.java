@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.dokumen.IMasterDokumenService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -40,23 +40,35 @@ public class DokumenController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DokumenDTO save(DokumenDTO d) {
+	public DokumenDTO save(DokumenDTO d) throws IOException {
 		return new DokumenDTO(dokumenService.save(d.toDokumen()));
 	}
 	
-	@Path("{id}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DokumenDTO update(@PathParam("id") String id, DokumenDTO d) {
-		return new DokumenDTO(dokumenService.updateById(id, d.toDokumen()));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public DokumenDTO update(DokumenDTO d) {
+		return new DokumenDTO(dokumenService.update(d.toDokumen()));
 	}
 	
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(dokumenService.delete(id));
+	@RequiredAuthorization
+	public DokumenDTO updateId(@PathParam("idLama") String idLama, DokumenDTO d) throws IOException {
+		return new DokumenDTO(dokumenService.updateId(idLama, d.toDokumen()));
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public DokumenDTO delete(DokumenDTO d) throws IOException {
+		return new DokumenDTO(dokumenService.delete(d.toDokumen()));
 	}
 	
 	@GET
@@ -64,13 +76,13 @@ public class DokumenController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<DokumenDTO> getDaftarMasterDokumen(@Context UriInfo info) {
+	public List<DokumenDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return dokumenService.getDaftarMasterDokumen(queryParamFiltersDTO.toQueryParamFilters())
+		return dokumenService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new DokumenDTO(t))
 				.collect(Collectors.toList());
@@ -81,13 +93,13 @@ public class DokumenController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarSkalaUsaha(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return dokumenService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return dokumenService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

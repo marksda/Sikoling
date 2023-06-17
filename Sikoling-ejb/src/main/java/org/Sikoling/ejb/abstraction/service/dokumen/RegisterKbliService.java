@@ -1,8 +1,10 @@
 package org.Sikoling.ejb.abstraction.service.dokumen;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 
@@ -15,59 +17,34 @@ public class RegisterKbliService implements IRegisterKbliService {
 	}
 
 	@Override
-	public RegisterKbli save(RegisterKbli registerKbli) {
-		return registerKbliRepository.save(registerKbli);
+	public RegisterKbli save(RegisterKbli t) throws IOException {
+		return registerKbliRepository.save(t);
 	}
 
 	@Override
-	public RegisterKbli update(RegisterKbli registerKbli) {
-		return registerKbliRepository.update(registerKbli);
+	public RegisterKbli update(RegisterKbli t) {
+		return registerKbliRepository.update(t);
 	}
 
 	@Override
-	public DeleteResponse delete(String nib, String kode) {
-		return registerKbliRepository.delete(nib, kode);
+	public RegisterKbli updateId(String idNibLama, String idKbliLama, RegisterKbli t) throws IOException {
+		return registerKbliRepository.updateId(idNibLama, idKbliLama, t);
 	}
 
 	@Override
-	public List<RegisterKbli> getAllByPage(Integer page, Integer pageSize) {
-		return registerKbliRepository.getAllByPage(page, pageSize);
+	public RegisterKbli delete(RegisterKbli t) throws IOException {
+		return registerKbliRepository.delete(t);
 	}
 
 	@Override
-	public List<RegisterKbli> getByNama(String nama) {
-		return registerKbliRepository.getByNama(nama);
+	public List<RegisterKbli> getDaftarData(QueryParamFilters queryParamFilters) {
+		return registerKbliRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<RegisterKbli> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return registerKbliRepository.getByNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return registerKbliRepository.getJumlahData(queryParamFilters);
 	}
-
-	@Override
-	public List<RegisterKbli> getByKode(String kode) {
-		return registerKbliRepository.getByKode(kode);
-	}
-
-	@Override
-	public List<RegisterKbli> getByKodeAndPage(String kode, Integer page, Integer pageSize) {
-		return registerKbliRepository.getByKodeAndPage(kode, page, pageSize);
-	}
-
-	@Override
-	public List<RegisterKbli> getByNib(String nib) {
-		return registerKbliRepository.getByNib(nib);
-	}
-
-	@Override
-	public List<RegisterKbli> getByNibAndPage(String nib, Integer page, Integer pageSize) {
-		return registerKbliRepository.getByNibAndPage(nib, page, pageSize);
-	}
-
 	
-	@Override
-	public List<RegisterKbli> getAll() {
-		return registerKbliRepository.getAll();
-	}
-
+	
 }

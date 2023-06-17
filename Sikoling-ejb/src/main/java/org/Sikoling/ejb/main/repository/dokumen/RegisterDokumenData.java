@@ -12,21 +12,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_register_dokumen")
-@NamedQueries({
-	@NamedQuery(name="RegisterDokumenData.findAll", query="SELECT d FROM RegisterDokumenData d"),
-	@NamedQuery(name="RegisterDokumenData.findByNamaDokumen", query = "SELECT d FROM RegisterDokumenData d WHERE d.dokumenData.nama LIKE :namaDokumen"),
-	@NamedQuery(name="RegisterDokumenData.findByIdDokumen", query="SELECT d FROM RegisterDokumenData d WHERE d.dokumenData.id = :idDokumen"),
-	@NamedQuery(name="RegisterDokumenData.findByNamaPerusahaan", query = "SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.nama LIKE :namaPerusahaan"),
-	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaan", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.id = :idPerusahaan"),
-	@NamedQuery(name="RegisterDokumenData.findByIdPerusahaanAndIdDokumen", query="SELECT d FROM RegisterDokumenData d WHERE d.perusahaanData.id = :idPerusahaan AND d.dokumenData.id = :idDokumen")
-})
 public class RegisterDokumenData implements Serializable {
 
 	private static final long serialVersionUID = 781878194764826140L;

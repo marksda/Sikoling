@@ -47,6 +47,8 @@ public class AutorityController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public AutorityDTO update(AutorityDTO d) {
 		return new AutorityDTO(authorityService.update(d.toAuthority()));
 	}
@@ -55,12 +57,17 @@ public class AutorityController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public AutorityDTO updateId(@PathParam("idLama") String idLama, AutorityDTO d) throws IOException {
 		return new AutorityDTO(authorityService.updateId(idLama, d.toAuthority()));
 	}
 	
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public AutorityDTO delete(AutorityDTO d) throws IOException {
 		return new AutorityDTO(authorityService.delete(d.toAuthority()));
 	}
