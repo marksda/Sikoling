@@ -182,8 +182,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public RegisterKbliRepositoryJPA getRegisterKbliRepositoryJPA(EntityManager entityManager) {
-		return new RegisterKbliRepositoryJPA(entityManager);
+	public RegisterKbliRepositoryJPA getRegisterKbliRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new RegisterKbliRepositoryJPA(entityManager, dataConverter);
 	}
 		
 	@Produces

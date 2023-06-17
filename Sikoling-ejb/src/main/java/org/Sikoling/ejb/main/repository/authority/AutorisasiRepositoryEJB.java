@@ -50,5 +50,10 @@ public class AutorisasiRepositoryEJB implements IAutorityRepository {
 	public Autority updateId(String idLama, Autority t) throws IOException {
 		return autorisasiRepository.updateId(idLama, t);
 	}
+
+	@Override
+	public Autority getByUserName(String userName) {
+		return autorisasiRepository.getByUserName(userName);
+	}
 	
 }

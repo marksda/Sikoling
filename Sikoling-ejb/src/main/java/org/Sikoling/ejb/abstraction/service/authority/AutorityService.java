@@ -45,5 +45,10 @@ public class AutorityService implements IAutorityService {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		return authorityRepository.getJumlahData(queryParamFilters);
 	}
+
+	@Override
+	public Autority getByUserName(String userName) {
+		return authorityRepository.getByUserName(userName);
+	}
 	
 }

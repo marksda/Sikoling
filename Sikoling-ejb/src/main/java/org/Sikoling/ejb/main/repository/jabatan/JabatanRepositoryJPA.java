@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.jabatan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -30,54 +30,59 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 	}
 
 	@Override
-	public Jabatan save(Jabatan t) {
-		JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(t);
-		entityManager.persist(jabatanData);
-		entityManager.flush();
-		return dataConverter.convertJabatanDataToJabatan(jabatanData);
+	public Jabatan save(Jabatan t) throws IOException {
+		try {
+			JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(t);
+			entityManager.persist(jabatanData);
+			entityManager.flush();
+			return dataConverter.convertJabatanDataToJabatan(jabatanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public Jabatan update(Jabatan t) {
 		JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(t);
-		jabatanData = entityManager.merge(jabatanData);
-		return dataConverter.convertJabatanDataToJabatan(jabatanData);
+		JabatanData dataTermerge = entityManager.merge(jabatanData);
+		entityManager.flush();
+		return dataConverter.convertJabatanDataToJabatan(dataTermerge);
 	}
-
-	@Override
-	public List<Jabatan> getAll() {
-		return entityManager.createNamedQuery("JabatanData.findAll", JabatanData.class)
-				.getResultList()
-				.stream()
-				.map(t -> dataConverter.convertJabatanDataToJabatan(t))
-				.collect(Collectors.toList());
-	}
-
 	
 	@Override
-	public Jabatan updateById(String id, Jabatan jabatan) {
-		String idBaru = jabatan.getId();
-		JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(jabatan);
-		jabatanData.setId(id);
-		jabatanData = entityManager.merge(jabatanData);
-		if(!idBaru.equals(id)) {
-			jabatanData.setId(idBaru);
+	public Jabatan updateId(String id, Jabatan jabatan) throws IOException {
+		JabatanData dataLama = entityManager.find(JabatanData.class, jabatan.getId());
+		
+		if(dataLama != null) {
+			JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(jabatan);
+			entityManager.remove(dataLama);
+			JabatanData dataTermerge = entityManager.merge(jabatanData);
 			entityManager.flush();
+			return dataConverter.convertJabatanDataToJabatan(dataTermerge);
 		}
-		return dataConverter.convertJabatanDataToJabatan(jabatanData);
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+		
 	}
 	
-
 	@Override
-	public DeleteResponse delete(String id) {
-		JabatanData jabatanData = entityManager.find(JabatanData.class, id);
-		entityManager.remove(jabatanData);	
-		return new DeleteResponse(true, id);
+	public Jabatan delete(Jabatan d) throws IOException {
+		JabatanData jabatanData = entityManager.find(JabatanData.class, d.getId());
+		if(jabatanData != null) {
+			entityManager.remove(jabatanData);	
+			entityManager.flush();
+			return dataConverter.convertJabatanDataToJabatan(jabatanData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+		
 	}
 	
-
 	@Override
-	public List<Jabatan> getDaftarJabatan(QueryParamFilters queryParamFilters) {
+	public List<Jabatan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<JabatanData> cq = cb.createQuery(JabatanData.class);
 		Root<JabatanData> root = cq.from(JabatanData.class);		
@@ -151,9 +156,8 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 				.collect(Collectors.toList());
 	}
 	
-
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<JabatanData> root = cq.from(JabatanData.class);		
@@ -186,6 +190,5 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-	
-	
+		
 }

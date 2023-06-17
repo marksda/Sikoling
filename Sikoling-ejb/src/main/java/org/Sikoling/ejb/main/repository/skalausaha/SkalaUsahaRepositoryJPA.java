@@ -198,5 +198,6 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 		}
 		
 		return entityManager.createQuery(cq).getSingleResult();
-	}	
+	}
+	
 }

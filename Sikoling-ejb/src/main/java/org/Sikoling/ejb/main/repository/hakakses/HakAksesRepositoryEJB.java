@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.hakakses;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -20,14 +20,9 @@ public class HakAksesRepositoryEJB implements IHakAksesRepository {
 	
 	@Inject
 	private HakAksesRepositoryJPA hakAksesRepository;
-		
-	@Override
-	public List<HakAkses> getAll() {
-		return hakAksesRepository.getAll();
-	}
 
 	@Override
-	public HakAkses save(HakAkses t) {
+	public HakAkses save(HakAkses t) throws IOException {
 		return hakAksesRepository.save(t);
 	}
 
@@ -35,20 +30,25 @@ public class HakAksesRepositoryEJB implements IHakAksesRepository {
 	public HakAkses update(HakAkses t) {
 		return hakAksesRepository.update(t);
 	}
+
+	@Override
+	public HakAkses delete(HakAkses t) throws IOException {
+		return hakAksesRepository.delete(t);
+	}
+
+	@Override
+	public List<HakAkses> getDaftarData(QueryParamFilters queryParamFilters) {
+		return hakAksesRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return hakAksesRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public HakAkses updateId(String idLama, HakAkses t) throws IOException {
+		return hakAksesRepository.updateId(idLama, t);
+	}
 	
-	@Override
-	public DeleteResponse delete(String id) {
-		return hakAksesRepository.delete(id);
-	}
-
-	@Override
-	public List<HakAkses> getDaftarHakAkses(QueryParamFilters queryParamFilters) {
-		return hakAksesRepository.getDaftarHakAkses(queryParamFilters);
-	}
-
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return hakAksesRepository.getCount(queryParamFilters);
-	}
-
 }

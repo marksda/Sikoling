@@ -12,6 +12,7 @@ public interface IAutorityService {
 	Autority update(Autority t);
 	Autority updateId(String idLama, Autority t) throws IOException;
 	Autority delete(Autority t) throws IOException;
+	Autority getByUserName(String userName);
 	List<Autority> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);	
 }

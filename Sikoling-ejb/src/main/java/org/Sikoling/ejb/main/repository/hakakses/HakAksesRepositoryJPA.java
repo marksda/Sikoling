@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.hakakses;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -28,41 +28,58 @@ public class HakAksesRepositoryJPA implements IHakAksesRepository {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
-	
-	@Override
-	public List<HakAkses> getAll() {
-		return entityManager.createNamedQuery("HakAksesData.findAll", HakAksesData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertHakAksesDataToHakAkses(d))
-				.collect(Collectors.toList());
-	}
 
 	@Override
-	public HakAkses save(HakAkses t) {
-		HakAksesData hakAksesData = dataConverter.convertHakAksesToHakAksesData(t);
-		entityManager.persist(hakAksesData);
-		entityManager.flush();
-		return dataConverter.convertHakAksesDataToHakAkses(hakAksesData);
+	public HakAkses save(HakAkses t) throws IOException {
+		try {
+			HakAksesData hakAksesData = dataConverter.convertHakAksesToHakAksesData(t);
+			entityManager.persist(hakAksesData);
+			entityManager.flush();
+			return dataConverter.convertHakAksesDataToHakAkses(hakAksesData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public HakAkses update(HakAkses t) {
 		HakAksesData hakAksesData = dataConverter.convertHakAksesToHakAksesData(t);
-		hakAksesData = entityManager.merge(hakAksesData);
-		
-		return dataConverter.convertHakAksesDataToHakAkses(hakAksesData);
+		HakAksesData dataTermerge = entityManager.merge(hakAksesData);
+		entityManager.flush();
+		return dataConverter.convertHakAksesDataToHakAkses(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		HakAksesData hakAksesData = entityManager.find(HakAksesData.class, id);
-		entityManager.remove(hakAksesData);			
-		return new DeleteResponse(true, id);
+	public HakAkses updateId(String idLama, HakAkses t) throws IOException {
+		HakAksesData dataLama = entityManager.find(HakAksesData.class, idLama);
+		if(dataLama != null) {
+			HakAksesData skalaUsahaData = dataConverter.convertHakAksesToHakAksesData(t);
+			entityManager.remove(dataLama);	
+			HakAksesData dataTermerge = entityManager.merge(skalaUsahaData);
+			entityManager.flush();
+			return dataConverter.convertHakAksesDataToHakAkses(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+	
+	@Override
+	public HakAkses delete(HakAkses t) throws IOException {
+		HakAksesData hakAksesData = entityManager.find(HakAksesData.class, t.getId());
+		if(hakAksesData != null) {
+			entityManager.remove(hakAksesData);	
+			entityManager.flush();
+			return dataConverter.convertHakAksesDataToHakAkses(hakAksesData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}		
 	}
 
 	@Override
-	public List<HakAkses> getDaftarHakAkses(QueryParamFilters queryParamFilters) {
+	public List<HakAkses> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<HakAksesData> cq = cb.createQuery(HakAksesData.class);
 		Root<HakAksesData> root = cq.from(HakAksesData.class);
@@ -148,7 +165,7 @@ public class HakAksesRepositoryJPA implements IHakAksesRepository {
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<HakAksesData> root = cq.from(HakAksesData.class);		
@@ -184,6 +201,5 @@ public class HakAksesRepositoryJPA implements IHakAksesRepository {
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-
 
 }

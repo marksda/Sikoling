@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.jabatan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -13,42 +13,37 @@ public class JabatanService implements IJabatanService {
 	private final IJabatanRepository jabatanRepository;
 
 	public JabatanService(IJabatanRepository jabatanRepository) {
-		super();
 		this.jabatanRepository = jabatanRepository;
 	}
 
 	@Override
- 	public Jabatan save(Jabatan jabatan) {
-		return jabatanRepository.save(jabatan);
+	public Jabatan save(Jabatan t) throws IOException {
+		return jabatanRepository.save(t);
 	}
 
 	@Override
-	public Jabatan update(Jabatan jabatan) {
-		return jabatanRepository.update(jabatan);
+	public Jabatan update(Jabatan t) {
+		return jabatanRepository.update(t);
 	}
 
-	
 	@Override
-	public Jabatan updateById(String id, Jabatan jabatan) {
-		return jabatanRepository.updateById(id, jabatan);
+	public Jabatan updateId(String idLama, Jabatan t) throws IOException {
+		return jabatanRepository.updateId(idLama, t);
 	}
 
-	
 	@Override
-	public DeleteResponse delete(String id) {
-		return jabatanRepository.delete(id);
+	public Jabatan delete(Jabatan t) throws IOException {
+		return jabatanRepository.delete(t);
 	}
 
-	
 	@Override
-	public List<Jabatan> getDaftarJabatan(QueryParamFilters queryParamFilters) {
-		return jabatanRepository.getDaftarJabatan(queryParamFilters);
+	public List<Jabatan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return jabatanRepository.getDaftarData(queryParamFilters);
 	}
 
-	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return jabatanRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return jabatanRepository.getJumlahData(queryParamFilters);
 	}
 	
 }

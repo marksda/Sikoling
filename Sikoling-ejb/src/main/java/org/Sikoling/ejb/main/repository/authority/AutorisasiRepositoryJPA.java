@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Autority;
@@ -77,15 +78,15 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 		}		
 	}
 	
-//	@Override
-//	public Autority getByUserName(String userName) {
-//		AutorisasiData data = Optional.ofNullable(
-//				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
-//				.setParameter("userName", userName).getSingleResult()
-//				)
-//				.orElse(null);
-//		return data != null ? dataConverter.convertAutorisasiDataToAutority(data):null;				
-//	}
+	@Override
+	public Autority getByUserName(String userName) {
+		AutorisasiData data = Optional.ofNullable(
+				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+				.setParameter("userName", userName).getSingleResult()
+				)
+				.orElse(null);
+		return data != null ? dataConverter.convertAutorisasiDataToAutority(data):null;				
+	}
 	
 	@Override
 	public List<Autority> getDaftarData(QueryParamFilters queryParamFilters) {

@@ -1,15 +1,14 @@
 package org.Sikoling.main.restful.autority;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.hakakses.IHakAksesService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -41,22 +40,36 @@ public class HakAksesController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public HakAksesDTO save(HakAksesDTO d) {
+	public HakAksesDTO save(HakAksesDTO d) throws IOException {
 		return new HakAksesDTO(hakAksesService.save(d.toHakAkses()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
 	public HakAksesDTO update(HakAksesDTO d) {
 		return new HakAksesDTO(hakAksesService.update(d.toHakAkses()));
 	}
 	
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(hakAksesService.delete(id));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public HakAksesDTO updateId(@PathParam("idLama") String idLama, HakAksesDTO d) throws IOException {
+		return new HakAksesDTO(hakAksesService.updateId(idLama, d.toHakAkses()));
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public HakAksesDTO delete(HakAksesDTO d) throws IOException {
+		return new HakAksesDTO(hakAksesService.delete(d.toHakAkses()));
 	}
 
 	@GET
@@ -64,13 +77,13 @@ public class HakAksesController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<HakAksesDTO> getDaftarPerusahaan(@Context UriInfo info) {
+	public List<HakAksesDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return hakAksesService.getDaftarHakAkses(queryParamFiltersDTO.toQueryParamFilters())
+		return hakAksesService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new HakAksesDTO(t))
 				.collect(Collectors.toList());
@@ -81,13 +94,13 @@ public class HakAksesController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarHakAkses(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return hakAksesService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return hakAksesService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }
