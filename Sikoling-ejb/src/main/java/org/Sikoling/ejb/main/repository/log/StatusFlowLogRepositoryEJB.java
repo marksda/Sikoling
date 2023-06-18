@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.log;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
@@ -22,12 +22,7 @@ public class StatusFlowLogRepositoryEJB implements IStatusFlowLogRepository {
 	private StatusFlowLogRepositoryJPA statusFlowLogRepository;
 
 	@Override
-	public List<StatusFlowLog> getAll() {
-		return statusFlowLogRepository.getAll();
-	}
-
-	@Override
-	public StatusFlowLog save(StatusFlowLog t) {
+	public StatusFlowLog save(StatusFlowLog t) throws IOException {
 		return statusFlowLogRepository.save(t);
 	}
 
@@ -37,23 +32,24 @@ public class StatusFlowLogRepositoryEJB implements IStatusFlowLogRepository {
 	}
 
 	@Override
-	public StatusFlowLog updateById(String id, StatusFlowLog statusFlowLog) {
-		return statusFlowLogRepository.updateById(id, statusFlowLog);
+	public StatusFlowLog delete(StatusFlowLog t) throws IOException {
+		return statusFlowLogRepository.delete(t);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return statusFlowLogRepository.delete(id);
+	public List<StatusFlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
+		return statusFlowLogRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<StatusFlowLog> getDaftarStatusFlowLog(QueryParamFilters queryParamFilters) {
-		return statusFlowLogRepository.getDaftarStatusFlowLog(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return statusFlowLogRepository.getJumlahData(queryParamFilters);
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return statusFlowLogRepository.getCount(queryParamFilters);
+	public StatusFlowLog updateId(String idLama, StatusFlowLog t) throws IOException {
+		return statusFlowLogRepository.updateId(idLama, t);
 	}
 
+	
 }

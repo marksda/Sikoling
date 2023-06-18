@@ -1,14 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.penanggungjawab;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
 public interface IPenanggungJawabService {
-	PenanggungJawab save(PenanggungJawab t, String idPemrakarsa);
-	PenanggungJawab update(PenanggungJawab t, String idPemrakarsa);
-	List<PenanggungJawab> getAll();
-	List<PenanggungJawab> getAllByPage(Integer page, Integer pageSize);
-	List<PenanggungJawab> getByNama(String nama);
-	List<PenanggungJawab> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+	PenanggungJawab save(PenanggungJawab t) throws IOException;
+	PenanggungJawab update(PenanggungJawab t);
+	PenanggungJawab updateId(String idLama, PenanggungJawab t) throws IOException;
+	PenanggungJawab delete(PenanggungJawab t) throws IOException;
+	List<PenanggungJawab> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

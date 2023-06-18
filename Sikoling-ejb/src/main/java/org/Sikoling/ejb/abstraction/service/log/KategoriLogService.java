@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.log;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
@@ -15,19 +15,9 @@ public class KategoriLogService implements IKategoriLogService {
 	public KategoriLogService(IKategoriLogRepository kategoriLogRepository) {
 		this.kategoriLogRepository = kategoriLogRepository;
 	}
-	
-	@Override
-	public List<KategoriFlowLog> getAll() {
-		return kategoriLogRepository.getAll();
-	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return kategoriLogRepository.delete(id);
-	}
-
-	@Override
-	public KategoriFlowLog save(KategoriFlowLog t) {
+	public KategoriFlowLog save(KategoriFlowLog t) throws IOException {
 		return kategoriLogRepository.save(t);
 	}
 
@@ -37,15 +27,23 @@ public class KategoriLogService implements IKategoriLogService {
 	}
 
 	@Override
-	public List<KategoriFlowLog> getDaftarKategoriLog(QueryParamFilters queryParamFilters) {
-		return kategoriLogRepository.getDaftarKategoriLog(queryParamFilters);
+	public KategoriFlowLog updateId(String idLama, KategoriFlowLog t) throws IOException {
+		return kategoriLogRepository.updateId(idLama, t);
 	}
 
-	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return kategoriLogRepository.getCount(queryParamFilters);
+	public KategoriFlowLog delete(KategoriFlowLog t) throws IOException {
+		return kategoriLogRepository.delete(t);
 	}
 
+	@Override
+	public List<KategoriFlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriLogRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriLogRepository.getJumlahData(queryParamFilters);
+	}
 	
 }

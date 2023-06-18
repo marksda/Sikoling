@@ -21,6 +21,7 @@ import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
@@ -77,6 +78,7 @@ import org.Sikoling.ejb.main.repository.log.KategoriLogData;
 import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
+import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriSuratArahanData;
@@ -204,7 +206,11 @@ public class DataConverter {
 		Kecamatan kecamatan = null;
 		
 		if(d != null) {
-			kecamatan = new Kecamatan(d.getId(), d.getNama());
+			kecamatan = new Kecamatan(
+					d.getId(), 
+					d.getNama(), 
+					d.getKabupaten() != null ? convertKabupatenDataToKabupaten(d.getKabupaten()):null
+					);
 		}
 		
 		return kecamatan;		
@@ -902,6 +908,21 @@ public class DataConverter {
 		return kategoriProduk;
 	}
 	
+	public PenanggungJawab convertPenanggungJawabDataToPenanggungJawab(PenanggungJawabData d) {
+		PenanggungJawab penanggungJawab = null;
+		
+		if(d != null) {
+			penanggungJawab = new PenanggungJawab(
+					d.getId(), 
+					d.getPerson() != null ? convertPersonDataToPerson(d.getPerson()):null, 
+					d.getJabatan() != null ? convertJabatanDataToJabatan(d.getJabatan()):null, 
+					d.getPemrakarsa() != null ? convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPemrakarsa()):null
+					);
+		}
+		
+		return penanggungJawab;
+	}
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -949,6 +970,9 @@ public class DataConverter {
 			kecamatanData = new KecamatanData();
 			kecamatanData.setId(t.getId());
 			kecamatanData.setNama(t.getNama());
+			KabupatenData kabupatenData = t.getKabupaten() != null ?
+					convertKabupatenToKabupatenData(t.getKabupaten()):null;
+			kecamatanData.setKabupaten(kabupatenData);
 		}
 		
 		return kecamatanData;
@@ -1612,6 +1636,19 @@ public class DataConverter {
 		}
 		
 		return kategoriProdukData;
+	}
+	
+	public PenanggungJawabData convertPenanggungJawabToPenanggungJawabData(PenanggungJawab t) {
+		PenanggungJawabData penanggungJawabData = new PenanggungJawabData();
+		
+		if(t != null) {
+			penanggungJawabData.setId(t.getId());
+			penanggungJawabData.setPerson(convertPersonToPersonData(t.getPerson()));
+			penanggungJawabData.setPemrakarsa(convertRegisterPerusahaanToRegisterPerusahaanData(t.getRegisterPerusahaan()));
+			penanggungJawabData.setJabatan(convertJabatanToJabatanData(t.getJabatan()));
+		}
+		
+		return penanggungJawabData;
 	}
 	
 	/*----------id generator function---------------*/

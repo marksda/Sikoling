@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.log;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
@@ -17,33 +17,33 @@ public class StatusFlowLogServices implements IStatusFlowLogServices {
 	}
 
 	@Override
-	public StatusFlowLog save(StatusFlowLog statusFlowLog) {
-		return statusFlowLogRepository.save(statusFlowLog);
+	public StatusFlowLog save(StatusFlowLog t) throws IOException {
+		return statusFlowLogRepository.save(t);
 	}
 
 	@Override
-	public StatusFlowLog update(StatusFlowLog statusFlowLog) {
-		return statusFlowLogRepository.update(statusFlowLog);
+	public StatusFlowLog update(StatusFlowLog t) {
+		return statusFlowLogRepository.update(t);
 	}
 
 	@Override
-	public StatusFlowLog updateById(String id, StatusFlowLog statusFlowLog) {
-		return statusFlowLogRepository.updateById(id, statusFlowLog);
+	public StatusFlowLog updateId(String idLama, StatusFlowLog t) throws IOException {
+		return statusFlowLogRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return statusFlowLogRepository.delete(id);
+	public StatusFlowLog delete(StatusFlowLog t) throws IOException {
+		return statusFlowLogRepository.delete(t);
 	}
 
 	@Override
-	public List<StatusFlowLog> getDaftarStatusFlowLog(QueryParamFilters queryParamFilters) {
-		return statusFlowLogRepository.getDaftarStatusFlowLog(queryParamFilters);
+	public List<StatusFlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
+		return statusFlowLogRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return statusFlowLogRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return statusFlowLogRepository.getJumlahData(queryParamFilters);
 	}
-
+	
 }

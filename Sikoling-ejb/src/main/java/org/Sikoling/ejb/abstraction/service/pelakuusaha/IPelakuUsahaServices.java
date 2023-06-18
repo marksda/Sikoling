@@ -1,23 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
 public interface IPelakuUsahaServices {
-	List<PelakuUsaha> getALL();
-	PelakuUsaha save(PelakuUsaha pelakuUsaha);
-	PelakuUsaha update(PelakuUsaha pelakuUsaha);
-	PelakuUsaha updateById(String id, PelakuUsaha pelakuUsaha);
-	DeleteResponse delete(String id);
-//	List<PelakuUsaha> getAllByPage(Integer page, Integer pageSize);
-//	List<PelakuUsaha> getByNama(String nama);
-//	List<PelakuUsaha> getByNamaAndPage(String nama, Integer page, Integer pageSize);
-//	List<PelakuUsaha> getByKategoriPelakuUsaha(KategoriPelakuUsaha kategoriPelakuUsaha);
-//	List<PelakuUsaha> getByKategoriPelakuUsahaAndPage(KategoriPelakuUsaha kategoriPelakuUsaha, Integer page, Integer pageSize);
-	List<PelakuUsaha> getDaftarPelakuUsaha(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	PelakuUsaha save(PelakuUsaha t) throws IOException;
+	PelakuUsaha update(PelakuUsaha t);
+	PelakuUsaha updateId(String idLama, PelakuUsaha t) throws IOException;
+	PelakuUsaha delete(PelakuUsaha t) throws IOException;
+	List<PelakuUsaha> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

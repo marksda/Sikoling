@@ -1,17 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.kecamatan;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
 public interface IKecamatanService {
-	Kecamatan save(Kecamatan kecamatan, String idKabupaten);
-	Kecamatan update(Kecamatan kecamatan, String idKabupaten);
-	List<Kecamatan> getAll();
-	List<Kecamatan> getAllByPage(Integer page, Integer pageSize);
-	List<Kecamatan> getByNama(String nama);
-	List<Kecamatan> getByNamaAndPage(String nama, Integer page, Integer pageSize);	
-	List<Kecamatan> getByKabupaten(String idKabupaten);
-	List<Kecamatan> getByKabupatenAndPage(String idKabupaten, Integer page, Integer pageSize);
-	List<Kecamatan> getByKabupatenAndNama(String idKabupaten, String nama);
-	List<Kecamatan> getByKabupatenAndNamaAndPage(String idKabupaten, String nama, Integer page, Integer pageSize);
+	Kecamatan save(Kecamatan t) throws IOException;
+	Kecamatan update(Kecamatan t);
+	Kecamatan updateId(String idLama, Kecamatan t) throws IOException;
+	Kecamatan delete(Kecamatan t) throws IOException;
+	List<Kecamatan> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

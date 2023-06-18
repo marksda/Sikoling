@@ -11,20 +11,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_flow_log")
-@NamedQueries({
-	@NamedQuery(name="FlowLogData.findAll", query="SELECT p FROM FlowLogData p"),
-	@NamedQuery(name="FlowLogData.findByIdPengakses", 
-		query="SELECT d FROM FlowLogData d WHERE d.pengaksesData.id = :idPengakses"),
-	@NamedQuery(name="FlowLogData.findByIdKategoriLog", 
-		query="SELECT d FROM FlowLogData d WHERE d.kategoriLogData.id = :idKategoriLog"),
-})
 public class FlowLogData implements Serializable {
 
 	private static final long serialVersionUID = 6708500898590911457L;

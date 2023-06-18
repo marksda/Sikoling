@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.pelakuusaha;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -17,40 +17,33 @@ public class PelakuUsahaService implements IPelakuUsahaServices {
 	}
 
 	@Override
-	public List<PelakuUsaha> getALL() {
-		return pelakuUsahaRepository.getAll();
+	public PelakuUsaha save(PelakuUsaha t) throws IOException {
+		return pelakuUsahaRepository.save(t);
 	}
 
 	@Override
-	public PelakuUsaha save(PelakuUsaha pelakuUsaha) {
-		return pelakuUsahaRepository.save(pelakuUsaha);
+	public PelakuUsaha update(PelakuUsaha t) {
+		return pelakuUsahaRepository.update(t);
 	}
 
 	@Override
-	public PelakuUsaha update(PelakuUsaha pelakuUsaha) {
-		return pelakuUsahaRepository.save(pelakuUsaha);
+	public PelakuUsaha updateId(String idLama, PelakuUsaha t) throws IOException {
+		return pelakuUsahaRepository.updateId(idLama, t);
+	}
+
+	@Override
+	public PelakuUsaha delete(PelakuUsaha t) throws IOException {
+		return pelakuUsahaRepository.delete(t);
+	}
+
+	@Override
+	public List<PelakuUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
+		return pelakuUsahaRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return pelakuUsahaRepository.getJumlahData(queryParamFilters);
 	}
 	
-	@Override
-	public PelakuUsaha updateById(String id, PelakuUsaha pelakuUsaha) {
-		return pelakuUsahaRepository.updateById(id, pelakuUsaha);
-	}
-
-	@Override
-	public DeleteResponse delete(String id) {
-		return pelakuUsahaRepository.delete(id);
-	}
-
-	
-	@Override
-	public List<PelakuUsaha> getDaftarPelakuUsaha(QueryParamFilters queryParamFilters) {
-		return pelakuUsahaRepository.getDaftarPelakuUsaha(queryParamFilters);
-	}
-	
-
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return pelakuUsahaRepository.getCount(queryParamFilters);
-	}
-
 }

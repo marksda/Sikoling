@@ -1,16 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.log;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
 
 public interface IFlowLogService {
-	DeleteResponse delete(String id);
-	FlowLog save(FlowLog t);
+	FlowLog save(FlowLog t) throws IOException;
 	FlowLog update(FlowLog t);
-	List<FlowLog> getDaftarFlowLog(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	FlowLog updateId(String idLama, FlowLog t) throws IOException;
+	FlowLog delete(FlowLog t) throws IOException;
+	List<FlowLog> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

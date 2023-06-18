@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -30,38 +30,56 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 	}
 
 	@Override
-	public List<FlowLog> getAll() {
-		return entityManager.createNamedQuery("FlowLogData.findAll", FlowLogData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertFlowLogDataToFlowLog(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public FlowLog save(FlowLog t) {
-		FlowLogData flowLogData = dataConverter.convertFlowLogToFlowLogData(t);
-		entityManager.persist(flowLogData);
-		entityManager.flush();
-		return dataConverter.convertFlowLogDataToFlowLog(flowLogData);
+	public FlowLog save(FlowLog t) throws IOException {
+		try {
+			FlowLogData flowLogData = dataConverter.convertFlowLogToFlowLogData(t);
+			entityManager.persist(flowLogData);
+			entityManager.flush();
+			return dataConverter.convertFlowLogDataToFlowLog(flowLogData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public FlowLog update(FlowLog t) {
 		FlowLogData flowLogData = dataConverter.convertFlowLogToFlowLogData(t);
-		flowLogData = entityManager.merge(flowLogData);
-		return dataConverter.convertFlowLogDataToFlowLog(flowLogData);
+		FlowLogData dataTermerge = entityManager.merge(flowLogData);
+		entityManager.flush();
+		return dataConverter.convertFlowLogDataToFlowLog(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		FlowLogData flowLogData = entityManager.find(FlowLogData.class, id);
-		entityManager.remove(flowLogData);			
-		return new DeleteResponse(true, id);
+	public FlowLog updateId(String idLama, FlowLog t) throws IOException {
+		FlowLogData dataLama = entityManager.find(FlowLogData.class, idLama);
+		if(dataLama != null) {
+			FlowLogData flowLogData = dataConverter.convertFlowLogToFlowLogData(t);
+			entityManager.remove(dataLama);	
+			FlowLogData dataTermerge = entityManager.merge(flowLogData);
+			entityManager.flush();
+			return dataConverter.convertFlowLogDataToFlowLog(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 	
 	@Override
-	public List<FlowLog> getDaftarFlowLog(QueryParamFilters queryParamFilters) {
+	public FlowLog delete(FlowLog d) throws IOException {
+		FlowLogData flowLogData = entityManager.find(FlowLogData.class, d.getId());
+		if(flowLogData != null) {
+			entityManager.remove(flowLogData);		
+			entityManager.flush();
+			return dataConverter.convertFlowLogDataToFlowLog(flowLogData);
+		}
+		else {
+			throw new IOException("data sudah ada");
+		}
+	}
+	
+	@Override
+	public List<FlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<FlowLogData> cq = cb.createQuery(FlowLogData.class);
 		Root<FlowLogData> root = cq.from(FlowLogData.class);		
@@ -202,7 +220,7 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<FlowLogData> root = cq.from(FlowLogData.class);		

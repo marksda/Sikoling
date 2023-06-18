@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.log;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,11 +10,9 @@ import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -49,7 +48,7 @@ public class FlowLogController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) {
+	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) throws IOException {
 		Autority pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setPengakses(new AutorityDTO(pengakses));		
 		
@@ -65,26 +64,36 @@ public class FlowLogController {
 		return new FlowLogDTO(flowLogService.update(d.toFlowLog()));
 	}
 	
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(flowLogService.delete(id));
+	public FlowLogDTO updateId(@PathParam("idLama") String idLama, FlowLogDTO d) throws IOException {
+		return new FlowLogDTO(flowLogService.updateId(idLama, d.toFlowLog()));
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public FlowLogDTO delete(FlowLogDTO d) throws IOException {
+		return new FlowLogDTO(flowLogService.delete(d.toFlowLog()));
 	}
 	
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<FlowLogDTO> getDaftarFlowLog(@Context UriInfo info) {
+	public List<FlowLogDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return flowLogService.getDaftarFlowLog(queryParamFiltersDTO.toQueryParamFilters())
+		return flowLogService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> {
 					if(t.getKategoriFlowLog().getId().equals("1")) {
@@ -103,12 +112,12 @@ public class FlowLogController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountFlowLog(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return flowLogService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return flowLogService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 }

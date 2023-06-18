@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.pelakuusaha;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -37,30 +39,52 @@ public class PelakuUsahaController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public PelakuUsahaDTO save(PelakuUsahaDTO d) {		
-        return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toPelakuUsaha()));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public PelakuUsahaDTO save(PelakuUsahaDTO d) throws IOException {
+		return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toPelakuUsaha()));
     }
-		
-	@Path("{id}")
+	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PelakuUsahaDTO update(@PathParam("id") String id, PelakuUsahaDTO d) {		
-		return new PelakuUsahaDTO(pelakuUsahaServices.updateById(id, d.toPelakuUsaha()));
-	}		
-
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PelakuUsahaDTO update(PelakuUsahaDTO d) {		
+		return new PelakuUsahaDTO(pelakuUsahaServices.update(d.toPelakuUsaha()));
+	}
+	
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PelakuUsahaDTO updateId(@PathParam("idLama") String idLama, PelakuUsahaDTO d) throws IOException {
+		return new PelakuUsahaDTO(pelakuUsahaServices.updateId(idLama, d.toPelakuUsaha()));
+	}
+	
+	@DELETE
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PelakuUsahaDTO delete(PelakuUsahaDTO d) throws IOException {
+		return new PelakuUsahaDTO(pelakuUsahaServices.delete(d.toPelakuUsaha()));
+	}
+	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<PelakuUsahaDTO> getDaftarPelakuUsaha(@Context UriInfo info) {
+	public List<PelakuUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return pelakuUsahaServices.getDaftarPelakuUsaha(queryParamFiltersDTO.toQueryParamFilters())
+		return pelakuUsahaServices.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new PelakuUsahaDTO(t))
 				.collect(Collectors.toList());
@@ -71,13 +95,13 @@ public class PelakuUsahaController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarKategoriPelakuUsaha(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return pelakuUsahaServices.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return pelakuUsahaServices.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

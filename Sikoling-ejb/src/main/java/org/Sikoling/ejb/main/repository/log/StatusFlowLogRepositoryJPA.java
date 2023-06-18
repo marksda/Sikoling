@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -30,21 +30,17 @@ public class StatusFlowLogRepositoryJPA implements IStatusFlowLogRepository {
 	}
 
 	@Override
-	public List<StatusFlowLog> getAll() {
-		return entityManager.createNamedQuery("StatusFlowLogData", StatusFlowLogData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertStatusFlowLogDataToStatusFlowLog(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public StatusFlowLog save(StatusFlowLog t) {
-		StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
-		entityManager.persist(statusFlowLogData);
-		entityManager.flush();
+	public StatusFlowLog save(StatusFlowLog t) throws IOException {
+		try {
+			StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
+			entityManager.persist(statusFlowLogData);
+			entityManager.flush();
+			
+			return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
 		
-		return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
 	}
 
 	@Override
@@ -56,27 +52,35 @@ public class StatusFlowLogRepositoryJPA implements IStatusFlowLogRepository {
 	}
 
 	@Override
-	public StatusFlowLog updateById(String id, StatusFlowLog statusFlowLog) {
-		String idBaru = statusFlowLog.getId();
-		StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(statusFlowLog);
-		statusFlowLogData.setId(id);
-		statusFlowLogData = entityManager.merge(statusFlowLogData);
-		if(!idBaru.equals(id)) {
-			statusFlowLogData.setId(idBaru);
+	public StatusFlowLog updateId(String idLama, StatusFlowLog t) throws IOException {
+		StatusFlowLogData dataLama = entityManager.find(StatusFlowLogData.class, idLama);
+		if(dataLama != null) {
+			StatusFlowLogData skalaUsahaData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
+			entityManager.remove(dataLama);	
+			StatusFlowLogData dataTermerge = entityManager.merge(skalaUsahaData);
 			entityManager.flush();
+			return dataConverter.convertStatusFlowLogDataToStatusFlowLog(dataTermerge);
 		}
-		return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		StatusFlowLogData statusFlowLogData = entityManager.find(StatusFlowLogData.class, id);
-		entityManager.remove(statusFlowLogData);	
-		return new DeleteResponse(true, id);
+	public StatusFlowLog delete(StatusFlowLog t) throws IOException {
+		StatusFlowLogData statusFlowLogData = entityManager.find(StatusFlowLogData.class, t.getId());
+		if(statusFlowLogData != null) {
+			entityManager.remove(statusFlowLogData);	
+			entityManager.flush();
+			return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public List<StatusFlowLog> getDaftarStatusFlowLog(QueryParamFilters queryParamFilters) {
+	public List<StatusFlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<StatusFlowLogData> cq = cb.createQuery(StatusFlowLogData.class);
 		Root<StatusFlowLogData> root = cq.from(StatusFlowLogData.class);		
@@ -151,7 +155,7 @@ public class StatusFlowLogRepositoryJPA implements IStatusFlowLogRepository {
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<StatusFlowLogData> root = cq.from(StatusFlowLogData.class);		

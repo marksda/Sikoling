@@ -1,14 +1,8 @@
 package org.Sikoling.ejb.abstraction.repository;
 
-import java.util.List;
-
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.Filter;
-import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import java.io.IOException;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 
 public interface IKategoriLogRepository extends IRepository<KategoriFlowLog> {
-	DeleteResponse delete(String id);
-	List<KategoriFlowLog> getDaftarKategoriLog(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	KategoriFlowLog updateId(String idLama, KategoriFlowLog t) throws IOException;
 }

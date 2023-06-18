@@ -1,11 +1,8 @@
 package org.Sikoling.ejb.abstraction.repository;
 
-import java.util.List;
-
+import java.io.IOException;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 
-public interface IPenanggungJawabRepository extends IRepository2<PenanggungJawab, String> {
-	List<PenanggungJawab> getAllByPage(Integer page, Integer pageSize);
-	List<PenanggungJawab> getByNama(String nama);
-	List<PenanggungJawab> getByNamaAndPage(String nama, Integer page, Integer pageSize);
+public interface IPenanggungJawabRepository extends IRepository<PenanggungJawab> {
+	PenanggungJawab updateId(String idLama, PenanggungJawab t) throws IOException;
 }

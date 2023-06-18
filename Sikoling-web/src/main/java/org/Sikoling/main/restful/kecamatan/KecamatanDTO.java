@@ -4,20 +4,24 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.main.restful.kabupaten.KabupatenDTO;
 
 public class KecamatanDTO implements Serializable {
 
 	private static final long serialVersionUID = 7449068860478766279L;
 	private String id;
 	private String nama;
+	private KabupatenDTO kabupaten;
 		
 	public KecamatanDTO() {		
 	}
 	
-	public KecamatanDTO(Kecamatan kecamatan) {
-		if(kecamatan != null) {
-			this.id = kecamatan.getId();
-			this.nama = kecamatan.getNama();
+	public KecamatanDTO(Kecamatan t) {
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+			this.kabupaten = t.getKabupaten() != null ?
+					new KabupatenDTO(t.getKabupaten()):null;
 		}		
 	}
 
@@ -35,6 +39,14 @@ public class KecamatanDTO implements Serializable {
 
 	public void setNama(String nama) {
 		this.nama = nama;
+	}
+
+	public KabupatenDTO getKabupaten() {
+		return kabupaten;
+	}
+
+	public void setKabupaten(KabupatenDTO kabupaten) {
+		this.kabupaten = kabupaten;
 	}
 
 	public static long getSerialversionuid() {
@@ -82,7 +94,11 @@ public class KecamatanDTO implements Serializable {
 	}
 	
 	public Kecamatan toKecamatan() {
-		return new Kecamatan(id, nama);
+		return new Kecamatan(
+				id, 
+				nama,
+				kabupaten != null ? kabupaten.toKabupaten():null
+				);
 	}
 
 }

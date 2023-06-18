@@ -4,16 +4,10 @@ import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="master.tbl_kategori_model_perizinan")
-@NamedQueries({
-	@NamedQuery(name="ModelPerizinanData.findAll", query="SELECT p FROM ModelPerizinanData p"),
-	@NamedQuery(name="ModelPerizinanData.findByQueryNama", query="SELECT p FROM ModelPerizinanData p WHERE p.nama LIKE :nama")
-})
 public class ModelPerizinanData implements Serializable {
 
 	private static final long serialVersionUID = 2331489181647860142L;
@@ -56,6 +50,4 @@ public class ModelPerizinanData implements Serializable {
 		return serialVersionUID;
 	}
 	
-	
-
 }

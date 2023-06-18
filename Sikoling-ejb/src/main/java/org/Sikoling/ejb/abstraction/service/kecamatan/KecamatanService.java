@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.abstraction.service.kecamatan;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 
 public class KecamatanService implements IKecamatanService {
@@ -14,55 +17,33 @@ public class KecamatanService implements IKecamatanService {
 	}
 
 	@Override
-	public Kecamatan save(Kecamatan kecamatan, String idKabupaten) {
-		return kecamatanRepository.save(kecamatan, idKabupaten);
+	public Kecamatan save(Kecamatan t) throws IOException {
+		return kecamatanRepository.save(t);
 	}
 
 	@Override
-	public Kecamatan update(Kecamatan kecamatan, String idKabupaten) {
-		return kecamatanRepository.update(kecamatan, idKabupaten);
+	public Kecamatan update(Kecamatan t) {
+		return kecamatanRepository.update(t);
 	}
 
 	@Override
-	public List<Kecamatan> getAll() {
-		return kecamatanRepository.getAll();
-	}
-	
-	@Override
-	public List<Kecamatan> getAllByPage(Integer page, Integer pageSize) {
-		return kecamatanRepository.getAllByPage(page, pageSize);
+	public Kecamatan updateId(String idLama, Kecamatan t) throws IOException {
+		return kecamatanRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public List<Kecamatan> getByNama(String nama) {
-		return kecamatanRepository.getByNama(nama);
+	public Kecamatan delete(Kecamatan t) throws IOException {
+		return kecamatanRepository.delete(t);
 	}
 
 	@Override
-	public List<Kecamatan> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kecamatanRepository.getByNamaAndPage(nama, page, pageSize);
+	public List<Kecamatan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kecamatanRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<Kecamatan> getByKabupaten(String idKabupaten) {
-		return kecamatanRepository.getByKabupaten(idKabupaten);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kecamatanRepository.getJumlahData(queryParamFilters);
 	}
 
-	@Override
-	public List<Kecamatan> getByKabupatenAndPage(String idKabupaten, Integer page, Integer pageSize) {
-		return kecamatanRepository.getByKabupatenAndPage(idKabupaten, page, pageSize);
-	}
-
-	@Override
-	public List<Kecamatan> getByKabupatenAndNama(String idKabupaten, String nama) {
-		return kecamatanRepository.getByKabupatenAndNama(idKabupaten, nama);
-	}
-
-	@Override
-	public List<Kecamatan> getByKabupatenAndNamaAndPage(String idKabupaten, String nama, Integer page,
-			Integer pageSize) {
-		return kecamatanRepository.getByKabupatenAndNamaAndPage(idKabupaten, nama, page, pageSize);
-	}
-
-	
 }

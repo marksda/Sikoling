@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.log;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
@@ -20,14 +20,9 @@ public class FlowLogRepositoryEJB implements IFlowLogRepository {
 
 	@Inject
 	private FlowLogRepositoryJPA flowLogRepository;
-	
-	@Override
-	public List<FlowLog> getAll() {
-		return flowLogRepository.getAll();
-	}
 
 	@Override
-	public FlowLog save(FlowLog t) {
+	public FlowLog save(FlowLog t) throws IOException {
 		return flowLogRepository.save(t);
 	}
 
@@ -37,18 +32,23 @@ public class FlowLogRepositoryEJB implements IFlowLogRepository {
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return flowLogRepository.delete(id);
-	}
-	
-	@Override
-	public List<FlowLog> getDaftarFlowLog(QueryParamFilters queryParamFilters) {
-		return flowLogRepository.getDaftarFlowLog(queryParamFilters);
-	}
-	
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return flowLogRepository.getCount(queryParamFilters);
+	public FlowLog delete(FlowLog t) throws IOException {
+		return flowLogRepository.delete(t);
 	}
 
+	@Override
+	public List<FlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
+		return flowLogRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return flowLogRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public FlowLog updateId(String idLama, FlowLog t) throws IOException {
+		return flowLogRepository.updateId(idLama, t);
+	}
+		
 }

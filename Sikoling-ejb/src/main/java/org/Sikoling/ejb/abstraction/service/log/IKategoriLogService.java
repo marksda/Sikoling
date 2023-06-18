@@ -1,17 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.log;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 
 public interface IKategoriLogService {
-	List<KategoriFlowLog> getAll();
-	DeleteResponse delete(String id);
-	KategoriFlowLog save(KategoriFlowLog t);
+	KategoriFlowLog save(KategoriFlowLog t) throws IOException;
 	KategoriFlowLog update(KategoriFlowLog t);
-	List<KategoriFlowLog> getDaftarKategoriLog(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	KategoriFlowLog updateId(String idLama, KategoriFlowLog t) throws IOException;
+	KategoriFlowLog delete(KategoriFlowLog t) throws IOException;
+	List<KategoriFlowLog> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

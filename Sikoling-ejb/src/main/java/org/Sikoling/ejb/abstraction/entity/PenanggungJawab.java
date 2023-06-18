@@ -9,12 +9,13 @@ public class PenanggungJawab implements Serializable {
 	private final String id;
 	private final Person person;
 	private final Jabatan jabatan;
+	private final RegisterPerusahaan registerPerusahaan;
 	
-	public PenanggungJawab(String id, Person person, Jabatan jabatan) {
-		super();
+	public PenanggungJawab(String id, Person person, Jabatan jabatan, RegisterPerusahaan registerPerusahaan) {
 		this.id = id;
 		this.person = person;
 		this.jabatan = jabatan;
+		this.registerPerusahaan = registerPerusahaan;
 	}
 	
 	public String getId() {
@@ -29,6 +30,10 @@ public class PenanggungJawab implements Serializable {
 		return jabatan;
 	}
 	
+	public RegisterPerusahaan getRegisterPerusahaan() {
+		return registerPerusahaan;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -71,6 +76,5 @@ public class PenanggungJawab implements Serializable {
 	public String toString() {
 		return "PenanggungJawab{" + "nik=" + person.getNik() + ", nama=" + person.getNama() + ", jabatan=" 
 				+ jabatan.getNama() + ", noHandphone=" + person.getKontak().getTelepone() + "}";
-	}
-                                                                                                                                   				
+	}                                                                                                          				
 }

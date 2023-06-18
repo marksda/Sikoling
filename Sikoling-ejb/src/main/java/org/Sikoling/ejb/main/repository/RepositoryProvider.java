@@ -73,8 +73,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KecamatanRepositoryJPA getKecamatanRepositoryJPA(EntityManager entityManager) {
-		return new KecamatanRepositoryJPA(entityManager);
+	public KecamatanRepositoryJPA getKecamatanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new KecamatanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
@@ -103,8 +103,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public PenanggungJawabRepositoryJPA getPenanggungJawabRepositoryJPA(EntityManager entityManager) {
-		return new PenanggungJawabRepositoryJPA(entityManager);
+	public PenanggungJawabRepositoryJPA getPenanggungJawabRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new PenanggungJawabRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

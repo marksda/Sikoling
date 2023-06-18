@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.modelperizinan;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -39,10 +39,12 @@ public class ModelPerizinanController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public ModelPerizinanDTO save(ModelPerizinanDTO modelPerizinanDTO) {
-        return new ModelPerizinanDTO(modelPerizinanService.save(modelPerizinanDTO.toModelPerizinan()));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public ModelPerizinanDTO save(ModelPerizinanDTO d) throws IOException {
+		return new ModelPerizinanDTO(modelPerizinanService.save(d.toModelPerizinan()));
     }
-		
+	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -52,11 +54,23 @@ public class ModelPerizinanController {
 		return new ModelPerizinanDTO(modelPerizinanService.update(d.toModelPerizinan()));
 	}
 	
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(modelPerizinanService.delete(id));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public ModelPerizinanDTO updateId(@PathParam("idLama") String idLama, ModelPerizinanDTO d) throws IOException {
+		return new ModelPerizinanDTO(modelPerizinanService.updateId(idLama, d.toModelPerizinan()));
+	}
+	
+	@DELETE
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public ModelPerizinanDTO delete(ModelPerizinanDTO d) throws IOException {
+		return new ModelPerizinanDTO(modelPerizinanService.delete(d.toModelPerizinan()));
 	}
 	
 	@GET
@@ -64,13 +78,13 @@ public class ModelPerizinanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<ModelPerizinanDTO> getDaftarModelPerizinan(@Context UriInfo info) {
+	public List<ModelPerizinanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return modelPerizinanService.getDaftarModelPerizinan(queryParamFiltersDTO.toQueryParamFilters())
+		return modelPerizinanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new ModelPerizinanDTO(t))
 				.collect(Collectors.toList());
@@ -81,13 +95,13 @@ public class ModelPerizinanController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarModelPerizinan(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return modelPerizinanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return modelPerizinanService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

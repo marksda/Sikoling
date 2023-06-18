@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.main.repository.pelakuusaha;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,10 +9,10 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -31,53 +32,56 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 	}
 	
 	@Override
-	public List<PelakuUsaha> getAll() {
-		return entityManager.createNamedQuery("PelakuUsahaData.findAll", PelakuUsahaData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertPelakuUsahaDataToPelakuUsaha(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public PelakuUsaha save(PelakuUsaha t) {
-		PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);
-		entityManager.persist(pelakuUsahaData);
-		entityManager.flush();
-		
-		return dataConverter.convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
-	}
-	
-	@Override
-	public DeleteResponse delete(String id) {
-		PelakuUsahaData pelakuUsahaData = entityManager.find(PelakuUsahaData.class, id);
-		entityManager.remove(pelakuUsahaData);
-		return new DeleteResponse(true, id);
-	}
-		
-	@Override
-	public PelakuUsaha update(PelakuUsaha t) {
-		PelakuUsahaData detailPelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);
-		detailPelakuUsahaData = entityManager.merge(detailPelakuUsahaData);
-		return dataConverter.convertPelakuUsahaDataToPelakuUsaha(detailPelakuUsahaData);
-	}
-
-	@Override
-	public PelakuUsaha updateById(String id, PelakuUsaha pelakuUsaha) {
-		String idBaru = pelakuUsaha.getId();
-		PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(pelakuUsaha);
-		pelakuUsahaData.setId(id);
-		pelakuUsahaData = entityManager.merge(pelakuUsahaData);
-		
-		if(!idBaru.equals(id)) {
-			pelakuUsahaData.setId(idBaru);
+	public PelakuUsaha save(PelakuUsaha t) throws IOException {
+		try {
+			PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);
+			entityManager.persist(pelakuUsahaData);
+			entityManager.flush();			
+			return dataConverter.convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
 		}
 		
-		return dataConverter.convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
 	}
 	
 	@Override
-	public List<PelakuUsaha> getDaftarPelakuUsaha(QueryParamFilters queryParamFilters) {
+	public PelakuUsaha update(PelakuUsaha t) {
+		PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);
+		PelakuUsahaData dataTermerge = entityManager.merge(pelakuUsahaData);	
+		entityManager.flush();
+		return dataConverter.convertPelakuUsahaDataToPelakuUsaha(dataTermerge);
+	}
+
+	@Override
+	public PelakuUsaha updateId(String idLama, PelakuUsaha t) throws IOException {
+		PelakuUsahaData dataLama = entityManager.find(PelakuUsahaData.class, idLama);
+		if(dataLama != null) {
+			PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);
+			entityManager.remove(dataLama);	
+			PelakuUsahaData dataTermerge = entityManager.merge(pelakuUsahaData);
+			entityManager.flush();
+			return dataConverter.convertPelakuUsahaDataToPelakuUsaha(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+
+	@Override
+	public PelakuUsaha delete(PelakuUsaha t) throws IOException {
+		PelakuUsahaData pelakuUsahaData = entityManager.find(PelakuUsahaData.class, t.getId());
+		if(pelakuUsahaData != null) {
+			entityManager.remove(pelakuUsahaData);	
+			entityManager.flush();
+			return dataConverter.convertPelakuUsahaDataToPelakuUsaha(pelakuUsahaData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+	
+	@Override
+	public List<PelakuUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<PelakuUsahaData> cq = cb.createQuery(PelakuUsahaData.class);
 		Root<PelakuUsahaData> root = cq.from(PelakuUsahaData.class);		
@@ -185,7 +189,7 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<PelakuUsahaData> root = cq.from(PelakuUsahaData.class);		

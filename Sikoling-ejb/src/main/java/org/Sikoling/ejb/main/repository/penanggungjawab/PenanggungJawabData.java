@@ -9,10 +9,6 @@ import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 @Entity
 @Table(name="master.tbl_penanggung_jawab")
-@NamedQueries({
-@NamedQuery(name="PenanggungJawabData.findAll", query="SELECT p FROM PenanggungJawabData p"),
-@NamedQuery(name="PenanggungJawabData.findByNama", query="SELECT p FROM PenanggungJawabData p WHERE p.person.nama LIKE :nama"),
-})
 public class PenanggungJawabData implements Serializable {
 	
 	private static final long serialVersionUID = 6630651928270252860L;

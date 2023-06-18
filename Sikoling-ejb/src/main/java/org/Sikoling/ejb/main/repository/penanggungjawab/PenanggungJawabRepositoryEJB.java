@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.main.repository.penanggungjawab;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -17,36 +20,38 @@ import jakarta.inject.Inject;
 public class PenanggungJawabRepositoryEJB implements IPenanggungJawabRepository {
 	
 	@Inject
-	private PenanggungJawabRepositoryJPA penanggungJawabRepositoryJPA;
+	private PenanggungJawabRepositoryJPA penanggungJawabRepository;
 
 	@Override
-	public List<PenanggungJawab> getAll() {		
-		return penanggungJawabRepositoryJPA.getAll();
+	public PenanggungJawab save(PenanggungJawab t) throws IOException {
+		return penanggungJawabRepository.save(t);
 	}
 
 	@Override
-	public PenanggungJawab save(PenanggungJawab t, String idPemrakarsa) {
-		return penanggungJawabRepositoryJPA.save(t, idPemrakarsa);
+	public PenanggungJawab update(PenanggungJawab t) {
+		return penanggungJawabRepository.update(t);
 	}
 
 	@Override
-	public PenanggungJawab update(PenanggungJawab t, String idPemrakarsa) {
-		return penanggungJawabRepositoryJPA.update(t, idPemrakarsa);
+	public PenanggungJawab delete(PenanggungJawab t) throws IOException {
+		return penanggungJawabRepository.delete(t);
 	}
 
 	@Override
-	public List<PenanggungJawab> getAllByPage(Integer page, Integer pageSize) {
-		return penanggungJawabRepositoryJPA.getAllByPage(page, pageSize);
+	public List<PenanggungJawab> getDaftarData(QueryParamFilters queryParamFilters) {
+		return penanggungJawabRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<PenanggungJawab> getByNama(String nama) {
-		return penanggungJawabRepositoryJPA.getByNama(nama);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return penanggungJawabRepository.getJumlahData(queryParamFilters);
 	}
 
 	@Override
-	public List<PenanggungJawab> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return penanggungJawabRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
+	public PenanggungJawab updateId(String idLama, PenanggungJawab t) throws IOException {
+		return penanggungJawabRepository.updateId(idLama, t);
 	}
 
+	
+	
 }

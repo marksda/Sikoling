@@ -1,18 +1,17 @@
 package org.Sikoling.ejb.main.repository.log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 import org.Sikoling.ejb.abstraction.repository.IKategoriLogRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,40 +29,58 @@ public class KategoriLogRepositoryJPA implements IKategoriLogRepository {
 		this.dataConverter = dataConverter;
 	}
 	
-
 	@Override
-	public List<KategoriFlowLog> getAll() {
-		return entityManager.createNamedQuery("KategoriLogData.findAll", KategoriLogData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public KategoriFlowLog save(KategoriFlowLog t) {
-		KategoriLogData kategoriLogData = dataConverter.convertKategoriFlowLogToKategoriFlowLogData(t);
-		entityManager.persist(kategoriLogData);
-		entityManager.flush();
-		return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(kategoriLogData);
+	public KategoriFlowLog save(KategoriFlowLog t) throws IOException {
+		try {
+			KategoriLogData kategoriLogData = dataConverter.convertKategoriFlowLogToKategoriFlowLogData(t);
+			entityManager.persist(kategoriLogData);
+			entityManager.flush();
+			return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(kategoriLogData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public KategoriFlowLog update(KategoriFlowLog t) {
 		KategoriLogData kategoriLogData = dataConverter.convertKategoriFlowLogToKategoriFlowLogData(t);
-		kategoriLogData = entityManager.merge(kategoriLogData);
-		return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(kategoriLogData);
+		KategoriLogData dataTermerge = entityManager.merge(kategoriLogData);
+		entityManager.flush();
+		return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		KategoriLogData kategoriLogData = entityManager.find(KategoriLogData.class, id);
-		entityManager.remove(kategoriLogData);			
-		return new DeleteResponse(true, id);
+	public KategoriFlowLog updateId(String idLama, KategoriFlowLog t) throws IOException {
+		KategoriLogData dataLama = entityManager.find(KategoriLogData.class, idLama);
+		if(dataLama != null) {
+			KategoriLogData skalaUsahaData = dataConverter.convertKategoriFlowLogToKategoriFlowLogData(t);
+			entityManager.remove(dataLama);	
+			KategoriLogData dataTermerge = entityManager.merge(skalaUsahaData);
+			entityManager.flush();
+			return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public List<KategoriFlowLog> getDaftarKategoriLog(QueryParamFilters queryParamFilters) {
+	public KategoriFlowLog delete(KategoriFlowLog t) throws IOException {
+		KategoriLogData kategoriLogData = entityManager.find(KategoriLogData.class, t.getId());
+		if(kategoriLogData != null) {
+			entityManager.remove(kategoriLogData);	
+			entityManager.flush();
+			return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(kategoriLogData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+
+
+	@Override
+	public List<KategoriFlowLog> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<KategoriLogData> cq = cb.createQuery(KategoriLogData.class);
 		Root<KategoriLogData> root = cq.from(KategoriLogData.class);		
@@ -136,11 +153,9 @@ public class KategoriLogRepositoryJPA implements IKategoriLogRepository {
 				.map(d -> dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(d))
 				.collect(Collectors.toList());
 	}
-
-
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<KategoriLogData> root = cq.from(KategoriLogData.class);		

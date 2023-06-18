@@ -1,17 +1,18 @@
 package org.Sikoling.ejb.main.repository.modelperizinan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,39 +31,56 @@ public class ModelPerizinanRepositoryJPA implements IModelPerizinanRepository {
 	}
 	
 	@Override
-	public List<ModelPerizinan> getAll() {
-		return entityManager.createNamedQuery("ModelPerizinanData.findAll", ModelPerizinanData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertModelPerizinanDataToModelPerizinan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public ModelPerizinan save(ModelPerizinan t) {
-		ModelPerizinanData modelPerizinanData = dataConverter.convertModelPerizinanToModelPerizinanData(t);
-		entityManager.persist(modelPerizinanData);
-		entityManager.flush();
-		return dataConverter.convertModelPerizinanDataToModelPerizinan(modelPerizinanData);
+	public ModelPerizinan save(ModelPerizinan t) throws IOException {
+		try {
+			ModelPerizinanData modelPerizinanData = dataConverter.convertModelPerizinanToModelPerizinanData(t);
+			entityManager.persist(modelPerizinanData);
+			entityManager.flush();
+			return dataConverter.convertModelPerizinanDataToModelPerizinan(modelPerizinanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public ModelPerizinan update(ModelPerizinan t) {
 		ModelPerizinanData modelPerizinanData = dataConverter.convertModelPerizinanToModelPerizinanData(t);
-		modelPerizinanData = entityManager.merge(modelPerizinanData);
-		return dataConverter.convertModelPerizinanDataToModelPerizinan(modelPerizinanData);
+		ModelPerizinanData dataTermerge = entityManager.merge(modelPerizinanData);
+		entityManager.flush();
+		return dataConverter.convertModelPerizinanDataToModelPerizinan(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		ModelPerizinanData modelPerizinanData = entityManager.find(ModelPerizinanData.class, id);
-		entityManager.remove(modelPerizinanData);
-		return new DeleteResponse(true, id);
+	public ModelPerizinan updateId(String idLama, ModelPerizinan t) throws IOException {
+		ModelPerizinanData dataLama = entityManager.find(ModelPerizinanData.class, idLama);
+		if(dataLama != null) {
+			ModelPerizinanData modelPerizinanData = dataConverter.convertModelPerizinanToModelPerizinanData(t);
+			entityManager.remove(dataLama);	
+			ModelPerizinanData dataTermerge = entityManager.merge(modelPerizinanData);
+			entityManager.flush();
+			return dataConverter.convertModelPerizinanDataToModelPerizinan(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
+	@Override
+	public ModelPerizinan delete(ModelPerizinan t) throws IOException {
+		ModelPerizinanData modelPerizinanData = entityManager.find(ModelPerizinanData.class, t.getId());
+		if(modelPerizinanData != null) {
+			entityManager.remove(modelPerizinanData);	
+			entityManager.flush();
+			return dataConverter.convertModelPerizinanDataToModelPerizinan(modelPerizinanData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
 	
 	@Override
-	public List<ModelPerizinan> getDaftarModelPerizinan(QueryParamFilters queryParamFilters) {
+	public List<ModelPerizinan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<ModelPerizinanData> cq = cb.createQuery(ModelPerizinanData.class);
 		Root<ModelPerizinanData> root = cq.from(ModelPerizinanData.class);		
@@ -146,10 +164,9 @@ public class ModelPerizinanRepositoryJPA implements IModelPerizinanRepository {
 				.map(d -> dataConverter.convertModelPerizinanDataToModelPerizinan(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<ModelPerizinanData> root = cq.from(ModelPerizinanData.class);		

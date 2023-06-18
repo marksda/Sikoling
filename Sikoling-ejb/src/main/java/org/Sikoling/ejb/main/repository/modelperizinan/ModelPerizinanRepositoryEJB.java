@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.modelperizinan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -20,14 +20,9 @@ public class ModelPerizinanRepositoryEJB implements IModelPerizinanRepository {
 
 	@Inject
 	private ModelPerizinanRepositoryJPA modelPerizinanRepository;
-	
-	@Override
-	public List<ModelPerizinan> getAll() {
-		return modelPerizinanRepository.getAll();
-	}
 
 	@Override
-	public ModelPerizinan save(ModelPerizinan t) {
+	public ModelPerizinan save(ModelPerizinan t) throws IOException {
 		return modelPerizinanRepository.save(t);
 	}
 
@@ -37,20 +32,25 @@ public class ModelPerizinanRepositoryEJB implements IModelPerizinanRepository {
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return modelPerizinanRepository.delete(id);
+	public ModelPerizinan delete(ModelPerizinan t) throws IOException {
+		return modelPerizinanRepository.delete(t);
 	}
 
-	
 	@Override
-	public List<ModelPerizinan> getDaftarModelPerizinan(QueryParamFilters queryParamFilters) {
-		return modelPerizinanRepository.getDaftarModelPerizinan(queryParamFilters);
+	public List<ModelPerizinan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return modelPerizinanRepository.getDaftarData(queryParamFilters);
 	}
 
-	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return modelPerizinanRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return modelPerizinanRepository.getJumlahData(queryParamFilters);
 	}
 
+	@Override
+	public ModelPerizinan updateId(String idLama, ModelPerizinan t) throws IOException {
+		return modelPerizinanRepository.updateId(idLama, t);
+	}
+	
+	
+	
 }
