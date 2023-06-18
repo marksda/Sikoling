@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.kategoripelakuusaha;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -17,7 +17,7 @@ public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices 
 	}
 
 	@Override
-	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) {
+	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) throws IOException {
 		return kategoriPelakuUsahaRepository.save(t);
 	}
 
@@ -25,29 +25,25 @@ public class KategoriPelakuUsahaService implements IKategoriPelakuUsahaServices 
 	public KategoriPelakuUsaha update(KategoriPelakuUsaha t) {
 		return kategoriPelakuUsahaRepository.update(t);
 	}
-	
+
 	@Override
-	public KategoriPelakuUsaha updateById(String id, KategoriPelakuUsaha kategoriPelakuUsaha) {
-		return kategoriPelakuUsahaRepository.updateById(id, kategoriPelakuUsaha);
+	public KategoriPelakuUsaha updateId(String idLama, KategoriPelakuUsaha t) throws IOException {
+		return kategoriPelakuUsahaRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return kategoriPelakuUsahaRepository.delete(id);
+	public KategoriPelakuUsaha delete(KategoriPelakuUsaha t) throws IOException {
+		return kategoriPelakuUsahaRepository.delete(t);
 	}
 
-	
 	@Override
-	public List<KategoriPelakuUsaha> getDaftarKategoriPelakuUsaha(QueryParamFilters queryParamFilters) {
-		return kategoriPelakuUsahaRepository.getDaftarKategoriPelakuUsaha(queryParamFilters);
+	public List<KategoriPelakuUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriPelakuUsahaRepository.getDaftarData(queryParamFilters);
 	}
 
-	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return kategoriPelakuUsahaRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriPelakuUsahaRepository.getJumlahData(queryParamFilters);
 	}
-
-	
 
 }

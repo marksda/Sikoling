@@ -4,20 +4,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
+import org.Sikoling.main.restful.propinsi.PropinsiDTO;
 
 public class KabupatenDTO implements Serializable {
 
 	private static final long serialVersionUID = -4317489216038458871L;
 	private String id;
 	private String nama;
+	private PropinsiDTO propinsi;
 	
 	public KabupatenDTO() {
 	}
 	
-	public KabupatenDTO(Kabupaten kabupaten) {
-		if(kabupaten != null) {
-			this.id = kabupaten.getId();
-			this.nama = kabupaten.getNama();
+	public KabupatenDTO(Kabupaten t) {
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+			this.propinsi = t.getPropinsi() != null ? new PropinsiDTO(t.getPropinsi()):null;
 		}		
 	}
 
@@ -82,7 +85,11 @@ public class KabupatenDTO implements Serializable {
 	}
 	
 	public Kabupaten toKabupaten() {
-		return new Kabupaten(id, nama);
+		return new Kabupaten(
+				id, 
+				nama,
+				propinsi != null ? propinsi.toPropinsi(): null
+				);
 	}
 
 }

@@ -15,6 +15,7 @@ import org.Sikoling.ejb.abstraction.entity.Jabatan;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
+import org.Sikoling.ejb.abstraction.entity.KategoriProduk;
 import org.Sikoling.ejb.abstraction.entity.Kecamatan;
 import org.Sikoling.ejb.abstraction.entity.Kontak;
 import org.Sikoling.ejb.abstraction.entity.ModelPerizinan;
@@ -67,6 +68,7 @@ import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.jabatan.JabatanData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kategoripelakuusaha.KategoriPelakuUsahaData;
+import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.log.FlowLogData;
@@ -164,7 +166,11 @@ public class DataConverter {
 		Kabupaten kabupaten = null;
 		
 		if(d != null) {
-			kabupaten = new Kabupaten(d.getId(), d.getNama());
+			kabupaten = new Kabupaten(
+					d.getId(), 
+					d.getNama(),
+					d.getPropinsi() != null ? convertPropinsiDataToPropinsi(d.getPropinsi()):null
+					);
 		}
 		
 		return kabupaten;		
@@ -886,6 +892,16 @@ public class DataConverter {
 		return bidangUsaha;
 	}
 	
+	public KategoriProduk convertKategoriProdukDataToKategoriProduk(KategoriProdukData d) {
+		KategoriProduk kategoriProduk = null;
+		
+		if(d != null) {
+			kategoriProduk = new KategoriProduk(d.getId(), d.getNama());
+		}
+		
+		return kategoriProduk;
+	}
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -919,6 +935,8 @@ public class DataConverter {
 			kabupatenData = new KabupatenData();
 			kabupatenData.setId(t.getId());
 			kabupatenData.setNama(t.getNama());
+			PropinsiData propinsiData = t.getPropinsi() != null ? convertPropinsiToPropinsiData(t.getPropinsi()):null;
+			kabupatenData.setPropinsi(propinsiData);
 		}
 		
 		return kabupatenData;
@@ -1583,6 +1601,17 @@ public class DataConverter {
 		}
 		
 		return bidangUsahaData;
+	}
+	
+	public KategoriProdukData convertKategoriProdukToKategoriProdukData(KategoriProduk t) {
+		KategoriProdukData kategoriProdukData = new KategoriProdukData();
+		
+		if(t != null) {
+			kategoriProdukData.setId(t.getId());
+			kategoriProdukData.setNama(t.getNama());
+		}
+		
+		return kategoriProdukData;
 	}
 	
 	/*----------id generator function---------------*/

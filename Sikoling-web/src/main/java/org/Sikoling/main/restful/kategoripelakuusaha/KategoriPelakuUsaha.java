@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.kategoripelakuusaha;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.kategoripelakuusaha.IKategoriPelakuUsahaServices;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -38,30 +38,38 @@ public class KategoriPelakuUsaha {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public KategoriPelakuUsahaDTO saveKategori(KategoriPelakuUsahaDTO d) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public KategoriPelakuUsahaDTO save(KategoriPelakuUsahaDTO d) throws IOException {
         return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.save(d.toKategoriPelakuUsaha()));
     }
 
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KategoriPelakuUsahaDTO updateKategori(KategoriPelakuUsahaDTO d) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KategoriPelakuUsahaDTO update(KategoriPelakuUsahaDTO d) {
 		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.update(d.toKategoriPelakuUsaha()));
 	}
 	
-	@Path("id/{id}")
+	@Path("id/{idLama}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KategoriPelakuUsahaDTO updateKategoriById(@PathParam("id") String id, KategoriPelakuUsahaDTO d) {
-		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.updateById(id, d.toKategoriPelakuUsaha()));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KategoriPelakuUsahaDTO updateKategoriId(@PathParam("idLama") String idLama, KategoriPelakuUsahaDTO d) throws IOException {
+		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.updateId(idLama, d.toKategoriPelakuUsaha()));
 	}
 	
-	@Path("{id}")
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(kategoriPelakuUsahaService.delete(id));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KategoriPelakuUsahaDTO delete(KategoriPelakuUsahaDTO d) throws IOException {
+		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.delete(d.toKategoriPelakuUsaha()));
 	}
 	
 	@GET
@@ -69,13 +77,13 @@ public class KategoriPelakuUsaha {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<KategoriPelakuUsahaDTO> getDaftarKategoriPelakuUsaha(@Context UriInfo info) {
+	public List<KategoriPelakuUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return kategoriPelakuUsahaService.getDaftarKategoriPelakuUsaha(queryParamFiltersDTO.toQueryParamFilters())
+		return kategoriPelakuUsahaService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new KategoriPelakuUsahaDTO(t))
 				.collect(Collectors.toList());
@@ -86,13 +94,13 @@ public class KategoriPelakuUsaha {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarKategoriPelakuUsaha(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return kategoriPelakuUsahaService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return kategoriPelakuUsahaService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

@@ -1,11 +1,11 @@
 package org.Sikoling.ejb.main.repository.kategoripelakuusaha;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.KategoriPelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -30,54 +30,59 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 	}
 
 	@Override
-	public List<KategoriPelakuUsaha> getAll() {
-		return entityManager.createNamedQuery("KategoriPelakuUsahaData.findAll", KategoriPelakuUsahaData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(d))
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) {
-		KategoriPelakuUsahaData kategoriPelakuUsahaData = dataConverter.convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t);
-		entityManager.persist(kategoriPelakuUsahaData);
-		entityManager.flush();
-		return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(kategoriPelakuUsahaData);
+	public KategoriPelakuUsaha save(KategoriPelakuUsaha t) throws IOException {
+		try {
+			KategoriPelakuUsahaData kategoriPelakuUsahaData = dataConverter.convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t);
+			entityManager.persist(kategoriPelakuUsahaData);
+			entityManager.flush();
+			return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(kategoriPelakuUsahaData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public KategoriPelakuUsaha update(KategoriPelakuUsaha t) {
 		KategoriPelakuUsahaData kategoriPelakuUsahaData = dataConverter.convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t);
-		kategoriPelakuUsahaData = entityManager.merge(kategoriPelakuUsahaData);
-		return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(kategoriPelakuUsahaData);
+		KategoriPelakuUsahaData dataTermerge = entityManager.merge(kategoriPelakuUsahaData);
+		entityManager.flush();
+		return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		KategoriPelakuUsahaData kategoriPelakuUsahaData = entityManager.find(KategoriPelakuUsahaData.class, id);
-		entityManager.remove(kategoriPelakuUsahaData);
+	public KategoriPelakuUsaha updateId(String idLama, KategoriPelakuUsaha t) throws IOException {
+		KategoriPelakuUsahaData dataLama = entityManager.find(KategoriPelakuUsahaData.class, idLama);
 		
-		return new DeleteResponse(true, id);
-	}
-
-	@Override
-	public KategoriPelakuUsaha updateById(String id, KategoriPelakuUsaha kategoriPelakuUsaha) {
-		String idBaru = kategoriPelakuUsaha.getId();
-		KategoriPelakuUsahaData kategoriPelakuUsahaData = dataConverter.convertKategoriPelakuUsahaToKategoriPelakuUsahaData(kategoriPelakuUsaha);
-		kategoriPelakuUsahaData.setId(id);
-		kategoriPelakuUsahaData = entityManager.merge(kategoriPelakuUsahaData);
-		
-		if(!idBaru.equals(id)) {
-			kategoriPelakuUsahaData.setId(idBaru);
+		if(dataLama != null) {
+			KategoriPelakuUsahaData kategoriPelakuUsahaData = dataConverter.convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t);
+			entityManager.remove(dataLama);
 			entityManager.flush();
+			KategoriPelakuUsahaData dataTermerge = entityManager.merge(kategoriPelakuUsahaData);
+			return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(dataTermerge);
 		}
-		
-		return null;
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 	
 	@Override
-	public List<KategoriPelakuUsaha> getDaftarKategoriPelakuUsaha(QueryParamFilters queryParamFilters) {
+	public KategoriPelakuUsaha delete(KategoriPelakuUsaha d) throws IOException {
+		KategoriPelakuUsahaData kategoriPelakuUsahaData = entityManager.find(KategoriPelakuUsahaData.class, d.getId());
+		
+		if(kategoriPelakuUsahaData != null) {
+			entityManager.remove(kategoriPelakuUsahaData);
+			entityManager.flush();
+			return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(kategoriPelakuUsahaData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+		
+	}
+	
+	@Override
+	public List<KategoriPelakuUsaha> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<KategoriPelakuUsahaData> cq = cb.createQuery(KategoriPelakuUsahaData.class);
 		Root<KategoriPelakuUsahaData> root = cq.from(KategoriPelakuUsahaData.class);		
@@ -165,8 +170,9 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 				.collect(Collectors.toList());
 	}
 	
+	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<KategoriPelakuUsahaData> root = cq.from(KategoriPelakuUsahaData.class);		

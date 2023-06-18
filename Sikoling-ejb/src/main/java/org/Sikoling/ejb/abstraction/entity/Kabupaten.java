@@ -8,16 +8,13 @@ public class Kabupaten implements Serializable {
 	private static final long serialVersionUID = -1725097099726145918L;
 	private final String id;
 	private final String nama;
+	private final Propinsi propinsi;	
 	
-	public Kabupaten(String id) {
-		this.id = id;
-		this.nama = null;
-	}
-	
-	public Kabupaten(String id, String nama) {
+	public Kabupaten(String id, String nama, Propinsi propinsi) {
 		this.id = id;
 		this.nama = nama;
-	}	
+		this.propinsi = propinsi;
+	}
 
 	public String getId() {
 		return id;
@@ -25,6 +22,10 @@ public class Kabupaten implements Serializable {
 
 	public String getNama() {
 		return nama;
+	}
+
+	public Propinsi getPropinsi() {
+		return propinsi;
 	}
 
 	public static long getSerialversionuid() {

@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.main.repository.kategoriproduk;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.KategoriProduk;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -16,36 +19,36 @@ import jakarta.inject.Inject;
 public class KategoriProdukRepositoryEJB implements IKategoriProdukRepository {
 	
 	@Inject
-	private KategoriProdukRepositoryJPA kategoriProdukRepositoryJPA;
+	private KategoriProdukRepositoryJPA kategoriProdukRepository;
 
 	@Override
-	public List<KategoriProduk> getAll() {
-		return kategoriProdukRepositoryJPA.getAll();
-	}
-
-	@Override
-	public KategoriProduk save(KategoriProduk t) {
-		return kategoriProdukRepositoryJPA.save(t);
+	public KategoriProduk save(KategoriProduk t) throws IOException {
+		return kategoriProdukRepository.save(t);
 	}
 
 	@Override
 	public KategoriProduk update(KategoriProduk t) {
-		return kategoriProdukRepositoryJPA.update(t);
+		return kategoriProdukRepository.update(t);
 	}
 
 	@Override
-	public List<KategoriProduk> getAllByPage(Integer page, Integer pageSize) {
-		return kategoriProdukRepositoryJPA.getAllByPage(page, pageSize);
+	public KategoriProduk delete(KategoriProduk t) throws IOException {
+		return kategoriProdukRepository.delete(t);
 	}
 
 	@Override
-	public List<KategoriProduk> getByQueryNama(String nama) {
-		return kategoriProdukRepositoryJPA.getByQueryNama(nama);
+	public List<KategoriProduk> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriProdukRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<KategoriProduk> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kategoriProdukRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriProdukRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public KategoriProduk updateId(String idLama, KategoriProduk t) throws IOException {
+		return kategoriProdukRepository.updateId(idLama, t);
 	}
 
 }

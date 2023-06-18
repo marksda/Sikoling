@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.main.repository.kabupaten;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -16,57 +19,36 @@ import jakarta.inject.Inject;
 public class KabupatenRepositoryEJB implements IKabupatenRepository {
 	
 	@Inject
-	private KabupatenRepositoryJPA kabupatenRepositoryJPA;
+	private KabupatenRepositoryJPA kabupatenRepository;
 
 	@Override
-	public List<Kabupaten> getAll() {
-		return kabupatenRepositoryJPA.getAll();
+	public Kabupaten save(Kabupaten t) throws IOException {
+		return kabupatenRepository.save(t);
 	}
 
 	@Override
-	public Kabupaten save(Kabupaten t, String s) {
-		return kabupatenRepositoryJPA.save(t, s);
+	public Kabupaten update(Kabupaten t) {
+		return kabupatenRepository.update(t);
 	}
 
 	@Override
-	public Kabupaten update(Kabupaten t, String s) {
-		return kabupatenRepositoryJPA.update(t, s);
+	public Kabupaten delete(Kabupaten t) throws IOException {
+		return kabupatenRepository.delete(t);
 	}
 
 	@Override
-	public List<Kabupaten> getAllByPage(Integer page, Integer pageSize) {
-		return kabupatenRepositoryJPA.getAllByPage(page, pageSize);
+	public List<Kabupaten> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kabupatenRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<Kabupaten> getByNama(String nama) {
-		return kabupatenRepositoryJPA.getByNama(nama);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kabupatenRepository.getJumlahData(queryParamFilters);
 	}
 
 	@Override
-	public List<Kabupaten> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return kabupatenRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
-	}
-
-	@Override
-	public List<Kabupaten> getByPropinsi(String idPropinsi) {
-		return kabupatenRepositoryJPA.getByPropinsi(idPropinsi);
-	}
-
-	@Override
-	public List<Kabupaten> getByPropinsiAndPage(String idPropinsi, Integer page, Integer pageSize) {
-		return kabupatenRepositoryJPA.getByPropinsiAndPage(idPropinsi, page, pageSize);
-	}
-
-	@Override
-	public List<Kabupaten> getByPropinsiAndNama(String idPropinsi, String nama) {
-		return kabupatenRepositoryJPA.getByPropinsiAndNama(idPropinsi, nama);
-	}
-
-	@Override
-	public List<Kabupaten> getByPropinsiAndNamaAndPage(String idPropinsi, String nama, Integer page,
-			Integer pageSize) {
-		return kabupatenRepositoryJPA.getByPropinsiAndNamaAndPage(idPropinsi, nama, page, pageSize);
+	public Kabupaten updateId(String idLama, Kabupaten t) throws IOException {
+		return kabupatenRepository.updateId(idLama, t);
 	}
 
 }

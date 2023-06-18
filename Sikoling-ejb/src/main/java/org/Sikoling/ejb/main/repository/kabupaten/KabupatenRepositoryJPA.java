@@ -1,142 +1,203 @@
 package org.Sikoling.ejb.main.repository.kabupaten;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Kabupaten;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
-import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
-
+import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
-public class KabupatenRepositoryJPA implements IKabupatenRepository {
-	
+public class KabupatenRepositoryJPA implements IKabupatenRepository {	
 	private final EntityManager entityManager;
+	private final DataConverter dataConverter;
 
-	public KabupatenRepositoryJPA(EntityManager entityManager) {
+	public KabupatenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
+		this.dataConverter = dataConverter;
 	}
 
 	@Override
-	public Kabupaten save(Kabupaten t, String s) {
-		KabupatenData kabupatenData = convertKabupatenToKabupatenData(t, s);
-		entityManager.persist(kabupatenData);
-		entityManager.flush();		
-		return convertKabupatenDataToKabupaten(kabupatenData);
+	public Kabupaten save(Kabupaten t) throws IOException {
+		try {
+			KabupatenData kabupatenData = dataConverter.convertKabupatenToKabupatenData(t);
+			entityManager.persist(kabupatenData);
+			entityManager.flush();		
+			return dataConverter.convertKabupatenDataToKabupaten(kabupatenData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
-	public Kabupaten update(Kabupaten t, String s) {
-		KabupatenData kabupatenData = convertKabupatenToKabupatenData(t, s);
-		kabupatenData = entityManager.merge(kabupatenData);
-		return convertKabupatenDataToKabupaten(kabupatenData);
+	public Kabupaten update(Kabupaten t) {
+		KabupatenData kabupatenData = dataConverter.convertKabupatenToKabupatenData(t);
+		KabupatenData dataTermerge = entityManager.merge(kabupatenData);
+		entityManager.flush();
+		return dataConverter.convertKabupatenDataToKabupaten(dataTermerge);
 	}
 	
 	@Override
-	public List<Kabupaten> getAll() {
-		return entityManager.createNamedQuery("KabupatenData.findAll", KabupatenData.class)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
+	public Kabupaten updateId(String idLama, Kabupaten t) throws IOException {
+		KabupatenData dataLama = entityManager.find(KabupatenData.class, idLama);
+		if(dataLama != null) {
+			KabupatenData kabupatenData = dataConverter.convertKabupatenToKabupatenData(t);
+			entityManager.remove(dataLama);	
+			KabupatenData dataTermerge = entityManager.merge(kabupatenData);
+			entityManager.flush();
+			return dataConverter.convertKabupatenDataToKabupaten(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 	
 	@Override
-	public List<Kabupaten> getAllByPage(Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("KabupatenData.findAll", KabupatenData.class)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public List<Kabupaten> getByNama(String nama) {
-		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("KabupatenData.findByNama", KabupatenData.class)
-				.setParameter("nama", nama)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public List<Kabupaten> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("KabupatenData.findByNama", KabupatenData.class)
-				.setParameter("nama", nama)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public List<Kabupaten> getByPropinsi(String idPropinsi) {
-		return entityManager.createNamedQuery("KabupatenData.findByPropinsi", KabupatenData.class)
-				.setParameter("idPropinsi", idPropinsi)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
+	public Kabupaten delete(Kabupaten t) throws IOException {
+		KabupatenData kabupatenData = entityManager.find(KabupatenData.class, t.getId());
+		if(kabupatenData != null) {
+			entityManager.remove(kabupatenData);	
+			entityManager.flush();
+			return dataConverter.convertKabupatenDataToKabupaten(kabupatenData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public List<Kabupaten> getByPropinsiAndPage(String idPropinsi, Integer page, Integer pageSize) {
-		return entityManager.createNamedQuery("KabupatenData.findByPropinsi", KabupatenData.class)
-				.setParameter("idPropinsi", idPropinsi)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
+	public List<Kabupaten> getDaftarData(QueryParamFilters queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<KabupatenData> cq = cb.createQuery(KabupatenData.class);
+		Root<KabupatenData> root = cq.from(KabupatenData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "propinsi":
+				daftarPredicate.add(cb.equal(root.get("propinsi").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(root);
+		}
+		else {
+			cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		// sort clause
+		Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
+				
+		while (iterSort.hasNext()) {
+			SortOrder sort = (SortOrder) iterSort.next();
+			switch (sort.getFieldName()) {
+			case "id":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("id")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("id")));
+				}
+				break;
+			case "nama":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("nama")));
+				}
+				break;
+			case "propinsi":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("propinsi").get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("propinsi").get("nama")));
+				}
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		TypedQuery<KabupatenData> q = null;		
+		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
+			q = entityManager.createQuery(cq)
+					.setMaxResults(queryParamFilters.getPageSize())
+					.setFirstResult((queryParamFilters.getPageNumber()-1)*queryParamFilters.getPageSize());
+		}
+		else {
+			q = entityManager.createQuery(cq);
+		}
+		
+		return q.getResultList()
 				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
+				.map(d -> dataConverter.convertKabupatenDataToKabupaten(d))
 				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Kabupaten> getByPropinsiAndNama(String idPropinsi, String nama) {		
-		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("KabupatenData.findByPropinsiAndNama", KabupatenData.class)
-				.setParameter("nama", nama)
-				.setParameter("idPropinsi", idPropinsi)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public List<Kabupaten> getByPropinsiAndNamaAndPage(String idPropinsi, String nama, Integer page,
-			Integer pageSize) {
-		nama = "%" + nama +"%";
-		return entityManager.createNamedQuery("KabupatenData.findByPropinsiAndNama", KabupatenData.class)
-				.setParameter("nama", nama)
-				.setParameter("idPropinsi", idPropinsi)
-				.setMaxResults(pageSize)
-				.setFirstResult((page-1)*pageSize)
-				.getResultList()
-				.stream()
-				.map(t -> convertKabupatenDataToKabupaten(t))
-				.collect(Collectors.toList());
-	}
-	
-	private Kabupaten convertKabupatenDataToKabupaten(KabupatenData kabupatenData) {
-		return new Kabupaten(kabupatenData.getId(), kabupatenData.getNama());
-	}
-	
-	private KabupatenData convertKabupatenToKabupatenData(Kabupaten kabupaten, String idPropinsi) {
-		KabupatenData kabupatenData = new KabupatenData();
-		kabupatenData.setId(kabupaten.getId());
-		kabupatenData.setNama(kabupaten.getNama());
-		PropinsiData propinsiData = new PropinsiData();
-		propinsiData.setId(idPropinsi);
-		kabupatenData.setPropinsi(propinsiData);
-		return kabupatenData;
 	}
 		
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<KabupatenData> root = cq.from(KabupatenData.class);		
+		
+		// where clause
+		Iterator<Filter> iterFilter = queryParamFilters.iterator();
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
+		
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
+			
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "nama":
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
+				break;
+			case "propinsi":
+				daftarPredicate.add(cb.equal(root.get("propinsi").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
+		}
+		
+		if(daftarPredicate.isEmpty()) {
+			cq.select(cb.count(root));
+		}
+		else {
+			cq.select(cb.count(root)).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
+		}
+		
+		return entityManager.createQuery(cq).getSingleResult();
+	}
 }

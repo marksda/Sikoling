@@ -1,21 +1,32 @@
 package org.Sikoling.main.restful.kabupaten;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.kabupaten.IKabupatenService;
+import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
@@ -25,110 +36,72 @@ public class KabupatenController {
 	@Inject
 	private IKabupatenService kabupatenService;
 	
-	@Path("{idPropinsi}")
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KabupatenDTO save(KabupatenDTO kabupatenDTO, @PathParam("idKabupaten") String idPropinsi) {
-		return new KabupatenDTO(kabupatenService.save(kabupatenDTO.toKabupaten(), idPropinsi));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KabupatenDTO save(KabupatenDTO d) throws IOException {
+		return new KabupatenDTO(kabupatenService.save(d.toKabupaten()));
 	}
 	
-	@Path("{idPropinsi}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public KabupatenDTO update(KabupatenDTO kabupatenDTO, @PathParam("idKabupaten") String idPropinsi) {
-		return new KabupatenDTO(kabupatenService.update(kabupatenDTO.toKabupaten(), idPropinsi));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KabupatenDTO update(KabupatenDTO d) {
+		return new KabupatenDTO(kabupatenService.update(d.toKabupaten()));
+	}
+	
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KabupatenDTO updateId(@PathParam("idLama") String idLama, KabupatenDTO d) throws IOException {
+		return new KabupatenDTO(kabupatenService.updateId(idLama, d.toKabupaten()));
+	}
+	
+	@DELETE
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KabupatenDTO delete(KabupatenDTO d) throws IOException {
+		return new KabupatenDTO(kabupatenService.delete(d.toKabupaten()));
 	}
 	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getAll() {
-		return kabupatenService.getAll()
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<KabupatenDTO> getDaftarData(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return kabupatenService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(k -> new KabupatenDTO(k))
+				.map(t -> new KabupatenDTO(t))
 				.collect(Collectors.toList());
 	}
 	
-	@Path("page")
+	@Path("count")
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kabupatenService.getAllByPage(page, pageSize)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByNama(@QueryParam("nama") String nama) {
-		return kabupatenService.getByQueryNama(nama)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByNamAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
-			@QueryParam("pageSize") Integer pageSize) {
-		return kabupatenService.getByQueryNamAndPage(nama, page, pageSize)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("propinsi")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByIdPropinsi(@QueryParam("idPropinsi") String idPropinsi) {
-		return kabupatenService.getByIdPropinsi(idPropinsi)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("propinsi/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByIdPropinsiAndPage(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("page") Integer page, 
-			@QueryParam("pageSize") Integer pageSize) {
-		return kabupatenService.getByIdPropinsiAndPage(idPropinsi, page, pageSize)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("propinsi/nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByIdPropinsiAndNama(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("nama") String nama) {
-		return kabupatenService.getByIdPropinsiAndQueryNama(idPropinsi, nama)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("propinsi/nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<KabupatenDTO> getByIdPropinsiAndNamaAndPage(@QueryParam("idPropinsi") String idPropinsi, @QueryParam("nama") String nama,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return kabupatenService.getByIdPropinsiAndQueryNamaAndPage(idPropinsi, nama, page, pageSize)
-				.stream()
-				.map(k -> new KabupatenDTO(k))
-				.collect(Collectors.toList());
+    @Produces({MediaType.TEXT_PLAIN})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public Long getJumlahData(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return kabupatenService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

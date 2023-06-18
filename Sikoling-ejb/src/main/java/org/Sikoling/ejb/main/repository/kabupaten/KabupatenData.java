@@ -7,11 +7,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="master.tbl_kabupaten")
-@NamedQueries({
-@NamedQuery(name="KabupatenData.findAll", query="SELECT k FROM KabupatenData k"),
-@NamedQuery(name="KabupatenData.findByNama", query="SELECT k FROM KabupatenData k WHERE k.nama LIKE :nama"),
-@NamedQuery(name="KabupatenData.findByPropinsi", query="SELECT k FROM KabupatenData k WHERE k.propinsi.id = :idPropinsi"),
-@NamedQuery(name="KabupatenData.findByPropinsiAndNama", query="SELECT k FROM KabupatenData k WHERE k.nama LIKE :nama AND k.propinsi.id = :idPropinsi")})
 public class KabupatenData implements Serializable {
 	private static final long serialVersionUID = -7026002892763939209L;
 
@@ -21,7 +16,7 @@ public class KabupatenData implements Serializable {
 	@Column(name="nama")
 	private String nama;
 
-	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "propinsi", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private PropinsiData propinsi;
 
