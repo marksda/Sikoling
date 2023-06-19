@@ -1,17 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.person;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
 public interface IPersonService {
-	Person save(Person person);
-	Person update(Person person);
-	List<Person> getAll();
-	DeleteResponse delete(String id);
-	List<Person> getDaftarPerson(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	Person save(Person t) throws IOException;
+	Person update(Person t);
+	Person updateId(String idLama, Person t) throws IOException;
+	Person delete(Person t) throws IOException;
+	List<Person> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

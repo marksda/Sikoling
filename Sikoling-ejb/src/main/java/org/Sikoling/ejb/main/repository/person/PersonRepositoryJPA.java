@@ -1,17 +1,18 @@
 package org.Sikoling.ejb.main.repository.person;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,38 +31,55 @@ public class PersonRepositoryJPA implements IPersonRepository {
 	}
 
 	@Override
-	public Person save(Person t) {
-		PersonData personData = dataConverter.convertPersonToPersonData(t);
-		entityManager.persist(personData);
-		entityManager.flush();
-		return dataConverter.convertPersonDataToPerson(personData);
+	public Person save(Person t) throws IOException {
+		try {
+			PersonData personData = dataConverter.convertPersonToPersonData(t);
+			entityManager.persist(personData);
+			entityManager.flush();		
+			return dataConverter.convertPersonDataToPerson(personData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public Person update(Person t) {
 		PersonData personData = dataConverter.convertPersonToPersonData(t);
-		personData = entityManager.merge(personData);
-		return dataConverter.convertPersonDataToPerson(personData);
+		PersonData dataTermerge = entityManager.merge(personData);	
+		entityManager.flush();
+		return dataConverter.convertPersonDataToPerson(dataTermerge);
 	}
 
 	@Override
-	public List<Person> getAll() {
-		return entityManager.createNamedQuery("PersonData.findAll", PersonData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertPersonDataToPerson(d))
-				.collect(Collectors.toList());
+	public Person updateId(String idLama, Person t) throws IOException {
+		PersonData dataLama = entityManager.find(PersonData.class, idLama);
+		if(dataLama != null) {
+			PersonData personData = dataConverter.convertPersonToPersonData(t);
+			entityManager.remove(dataLama);	
+			PersonData dataTermerge = entityManager.merge(personData);
+			entityManager.flush();
+			return dataConverter.convertPersonDataToPerson(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		PersonData personData = entityManager.find(PersonData.class, id);
-		entityManager.remove(personData);			
-		return new DeleteResponse(true, id);
+	public Person delete(Person t) throws IOException {
+		PersonData personData = entityManager.find(PersonData.class, t.getNik());
+		if(personData != null) {
+			entityManager.remove(personData);	
+			entityManager.flush();
+			return dataConverter.convertPersonDataToPerson(personData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
-
+	
 	@Override
-	public List<Person> getDaftarPerson(QueryParamFilters queryParamFilters) {
+	public List<Person> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<PersonData> cq = cb.createQuery(PersonData.class);
 		Root<PersonData> root = cq.from(PersonData.class);
@@ -136,7 +154,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<PersonData> root = cq.from(PersonData.class);		

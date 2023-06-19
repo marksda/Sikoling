@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.person;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -19,40 +19,37 @@ import jakarta.inject.Inject;
 public class PersonRepositoryEJB implements IPersonRepository {
 	
 	@Inject
-	private PersonRepositoryJPA personRepositoryJPA;
+	private PersonRepositoryJPA personRepository;
 
 	@Override
-	public List<Person> getAll() {
-		return personRepositoryJPA.getAll();
-	}
-
-	@Override
-	public Person save(Person t) {
-		return personRepositoryJPA.save(t);
+	public Person save(Person t) throws IOException {
+		return personRepository.save(t);
 	}
 
 	@Override
 	public Person update(Person t) {
-		return personRepositoryJPA.update(t);
+		return personRepository.update(t);
+	}
+
+	@Override
+	public Person delete(Person t) throws IOException {
+		return personRepository.delete(t);
+	}
+
+	@Override
+	public List<Person> getDaftarData(QueryParamFilters queryParamFilters) {
+		return personRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return personRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public Person updateId(String idLama, Person t) throws IOException {
+		return personRepository.updateId(idLama, t);
 	}
 
 	
-	@Override
-	public DeleteResponse delete(String id) {
-		return personRepositoryJPA.delete(id);
-	}
-	
-
-	@Override
-	public List<Person> getDaftarPerson(QueryParamFilters queryParamFilters) {
-		return personRepositoryJPA.getDaftarPerson(queryParamFilters);
-	}
-	
-
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return personRepositoryJPA.getCount(queryParamFilters);
-	}
-
-
 }

@@ -3,10 +3,13 @@ package org.Sikoling.main.restful.files;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
@@ -168,7 +171,11 @@ public class FileController {
 				.concat("/")
 				.concat(fileKey);
 		
-		RegisterDokumen registerDokumen = registerDokumenService.getByIdRegisterDokumen(idRegDokumen);
+		List<Filter> filters = new ArrayList<>();
+		filters.add(new Filter("id", idRegDokumen));
+		QueryParamFilters queryParamFilters = new QueryParamFilters(0, 0, filters, null);
+		
+		RegisterDokumen registerDokumen = registerDokumenService.getDaftarData(queryParamFilters).get(0);
 		
 		RegisterDokumen registerDokumenBaru = new RegisterDokumen(
 				idRegDokumen, registerDokumen.getDokumen(), registerDokumen.getPerusahaan(), 

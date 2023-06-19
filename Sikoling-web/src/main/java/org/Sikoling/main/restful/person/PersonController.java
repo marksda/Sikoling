@@ -1,15 +1,14 @@
 package org.Sikoling.main.restful.person;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -39,24 +38,38 @@ public class PersonController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public PersonDTO save(PersonDTO personDTO) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PersonDTO save(PersonDTO personDTO) throws IOException {
 		return new PersonDTO(personService.save(personDTO.toPerson()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PersonDTO update(PersonDTO personDTO) {
 		return new PersonDTO(personService.update(personDTO.toPerson()));
 	}
 		
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(personService.delete(id));
+	public PersonDTO updateId(@PathParam("idLama") String idLama, PersonDTO d) throws IOException {
+		return new PersonDTO(personService.updateId(idLama, d.toPerson()));
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PersonDTO delete(PersonDTO d) throws IOException {
+		return new PersonDTO(personService.delete(d.toPerson()));
 	}
 	
 	@GET
@@ -64,13 +77,13 @@ public class PersonController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<PersonDTO> getDaftarPerson(@Context UriInfo info) {
+	public List<PersonDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return personService.getDaftarPerson(queryParamFiltersDTO.toQueryParamFilters())
+		return personService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new PersonDTO(t))
 				.collect(Collectors.toList());
@@ -87,7 +100,7 @@ public class PersonController {
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return personService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return personService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

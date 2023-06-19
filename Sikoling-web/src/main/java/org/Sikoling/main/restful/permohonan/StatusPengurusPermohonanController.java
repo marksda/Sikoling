@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.permohonan.IStatusPengurusPermohonanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -38,7 +38,9 @@ public class StatusPengurusPermohonanController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public StatusPengurusPermohonanDTO save(StatusPengurusPermohonanDTO d) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public StatusPengurusPermohonanDTO save(StatusPengurusPermohonanDTO d) throws IOException {
         return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.save(d.toStatusPengurusPermohonan()));
     }
 	
@@ -51,21 +53,23 @@ public class StatusPengurusPermohonanController {
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.update(d.toStatusPengurusPermohonan()));
 	}
 	
-	@Path("{id}")
 	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(statusPengurusPermohonanService.delete(id));
+	public StatusPengurusPermohonanDTO delete(StatusPengurusPermohonanDTO d) throws IOException {
+		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.delete(d.toStatusPengurusPermohonan()));
 	}
 
-	@Path("id/{id}")
+	@Path("id/{idLama}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public StatusPengurusPermohonanDTO updateById(@PathParam("id") String id, StatusPengurusPermohonanDTO d) {
-		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.updateById(id, d.toStatusPengurusPermohonan()));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public StatusPengurusPermohonanDTO updateById(@PathParam("idLama") String idLama, StatusPengurusPermohonanDTO d) throws IOException {
+		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.updateId(idLama, d.toStatusPengurusPermohonan()));
 	}	
 
 	@GET
@@ -73,13 +77,13 @@ public class StatusPengurusPermohonanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<StatusPengurusPermohonanDTO> getDaftarStatusPengurusPermohonan(@Context UriInfo info) {
+	public List<StatusPengurusPermohonanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return statusPengurusPermohonanService.getDaftarStatusPengurusPermohonan(queryParamFiltersDTO.toQueryParamFilters())
+		return statusPengurusPermohonanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new StatusPengurusPermohonanDTO(t))
 				.collect(Collectors.toList());
@@ -90,13 +94,13 @@ public class StatusPengurusPermohonanController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarStatusPengurusPermohonan(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return statusPengurusPermohonanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return statusPengurusPermohonanService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 		
 }
