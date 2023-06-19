@@ -1,9 +1,9 @@
 package org.Sikoling.ejb.abstraction.service.perusahaan;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
@@ -17,41 +17,33 @@ public class AutorityPerusahaanService implements IAutorityPerusahaanService {
 	}
 
 	@Override
-	public List<AutorityPerusahaan> getALL() {
-		return autorityPerusahaanRepository.getAll();
+	public AutorityPerusahaan save(AutorityPerusahaan t) throws IOException {
+		return autorityPerusahaanRepository.save(t);
 	}
 
 	@Override
-	public AutorityPerusahaan save(AutorityPerusahaan autorityPerusahaan) {
-		return autorityPerusahaanRepository.save(autorityPerusahaan);
+	public AutorityPerusahaan update(AutorityPerusahaan t) {
+		return autorityPerusahaanRepository.update(t);
 	}
 
 	@Override
-	public AutorityPerusahaan update(AutorityPerusahaan autorityPerusahaan) {
-		return autorityPerusahaanRepository.update(autorityPerusahaan);
+	public AutorityPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan t) throws IOException {
+		return autorityPerusahaanRepository.updateId(idLamaAutority, idLamaRegisterPerusahaan, t);
 	}
 
 	@Override
-	public DeleteResponse delete(String idAutority, String idRegisterPerusahaan) {
-		return autorityPerusahaanRepository.delete(idAutority, idRegisterPerusahaan);
+	public AutorityPerusahaan delete(AutorityPerusahaan t) throws IOException {
+		return autorityPerusahaanRepository.delete(t);
 	}
 
 	@Override
-	public List<AutorityPerusahaan> getDaftarAutorityPerusahaan(QueryParamFilters queryParamFilters) {
-		return autorityPerusahaanRepository.getDaftarAutorityPerusahaan(queryParamFilters);
+	public List<AutorityPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return autorityPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return autorityPerusahaanRepository.getCount(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return autorityPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
-
-	@Override
-	public AutorityPerusahaan updateById(String idLamaAutority, String idLamaRegisterPerusahaan,
-			AutorityPerusahaan dataBaru) {
-		return autorityPerusahaanRepository.updateById(idLamaAutority, idLamaRegisterPerusahaan, dataBaru);
-	}
-
 	
-
 }

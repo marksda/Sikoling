@@ -1,9 +1,9 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
@@ -22,12 +22,7 @@ public class AutorityPerusahaanRepositoryEJB implements IAutorityPerusahaanRepos
 	private AutorityPerusahaanRepositoryJPA autorityPerusahaanRepository;
 
 	@Override
-	public List<AutorityPerusahaan> getAll() {
-		return autorityPerusahaanRepository.getAll();
-	}
-
-	@Override
-	public AutorityPerusahaan save(AutorityPerusahaan t) {
+	public AutorityPerusahaan save(AutorityPerusahaan t) throws IOException {
 		return autorityPerusahaanRepository.save(t);
 	}
 
@@ -37,23 +32,26 @@ public class AutorityPerusahaanRepositoryEJB implements IAutorityPerusahaanRepos
 	}
 
 	@Override
-	public List<AutorityPerusahaan> getDaftarAutorityPerusahaan(QueryParamFilters queryParamFilters) {
-		return autorityPerusahaanRepository.getDaftarAutorityPerusahaan(queryParamFilters);
+	public AutorityPerusahaan delete(AutorityPerusahaan t) throws IOException {
+		return autorityPerusahaanRepository.delete(t);
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return autorityPerusahaanRepository.getCount(queryParamFilters);
+	public List<AutorityPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return autorityPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public DeleteResponse delete(String idAutority, String idRegisterPerusahaan) {
-		return autorityPerusahaanRepository.delete(idAutority, idRegisterPerusahaan);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return autorityPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
 
 	@Override
-	public AutorityPerusahaan updateById(String idLamaAutority, String idLamaRegisterPerusahaan,
-			AutorityPerusahaan dataBaru) {
-		return autorityPerusahaanRepository.updateById(idLamaAutority, idLamaRegisterPerusahaan, dataBaru);
+	public AutorityPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan t)
+			throws IOException {
+		return autorityPerusahaanRepository.updateId(idLamaAutority, idLamaRegisterPerusahaan, t);
 	}
+	
+	
+	
 }

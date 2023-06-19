@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.perusahaan;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.perusahaan.IAutorityPerusahaanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -38,7 +38,9 @@ public class AutorityPerusahaanController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public AutorityPerusahaanDTO save(AutorityPerusahaanDTO d) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public AutorityPerusahaanDTO save(AutorityPerusahaanDTO d) throws IOException {
         return new AutorityPerusahaanDTO(autorityPerusahaanService.save(d.toAutorityPerusahaan()));
     }
 	
@@ -55,18 +57,19 @@ public class AutorityPerusahaanController {
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public AutorityPerusahaanDTO updateById(@PathParam("idLamaAutority") String idLamaAutority,
-			@PathParam("idLamaRegisterPerusahaan") String idLamaRegisterPerusahaan, AutorityPerusahaanDTO d) {
-		return new AutorityPerusahaanDTO(autorityPerusahaanService.updateById(idLamaAutority, idLamaRegisterPerusahaan, d.toAutorityPerusahaan()));
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public AutorityPerusahaanDTO updateId(@PathParam("idLamaAutority") String idLamaAutority,
+			@PathParam("idLamaRegisterPerusahaan") String idLamaRegisterPerusahaan, AutorityPerusahaanDTO d) throws IOException {
+		return new AutorityPerusahaanDTO(autorityPerusahaanService.updateId(idLamaAutority, idLamaRegisterPerusahaan, d.toAutorityPerusahaan()));
 	}
 	
-	@Path("{idAutority}/{idRegisterPerusahaan}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("idAutority") String idAutority, @PathParam("idRegisterPerusahaan") String idRegisterPerusahaan) {
-		return new DeleteResponseDTO(autorityPerusahaanService.delete(idAutority, idRegisterPerusahaan));
+	public AutorityPerusahaanDTO delete(AutorityPerusahaanDTO d) throws IOException {
+		return new AutorityPerusahaanDTO(autorityPerusahaanService.delete(d.toAutorityPerusahaan()));
 	}
 
 	@GET
@@ -74,13 +77,13 @@ public class AutorityPerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<AutorityPerusahaanDTO> getDaftarAutorityPerusahaan(@Context UriInfo info) {
+	public List<AutorityPerusahaanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return autorityPerusahaanService.getDaftarAutorityPerusahaan(queryParamFiltersDTO.toQueryParamFilters())
+		return autorityPerusahaanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new AutorityPerusahaanDTO(t))
 				.collect(Collectors.toList());
@@ -91,13 +94,13 @@ public class AutorityPerusahaanController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarAutorityPerusahaan(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return autorityPerusahaanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return autorityPerusahaanService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }
