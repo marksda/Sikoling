@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
@@ -22,12 +22,7 @@ public class PosisiTahapPemberkasanRepositoryEJB implements IPosisiTahapPemberka
 	private PosisiTahapPemberkasanRepositoryJPA posisiTahapPemberkasanRepository;
 
 	@Override
-	public List<PosisiTahapPemberkasan> getAll() {
-		return posisiTahapPemberkasanRepository.getAll();
-	}
-
-	@Override
-	public PosisiTahapPemberkasan save(PosisiTahapPemberkasan t) {
+	public PosisiTahapPemberkasan save(PosisiTahapPemberkasan t) throws IOException {
 		return posisiTahapPemberkasanRepository.save(t);
 	}
 
@@ -37,26 +32,23 @@ public class PosisiTahapPemberkasanRepositoryEJB implements IPosisiTahapPemberka
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return posisiTahapPemberkasanRepository.delete(id);
+	public PosisiTahapPemberkasan delete(PosisiTahapPemberkasan t) throws IOException {
+		return posisiTahapPemberkasanRepository.delete(t);
 	}
 
-	
 	@Override
-	public PosisiTahapPemberkasan updateById(String id, PosisiTahapPemberkasan posisiTahapPemberkasan) {
-		return posisiTahapPemberkasanRepository.updateById(id, posisiTahapPemberkasan);
+	public List<PosisiTahapPemberkasan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return posisiTahapPemberkasanRepository.getDaftarData(queryParamFilters);
 	}
-	
 
 	@Override
-	public List<PosisiTahapPemberkasan> getDaftarPosisiTahapPemberkasan(QueryParamFilters queryParamFilters) {
-		return posisiTahapPemberkasanRepository.getDaftarPosisiTahapPemberkasan(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return posisiTahapPemberkasanRepository.getJumlahData(queryParamFilters);
 	}
-	
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return posisiTahapPemberkasanRepository.getCount(queryParamFilters);
+	public PosisiTahapPemberkasan updateId(String idLama, PosisiTahapPemberkasan t) throws IOException {
+		return posisiTahapPemberkasanRepository.updateId(idLama, t);
 	}
 
 }

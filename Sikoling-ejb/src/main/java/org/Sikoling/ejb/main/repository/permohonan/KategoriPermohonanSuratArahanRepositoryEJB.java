@@ -1,9 +1,11 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.permohonan.JenisPermohonanSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonanSuratArahan;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanSuratArahahanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -20,23 +22,33 @@ public class KategoriPermohonanSuratArahanRepositoryEJB implements IKategoriPerm
 	private KategoriPermohonanSuratArahanRepositoryJPA kategoriPermohonanSuratArahan;
 
 	@Override
-	public List<JenisPermohonanSuratArahan> getAll() {
-		return kategoriPermohonanSuratArahan.getAll();
-	}
-
-	@Override
-	public JenisPermohonanSuratArahan save(JenisPermohonanSuratArahan t) {
+	public KategoriPermohonanSuratArahan save(KategoriPermohonanSuratArahan t) throws IOException {
 		return kategoriPermohonanSuratArahan.save(t);
 	}
 
 	@Override
-	public JenisPermohonanSuratArahan update(JenisPermohonanSuratArahan t) {
+	public KategoriPermohonanSuratArahan update(KategoriPermohonanSuratArahan t) {
 		return kategoriPermohonanSuratArahan.update(t);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return kategoriPermohonanSuratArahan.delete(id);
+	public KategoriPermohonanSuratArahan delete(KategoriPermohonanSuratArahan t) throws IOException {
+		return kategoriPermohonanSuratArahan.delete(t);
 	}
-	
+
+	@Override
+	public List<KategoriPermohonanSuratArahan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriPermohonanSuratArahan.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriPermohonanSuratArahan.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public KategoriPermohonanSuratArahan updateId(String idLama, KategoriPermohonanSuratArahan t) throws IOException {
+		return kategoriPermohonanSuratArahan.updateId(idLama, t);
+	}
+
 }

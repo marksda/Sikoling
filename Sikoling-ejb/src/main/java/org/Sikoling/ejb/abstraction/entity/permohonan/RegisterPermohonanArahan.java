@@ -14,14 +14,14 @@ import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 public class RegisterPermohonanArahan extends RegisterPermohonan implements Serializable {
 	
 	private static final long serialVersionUID = -5728955961609566242L;
-	private final JenisPermohonanSuratArahan jenisPermohonanSuratArahan;
+	private final KategoriPermohonanSuratArahan jenisPermohonanSuratArahan;
 	private final String uraianKegiatan;
 	
 	public RegisterPermohonanArahan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
 			RegisterPerusahaan perusahaan, Autority pengurusPermohonan, StatusPengurusPermohonan statusPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
-			JenisPermohonanSuratArahan jenisPermohonanSuratArahan, String uraianKegiatan) {
+			KategoriPermohonanSuratArahan jenisPermohonanSuratArahan, String uraianKegiatan) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusPengurusPermohonan,
 				penanggungJawabPermohonan, pengirimBerkas, penerimaBerkas, statusFlowLog, daftarDokumenSyarat, daftarDokumenHasil);
 		this.jenisPermohonanSuratArahan = jenisPermohonanSuratArahan;
@@ -32,7 +32,7 @@ public class RegisterPermohonanArahan extends RegisterPermohonan implements Seri
 		return serialVersionUID;
 	}
 
-	public JenisPermohonanSuratArahan getJenisPermohonanSuratArahan() {
+	public KategoriPermohonanSuratArahan getJenisPermohonanSuratArahan() {
 		return jenisPermohonanSuratArahan;
 	}
 

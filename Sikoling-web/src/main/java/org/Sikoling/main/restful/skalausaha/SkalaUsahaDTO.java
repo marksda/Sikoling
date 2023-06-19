@@ -16,9 +16,11 @@ public class SkalaUsahaDTO implements Serializable {
 	}
 	
 	public SkalaUsahaDTO(SkalaUsaha t) {
-		this.id = t.getId();
-		this.nama = t.getNama();
-		this.singkatan = t.getSingkatan();
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+			this.singkatan = t.getSingkatan();
+		}		
 	}
 
 	public String getId() {

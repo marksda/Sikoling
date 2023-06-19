@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.permohonan;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,11 +15,9 @@ import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -41,7 +40,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Stateless
 @LocalBean
 @Path("register_permohonan")
-public class PermohonanController {
+public class RegisterPermohonanController {
 	@Inject
 	private IAutorityService authorityService;
 	
@@ -56,7 +55,7 @@ public class PermohonanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) {
+	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) throws IOException {
 		Autority pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		AutorityDTO pengurusPermohonanDto = new AutorityDTO(pengurusPermohonan);
 		d.setPengurusPermohonan(pengurusPermohonanDto);
@@ -110,26 +109,36 @@ public class PermohonanController {
 		return new RegisterPermohonanDTO(registerPermohonanService.update(d.toRegisterPermohonan()));
 	}
 	
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(registerPermohonanService.delete(id));
+	public RegisterPermohonanDTO updateId(@PathParam("idLama") String idLama, RegisterPermohonanDTO d) throws IOException {
+		return new RegisterPermohonanDTO(registerPermohonanService.updateId(idLama, d.toRegisterPermohonan()));
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterPermohonanDTO delete(RegisterPermohonanDTO d) throws IOException {
+		return new RegisterPermohonanDTO(registerPermohonanService.delete(d.toRegisterPermohonan()));
 	}
 	
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<RegisterPermohonanDTO> getDaftarPermohonan(@Context UriInfo info) {
+	public List<RegisterPermohonanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return registerPermohonanService.getDaftarPermohonan(queryParamFiltersDTO.toQueryParamFilters())
+		return registerPermohonanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new RegisterPermohonanDTO(t))
 				.collect(Collectors.toList());
@@ -140,13 +149,13 @@ public class PermohonanController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarPermohonan(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return registerPermohonanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return registerPermohonanService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 
 }

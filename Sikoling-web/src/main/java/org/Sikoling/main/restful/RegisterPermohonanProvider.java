@@ -14,7 +14,7 @@ import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
-import org.Sikoling.main.restful.permohonan.JenisPermohonanSuratArahanDTO;
+import org.Sikoling.main.restful.permohonan.KategoriPermohonanSuratArahanDTO;
 import org.Sikoling.main.restful.permohonan.KategoriPermohonanDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanArahanDTO;
@@ -70,7 +70,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		List<RegisterDokumenDTO> daftarDokumenSyarat = null;
 		List<RegisterDokumenDTO> daftarDokumenHasil = null;
 
-		JenisPermohonanSuratArahanDTO jenisPermohonanSuratArahanDTO = null;
+		KategoriPermohonanSuratArahanDTO jenisPermohonanSuratArahanDTO = null;
 		String uraianKegiatan = null;
 		
 		while (parser.hasNext()) {
@@ -91,7 +91,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 					event = parser.next();
 					try {
 						jsonObject = parser.getObject();
-						jenisPermohonanSuratArahanDTO = jsonb.fromJson(jsonObject.toString(), JenisPermohonanSuratArahanDTO.class);
+						jenisPermohonanSuratArahanDTO = jsonb.fromJson(jsonObject.toString(), KategoriPermohonanSuratArahanDTO.class);
 					} catch (Exception e) {
 						jenisPermohonanSuratArahanDTO = null;
 					}					
@@ -228,7 +228,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 			dt.setStatusFlowLog(statusFlowLogDTO);
 			dt.setDaftarDokumenSyarat(daftarDokumenSyarat);
 			dt.setDaftarDokumenHasil(daftarDokumenHasil);
-			dt.setJenisPermohonanSuratArahan(jenisPermohonanSuratArahanDTO);
+			dt.setKategoriPermohonanSuratArahan(jenisPermohonanSuratArahanDTO);
 			dt.setUraianKegiatan(uraianKegiatan);
 			registerPermohonanDTO = dt;
 			break;

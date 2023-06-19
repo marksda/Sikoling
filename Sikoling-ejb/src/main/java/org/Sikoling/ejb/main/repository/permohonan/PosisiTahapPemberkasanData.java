@@ -4,15 +4,10 @@ import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="master.tbl_posisi_tahap_pemberkasan")
-@NamedQueries({
-	@NamedQuery(name="PosisiTahapPemberkasanData.findAll", query="SELECT p FROM PosisiTahapPemberkasanData p")
-})
 public class PosisiTahapPemberkasanData implements Serializable {
 
 	private static final long serialVersionUID = -1953183406580036213L;

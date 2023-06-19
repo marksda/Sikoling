@@ -1,14 +1,15 @@
 package org.Sikoling.main.restful.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.permohonan.IKategoriPermohonanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -40,9 +41,9 @@ public class KategoriPermohonanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public KategoriPermohonanDTO save(KategoriPermohonanDTO d) {				
+    public KategoriPermohonanDTO save(KategoriPermohonanDTO d) throws IOException {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.save(d.toKategoriPermohonan()));
-	}
+    }
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
@@ -53,13 +54,23 @@ public class KategoriPermohonanController {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.update(d.toKategoriPermohonan()));
 	}
 	
-	@Path("{id}")
-	@DELETE
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(kategoriPermohonanService.delete(id));
+	public KategoriPermohonanDTO updateId(@PathParam("idLama") String idLama, KategoriPermohonanDTO d) throws IOException {
+		return new KategoriPermohonanDTO(kategoriPermohonanService.updateId(idLama, d.toKategoriPermohonan()));
+	}
+	
+	@DELETE
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public KategoriPermohonanDTO delete(KategoriPermohonanDTO d) throws IOException {
+		return new KategoriPermohonanDTO(kategoriPermohonanService.delete(d.toKategoriPermohonan()));
 	}
 	
 	@GET
@@ -67,13 +78,13 @@ public class KategoriPermohonanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<KategoriPermohonanDTO> getDaftarKategoriPermohonan(@Context UriInfo info) {
+	public List<KategoriPermohonanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return kategoriPermohonanService.getDaftarKategoriPermohonan(queryParamFiltersDTO.toQueryParamFilters())
+		return kategoriPermohonanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new KategoriPermohonanDTO(t))
 				.collect(Collectors.toList());
@@ -84,13 +95,13 @@ public class KategoriPermohonanController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarSkalaUsaha(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return kategoriPermohonanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return kategoriPermohonanService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

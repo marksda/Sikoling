@@ -6,20 +6,25 @@ import java.util.Objects;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.main.restful.jabatan.JabatanDTO;
 import org.Sikoling.main.restful.person.PersonDTO;
+import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 public class PenanggungJawabDTO implements Serializable {
 	private static final long serialVersionUID = 3847984353247321174L;
 	private String id;
 	private PersonDTO person;
 	private JabatanDTO jabatan;
+	private RegisterPerusahaanDTO registerPerusahaan;
 	
 	public PenanggungJawabDTO() {		
 	}
 	
-	public PenanggungJawabDTO(PenanggungJawab penanggungJawab) {
-		this.id = penanggungJawab.getId();
-		this.person = new PersonDTO(penanggungJawab.getPerson());
-		this.jabatan = new JabatanDTO(penanggungJawab.getJabatan());
+	public PenanggungJawabDTO(PenanggungJawab t) {
+		if(t != null) {
+			this.id = t.getId();
+			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()):null;
+			this.jabatan = t.getJabatan() != null ? new JabatanDTO(t.getJabatan()):null;
+			this.registerPerusahaan = t.getRegisterPerusahaan() != null ? new RegisterPerusahaanDTO(t.getRegisterPerusahaan()):null;
+		}		
 	}
 	
 	public PenanggungJawabDTO(String id, PersonDTO person, JabatanDTO jabatan) {
@@ -51,6 +56,14 @@ public class PenanggungJawabDTO implements Serializable {
 
 	public void setJabatan(JabatanDTO jabatan) {
 		this.jabatan = jabatan;
+	}
+
+	public RegisterPerusahaanDTO getRegisterPerusahaan() {
+		return registerPerusahaan;
+	}
+
+	public void setRegisterPerusahaan(RegisterPerusahaanDTO registerPerusahaan) {
+		this.registerPerusahaan = registerPerusahaan;
 	}
 
 	public static long getSerialversionuid() {
@@ -99,7 +112,12 @@ public class PenanggungJawabDTO implements Serializable {
 	}
 
 	public PenanggungJawab toPenanggungJawab() {		
-		return new PenanggungJawab(id, person.toPerson(), jabatan.toJabatan());
+		return new PenanggungJawab(
+				id, 
+				this.person != null ? this.person.toPerson():null, 
+				this.jabatan != null ? this.jabatan.toJabatan():null, 
+				this.registerPerusahaan != null ? this.registerPerusahaan.toRegisterPerusahaan():null
+				);
 	}
 
 }

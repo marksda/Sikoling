@@ -5,15 +5,10 @@ import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="master.tbl_kategori_permohonan_surat_arahan")
-@NamedQueries({
-	@NamedQuery(name="KategoriPermohonanSuratArahanData.findAll", query="SELECT p FROM KategoriPermohonanSuratArahanData p")
-})
 public class KategoriPermohonanSuratArahanData implements Serializable {
 
 	private static final long serialVersionUID = -7594677665752109615L;
@@ -24,7 +19,6 @@ public class KategoriPermohonanSuratArahanData implements Serializable {
 	private String keterangan;
 
 	public KategoriPermohonanSuratArahanData() {
-		super();
 	}
 
 	public String getId() {
@@ -46,7 +40,6 @@ public class KategoriPermohonanSuratArahanData implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
 
 	@Override
 	public int hashCode() {

@@ -212,8 +212,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KategoriPermohonanSuratArahanRepositoryJPA getKategoriPermohonanSuratArahanRepositoryJPA(EntityManager entityManager) {
-		return new KategoriPermohonanSuratArahanRepositoryJPA(entityManager);
+	public KategoriPermohonanSuratArahanRepositoryJPA getKategoriPermohonanSuratArahanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new KategoriPermohonanSuratArahanRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

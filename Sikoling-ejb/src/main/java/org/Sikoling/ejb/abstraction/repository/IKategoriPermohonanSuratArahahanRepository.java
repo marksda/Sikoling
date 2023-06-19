@@ -1,8 +1,9 @@
 package org.Sikoling.ejb.abstraction.repository;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
-import org.Sikoling.ejb.abstraction.entity.permohonan.JenisPermohonanSuratArahan;
+import java.io.IOException;
 
-public interface IKategoriPermohonanSuratArahahanRepository extends IRepository<JenisPermohonanSuratArahan> {
-	DeleteResponse delete(String id);
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonanSuratArahan;
+
+public interface IKategoriPermohonanSuratArahahanRepository extends IRepository<KategoriPermohonanSuratArahan> {
+	KategoriPermohonanSuratArahan updateId(String idLama, KategoriPermohonanSuratArahan t) throws IOException;
 }

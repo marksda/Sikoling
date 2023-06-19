@@ -3,18 +3,18 @@ package org.Sikoling.main.restful.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.permohonan.JenisPermohonanSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonanSuratArahan;
 
-public class JenisPermohonanSuratArahanDTO implements Serializable {
+public class KategoriPermohonanSuratArahanDTO implements Serializable {
 
 	private static final long serialVersionUID = -493970788995457520L;
 	private String id;
 	private String keterangan;
 	
-	public JenisPermohonanSuratArahanDTO() {
+	public KategoriPermohonanSuratArahanDTO() {
 	}
 	
-	public JenisPermohonanSuratArahanDTO(JenisPermohonanSuratArahan t) {
+	public KategoriPermohonanSuratArahanDTO(KategoriPermohonanSuratArahan t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.keterangan = t.getKeterangan();
@@ -62,7 +62,7 @@ public class JenisPermohonanSuratArahanDTO implements Serializable {
             return false;
         }
         
-        final JenisPermohonanSuratArahanDTO other = (JenisPermohonanSuratArahanDTO) obj;
+        final KategoriPermohonanSuratArahanDTO other = (KategoriPermohonanSuratArahanDTO) obj;
         
         if (!id.equals(other.getId())) {
             return false;
@@ -80,8 +80,8 @@ public class JenisPermohonanSuratArahanDTO implements Serializable {
 				.concat("}");
 	}	
 	
-	public JenisPermohonanSuratArahan toJenisPermohonanSuratArahan() {
-		return new JenisPermohonanSuratArahan(id, keterangan);
+	public KategoriPermohonanSuratArahan toKategoriPermohonanSuratArahan() {
+		return new KategoriPermohonanSuratArahan(id, keterangan);
 	}
 
 }

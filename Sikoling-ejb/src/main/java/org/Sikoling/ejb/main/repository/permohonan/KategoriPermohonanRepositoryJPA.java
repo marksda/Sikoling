@@ -1,17 +1,18 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,40 +31,56 @@ public class KategoriPermohonanRepositoryJPA implements IKategoriPermohonanRepos
 	}
 	
 	@Override
-	public List<KategoriPermohonan> getAll() {
-		return entityManager.createNamedQuery("KategoriPermohonanData.findAll", KategoriPermohonanData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public KategoriPermohonan save(KategoriPermohonan t) {
-		KategoriPermohonanData kategoriPermohonanData = dataConverter.convertKategoriPermohonanToKategoriPermohonanData(t);
-		entityManager.persist(kategoriPermohonanData);
-		entityManager.flush();
-		return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(kategoriPermohonanData);
+	public KategoriPermohonan save(KategoriPermohonan t) throws IOException {
+		try {
+			KategoriPermohonanData kategoriPermohonanData = dataConverter.convertKategoriPermohonanToKategoriPermohonanData(t);
+			entityManager.persist(kategoriPermohonanData);
+			entityManager.flush();
+			return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(kategoriPermohonanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}
+		
 	}
 
 	@Override
 	public KategoriPermohonan update(KategoriPermohonan t) {
 		KategoriPermohonanData kategoriPermohonanData = dataConverter.convertKategoriPermohonanToKategoriPermohonanData(t);
-		kategoriPermohonanData = entityManager.merge(kategoriPermohonanData);
-		
-		return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(kategoriPermohonanData);
+		KategoriPermohonanData dataTermerge = entityManager.merge(kategoriPermohonanData);	
+		entityManager.flush();
+		return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		KategoriPermohonanData kategoriPermohonanData = entityManager.find(KategoriPermohonanData.class, id);
-		entityManager.remove(kategoriPermohonanData);
-		return new DeleteResponse(true, id);
+	public KategoriPermohonan updateId(String idLama, KategoriPermohonan t) throws IOException {
+		KategoriPermohonanData dataLama = entityManager.find(KategoriPermohonanData.class, idLama);
+		if(dataLama != null) {
+			KategoriPermohonanData kategoriPermohonanData = dataConverter.convertKategoriPermohonanToKategoriPermohonanData(t);
+			entityManager.remove(dataLama);	
+			KategoriPermohonanData dataTermerge = entityManager.merge(kategoriPermohonanData);
+			entityManager.flush();
+			return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
+	@Override
+	public KategoriPermohonan delete(KategoriPermohonan t) throws IOException {
+		KategoriPermohonanData kategoriPermohonanData = entityManager.find(KategoriPermohonanData.class, t.getId());
+		if(kategoriPermohonanData != null) {
+			entityManager.remove(kategoriPermohonanData);	
+			entityManager.flush();
+			return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(kategoriPermohonanData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
 	
 	@Override
-	public List<KategoriPermohonan> getDaftarKategoriPermohonan(QueryParamFilters queryParamFilters) {
+	public List<KategoriPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<KategoriPermohonanData> cq = cb.createQuery(KategoriPermohonanData.class);
 		Root<KategoriPermohonanData> root = cq.from(KategoriPermohonanData.class);		
@@ -137,9 +154,8 @@ public class KategoriPermohonanRepositoryJPA implements IKategoriPermohonanRepos
 				.collect(Collectors.toList());
 	}
 	
-
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<KategoriPermohonanData> root = cq.from(KategoriPermohonanData.class);		

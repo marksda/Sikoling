@@ -1,17 +1,18 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,39 +31,55 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 
 	@Override
-	public List<StatusPengurusPermohonan> getAll() {
-		return entityManager.createNamedQuery("StatusPengurusPermohonanData.findAll", StatusPengurusPermohonanData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) {
-		StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(t);
-		entityManager.persist(statusPengurusPermohonanData);
-		entityManager.flush();
-		
-		return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(statusPengurusPermohonanData);
+	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) throws IOException {
+		try {
+			StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
+			entityManager.persist(statusPengurusPermohonanData);
+			entityManager.flush();		
+			return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(statusPengurusPermohonanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public StatusPengurusPermohonan update(StatusPengurusPermohonan t) {
-		StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(t);
-		statusPengurusPermohonanData = entityManager.merge(statusPengurusPermohonanData);
-		return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(statusPengurusPermohonanData);
+		StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
+		StatusPengurusPermohonanData dataTermerge = entityManager.merge(statusPengurusPermohonanData);	
+		entityManager.flush();
+		return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		StatusPengurusPermohonanData statusPengurusPermohonanData = entityManager.find(StatusPengurusPermohonanData.class, id);
-		entityManager.remove(statusPengurusPermohonanData);			
-		return new DeleteResponse(true, id);
+	public StatusPengurusPermohonan updateId(String idLama, StatusPengurusPermohonan t) throws IOException {
+		StatusPengurusPermohonanData dataLama = entityManager.find(StatusPengurusPermohonanData.class, idLama);
+		if(dataLama != null) {
+			StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
+			entityManager.remove(dataLama);	
+			StatusPengurusPermohonanData dataTermerge = entityManager.merge(statusPengurusPermohonanData);
+			entityManager.flush();
+			return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
 	@Override
-	public List<StatusPengurusPermohonan> getDaftarStatusPengurusPermohonan(QueryParamFilters queryParamFilters) {
+	public StatusPengurusPermohonan delete(StatusPengurusPermohonan t) throws IOException {
+		StatusPengurusPermohonanData statusPengurusPermohonanData = entityManager.find(StatusPengurusPermohonanData.class, t.getId());
+		if(statusPengurusPermohonanData != null) {
+			entityManager.remove(statusPengurusPermohonanData);	
+			entityManager.flush();
+			return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(statusPengurusPermohonanData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+	
+	@Override
+	public List<StatusPengurusPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<StatusPengurusPermohonanData> cq = cb.createQuery(StatusPengurusPermohonanData.class);
 		Root<StatusPengurusPermohonanData> root = cq.from(StatusPengurusPermohonanData.class);		
@@ -137,7 +154,7 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<StatusPengurusPermohonanData> root = cq.from(StatusPengurusPermohonanData.class);		
@@ -170,19 +187,5 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-	
-	@Override
-	public StatusPengurusPermohonan updateById(String id, StatusPengurusPermohonan statusPengurusPermohonan) {
-		String idBaru = statusPengurusPermohonan.getId();
-		StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(statusPengurusPermohonan);
-		statusPengurusPermohonanData.setId(id);
-		statusPengurusPermohonanData = entityManager.merge(statusPengurusPermohonanData);
-		if(!idBaru.equals(id)) {
-			statusPengurusPermohonanData.setId(idBaru);
-			entityManager.flush();
-		}
-		return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(statusPengurusPermohonanData);
-	}
-
 	
 }

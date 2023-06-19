@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
@@ -22,12 +22,7 @@ public class KategoriPermohonanRepositoryEJB implements IKategoriPermohonanRepos
 	private KategoriPermohonanRepositoryJPA kategoriPermohonanRepository;
 
 	@Override
-	public List<KategoriPermohonan> getAll() {
-		return kategoriPermohonanRepository.getAll();
-	}
-
-	@Override
-	public KategoriPermohonan save(KategoriPermohonan t) {
+	public KategoriPermohonan save(KategoriPermohonan t) throws IOException {
 		return kategoriPermohonanRepository.save(t);
 	}
 
@@ -37,20 +32,25 @@ public class KategoriPermohonanRepositoryEJB implements IKategoriPermohonanRepos
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return kategoriPermohonanRepository.delete(id);
+	public KategoriPermohonan delete(KategoriPermohonan t) throws IOException {
+		return kategoriPermohonanRepository.delete(t);
+	}
+
+	@Override
+	public List<KategoriPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriPermohonanRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriPermohonanRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public KategoriPermohonan updateId(String idLama, KategoriPermohonan t) throws IOException {
+		return kategoriPermohonanRepository.updateId(idLama, t);
 	}
 
 	
-	@Override
-	public List<KategoriPermohonan> getDaftarKategoriPermohonan(QueryParamFilters queryParamFilters) {
-		return kategoriPermohonanRepository.getDaftarKategoriPermohonan(queryParamFilters);
-	}
-
 	
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return kategoriPermohonanRepository.getCount(queryParamFilters);
-	}
-
 }

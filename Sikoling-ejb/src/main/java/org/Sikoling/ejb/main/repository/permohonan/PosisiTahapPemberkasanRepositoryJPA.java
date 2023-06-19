@@ -1,17 +1,18 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.repository.IPosisiTahapPemberkasanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,54 +31,55 @@ public class PosisiTahapPemberkasanRepositoryJPA implements IPosisiTahapPemberka
 	}
 	
 	@Override
-	public List<PosisiTahapPemberkasan> getAll() {
-		return entityManager.createNamedQuery("PosisiTahapPemberkasanData.findAll", PosisiTahapPemberkasanData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public PosisiTahapPemberkasan save(PosisiTahapPemberkasan t) {
-		PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t);
-		entityManager.persist(posisiTahapPemberkasanData);
-		entityManager.flush();
-		
-		return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(posisiTahapPemberkasanData);
+	public PosisiTahapPemberkasan save(PosisiTahapPemberkasan t) throws IOException {
+		try {
+			PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t);
+			entityManager.persist(posisiTahapPemberkasanData);
+			entityManager.flush();		
+			return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(posisiTahapPemberkasanData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public PosisiTahapPemberkasan update(PosisiTahapPemberkasan t) {
 		PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t);
-		posisiTahapPemberkasanData = entityManager.merge(posisiTahapPemberkasanData);
-		return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(posisiTahapPemberkasanData);
+		PosisiTahapPemberkasanData dataTermerge = entityManager.merge(posisiTahapPemberkasanData);	
+		entityManager.flush();
+		return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		PosisiTahapPemberkasanData posisiTahapPemberkasanData = entityManager.find(PosisiTahapPemberkasanData.class, id);
-		entityManager.remove(posisiTahapPemberkasanData);			
-		return new DeleteResponse(true, id);
-	}
-
-
-	@Override
-	public PosisiTahapPemberkasan updateById(String id, PosisiTahapPemberkasan posisiTahapPemberkasan) {		
-		String idBaru = posisiTahapPemberkasan.getId();
-		PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(posisiTahapPemberkasan);
-		posisiTahapPemberkasanData.setId(id);
-		posisiTahapPemberkasanData = entityManager.merge(posisiTahapPemberkasanData);
-		if(!idBaru.equals(id)) {
-			posisiTahapPemberkasanData.setId(idBaru);
+	public PosisiTahapPemberkasan updateId(String idLama, PosisiTahapPemberkasan t) throws IOException {
+		PosisiTahapPemberkasanData dataLama = entityManager.find(PosisiTahapPemberkasanData.class, idLama);
+		if(dataLama != null) {
+			PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t);
+			entityManager.remove(dataLama);	
+			PosisiTahapPemberkasanData dataTermerge = entityManager.merge(posisiTahapPemberkasanData);
 			entityManager.flush();
+			return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(dataTermerge);
 		}
-		return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(posisiTahapPemberkasanData);
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
-	
 	@Override
-	public List<PosisiTahapPemberkasan> getDaftarPosisiTahapPemberkasan(QueryParamFilters queryParamFilters) {
+	public PosisiTahapPemberkasan delete(PosisiTahapPemberkasan t) throws IOException {
+		PosisiTahapPemberkasanData posisiTahapPemberkasanData = entityManager.find(PosisiTahapPemberkasanData.class, t.getId());
+		if(posisiTahapPemberkasanData != null) {
+			entityManager.remove(posisiTahapPemberkasanData);	
+			entityManager.flush();
+			return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(posisiTahapPemberkasanData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+
+	@Override
+	public List<PosisiTahapPemberkasan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<PosisiTahapPemberkasanData> cq = cb.createQuery(PosisiTahapPemberkasanData.class);
 		Root<PosisiTahapPemberkasanData> root = cq.from(PosisiTahapPemberkasanData.class);		
@@ -161,10 +163,9 @@ public class PosisiTahapPemberkasanRepositoryJPA implements IPosisiTahapPemberka
 				.map(d -> dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<PosisiTahapPemberkasanData> root = cq.from(PosisiTahapPemberkasanData.class);		

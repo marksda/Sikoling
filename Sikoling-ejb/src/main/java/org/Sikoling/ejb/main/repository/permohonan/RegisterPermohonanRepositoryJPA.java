@@ -1,17 +1,18 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,39 +31,55 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	}
 	
 	@Override
-	public List<RegisterPermohonan> getAll() {
-		return entityManager.createNamedQuery("RegisterPermohonanData.findAll", RegisterPermohonanData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public RegisterPermohonan save(RegisterPermohonan t) {
-		RegisterPermohonanData registerPermohonanData = dataConverter.convertRegisterPermohonanToRegisterPermohonanData(t);
-		entityManager.persist(registerPermohonanData);
-		entityManager.flush();
-		
-		return dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(registerPermohonanData);
+	public RegisterPermohonan save(RegisterPermohonan t) throws IOException {
+		try {
+			RegisterPermohonanData skalaUsahaData = dataConverter.convertRegisterPermohonanToRegisterPermohonanData(t);
+			entityManager.persist(skalaUsahaData);
+			entityManager.flush();		
+			return dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(skalaUsahaData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public RegisterPermohonan update(RegisterPermohonan t) {
-		RegisterPermohonanData registerPermohonanData = dataConverter.convertRegisterPermohonanToRegisterPermohonanData(t);
-		registerPermohonanData = entityManager.merge(registerPermohonanData);
-		return dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(registerPermohonanData);
+		RegisterPermohonanData skalaUsahaData = dataConverter.convertRegisterPermohonanToRegisterPermohonanData(t);
+		RegisterPermohonanData dataTermerge = entityManager.merge(skalaUsahaData);	
+		entityManager.flush();
+		return dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(dataTermerge);
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		RegisterPermohonanData registerPermohonanData = entityManager.find(RegisterPermohonanData.class, id);
-		entityManager.remove(registerPermohonanData);			
-		return new DeleteResponse(true, id);
+	public RegisterPermohonan updateId(String idLama, RegisterPermohonan t) throws IOException {
+		RegisterPermohonanData dataLama = entityManager.find(RegisterPermohonanData.class, idLama);
+		if(dataLama != null) {
+			RegisterPermohonanData skalaUsahaData = dataConverter.convertRegisterPermohonanToRegisterPermohonanData(t);
+			entityManager.remove(dataLama);	
+			RegisterPermohonanData dataTermerge = entityManager.merge(skalaUsahaData);
+			entityManager.flush();
+			return dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+
+	@Override
+	public RegisterPermohonan delete(RegisterPermohonan t) throws IOException {
+		RegisterPermohonanData skalaUsahaData = entityManager.find(RegisterPermohonanData.class, t.getId());
+		if(skalaUsahaData != null) {
+			entityManager.remove(skalaUsahaData);	
+			entityManager.flush();
+			return dataConverter.convertRegisterPermohonanDataToRegisterPermohonan(skalaUsahaData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 	
 	@Override
-	public List<RegisterPermohonan> getDaftarPermohonan(QueryParamFilters queryParamFilters) {
+	public List<RegisterPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<RegisterPermohonanData> cq = cb.createQuery(RegisterPermohonanData.class);
 		Root<RegisterPermohonanData> root = cq.from(RegisterPermohonanData.class);		
@@ -225,7 +242,7 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 	}
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<RegisterPermohonanData> root = cq.from(RegisterPermohonanData.class);		

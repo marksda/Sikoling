@@ -43,7 +43,7 @@ import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
-import org.Sikoling.ejb.abstraction.entity.permohonan.JenisPermohonanSuratArahan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonanSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
@@ -81,6 +81,7 @@ import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanData;
+import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanSuratArahanData;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriSuratArahanData;
 import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanData;
@@ -823,11 +824,11 @@ public class DataConverter {
 		return flowLog;	
 	}
 		
-	public JenisPermohonanSuratArahan convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(KategoriSuratArahanData d) {
-		JenisPermohonanSuratArahan jenisPermohonanSuratArahan = null;
+	public KategoriPermohonanSuratArahan convertKategoriSuratArahanDataToJenisPermohonanSuratArahan(KategoriSuratArahanData d) {
+		KategoriPermohonanSuratArahan jenisPermohonanSuratArahan = null;
 		
 		if(d != null) {
-			jenisPermohonanSuratArahan = new JenisPermohonanSuratArahan(d.getId(), d.getNama());
+			jenisPermohonanSuratArahan = new KategoriPermohonanSuratArahan(d.getId(), d.getNama());
 		}
 		
 		return jenisPermohonanSuratArahan;		
@@ -921,6 +922,16 @@ public class DataConverter {
 		}
 		
 		return penanggungJawab;
+	}
+	
+	public KategoriPermohonanSuratArahan convertKategoriPermohonanSuratArahanDataToKategoriPermohonanSuratArahan(KategoriPermohonanSuratArahanData d) {
+		KategoriPermohonanSuratArahan kategoriPermohonanSuratArahan = null;
+		
+		if(d != null) {
+			kategoriPermohonanSuratArahan = new KategoriPermohonanSuratArahan(d.getId(), d.getKeterangan());
+		}
+		
+		return kategoriPermohonanSuratArahan;
 	}
 	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
@@ -1394,7 +1405,7 @@ public class DataConverter {
 		return kategoriPermohonanData;
 	}
 	
-	public StatusPengurusPermohonanData convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(StatusPengurusPermohonan t) {
+	public StatusPengurusPermohonanData convertStatusPengurusPermohonanToStatusPengurusPermohonanData(StatusPengurusPermohonan t) {
 		StatusPengurusPermohonanData statusPengurusPermohonanData = null;
 		
 		if(t != null) {
@@ -1419,7 +1430,7 @@ public class DataConverter {
 		return posisiTahapPemberkasanData;
 	}
 	
-	public KategoriSuratArahanData convertJenisPermohonanSuratArahanToKategoriSuratArahanData(JenisPermohonanSuratArahan t) {
+	public KategoriSuratArahanData convertJenisPermohonanSuratArahanToKategoriSuratArahanData(KategoriPermohonanSuratArahan t) {
 		KategoriSuratArahanData kategoriSuratArahanData = null;
 		
 		if(t != null) {
@@ -1476,7 +1487,7 @@ public class DataConverter {
 			registerPermohonanData.setPerusahaanData(convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()));
 			registerPermohonanData.setAutorisasiData(convertAuthorityToAutorisasiData(t.getPengurusPermohonan()));
 			registerPermohonanData.setStatusPengurusPermohonanData(
-					convertStatusPengurusPermohonanToKategoriPengurusPermohonanData(t.getStatusPengurusPermohonan()));
+					convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t.getStatusPengurusPermohonan()));
 			registerPermohonanData.setPosisiTahapPemberkasanPengirimData(
 					convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t.getPengirimBerkas())
 					);
@@ -1649,6 +1660,17 @@ public class DataConverter {
 		}
 		
 		return penanggungJawabData;
+	}
+	
+	public KategoriPermohonanSuratArahanData convertKategoriPermohonanSuratArahanToKategoriPermohonanSuratArahanData(KategoriPermohonanSuratArahan t) {
+		KategoriPermohonanSuratArahanData kategoriPermohonanSuratArahanData = new KategoriPermohonanSuratArahanData();
+		
+		if(t != null) {
+			kategoriPermohonanSuratArahanData.setId(t.getId());
+			kategoriPermohonanSuratArahanData.setKeterangan(t.getKeterangan());
+		}
+		
+		return kategoriPermohonanSuratArahanData;
 	}
 	
 	/*----------id generator function---------------*/

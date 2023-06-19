@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
@@ -20,14 +20,9 @@ public class StatusPengurusPermohonanRepositoryEJB implements IStatusPengurusPer
 	
 	@Inject
 	private StatusPengurusPermohonanRepositoryJPA statusPengurusPermohonanRepository;
-	
-	@Override
-	public List<StatusPengurusPermohonan> getAll() {
-		return statusPengurusPermohonanRepository.getAll();
-	}
 
 	@Override
-	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) {
+	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) throws IOException {
 		return statusPengurusPermohonanRepository.save(t);
 	}
 
@@ -37,25 +32,25 @@ public class StatusPengurusPermohonanRepositoryEJB implements IStatusPengurusPer
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return statusPengurusPermohonanRepository.delete(id);
+	public StatusPengurusPermohonan delete(StatusPengurusPermohonan t) throws IOException {
+		return statusPengurusPermohonanRepository.delete(t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan updateById(String id, StatusPengurusPermohonan statusPengurusPermohonan) {
-		return statusPengurusPermohonanRepository.updateById(id, statusPengurusPermohonan);
+	public List<StatusPengurusPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return statusPengurusPermohonanRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return statusPengurusPermohonanRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public StatusPengurusPermohonan updateId(String idLama, StatusPengurusPermohonan t) throws IOException {
+		return statusPengurusPermohonanRepository.updateId(idLama, t);
 	}
 	
-
-	@Override
-	public List<StatusPengurusPermohonan> getDaftarStatusPengurusPermohonan(QueryParamFilters queryParamFilters) {
-		return statusPengurusPermohonanRepository.getDaftarStatusPengurusPermohonan(queryParamFilters);
-	}
 	
-
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return statusPengurusPermohonanRepository.getCount(queryParamFilters);
-	}
-
+	
 }

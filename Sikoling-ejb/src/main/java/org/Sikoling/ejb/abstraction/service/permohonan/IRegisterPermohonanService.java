@@ -1,17 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 
 public interface IRegisterPermohonanService {
-	DeleteResponse delete(String id);
-	RegisterPermohonan save(RegisterPermohonan t);
+	RegisterPermohonan save(RegisterPermohonan t) throws IOException;
 	RegisterPermohonan update(RegisterPermohonan t);
-	List<RegisterPermohonan> getAll();
-	List<RegisterPermohonan> getDaftarPermohonan(QueryParamFilters queryParamFilters);
-	Long getCount(List<Filter> queryParamFilters);
+	RegisterPermohonan updateId(String idLama, RegisterPermohonan t) throws IOException;
+	RegisterPermohonan delete(RegisterPermohonan t) throws IOException;
+	List<RegisterPermohonan> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
@@ -17,35 +17,33 @@ public class StatusPengurusPermohonanService implements IStatusPengurusPermohona
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return statusPengurusPermohonanRepository.delete(id);
+	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) throws IOException {
+		return statusPengurusPermohonanRepository.save(t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan save(StatusPengurusPermohonan statusPengurusPermohonan) {
-		return statusPengurusPermohonanRepository.save(statusPengurusPermohonan);
+	public StatusPengurusPermohonan update(StatusPengurusPermohonan t) {
+		return statusPengurusPermohonanRepository.update(t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan update(StatusPengurusPermohonan statusPengurusPermohonan) {
-		return statusPengurusPermohonanRepository.update(statusPengurusPermohonan);
-	}
-
-	
-	@Override
-	public List<StatusPengurusPermohonan> getDaftarStatusPengurusPermohonan(QueryParamFilters queryParamFilters) {
-		return statusPengurusPermohonanRepository.getDaftarStatusPengurusPermohonan(queryParamFilters);
-	}
-
-	
-	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return statusPengurusPermohonanRepository.getCount(queryParamFilters);
+	public StatusPengurusPermohonan updateId(String idLama, StatusPengurusPermohonan t) throws IOException {
+		return statusPengurusPermohonanRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan updateById(String id, StatusPengurusPermohonan statusPengurusPermohonan) {
-		return statusPengurusPermohonanRepository.updateById(id, statusPengurusPermohonan);
+	public StatusPengurusPermohonan delete(StatusPengurusPermohonan t) throws IOException {
+		return statusPengurusPermohonanRepository.delete(t);
+	}
+
+	@Override
+	public List<StatusPengurusPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return statusPengurusPermohonanRepository.getDaftarData(queryParamFilters);
+	}
+
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return statusPengurusPermohonanRepository.getJumlahData(queryParamFilters);
 	}
 	
 }

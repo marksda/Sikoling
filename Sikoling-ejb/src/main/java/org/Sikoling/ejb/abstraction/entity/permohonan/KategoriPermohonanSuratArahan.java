@@ -3,13 +3,13 @@ package org.Sikoling.ejb.abstraction.entity.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class JenisPermohonanSuratArahan implements Serializable {
+public class KategoriPermohonanSuratArahan implements Serializable {
 
 	private static final long serialVersionUID = -2686761379390064420L;
 	private final String id;
 	private final String keterangan;
 	
-	public JenisPermohonanSuratArahan(String id, String keterangan) {
+	public KategoriPermohonanSuratArahan(String id, String keterangan) {
 		this.id = id;
 		this.keterangan = keterangan;
 	}
@@ -47,7 +47,7 @@ public class JenisPermohonanSuratArahan implements Serializable {
             return false;
         }
         
-        final JenisPermohonanSuratArahan other = (JenisPermohonanSuratArahan) obj;
+        final KategoriPermohonanSuratArahan other = (KategoriPermohonanSuratArahan) obj;
         
         if (!id.equals(other.getId())) {
             return false;

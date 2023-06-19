@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.abstraction.service.permohonan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
@@ -17,12 +17,7 @@ public class KategoriPermohonanService implements IKategoriPermohonanService {
 	}
 
 	@Override
-	public DeleteResponse delete(String id) {
-		return kategoriPermohonanRepository.delete(id);
-	}
-
-	@Override
-	public KategoriPermohonan save(KategoriPermohonan t) {
+	public KategoriPermohonan save(KategoriPermohonan t) throws IOException {
 		return kategoriPermohonanRepository.save(t);
 	}
 
@@ -32,18 +27,23 @@ public class KategoriPermohonanService implements IKategoriPermohonanService {
 	}
 
 	@Override
-	public List<KategoriPermohonan> getAll() {
-		return kategoriPermohonanRepository.getAll();
+	public KategoriPermohonan updateId(String idLama, KategoriPermohonan t) throws IOException {
+		return kategoriPermohonanRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public List<KategoriPermohonan> getDaftarKategoriPermohonan(QueryParamFilters queryParamFilters) {
-		return kategoriPermohonanRepository.getDaftarKategoriPermohonan(queryParamFilters);
+	public KategoriPermohonan delete(KategoriPermohonan t) throws IOException {
+		return kategoriPermohonanRepository.delete(t);
 	}
 
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return kategoriPermohonanRepository.getCount(queryParamFilters);
+	public List<KategoriPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
+		return kategoriPermohonanRepository.getDaftarData(queryParamFilters);
 	}
 
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return kategoriPermohonanRepository.getJumlahData(queryParamFilters);
+	}
+	
 }
