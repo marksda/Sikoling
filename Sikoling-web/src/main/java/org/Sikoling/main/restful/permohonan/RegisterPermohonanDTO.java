@@ -10,7 +10,7 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
-import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
+import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 public class RegisterPermohonanDTO implements Serializable {
@@ -22,7 +22,7 @@ public class RegisterPermohonanDTO implements Serializable {
 	private RegisterPerusahaanDTO registerPerusahaan;
 	private AutorityDTO pengurusPermohonan;
 	private StatusPengurusPermohonanDTO statusPengurusPermohonan;
-	private PegawaiPerusahaanDTO penanggungJawabPermohonan;
+	private PegawaiDTO penanggungJawabPermohonan;
 	private PosisiTahapPemberkasanDTO pengirimBerkas;
 	private PosisiTahapPemberkasanDTO penerimaBerkas;
 	private StatusFlowLogDTO statusFlowLog;
@@ -45,7 +45,7 @@ public class RegisterPermohonanDTO implements Serializable {
 			this.statusPengurusPermohonan = t.getStatusPengurusPermohonan() != null ?
 					new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()) : null;
 			this.penanggungJawabPermohonan = t.getPenanggungJawabPermohonan() != null ?
-					new PegawaiPerusahaanDTO(t.getPenanggungJawabPermohonan()) : null;
+					new PegawaiDTO(t.getPenanggungJawabPermohonan()) : null;
 			this.pengirimBerkas = t.getPengirimBerkas() != null ?
 					new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()) : null;
 			this.penerimaBerkas = t.getPenerimaBerkas() != null ?
@@ -145,11 +145,11 @@ public class RegisterPermohonanDTO implements Serializable {
 		this.statusPengurusPermohonan = statusPengurusPermohonan;
 	}
 
-	public PegawaiPerusahaanDTO getPenanggungJawabPermohonan() {
+	public PegawaiDTO getPenanggungJawabPermohonan() {
 		return penanggungJawabPermohonan;
 	}
 
-	public void setPenanggungJawabPermohonan(PegawaiPerusahaanDTO penanggungJawabPermohonan) {
+	public void setPenanggungJawabPermohonan(PegawaiDTO penanggungJawabPermohonan) {
 		this.penanggungJawabPermohonan = penanggungJawabPermohonan;
 	}
 

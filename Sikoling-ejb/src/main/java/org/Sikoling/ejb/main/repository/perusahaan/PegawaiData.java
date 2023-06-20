@@ -11,18 +11,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_pegawai_perusahaan")
-@NamedQueries({
-	@NamedQuery(name="PegawaiPerusahaanData.findAll", query="SELECT d FROM PegawaiPerusahaanData d"),
-	@NamedQuery(name="PegawaiPerusahaanData.findByQueryNama", query="SELECT d FROM PegawaiPerusahaanData d WHERE d.personData.nama LIKE :nama"),
-	@NamedQuery(name="PegawaiPerusahaanData.findByIdPerusahaan", query="SELECT d FROM PegawaiPerusahaanData d WHERE d.registerPerusahaanData.id = :idRegisterPerusahaan")
-})
-public class PegawaiPerusahaanData implements Serializable {
+public class PegawaiData implements Serializable {
 
 	private static final long serialVersionUID = -5313775851019211468L;
 	
@@ -41,7 +34,7 @@ public class PegawaiPerusahaanData implements Serializable {
 	@ManyToOne(optional = false)
 	private JabatanData jabatanData;
 
-	public PegawaiPerusahaanData() {
+	public PegawaiData() {
 	}
 
 	public String getId() {
@@ -101,7 +94,7 @@ public class PegawaiPerusahaanData implements Serializable {
             return false;
         }
         
-        final PegawaiPerusahaanData other = (PegawaiPerusahaanData) obj;
+        final PegawaiData other = (PegawaiData) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;
@@ -110,5 +103,4 @@ public class PegawaiPerusahaanData implements Serializable {
         return true;
 	}
 	
-
 }

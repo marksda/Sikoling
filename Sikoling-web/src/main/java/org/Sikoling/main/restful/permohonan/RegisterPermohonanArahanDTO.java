@@ -8,7 +8,7 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
-import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
+import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
 public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implements Serializable {
@@ -28,7 +28,7 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 			this.setRegisterPerusahaan(t.getPerusahaan() != null ? new RegisterPerusahaanDTO(t.getPerusahaan()):null);
 			this.setPengurusPermohonan(t.getPengurusPermohonan() != null ? new AutorityDTO(t.getPengurusPermohonan()):null);
 			this.setStatusPengurusPermohonan(t.getStatusPengurusPermohonan() != null ? new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()):null);
-			this.setPenanggungJawabPermohonan(t.getPenanggungJawabPermohonan() != null ? new PegawaiPerusahaanDTO(t.getPenanggungJawabPermohonan()):null);
+			this.setPenanggungJawabPermohonan(t.getPenanggungJawabPermohonan() != null ? new PegawaiDTO(t.getPenanggungJawabPermohonan()):null);
 			this.setPengirimBerkas(t.getPengirimBerkas() != null ? new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()):null);
 			this.setPenerimaBerkas(t.getPenerimaBerkas() != null ? new PosisiTahapPemberkasanDTO(t.getPenerimaBerkas()):null);
 			this.setStatusFlowLog(t.getStatusFlowLog() != null ? new StatusFlowLogDTO(t.getStatusFlowLog()):null);			

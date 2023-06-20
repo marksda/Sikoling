@@ -13,7 +13,7 @@ import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.NibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
-import org.Sikoling.main.restful.pegawai.PegawaiPerusahaanDTO;
+import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 import org.Sikoling.main.restful.permohonan.KategoriPermohonanSuratArahanDTO;
 import org.Sikoling.main.restful.permohonan.KategoriPermohonanDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
@@ -59,7 +59,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		
 		String id = null;
 		KategoriPermohonanDTO kategoriPermohonanDTO = null;
-		PegawaiPerusahaanDTO pegawaiPerusahaanDTO = null;
+		PegawaiDTO pegawaiPerusahaanDTO = null;
 		RegisterPerusahaanDTO registerPerusahaanDTO = null;
 		AutorityDTO pengurusPermohonanDTO = null;
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = null;
@@ -109,7 +109,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 					event = parser.next();
 					try {
 						jsonObject = parser.getObject();
-						pegawaiPerusahaanDTO = jsonb.fromJson(jsonObject.toString(), PegawaiPerusahaanDTO.class);
+						pegawaiPerusahaanDTO = jsonb.fromJson(jsonObject.toString(), PegawaiDTO.class);
 					} catch (Exception e) {
 						pegawaiPerusahaanDTO = null;
 					}		

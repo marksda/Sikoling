@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
-import org.Sikoling.ejb.main.repository.perusahaan.PegawaiPerusahaanData;
+import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.CascadeType;
@@ -70,7 +70,7 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@JoinColumn(name="penanggung_jawab", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private PegawaiPerusahaanData penanggungJawab;
+	private PegawaiData penanggungJawab;
 	
 	@JoinColumn(name="status_flow", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
@@ -153,11 +153,11 @@ public class RegisterPermohonanData implements Serializable {
 		this.daftarDokumenSyarat = daftarDokumenSyarat;
 	}
 
-	public PegawaiPerusahaanData getPenanggungJawab() {
+	public PegawaiData getPenanggungJawab() {
 		return penanggungJawab;
 	}
 
-	public void setPenanggungJawab(PegawaiPerusahaanData penanggungJawab) {
+	public void setPenanggungJawab(PegawaiData penanggungJawab) {
 		this.penanggungJawab = penanggungJawab;
 	}
 

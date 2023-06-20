@@ -1,11 +1,11 @@
 package org.Sikoling.main.restful.pegawai;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.pegawai.IPegawaiPerusahaanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
-import org.Sikoling.main.restful.response.DeleteResponseDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -40,32 +40,36 @@ public class PegawaiController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PegawaiPerusahaanDTO save(PegawaiPerusahaanDTO d) {		
-		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.save(d.toPegawaiPerusahaan()));
+	public PegawaiDTO save(PegawaiDTO d) throws IOException {		
+		return new PegawaiDTO(pegawaiPerusahaanService.save(d.toPegawaiPerusahaan()));
 	}
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public PegawaiPerusahaanDTO update(PegawaiPerusahaanDTO d) {
-		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.update(d.toPegawaiPerusahaan()));
-	}
-	
-	@Path("id/{id}")
-	@PUT
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public PegawaiPerusahaanDTO updateById(@PathParam("id") String id, PegawaiPerusahaanDTO d) {
-		return new PegawaiPerusahaanDTO(pegawaiPerusahaanService.updateById(id, d.toPegawaiPerusahaan()));
-	}
-	
-	@Path("{id}")
-	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DeleteResponseDTO delete(@PathParam("id") String id) {
-		return new DeleteResponseDTO(pegawaiPerusahaanService.delete(id));
+	public PegawaiDTO update(PegawaiDTO d) {
+		return new PegawaiDTO(pegawaiPerusahaanService.update(d.toPegawaiPerusahaan()));
+	}
+	
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PegawaiDTO updateId(@PathParam("idLama") String idLama, PegawaiDTO d) throws IOException {
+		return new PegawaiDTO(pegawaiPerusahaanService.updateId(idLama, d.toPegawaiPerusahaan()));
+	}
+	
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PegawaiDTO delete(PegawaiDTO d) throws IOException {
+		return new PegawaiDTO(pegawaiPerusahaanService.delete(d.toPegawaiPerusahaan()));
 	}
 	
 	@GET
@@ -73,15 +77,15 @@ public class PegawaiController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<PegawaiPerusahaanDTO> getDaftarPegawaiPerusahaan(@Context UriInfo info) {
+	public List<PegawaiDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return pegawaiPerusahaanService.getDaftarPegawai(queryParamFiltersDTO.toQueryParamFilters())
+		return pegawaiPerusahaanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> new PegawaiPerusahaanDTO(t))
+				.map(t -> new PegawaiDTO(t))
 				.collect(Collectors.toList());
 	}
 	
@@ -90,12 +94,13 @@ public class PegawaiController {
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public Long getCountDaftarPegawaiPerusahaan(@Context UriInfo info) {
+	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return pegawaiPerusahaanService.getCount(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return pegawaiPerusahaanService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
+	
 }

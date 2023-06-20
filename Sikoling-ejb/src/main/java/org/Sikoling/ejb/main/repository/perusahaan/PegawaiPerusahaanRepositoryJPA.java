@@ -1,20 +1,18 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
-import org.Sikoling.ejb.main.repository.person.PersonData;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -32,70 +30,58 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 	}
 	
 	@Override
-	public List<Pegawai> getAll() {
-		return entityManager.createNamedQuery("PegawaiPerusahaanData.findAll", PegawaiPerusahaanData.class)
-				.getResultList()
-				.stream()
-				.map(d -> dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaan(d))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public Pegawai save(Pegawai t) {
-		PegawaiPerusahaanData pegawaiPerusahaanData = dataConverter.convertPegawaiPerusahaanToPegawaiPerusahaanData(t);
-		PersonData personData = null;
-		
+	public Pegawai save(Pegawai t) throws IOException {
 		try {
-			personData = entityManager.createNamedQuery("PersonData.findById", PersonData.class)
-					.setParameter("nik", pegawaiPerusahaanData.getPersonData().getId())
-					.getSingleResult();
-		} catch (NoResultException e) {
-			personData = pegawaiPerusahaanData.getPersonData();
-			entityManager.persist(personData);
-			entityManager.flush();
-		}
-						
-		entityManager.persist(pegawaiPerusahaanData);
-		entityManager.flush();
-		
-		return dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaan(pegawaiPerusahaanData);
+			PegawaiData pegawaiData = dataConverter.convertPegawaiToPegawaiData(t);
+			entityManager.persist(pegawaiData);
+			entityManager.flush();		
+			return dataConverter.convertPegawaiDataToPegawai(pegawaiData);
+		} catch (Exception e) {
+			throw new IOException("data sudah ada");
+		}		
 	}
 
 	@Override
 	public Pegawai update(Pegawai t) {
-		PegawaiPerusahaanData pegawaiPerusahaanData = dataConverter.convertPegawaiPerusahaanToPegawaiPerusahaanData(t);
-		pegawaiPerusahaanData = entityManager.merge(pegawaiPerusahaanData);
-		return dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaan(pegawaiPerusahaanData);
+		PegawaiData pegawaiData = dataConverter.convertPegawaiToPegawaiData(t);
+		PegawaiData dataTermerge = entityManager.merge(pegawaiData);	
+		entityManager.flush();
+		return dataConverter.convertPegawaiDataToPegawai(dataTermerge);
 	}
 
-	
 	@Override
-	public Pegawai updateById(String id, Pegawai pegawai) {
-		String idBaru = pegawai.getId();
-		PegawaiPerusahaanData pegawaiPerusahaanData = dataConverter.convertPegawaiPerusahaanToPegawaiPerusahaanData(pegawai);
-		pegawaiPerusahaanData.setId(id);
-		pegawaiPerusahaanData = entityManager.merge(pegawaiPerusahaanData);
-		if(!idBaru.equals(id)) {
-			pegawaiPerusahaanData.setId(idBaru);
+	public Pegawai updateId(String idLama, Pegawai t) throws IOException {
+		PegawaiData dataLama = entityManager.find(PegawaiData.class, idLama);
+		if(dataLama != null) {
+			PegawaiData pegawaiData = dataConverter.convertPegawaiToPegawaiData(t);
+			entityManager.remove(dataLama);	
+			PegawaiData dataTermerge = entityManager.merge(pegawaiData);
 			entityManager.flush();
+			return dataConverter.convertPegawaiDataToPegawai(dataTermerge);
 		}
-		return dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaan(pegawaiPerusahaanData);
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
 
-	
 	@Override
-	public DeleteResponse delete(String id) {
-		PegawaiPerusahaanData pegawaiPerusahaanData = entityManager.find(PegawaiPerusahaanData.class, id);
-		entityManager.remove(pegawaiPerusahaanData);	
-		return new DeleteResponse(true, id);
+	public Pegawai delete(Pegawai t) throws IOException {
+		PegawaiData pegawaiData = entityManager.find(PegawaiData.class, t.getId());
+		if(pegawaiData != null) {
+			entityManager.remove(pegawaiData);	
+			entityManager.flush();
+			return dataConverter.convertPegawaiDataToPegawai(pegawaiData);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
 	}
-
 	
 	@Override
-	public List<Pegawai> getDaftarPegawai(QueryParamFilters queryParamFilters) {
+	public List<Pegawai> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<PegawaiPerusahaanData> cq = cb.createQuery(PegawaiPerusahaanData.class);
-		Root<PegawaiPerusahaanData> root = cq.from(PegawaiPerusahaanData.class);		
+		CriteriaQuery<PegawaiData> cq = cb.createQuery(PegawaiData.class);
+		Root<PegawaiData> root = cq.from(PegawaiData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
@@ -164,7 +150,7 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 			}			
 		}
 		
-		TypedQuery<PegawaiPerusahaanData> q = null;		
+		TypedQuery<PegawaiData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
@@ -176,16 +162,15 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 		
 		return q.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertPegawaiPerusahaanDataToPegawaiPerusahaan(d))
+				.map(d -> dataConverter.convertPegawaiDataToPegawai(d))
 				.collect(Collectors.toList());
 	}
-
 	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
+	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<PegawaiPerusahaanData> root = cq.from(PegawaiPerusahaanData.class);		
+		Root<PegawaiData> root = cq.from(PegawaiData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();

@@ -1,8 +1,8 @@
 package org.Sikoling.ejb.main.repository.perusahaan;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.DeleteResponse;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -22,12 +22,7 @@ public class PegawaiPerusahaanRepositoryEJB implements IPegawaiPerusahaanReposit
 	private PegawaiPerusahaanRepositoryJPA pegawaiPerusahaanRepository;
 
 	@Override
-	public List<Pegawai> getAll() {
-		return pegawaiPerusahaanRepository.getAll();
-	}
-
-	@Override
-	public Pegawai save(Pegawai t) {
+	public Pegawai save(Pegawai t) throws IOException {
 		return pegawaiPerusahaanRepository.save(t);
 	}
 
@@ -36,28 +31,24 @@ public class PegawaiPerusahaanRepositoryEJB implements IPegawaiPerusahaanReposit
 		return pegawaiPerusahaanRepository.update(t);
 	}
 
-	
 	@Override
-	public Pegawai updateById(String id, Pegawai pegawai) {
-		return pegawaiPerusahaanRepository.updateById(id, pegawai);
+	public Pegawai delete(Pegawai t) throws IOException {
+		return pegawaiPerusahaanRepository.delete(t);
 	}
 
-	
 	@Override
-	public DeleteResponse delete(String id) {
-		return pegawaiPerusahaanRepository.delete(id);
+	public List<Pegawai> getDaftarData(QueryParamFilters queryParamFilters) {
+		return pegawaiPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 
-	
 	@Override
-	public List<Pegawai> getDaftarPegawai(QueryParamFilters queryParamFilters) {
-		return pegawaiPerusahaanRepository.getDaftarPegawai(queryParamFilters);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return pegawaiPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
 
-	
 	@Override
-	public Long getCount(List<Filter> queryParamFilters) {
-		return pegawaiPerusahaanRepository.getCount(queryParamFilters);
+	public Pegawai updateId(String idLama, Pegawai t) throws IOException {
+		return pegawaiPerusahaanRepository.updateId(idLama, t);
 	}
-
+	
 }

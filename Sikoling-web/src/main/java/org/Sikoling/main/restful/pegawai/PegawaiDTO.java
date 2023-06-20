@@ -8,7 +8,7 @@ import org.Sikoling.main.restful.jabatan.JabatanDTO;
 import org.Sikoling.main.restful.person.PersonDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
-public class PegawaiPerusahaanDTO implements Serializable {
+public class PegawaiDTO implements Serializable {
 
 	private static final long serialVersionUID = 4408097239880314226L;
 	private String id;
@@ -16,18 +16,15 @@ public class PegawaiPerusahaanDTO implements Serializable {
 	private PersonDTO person;
 	private JabatanDTO jabatan;
 	
-	public PegawaiPerusahaanDTO() {
+	public PegawaiDTO() {
 	}
 	
-	public PegawaiPerusahaanDTO(Pegawai t) {
+	public PegawaiDTO(Pegawai t) {
 		if(t != null) {
 			this.id = t.getId();
-			this.perusahaan = t.getPerusahaan() != null ?
-					new RegisterPerusahaanDTO(t.getPerusahaan()) : null;
-			this.person = t.getPerson() != null ? 
-					new PersonDTO(t.getPerson()) : null;
-			this.jabatan = t.getJabatan() != null ? 
-					new JabatanDTO(t.getJabatan()) : null;
+			this.perusahaan = t.getPerusahaan() != null ? new RegisterPerusahaanDTO(t.getPerusahaan()) : null;
+			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
+			this.jabatan = t.getJabatan() != null ? new JabatanDTO(t.getJabatan()) : null;
 		}
 	}
 	
@@ -88,7 +85,7 @@ public class PegawaiPerusahaanDTO implements Serializable {
             return false;
         }
         
-        final PegawaiPerusahaanDTO other = (PegawaiPerusahaanDTO) obj;
+        final PegawaiDTO other = (PegawaiDTO) obj;
         
         if (!this.id.equals(other.getId())) {
             return false;
