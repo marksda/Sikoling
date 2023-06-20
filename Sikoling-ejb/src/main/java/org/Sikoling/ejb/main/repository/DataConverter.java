@@ -24,6 +24,7 @@ import org.Sikoling.ejb.abstraction.entity.PelakuUsaha;
 import org.Sikoling.ejb.abstraction.entity.PenanggungJawab;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
+import org.Sikoling.ejb.abstraction.entity.Produk;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -91,6 +92,7 @@ import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.perusahaan.AutorityPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
+import org.Sikoling.ejb.main.repository.produk.ProdukData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
@@ -919,6 +921,16 @@ public class DataConverter {
 		return kategoriPermohonanSuratArahan;
 	}
 	
+	public Produk convertProdukDataToProduk(ProdukData d) {
+		Produk produk = null;
+		
+		if(d != null) {
+			produk = new Produk(d.getId(), d.getNama(), d.getKategoriProduk() != null ? convertKategoriProdukDataToKategoriProduk(d.getKategoriProduk()):null);
+		}
+		
+		return produk;
+	}
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -1656,6 +1668,18 @@ public class DataConverter {
 		}
 		
 		return kategoriPermohonanSuratArahanData;
+	}
+	
+	public ProdukData convertProdukToProdukData(Produk t) {
+		ProdukData produkData = new ProdukData();
+		
+		if(t != null) {
+			produkData.setId(t.getId());
+			produkData.setNama(t.getNama());
+			produkData.setKategoriProduk(t.getKategoriProduk() != null ? convertKategoriProdukToKategoriProdukData(t.getKategoriProduk()):null);			
+		}
+		
+		return produkData;
 	}
 	
 	/*----------id generator function---------------*/

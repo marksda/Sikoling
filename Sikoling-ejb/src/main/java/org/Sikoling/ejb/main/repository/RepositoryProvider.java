@@ -142,8 +142,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public ProdukRepositoryJPA getProdukRepositoryJPA(EntityManager entityManager) {
-		return new ProdukRepositoryJPA(entityManager);
+	public ProdukRepositoryJPA getProdukRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new ProdukRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

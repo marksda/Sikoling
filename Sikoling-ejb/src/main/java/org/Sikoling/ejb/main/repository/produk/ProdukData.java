@@ -7,10 +7,6 @@ import org.Sikoling.ejb.main.repository.kategoriproduk.KategoriProdukData;
 
 @Entity
 @Table(name="master.tbl_produk")
-@NamedQueries({
-@NamedQuery(name="ProdukData.findAll", query="SELECT p FROM ProdukData p"),
-@NamedQuery(name="ProdukData.findByNama", query="SELECT p FROM ProdukData p WHERE p.nama LIKE :nama")
-})
 public class ProdukData implements Serializable {
 	private static final long serialVersionUID = 8534122990459968013L;
 

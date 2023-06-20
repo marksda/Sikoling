@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.abstraction.service.produk;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Produk;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IProdukRepository;
 
 public class ProdukService implements IProdukService {
@@ -14,38 +17,33 @@ public class ProdukService implements IProdukService {
 	}
 
 	@Override
-	public Produk save(Produk produk) {
-		return this.produkRepository.save(produk);
+	public Produk save(Produk t) throws IOException {
+		return produkRepository.save(t);
 	}
 
 	@Override
-	public Produk update(Produk produk) {
-		return this.produkRepository.update(produk);
+	public Produk update(Produk t) {
+		return produkRepository.update(t);
 	}
-	
 
 	@Override
-	public List<Produk> getAll() {
-		return produkRepository.getAll();
+	public Produk updateId(String idLama, Produk t) throws IOException {
+		return produkRepository.updateId(idLama, t);
 	}
-	
 
 	@Override
-	public List<Produk> getAllByPage(Integer page, Integer pageSize) {
-		return produkRepository.getAllByPage(page, pageSize);
+	public Produk delete(Produk t) throws IOException {
+		return produkRepository.delete(t);
 	}
-	
 
 	@Override
-	public List<Produk> getByQueryNama(String nama) {
-		return produkRepository.getByQueryNama(nama);
+	public List<Produk> getDaftarData(QueryParamFilters queryParamFilters) {
+		return produkRepository.getDaftarData(queryParamFilters);
 	}
-	
 
 	@Override
-	public List<Produk> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return produkRepository.getByQueryNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return produkRepository.getJumlahData(queryParamFilters);
 	}
-
 	
 }

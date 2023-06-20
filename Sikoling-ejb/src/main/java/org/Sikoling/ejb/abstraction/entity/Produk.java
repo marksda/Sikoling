@@ -8,13 +8,12 @@ public class Produk implements Serializable {
 	private static final long serialVersionUID = 1719488297810116974L;
 	private final String id;
 	private final String nama;
-	private final String idKategoriProduk;
+	private final KategoriProduk kategoriProduk;
 	
-	public Produk(String id, String nama, String idKategoriProduk) {
-		super();
+	public Produk(String id, String nama, KategoriProduk kategoriProduk) {
 		this.id = id;
 		this.nama = nama;
-		this.idKategoriProduk = idKategoriProduk;
+		this.kategoriProduk = kategoriProduk;
 	}
 
 	public String getId() {
@@ -25,8 +24,8 @@ public class Produk implements Serializable {
 		return nama;
 	}
 
-	public String getIdKategoriProduk() {
-		return idKategoriProduk;
+	public KategoriProduk getKategoriProduk() {
+		return kategoriProduk;
 	}
 
 	public static long getSerialversionuid() {
