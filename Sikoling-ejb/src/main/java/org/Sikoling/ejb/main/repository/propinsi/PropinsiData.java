@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="master.tbl_propinsi")
-@NamedQueries({
-@NamedQuery(name="PropinsiData.findAll", query="SELECT p FROM PropinsiData p"),
-@NamedQuery(name="PropinsiData.findByName", query="SELECT p FROM PropinsiData p WHERE p.nama LIKE :nama")})
 public class PropinsiData implements Serializable {
 	private static final long serialVersionUID = -299594010656178333L;
 

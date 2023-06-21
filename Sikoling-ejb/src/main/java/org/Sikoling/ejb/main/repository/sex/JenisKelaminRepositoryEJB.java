@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.main.repository.sex;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -16,36 +19,36 @@ import jakarta.inject.Inject;
 public class JenisKelaminRepositoryEJB implements IJenisKelaminRepository {
 	
 	@Inject
-	private JenisKelaminRepositoryJPA jenisKelaminRepositoryJPA;
+	private JenisKelaminRepositoryJPA jenisKelaminRepository;
 
 	@Override
-	public List<JenisKelamin> getAll() {
-		return jenisKelaminRepositoryJPA.getAll();
-	}
-
-	@Override
-	public JenisKelamin save(JenisKelamin t) {
-		return jenisKelaminRepositoryJPA.save(t);
+	public JenisKelamin save(JenisKelamin t) throws IOException {
+		return jenisKelaminRepository.save(t);
 	}
 
 	@Override
 	public JenisKelamin update(JenisKelamin t) {
-		return jenisKelaminRepositoryJPA.update(t);
+		return jenisKelaminRepository.update(t);
 	}
 
 	@Override
-	public List<JenisKelamin> getAllByPage(Integer page, Integer pageSize) {
-		return jenisKelaminRepositoryJPA.getAllByPage(page, pageSize);
+	public JenisKelamin delete(JenisKelamin t) throws IOException {
+		return jenisKelaminRepository.delete(t);
 	}
 
 	@Override
-	public List<JenisKelamin> getByQueryNama(String nama) {
-		return jenisKelaminRepositoryJPA.getByQueryNama(nama);
+	public List<JenisKelamin> getDaftarData(QueryParamFilters queryParamFilters) {
+		return jenisKelaminRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<JenisKelamin> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return jenisKelaminRepositoryJPA.getByQueryNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return jenisKelaminRepository.getJumlahData(queryParamFilters);
+	}
+
+	@Override
+	public JenisKelamin updateId(String idLama, JenisKelamin t) throws IOException {
+		return jenisKelaminRepository.updateId(idLama, t);
 	}
 
 }

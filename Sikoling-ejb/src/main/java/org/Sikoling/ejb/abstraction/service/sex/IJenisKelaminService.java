@@ -1,14 +1,17 @@
 package org.Sikoling.ejb.abstraction.service.sex;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
 public interface IJenisKelaminService {
-	JenisKelamin save(JenisKelamin jenisKelamin);
-	JenisKelamin update(JenisKelamin jenisKelamin);
-	List<JenisKelamin> getAll();
-	List<JenisKelamin> getAllByPage(Integer page, Integer pageSize);
-	List<JenisKelamin> getByQueryNama(String nama);
-	List<JenisKelamin> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize);
+	JenisKelamin save(JenisKelamin t) throws IOException;
+	JenisKelamin update(JenisKelamin t);
+	JenisKelamin updateId(String idLama, JenisKelamin t) throws IOException;
+	JenisKelamin delete(JenisKelamin t) throws IOException;
+	List<JenisKelamin> getDaftarData(QueryParamFilters queryParamFilters);
+	Long getJumlahData(List<Filter> queryParamFilters);
 }

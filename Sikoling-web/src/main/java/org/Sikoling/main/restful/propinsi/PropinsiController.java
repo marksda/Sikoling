@@ -1,21 +1,32 @@
 package org.Sikoling.main.restful.propinsi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
+import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
@@ -28,59 +39,69 @@ public class PropinsiController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public PropinsiDTO save(PropinsiDTO propinsiDTO) {
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+    public PropinsiDTO save(PropinsiDTO propinsiDTO) throws IOException {
         return new PropinsiDTO(propinsiService.save(propinsiDTO.toPropinsi()));
     }
 	
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
     public PropinsiDTO update(PropinsiDTO propinsi) {
         return new PropinsiDTO(propinsiService.update(propinsi.toPropinsi()));
     }
 	
-	@GET
+	@Path("id/{idLama}")
+	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PropinsiDTO> getAll() {
-        return propinsiService.getAll()
-                .stream()
-                .map(f -> new PropinsiDTO(f))
-                .collect(Collectors.toList());
-    }
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PropinsiDTO updateId(@PathParam("idLama") String idLama, PropinsiDTO d) throws IOException {
+		return new PropinsiDTO(propinsiService.updateId(idLama, d.toPropinsi()));
+	}
 	
-	@Path("page")
-	@GET
+	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PropinsiDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-        return propinsiService.getAllByPage(page, pageSize)
-                .stream()
-                .map(f -> new PropinsiDTO(f))
-                .collect(Collectors.toList());
-    }
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public PropinsiDTO delete(PropinsiDTO d) throws IOException {
+		return new PropinsiDTO(propinsiService.delete(d.toPropinsi()));
+	}
 	
-	@Path("nama")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<PropinsiDTO> getByNama(@QueryParam("nama") String nama) {
-        return propinsiService.getByNama(nama)
-                .stream()
-                .map(f -> new PropinsiDTO(f))
-                .collect(Collectors.toList());
-    }
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public List<PropinsiDTO> getDaftarData(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return propinsiService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
+				.stream()
+				.map(t -> new PropinsiDTO(t))
+				.collect(Collectors.toList());
+	}
 	
-	@Path("nama/page")
+	@Path("count")
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<PropinsiDTO> getByNamaAndPage(@QueryParam("nama") String nama, @QueryParam("page") Integer page, 
-    		@QueryParam("pageSize") Integer pageSize) {
-        return propinsiService.getByNamaAndPage(nama, page, pageSize)
-                .stream()
-                .map(f -> new PropinsiDTO(f))
-                .collect(Collectors.toList());
-    }
+    @Produces({MediaType.TEXT_PLAIN})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public Long getJumlahData(@Context UriInfo info) {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("filters");
+		Jsonb jsonb = JsonbBuilder.create();
+		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
+		
+		return propinsiService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+	}
 	
 }

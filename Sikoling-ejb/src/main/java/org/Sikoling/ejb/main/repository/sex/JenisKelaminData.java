@@ -6,10 +6,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="master.tbl_jenis_kelamin")
-@NamedQueries({
-@NamedQuery(name="JenisKelaminData.findAll", query="SELECT j FROM JenisKelaminData j"),
-@NamedQuery(name="JenisKelaminData.findAllByQueryNama", query="SELECT j FROM JenisKelaminData j WHERE j.nama LIKE :nama")
-})
 public class JenisKelaminData implements Serializable {
 	private static final long serialVersionUID = -4654923742493315238L;
 

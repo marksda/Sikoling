@@ -63,8 +63,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public PropinsiRepositoryJPA getPropinsiRepositoryJPA(EntityManager entityManager) {
-		return new PropinsiRepositoryJPA(entityManager);
+	public PropinsiRepositoryJPA getPropinsiRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new PropinsiRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces
@@ -98,8 +98,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public JenisKelaminRepositoryJPA getJenisKelaminRepositoryJPA(EntityManager entityManager) {
-		return new JenisKelaminRepositoryJPA(entityManager);
+	public JenisKelaminRepositoryJPA getJenisKelaminRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new JenisKelaminRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

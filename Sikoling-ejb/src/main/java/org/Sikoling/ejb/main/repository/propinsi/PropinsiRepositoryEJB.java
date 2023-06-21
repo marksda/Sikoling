@@ -1,8 +1,11 @@
 package org.Sikoling.ejb.main.repository.propinsi;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -16,36 +19,36 @@ import jakarta.inject.Inject;
 public class PropinsiRepositoryEJB implements IPropinsiRepository {
 	
 	@Inject
-	private PropinsiRepositoryJPA propinsiRepositoryJPA;
+	private PropinsiRepositoryJPA propinsiRepository;
 
 	@Override
-	public List<Propinsi> getAll() {
-		return propinsiRepositoryJPA.getAll();
-	}
-
-	@Override
-	public Propinsi save(Propinsi t) {
-		return propinsiRepositoryJPA.save(t);
+	public Propinsi save(Propinsi t) throws IOException {
+		return propinsiRepository.save(t);
 	}
 
 	@Override
 	public Propinsi update(Propinsi t) {
-		return propinsiRepositoryJPA.update(t);
+		return propinsiRepository.update(t);
 	}
 
 	@Override
-	public List<Propinsi> getAllByPage(Integer page, Integer pageSize) {
-		return propinsiRepositoryJPA.getAllByPage(page, pageSize);
+	public Propinsi delete(Propinsi t) throws IOException {
+		return propinsiRepository.delete(t);
 	}
 
 	@Override
-	public List<Propinsi> getByNama(String nama) {
-		return propinsiRepositoryJPA.getByNama(nama);
+	public List<Propinsi> getDaftarData(QueryParamFilters queryParamFilters) {
+		return propinsiRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
-	public List<Propinsi> getByNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return propinsiRepositoryJPA.getByNamaAndPage(nama, page, pageSize);
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return propinsiRepository.getJumlahData(queryParamFilters);
 	}
 
+	@Override
+	public Propinsi updateId(String idLama, Propinsi t) throws IOException {
+		return propinsiRepository.updateId(idLama, t);
+	}
+	
 }
