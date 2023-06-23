@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Autority;
 import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
@@ -29,6 +28,7 @@ import org.Sikoling.ejb.abstraction.entity.Propinsi;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
+import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
@@ -96,6 +96,7 @@ import org.Sikoling.ejb.main.repository.produk.ProdukData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
+import org.keycloak.representations.idm.UserRepresentation;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -931,6 +932,19 @@ public class DataConverter {
 		return produk;
 	}
 	
+	public Autority convertKeyCloackUserRepresentationToAutority(UserRepresentation d) {
+		AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+				.setParameter("userName", d.getEmail())
+				.getResultList().stream().findFirst().orElse(null);		
+		Autority autority = null;
+		
+		if(autorisasiData != null) {
+			autority = convertAutorisasiDataToAutority(autorisasiData);
+		}
+		
+		return autority;
+	}
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -1129,7 +1143,7 @@ public class DataConverter {
 		
 		if(t != null) {
 			autorisasiData = new AutorisasiData();
-			autorisasiData.setId(t.getId());
+			autorisasiData.setId(t.getId() != null ? t.getId(): getGenerateIdAutorisasiData());
 			autorisasiData.setTanggalRegistrasi(t.getTanggal());
 			autorisasiData.setUserName(t.getUserName());
 			autorisasiData.setPerson(convertPersonToPersonData(t.getPerson()));
@@ -1682,6 +1696,20 @@ public class DataConverter {
 		return produkData;
 	}
 	
+	public UserRepresentation convertUserToUserRepresentationKeyCloack(User t) {
+		UserRepresentation userRepresentation = null;
+		
+		if(t != null) {
+			userRepresentation = new UserRepresentation();
+			userRepresentation.setId(t.getCredential().getUserName());
+			userRepresentation.setEmail(t.getPerson().getKontak().getEmail());
+	        userRepresentation.setUsername(t.getCredential().getUserName());
+	        userRepresentation.setFirstName(t.getPerson().getNama());
+		}
+		
+		return userRepresentation;
+	}
+	
 	/*----------id generator function---------------*/
 	private String getGenerateIdRegisterPerusahaan() {
 		int tahun = LocalDate.now().getYear();
@@ -1771,6 +1799,28 @@ public class DataConverter {
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {			
 			hasil = "0000001";			
+			return hasil.concat(Integer.toString(tahun));
+		}		
+	}
+	
+	private String getGenerateIdAutorisasiData() {
+		int tahun = LocalDate.now().getYear();
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(a.id) "
+				+ "FROM AutorisasiData a "
+				+ "WHERE EXTRACT(YEAR FROM a.tanggal) = :tahun");
+		
+		q.setParameter("tahun", tahun);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			hasil = hasil.substring(0, 4);
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 4, '0');
+			return hasil.concat(Integer.toString(tahun));
+		} catch (Exception e) {			
+			hasil = "0001";			
 			return hasil.concat(Integer.toString(tahun));
 		}		
 	}

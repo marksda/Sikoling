@@ -32,7 +32,7 @@ public class Wali implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 13 * hash + Objects.hashCode(this.user.getId());
+		hash = 13 * hash + Objects.hashCode(this.user.getPerson().getNik());
 		return hash;
 	}
 
@@ -52,7 +52,7 @@ public class Wali implements Serializable {
         
         final Wali other = (Wali) obj;
         
-        if (!this.user.getId().equals(other.getUser().getId())) {
+        if (!this.user.getPerson().getNik().equals(other.getUser().getPerson().getNik())) {
             return false;
         }
         
@@ -62,9 +62,9 @@ public class Wali implements Serializable {
 	@Override
 	public String toString() {
 		return "Wali{id=" 
-				.concat(this.user.getId())
+				.concat(this.user.getPerson().getNik())
 				.concat(", nama=")
-				.concat(this.user.getUserName())
+				.concat(this.user.getPerson().getNama())
 				.concat(", statusWali=")
 				.concat(this.status.getNama())
 				.concat("}");

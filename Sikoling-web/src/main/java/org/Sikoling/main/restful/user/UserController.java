@@ -1,9 +1,7 @@
 package org.Sikoling.main.restful.user;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.Sikoling.ejb.abstraction.service.user.IUserService;
+import java.io.IOException;
+import org.Sikoling.ejb.abstraction.service.keycloackuser.IKeyCloackUserService;
 import org.Sikoling.main.restful.message.SimpleResponseDTO;
 
 import jakarta.ejb.LocalBean;
@@ -24,12 +22,12 @@ import jakarta.ws.rs.core.MediaType;
 public class UserController {
 	
 	@Inject
-	private IUserService userService;
+	private IKeyCloackUserService userService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public UserDTO save(UserDTO u) {
+	public UserDTO save(UserDTO u) throws IOException {
 		return new UserDTO(userService.save(u.toUser()));
 	}
 	
@@ -39,52 +37,7 @@ public class UserController {
 	public UserDTO update(UserDTO u) {
 		return new UserDTO(userService.update(u.toUser()));
 	}
-	
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<UserDTO> getAll() {
-		return userService.getAll()
-				.stream()
-				.map(u -> new UserDTO(u))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<UserDTO> getAllByPage(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return userService.getAllByPage(page, pageSize)
-				.stream()
-				.map(u -> new UserDTO(u))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<UserDTO> getByQueryNama(@QueryParam("nama") String nama,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return userService.getByQueryNama(nama)
-				.stream()
-				.map(u -> new UserDTO(u))
-				.collect(Collectors.toList());
-	}
-	
-	@Path("nama/page")
-	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	public List<UserDTO> getByQueryNamaAndPage(@QueryParam("nama") String nama,
-			@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-		return userService.getByQueryNamaAndPage(nama, page, pageSize)
-				.stream()
-				.map(u -> new UserDTO(u))
-				.collect(Collectors.toList());
-	}
-
+		
 	@Path("cek_user_name")
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})

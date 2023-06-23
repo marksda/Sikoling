@@ -1,7 +1,6 @@
 package org.Sikoling.main.restful.user;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.User;
@@ -10,111 +9,43 @@ import org.Sikoling.main.restful.person.PersonDTO;
 public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 8350209564637166779L;
-	private String id;
-	private String userName;
-	private String password;
-	private Boolean loginStatus;
-	private Date registerDate;
-	private Boolean statusInternal;
-	private PersonDTO personDTO;
-	private Boolean statusEnable;
+	private CredentialDTO credential;
+	private PersonDTO person;
 	
-	public UserDTO() {
-		
+	public UserDTO() {		
 	}
 	
-	public UserDTO(User u) {
-		this.id = u.getId();
-		this.userName = u.getUserName();
-		this.password = u.getPassword();
-		this.loginStatus = u.getLoginStatus();
-		this.registerDate = u.getRegisterDate();
-		this.statusInternal = u.getStatusInternal();
+	public UserDTO(User t) {
+		if(t != null) {
+			this.credential = t.getCredential() != null ? new CredentialDTO(t.getCredential()):null;
+			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()):null;
+		}
 	}
 	
-	public UserDTO(String id, String email, String password, Boolean loginStatus, Date registerDate,
-			Boolean statusInternal) {
-		super();
-		this.id = id;
-		this.userName = email;
-		this.password = password;
-		this.loginStatus = loginStatus;
-		this.registerDate = registerDate;
-		this.statusInternal = statusInternal;
+	public CredentialDTO getCredential() {
+		return credential;
 	}
 
-	public String getId() {
-		return id;
+	public void setCredential(CredentialDTO credential) {
+		this.credential = credential;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public PersonDTO getPerson() {
+		return person;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String email) {
-		this.userName = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Boolean getLoginStatus() {
-		return loginStatus;
-	}
-
-	public void setLoginStatus(Boolean loginStatus) {
-		this.loginStatus = loginStatus;
-	}
-
-	public Date getRegisterDate() {
-		return registerDate;
-	}
-
-	public void setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
-	}
-
-	public Boolean getStatusInternal() {
-		return statusInternal;
-	}
-
-	public void setStatusInternal(Boolean statusInternal) {
-		this.statusInternal = statusInternal;
-	}
-	
-	public PersonDTO getPersonDTO() {
-		return personDTO;
-	}
-
-	public void setPersonDTO(PersonDTO personDTO) {
-		this.personDTO = personDTO;
-	}
-
-	public Boolean getStatusEnable() {
-		return statusEnable;
-	}
-
-	public void setStatusEnable(Boolean statusEnable) {
-		this.statusEnable = statusEnable;
+	public void setPerson(PersonDTO person) {
+		this.person = person;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	public int hashCode() {
-		int hash = 17;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.userName);
+		int hash = 171;
+        hash = 31 * hash + Objects.hashCode(this.credential.getUserName());
+        hash = 31 * hash + Objects.hashCode(this.person.getNik());
         return hash;
 	}
 
@@ -134,11 +65,7 @@ public class UserDTO implements Serializable {
         
         final UserDTO other = (UserDTO) obj;
         
-        if (this.id != other.id) {
-            return false;
-        }
-        
-        if (this.userName != other.userName) {
+        if (this.credential.getUserName() != other.credential.getUserName()) {
             return false;
         }
 
@@ -147,11 +74,14 @@ public class UserDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserDTO{" + "id=" + id + ", email=" + userName + '}';	  
+		return "UserDTO{" + "userName=" + this.credential.getUserName() + '}';	  
 	}
 
 	public User toUser() {
-		return new User(id, userName, password, loginStatus, registerDate, statusInternal, personDTO.toPerson(), statusEnable);
+		return new User(
+				this.credential != null ? this.credential.toCredential():null, 
+				this.person != null ? this.person.toPerson():null
+				);
 	}
 
 }

@@ -35,7 +35,7 @@ import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
-import org.Sikoling.ejb.abstraction.repository.IUserRepository;
+import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
 import org.Sikoling.ejb.abstraction.service.security.IOpenIdConnectService;
@@ -45,8 +45,6 @@ import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.SkalaUsahaService;
-import org.Sikoling.ejb.abstraction.service.user.IUserService;
-import org.Sikoling.ejb.abstraction.service.user.UserService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.dokumen.MasterDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IMasterDokumenService;
@@ -76,6 +74,8 @@ import org.Sikoling.ejb.abstraction.service.kategoriproduk.IKategoriProdukServic
 import org.Sikoling.ejb.abstraction.service.kategoriproduk.KategoriProdukService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.IKecamatanService;
 import org.Sikoling.ejb.abstraction.service.kecamatan.KecamatanService;
+import org.Sikoling.ejb.abstraction.service.keycloackuser.IKeyCloackUserService;
+import org.Sikoling.ejb.abstraction.service.keycloackuser.KeyCloackUserService;
 import org.Sikoling.ejb.abstraction.service.log.FlowLogService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.ejb.abstraction.service.log.IKategoriLogService;
@@ -175,8 +175,8 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IUserService getUserService(@Infrastructure IUserRepository userRepository) {
-		return new UserService(userRepository);
+	public IKeyCloackUserService getUserService(@Infrastructure IKeyCloackUserRepository userRepository) {
+		return new KeyCloackUserService(userRepository);
 	}
 	
 	@Produces

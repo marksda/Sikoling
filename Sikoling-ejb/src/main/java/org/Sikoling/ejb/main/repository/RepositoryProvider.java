@@ -35,7 +35,6 @@ import org.Sikoling.ejb.main.repository.produk.ProdukRepositoryJPA;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaRepositoryJPA;
-import org.Sikoling.ejb.main.repository.user.UserRepositoryJPA;
 import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserJPA;
 import org.keycloak.admin.client.Keycloak;
 import jakarta.ejb.LocalBean;
@@ -107,23 +106,21 @@ public class RepositoryProvider {
 		return new PenanggungJawabRepositoryJPA(entityManager, dataConverter);
 	}
 	
-	@Produces
-	public UserRepositoryJPA getUserRepositoryJPA(EntityManager entityManager) {
-		return new UserRepositoryJPA(entityManager);
-	}
+//	@Produces
+//	public UserRepositoryJPA getUserRepositoryJPA(EntityManager entityManager) {
+//		return new UserRepositoryJPA(entityManager);
+//	}
 	
 	@Produces
 	public KeyCloakUserJPA getKeyCloakUserRepository(EntityManager entityManager, Properties properties, 
-			Client client, ITokenValidationService tokenValidationService) {
+			Client client, ITokenValidationService tokenValidationService,  DataConverter dataConverter) {
 		Keycloak keycloak = Keycloak.getInstance(
-				properties.getProperty("SSO_AUTH_URL"),
-                "master",
-                properties.getProperty("SSO_AUTH_USER"),
-                properties.getProperty("SSO_AUTH_PASSWORD"),
-                "admin-cli");
+			properties.getProperty("SSO_AUTH_URL"), "master", properties.getProperty("SSO_AUTH_USER"), 
+			properties.getProperty("SSO_AUTH_PASSWORD"), "admin-cli"
+        );
 		
 		return new KeyCloakUserJPA(keycloak, properties.getProperty("SSO_REALM"), entityManager, 
-				properties.getProperty("SSO_TOKEN_URL"), client, tokenValidationService);
+				properties.getProperty("SSO_TOKEN_URL"), client, tokenValidationService, dataConverter);
 	}
 	
 	@Produces

@@ -1,9 +1,9 @@
 package org.Sikoling.ejb.main.security.user.keycloack;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -12,23 +12,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.Sikoling.ejb.abstraction.entity.Alamat;
-import org.Sikoling.ejb.abstraction.entity.Desa;
-import org.Sikoling.ejb.abstraction.entity.JenisKelamin;
-import org.Sikoling.ejb.abstraction.entity.Kabupaten;
-import org.Sikoling.ejb.abstraction.entity.Kecamatan;
-import org.Sikoling.ejb.abstraction.entity.Kontak;
+import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.Person;
-import org.Sikoling.ejb.abstraction.entity.Propinsi;
+import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
 import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 import org.Sikoling.ejb.abstraction.entity.Token;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.Credential;
-import org.Sikoling.ejb.abstraction.repository.IUserRepository;
+import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.main.repository.DataConverter;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
@@ -53,9 +49,10 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-public class KeyCloakUserJPA implements IUserRepository {
+public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	
 	private final EntityManager entityManager;
+	private final DataConverter dataConverter;
 	private final Keycloak keycloak;
 	private final String realm;	
 	private final String tokenURL;
@@ -63,111 +60,171 @@ public class KeyCloakUserJPA implements IUserRepository {
 	private final ITokenValidationService tokenValidationService;
 
 	public KeyCloakUserJPA(Keycloak keycloak, String realm, EntityManager entityManager, 
-			String tokenURL, Client client, ITokenValidationService tokenValidationService) {
+			String tokenURL, Client client, ITokenValidationService tokenValidationService, DataConverter dataConverter) {
 		this.keycloak = keycloak;
 		this.realm = realm;
 		this.entityManager = entityManager;
 		this.tokenURL = tokenURL;
 		this.client = client;
 		this.tokenValidationService = tokenValidationService;
+		this.dataConverter = dataConverter;
 	}
 	
 	@Override
-	public List<User> getAll() {		
-		return keycloak
-				.realm(realm)
-				.users()
-                .list()                
-                .stream()
-                .map(t -> {
-					try {
-						return convertUserRepresentationToUser(t);
-					} catch (ParseException e) {						
-						e.printStackTrace();
-						return null;
-					}
-				})
-                .collect(Collectors.toList());
-	}
-
-	@Override
-	public User save(User user) {
-		Response response = keycloak
-				.realm(realm)
-				.users()
-				.create(convertUserToUserPresentatiton(user));
+	public User save(User t) throws IOException {
+		String statusUser = cekModelAuthentication(t.getCredential().getUserName());
 		
-		if (response.getStatus() != 200) {
-            throw new IllegalArgumentException("user service " + user.getUserName() + " couldn't be saved in KeyCloak: " + response.readEntity(String.class));
-        }
+		Response response = null;
+		UserRepresentation userRepresentation = null;
+		CredentialRepresentation credentialRepresentation = null;
+		
+		switch (statusUser) {
+		case "local": {	//penambahan user lama (transisi) ke server keycloack
+			String pwd = "";
+			try {
+				MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+				messageDigest.reset();
+				messageDigest.update(t.getCredential().getPassword().getBytes());
+                byte[] digest = messageDigest.digest();
+                StringBuilder sb = new StringBuilder();
+                for (int i=0;i<digest.length;i++){
+                    sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+                }
+                
+                pwd=sb.toString(); 
+                
+                Integer count = entityManager.createNamedQuery("UserData.authenticationQuery", UserData.class)
+						.setParameter("nama", t.getCredential().getUserName())
+						.setParameter("password", pwd)
+						.getResultList()
+						.size();
+				
+				if(count == 0) {	//sandi tidak sesuai
+					throw new IOException("sandi tidak sesuai");
+				}
+				else {	//proses pemindahan data user lama menuju ke server keycloack
+					userRepresentation = dataConverter.convertUserToUserRepresentationKeyCloack(t);
+					userRepresentation.setCreatedTimestamp(System.currentTimeMillis()/1000);
+					credentialRepresentation = new CredentialRepresentation();
+				 	credentialRepresentation.setTemporary(false);
+					credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+					credentialRepresentation.setValue(t.getCredential().getPassword());					
+					userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));	
+					
+					response = keycloak
+							.realm(realm)
+							.users()
+							.create(userRepresentation);	
+					
+					if (response.getStatus() != 201) {	// data lama gagal ditambahkan		
+						throw new IOException("data autentikasi tidak bisa ditambahkan ke server identification provider");
+			        } else {	
+						try {
+							UserData userData = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+									.setParameter("nama", t.getCredential().getUserName())
+									.getSingleResult();								
 
-        return user;
+							entityManager.remove(userData);	
+							entityManager.flush();
+							
+							return t;
+						} catch (Exception e) {
+							throw new IOException("malfunction");
+						}
+					}
+				}	
+			} catch (Exception e) {
+				throw new IOException("sandi tidak sesuai");
+			}
+		}
+		case "remote":
+			throw new IOException("data sudah ada");
+		case "none":
+			userRepresentation = dataConverter.convertUserToUserRepresentationKeyCloack(t);
+			userRepresentation.setCreatedTimestamp(System.currentTimeMillis()/1000);
+			credentialRepresentation = new CredentialRepresentation();
+		 	credentialRepresentation.setTemporary(false);
+			credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+			credentialRepresentation.setValue(t.getCredential().getPassword());
+			userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));			
+			
+//			Map<String, List<String>> attributes = new HashMap<>();
+//	        attributes.put("statusInternal", Arrays.asList(user.getStatusInternal().toString()));  
+//	        attributes.put("registerDate", Arrays.asList(user.getRegisterDate().toString()));
+//	        attributes.put("nik", Arrays.asList(user.getPerson().getNik())); 
+//	        userRepresentation.setAttributes(attributes);
+			
+			response = keycloak
+					.realm(realm)
+					.users()
+					.create(userRepresentation);
+			
+			if (response.getStatus() != 201) {					
+				throw new IOException("data autentikasi tidak bisa ditambahkan ke server identification provider");
+	        }
+			else {	
+				try {		
+					Autority autority = new Autority(
+							null, 
+							LocalDate.now(), 
+							t.getPerson(), 
+							new HakAkses("09", null, null), 
+							false, 
+							false, 
+							t.getCredential().getUserName());
+					
+					AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
+					entityManager.persist(autorisasiData);
+					entityManager.flush();
+					
+					return t;
+				} catch (Exception e) {
+					throw new IOException("malfunction");
+				}
+			}
+		default:
+			throw new IOException("malfunction");
+		}
 	}
 
 	@Override
-	public User update(User user) {
+	public User update(User t) {		
 		UserResource userResource = keycloak
                 .realm(realm)
                 .users()
-                .get(user.getId());
-        
-        userResource.update(convertUserToUserPresentatiton(user));
+                .get(t.getCredential().getUserName());
+		
+		UserRepresentation userRepresentationLama = userResource.toRepresentation();
+		userRepresentationLama.setFirstName(t.getPerson().getNama());
+//		CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+//	 	credentialRepresentation.setTemporary(false);
+//		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+//		credentialRepresentation.setValue(t.getCredential().getPassword());		
+//		userRepresentationLama.setCredentials(Collections.singletonList(credentialRepresentation));			
+		
+		userResource.update(userRepresentationLama);
 
-        return user;
+        return t;
 	}
-
+	
 	@Override
-	public List<User> getAllByPage(Integer page, Integer pageSize) {
-		return keycloak
-                .realm(realm)
-                .users()
-                .list((page - 1) * pageSize, pageSize)
-                .stream()
-                .map(t -> {
-					try {
-						return convertUserRepresentationToUser(t);
-					} catch (ParseException e) {
-						e.printStackTrace();
-						return null;
-					}
-				})
-                .collect(Collectors.toList());
-	}
-
-	@Override
-	public List<User> getByQueryNama(String nama) {
-		return keycloak
-                .realm(realm)
-                .users()
-                .search(nama)
-                .stream()
-                .map(t -> {
-					try {
-						return convertUserRepresentationToUser(t);
-					} catch (ParseException e) {
-						e.printStackTrace();
-						return null;
-					}
-				})
-                .collect(Collectors.toList());
-	}
-
-	@Override
-	public List<User> getByQueryNamaAndPage(String nama, Integer page, Integer pageSize) {
-		return keycloak
-                .realm(realm)
-                .users()
-                .search(nama, (page - 1) * pageSize, pageSize)
-                .stream()
-                .map(t -> {
-					try {
-						return convertUserRepresentationToUser(t);
-					} catch (ParseException e) {
-						e.printStackTrace();
-						return null;
-					}
-				})
-                .collect(Collectors.toList());
+	public User updateSandi(String sandiLama, User t) throws IOException {
+//		UserResource userResource = keycloak
+//                .realm(realm)
+//                .users()
+//                .get(t.getCredential().getUserName());
+//		
+//		UserRepresentation userRepresentationLama = userResource.toRepresentation();
+//		CredentialRepresentation credentialRepresentationLama = userRepresentationLama.getCredentials().get(0);
+//		
+//		CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+//		credentialRepresentation.setTemporary(false);
+//		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+//		credentialRepresentation.setValue(t.getCredential().getPassword());
+		
+//		if(credentialRepresentationLama.getValue() == )
+		
+		return null;
 	}
 	
 	@Override
@@ -182,6 +239,7 @@ public class KeyCloakUserJPA implements IUserRepository {
 
 	@Override
 	public ResponToken getToken(Credential userAuthenticator) {
+		
 		Token token;
 		String hasil = cekPassword(userAuthenticator.getUserName(), userAuthenticator.getPassword());
 		if( hasil == "remote") {
@@ -490,61 +548,61 @@ public class KeyCloakUserJPA implements IUserRepository {
 	        return "remote";
 		}
 	}
-	
-	private UserRepresentation convertUserToUserPresentatiton(User user) {
-		UserRepresentation userRepresentation = new UserRepresentation();
-		userRepresentation.setId(user.getId());
-		userRepresentation.setEmail(user.getUserName());
-        userRepresentation.setUsername(user.getUserName());
-        userRepresentation.setFirstName(user.getPerson().getNama());
-        userRepresentation.setEnabled(user.getStatusEnable());        
-        
-        Map<String, List<String>> attributes = new HashMap<>();
-        attributes.put("statusInternal", Arrays.asList(user.getStatusInternal().toString()));  
-        attributes.put("registerDate", Arrays.asList(user.getRegisterDate().toString()));
-        attributes.put("nik", Arrays.asList(user.getPerson().getNik()));        
- 
-        userRepresentation.setAttributes(attributes);
-        
-		return userRepresentation;
-	}
-	
-	private User convertUserRepresentationToUser(UserRepresentation userRepresentation) throws ParseException {
-		
-		PersonData data = entityManager.find(PersonData.class, getAttribute(userRepresentation.getAttributes(), "nik"));
-		Person person = new Person(
-				data.getId(), data.getNama(),
-				new JenisKelamin(data.getSex().getId(), data.getSex().getNama()),
-				new Alamat(
-						new Propinsi(data.getAlamat().getPropinsi().getId(), data.getAlamat().getPropinsi().getNama()), 
-						new Kabupaten(data.getAlamat().getKabupaten().getId(), data.getAlamat().getKabupaten().getNama()),
-						new Kecamatan(data.getAlamat().getKecamatan().getId(), data.getAlamat().getKecamatan().getNama()), 
-						new Desa(data.getAlamat().getDesa().getId(), data.getAlamat().getDesa().getNama()), 
-						data.getAlamat().getDetailAlamat()), 
-				data.getScanKtp(),
-				new Kontak(data.getKontak().getTelepone(), null, data.getKontak().getEmail()));
-		
-		
-        User user = new User(
-        		userRepresentation.getId(),
-        		userRepresentation.getEmail(),
-        		person,
-        		new SimpleDateFormat("dd/MM/yyyy").parse(getAttribute(userRepresentation.getAttributes(), "registerDate")),
-        		Boolean.valueOf(getAttribute(userRepresentation.getAttributes(), "statusInternal")),
-        		userRepresentation.isEnabled()
-        		);
-       
-		return user;
-	}
-	
-	private String getAttribute(Map<String, List<String>> attributes, String name) {
-        return Optional.ofNullable(attributes)
-                .map(att -> att.get(name))
-                .orElse(Collections.emptyList())
-                .stream()
-                .findFirst()
-                .orElse("");
-    }
+//	
+//	private UserRepresentation convertUserToUserPresentatiton(User user) {
+//		UserRepresentation userRepresentation = new UserRepresentation();
+//		userRepresentation.setId(user.getId());
+//		userRepresentation.setEmail(user.getUserName());
+//        userRepresentation.setUsername(user.getUserName());
+//        userRepresentation.setFirstName(user.getPerson().getNama());
+//        userRepresentation.setEnabled(user.getStatusEnable());        
+//        
+//        Map<String, List<String>> attributes = new HashMap<>();
+//        attributes.put("statusInternal", Arrays.asList(user.getStatusInternal().toString()));  
+//        attributes.put("registerDate", Arrays.asList(user.getRegisterDate().toString()));
+//        attributes.put("nik", Arrays.asList(user.getPerson().getNik()));        
+// 
+//        userRepresentation.setAttributes(attributes);
+//        
+//		return userRepresentation;
+//	}
+//	
+//	private User convertUserRepresentationToUser(UserRepresentation userRepresentation) throws ParseException {
+//		
+//		PersonData data = entityManager.find(PersonData.class, getAttribute(userRepresentation.getAttributes(), "nik"));
+//		Person person = new Person(
+//				data.getId(), data.getNama(),
+//				new JenisKelamin(data.getSex().getId(), data.getSex().getNama()),
+//				new Alamat(
+//						new Propinsi(data.getAlamat().getPropinsi().getId(), data.getAlamat().getPropinsi().getNama()), 
+//						new Kabupaten(data.getAlamat().getKabupaten().getId(), data.getAlamat().getKabupaten().getNama()),
+//						new Kecamatan(data.getAlamat().getKecamatan().getId(), data.getAlamat().getKecamatan().getNama()), 
+//						new Desa(data.getAlamat().getDesa().getId(), data.getAlamat().getDesa().getNama()), 
+//						data.getAlamat().getDetailAlamat()), 
+//				data.getScanKtp(),
+//				new Kontak(data.getKontak().getTelepone(), null, data.getKontak().getEmail()));
+//		
+//		
+//        User user = new User(
+//        		userRepresentation.getId(),
+//        		userRepresentation.getEmail(),
+//        		person,
+//        		new SimpleDateFormat("dd/MM/yyyy").parse(getAttribute(userRepresentation.getAttributes(), "registerDate")),
+//        		Boolean.valueOf(getAttribute(userRepresentation.getAttributes(), "statusInternal")),
+//        		userRepresentation.isEnabled()
+//        		);
+//       
+//		return user;
+//	}
+//	
+//	private String getAttribute(Map<String, List<String>> attributes, String name) {
+//        return Optional.ofNullable(attributes)
+//                .map(att -> att.get(name))
+//                .orElse(Collections.emptyList())
+//                .stream()
+//                .findFirst()
+//                .orElse("");
+//    }
 	
 	private UserRepresentation convertRegistrasiToUserPresentatiton(Credential userAuthenticator, Person person) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
@@ -574,5 +632,25 @@ public class KeyCloakUserJPA implements IUserRepository {
         
 		return userRepresentation;
 	}
+
+	
+	@Override
+	public User delete(User t) throws IOException {
+		return null;
+	}
+
+	
+	@Override
+	public List<User> getDaftarData(QueryParamFilters queryParamFilters) {
+		return null;
+	}
+
+	
+	@Override
+	public Long getJumlahData(List<Filter> queryParamFilters) {
+		return null;
+	}
+
+	
 		
 }
