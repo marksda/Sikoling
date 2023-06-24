@@ -9,13 +9,13 @@ public class RegisterPerusahaan implements Serializable {
 	private static final long serialVersionUID = -4021307873874947821L;
 	private final String id;
 	private final LocalDate tanggalRegistrasi;
-	private final Autority kreator;
-	private final Autority verifikator;
+	private final Otoritas kreator;
+	private final Otoritas verifikator;
 	private final Perusahaan perusahaan;
 	private final Boolean statusVerifikasi;	
 //	private final List<Autority> pengakses;
 	
-	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Autority kreator, Autority verifikator,
+	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Otoritas kreator, Otoritas verifikator,
 			Perusahaan perusahaan, Boolean statusVerifikasi) {
 		this.id = id;
 		this.tanggalRegistrasi = tanggalRegistrasi;
@@ -38,11 +38,11 @@ public class RegisterPerusahaan implements Serializable {
 		return tanggalRegistrasi;
 	}
 
-	public Autority getKreator() {
+	public Otoritas getKreator() {
 		return kreator;
 	}
 
-	public Autority getVerifikator() {
+	public Otoritas getVerifikator() {
 		return verifikator;
 	}
 

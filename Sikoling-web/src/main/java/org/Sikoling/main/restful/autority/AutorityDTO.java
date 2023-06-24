@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.main.restful.person.PersonDTO;
 
 public class AutorityDTO implements Serializable {
@@ -21,7 +21,7 @@ public class AutorityDTO implements Serializable {
 	public AutorityDTO() {
 	}
 	
-	public AutorityDTO(Autority t) {
+	public AutorityDTO(Otoritas t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.tanggal = t.getTanggal();
@@ -131,8 +131,8 @@ public class AutorityDTO implements Serializable {
 				.concat("}");
 	}
 	
-	public Autority toAuthority() {
-		return new Autority(
+	public Otoritas toAuthority() {
+		return new Otoritas(
 				id != null ? id: null,
 				tanggal,
 				person != null ? person.toPerson():null, 

@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
+import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 

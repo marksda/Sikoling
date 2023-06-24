@@ -2,7 +2,7 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
 
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,9 +1,9 @@
 package org.Sikoling.ejb.abstraction.repository;
 
 import java.io.IOException;
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 
-public interface IAutorityRepository extends IRepository<Autority> {	
-	Autority getByUserName(String userName);
-	Autority updateId(String idLama, Autority t) throws IOException;
+public interface IAutorityRepository extends IRepository<Otoritas> {	
+	Otoritas getByUserName(String userName);
+	Otoritas updateId(String idLama, Otoritas t) throws IOException;
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.Person;
@@ -26,12 +26,12 @@ import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
+import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
@@ -164,7 +164,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	        }
 			else {	
 				try {		
-					Autority autority = new Autority(
+					Otoritas autority = new Otoritas(
 							null, 
 							LocalDate.now(), 
 							t.getPerson(), 

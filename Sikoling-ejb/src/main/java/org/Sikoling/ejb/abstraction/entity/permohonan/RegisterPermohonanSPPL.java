@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.Alamat;
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.KapasitasSkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
@@ -30,7 +30,7 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	private final Alamat lokasiUsaha;
 	
 	public RegisterPermohonanSPPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Autority pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Otoritas pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli2020 jenisUsaha,

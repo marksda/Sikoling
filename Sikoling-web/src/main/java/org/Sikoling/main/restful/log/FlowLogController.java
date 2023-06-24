@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
@@ -49,7 +49,7 @@ public class FlowLogController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) throws IOException {
-		Autority pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Otoritas pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setPengakses(new AutorityDTO(pengakses));		
 		
 		return new FlowLogDTO(flowLogService.save(d.toFlowLog()));

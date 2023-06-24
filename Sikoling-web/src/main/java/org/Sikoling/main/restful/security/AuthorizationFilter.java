@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 
@@ -111,7 +111,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     }
     
     private void checkPermissions(List<Role> allowedRoles, Map<String, Object> claims) throws Exception {
-    	Autority authority = authorityService.getByUserName(claims.get("email").toString());		
+    	Otoritas authority = authorityService.getByUserName(claims.get("email").toString());		
     	boolean grandPermission = false;
     	String hakAkses = "ADMIN";
     	if(authority.getHakAkses().getId().equals("09")) {

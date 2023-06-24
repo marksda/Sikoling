@@ -7,10 +7,10 @@ import java.util.List;
 import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
+import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 

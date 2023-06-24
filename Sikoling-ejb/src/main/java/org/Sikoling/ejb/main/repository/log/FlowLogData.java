@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.log;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import org.Sikoling.ejb.main.repository.authority.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
 import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
 
 import jakarta.persistence.CascadeType;

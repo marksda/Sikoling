@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
@@ -56,7 +56,7 @@ public class RegisterPermohonanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) throws IOException {
-		Autority pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		AutorityDTO pengurusPermohonanDto = new AutorityDTO(pengurusPermohonan);
 		d.setPengurusPermohonan(pengurusPermohonanDto);
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = new PosisiTahapPemberkasanDTO();

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -18,7 +18,7 @@ public class RegisterPermohonanArahan extends RegisterPermohonan implements Seri
 	private final String uraianKegiatan;
 	
 	public RegisterPermohonanArahan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Autority pengurusPermohonan, StatusPengurusPermohonan statusPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Otoritas pengurusPermohonan, StatusPengurusPermohonan statusPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
 			KategoriPermohonanSuratArahan jenisPermohonanSuratArahan, String uraianKegiatan) {

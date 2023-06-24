@@ -6,10 +6,10 @@ import java.util.Objects;
 public class AutorityPerusahaan implements Serializable {
 
 	private static final long serialVersionUID = -5743948068191153726L;
-	private final Autority authority;
+	private final Otoritas authority;
 	private final RegisterPerusahaan registerPerusahaan;
 	
-	public AutorityPerusahaan(Autority authority, RegisterPerusahaan registerPerusahaan) {
+	public AutorityPerusahaan(Otoritas authority, RegisterPerusahaan registerPerusahaan) {
 		this.authority = authority;
 		this.registerPerusahaan = registerPerusahaan;
 	}
@@ -18,7 +18,7 @@ public class AutorityPerusahaan implements Serializable {
 		return serialVersionUID;
 	}
 	
-	public Autority getAuthority() {
+	public Otoritas getAuthority() {
 		return authority;
 	}
 	

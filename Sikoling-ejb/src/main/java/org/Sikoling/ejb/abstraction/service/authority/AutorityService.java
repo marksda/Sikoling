@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.authority;
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
@@ -17,27 +17,27 @@ public class AutorityService implements IAutorityService {
 	}
 
 	@Override
-	public Autority save(Autority t) throws IOException {
+	public Otoritas save(Otoritas t) throws IOException {
 		return authorityRepository.save(t);
 	}
 
 	@Override
-	public Autority update(Autority t) {
+	public Otoritas update(Otoritas t) {
 		return authorityRepository.update(t);
 	}
 
 	@Override
-	public Autority updateId(String idLama, Autority t) throws IOException {
+	public Otoritas updateId(String idLama, Otoritas t) throws IOException {
 		return authorityRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public Autority delete(Autority t) throws IOException {
+	public Otoritas delete(Otoritas t) throws IOException {
 		return authorityRepository.delete(t);
 	}
 
 	@Override
-	public List<Autority> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<Otoritas> getDaftarData(QueryParamFilters queryParamFilters) {
 		return authorityRepository.getDaftarData(queryParamFilters);
 	}
 
@@ -47,7 +47,7 @@ public class AutorityService implements IAutorityService {
 	}
 
 	@Override
-	public Autority getByUserName(String userName) {
+	public Otoritas getByUserName(String userName) {
 		return authorityRepository.getByUserName(userName);
 	}
 	

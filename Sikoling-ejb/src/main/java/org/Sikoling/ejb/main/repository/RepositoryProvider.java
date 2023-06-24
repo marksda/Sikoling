@@ -2,7 +2,6 @@ package org.Sikoling.ejb.main.repository;
 
 import java.util.Properties;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
-import org.Sikoling.ejb.main.repository.authority.AutorisasiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenRepositoryJPA;
@@ -20,6 +19,7 @@ import org.Sikoling.ejb.main.repository.log.FlowLogRepositoryJPA;
 import org.Sikoling.ejb.main.repository.log.KategoriLogRepositoryJPA;
 import org.Sikoling.ejb.main.repository.log.StatusFlowLogRepositoryJPA;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanRepositoryJPA;
+import org.Sikoling.ejb.main.repository.otoritas.AutorisasiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabRepositoryJPA;
 import org.Sikoling.ejb.main.repository.permohonan.KategoriPermohonanRepositoryJPA;

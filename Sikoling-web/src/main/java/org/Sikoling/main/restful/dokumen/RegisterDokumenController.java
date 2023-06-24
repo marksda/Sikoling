@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.main.restful.autority.AutorityDTO;
@@ -49,7 +49,7 @@ public class RegisterDokumenController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) throws IOException {		
-		Autority kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setUploader(new AutorityDTO(kreator));
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);

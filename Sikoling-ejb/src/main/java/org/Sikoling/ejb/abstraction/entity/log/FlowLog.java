@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 
 public class FlowLog implements Serializable {
@@ -17,13 +17,13 @@ public class FlowLog implements Serializable {
 	private final PosisiTahapPemberkasan penerimaBerkas;
 	private final StatusFlowLog statusFlowLog;
 	private final String keterangan;
-	private final Autority pengakses;
+	private final Otoritas pengakses;
 	
 	
 
 	public FlowLog(String id, LocalDate tanggal, KategoriFlowLog kategoriFlowLog, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, String keterangan,
-			Autority pengakses) {
+			Otoritas pengakses) {
 		this.id = id;
 		this.tanggal = tanggal;
 		this.kategoriFlowLog = kategoriFlowLog;
@@ -54,7 +54,7 @@ public class FlowLog implements Serializable {
 		return keterangan;
 	}
 
-	public Autority getPengakses() {
+	public Otoritas getPengakses() {
 		return pengakses;
 	}
 	

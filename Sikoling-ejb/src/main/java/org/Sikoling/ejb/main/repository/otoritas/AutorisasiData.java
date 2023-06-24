@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.authority;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.Serializable;
 import java.time.LocalDate;

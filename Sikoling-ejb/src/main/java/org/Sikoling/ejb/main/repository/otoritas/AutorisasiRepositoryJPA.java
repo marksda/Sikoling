@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.authority;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -31,7 +31,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 
 	@Override
-	public Autority save(Autority t) throws IOException {
+	public Otoritas save(Otoritas t) throws IOException {
 		try {
 			AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 			entityManager.persist(autorisasiData);
@@ -43,7 +43,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 
 	@Override
-	public Autority update(Autority t) {
+	public Otoritas update(Otoritas t) {
 		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
 		entityManager.flush();
@@ -51,7 +51,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 	
 	@Override
-	public Autority updateId(String idLama, Autority t) throws IOException {
+	public Otoritas updateId(String idLama, Otoritas t) throws IOException {
 		AutorisasiData dataLama = entityManager.find(AutorisasiData.class, idLama);
 		if(dataLama != null) {
 			AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
@@ -66,7 +66,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 	
 	@Override
-	public Autority delete(Autority t) throws IOException {
+	public Otoritas delete(Otoritas t) throws IOException {
 		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, t.getId());
 		if(autorisasiData != null) {
 			entityManager.remove(autorisasiData);
@@ -79,7 +79,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 	
 	@Override
-	public Autority getByUserName(String userName) {
+	public Otoritas getByUserName(String userName) {
 		AutorisasiData data = Optional.ofNullable(
 				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
 				.setParameter("userName", userName).getSingleResult()
@@ -89,7 +89,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	}
 	
 	@Override
-	public List<Autority> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<Otoritas> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<AutorisasiData> cq = cb.createQuery(AutorisasiData.class);
 		Root<AutorisasiData> root = cq.from(AutorisasiData.class);

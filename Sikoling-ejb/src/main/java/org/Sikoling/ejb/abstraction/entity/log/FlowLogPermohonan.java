@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 
@@ -15,7 +15,7 @@ public class FlowLogPermohonan extends FlowLog implements Serializable {
 	
 	public FlowLogPermohonan(String id, LocalDate tanggal, KategoriFlowLog kategoriFlowLog,
 			PosisiTahapPemberkasan pengirimBerkas, PosisiTahapPemberkasan penerimaBerkas, 
-			StatusFlowLog statusFlowLog, String keterangan, Autority pengakses,
+			StatusFlowLog statusFlowLog, String keterangan, Otoritas pengakses,
 			RegisterPermohonan registerPermohonan) {
 		super(id, tanggal, kategoriFlowLog, pengirimBerkas, penerimaBerkas, statusFlowLog, keterangan, pengakses);
 		this.registerPermohonan = registerPermohonan;

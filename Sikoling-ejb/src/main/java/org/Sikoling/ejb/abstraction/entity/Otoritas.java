@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Autority implements Serializable {
+public class Otoritas implements Serializable {
 
 	private static final long serialVersionUID = 1406083948068577996L;
 	private final String id;
@@ -15,7 +15,7 @@ public class Autority implements Serializable {
 	private final Boolean isVerified;
 	private final String userName;
 	
-	public Autority(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
+	public Otoritas(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
 			Boolean isVerified, String userName) {
 		super();
 		this.id = id;
@@ -80,7 +80,7 @@ public class Autority implements Serializable {
             return false;
         }
         
-        final Autority other = (Autority) obj;
+        final Otoritas other = (Otoritas) obj;
         
         if (!this.person.getNik().equals(other.person.getNik())) {
             return false;
@@ -91,7 +91,7 @@ public class Autority implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Autorisasi {"
+		return "Otoriras {"
 				.concat("id=")
 				.concat(this.person.getNik())
 				.concat(", ")

@@ -1,9 +1,9 @@
-package org.Sikoling.ejb.main.repository.authority;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.Autority;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
@@ -22,22 +22,22 @@ public class AutorisasiRepositoryEJB implements IAutorityRepository {
 	private AutorisasiRepositoryJPA autorisasiRepository;
 
 	@Override
-	public Autority save(Autority t) throws IOException {
+	public Otoritas save(Otoritas t) throws IOException {
 		return autorisasiRepository.save(t);
 	}
 
 	@Override
-	public Autority update(Autority t) {
+	public Otoritas update(Otoritas t) {
 		return autorisasiRepository.update(t);
 	}
 
 	@Override
-	public Autority delete(Autority t) throws IOException {
+	public Otoritas delete(Otoritas t) throws IOException {
 		return autorisasiRepository.delete(t);
 	}
 
 	@Override
-	public List<Autority> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<Otoritas> getDaftarData(QueryParamFilters queryParamFilters) {
 		return autorisasiRepository.getDaftarData(queryParamFilters);
 	}
 
@@ -47,12 +47,12 @@ public class AutorisasiRepositoryEJB implements IAutorityRepository {
 	}
 
 	@Override
-	public Autority updateId(String idLama, Autority t) throws IOException {
+	public Otoritas updateId(String idLama, Otoritas t) throws IOException {
 		return autorisasiRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public Autority getByUserName(String userName) {
+	public Otoritas getByUserName(String userName) {
 		return autorisasiRepository.getByUserName(userName);
 	}
 	
