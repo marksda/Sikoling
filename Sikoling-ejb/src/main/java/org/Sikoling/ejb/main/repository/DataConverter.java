@@ -571,7 +571,7 @@ public class DataConverter {
 		RegisterPerusahaan registerPerusahaan = null; 	
 		
 		if( d != null) {
-			List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumenWithOutPerusahaan(d.getDaftarRegisterDokumenData());
+//			List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumenWithOutPerusahaan(d.getDaftarRegisterDokumenData());
 			
 			Perusahaan perusahaan = new Perusahaan(
 					d.getNpwp(), 
@@ -580,8 +580,8 @@ public class DataConverter {
 					convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData()), 
 					convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsaha()), 
 					convertAlamatDataToAlamat(d.getAlamatPerusahaanData()), 
-					convertKontakDataToKontak(d.getKontakPerusahaanData()), 
-					daftarRegisterDokumen
+					convertKontakDataToKontak(d.getKontakPerusahaanData()), null
+//					daftarRegisterDokumen
 					);
 			
 			registerPerusahaan = new RegisterPerusahaan(

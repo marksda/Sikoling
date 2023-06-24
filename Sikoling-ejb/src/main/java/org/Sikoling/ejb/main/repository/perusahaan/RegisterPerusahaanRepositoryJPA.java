@@ -238,8 +238,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				.map(d -> dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(d))
 				.collect(Collectors.toList());
 	}
-	
-	
+		
 	@Override
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -287,7 +286,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		return entityManager.createQuery(cq).getSingleResult();
 		
 	}
-
 	
 }
 

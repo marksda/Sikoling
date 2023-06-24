@@ -21,57 +21,58 @@ import jakarta.inject.Inject;
 @LocalBean
 @Infrastructure
 public class KeyCloackUserEJB implements IKeyCloackUserRepository{
+	
 	@Inject
-	private KeyCloakUserJPA userRepositoryJPA;
+	private KeyCloakUserJPA keyCloakUser;
 
 	@Override
 	public User save(User t) throws IOException {
-		return null;
+		return keyCloakUser.save(t);
 	}
 
 	@Override
 	public User update(User t) {
-		return null;
+		return keyCloakUser.update(t);
 	}
 
 	@Override
 	public User delete(User t) throws IOException {
-		return null;
+		return keyCloakUser.delete(t);
 	}
 
 	@Override
 	public List<User> getDaftarData(QueryParamFilters queryParamFilters) {
-		return null;
+		return keyCloakUser.getDaftarData(queryParamFilters);
 	}
 
 	@Override
 	public Long getJumlahData(List<Filter> queryParamFilters) {
-		return null;
+		return keyCloakUser.getJumlahData(queryParamFilters);
 	}
 
 	@Override
 	public User updateSandi(String sandiLama, User t) throws IOException {
-		return null;
+		return keyCloakUser.updateSandi(sandiLama, t);
 	}
 
 	@Override
 	public Boolean cekUserName(String nama) {
-		return null;
+		return keyCloakUser.cekUserName(nama);
 	}
 
 	@Override
 	public ResponToken getToken(Credential userAuthenticator) {
-		return null;
+		return keyCloakUser.getToken(userAuthenticator);
 	}
 
 	@Override
 	public ResponToken refreshToken(String refreshToken) {
-		return null;
+		return keyCloakUser.refreshToken(refreshToken);
 	}
 
 	@Override
 	public SimpleResponse addRegistrasi(Credential userAuthenticator, Person person) {
-		return null;
+		return keyCloakUser.addRegistrasi(userAuthenticator, person);
 	}
 	
 	

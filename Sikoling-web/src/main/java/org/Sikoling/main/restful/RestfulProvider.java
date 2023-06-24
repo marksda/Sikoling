@@ -175,8 +175,8 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IKeyCloackUserService getUserService(@Infrastructure IKeyCloackUserRepository userRepository) {
-		return new KeyCloackUserService(userRepository);
+	public IKeyCloackUserService getUserService(@Infrastructure IKeyCloackUserRepository keyCloackUserRepository) {
+		return new KeyCloackUserService(keyCloackUserRepository);
 	}
 	
 	@Produces
