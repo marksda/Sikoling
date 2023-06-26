@@ -8,45 +8,35 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 public class RegisterKbliDTO implements Serializable {
 
 	private static final long serialVersionUID = -4442022463611044537L;
-	private String idNib;
-	private String idKbli;
-	private String nama;
+	private DokumenNibOssDTO dokumenNibOss;
+	private KbliDTO kbli;
 	
 	public RegisterKbliDTO() {
 	}
 	
 	public RegisterKbliDTO(RegisterKbli t) {
 		if(t!= null) {
-			this.idNib = t.getIdNib();
-			this.idKbli = t.getIdKbli();
-			this.nama = t.getNama();
+			this.dokumenNibOss = t.getDokumenNibOss() != null ? new DokumenNibOssDTO(t.getDokumenNibOss()):null;
+			this.kbli = t.getKbli() != null ? new KbliDTO(t.getKbli()):null;
 		}
 	}	
 	
-	public String getIdNib() {
-		return idNib;
+	public DokumenNibOssDTO getDokumenNibOssDTO() {
+		return dokumenNibOss;
 	}
 
-	public void setIdNib(String idNib) {
-		this.idNib = idNib;
+	public void setDokumenNibOssDTO(DokumenNibOssDTO d) {
+		this.dokumenNibOss = d;
 	}
 
-	public String getIdKbli() {
-		return idKbli;
+	public KbliDTO getKbli() {
+		return kbli;
 	}
 
-	public void setIdKbli(String idKbli) {
-		this.idKbli = idKbli;
+	public void setKbli(KbliDTO d) {
+		this.kbli = d;
 	}
-
-	public String getNama() {
-		return nama;
-	}
-
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -54,8 +44,8 @@ public class RegisterKbliDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 137;
-		hash = 171 * hash + Objects.hashCode(idNib);
-        hash = 171 * hash + Objects.hashCode(idKbli);
+		hash = 171 * hash + Objects.hashCode(this.dokumenNibOss.getNomor());
+        hash = 171 * hash + Objects.hashCode(this.kbli.getKode());
         return hash;
 	}
 	
@@ -76,8 +66,11 @@ public class RegisterKbliDTO implements Serializable {
         
         final RegisterKbliDTO other = (RegisterKbliDTO) obj;
         
-        if ( !(this.idNib.equalsIgnoreCase(other.getIdNib()) 
-        		&& this.idKbli.equalsIgnoreCase(other.getIdKbli())) ) {
+        if ( !this.dokumenNibOss.getNomor().equalsIgnoreCase(other.dokumenNibOss.getNomor()) ) {
+            return false;
+        }
+        
+        if ( !this.kbli.getKode().equalsIgnoreCase(other.kbli.getKode()) ) {
             return false;
         }
 
@@ -86,15 +79,18 @@ public class RegisterKbliDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "RegisterKbliDTO{idNib="
-				.concat(idNib)
-				.concat(", idKbli = ")
-				.concat(idKbli)
+		return "RegisterKbliDTO{nib="
+				.concat(dokumenNibOss.getNomor())
+				.concat(", kode_kbli = ")
+				.concat(kbli.getKode())
 				.concat("}");	  
 	}
 
 	public RegisterKbli toRegisterKbli() {
-		return new RegisterKbli(idNib, idKbli, nama);
+		return new RegisterKbli(
+				this.dokumenNibOss != null ? this.dokumenNibOss.toDokumenNibOss():null, 
+				this.kbli != null ? this.kbli.toKbli():null
+				);
 	}	
 
 }

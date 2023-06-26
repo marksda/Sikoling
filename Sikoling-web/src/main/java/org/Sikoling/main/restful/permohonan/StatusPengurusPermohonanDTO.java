@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 
 public class StatusPengurusPermohonanDTO implements Serializable {
 
@@ -14,7 +14,7 @@ public class StatusPengurusPermohonanDTO implements Serializable {
 	public StatusPengurusPermohonanDTO() {
 	}
 	
-	public StatusPengurusPermohonanDTO(StatusPengurusPermohonan t) {
+	public StatusPengurusPermohonanDTO(StatuswaliPermohonan t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.nama = t.getNama();
@@ -81,7 +81,7 @@ public class StatusPengurusPermohonanDTO implements Serializable {
 				.concat("}");
 	}
 
-	public StatusPengurusPermohonan toStatusPengurusPermohonan() {
-		return new StatusPengurusPermohonan(id, nama);
+	public StatuswaliPermohonan toStatusPengurusPermohonan() {
+		return new StatuswaliPermohonan(id, nama);
 	}
 }

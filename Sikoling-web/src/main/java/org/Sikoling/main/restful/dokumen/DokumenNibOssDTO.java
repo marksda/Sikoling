@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
 
-public class NibOssDTO extends DokumenDTO implements Serializable {
+public class DokumenNibOssDTO extends DokumenDTO implements Serializable {
 
 	private static final long serialVersionUID = -1573998338773596635L;
 	private String nomor;
 	private LocalDate tanggal;
 	private List<RegisterKbliDTO> daftarKbli;
 	
-	public NibOssDTO() {
+	public DokumenNibOssDTO() {
 	}
 	
-	public NibOssDTO(NibOss t) {
+	public DokumenNibOssDTO(DokumenNibOss t) {
 		super();
 		if(t != null) {
 			this.setId(t.getId());
@@ -28,8 +28,8 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 			this.setKategoriDokumen(kategoriDokumenDTO);
 			this.nomor = t.getNomor();
 			this.tanggal = t.getTanggal();
-			this.daftarKbli = t.getDaftarKbli() != null ? 
-					t.getDaftarKbli().stream()
+			this.daftarKbli = t.getDaftarRegisterKbli() != null ? 
+					t.getDaftarRegisterKbli().stream()
 					.map(i -> new RegisterKbliDTO(i)).collect(Collectors.toList()) : null;
 		}
 	}
@@ -84,7 +84,7 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
             return false;
         }
         
-        final NibOssDTO other = (NibOssDTO) obj;
+        final DokumenNibOssDTO other = (DokumenNibOssDTO) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -95,7 +95,7 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "NibOssDTO{id="
+		return "DokumenNibOssDTO{id="
 				.concat(this.getId())
 				.concat(", nama=")
 				.concat(this.getNama())
@@ -104,8 +104,8 @@ public class NibOssDTO extends DokumenDTO implements Serializable {
 				.concat("}");	  
 	}
 
-	public NibOss toNibOss() {
-		return new NibOss(
+	public DokumenNibOss toDokumenNibOss() {
+		return new DokumenNibOss(
 				this.getId(), 
 				this.getNama(), 
 				this.getKategoriDokumen() != null ? 

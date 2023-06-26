@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 
@@ -31,7 +31,7 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 
 	@Override
-	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) throws IOException {
+	public StatuswaliPermohonan save(StatuswaliPermohonan t) throws IOException {
 		try {
 			StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
 			entityManager.persist(statusPengurusPermohonanData);
@@ -43,7 +43,7 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 
 	@Override
-	public StatusPengurusPermohonan update(StatusPengurusPermohonan t) {
+	public StatuswaliPermohonan update(StatuswaliPermohonan t) {
 		StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
 		StatusPengurusPermohonanData dataTermerge = entityManager.merge(statusPengurusPermohonanData);	
 		entityManager.flush();
@@ -51,7 +51,7 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 
 	@Override
-	public StatusPengurusPermohonan updateId(String idLama, StatusPengurusPermohonan t) throws IOException {
+	public StatuswaliPermohonan updateId(String idLama, StatuswaliPermohonan t) throws IOException {
 		StatusPengurusPermohonanData dataLama = entityManager.find(StatusPengurusPermohonanData.class, idLama);
 		if(dataLama != null) {
 			StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
@@ -66,7 +66,7 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 
 	@Override
-	public StatusPengurusPermohonan delete(StatusPengurusPermohonan t) throws IOException {
+	public StatuswaliPermohonan delete(StatuswaliPermohonan t) throws IOException {
 		StatusPengurusPermohonanData statusPengurusPermohonanData = entityManager.find(StatusPengurusPermohonanData.class, t.getId());
 		if(statusPengurusPermohonanData != null) {
 			entityManager.remove(statusPengurusPermohonanData);	
@@ -79,7 +79,7 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 	
 	@Override
-	public List<StatusPengurusPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<StatuswaliPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<StatusPengurusPermohonanData> cq = cb.createQuery(StatusPengurusPermohonanData.class);
 		Root<StatusPengurusPermohonanData> root = cq.from(StatusPengurusPermohonanData.class);		

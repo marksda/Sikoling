@@ -2,27 +2,28 @@ package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Pegawai;
+public class DokumenNibOss extends Dokumen implements Serializable {
 
-public class AktaPendirian extends Dokumen implements Serializable {	
-	
-	private static final long serialVersionUID = -3186081818421591782L;	
+	private static final long serialVersionUID = 5827527013544422359L;
 	private final String nomor;
 	private final LocalDate tanggal;
-	private final String namaNotaris;
-	private final Pegawai penanggungJawab;
+	private final List<RegisterKbli> daftarRegisterKbli;	
 	
-	public AktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
-			LocalDate tanggal, String namaNotaris, Pegawai penanggungJawab) {
+	public DokumenNibOss(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
+			List<RegisterKbli> daftarRegisterKbli) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
-		this.namaNotaris = namaNotaris;
-		this.penanggungJawab = penanggungJawab;
-	}
+		this.daftarRegisterKbli = daftarRegisterKbli;
+	}	
 	
+	public List<RegisterKbli> getDaftarRegisterKbli() {
+		return daftarRegisterKbli;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -34,18 +35,11 @@ public class AktaPendirian extends Dokumen implements Serializable {
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
-
-	public String getNamaNotaris() {
-		return namaNotaris;
-	}
-
-	public Pegawai getPenanggungJawab() {
-		return penanggungJawab;
-	}
-
+	
+	@Override
 	public int hashCode() {
-		int hash = 173;
-        hash = 121 * hash + Objects.hashCode(this.getId());
+		int hash = 237;
+        hash = 141 * hash + Objects.hashCode(this.getId());
         return hash;
 	}
 
@@ -63,7 +57,7 @@ public class AktaPendirian extends Dokumen implements Serializable {
             return false;
         }
         
-        final AktaPendirian other = (AktaPendirian) obj;
+        final DokumenNibOss other = (DokumenNibOss) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -74,14 +68,10 @@ public class AktaPendirian extends Dokumen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AktaPemrakarsa{"
-				.concat("id=")
+		return "NibOss{ id=" 
 				.concat(this.getId())
 				.concat(", nomor=")
-				.concat(this.nomor)
-				.concat(", tanggal=")
-				.concat(tanggal.toString())
+				.concat(nomor)
 				.concat("}");
 	}
-		
 }

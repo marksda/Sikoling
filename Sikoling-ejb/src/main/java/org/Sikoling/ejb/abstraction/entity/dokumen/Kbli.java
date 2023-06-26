@@ -3,14 +3,14 @@ package org.Sikoling.ejb.abstraction.entity.dokumen;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Kbli2020 implements Serializable {
+public class Kbli implements Serializable {
 
 	private static final long serialVersionUID = 336395546827376279L;
 	private final String kode;
 	private final String nama;
 	private final String kategori;
 	
-	public Kbli2020(String kode, String nama, String kategori) {
+	public Kbli(String kode, String nama, String kategori) {
 		super();
 		this.kode = kode;
 		this.nama = nama;
@@ -55,7 +55,7 @@ public class Kbli2020 implements Serializable {
             return false;
         }
         
-        final Kbli2020 other = (Kbli2020) obj;
+        final Kbli other = (Kbli) obj;
         
         if (!this.kode.equalsIgnoreCase(other.getKode())) {
             return false;

@@ -66,16 +66,16 @@ public class RegisterDokumenData implements Serializable {
 	private RekomendasiDPLHData rekomendasiDPLHData;
 	
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)	
-	private NibOssData nibOssData;
+	private DokumenNibOssData nibOssData;
 
 	public RegisterDokumenData() {
 	}
 			
-	public NibOssData getNibOssData() {
+	public DokumenNibOssData getNibOssData() {
 		return nibOssData;
 	}
 
-	public void setNibOssData(NibOssData nibOssData) {
+	public void setNibOssData(DokumenNibOssData nibOssData) {
 		this.nibOssData = nibOssData;
 	}
 

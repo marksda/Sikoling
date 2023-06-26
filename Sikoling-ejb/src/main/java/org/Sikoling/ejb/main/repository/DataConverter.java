@@ -29,12 +29,12 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.User;
-import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenAktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
-import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
@@ -49,16 +49,16 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.PosisiTahapPemberkasan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
-import org.Sikoling.ejb.main.repository.dokumen.Kbli2020Data;
+import org.Sikoling.ejb.main.repository.dokumen.KbliData;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
-import org.Sikoling.ejb.main.repository.dokumen.NibOssData;
+import org.Sikoling.ejb.main.repository.dokumen.DokumenNibOssData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterKbliData;
 import org.Sikoling.ejb.main.repository.dokumen.RekomendasiDPLHData;
@@ -325,22 +325,43 @@ public class DataConverter {
 		RegisterKbli registerKbli = null;
 		
 		if(d != null) {
-			registerKbli = new RegisterKbli(d.getNib().getNomor(), d.getKbli().getId(), d.getKbli().getNama());
+			registerKbli = new RegisterKbli(
+					convertDokumenNibOssDataToDokumenNibOss(d.getNib()),
+					convertKbli2022DataToKbli2020(d.getKbli())
+					);
 		}
 		
 		return registerKbli;
 	}
 	
-	public Kbli2020 convertKbli2022DataToKbli2020(Kbli2020Data d) {
-		Kbli2020 kbli2020 = null;
+	public Kbli convertKbli2022DataToKbli2020(KbliData d) {
+		Kbli kbli2020 = null;
 		
 		if(d != null) {
-			kbli2020 = new Kbli2020(d.getId(), d.getNama(), d.getKategori());
+			kbli2020 = new Kbli(d.getId(), d.getNama(), d.getKategori());
 		}
 		
 		return kbli2020;
 	}
-	
+		
+	public DokumenNibOss convertDokumenNibOssDataToDokumenNibOss(DokumenNibOssData d) {
+		DokumenNibOss dokumenNibOss = null;
+		
+		if(d != null) {
+			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getRegisterDokumenData().getDokumenData());
+			dokumenNibOss = new DokumenNibOss(
+					dokumen != null ? dokumen.getId():null, 
+					dokumen != null ? dokumen.getNama():null, 
+					dokumen != null ? dokumen.getKategoriDokumen():null, 
+					d.getNomor(), 
+					d.getTanggalPenetapan(), 
+					d.getDaftarKbli() != null ? convertDaftarRegisterKbliDataToDaftarRegisterKbli(d.getDaftarKbli()):null
+					);					
+		}
+		
+		return dokumenNibOss;
+	}	
+
 	public List<RegisterKbli> convertDaftarRegisterKbliDataToDaftarRegisterKbli(List<RegisterKbliData> d) {
 		List<RegisterKbli> daftarRegisterKbli = null;
 		
@@ -356,30 +377,12 @@ public class DataConverter {
 		
 		return daftarRegisterKbli;
 	}
-	
-	public NibOss convertNibOssDataToNibOss(Dokumen dok, NibOssData d) {
-		NibOss nibOss = null;
-		
-		if(d != null) {
-			List<RegisterKbli> daftarRegisterKbli = convertDaftarRegisterKbliDataToDaftarRegisterKbli(d.getDaftarKbli());
-			nibOss = new NibOss(
-					dok.getId(), 
-					dok.getNama(), 
-					dok.getKategoriDokumen(), 
-					d.getNomor(), 
-					d.getTanggalPenetapan(), 
-					daftarRegisterKbli
-					);
-		}
-		
-		return nibOss;
-	}
 			
-	public AktaPendirian convertAktaPendirianDataToAktaPendirian(Dokumen dok, AktaPendirianData d) {
-		AktaPendirian aktaPendirian = null;
+	public DokumenAktaPendirian convertAktaPendirianDataToAktaPendirian(Dokumen dok, AktaPendirianData d) {
+		DokumenAktaPendirian aktaPendirian = null;
 		
 		if(d != null) {
-			aktaPendirian = new AktaPendirian(
+			aktaPendirian = new DokumenAktaPendirian(
 					dok.getId(), 
 					dok.getNama(), 
 					dok.getKategoriDokumen(),
@@ -450,8 +453,8 @@ public class DataConverter {
 		if(d != null) {			
 			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getDokumenData());	
 			SuratArahan suratArahan = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());				
-			NibOss nibOss = convertNibOssDataToNibOss(dokumen, d.getNibOssData());				
-			AktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
+			DokumenNibOss nibOss = convertNibOssDataToNibOss(dokumen, d.getNibOssData());				
+			DokumenAktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
 			LampiranSuratArahan lampiranSuratArahan = convertLampiranSuratArahanDataToLampiranSuratArahan(dokumen, d.getLampiranSuratArahanData());
 			RekomendasiUKLUPL rekomendasiUKLUPL = convertRekomendasiUKLUPLDataToRekomendasiUKLUPL(dokumen, d.getRekomendasiUKLUPLData());
 			RekomendasiDPLH rekomendasiDPLH = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
@@ -496,8 +499,8 @@ public class DataConverter {
 		if(d != null) {				
 			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getDokumenData());	
 			SuratArahan suratArahan = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());				
-			NibOss nibOss = convertNibOssDataToNibOss(dokumen, d.getNibOssData());				
-			AktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
+			DokumenNibOss nibOss = convertNibOssDataToNibOss(dokumen, d.getNibOssData());				
+			DokumenAktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
 			LampiranSuratArahan lampiranSuratArahan = convertLampiranSuratArahanDataToLampiranSuratArahan(dokumen, d.getLampiranSuratArahanData());
 			RekomendasiUKLUPL rekomendasiUKLUPL = convertRekomendasiUKLUPLDataToRekomendasiUKLUPL(dokumen, d.getRekomendasiUKLUPLData());
 			RekomendasiDPLH rekomendasiDPLH = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
@@ -686,11 +689,11 @@ public class DataConverter {
 		return kategoriPermohonan;
 	}
 	
-	public StatusPengurusPermohonan convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(StatusPengurusPermohonanData d) {
-		StatusPengurusPermohonan statusPengurusPermohonan = null;
+	public StatuswaliPermohonan convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(StatusPengurusPermohonanData d) {
+		StatuswaliPermohonan statusPengurusPermohonan = null;
 		
 		if(d != null) {
-			statusPengurusPermohonan = new StatusPengurusPermohonan(d.getId(), d.getNama());
+			statusPengurusPermohonan = new StatuswaliPermohonan(d.getId(), d.getNama());
 		}
 		
 		return statusPengurusPermohonan;
@@ -1232,7 +1235,7 @@ public class DataConverter {
 		return lampiranSuratArahanData;
 	}
 	
-	public AktaPendirianData convertAktaPendirianToAktaPendirianData(AktaPendirian t, String idRegisterDokumen) {
+	public AktaPendirianData convertAktaPendirianToAktaPendirianData(DokumenAktaPendirian t, String idRegisterDokumen) {
 		AktaPendirianData aktaPendirianData = null;
 		
 		if(t != null) {
@@ -1283,11 +1286,11 @@ public class DataConverter {
 		
 		if(t != null) {
 			registerKbliData = new RegisterKbliData();
-			NibOssData nibOssData = new NibOssData();
+			DokumenNibOssData nibOssData = convertDokumenNibOssToDokumenNibOssData(null, getGenerateIdRegisterDokumen());
 			nibOssData.setNomor(t.getIdNib());
 			registerKbliData.setNib(nibOssData);
 			
-			Kbli2020Data kbli2020Data = new Kbli2020Data();
+			KbliData kbli2020Data = new KbliData();
 			kbli2020Data.setId(t.getIdKbli());			
 			registerKbliData.setKbli(kbli2020Data);
 			
@@ -1296,33 +1299,17 @@ public class DataConverter {
 		return registerKbliData;
 	}
 	
-	public Kbli2020Data convertKbli2020ToKbli2020Data(Kbli2020 t) {
-		Kbli2020Data kbli2020Data = null;
+	public KbliData convertKbli2020ToKbli2020Data(Kbli t) {
+		KbliData kbli2020Data = null;
 		
 		if(t != null) {			
-			kbli2020Data = new Kbli2020Data();
+			kbli2020Data = new KbliData();
 			kbli2020Data.setId(t.getKode());	
 			kbli2020Data.setNama(t.getNama());
 			kbli2020Data.setKategori(t.getKategori());			
 		}
 		
 		return kbli2020Data;
-	}
-	
-	public List<RegisterKbliData> convertDaftarRegisterKbliToDaftarRegisterKbliData(List<RegisterKbli> t) {
-		List<RegisterKbliData> daftarRegisterKbliData = null;
-		
-		if(t != null) {
-			daftarRegisterKbliData = new ArrayList<RegisterKbliData>();
-			for(RegisterKbli item : t) {		
-				RegisterKbliData registerKbliData = convertRegisterKbliToRegisterKbliData(item);
-				if(registerKbliData != null) {
-					daftarRegisterKbliData.add(registerKbliData);
-				}				
-			}
-		}
-		
-		return daftarRegisterKbliData;
 	}
 	
 	public List<AutorisasiData> convertDaftarAutorisasiDataToDaftarAuthority(List<Otoritas> t) {
@@ -1341,22 +1328,40 @@ public class DataConverter {
 		return daftarAutorisasiData;
 	}
 	
-	public NibOssData convertNibOssToNibOssData(NibOss t, String idRegisterDokumen) {
-		NibOssData nibOssData = null;
+	public DokumenNibOssData convertDokumenNibOssToDokumenNibOssData(DokumenNibOss t) {
+		DokumenNibOssData dokumenNibOssData = null;
 		
 		if(t != null) {
-			List<RegisterKbliData> daftarRegisterKbliData = convertDaftarRegisterKbliToDaftarRegisterKbliData(t.getDaftarKbli());
-			nibOssData = new NibOssData();
-			nibOssData.setNomor(t.getNomor());
-			nibOssData.setTanggalPenetapan(t.getTanggal());
-			nibOssData.setDaftarKbli(daftarRegisterKbliData);
-			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
-			registerDokumenData.setId(idRegisterDokumen);
-			nibOssData.setRegisterDokumenData(registerDokumenData);
+			dokumenNibOssData = new DokumenNibOssData();
+			dokumenNibOssData.setNomor(t.getNomor());
+			dokumenNibOssData.setTanggalPenetapan(t.getTanggal());
+			RegisterDokumen registerDokumen = new RegisterDokumen(
+					null, new Dokumen(t.getId(), t.getNama(), t.getKategoriDokumen()), null, null, null, null, null, null
+					);
+			dokumenNibOssData.setRegisterDokumenData(convertRegisterDokumenToRegisterDokumenData(registerDokumen));
+			dokumenNibOssData.setDaftarKbli(
+					t.getDaftarRegisterKbli() != null ? convertDaftarRegisterKbliToDaftarRegisterKbliData(t.getDaftarRegisterKbli()):null
+					);
 		}
 		
-		return nibOssData;
+		return dokumenNibOssData;
 	}
+	
+	public List<RegisterKbliData> convertDaftarRegisterKbliToDaftarRegisterKbliData(List<RegisterKbli> t) {
+		List<RegisterKbliData> daftarRegisterKbliData = null;
+		
+		if(t != null) {
+			daftarRegisterKbliData = new ArrayList<RegisterKbliData>();
+			for(RegisterKbli item : t) {		
+				RegisterKbliData registerKbliData = convertRegisterKbliToRegisterKbliData(item);
+				if(registerKbliData != null) {
+					daftarRegisterKbliData.add(registerKbliData);
+				}				
+			}
+		}
+		
+		return daftarRegisterKbliData;
+	}	
 		
 	public RegisterDokumenData convertRegisterDokumenToRegisterDokumenData(RegisterDokumen t) {
 		RegisterDokumenData registerDokumenData = null;
@@ -1366,19 +1371,30 @@ public class DataConverter {
 			String id = t.getId();
 			
 			registerDokumenData = new RegisterDokumenData();
-			registerDokumenData.setId(id != null ? id : getGenerateIdRegisterDokumen());
-			registerDokumenData.setPerusahaanData(convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()));
-			
-			MasterDokumenData masterDokumenData = new MasterDokumenData();
-			masterDokumenData.setId(dokumen.getId());
-			masterDokumenData.setNama(dokumen.getNama());
-			registerDokumenData.setDokumenData(masterDokumenData);
-			
-			registerDokumenData.setTanggalRegistrasi(t.getTanggalRegistrasi());
-			registerDokumenData.setUploader(convertAuthorityToAutorisasiData(t.getUploader()));
-			registerDokumenData.setLokasiFile(t.getLokasiFile());
-			registerDokumenData.setStatusDokumen(convertStatusDokumenToStatusDokumenData(t.getStatusDokumen()));
-			registerDokumenData.setStatusVerified(t.getStatusVerified());
+			registerDokumenData.setId(
+					id != null ? id : getGenerateIdRegisterDokumen()
+					);
+			registerDokumenData.setPerusahaanData(
+					t.getPerusahaan() != null ? convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()):null
+					);	
+			registerDokumenData.setDokumenData(
+					dokumen != null ? convertMasterDokumenToMasterDokumenData(dokumen):null
+					);			
+			registerDokumenData.setTanggalRegistrasi(
+					t.getTanggalRegistrasi() != null ? t.getTanggalRegistrasi():null
+					);
+			registerDokumenData.setUploader(
+					t.getUploader() != null ? convertAuthorityToAutorisasiData(t.getUploader()):null
+					);
+			registerDokumenData.setLokasiFile(
+					t.getLokasiFile() != null ? t.getLokasiFile():null
+					);
+			registerDokumenData.setStatusDokumen(
+					t.getStatusDokumen() != null ? convertStatusDokumenToStatusDokumenData(t.getStatusDokumen()):null
+					);
+			registerDokumenData.setStatusVerified(
+					t.getStatusVerified() != null ? t.getStatusVerified():null
+					);
 			
 			if(dokumen instanceof SuratArahan) {
 				registerDokumenData.setSuratArahanData(convertSuratArahanToSuratArahanData((SuratArahan) dokumen, registerDokumenData.getId()));
@@ -1386,8 +1402,8 @@ public class DataConverter {
 			else if(dokumen instanceof LampiranSuratArahan) {
 				registerDokumenData.setLampiranSuratArahanData(convertLampiranSuratArahanToLampiranSuratArahanData((LampiranSuratArahan) dokumen, registerDokumenData.getId()));
 			}
-			else if(dokumen instanceof AktaPendirian) {
-				registerDokumenData.setAktaPendirianData(convertAktaPendirianToAktaPendirianData((AktaPendirian) dokumen, registerDokumenData.getId()));
+			else if(dokumen instanceof DokumenAktaPendirian) {
+				registerDokumenData.setAktaPendirianData(convertAktaPendirianToAktaPendirianData((DokumenAktaPendirian) dokumen, registerDokumenData.getId()));
 			}
 			else if(dokumen instanceof RekomendasiUKLUPL) {
 				registerDokumenData.setRekomendasiUKLUPLData(convertRekomendasiUKLUPLToRekomendasiUKLUPLData((RekomendasiUKLUPL) dokumen, registerDokumenData.getId()));
@@ -1395,8 +1411,8 @@ public class DataConverter {
 			else if(dokumen instanceof RekomendasiDPLH) {
 				registerDokumenData.setRekomendasiDPLHData(convertRekomendasiDPLHToRekomendasiDPLHData((RekomendasiDPLH) dokumen, registerDokumenData.getId()));
 			}
-			else if(dokumen instanceof NibOss) {
-				registerDokumenData.setNibOssData(convertNibOssToNibOssData((NibOss) dokumen, registerDokumenData.getId()));
+			else if(dokumen instanceof DokumenNibOss) {
+				registerDokumenData.setNibOssData(convertDokumenNibOssToDokumenNibOssData((DokumenNibOss) dokumen));
 			}
 			
 		}
@@ -1416,7 +1432,7 @@ public class DataConverter {
 		return kategoriPermohonanData;
 	}
 	
-	public StatusPengurusPermohonanData convertStatusPengurusPermohonanToStatusPengurusPermohonanData(StatusPengurusPermohonan t) {
+	public StatusPengurusPermohonanData convertStatusPengurusPermohonanToStatusPengurusPermohonanData(StatuswaliPermohonan t) {
 		StatusPengurusPermohonanData statusPengurusPermohonanData = null;
 		
 		if(t != null) {

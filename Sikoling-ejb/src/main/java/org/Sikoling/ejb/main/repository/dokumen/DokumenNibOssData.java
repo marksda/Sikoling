@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="NibOssData.findAll", query="SELECT d FROM NibOssData d"),
 	@NamedQuery(name="NibOssData.findByIdRegistrasi", query="SELECT d FROM NibOssData d WHERE d.registerDokumenData.id = :idRegister")
 })
-public class NibOssData implements Serializable {
+public class DokumenNibOssData implements Serializable {
 
 	private static final long serialVersionUID = 8612019941448379437L;
 
@@ -40,7 +40,7 @@ public class NibOssData implements Serializable {
 	@OneToMany(mappedBy = "nib", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private List<RegisterKbliData> daftarKbli;
 	
-	public NibOssData() {
+	public DokumenNibOssData() {
 	}
 
 	public String getNomor() {
@@ -101,7 +101,7 @@ public class NibOssData implements Serializable {
             return false;
         }
         
-        final NibOssData other = (NibOssData) obj;
+        final DokumenNibOssData other = (DokumenNibOssData) obj;
         
         if (!nomor.equalsIgnoreCase(other.getNomor())) {
             return false;

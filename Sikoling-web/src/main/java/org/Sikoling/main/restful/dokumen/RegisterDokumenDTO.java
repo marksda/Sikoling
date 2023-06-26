@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.AktaPendirian;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenAktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
-import org.Sikoling.ejb.abstraction.entity.dokumen.NibOss;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiUKLUPL;
 import org.Sikoling.ejb.abstraction.entity.dokumen.SuratArahan;
@@ -43,8 +43,8 @@ public class RegisterDokumenDTO implements Serializable {
 			else if(dokumen instanceof LampiranSuratArahan) {
 				this.dokumen = new LampiranSuratArahanDTO((LampiranSuratArahan) dokumen);
 			}
-			else if(dokumen instanceof AktaPendirian) {
-				this.dokumen = new AktaPendirianDTO((AktaPendirian) dokumen);
+			else if(dokumen instanceof DokumenAktaPendirian) {
+				this.dokumen = new AktaPendirianDTO((DokumenAktaPendirian) dokumen);
 			}
 			else if(dokumen instanceof RekomendasiUKLUPL) {
 				this.dokumen = new RekomendasiUKLUPLDTO((RekomendasiUKLUPL) dokumen);
@@ -52,8 +52,8 @@ public class RegisterDokumenDTO implements Serializable {
 			else if(dokumen instanceof RekomendasiDPLH) {
 				this.dokumen = new RekomendasiDPLHDTO((RekomendasiDPLH) dokumen);
 			}
-			else if(dokumen instanceof NibOss) {
-				this.dokumen = new NibOssDTO((NibOss) dokumen);
+			else if(dokumen instanceof DokumenNibOss) {
+				this.dokumen = new DokumenNibOssDTO((DokumenNibOss) dokumen);
 			}
 			else {
 				this.dokumen = null;
@@ -193,8 +193,8 @@ public class RegisterDokumenDTO implements Serializable {
 			else if(this.dokumen instanceof RekomendasiDPLHDTO) {
 				dokumen = ((RekomendasiDPLHDTO) this.dokumen).toRekomendasiDPLH();
 			}
-			else if(this.dokumen instanceof NibOssDTO) {
-				dokumen = ((NibOssDTO) this.dokumen).toNibOss();
+			else if(this.dokumen instanceof DokumenNibOssDTO) {
+				dokumen = ((DokumenNibOssDTO) this.dokumen).toDokumenNibOss();
 			}
 		}
 		

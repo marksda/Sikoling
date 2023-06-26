@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
-import org.Sikoling.main.restful.dokumen.NibOssDTO;
+import org.Sikoling.main.restful.dokumen.DokumenNibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
@@ -54,11 +54,11 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 					 String id = jsonObject.getString("id");
 					 switch (id) {
 					 case "010301":
-						d = jsonb.fromJson(jsonObject.toString(), NibOssDTO.class);
+						d = jsonb.fromJson(jsonObject.toString(), DokumenNibOssDTO.class);
 						registerDokumenDTO.setDokumen(d); 
 						break;
 					 case "010101":
-							d = jsonb.fromJson(jsonObject.toString(), NibOssDTO.class);
+							d = jsonb.fromJson(jsonObject.toString(), DokumenNibOssDTO.class);
 							registerDokumenDTO.setDokumen(d); 
 							break;
 					 default:

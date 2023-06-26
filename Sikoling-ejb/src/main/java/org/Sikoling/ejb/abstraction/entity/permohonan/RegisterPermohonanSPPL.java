@@ -13,7 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.Pegawai;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 
 public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serializable {
@@ -21,7 +21,7 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	private static final long serialVersionUID = -2273950873696532803L;
 	private final KapasitasSkalaUsaha kapasitasSkalaUsaha;
 	private final BidangUsaha bidangUsaha;
-	private final Kbli2020 jenisUsaha; //kode kbli dan nama kbli ex: 20116 - Industri Kimia Dasar Organik 
+	private final Kbli jenisUsaha; //kode kbli dan nama kbli ex: 20116 - Industri Kimia Dasar Organik 
 	private final Person penanggungJawab;
 	private final String namaUsaha;
 	private final String kriteria;
@@ -30,10 +30,10 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 	private final Alamat lokasiUsaha;
 	
 	public RegisterPermohonanSPPL(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Otoritas pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Otoritas pengurusPermohonan, StatuswaliPermohonan statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil,
-			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli2020 jenisUsaha,
+			KapasitasSkalaUsaha kapasitasSkalaUsaha, BidangUsaha bidangUsaha, Kbli jenisUsaha,
 			Person penanggungJawab, String namaUsaha, String kriteria, String izinYangDimiliki,
 			String keteranganKegiatan, Alamat lokasiUsaha) {
 		super(id, kategoriPermohonan, tanggalRegistrasi, perusahaan, pengurusPermohonan, statusWaliPengurusPermohonan,
@@ -61,7 +61,7 @@ public class RegisterPermohonanSPPL extends RegisterPermohonan implements Serial
 		return bidangUsaha;
 	}
 
-	public Kbli2020 getJenisUsaha() {
+	public Kbli getJenisUsaha() {
 		return jenisUsaha;
 	}
 

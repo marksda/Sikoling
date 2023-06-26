@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 
 public class StatusPengurusPermohonanService implements IStatusPengurusPermohonanService {
@@ -17,27 +17,27 @@ public class StatusPengurusPermohonanService implements IStatusPengurusPermohona
 	}
 
 	@Override
-	public StatusPengurusPermohonan save(StatusPengurusPermohonan t) throws IOException {
+	public StatuswaliPermohonan save(StatuswaliPermohonan t) throws IOException {
 		return statusPengurusPermohonanRepository.save(t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan update(StatusPengurusPermohonan t) {
+	public StatuswaliPermohonan update(StatuswaliPermohonan t) {
 		return statusPengurusPermohonanRepository.update(t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan updateId(String idLama, StatusPengurusPermohonan t) throws IOException {
+	public StatuswaliPermohonan updateId(String idLama, StatuswaliPermohonan t) throws IOException {
 		return statusPengurusPermohonanRepository.updateId(idLama, t);
 	}
 
 	@Override
-	public StatusPengurusPermohonan delete(StatusPengurusPermohonan t) throws IOException {
+	public StatuswaliPermohonan delete(StatuswaliPermohonan t) throws IOException {
 		return statusPengurusPermohonanRepository.delete(t);
 	}
 
 	@Override
-	public List<StatusPengurusPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<StatuswaliPermohonan> getDaftarData(QueryParamFilters queryParamFilters) {
 		return statusPengurusPermohonanRepository.getDaftarData(queryParamFilters);
 	}
 

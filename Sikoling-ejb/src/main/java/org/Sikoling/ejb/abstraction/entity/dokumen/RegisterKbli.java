@@ -6,36 +6,30 @@ import java.util.Objects;
 public class RegisterKbli implements Serializable {
 
 	private static final long serialVersionUID = 2998858268709853490L;
-	private final String idNib;
-	private final String idKbli;
-	private final String nama;
+	private final DokumenNibOss dokumenNibOss;
+	private final Kbli kbli;
 	
-	public RegisterKbli(String idNib, String idKbli, String nama) {
-		this.idNib = idNib;
-		this.idKbli = idKbli;
-		this.nama = nama;
-	}	
+	public RegisterKbli(DokumenNibOss dokumenNibOss, Kbli kbli) {
+		this.dokumenNibOss = dokumenNibOss;
+		this.kbli = kbli;
+	}
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getIdNib() {
-		return idNib;
+	public DokumenNibOss getDokumenNibOss() {
+		return dokumenNibOss;
 	}
 
-	public String getIdKbli() {
-		return idKbli;
-	}
-
-	public String getNama() {
-		return nama;
+	public Kbli getKbli() {
+		return kbli;
 	}
 
 	public int hashCode() {
 		int hash = 17;
-		hash = 131 * hash + Objects.hashCode(idNib);
-        hash = 131 * hash + Objects.hashCode(idKbli);
+		hash = 131 * hash + Objects.hashCode(dokumenNibOss.getId());
+        hash = 131 * hash + Objects.hashCode(kbli.getKode());
         return hash;
 	}
 
@@ -56,11 +50,11 @@ public class RegisterKbli implements Serializable {
         
         final RegisterKbli other = (RegisterKbli) obj;
         
-        if (!this.idNib.equalsIgnoreCase(other.getIdNib())) {
+        if (!this.dokumenNibOss.getId().equalsIgnoreCase(other.getDokumenNibOss().getId())) {
             return false;
         }
         
-        if (!this.idKbli.equalsIgnoreCase(other.getIdKbli())) {
+        if (!this.kbli.getKode().equalsIgnoreCase(other.kbli.getKode())) {
             return false;
         }
 
@@ -70,9 +64,9 @@ public class RegisterKbli implements Serializable {
 	@Override
 	public String toString() {
 		return "RegisterKbli{ idNib=" 
-				.concat(idNib)
+				.concat(this.dokumenNibOss.getId())
 				.concat(", idKbli=")
-				.concat(idKbli)
+				.concat(this.kbli.getKode())
 				.concat("}");	  
 	}
 

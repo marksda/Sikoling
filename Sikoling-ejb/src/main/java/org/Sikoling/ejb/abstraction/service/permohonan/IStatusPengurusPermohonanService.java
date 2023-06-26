@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 
 public interface IStatusPengurusPermohonanService {
-	StatusPengurusPermohonan save(StatusPengurusPermohonan t) throws IOException;
-	StatusPengurusPermohonan update(StatusPengurusPermohonan t);
-	StatusPengurusPermohonan updateId(String idLama, StatusPengurusPermohonan t) throws IOException;
-	StatusPengurusPermohonan delete(StatusPengurusPermohonan t) throws IOException;
-	List<StatusPengurusPermohonan> getDaftarData(QueryParamFilters queryParamFilters);
+	StatuswaliPermohonan save(StatuswaliPermohonan t) throws IOException;
+	StatuswaliPermohonan update(StatuswaliPermohonan t);
+	StatuswaliPermohonan updateId(String idLama, StatuswaliPermohonan t) throws IOException;
+	StatuswaliPermohonan delete(StatuswaliPermohonan t) throws IOException;
+	List<StatuswaliPermohonan> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);
 }

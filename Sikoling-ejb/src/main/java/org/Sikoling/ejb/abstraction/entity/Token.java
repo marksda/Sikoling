@@ -13,7 +13,6 @@ public class Token {
 
     public Token(String userId, String userName, String userEmail, String accessToken, String refreshToken,
 			String expiresIn, String hakAkses) {
-		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;

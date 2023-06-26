@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 
 public interface IKbliService {
-	Kbli2020 save(Kbli2020 t) throws IOException;
-	Kbli2020 update(Kbli2020 t);
-	Kbli2020 updateId(String idLama, Kbli2020 t) throws IOException;
-	Kbli2020 delete(Kbli2020 t) throws IOException;
-	List<Kbli2020> getDaftarData(QueryParamFilters queryParamFilters);
+	Kbli save(Kbli t) throws IOException;
+	Kbli update(Kbli t);
+	Kbli updateId(String idLama, Kbli t) throws IOException;
+	Kbli delete(Kbli t) throws IOException;
+	List<Kbli> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);
 }

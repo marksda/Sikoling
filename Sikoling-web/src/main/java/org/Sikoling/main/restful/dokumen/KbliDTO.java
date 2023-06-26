@@ -3,7 +3,7 @@ package org.Sikoling.main.restful.dokumen;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 
 public class KbliDTO implements Serializable {
 	
@@ -15,7 +15,7 @@ public class KbliDTO implements Serializable {
  	public KbliDTO() {
 	}
 	
-	public KbliDTO(Kbli2020 t) {
+	public KbliDTO(Kbli t) {
 		this.kode = t.getKode();
 		this.nama = t.getNama();
 		this.kategori = t.getKategori();
@@ -89,8 +89,8 @@ public class KbliDTO implements Serializable {
 				.concat("}");	  
 	}
 
-	public Kbli2020 toKbli() {
-		return new Kbli2020(kode, nama, kategori);
+	public Kbli toKbli() {
+		return new Kbli(kode, nama, kategori);
 	}
 	
 }

@@ -2,28 +2,27 @@ package org.Sikoling.ejb.abstraction.entity.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
-public class NibOss extends Dokumen implements Serializable {
+import org.Sikoling.ejb.abstraction.entity.Pegawai;
 
-	private static final long serialVersionUID = 5827527013544422359L;
+public class DokumenAktaPendirian extends Dokumen implements Serializable {	
+	
+	private static final long serialVersionUID = -3186081818421591782L;	
 	private final String nomor;
 	private final LocalDate tanggal;
-	private final List<RegisterKbli> daftarKbli;	
+	private final String namaNotaris;
+	private final Pegawai penanggungJawab;
 	
-	public NibOss(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
-			List<RegisterKbli> daftarKbli) {
+	public DokumenAktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
+			LocalDate tanggal, String namaNotaris, Pegawai penanggungJawab) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
-		this.daftarKbli = daftarKbli;
-	}	
-	
-	public List<RegisterKbli> getDaftarKbli() {
-		return daftarKbli;
+		this.namaNotaris = namaNotaris;
+		this.penanggungJawab = penanggungJawab;
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -35,11 +34,18 @@ public class NibOss extends Dokumen implements Serializable {
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
-	
-	@Override
+
+	public String getNamaNotaris() {
+		return namaNotaris;
+	}
+
+	public Pegawai getPenanggungJawab() {
+		return penanggungJawab;
+	}
+
 	public int hashCode() {
-		int hash = 237;
-        hash = 141 * hash + Objects.hashCode(this.getId());
+		int hash = 173;
+        hash = 121 * hash + Objects.hashCode(this.getId());
         return hash;
 	}
 
@@ -57,7 +63,7 @@ public class NibOss extends Dokumen implements Serializable {
             return false;
         }
         
-        final NibOss other = (NibOss) obj;
+        final DokumenAktaPendirian other = (DokumenAktaPendirian) obj;
         
         if (!this.getId().equalsIgnoreCase(other.getId())) {
             return false;
@@ -68,10 +74,14 @@ public class NibOss extends Dokumen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NibOss{ id=" 
+		return "AktaPemrakarsa{"
+				.concat("id=")
 				.concat(this.getId())
 				.concat(", nomor=")
-				.concat(nomor)
+				.concat(this.nomor)
+				.concat(", tanggal=")
+				.concat(tanggal.toString())
 				.concat("}");
 	}
+		
 }

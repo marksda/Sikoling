@@ -14,12 +14,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_nib_kbli")
-@NamedQueries({
-	@NamedQuery(name="RegisterKbliData.findAll", query="SELECT d FROM RegisterKbliData d"),
-	@NamedQuery(name="RegisterKbliData.findByNama", query="SELECT d FROM RegisterKbliData d WHERE d.kbli.nama = :nama"),
-	@NamedQuery(name="RegisterKbliData.findByKode", query="SELECT d FROM RegisterKbliData d WHERE d.kbli.id LIKE :kode"),
-	@NamedQuery(name="RegisterKbliData.findByNib", query = "SELECT d FROM RegisterKbliData d WHERE d.nib.nomor = :nib")
-})
 @IdClass(RegisterKbliDataId.class)
 public class RegisterKbliData implements Serializable {
 
@@ -28,29 +22,29 @@ public class RegisterKbliData implements Serializable {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = true, updatable = true)
-	private NibOssData nib;
+	private DokumenNibOssData nib;
 		
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "kbli", referencedColumnName = "id", insertable = true, updatable = true)
-	private Kbli2020Data kbli;
+	private KbliData kbli;
 	
 	public RegisterKbliData() {
 	}
 
-	public NibOssData getNib() {
+	public DokumenNibOssData getNib() {
 		return nib;
 	}
 	
-	public void setNib(NibOssData nib) {
+	public void setNib(DokumenNibOssData nib) {
 		this.nib = nib;
 	}
 	
-	public Kbli2020Data getKbli() {
+	public KbliData getKbli() {
 		return kbli;
 	}
 	
-	public void setKbli(Kbli2020Data kbli) {
+	public void setKbli(KbliData kbli) {
 		this.kbli = kbli;
 	}
 	

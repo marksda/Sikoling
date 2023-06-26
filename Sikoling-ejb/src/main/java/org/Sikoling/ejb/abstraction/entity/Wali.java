@@ -3,15 +3,15 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.permohonan.StatusPengurusPermohonan;
+import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 
 public class Wali implements Serializable {
 
 	private static final long serialVersionUID = 2775584601268906714L;
 	private final User user;
-	private final StatusPengurusPermohonan status;
+	private final StatuswaliPermohonan status;
 	
-	public Wali(User user, StatusPengurusPermohonan status) {
+	public Wali(User user, StatuswaliPermohonan status) {
 		super();
 		this.user = user;
 		this.status = status;
@@ -21,7 +21,7 @@ public class Wali implements Serializable {
 		return user;
 	}
 
-	public StatusPengurusPermohonan getStatus() {
+	public StatuswaliPermohonan getStatus() {
 		return status;
 	}
 

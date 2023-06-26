@@ -3,13 +3,13 @@ package org.Sikoling.ejb.abstraction.entity.permohonan;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class StatusPengurusPermohonan implements Serializable {
+public class StatuswaliPermohonan implements Serializable {
 
 	private static final long serialVersionUID = 7290219535631898387L;	
 	private final String id;
 	private final String nama;
 	
-	public StatusPengurusPermohonan(String id, String nama) {
+	public StatuswaliPermohonan(String id, String nama) {
 		super();
 		this.id = id;
 		this.nama = nama;
@@ -49,7 +49,7 @@ public class StatusPengurusPermohonan implements Serializable {
             return false;
         }
         
-        final StatusPengurusPermohonan other = (StatusPengurusPermohonan) obj;
+        final StatuswaliPermohonan other = (StatuswaliPermohonan) obj;
         
         if (!this.id.equals(other.id)) {
             return false;

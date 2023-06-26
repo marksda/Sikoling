@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
@@ -22,22 +22,22 @@ public class Kbli2020RepositoryEJB implements IKbliRepository {
 	private Kbli2020RepositoryJPA getJumlahData;
 
 	@Override
-	public Kbli2020 save(Kbli2020 t) throws IOException {
+	public Kbli save(Kbli t) throws IOException {
 		return getJumlahData.save(t);
 	}
 
 	@Override
-	public Kbli2020 update(Kbli2020 t) {
+	public Kbli update(Kbli t) {
 		return getJumlahData.update(t);
 	}
 
 	@Override
-	public Kbli2020 delete(Kbli2020 t) throws IOException {
+	public Kbli delete(Kbli t) throws IOException {
 		return getJumlahData.delete(t);
 	}
 
 	@Override
-	public List<Kbli2020> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<Kbli> getDaftarData(QueryParamFilters queryParamFilters) {
 		return getJumlahData.getDaftarData(queryParamFilters);
 	}
 
@@ -47,7 +47,7 @@ public class Kbli2020RepositoryEJB implements IKbliRepository {
 	}
 
 	@Override
-	public Kbli2020 updateId(String idLama, Kbli2020 t) throws IOException {
+	public Kbli updateId(String idLama, Kbli t) throws IOException {
 		return getJumlahData.updateId(idLama, t);
 	}
 	

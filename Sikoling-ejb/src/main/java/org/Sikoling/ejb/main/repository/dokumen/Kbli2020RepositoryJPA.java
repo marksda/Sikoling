@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli2020;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
@@ -29,9 +29,9 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 	}
 	
 	@Override
-	public Kbli2020 save(Kbli2020 t) throws IOException {
+	public Kbli save(Kbli t) throws IOException {
 		try {
-			Kbli2020Data kbliData = dataConverter.convertKbli2020ToKbli2020Data(t);
+			KbliData kbliData = dataConverter.convertKbli2020ToKbli2020Data(t);
 			entityManager.persist(kbliData);
 			entityManager.flush();
 			return dataConverter.convertKbli2022DataToKbli2020(kbliData);
@@ -41,21 +41,21 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 	}
 
 	@Override
-	public Kbli2020 update(Kbli2020 t) {
-		Kbli2020Data kbliData = dataConverter.convertKbli2020ToKbli2020Data(t);
-		Kbli2020Data dataTermerge = entityManager.merge(kbliData);
+	public Kbli update(Kbli t) {
+		KbliData kbliData = dataConverter.convertKbli2020ToKbli2020Data(t);
+		KbliData dataTermerge = entityManager.merge(kbliData);
 		entityManager.flush();
 		return dataConverter.convertKbli2022DataToKbli2020(dataTermerge);
 	}
 
 	@Override
-	public Kbli2020 updateId(String idLama, Kbli2020 t) throws IOException {
-		Kbli2020Data dataLama = entityManager.find(Kbli2020Data.class, t.getKode());
+	public Kbli updateId(String idLama, Kbli t) throws IOException {
+		KbliData dataLama = entityManager.find(KbliData.class, t.getKode());
 		
 		if(dataLama != null) {
-			Kbli2020Data kbli2020Data = dataConverter.convertKbli2020ToKbli2020Data(t);
+			KbliData kbli2020Data = dataConverter.convertKbli2020ToKbli2020Data(t);
 			entityManager.remove(dataLama);	
-			Kbli2020Data dataTermerge = entityManager.merge(kbli2020Data);
+			KbliData dataTermerge = entityManager.merge(kbli2020Data);
 			entityManager.flush();
 			return dataConverter.convertKbli2022DataToKbli2020(dataTermerge);
 		}
@@ -66,8 +66,8 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 	
 	
 	@Override
-	public Kbli2020 delete(Kbli2020 t) throws IOException {
-		Kbli2020Data kbliData = entityManager.find(Kbli2020Data.class, t.getKode());
+	public Kbli delete(Kbli t) throws IOException {
+		KbliData kbliData = entityManager.find(KbliData.class, t.getKode());
 		if(kbliData != null) {
 			entityManager.remove(kbliData);
 			entityManager.flush();
@@ -79,10 +79,10 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 	}
 	
 	@Override
-	public List<Kbli2020> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<Kbli> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Kbli2020Data> cq = cb.createQuery(Kbli2020Data.class);
-		Root<Kbli2020Data> root = cq.from(Kbli2020Data.class);		
+		CriteriaQuery<KbliData> cq = cb.createQuery(KbliData.class);
+		Root<KbliData> root = cq.from(KbliData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
@@ -148,7 +148,7 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 			}			
 		}
 		
-		TypedQuery<Kbli2020Data> q = null;		
+		TypedQuery<KbliData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
@@ -168,7 +168,7 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<Kbli2020Data> root = cq.from(Kbli2020Data.class);		
+		Root<KbliData> root = cq.from(KbliData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();

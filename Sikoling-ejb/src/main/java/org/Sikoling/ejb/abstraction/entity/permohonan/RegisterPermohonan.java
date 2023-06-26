@@ -20,7 +20,7 @@ public class RegisterPermohonan implements Serializable {
 	private final LocalDate tanggalRegistrasi;
 	private final RegisterPerusahaan perusahaan;
 	private final Otoritas pengurusPermohonan;
-	private final StatusPengurusPermohonan statusPengurusPermohonan;
+	private final StatuswaliPermohonan statusPengurusPermohonan;
 	private final Pegawai penanggungJawabPermohonan;
 	private final PosisiTahapPemberkasan pengirimBerkas;
 	private final PosisiTahapPemberkasan penerimaBerkas;
@@ -29,7 +29,7 @@ public class RegisterPermohonan implements Serializable {
 	private final List<RegisterDokumen> daftarDokumenHasil;	
 
 	public RegisterPermohonan(String id, KategoriPermohonan kategoriPermohonan, LocalDate tanggalRegistrasi,
-			RegisterPerusahaan perusahaan, Otoritas pengurusPermohonan, StatusPengurusPermohonan statusWaliPengurusPermohonan,
+			RegisterPerusahaan perusahaan, Otoritas pengurusPermohonan, StatuswaliPermohonan statusWaliPengurusPermohonan,
 			Pegawai penanggungJawabPermohonan, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog,
 			List<RegisterDokumen> daftarDokumenSyarat, List<RegisterDokumen> daftarDokumenHasil) {
@@ -71,7 +71,7 @@ public class RegisterPermohonan implements Serializable {
 		return pengurusPermohonan;
 	}
 	
-	public StatusPengurusPermohonan getStatusPengurusPermohonan() {
+	public StatuswaliPermohonan getStatusPengurusPermohonan() {
 		return statusPengurusPermohonan;
 	}
 	

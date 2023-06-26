@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
-import org.Sikoling.main.restful.dokumen.NibOssDTO;
+import org.Sikoling.main.restful.dokumen.DokumenNibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiDTO;
@@ -249,7 +249,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		switch (idDokumen) {
 		 case "010301":
 			registerDokumenDTO = jsonb.fromJson(jObject.toString(), RegisterDokumenDTO.class);
-			DokumenDTO d = jsonb.fromJson(jObjDokumen.toString(), NibOssDTO.class);
+			DokumenDTO d = jsonb.fromJson(jObjDokumen.toString(), DokumenNibOssDTO.class);
 			registerDokumenDTO.setDokumen(d); 
 			break;
 		 default:
