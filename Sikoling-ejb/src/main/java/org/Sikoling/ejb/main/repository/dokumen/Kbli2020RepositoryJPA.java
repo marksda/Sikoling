@@ -31,10 +31,10 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 	@Override
 	public Kbli save(Kbli t) throws IOException {
 		try {
-			KbliData kbliData = dataConverter.convertKbli2020ToKbli2020Data(t);
+			KbliData kbliData = dataConverter.convertKbliToKbliData(t);
 			entityManager.persist(kbliData);
 			entityManager.flush();
-			return dataConverter.convertKbli2022DataToKbli2020(kbliData);
+			return dataConverter.convertKbliDataToKbli(kbliData);
 		} catch (Exception e) {
 			throw new IOException("data sudah ada");
 		}
@@ -42,10 +42,10 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 
 	@Override
 	public Kbli update(Kbli t) {
-		KbliData kbliData = dataConverter.convertKbli2020ToKbli2020Data(t);
+		KbliData kbliData = dataConverter.convertKbliToKbliData(t);
 		KbliData dataTermerge = entityManager.merge(kbliData);
 		entityManager.flush();
-		return dataConverter.convertKbli2022DataToKbli2020(dataTermerge);
+		return dataConverter.convertKbliDataToKbli(dataTermerge);
 	}
 
 	@Override
@@ -53,11 +53,11 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 		KbliData dataLama = entityManager.find(KbliData.class, t.getKode());
 		
 		if(dataLama != null) {
-			KbliData kbli2020Data = dataConverter.convertKbli2020ToKbli2020Data(t);
+			KbliData kbli2020Data = dataConverter.convertKbliToKbliData(t);
 			entityManager.remove(dataLama);	
 			KbliData dataTermerge = entityManager.merge(kbli2020Data);
 			entityManager.flush();
-			return dataConverter.convertKbli2022DataToKbli2020(dataTermerge);
+			return dataConverter.convertKbliDataToKbli(dataTermerge);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
@@ -71,7 +71,7 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 		if(kbliData != null) {
 			entityManager.remove(kbliData);
 			entityManager.flush();
-			return dataConverter.convertKbli2022DataToKbli2020(kbliData);
+			return dataConverter.convertKbliDataToKbli(kbliData);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
@@ -160,7 +160,7 @@ public class Kbli2020RepositoryJPA implements IKbliRepository {
 		
 		return q.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertKbli2022DataToKbli2020(d))
+				.map(d -> dataConverter.convertKbliDataToKbli(d))
 				.collect(Collectors.toList());
 	}
 	

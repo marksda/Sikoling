@@ -327,21 +327,21 @@ public class DataConverter {
 		if(d != null) {
 			registerKbli = new RegisterKbli(
 					convertDokumenNibOssDataToDokumenNibOss(d.getNib()),
-					convertKbli2022DataToKbli2020(d.getKbli())
+					convertKbliDataToKbli(d.getKbli())
 					);
 		}
 		
 		return registerKbli;
 	}
 	
-	public Kbli convertKbli2022DataToKbli2020(KbliData d) {
-		Kbli kbli2020 = null;
+	public Kbli convertKbliDataToKbli(KbliData d) {
+		Kbli kbli = null;
 		
 		if(d != null) {
-			kbli2020 = new Kbli(d.getId(), d.getNama(), d.getKategori());
+			kbli = new Kbli(d.getId(), d.getNama(), d.getKategori());
 		}
 		
-		return kbli2020;
+		return kbli;
 	}
 		
 	public DokumenNibOss convertDokumenNibOssDataToDokumenNibOss(DokumenNibOssData d) {
@@ -453,7 +453,7 @@ public class DataConverter {
 		if(d != null) {			
 			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getDokumenData());	
 			SuratArahan suratArahan = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());				
-			DokumenNibOss nibOss = convertNibOssDataToNibOss(dokumen, d.getNibOssData());				
+			DokumenNibOss nibOss = convertDokumenNibOssDataToDokumenNibOss(d.getNibOssData());				
 			DokumenAktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
 			LampiranSuratArahan lampiranSuratArahan = convertLampiranSuratArahanDataToLampiranSuratArahan(dokumen, d.getLampiranSuratArahanData());
 			RekomendasiUKLUPL rekomendasiUKLUPL = convertRekomendasiUKLUPLDataToRekomendasiUKLUPL(dokumen, d.getRekomendasiUKLUPLData());
@@ -499,7 +499,7 @@ public class DataConverter {
 		if(d != null) {				
 			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getDokumenData());	
 			SuratArahan suratArahan = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());				
-			DokumenNibOss nibOss = convertNibOssDataToNibOss(dokumen, d.getNibOssData());				
+			DokumenNibOss nibOss = convertDokumenNibOssDataToDokumenNibOss(d.getNibOssData());				
 			DokumenAktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
 			LampiranSuratArahan lampiranSuratArahan = convertLampiranSuratArahanDataToLampiranSuratArahan(dokumen, d.getLampiranSuratArahanData());
 			RekomendasiUKLUPL rekomendasiUKLUPL = convertRekomendasiUKLUPLDataToRekomendasiUKLUPL(dokumen, d.getRekomendasiUKLUPLData());
@@ -1163,19 +1163,34 @@ public class DataConverter {
 		
 		if(t != null) {
 			String id = t.getId();
+			Perusahaan perusahaan = t.getPerusahaan();
 			registerPerusahaanData = new RegisterPerusahaanData();
 			registerPerusahaanData.setId(id != null ? id : getGenerateIdRegisterPerusahaan());
-			registerPerusahaanData.setNama(t.getPerusahaan().getNama());
-			registerPerusahaanData.setAlamatPerusahaanData(convertAlamatToAlamatData(t.getPerusahaan().getAlamat()));
-			registerPerusahaanData.setModelPerizinanData(convertModelPerizinanToModelPerizinanData(t.getPerusahaan().getModelPerizinan()));
-			registerPerusahaanData.setSkalaUsahaData(convertSkalaUsahaToSkalaUsahaData(t.getPerusahaan().getSkalaUsaha()));
-			registerPerusahaanData.setPelakuUsaha(convertPelakuUsahaToPelakuUsahaData(t.getPerusahaan().getPelakuUsaha()));
+			if(perusahaan != null) {
+				registerPerusahaanData.setNama(perusahaan.getNama());
+				registerPerusahaanData.setAlamatPerusahaanData(
+						perusahaan.getAlamat() != null ? convertAlamatToAlamatData(t.getPerusahaan().getAlamat()):null
+						);
+				registerPerusahaanData.setModelPerizinanData(
+						perusahaan.getModelPerizinan() != null ? convertModelPerizinanToModelPerizinanData(perusahaan.getModelPerizinan()):null
+						);
+				registerPerusahaanData.setSkalaUsahaData(
+						perusahaan.getSkalaUsaha() != null ? convertSkalaUsahaToSkalaUsahaData(perusahaan.getSkalaUsaha()):null
+						);
+				registerPerusahaanData.setPelakuUsaha(
+						perusahaan.getPelakuUsaha() != null ? convertPelakuUsahaToPelakuUsahaData(perusahaan.getPelakuUsaha()):null
+						);
+				registerPerusahaanData.setKontakPerusahaanData(
+						perusahaan.getKontak() != null ? convertKontakToKontakData(perusahaan.getKontak()):null
+						);
+				registerPerusahaanData.setNpwp(
+						perusahaan.getId() != null ? perusahaan.getId():null
+						);			
+			}			
 			registerPerusahaanData.setStatusVerifikasi(t.getStatusVerifikasi());
-			registerPerusahaanData.setKontakPerusahaanData(convertKontakToKontakData(t.getPerusahaan().getKontak()));
 			registerPerusahaanData.setKreator(convertAuthorityToAutorisasiData(t.getKreator()));
 			registerPerusahaanData.setVerifikator(convertAuthorityToAutorisasiData(t.getVerifikator()));
 			registerPerusahaanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
-			registerPerusahaanData.setNpwp(t.getPerusahaan().getId());			
 		}
 		
 		return registerPerusahaanData;
@@ -1286,30 +1301,28 @@ public class DataConverter {
 		
 		if(t != null) {
 			registerKbliData = new RegisterKbliData();
-			DokumenNibOssData nibOssData = convertDokumenNibOssToDokumenNibOssData(null, getGenerateIdRegisterDokumen());
-			nibOssData.setNomor(t.getIdNib());
-			registerKbliData.setNib(nibOssData);
-			
-			KbliData kbli2020Data = new KbliData();
-			kbli2020Data.setId(t.getIdKbli());			
-			registerKbliData.setKbli(kbli2020Data);
-			
+			registerKbliData.setNib(
+					t.getDokumenNibOss() != null ? convertDokumenNibOssToDokumenNibOssData(t.getDokumenNibOss()):null
+					);
+			registerKbliData.setKbli(
+					t.getKbli() != null ? convertKbliToKbliData(t.getKbli()):null
+					);
 		}
 		
 		return registerKbliData;
 	}
 	
-	public KbliData convertKbli2020ToKbli2020Data(Kbli t) {
-		KbliData kbli2020Data = null;
+	public KbliData convertKbliToKbliData(Kbli t) {
+		KbliData kbliData = null;
 		
 		if(t != null) {			
-			kbli2020Data = new KbliData();
-			kbli2020Data.setId(t.getKode());	
-			kbli2020Data.setNama(t.getNama());
-			kbli2020Data.setKategori(t.getKategori());			
+			kbliData = new KbliData();
+			kbliData.setId(t.getKode());	
+			kbliData.setNama(t.getNama());
+			kbliData.setKategori(t.getKategori());			
 		}
 		
-		return kbli2020Data;
+		return kbliData;
 	}
 	
 	public List<AutorisasiData> convertDaftarAutorisasiDataToDaftarAuthority(List<Otoritas> t) {
@@ -1594,13 +1607,9 @@ public class DataConverter {
 		if(t != null) {
 			masterDokumenData.setId(t.getId());
 			masterDokumenData.setNama(t.getNama());
-			KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
-			KategoriDokumen kategoriDokumen = t.getKategoriDokumen();
-			if(kategoriDokumen != null) {
-				kategoriDokumenData.setId(kategoriDokumen.getId());
-				kategoriDokumenData.setNama(kategoriDokumen.getNama());
-				masterDokumenData.setKategoriDokumenData(kategoriDokumenData);
-			}
+			masterDokumenData.setKategoriDokumenData(
+					t.getKategoriDokumen() != null ? convertKategoriDokumenToKategoriDokumenData(t.getKategoriDokumen()):null
+					);
 		}
 		
 		return masterDokumenData;
