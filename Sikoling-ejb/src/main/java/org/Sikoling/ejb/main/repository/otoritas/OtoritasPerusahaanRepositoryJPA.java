@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IOtoritasPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -19,20 +19,20 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepository {
+public class OtoritasPerusahaanRepositoryJPA implements IOtoritasPerusahaanRepository {
 	
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;
 
-	public AutorityPerusahaanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+	public OtoritasPerusahaanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
 	
 	@Override
-	public AutorityPerusahaan save(AutorityPerusahaan t) throws IOException {
+	public OtoritasPerusahaan save(OtoritasPerusahaan t) throws IOException {
 		try {
-			AutorityPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(t);
+			OtoritasPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(t);
 			entityManager.persist(autorityPerusahaanData);
 			entityManager.flush();		
 			return dataConverter.convertAutorityPerusahaanDataToAutorityPerusahaan(autorityPerusahaanData);
@@ -43,25 +43,25 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 	}
 
 	@Override
-	public AutorityPerusahaan update(AutorityPerusahaan t) {
-		AutorityPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(t);
-		AutorityPerusahaanData dataTermerge = entityManager.merge(autorityPerusahaanData);		
+	public OtoritasPerusahaan update(OtoritasPerusahaan t) {
+		OtoritasPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(t);
+		OtoritasPerusahaanData dataTermerge = entityManager.merge(autorityPerusahaanData);		
 		entityManager.flush();
 		return dataConverter.convertAutorityPerusahaanDataToAutorityPerusahaan(dataTermerge);
 	}
 
 	@Override
-	public AutorityPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan t) throws IOException {
-		AutorityPerusahaanDataId idLama = new AutorityPerusahaanDataId();
+	public OtoritasPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, OtoritasPerusahaan t) throws IOException {
+		OtoritasPerusahaanDataId idLama = new OtoritasPerusahaanDataId();
 		idLama.setAutority(idLamaAutority);
 		idLama.setPerusahaan(idLamaRegisterPerusahaan);
 		
-		AutorityPerusahaanData dataLama = entityManager.find(AutorityPerusahaanData.class, idLama);
+		OtoritasPerusahaanData dataLama = entityManager.find(OtoritasPerusahaanData.class, idLama);
 		
 		if(dataLama != null) {
-			AutorityPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(t);
+			OtoritasPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(t);
 			entityManager.remove(dataLama);
-			AutorityPerusahaanData dataTermerge = entityManager.merge(autorityPerusahaanData);
+			OtoritasPerusahaanData dataTermerge = entityManager.merge(autorityPerusahaanData);
 			entityManager.flush();
 			return dataConverter.convertAutorityPerusahaanDataToAutorityPerusahaan(dataTermerge);
 		}
@@ -71,12 +71,12 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 	}
 	
 	@Override
-	public AutorityPerusahaan delete(AutorityPerusahaan t) throws IOException {
-		AutorityPerusahaanDataId id = new AutorityPerusahaanDataId();
-		id.setAutority(t.getAuthority().getId());
+	public OtoritasPerusahaan delete(OtoritasPerusahaan t) throws IOException {
+		OtoritasPerusahaanDataId id = new OtoritasPerusahaanDataId();
+		id.setAutority(t.getOtoritas().getId());
 		id.setPerusahaan(t.getRegisterPerusahaan().getId());
 		
-		AutorityPerusahaanData autorityPerusahaanData = entityManager.find(AutorityPerusahaanData.class, id);
+		OtoritasPerusahaanData autorityPerusahaanData = entityManager.find(OtoritasPerusahaanData.class, id);
 		
 		if(autorityPerusahaanData != null) {
 			entityManager.remove(autorityPerusahaanData);	
@@ -89,10 +89,10 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 	}
 
 	@Override
-	public List<AutorityPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<OtoritasPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<AutorityPerusahaanData> cq = cb.createQuery(AutorityPerusahaanData.class);
-		Root<AutorityPerusahaanData> root = cq.from(AutorityPerusahaanData.class);		
+		CriteriaQuery<OtoritasPerusahaanData> cq = cb.createQuery(OtoritasPerusahaanData.class);
+		Root<OtoritasPerusahaanData> root = cq.from(OtoritasPerusahaanData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
@@ -147,7 +147,7 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 			}			
 		}
 		
-		TypedQuery<AutorityPerusahaanData> q = null;		
+		TypedQuery<OtoritasPerusahaanData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
@@ -167,7 +167,7 @@ public class AutorityPerusahaanRepositoryJPA implements IAutorityPerusahaanRepos
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<AutorityPerusahaanData> root = cq.from(AutorityPerusahaanData.class);		
+		Root<OtoritasPerusahaanData> root = cq.from(OtoritasPerusahaanData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();

@@ -16,10 +16,10 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class AutorisasiRepositoryEJB implements IAutorityRepository {
+public class OtoritasRepositoryEJB implements IAutorityRepository {
 	
 	@Inject
-	private AutorisasiRepositoryJPA autorisasiRepository;
+	private OtoritasRepositoryJPA autorisasiRepository;
 
 	@Override
 	public Otoritas save(Otoritas t) throws IOException {

@@ -10,7 +10,8 @@ import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
@@ -54,11 +55,11 @@ public class RegisterPerusahaanData implements Serializable {
 	
 	@JoinColumn(name="kreator", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData kreator;
+	private OtoritasData kreator;
 	
 	@JoinColumn(name="verifikator", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData verifikator;
+	private OtoritasData verifikator;
 	
 	@Column(name="tanggal_registrasi")
 	private LocalDate tanggalRegistrasi;	
@@ -69,7 +70,7 @@ public class RegisterPerusahaanData implements Serializable {
 	private List<RegisterDokumenData> daftarRegisterDokumenData;	
 
 	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
-	private List<AutorityPerusahaanData> daftarAutorityPerusahaanData;
+	private List<OtoritasPerusahaanData> daftarAutorityPerusahaanData;
 	
 	public RegisterPerusahaanData() {
 	}
@@ -138,19 +139,19 @@ public class RegisterPerusahaanData implements Serializable {
 		this.kontakPerusahaanData = kontakPerusahaanData;
 	}
 
-	public AutorisasiData getKreator() {
+	public OtoritasData getKreator() {
 		return kreator;
 	}
 
-	public void setKreator(AutorisasiData kreator) {
+	public void setKreator(OtoritasData kreator) {
 		this.kreator = kreator;
 	}
 
-	public AutorisasiData getVerifikator() {
+	public OtoritasData getVerifikator() {
 		return verifikator;
 	}
 
-	public void setVerifikator(AutorisasiData verifikator) {
+	public void setVerifikator(OtoritasData verifikator) {
 		this.verifikator = verifikator;
 	}
 
@@ -178,11 +179,11 @@ public class RegisterPerusahaanData implements Serializable {
 		this.daftarRegisterDokumenData = daftarRegisterDokumenData;
 	}
 
-	public List<AutorityPerusahaanData> getDaftarAutorityPerusahaanData() {
+	public List<OtoritasPerusahaanData> getDaftarAutorityPerusahaanData() {
 		return daftarAutorityPerusahaanData;
 	}
 
-	public void setDaftarAutorityPerusahaanData(List<AutorityPerusahaanData> daftarAutorityPerusahaanData) {
+	public void setDaftarAutorityPerusahaanData(List<OtoritasPerusahaanData> daftarAutorityPerusahaanData) {
 		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
 	}
 

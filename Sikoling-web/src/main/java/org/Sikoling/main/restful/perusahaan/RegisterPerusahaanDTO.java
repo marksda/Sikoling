@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.main.restful.autority.AutorityDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 
 public class RegisterPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 2393298210508926234L;
 	private String id;
 	private LocalDate tanggalRegistrasi;
-	private AutorityDTO kreator;
-	private AutorityDTO verifikator;
+	private OtoritasDTO kreator;
+	private OtoritasDTO verifikator;
 	private PerusahaanDTO perusahaan;
 	private Boolean statusVerifikasi;	
 //	private List<AuthorityDTO> pengakses;
@@ -24,8 +24,8 @@ public class RegisterPerusahaanDTO implements Serializable {
 		if(t != null) {
 			this.id = t.getId();
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
-			this.kreator = t.getKreator() != null ? new AutorityDTO(t.getKreator()) : null;
-			this.verifikator = t.getVerifikator() != null ? new AutorityDTO(t.getVerifikator()) : null;
+			this.kreator = t.getKreator() != null ? new OtoritasDTO(t.getKreator()) : null;
+			this.verifikator = t.getVerifikator() != null ? new OtoritasDTO(t.getVerifikator()) : null;
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 			this.statusVerifikasi = t.getStatusVerifikasi();
 //			this.pengakses = t.getPengakses() != null ?
@@ -44,19 +44,19 @@ public class RegisterPerusahaanDTO implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public AutorityDTO getKreator() {
+	public OtoritasDTO getKreator() {
 		return kreator;
 	}
 
-	public void setKreator(AutorityDTO kreator) {
+	public void setKreator(OtoritasDTO kreator) {
 		this.kreator = kreator;
 	}
 
-	public AutorityDTO getVerifikator() {
+	public OtoritasDTO getVerifikator() {
 		return verifikator;
 	}
 
-	public void setVerifikator(AutorityDTO verifikator) {
+	public void setVerifikator(OtoritasDTO verifikator) {
 		this.verifikator = verifikator;
 	}
 
@@ -142,8 +142,8 @@ public class RegisterPerusahaanDTO implements Serializable {
 		return new RegisterPerusahaan(
 				id,
 				tanggalRegistrasi, 
-				kreator != null ? kreator.toAuthority() : null, 
-				verifikator != null ? verifikator.toAuthority() : null, 
+				kreator != null ? kreator.toOtoritas() : null, 
+				verifikator != null ? verifikator.toOtoritas() : null, 
 				perusahaan.toPerusahaan(),
 				statusVerifikasi
 //				pengakses != null?

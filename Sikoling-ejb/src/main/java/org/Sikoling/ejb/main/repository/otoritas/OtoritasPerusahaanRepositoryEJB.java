@@ -1,12 +1,12 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IOtoritasPerusahaanRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.Local;
@@ -16,28 +16,28 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class AutorityPerusahaanRepositoryEJB implements IAutorityPerusahaanRepository {
+public class OtoritasPerusahaanRepositoryEJB implements IOtoritasPerusahaanRepository {
 	
 	@Inject
-	private AutorityPerusahaanRepositoryJPA autorityPerusahaanRepository;
+	private OtoritasPerusahaanRepositoryJPA autorityPerusahaanRepository;
 
 	@Override
-	public AutorityPerusahaan save(AutorityPerusahaan t) throws IOException {
+	public OtoritasPerusahaan save(OtoritasPerusahaan t) throws IOException {
 		return autorityPerusahaanRepository.save(t);
 	}
 
 	@Override
-	public AutorityPerusahaan update(AutorityPerusahaan t) {
+	public OtoritasPerusahaan update(OtoritasPerusahaan t) {
 		return autorityPerusahaanRepository.update(t);
 	}
 
 	@Override
-	public AutorityPerusahaan delete(AutorityPerusahaan t) throws IOException {
+	public OtoritasPerusahaan delete(OtoritasPerusahaan t) throws IOException {
 		return autorityPerusahaanRepository.delete(t);
 	}
 
 	@Override
-	public List<AutorityPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<OtoritasPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
 		return autorityPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 
@@ -47,7 +47,7 @@ public class AutorityPerusahaanRepositoryEJB implements IAutorityPerusahaanRepos
 	}
 
 	@Override
-	public AutorityPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan t)
+	public OtoritasPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, OtoritasPerusahaan t)
 			throws IOException {
 		return autorityPerusahaanRepository.updateId(idLamaAutority, idLamaRegisterPerusahaan, t);
 	}

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.CascadeType;
@@ -38,7 +38,7 @@ public class RegisterDokumenData implements Serializable {
 	
 	@JoinColumn(name = "uploader", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData uploader;
+	private OtoritasData uploader;
 	
 	@Column(name="lokasi_file", insertable = true, updatable = true)
 	private String lokasiFile;
@@ -143,11 +143,11 @@ public class RegisterDokumenData implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 
-	public AutorisasiData getUploader() {
+	public OtoritasData getUploader() {
 		return uploader;
 	}
 
-	public void setUploader(AutorisasiData uploader) {
+	public void setUploader(OtoritasData uploader) {
 		this.uploader = uploader;
 	}
 

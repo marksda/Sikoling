@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.autority;
+package org.Sikoling.main.restful.otoritas;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.main.restful.person.PersonDTO;
 
-public class AutorityDTO implements Serializable {
+public class OtoritasDTO implements Serializable {
 
 	private static final long serialVersionUID = 6026401650478903435L;
 	private String id;
@@ -18,10 +18,10 @@ public class AutorityDTO implements Serializable {
 	private Boolean isVerified;
 	private String userName;
 	
-	public AutorityDTO() {
+	public OtoritasDTO() {
 	}
 	
-	public AutorityDTO(Otoritas t) {
+	public OtoritasDTO(Otoritas t) {
 		if(t != null) {
 			this.id = t.getId();
 			this.tanggal = t.getTanggal();
@@ -114,7 +114,7 @@ public class AutorityDTO implements Serializable {
             return false;
         }
         
-        final AutorityDTO other = (AutorityDTO) obj;
+        final OtoritasDTO other = (OtoritasDTO) obj;
         
         if (!this.userName.equals(other.getUserName())) {
             return false;
@@ -131,7 +131,7 @@ public class AutorityDTO implements Serializable {
 				.concat("}");
 	}
 	
-	public Otoritas toAuthority() {
+	public Otoritas toOtoritas() {
 		return new Otoritas(
 				id != null ? id: null,
 				tanggal,

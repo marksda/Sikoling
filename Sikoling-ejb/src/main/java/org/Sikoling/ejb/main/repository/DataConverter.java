@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.BidangUsaha;
 import org.Sikoling.ejb.abstraction.entity.Desa;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
@@ -77,7 +77,8 @@ import org.Sikoling.ejb.main.repository.log.FlowLogPermohonanData;
 import org.Sikoling.ejb.main.repository.log.KategoriLogData;
 import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.penanggungjawab.PenanggungJawabData;
 import org.Sikoling.ejb.main.repository.permohonan.DokumenPersyaratanPermohonanData;
@@ -89,7 +90,6 @@ import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanData;
 import org.Sikoling.ejb.main.repository.permohonan.RegisterPermohonanSuratArahanData;
 import org.Sikoling.ejb.main.repository.permohonan.StatusPengurusPermohonanData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.perusahaan.AutorityPerusahaanData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 import org.Sikoling.ejb.main.repository.produk.ProdukData;
@@ -126,7 +126,7 @@ public class DataConverter {
 		return alamat;
 	}
 	
-	public Otoritas convertAutorisasiDataToAutority(AutorisasiData d) {
+	public Otoritas convertAutorisasiDataToAutority(OtoritasData d) {
 		Otoritas autority = null;
 		
 		if(d != null) {
@@ -555,14 +555,14 @@ public class DataConverter {
 		return daftarRegisterDokumen;		
 	}
 	
-	public List<Otoritas> convertDaftarAuthorityToDaftarAutorisasiData(List<AutorisasiData> d) {
+	public List<Otoritas> convertDaftarAuthorityToDaftarAutorisasiData(List<OtoritasData> d) {
 		List<Otoritas> daftarAuthority = new ArrayList<Otoritas>();
-		Iterator<AutorisasiData> iter = d.iterator();
+		Iterator<OtoritasData> iter = d.iterator();
 		
-		AutorisasiData autorisasiData = null;
+		OtoritasData autorisasiData = null;
 		Otoritas item;
 		while (iter.hasNext()) {
-			autorisasiData = (AutorisasiData) iter.next();					
+			autorisasiData = (OtoritasData) iter.next();					
 			item = convertAutorisasiDataToAutority(autorisasiData);
 			daftarAuthority.add(item);
 		}
@@ -835,11 +835,11 @@ public class DataConverter {
 		return statusFlowLog;		
 	}
 	
-	public AutorityPerusahaan convertAutorityPerusahaanDataToAutorityPerusahaan(AutorityPerusahaanData d) {
-		AutorityPerusahaan autorityPerusahaan = null;
+	public OtoritasPerusahaan convertAutorityPerusahaanDataToAutorityPerusahaan(OtoritasPerusahaanData d) {
+		OtoritasPerusahaan autorityPerusahaan = null;
 		
 		if(d != null) {
-			AutorisasiData autorisasiData = d.getAutority();
+			OtoritasData autorisasiData = d.getAutority();
 			Otoritas autority = new Otoritas(
 					autorisasiData.getId(), 
 					autorisasiData.getTanggalRegistrasi(),
@@ -874,7 +874,7 @@ public class DataConverter {
 //						.collect(Collectors.toList())
 					);
 			
-			autorityPerusahaan = new AutorityPerusahaan(autority, registerPerusahaan);
+			autorityPerusahaan = new OtoritasPerusahaan(autority, registerPerusahaan);
 		}
 		
 		return autorityPerusahaan;	
@@ -936,7 +936,7 @@ public class DataConverter {
 	}
 	
 	public Otoritas convertKeyCloackUserRepresentationToAutority(UserRepresentation d) {
-		AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+		OtoritasData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
 				.setParameter("userName", d.getEmail())
 				.getResultList().stream().findFirst().orElse(null);		
 		Otoritas autority = null;
@@ -1141,11 +1141,11 @@ public class DataConverter {
 		return hakAksesData;
 	}
 	
-	public AutorisasiData convertAuthorityToAutorisasiData(Otoritas t) {
-		AutorisasiData autorisasiData = null;
+	public OtoritasData convertAuthorityToAutorisasiData(Otoritas t) {
+		OtoritasData autorisasiData = null;
 		
 		if(t != null) {
-			autorisasiData = new AutorisasiData();
+			autorisasiData = new OtoritasData();
 			autorisasiData.setId(t.getId() != null ? t.getId(): getGenerateIdAutorisasiData());
 			autorisasiData.setTanggalRegistrasi(t.getTanggal());
 			autorisasiData.setUserName(t.getUserName());
@@ -1325,13 +1325,13 @@ public class DataConverter {
 		return kbliData;
 	}
 	
-	public List<AutorisasiData> convertDaftarAutorisasiDataToDaftarAuthority(List<Otoritas> t) {
-		List<AutorisasiData> daftarAutorisasiData = null;
+	public List<OtoritasData> convertDaftarAutorisasiDataToDaftarAuthority(List<Otoritas> t) {
+		List<OtoritasData> daftarAutorisasiData = null;
 		
 		if(t != null) {
-			daftarAutorisasiData = new ArrayList<AutorisasiData>();
+			daftarAutorisasiData = new ArrayList<OtoritasData>();
 			for(Otoritas item : t) {		
-				AutorisasiData autorisasiData = convertAuthorityToAutorisasiData(item);
+				OtoritasData autorisasiData = convertAuthorityToAutorisasiData(item);
 				if(autorisasiData != null) {
 					daftarAutorisasiData.add(autorisasiData);
 				}				
@@ -1627,12 +1627,12 @@ public class DataConverter {
 		return kategoriDokumenData;
 	}
 	
-	public AutorityPerusahaanData convertAutorityPerusahaanToAutorityPerusahaanData(AutorityPerusahaan t) {
-		AutorityPerusahaanData autorityPerusahaanData = new AutorityPerusahaanData();
+	public OtoritasPerusahaanData convertAutorityPerusahaanToAutorityPerusahaanData(OtoritasPerusahaan t) {
+		OtoritasPerusahaanData autorityPerusahaanData = new OtoritasPerusahaanData();
 		
 		if(t != null) {			
-			Otoritas autority = t.getAuthority();
-			AutorisasiData autorisasiData = new AutorisasiData();
+			Otoritas autority = t.getOtoritas();
+			OtoritasData autorisasiData = new OtoritasData();
 			autorisasiData.setId(autority.getId());
 			autorisasiData.setTanggalRegistrasi(autority.getTanggal());
 			autorisasiData.setUserName(autority.getUserName());

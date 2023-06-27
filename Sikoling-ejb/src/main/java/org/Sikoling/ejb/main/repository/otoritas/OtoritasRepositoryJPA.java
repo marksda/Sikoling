@@ -20,12 +20,12 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class AutorisasiRepositoryJPA implements IAutorityRepository {
+public class OtoritasRepositoryJPA implements IAutorityRepository {
 	
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;	
 
-	public AutorisasiRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+	public OtoritasRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
@@ -33,7 +33,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	@Override
 	public Otoritas save(Otoritas t) throws IOException {
 		try {
-			AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
+			OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 			entityManager.persist(autorisasiData);
 			entityManager.flush();
 			return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
@@ -44,7 +44,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 
 	@Override
 	public Otoritas update(Otoritas t) {
-		AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
+		OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 		autorisasiData = entityManager.merge(autorisasiData);
 		entityManager.flush();
 		return dataConverter.convertAutorisasiDataToAutority(autorisasiData);
@@ -52,11 +52,11 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	
 	@Override
 	public Otoritas updateId(String idLama, Otoritas t) throws IOException {
-		AutorisasiData dataLama = entityManager.find(AutorisasiData.class, idLama);
+		OtoritasData dataLama = entityManager.find(OtoritasData.class, idLama);
 		if(dataLama != null) {
-			AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
+			OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(t);
 			entityManager.remove(dataLama);	
-			AutorisasiData dataTermerge = entityManager.merge(autorisasiData);
+			OtoritasData dataTermerge = entityManager.merge(autorisasiData);
 			entityManager.flush();
 			return dataConverter.convertAutorisasiDataToAutority(dataTermerge);
 		}
@@ -67,7 +67,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	
 	@Override
 	public Otoritas delete(Otoritas t) throws IOException {
-		AutorisasiData autorisasiData = entityManager.find(AutorisasiData.class, t.getId());
+		OtoritasData autorisasiData = entityManager.find(OtoritasData.class, t.getId());
 		if(autorisasiData != null) {
 			entityManager.remove(autorisasiData);
 			entityManager.flush();
@@ -80,8 +80,8 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	
 	@Override
 	public Otoritas getByUserName(String userName) {
-		AutorisasiData data = Optional.ofNullable(
-				entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+		OtoritasData data = Optional.ofNullable(
+				entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
 				.setParameter("userName", userName).getSingleResult()
 				)
 				.orElse(null);
@@ -91,8 +91,8 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	@Override
 	public List<Otoritas> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<AutorisasiData> cq = cb.createQuery(AutorisasiData.class);
-		Root<AutorisasiData> root = cq.from(AutorisasiData.class);
+		CriteriaQuery<OtoritasData> cq = cb.createQuery(OtoritasData.class);
+		Root<OtoritasData> root = cq.from(OtoritasData.class);
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
@@ -205,7 +205,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 			}			
 		}
 		
-		TypedQuery<AutorisasiData> q = null;		
+		TypedQuery<OtoritasData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { //limit query result
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
@@ -225,7 +225,7 @@ public class AutorisasiRepositoryJPA implements IAutorityRepository {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<AutorisasiData> root = cq.from(AutorisasiData.class);		
+		Root<OtoritasData> root = cq.from(OtoritasData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();

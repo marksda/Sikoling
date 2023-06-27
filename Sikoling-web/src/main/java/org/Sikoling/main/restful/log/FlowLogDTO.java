@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
-import org.Sikoling.main.restful.autority.AutorityDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
 
 public class FlowLogDTO implements Serializable {
@@ -18,7 +18,7 @@ public class FlowLogDTO implements Serializable {
 	private PosisiTahapPemberkasanDTO penerimaBerkas;
 	private StatusFlowLogDTO statusFlowLog;
 	private String keterangan;
-	private AutorityDTO pengakses;
+	private OtoritasDTO pengakses;
 	
 	public FlowLogDTO() {
 	}
@@ -37,7 +37,7 @@ public class FlowLogDTO implements Serializable {
 					new StatusFlowLogDTO(t.getStatusFlowLog()) : null;
 			this.keterangan = t.getKeterangan();
 			this.pengakses = t.getPengakses() != null ?
-					new AutorityDTO(t.getPengakses()) : null;
+					new OtoritasDTO(t.getPengakses()) : null;
 		}
 	}
 
@@ -97,11 +97,11 @@ public class FlowLogDTO implements Serializable {
 		this.keterangan = keterangan;
 	}
 
-	public AutorityDTO getPengakses() {
+	public OtoritasDTO getPengakses() {
 		return pengakses;
 	}
 
-	public void setPengakses(AutorityDTO pengakses) {
+	public void setPengakses(OtoritasDTO pengakses) {
 		this.pengakses = pengakses;
 	}
 
@@ -161,7 +161,7 @@ public class FlowLogDTO implements Serializable {
 				statusFlowLog != null ?
 						statusFlowLog.toStatusFlowLog() : null,
 				keterangan, 
-				pengakses != null ? pengakses.toAuthority() : null
+				pengakses != null ? pengakses.toOtoritas() : null
 				);
 	}
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
-import org.Sikoling.main.restful.autority.AutorityDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -50,7 +50,7 @@ public class RegisterDokumenController {
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) throws IOException {		
 		Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setUploader(new AutorityDTO(kreator));
+		d.setUploader(new OtoritasDTO(kreator));
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
 		d.setStatusVerified(Boolean.FALSE);

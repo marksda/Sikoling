@@ -3,7 +3,7 @@ package org.Sikoling.ejb.main.repository.log;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
 import org.Sikoling.ejb.main.repository.permohonan.PosisiTahapPemberkasanData;
 
 import jakarta.persistence.CascadeType;
@@ -45,7 +45,7 @@ public class FlowLogData implements Serializable {
 	
 	@JoinColumn(name = "pengakses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData pengaksesData;
+	private OtoritasData pengaksesData;
 	
 	@OneToOne(mappedBy = "flowLog", cascade = CascadeType.PERSIST)
 	private FlowLogPermohonanData flowLogPermohonanData;
@@ -85,11 +85,11 @@ public class FlowLogData implements Serializable {
 		this.keterangan = keterangan;
 	}
 
-	public AutorisasiData getPengaksesData() {
+	public OtoritasData getPengaksesData() {
 		return pengaksesData;
 	}
 
-	public void setPengaksesData(AutorisasiData pengaksesData) {
+	public void setPengaksesData(OtoritasData pengaksesData) {
 		this.pengaksesData = pengaksesData;
 	}
 	

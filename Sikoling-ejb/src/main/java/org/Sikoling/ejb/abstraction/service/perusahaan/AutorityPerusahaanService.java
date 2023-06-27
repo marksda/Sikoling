@@ -3,41 +3,41 @@ package org.Sikoling.ejb.abstraction.service.perusahaan;
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IOtoritasPerusahaanRepository;
 
 public class AutorityPerusahaanService implements IAutorityPerusahaanService {
 	
-	private final IAutorityPerusahaanRepository autorityPerusahaanRepository;
+	private final IOtoritasPerusahaanRepository autorityPerusahaanRepository;
 
-	public AutorityPerusahaanService(IAutorityPerusahaanRepository autorityPerusahaanRepository) {
+	public AutorityPerusahaanService(IOtoritasPerusahaanRepository autorityPerusahaanRepository) {
 		this.autorityPerusahaanRepository = autorityPerusahaanRepository;
 	}
 
 	@Override
-	public AutorityPerusahaan save(AutorityPerusahaan t) throws IOException {
+	public OtoritasPerusahaan save(OtoritasPerusahaan t) throws IOException {
 		return autorityPerusahaanRepository.save(t);
 	}
 
 	@Override
-	public AutorityPerusahaan update(AutorityPerusahaan t) {
+	public OtoritasPerusahaan update(OtoritasPerusahaan t) {
 		return autorityPerusahaanRepository.update(t);
 	}
 
 	@Override
-	public AutorityPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, AutorityPerusahaan t) throws IOException {
+	public OtoritasPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, OtoritasPerusahaan t) throws IOException {
 		return autorityPerusahaanRepository.updateId(idLamaAutority, idLamaRegisterPerusahaan, t);
 	}
 
 	@Override
-	public AutorityPerusahaan delete(AutorityPerusahaan t) throws IOException {
+	public OtoritasPerusahaan delete(OtoritasPerusahaan t) throws IOException {
 		return autorityPerusahaanRepository.delete(t);
 	}
 
 	@Override
-	public List<AutorityPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
+	public List<OtoritasPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
 		return autorityPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 

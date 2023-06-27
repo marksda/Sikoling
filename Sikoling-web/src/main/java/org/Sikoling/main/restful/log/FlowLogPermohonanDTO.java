@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
-import org.Sikoling.main.restful.autority.AutorityDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanArahanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanDTO;
@@ -40,8 +40,8 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 			this.setStatusFlowLog(statusFlowLog);
 			
 			this.setKeterangan(t.getKeterangan());
-			AutorityDTO pengakses = t.getPengakses() != null ?
-					new AutorityDTO(t.getPengakses()) : null;
+			OtoritasDTO pengakses = t.getPengakses() != null ?
+					new OtoritasDTO(t.getPengakses()) : null;
 			this.setPengakses(pengakses);
 			this.registerPermohonan = t.getRegisterPermohonan() != null ?
 					new RegisterPermohonanDTO(t.getRegisterPermohonan()) : null;
@@ -123,7 +123,7 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 								this.getStatusFlowLog().toStatusFlowLog() : null,  
 				this.getKeterangan(), 
 				this.getPengakses() != null ?
-						this.getPengakses().toAuthority() : null, 
+						this.getPengakses().toOtoritas() : null, 
 				this.registerPermohonan != null ? registerPermohonan : null
 				);
 	}

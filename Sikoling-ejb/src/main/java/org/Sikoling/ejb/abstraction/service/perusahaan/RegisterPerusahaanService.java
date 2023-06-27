@@ -3,7 +3,7 @@ package org.Sikoling.ejb.abstraction.service.perusahaan;
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -33,12 +33,12 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	}
 
 	@Override
-	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
+	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
 		return registerPerusahaanRepository.deleteLinkKepemilikanPerusahaan(autorityPerusahaan);
 	}
 
 	@Override
-	public RegisterPerusahaan addLinkKepemilanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
+	public RegisterPerusahaan addLinkKepemilanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
 		return registerPerusahaanRepository.addLinkKepemilanPerusahaan(autorityPerusahaan);
 	}
 

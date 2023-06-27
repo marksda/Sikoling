@@ -5,9 +5,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
-import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
@@ -26,7 +26,7 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 			this.setKategoriPermohonan(t.getKategoriPermohonan() != null ?	new KategoriPermohonanDTO(t.getKategoriPermohonan()):null);
 			this.setTanggalRegistrasi(t.getTanggalRegistrasi());			
 			this.setRegisterPerusahaan(t.getPerusahaan() != null ? new RegisterPerusahaanDTO(t.getPerusahaan()):null);
-			this.setPengurusPermohonan(t.getPengurusPermohonan() != null ? new AutorityDTO(t.getPengurusPermohonan()):null);
+			this.setPengurusPermohonan(t.getPengurusPermohonan() != null ? new OtoritasDTO(t.getPengurusPermohonan()):null);
 			this.setStatusPengurusPermohonan(t.getStatusPengurusPermohonan() != null ? new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()):null);
 			this.setPenanggungJawabPermohonan(t.getPenanggungJawabPermohonan() != null ? new PegawaiDTO(t.getPenanggungJawabPermohonan()):null);
 			this.setPengirimBerkas(t.getPengirimBerkas() != null ? new PosisiTahapPemberkasanDTO(t.getPengirimBerkas()):null);
@@ -108,7 +108,7 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 				this.getKategoriPermohonan() != null ? this.getKategoriPermohonan().toKategoriPermohonan() : null, 
 				this.getTanggalRegistrasi(), 
 				this.getRegisterPerusahaan() != null ? this.getRegisterPerusahaan().toRegisterPerusahaan() : null,
-				this.getPengurusPermohonan() != null ? this.getPengurusPermohonan().toAuthority() : null, 
+				this.getPengurusPermohonan() != null ? this.getPengurusPermohonan().toOtoritas() : null, 
 				this.getStatusPengurusPermohonan() != null ? this.getStatusPengurusPermohonan().toStatusPengurusPermohonan() : null, 
 				this.getPenanggungJawabPermohonan() != null ? this.getPenanggungJawabPermohonan().toPegawaiPerusahaan() : null, 
 				this.getPengirimBerkas() != null ? this.getPengirimBerkas().toPosisiTahapPemberkasan() : null, 

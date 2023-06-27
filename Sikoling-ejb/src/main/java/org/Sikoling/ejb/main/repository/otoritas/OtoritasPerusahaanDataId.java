@@ -1,15 +1,15 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class AutorityPerusahaanDataId implements Serializable {
+public class OtoritasPerusahaanDataId implements Serializable {
 
 	private static final long serialVersionUID = 5171532190891483206L;
 	private String autority;
 	private String perusahaan;
 	
-	public AutorityPerusahaanDataId() {
+	public OtoritasPerusahaanDataId() {
 	}
 	
 	public String getAutority() {
@@ -54,7 +54,7 @@ public class AutorityPerusahaanDataId implements Serializable {
             return false;
         }
         
-        final AutorityPerusahaanDataId other = (AutorityPerusahaanDataId) obj;
+        final OtoritasPerusahaanDataId other = (OtoritasPerusahaanDataId) obj;
         
         if (!this.autority.equals(other.getAutority())) {
             return false;

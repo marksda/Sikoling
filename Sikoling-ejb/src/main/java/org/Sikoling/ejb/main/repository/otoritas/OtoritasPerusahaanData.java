@@ -1,8 +1,8 @@
-package org.Sikoling.ejb.main.repository.perusahaan;
+package org.Sikoling.ejb.main.repository.otoritas;
 
 import java.io.Serializable;
 
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,29 +19,29 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="AutorityPerusahaanData.findAll", query="SELECT d FROM AutorityPerusahaanData d"),
 	@NamedQuery(name="AutorityPerusahaanData.findByPemilik", query = "SELECT d FROM AutorityPerusahaanData d WHERE d.autority.id = :idAutorisasi")
 })
-@IdClass(AutorityPerusahaanDataId.class)
-public class AutorityPerusahaanData implements Serializable {
+@IdClass(OtoritasPerusahaanDataId.class)
+public class OtoritasPerusahaanData implements Serializable {
 
 	private static final long serialVersionUID = -5441108494516995827L;
 	
 	@Id
 	@JoinColumn(name = "autority", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData autority;
+	private OtoritasData autority;
 	
 	@Id
 	@JoinColumn(name = "perusahaan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
 	private RegisterPerusahaanData perusahaan;
 	
-	public AutorityPerusahaanData() {
+	public OtoritasPerusahaanData() {
 	}
 
-	public AutorisasiData getAutority() {
+	public OtoritasData getAutority() {
 		return autority;
 	}
 
-	public void setAutority(AutorisasiData autority) {
+	public void setAutority(OtoritasData autority) {
 		this.autority = autority;
 	}
 

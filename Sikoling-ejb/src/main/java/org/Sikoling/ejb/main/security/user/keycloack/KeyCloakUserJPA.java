@@ -31,7 +31,7 @@ import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.kabupaten.KabupatenData;
 import org.Sikoling.ejb.main.repository.kecamatan.KecamatanData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
 import org.Sikoling.ejb.main.repository.propinsi.PropinsiData;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminData;
@@ -173,7 +173,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 							false, 
 							t.getCredential().getUserName());
 					
-					AutorisasiData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
+					OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
 					entityManager.persist(autorisasiData);
 					entityManager.flush();
 					
@@ -262,7 +262,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	        
 	        Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
 	        
-	        AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+	        OtoritasData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
 					.setParameter("userName", userAuthenticator.getUserName())
 					.getSingleResult();
 	        
@@ -305,7 +305,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 		Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
 		Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
 		
-		AutorisasiData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", AutorisasiData.class)
+		OtoritasData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
 				.setParameter("userName", getClaim(claims, "email"))
 				.getSingleResult();
         
@@ -364,7 +364,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 										.getSingleResult();								
 								
 								PersonData personData = convertPersonToPersonData(person);
-								AutorisasiData autorisasiData = new AutorisasiData();
+								OtoritasData autorisasiData = new OtoritasData();
 								
 								HakAksesData hakAksesData = new HakAksesData();
 								hakAksesData.setId("09");
@@ -405,7 +405,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 						PersonData personData = convertPersonToPersonData(person);
 						
 						//data authority
-						AutorisasiData autorisasiData = new AutorisasiData();						
+						OtoritasData autorisasiData = new OtoritasData();						
 						HakAksesData hakAksesData = new HakAksesData();
 						hakAksesData.setId("09");
 						autorisasiData.setHakAkses(hakAksesData);

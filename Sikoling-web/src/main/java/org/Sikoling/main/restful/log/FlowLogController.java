@@ -8,7 +8,7 @@ import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
-import org.Sikoling.main.restful.autority.AutorityDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -50,7 +50,7 @@ public class FlowLogController {
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) throws IOException {
 		Otoritas pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setPengakses(new AutorityDTO(pengakses));		
+		d.setPengakses(new OtoritasDTO(pengakses));		
 		
 		return new FlowLogDTO(flowLogService.save(d.toFlowLog()));
 	}

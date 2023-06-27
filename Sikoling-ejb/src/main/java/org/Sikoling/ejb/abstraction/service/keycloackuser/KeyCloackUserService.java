@@ -17,7 +17,6 @@ public class KeyCloackUserService implements IKeyCloackUserService {
 	private final IKeyCloackUserRepository userRepository;	
 
 	public KeyCloackUserService(IKeyCloackUserRepository userRepository) {
-		super();
 		this.userRepository = userRepository;
 	}
 

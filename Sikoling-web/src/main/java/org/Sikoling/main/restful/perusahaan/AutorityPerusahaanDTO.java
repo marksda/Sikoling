@@ -3,32 +3,32 @@ package org.Sikoling.main.restful.perusahaan;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
-import org.Sikoling.main.restful.autority.AutorityDTO;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 
 public class AutorityPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 491207506437595211L;
-	private AutorityDTO authority;
+	private OtoritasDTO authority;
 	private RegisterPerusahaanDTO registerPerusahaan;
 	
 	public AutorityPerusahaanDTO() {
 	}
 	
-	public AutorityPerusahaanDTO(AutorityPerusahaan t) {
+	public AutorityPerusahaanDTO(OtoritasPerusahaan t) {
 		if(t != null) {
-			this.authority = t.getAuthority() != null ?
-					new AutorityDTO(t.getAuthority()):null;
+			this.authority = t.getOtoritas() != null ?
+					new OtoritasDTO(t.getOtoritas()):null;
 			this.registerPerusahaan = t.getRegisterPerusahaan() != null ?
 					new RegisterPerusahaanDTO(t.getRegisterPerusahaan()):null;
 		}
 	}
 
-	public AutorityDTO getAuthority() {
+	public OtoritasDTO getAuthority() {
 		return authority;
 	}
 
-	public void setAuthority(AutorityDTO authority) {
+	public void setAuthority(OtoritasDTO authority) {
 		this.authority = authority;
 	}
 
@@ -58,9 +58,9 @@ public class AutorityPerusahaanDTO implements Serializable {
             return false;
         }
         
-        final AutorityPerusahaan other = (AutorityPerusahaan) obj;
+        final OtoritasPerusahaan other = (OtoritasPerusahaan) obj;
         
-        if (!this.authority.getId().equals(other.getAuthority().getId())) {
+        if (!this.authority.getId().equals(other.getOtoritas().getId())) {
             return false;
         }
         
@@ -90,9 +90,9 @@ public class AutorityPerusahaanDTO implements Serializable {
 				.concat("}");
 	}	
 	
-	public AutorityPerusahaan toAutorityPerusahaan() {
-		return new AutorityPerusahaan(
-				this.authority != null ? this.authority.toAuthority():null,
+	public OtoritasPerusahaan toAutorityPerusahaan() {
+		return new OtoritasPerusahaan(
+				this.authority != null ? this.authority.toOtoritas():null,
 				this.registerPerusahaan != null ? this.registerPerusahaan.toRegisterPerusahaan():null
 				);
 	}

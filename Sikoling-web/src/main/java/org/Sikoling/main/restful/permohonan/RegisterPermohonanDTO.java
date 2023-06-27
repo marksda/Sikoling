@@ -7,9 +7,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
-import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
@@ -20,7 +20,7 @@ public class RegisterPermohonanDTO implements Serializable {
 	private KategoriPermohonanDTO kategoriPermohonan;
 	private LocalDate tanggalRegistrasi;
 	private RegisterPerusahaanDTO registerPerusahaan;
-	private AutorityDTO pengurusPermohonan;
+	private OtoritasDTO pengurusPermohonan;
 	private StatusPengurusPermohonanDTO statusPengurusPermohonan;
 	private PegawaiDTO penanggungJawabPermohonan;
 	private PosisiTahapPemberkasanDTO pengirimBerkas;
@@ -41,7 +41,7 @@ public class RegisterPermohonanDTO implements Serializable {
 			this.registerPerusahaan = t.getPerusahaan() != null ?
 					new RegisterPerusahaanDTO(t.getPerusahaan()) : null;			
 			this.pengurusPermohonan = t.getPengurusPermohonan() != null ?
-					new AutorityDTO(t.getPengurusPermohonan()) : null;
+					new OtoritasDTO(t.getPengurusPermohonan()) : null;
 			this.statusPengurusPermohonan = t.getStatusPengurusPermohonan() != null ?
 					new StatusPengurusPermohonanDTO(t.getStatusPengurusPermohonan()) : null;
 			this.penanggungJawabPermohonan = t.getPenanggungJawabPermohonan() != null ?
@@ -97,11 +97,11 @@ public class RegisterPermohonanDTO implements Serializable {
 		this.registerPerusahaan = registerPerusahaan;
 	}
 	
-	public AutorityDTO getPengurusPermohonan() {
+	public OtoritasDTO getPengurusPermohonan() {
 		return pengurusPermohonan;
 	}
 	
-	public void setPengurusPermohonan(AutorityDTO pengurusPermohonan) {
+	public void setPengurusPermohonan(OtoritasDTO pengurusPermohonan) {
 		this.pengurusPermohonan = pengurusPermohonan;
 	}
 		
@@ -214,7 +214,7 @@ public class RegisterPermohonanDTO implements Serializable {
 				registerPerusahaan != null ?
 						registerPerusahaan.toRegisterPerusahaan() : null, 
 				pengurusPermohonan != null ?
-						pengurusPermohonan.toAuthority() : null, 
+						pengurusPermohonan.toOtoritas() : null, 
 				statusPengurusPermohonan != null ?
 						statusPengurusPermohonan.toStatusPengurusPermohonan() : null,
 				penanggungJawabPermohonan != null ?

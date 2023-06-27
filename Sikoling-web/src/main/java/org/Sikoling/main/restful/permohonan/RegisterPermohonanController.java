@@ -10,10 +10,10 @@ import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
 import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
-import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -57,7 +57,7 @@ public class RegisterPermohonanController {
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) throws IOException {
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		AutorityDTO pengurusPermohonanDto = new AutorityDTO(pengurusPermohonan);
+		OtoritasDTO pengurusPermohonanDto = new OtoritasDTO(pengurusPermohonan);
 		d.setPengurusPermohonan(pengurusPermohonanDto);
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = new PosisiTahapPemberkasanDTO();
 		pengirimBerkasDTO.setId("0");

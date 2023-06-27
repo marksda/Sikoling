@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.autority;
+package org.Sikoling.main.restful.otoritas;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +30,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Stateless
 @LocalBean
 @Path("authority")
-public class AutorityController {
+public class OtoritasController {
 	
 	@Inject
 	private IAutorityService authorityService;
@@ -40,8 +40,8 @@ public class AutorityController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public AutorityDTO save(AutorityDTO d) throws IOException {
-		return new AutorityDTO(authorityService.save(d.toAuthority()));
+	public OtoritasDTO save(OtoritasDTO d) throws IOException {
+		return new OtoritasDTO(authorityService.save(d.toOtoritas()));
 	}
 	
 	@PUT
@@ -49,8 +49,8 @@ public class AutorityController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public AutorityDTO update(AutorityDTO d) {
-		return new AutorityDTO(authorityService.update(d.toAuthority()));
+	public OtoritasDTO update(OtoritasDTO d) {
+		return new OtoritasDTO(authorityService.update(d.toOtoritas()));
 	}
 	
 	@Path("id/{idLama}")
@@ -59,8 +59,8 @@ public class AutorityController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public AutorityDTO updateId(@PathParam("idLama") String idLama, AutorityDTO d) throws IOException {
-		return new AutorityDTO(authorityService.updateId(idLama, d.toAuthority()));
+	public OtoritasDTO updateId(@PathParam("idLama") String idLama, OtoritasDTO d) throws IOException {
+		return new OtoritasDTO(authorityService.updateId(idLama, d.toOtoritas()));
 	}
 	
 	@DELETE
@@ -68,8 +68,8 @@ public class AutorityController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public AutorityDTO delete(AutorityDTO d) throws IOException {
-		return new AutorityDTO(authorityService.delete(d.toAuthority()));
+	public OtoritasDTO delete(OtoritasDTO d) throws IOException {
+		return new OtoritasDTO(authorityService.delete(d.toOtoritas()));
 	}
 		
 	@GET
@@ -77,7 +77,7 @@ public class AutorityController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<AutorityDTO> getDaftarData(@Context UriInfo info) {
+	public List<OtoritasDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
@@ -85,7 +85,7 @@ public class AutorityController {
 		
 		return authorityService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> new AutorityDTO(t))
+				.map(t -> new OtoritasDTO(t))
 				.collect(Collectors.toList());
 	}
 	

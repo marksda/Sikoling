@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.autority;
+package org.Sikoling.main.restful.otoritas;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.perusahaan.AutorityPerusahaanData;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,7 +26,7 @@ import jakarta.persistence.Table;
 	@NamedQuery(name="AutorisasiData.findByNama", query="SELECT u FROM AutorisasiData u WHERE u.person.nama like :nama"),
 	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.userName = :userName")	
 })
-public class AutorisasiData implements Serializable {
+public class OtoritasData implements Serializable {
 
 	private static final long serialVersionUID = 2467589981792742907L;
 	
@@ -54,7 +54,7 @@ public class AutorisasiData implements Serializable {
 	private LocalDate tanggalRegistrasi;	
 	
 	@OneToMany(mappedBy = "autority", fetch = FetchType.LAZY)
-	List<AutorityPerusahaanData> daftarAutorityPerusahaanData;
+	List<OtoritasPerusahaanData> daftarAutorityPerusahaanData;
 			
 	public String getUserName() {
 		return userName;
@@ -80,7 +80,7 @@ public class AutorisasiData implements Serializable {
 		this.person = personData;
 	}
 
-	public AutorisasiData() {
+	public OtoritasData() {
 	}
 
 	public String getId() {
@@ -119,11 +119,11 @@ public class AutorisasiData implements Serializable {
 		this.tanggalRegistrasi = tanggalRegistrasi;
 	}
 		
-	public List<AutorityPerusahaanData> getDaftarAutorityPerusahaanData() {
+	public List<OtoritasPerusahaanData> getDaftarAutorityPerusahaanData() {
 		return daftarAutorityPerusahaanData;
 	}
 
-	public void setDaftarAutorityPerusahaanData(List<AutorityPerusahaanData> daftarAutorityPerusahaanData) {
+	public void setDaftarAutorityPerusahaanData(List<OtoritasPerusahaanData> daftarAutorityPerusahaanData) {
 		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
 	}
 
@@ -148,7 +148,7 @@ public class AutorisasiData implements Serializable {
             return false;
         }
         
-        final AutorisasiData other = (AutorisasiData) obj;
+        final OtoritasData other = (OtoritasData) obj;
         
         if (!id.equals(other.getId())) {
             return false;

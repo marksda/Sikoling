@@ -8,11 +8,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.main.restful.autority.AutorityDTO;
 import org.Sikoling.main.restful.dokumen.DokumenDTO;
 import org.Sikoling.main.restful.dokumen.DokumenNibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.log.StatusFlowLogDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 import org.Sikoling.main.restful.permohonan.KategoriPermohonanSuratArahanDTO;
 import org.Sikoling.main.restful.permohonan.KategoriPermohonanDTO;
@@ -61,7 +61,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 		KategoriPermohonanDTO kategoriPermohonanDTO = null;
 		PegawaiDTO pegawaiPerusahaanDTO = null;
 		RegisterPerusahaanDTO registerPerusahaanDTO = null;
-		AutorityDTO pengurusPermohonanDTO = null;
+		OtoritasDTO pengurusPermohonanDTO = null;
 		PosisiTahapPemberkasanDTO pengirimBerkasDTO = null;
 		PosisiTahapPemberkasanDTO penerimaBerkasDTO = null;
 		StatusFlowLogDTO statusFlowLogDTO =null;
@@ -127,7 +127,7 @@ public class RegisterPermohonanProvider implements MessageBodyReader<RegisterPer
 					event = parser.next();
 					try {
 						jsonObject = parser.getObject();
-						pengurusPermohonanDTO = jsonb.fromJson(jsonObject.toString(), AutorityDTO.class);
+						pengurusPermohonanDTO = jsonb.fromJson(jsonObject.toString(), OtoritasDTO.class);
 					} catch (Exception e) {
 						pengurusPermohonanDTO = null;
 					}		

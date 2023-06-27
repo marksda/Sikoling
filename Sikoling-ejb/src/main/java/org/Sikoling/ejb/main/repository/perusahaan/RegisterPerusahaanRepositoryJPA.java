@@ -6,13 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.AutorityPerusahaan;
+import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanDataId;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
@@ -74,10 +76,10 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 //	}
 	
 	@Override
-	public RegisterPerusahaan addLinkKepemilanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
-		AutorityPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(autorityPerusahaan);
+	public RegisterPerusahaan addLinkKepemilanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
+		OtoritasPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(autorityPerusahaan);
 		try {
-			AutorityPerusahaanData newAddData = entityManager.merge(autorityPerusahaanData);
+			OtoritasPerusahaanData newAddData = entityManager.merge(autorityPerusahaanData);
 			entityManager.flush();
 			RegisterPerusahaanData registerPerusahaanDataTerupdate = entityManager.find(RegisterPerusahaanData.class, newAddData.getPerusahaan().getId()); 
 			return dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanDataTerupdate);
@@ -89,12 +91,12 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	
 	
 	@Override
-	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(AutorityPerusahaan autorityPerusahaan) throws IOException {
-		AutorityPerusahaanDataId id = new AutorityPerusahaanDataId();
-		id.setAutority(autorityPerusahaan.getAuthority().getId());
+	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
+		OtoritasPerusahaanDataId id = new OtoritasPerusahaanDataId();
+		id.setAutority(autorityPerusahaan.getOtoritas().getId());
 		id.setPerusahaan(autorityPerusahaan.getRegisterPerusahaan().getId());
 		
-		AutorityPerusahaanData autorityPerusahaanData = entityManager.find(AutorityPerusahaanData.class, id);
+		OtoritasPerusahaanData autorityPerusahaanData = entityManager.find(OtoritasPerusahaanData.class, id);
 		
 		if(autorityPerusahaanData != null) {
 			entityManager.remove(autorityPerusahaanData);

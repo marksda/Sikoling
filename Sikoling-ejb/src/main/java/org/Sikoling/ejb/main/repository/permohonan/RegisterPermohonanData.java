@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.Sikoling.ejb.main.repository.log.StatusFlowLogData;
-import org.Sikoling.ejb.main.repository.otoritas.AutorisasiData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 import org.Sikoling.ejb.main.repository.perusahaan.RegisterPerusahaanData;
 
@@ -54,7 +54,7 @@ public class RegisterPermohonanData implements Serializable {
 	
 	@JoinColumn(name="pengakses", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private AutorisasiData autorisasiData;
+	private OtoritasData autorisasiData;
 	
 	@JoinColumn(name="kategori_pengurus_permohonan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
@@ -129,11 +129,11 @@ public class RegisterPermohonanData implements Serializable {
 		this.perusahaanData = perusahaanData;
 	}
 
-	public AutorisasiData getAutorisasiData() {
+	public OtoritasData getAutorisasiData() {
 		return autorisasiData;
 	}
 
-	public void setAutorisasiData(AutorisasiData autorisasiData) {
+	public void setAutorisasiData(OtoritasData autorisasiData) {
 		this.autorisasiData = autorisasiData;
 	}
 

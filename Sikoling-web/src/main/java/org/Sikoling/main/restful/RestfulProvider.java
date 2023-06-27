@@ -2,7 +2,7 @@ package org.Sikoling.main.restful;
 
 import java.util.Properties;
 
-import org.Sikoling.ejb.abstraction.repository.IAutorityPerusahaanRepository;
+import org.Sikoling.ejb.abstraction.repository.IOtoritasPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
@@ -264,7 +264,7 @@ public class RestfulProvider {
 	
 	@Produces
 	public IAutorityPerusahaanService getAutorityPerusahaanService(
-			@Infrastructure IAutorityPerusahaanRepository autorityPerusahaanRepository) {
+			@Infrastructure IOtoritasPerusahaanRepository autorityPerusahaanRepository) {
 		return new AutorityPerusahaanService(autorityPerusahaanRepository);
 	}
 	
