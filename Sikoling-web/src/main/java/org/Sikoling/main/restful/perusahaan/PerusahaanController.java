@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
-import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
+import org.Sikoling.main.restful.otoritas.OtoritasPerusahaanDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -40,7 +41,7 @@ public class PerusahaanController {
 	private IRegisterPerusahaanService registerPerusahaanService;
 	
 	@Inject
-	private IAutorityService authorityService;
+	private IOtoritasService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -91,11 +92,11 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO deleteLinkKepemilikanPerusahaan(AutorityPerusahaanDTO d,
+	public RegisterPerusahaanDTO deleteLinkKepemilikanPerusahaan(OtoritasPerusahaanDTO d,
 			@Context SecurityContext securityContext) throws IOException {
 //		Autority pemilik = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
-		return new RegisterPerusahaanDTO(registerPerusahaanService.deleteLinkKepemilikanPerusahaan(d.toAutorityPerusahaan()));
+		return new RegisterPerusahaanDTO(registerPerusahaanService.deleteLinkKepemilikanPerusahaan(d.toOtoritasPerusahaan()));
 	}
 	
 	@Path("kepemilikan")
@@ -104,8 +105,8 @@ public class PerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO addLinkKepemilikanPerusahaan(AutorityPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {				
-		return new RegisterPerusahaanDTO(registerPerusahaanService.addLinkKepemilanPerusahaan(d.toAutorityPerusahaan()));
+	public RegisterPerusahaanDTO addLinkKepemilikanPerusahaan(OtoritasPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {				
+		return new RegisterPerusahaanDTO(registerPerusahaanService.addLinkKepemilanPerusahaan(d.toOtoritasPerusahaan()));
 	}
 	
 //	@Path("is_eksis")

@@ -1,10 +1,10 @@
-package org.Sikoling.main.restful.perusahaan;
+package org.Sikoling.main.restful.otoritas;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.perusahaan.IAutorityPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasPerusahaanService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -29,19 +29,19 @@ import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
-@Path("autority_perusahaan")
-public class AutorityPerusahaanController {
+@Path("otoritas_perusahaan")
+public class OtoritasPerusahaanController {
 	
 	@Inject
-	private IAutorityPerusahaanService autorityPerusahaanService;
+	private IOtoritasPerusahaanService autorityPerusahaanService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-    public AutorityPerusahaanDTO save(AutorityPerusahaanDTO d) throws IOException {
-        return new AutorityPerusahaanDTO(autorityPerusahaanService.save(d.toAutorityPerusahaan()));
+    public OtoritasPerusahaanDTO save(OtoritasPerusahaanDTO d) throws IOException {
+        return new OtoritasPerusahaanDTO(autorityPerusahaanService.save(d.toOtoritasPerusahaan()));
     }
 	
 	@PUT
@@ -49,8 +49,8 @@ public class AutorityPerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public AutorityPerusahaanDTO update(AutorityPerusahaanDTO d) {		
-		return new AutorityPerusahaanDTO(autorityPerusahaanService.update(d.toAutorityPerusahaan()));
+	public OtoritasPerusahaanDTO update(OtoritasPerusahaanDTO d) {		
+		return new OtoritasPerusahaanDTO(autorityPerusahaanService.update(d.toOtoritasPerusahaan()));
 	}
 	
 	@Path("id/{idLamaAutority}/{idLamaRegisterPerusahaan}")
@@ -59,17 +59,17 @@ public class AutorityPerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public AutorityPerusahaanDTO updateId(@PathParam("idLamaAutority") String idLamaAutority,
-			@PathParam("idLamaRegisterPerusahaan") String idLamaRegisterPerusahaan, AutorityPerusahaanDTO d) throws IOException {
-		return new AutorityPerusahaanDTO(autorityPerusahaanService.updateId(idLamaAutority, idLamaRegisterPerusahaan, d.toAutorityPerusahaan()));
+	public OtoritasPerusahaanDTO updateId(@PathParam("idLamaAutority") String idLamaAutority,
+			@PathParam("idLamaRegisterPerusahaan") String idLamaRegisterPerusahaan, OtoritasPerusahaanDTO d) throws IOException {
+		return new OtoritasPerusahaanDTO(autorityPerusahaanService.updateId(idLamaAutority, idLamaRegisterPerusahaan, d.toOtoritasPerusahaan()));
 	}
 	
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public AutorityPerusahaanDTO delete(AutorityPerusahaanDTO d) throws IOException {
-		return new AutorityPerusahaanDTO(autorityPerusahaanService.delete(d.toAutorityPerusahaan()));
+	public OtoritasPerusahaanDTO delete(OtoritasPerusahaanDTO d) throws IOException {
+		return new OtoritasPerusahaanDTO(autorityPerusahaanService.delete(d.toOtoritasPerusahaan()));
 	}
 
 	@GET
@@ -77,7 +77,7 @@ public class AutorityPerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public List<AutorityPerusahaanDTO> getDaftarData(@Context UriInfo info) {
+	public List<OtoritasPerusahaanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
 		Jsonb jsonb = JsonbBuilder.create();
@@ -85,7 +85,7 @@ public class AutorityPerusahaanController {
 		
 		return autorityPerusahaanService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
-				.map(t -> new AutorityPerusahaanDTO(t))
+				.map(t -> new OtoritasPerusahaanDTO(t))
 				.collect(Collectors.toList());
 	}
 	

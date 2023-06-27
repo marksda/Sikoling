@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.service.authority;
+package org.Sikoling.ejb.abstraction.service.otoritas;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 
-public interface IAutorityService {
+public interface IOtoritasService {
 	Otoritas save(Otoritas t) throws IOException;
 	Otoritas update(Otoritas t);
 	Otoritas updateId(String idLama, Otoritas t) throws IOException;

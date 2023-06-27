@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -33,7 +33,7 @@ import jakarta.ws.rs.core.UriInfo;
 public class OtoritasController {
 	
 	@Inject
-	private IAutorityService authorityService;
+	private IOtoritasService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})

@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.service.perusahaan;
+package org.Sikoling.ejb.abstraction.service.otoritas;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,42 +8,42 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IOtoritasPerusahaanRepository;
 
-public class AutorityPerusahaanService implements IAutorityPerusahaanService {
+public class OtoritasPerusahaanService implements IOtoritasPerusahaanService {
 	
-	private final IOtoritasPerusahaanRepository autorityPerusahaanRepository;
+	private final IOtoritasPerusahaanRepository otoritasPerusahaanRepository;
 
-	public AutorityPerusahaanService(IOtoritasPerusahaanRepository autorityPerusahaanRepository) {
-		this.autorityPerusahaanRepository = autorityPerusahaanRepository;
+	public OtoritasPerusahaanService(IOtoritasPerusahaanRepository otoritasPerusahaanRepository) {
+		this.otoritasPerusahaanRepository = otoritasPerusahaanRepository;
 	}
 
 	@Override
 	public OtoritasPerusahaan save(OtoritasPerusahaan t) throws IOException {
-		return autorityPerusahaanRepository.save(t);
+		return otoritasPerusahaanRepository.save(t);
 	}
 
 	@Override
 	public OtoritasPerusahaan update(OtoritasPerusahaan t) {
-		return autorityPerusahaanRepository.update(t);
+		return otoritasPerusahaanRepository.update(t);
 	}
 
 	@Override
 	public OtoritasPerusahaan updateId(String idLamaAutority, String idLamaRegisterPerusahaan, OtoritasPerusahaan t) throws IOException {
-		return autorityPerusahaanRepository.updateId(idLamaAutority, idLamaRegisterPerusahaan, t);
+		return otoritasPerusahaanRepository.updateId(idLamaAutority, idLamaRegisterPerusahaan, t);
 	}
 
 	@Override
 	public OtoritasPerusahaan delete(OtoritasPerusahaan t) throws IOException {
-		return autorityPerusahaanRepository.delete(t);
+		return otoritasPerusahaanRepository.delete(t);
 	}
 
 	@Override
 	public List<OtoritasPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
-		return autorityPerusahaanRepository.getDaftarData(queryParamFilters);
+		return otoritasPerusahaanRepository.getDaftarData(queryParamFilters);
 	}
 
 	@Override
 	public Long getJumlahData(List<Filter> queryParamFilters) {
-		return autorityPerusahaanRepository.getJumlahData(queryParamFilters);
+		return otoritasPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
 	
 }

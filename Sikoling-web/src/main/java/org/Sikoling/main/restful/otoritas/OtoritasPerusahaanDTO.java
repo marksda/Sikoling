@@ -1,35 +1,35 @@
-package org.Sikoling.main.restful.perusahaan;
+package org.Sikoling.main.restful.otoritas;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
-import org.Sikoling.main.restful.otoritas.OtoritasDTO;
+import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 
-public class AutorityPerusahaanDTO implements Serializable {
+public class OtoritasPerusahaanDTO implements Serializable {
 
 	private static final long serialVersionUID = 491207506437595211L;
-	private OtoritasDTO authority;
+	private OtoritasDTO otoritas;
 	private RegisterPerusahaanDTO registerPerusahaan;
 	
-	public AutorityPerusahaanDTO() {
+	public OtoritasPerusahaanDTO() {
 	}
 	
-	public AutorityPerusahaanDTO(OtoritasPerusahaan t) {
+	public OtoritasPerusahaanDTO(OtoritasPerusahaan t) {
 		if(t != null) {
-			this.authority = t.getOtoritas() != null ?
+			this.otoritas = t.getOtoritas() != null ?
 					new OtoritasDTO(t.getOtoritas()):null;
 			this.registerPerusahaan = t.getRegisterPerusahaan() != null ?
 					new RegisterPerusahaanDTO(t.getRegisterPerusahaan()):null;
 		}
 	}
 
-	public OtoritasDTO getAuthority() {
-		return authority;
+	public OtoritasDTO getOtoritas() {
+		return otoritas;
 	}
 
-	public void setAuthority(OtoritasDTO authority) {
-		this.authority = authority;
+	public void setOtoritas(OtoritasDTO otoritas) {
+		this.otoritas = otoritas;
 	}
 
 	public RegisterPerusahaanDTO getRegisterPerusahaan() {
@@ -60,7 +60,7 @@ public class AutorityPerusahaanDTO implements Serializable {
         
         final OtoritasPerusahaan other = (OtoritasPerusahaan) obj;
         
-        if (!this.authority.getId().equals(other.getOtoritas().getId())) {
+        if (!this.otoritas.getId().equals(other.getOtoritas().getId())) {
             return false;
         }
         
@@ -74,7 +74,7 @@ public class AutorityPerusahaanDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 71;
-		hash = 171 * hash + Objects.hashCode(this.authority.getId());
+		hash = 171 * hash + Objects.hashCode(this.otoritas.getId());
 		hash = 171 * hash + Objects.hashCode(this.registerPerusahaan.getId());
 		return hash;
 	}
@@ -83,16 +83,16 @@ public class AutorityPerusahaanDTO implements Serializable {
 	public String toString() {
 		return "AuthorityPerusahaan {"
 				.concat("idAuthority=")
-				.concat(this.authority.getId())
+				.concat(this.otoritas.getId())
 				.concat(", ")
 				.concat("idRegisterPerusahaan=")
 				.concat(this.registerPerusahaan.getId())
 				.concat("}");
 	}	
 	
-	public OtoritasPerusahaan toAutorityPerusahaan() {
+	public OtoritasPerusahaan toOtoritasPerusahaan() {
 		return new OtoritasPerusahaan(
-				this.authority != null ? this.authority.toOtoritas():null,
+				this.otoritas != null ? this.otoritas.toOtoritas():null,
 				this.registerPerusahaan != null ? this.registerPerusahaan.toRegisterPerusahaan():null
 				);
 	}

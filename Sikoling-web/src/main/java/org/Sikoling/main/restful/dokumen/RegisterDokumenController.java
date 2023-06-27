@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
-import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
@@ -41,7 +41,7 @@ public class RegisterDokumenController {
 	private IRegisterDokumenService registerDokumenService;
 	
 	@Inject
-	private IAutorityService authorityService;
+	private IOtoritasService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})

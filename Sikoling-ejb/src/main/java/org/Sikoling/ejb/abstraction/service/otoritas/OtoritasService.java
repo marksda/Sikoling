@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.service.authority;
+package org.Sikoling.ejb.abstraction.service.otoritas;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
 
-public class AutorityService implements IAutorityService {
+public class OtoritasService implements IOtoritasService {
 	
 	private final IAutorityRepository authorityRepository;
 
-	public AutorityService(IAutorityRepository authorityRepository) {
+	public OtoritasService(IAutorityRepository authorityRepository) {
 		this.authorityRepository = authorityRepository;
 	}
 

@@ -61,8 +61,6 @@ import org.Sikoling.ejb.abstraction.service.hakakses.HakAksesService;
 import org.Sikoling.ejb.abstraction.service.hakakses.IHakAksesService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
 import org.Sikoling.ejb.abstraction.service.jabatan.JabatanService;
-import org.Sikoling.ejb.abstraction.service.authority.AutorityService;
-import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.BidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.bidangusaha.IBidangUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.DesaService;
@@ -84,6 +82,10 @@ import org.Sikoling.ejb.abstraction.service.log.KategoriLogService;
 import org.Sikoling.ejb.abstraction.service.log.StatusFlowLogServices;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
+import org.Sikoling.ejb.abstraction.service.otoritas.OtoritasService;
+import org.Sikoling.ejb.abstraction.service.otoritas.OtoritasPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasPerusahaanService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.pegawai.IPegawaiPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.pegawai.PegawaiPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.pelakuusaha.PelakuUsahaService;
@@ -102,8 +104,6 @@ import org.Sikoling.ejb.abstraction.service.permohonan.RegisterPermohonanService
 import org.Sikoling.ejb.abstraction.service.permohonan.StatusPengurusPermohonanService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.ejb.abstraction.service.person.PersonService;
-import org.Sikoling.ejb.abstraction.service.perusahaan.AutorityPerusahaanService;
-import org.Sikoling.ejb.abstraction.service.perusahaan.IAutorityPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.RegisterPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
@@ -257,15 +257,15 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IAutorityService getAuthorityService(
+	public IOtoritasService getAuthorityService(
 			@Infrastructure IAutorityRepository authorityRepository) {
-		return new AutorityService(authorityRepository);
+		return new OtoritasService(authorityRepository);
 	}
 	
 	@Produces
-	public IAutorityPerusahaanService getAutorityPerusahaanService(
-			@Infrastructure IOtoritasPerusahaanRepository autorityPerusahaanRepository) {
-		return new AutorityPerusahaanService(autorityPerusahaanRepository);
+	public IOtoritasPerusahaanService getAutorityPerusahaanService(
+			@Infrastructure IOtoritasPerusahaanRepository otoritasPerusahaanRepository) {
+		return new OtoritasPerusahaanService(otoritasPerusahaanRepository);
 	}
 	
 	@Produces

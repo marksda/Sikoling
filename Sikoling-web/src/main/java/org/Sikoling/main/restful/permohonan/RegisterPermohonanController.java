@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonanArahan;
-import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
 import org.Sikoling.ejb.abstraction.service.log.IFlowLogService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.permohonan.IRegisterPermohonanService;
 import org.Sikoling.main.restful.log.FlowLogPermohonanDTO;
 import org.Sikoling.main.restful.log.KategoriFlowLogDTO;
@@ -42,7 +42,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Path("register_permohonan")
 public class RegisterPermohonanController {
 	@Inject
-	private IAutorityService authorityService;
+	private IOtoritasService authorityService;
 	
 	@Inject
 	private IFlowLogService flowLogService;

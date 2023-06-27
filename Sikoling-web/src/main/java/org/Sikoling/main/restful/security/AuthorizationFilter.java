@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
-import org.Sikoling.ejb.abstraction.service.authority.IAutorityService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 
 import jakarta.ejb.LocalBean;
@@ -41,7 +41,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 	private ITokenValidationService tokenValidationService;		
 	
 	@Inject
-	private IAutorityService authorityService;
+	private IOtoritasService authorityService;
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
