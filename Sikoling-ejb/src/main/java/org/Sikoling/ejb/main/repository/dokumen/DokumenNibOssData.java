@@ -20,8 +20,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_dok_nib")
 @NamedQueries({
-	@NamedQuery(name="NibOssData.findAll", query="SELECT d FROM NibOssData d"),
-	@NamedQuery(name="NibOssData.findByIdRegistrasi", query="SELECT d FROM NibOssData d WHERE d.registerDokumenData.id = :idRegister")
+	@NamedQuery(name="DokumenNibOssData.findAll", query="SELECT d FROM DokumenNibOssData d"),
+	@NamedQuery(name="DokumenNibOssData.findByIdRegistrasi", query="SELECT d FROM DokumenNibOssData d WHERE d.registerDokumenData.id = :idRegister")
 })
 public class DokumenNibOssData implements Serializable {
 

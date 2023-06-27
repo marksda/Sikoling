@@ -29,11 +29,11 @@ import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
 @LocalBean
-@Path("authority")
+@Path("otoritas")
 public class OtoritasController {
 	
 	@Inject
-	private IOtoritasService authorityService;
+	private IOtoritasService otoritasService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -41,7 +41,7 @@ public class OtoritasController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
 	public OtoritasDTO save(OtoritasDTO d) throws IOException {
-		return new OtoritasDTO(authorityService.save(d.toOtoritas()));
+		return new OtoritasDTO(otoritasService.save(d.toOtoritas()));
 	}
 	
 	@PUT
@@ -50,7 +50,7 @@ public class OtoritasController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
 	public OtoritasDTO update(OtoritasDTO d) {
-		return new OtoritasDTO(authorityService.update(d.toOtoritas()));
+		return new OtoritasDTO(otoritasService.update(d.toOtoritas()));
 	}
 	
 	@Path("id/{idLama}")
@@ -60,7 +60,7 @@ public class OtoritasController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public OtoritasDTO updateId(@PathParam("idLama") String idLama, OtoritasDTO d) throws IOException {
-		return new OtoritasDTO(authorityService.updateId(idLama, d.toOtoritas()));
+		return new OtoritasDTO(otoritasService.updateId(idLama, d.toOtoritas()));
 	}
 	
 	@DELETE
@@ -69,7 +69,7 @@ public class OtoritasController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
 	public OtoritasDTO delete(OtoritasDTO d) throws IOException {
-		return new OtoritasDTO(authorityService.delete(d.toOtoritas()));
+		return new OtoritasDTO(otoritasService.delete(d.toOtoritas()));
 	}
 		
 	@GET
@@ -83,7 +83,7 @@ public class OtoritasController {
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return authorityService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
+		return otoritasService.getDaftarData(queryParamFiltersDTO.toQueryParamFilters())
 				.stream()
 				.map(t -> new OtoritasDTO(t))
 				.collect(Collectors.toList());
@@ -100,7 +100,7 @@ public class OtoritasController {
 		Jsonb jsonb = JsonbBuilder.create();
 		QueryParamFiltersDTO queryParamFiltersDTO = jsonb.fromJson(queryParamsStr, QueryParamFiltersDTO.class);
 		
-		return authorityService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
+		return otoritasService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
 }

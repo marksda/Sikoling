@@ -108,6 +108,12 @@ public class OtoritasPerusahaanRepositoryJPA implements IOtoritasPerusahaanRepos
 			case "perusahaan":
 				daftarPredicate.add(cb.like(cb.lower(root.get("perusahaan").get("nama")), filter.getValue().toLowerCase()+"%"));
 				break;
+			case "npwp":
+				daftarPredicate.add(cb.equal(root.get("perusahaan").get("npwp"), filter.getValue()));
+				break;
+			case "nik":
+				daftarPredicate.add(cb.equal(root.get("autority").get("person").get("id"), filter.getValue()));
+				break;
 			default:
 				break;
 			}			
@@ -182,6 +188,12 @@ public class OtoritasPerusahaanRepositoryJPA implements IOtoritasPerusahaanRepos
 				break;
 			case "perusahaan":
 				daftarPredicate.add(cb.like(cb.lower(root.get("perusahaan").get("nama")), filter.getValue().toLowerCase()+"%"));
+				break;
+			case "npwp":
+				daftarPredicate.add(cb.equal(root.get("perusahaan").get("npwp"), filter.getValue()));
+				break;
+			case "nik":
+				daftarPredicate.add(cb.equal(root.get("autority").get("person").get("id"), filter.getValue()));
 				break;
 			default:
 				break;

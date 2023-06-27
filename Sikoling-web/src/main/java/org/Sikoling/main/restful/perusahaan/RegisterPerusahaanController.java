@@ -8,12 +8,10 @@ import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
-import org.Sikoling.main.restful.otoritas.OtoritasPerusahaanDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -25,6 +23,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -35,13 +34,13 @@ import jakarta.ws.rs.core.UriInfo;
 @Stateless
 @LocalBean
 @Path("register_perusahaan")
-public class PerusahaanController {
+public class RegisterPerusahaanController {
 	
 	@Inject
 	private IRegisterPerusahaanService registerPerusahaanService;
 	
 	@Inject
-	private IOtoritasService authorityService;
+	private IOtoritasService otoritasService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -49,7 +48,7 @@ public class PerusahaanController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {		
-		Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Otoritas kreator = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
 		
 		return new RegisterPerusahaanDTO(
 				registerPerusahaanService.save(
@@ -77,6 +76,16 @@ public class PerusahaanController {
 		return new RegisterPerusahaanDTO(registerPerusahaanService.update(registerPerusahaanDTO.toRegisterPerusahaan()));
 	}
 	
+	@Path("id/{idLama}")
+	@PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterPerusahaanDTO updateId(@PathParam("idLama") String idLama, RegisterPerusahaanDTO d) throws IOException {
+		return new RegisterPerusahaanDTO(registerPerusahaanService.updateId(idLama, d.toRegisterPerusahaan()));
+	}
+	
 	@Path("{id}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
@@ -85,39 +94,7 @@ public class PerusahaanController {
 	public RegisterPerusahaanDTO delete(RegisterPerusahaanDTO d) throws IOException {
 		return new RegisterPerusahaanDTO(registerPerusahaanService.delete(d.toRegisterPerusahaan()));
 	}
-	
-	@Path("kepemilikan")
-	@DELETE
-	@Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO deleteLinkKepemilikanPerusahaan(OtoritasPerusahaanDTO d,
-			@Context SecurityContext securityContext) throws IOException {
-//		Autority pemilik = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		
-		return new RegisterPerusahaanDTO(registerPerusahaanService.deleteLinkKepemilikanPerusahaan(d.toOtoritasPerusahaan()));
-	}
-	
-	@Path("kepemilikan")
-	@POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO addLinkKepemilikanPerusahaan(OtoritasPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {				
-		return new RegisterPerusahaanDTO(registerPerusahaanService.addLinkKepemilanPerusahaan(d.toOtoritasPerusahaan()));
-	}
-	
-//	@Path("is_eksis")
-//	@GET
-//    @Produces({MediaType.TEXT_PLAIN})
-//	@RequiredAuthorization
-//	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-//	public Boolean cekPerusahaan(@QueryParam("id") String id) {
-//		return registerPerusahaanService.cekById(id);
-//	}
-	
 	@GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})

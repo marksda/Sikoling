@@ -47,15 +47,10 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 		return registerPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
 
-	@Override
-	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(OtoritasPerusahaan autorityPerusahaan)
-			throws IOException {
-		return registerPerusahaanRepository.deleteLinkKepemilikanPerusahaan(autorityPerusahaan);
-	}
 
 	@Override
-	public RegisterPerusahaan addLinkKepemilanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
-		return registerPerusahaanRepository.addLinkKepemilanPerusahaan(autorityPerusahaan);
+	public RegisterPerusahaan updateId(String idLama, RegisterPerusahaan t) throws IOException {
+		return registerPerusahaanRepository.updateId(idLama, t);
 	}
-	
+
 }

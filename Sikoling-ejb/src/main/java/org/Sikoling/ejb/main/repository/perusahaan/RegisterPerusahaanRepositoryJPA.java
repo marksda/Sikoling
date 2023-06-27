@@ -6,16 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
-import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
-import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanDataId;
-
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -55,6 +51,21 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	}
 	
 	@Override
+	public RegisterPerusahaan updateId(String idLama, RegisterPerusahaan t) throws IOException {
+		RegisterPerusahaanData dataLama = entityManager.find(RegisterPerusahaanData.class, idLama);
+		if(dataLama != null) {
+			RegisterPerusahaanData registerPerusahaanData = dataConverter.convertRegisterPerusahaanToRegisterPerusahaanData(t);
+			entityManager.remove(dataLama);	
+			RegisterPerusahaanData dataTermerge = entityManager.merge(registerPerusahaanData);
+			entityManager.flush();
+			return dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(dataTermerge);
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+	
+	@Override
 	public RegisterPerusahaan delete(RegisterPerusahaan t) throws IOException {
 		RegisterPerusahaanData registerPerusahaanData = entityManager.find(RegisterPerusahaanData.class, t.getId());
 		if(registerPerusahaanData != null) {
@@ -66,61 +77,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			throw new IOException("Data tidak ditemukan");
 		}
 	}
-	
-//	@Override
-//	public DeleteResponse delete(String id) {
-//		RegisterPerusahaanData registerPerusahaanData = entityManager.find(RegisterPerusahaanData.class, id);
-//		entityManager.remove(registerPerusahaanData);			
-//		entityManager.flush();
-//		return new DeleteResponse(true, id);
-//	}
-	
-	@Override
-	public RegisterPerusahaan addLinkKepemilanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
-		OtoritasPerusahaanData autorityPerusahaanData = dataConverter.convertAutorityPerusahaanToAutorityPerusahaanData(autorityPerusahaan);
-		try {
-			OtoritasPerusahaanData newAddData = entityManager.merge(autorityPerusahaanData);
-			entityManager.flush();
-			RegisterPerusahaanData registerPerusahaanDataTerupdate = entityManager.find(RegisterPerusahaanData.class, newAddData.getPerusahaan().getId()); 
-			return dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanDataTerupdate);
-		} catch (EntityExistsException e) {
-			throw new IOException("data sudah ada");
-		}
-		
-	}
-	
-	
-	@Override
-	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
-		OtoritasPerusahaanDataId id = new OtoritasPerusahaanDataId();
-		id.setAutority(autorityPerusahaan.getOtoritas().getId());
-		id.setPerusahaan(autorityPerusahaan.getRegisterPerusahaan().getId());
-		
-		OtoritasPerusahaanData autorityPerusahaanData = entityManager.find(OtoritasPerusahaanData.class, id);
-		
-		if(autorityPerusahaanData != null) {
-			entityManager.remove(autorityPerusahaanData);
-			entityManager.flush();
-			RegisterPerusahaanData registerPerusahaanDataTerupdate = entityManager.find(RegisterPerusahaanData.class, autorityPerusahaanData.getPerusahaan().getId()); 
-			return dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(registerPerusahaanDataTerupdate);
-		}
-		else {
-			throw new IOException("Data tidak ditemukan");
-		}
-	}
-	
-	
-//	@Override
-//	public Boolean cekById(String id) {
-//		RegisterPerusahaanData perusahaanData = entityManager.find(RegisterPerusahaanData.class, id);
-//		if(perusahaanData == null) {
-//			return false;
-//		}
-//		else {
-//			return true;
-//		}		 
-//	}
-	
 	
 	@Override
 	public List<RegisterPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {
@@ -288,6 +244,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 		return entityManager.createQuery(cq).getSingleResult();
 		
 	}
+
 	
 }
 

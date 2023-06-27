@@ -81,7 +81,7 @@ public class OtoritasRepositoryJPA implements IAutorityRepository {
 	@Override
 	public Otoritas getByUserName(String userName) {
 		OtoritasData data = Optional.ofNullable(
-				entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
+				entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
 				.setParameter("userName", userName).getSingleResult()
 				)
 				.orElse(null);

@@ -16,8 +16,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_autority_perusahaan")
 @NamedQueries({
-	@NamedQuery(name="AutorityPerusahaanData.findAll", query="SELECT d FROM AutorityPerusahaanData d"),
-	@NamedQuery(name="AutorityPerusahaanData.findByPemilik", query = "SELECT d FROM AutorityPerusahaanData d WHERE d.autority.id = :idAutorisasi")
+	@NamedQuery(name="OtoritasPerusahaanData.findAll", query="SELECT d FROM OtoritasPerusahaanData d"),
+	@NamedQuery(name="OtoritasPerusahaanData.findByPemilik", query = "SELECT d FROM OtoritasPerusahaanData d WHERE d.autority.id = :idAutorisasi")
 })
 @IdClass(OtoritasPerusahaanDataId.class)
 public class OtoritasPerusahaanData implements Serializable {

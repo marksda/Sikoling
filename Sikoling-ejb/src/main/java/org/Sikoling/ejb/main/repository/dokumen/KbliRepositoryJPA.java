@@ -19,11 +19,11 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class Kbli2020RepositoryJPA implements IKbliRepository {	
+public class KbliRepositoryJPA implements IKbliRepository {	
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;
 
-	public Kbli2020RepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+	public KbliRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}

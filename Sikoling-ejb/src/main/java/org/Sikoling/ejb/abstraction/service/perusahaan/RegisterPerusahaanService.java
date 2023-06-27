@@ -3,7 +3,6 @@ package org.Sikoling.ejb.abstraction.service.perusahaan;
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
@@ -28,18 +27,13 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	}
 
 	@Override
+	public RegisterPerusahaan updateId(String idLama, RegisterPerusahaan t) throws IOException {
+		return registerPerusahaanRepository.updateId(idLama, t);
+	}
+	
+	@Override
 	public RegisterPerusahaan delete(RegisterPerusahaan t) throws IOException {
 		return registerPerusahaanRepository.delete(t);
-	}
-
-	@Override
-	public RegisterPerusahaan deleteLinkKepemilikanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
-		return registerPerusahaanRepository.deleteLinkKepemilikanPerusahaan(autorityPerusahaan);
-	}
-
-	@Override
-	public RegisterPerusahaan addLinkKepemilanPerusahaan(OtoritasPerusahaan autorityPerusahaan) throws IOException {
-		return registerPerusahaanRepository.addLinkKepemilanPerusahaan(autorityPerusahaan);
 	}
 
 	@Override
@@ -51,5 +45,6 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		return registerPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
+
 	
 }

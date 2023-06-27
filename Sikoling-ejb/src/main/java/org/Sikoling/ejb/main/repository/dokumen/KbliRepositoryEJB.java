@@ -16,10 +16,10 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class Kbli2020RepositoryEJB implements IKbliRepository {
+public class KbliRepositoryEJB implements IKbliRepository {
 	
 	@Inject
-	private Kbli2020RepositoryJPA getJumlahData;
+	private KbliRepositoryJPA getJumlahData;
 
 	@Override
 	public Kbli save(Kbli t) throws IOException {

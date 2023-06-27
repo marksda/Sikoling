@@ -22,9 +22,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_autorisasi")
 @NamedQueries({
-	@NamedQuery(name="AutorisasiData.findAll", query="SELECT u FROM AutorisasiData u"),
-	@NamedQuery(name="AutorisasiData.findByNama", query="SELECT u FROM AutorisasiData u WHERE u.person.nama like :nama"),
-	@NamedQuery(name="AutorisasiData.findByUserName", query="SELECT u FROM AutorisasiData u WHERE u.userName = :userName")	
+	@NamedQuery(name="OtoritasData.findAll", query="SELECT u FROM OtoritasData u"),
+	@NamedQuery(name="OtoritasData.findByNama", query="SELECT u FROM OtoritasData u WHERE u.person.nama like :nama"),
+	@NamedQuery(name="OtoritasData.findByUserName", query="SELECT u FROM OtoritasData u WHERE u.userName = :userName")	
 })
 public class OtoritasData implements Serializable {
 

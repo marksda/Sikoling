@@ -262,7 +262,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	        
 	        Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
 	        
-	        OtoritasData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
+	        OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
 					.setParameter("userName", userAuthenticator.getUserName())
 					.getSingleResult();
 	        
@@ -305,7 +305,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 		Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() { });
 		Map<String, Object> claims = tokenValidationService.validate(map.get("access_token"));
 		
-		OtoritasData autorisasiData = entityManager.createNamedQuery("AutorisasiData.findByUserName", OtoritasData.class)
+		OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
 				.setParameter("userName", getClaim(claims, "email"))
 				.getSingleResult();
         
@@ -632,25 +632,20 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
         
 		return userRepresentation;
 	}
-
 	
 	@Override
 	public User delete(User t) throws IOException {
 		return null;
 	}
-
 	
 	@Override
 	public List<User> getDaftarData(QueryParamFilters queryParamFilters) {
 		return null;
 	}
-
 	
 	@Override
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		return null;
 	}
-
-	
 		
 }
