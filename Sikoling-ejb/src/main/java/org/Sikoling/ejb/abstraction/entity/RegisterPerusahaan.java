@@ -13,7 +13,6 @@ public class RegisterPerusahaan implements Serializable {
 	private final Otoritas verifikator;
 	private final Perusahaan perusahaan;
 	private final Boolean statusVerifikasi;	
-//	private final List<Autority> pengakses;
 	
 	public RegisterPerusahaan(String id, LocalDate tanggalRegistrasi, Otoritas kreator, Otoritas verifikator,
 			Perusahaan perusahaan, Boolean statusVerifikasi) {
@@ -53,11 +52,6 @@ public class RegisterPerusahaan implements Serializable {
 	public Boolean getStatusVerifikasi() {
 		return statusVerifikasi;
 	}
-	
-//	public List<Autority> getPengakses() {
-//		return pengakses;
-//	}
-	
 
 	@Override
 	public int hashCode() {

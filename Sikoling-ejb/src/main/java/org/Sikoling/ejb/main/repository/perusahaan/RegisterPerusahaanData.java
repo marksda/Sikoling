@@ -2,28 +2,18 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-
 import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
-import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
-import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 
 @Entity
 @Table(name="master.tbl_perusahaan")
-@NamedQueries({
-	@NamedQuery(name="RegisterPerusahaanData.findAll", query="SELECT p FROM RegisterPerusahaanData p"),
-	@NamedQuery(name="RegisterPerusahaanData.findByQueryNama", query="SELECT p FROM RegisterPerusahaanData p WHERE p.nama LIKE :nama"),
-	@NamedQuery(name="RegisterPerusahaanData.findByIdKreator", query="SELECT p FROM RegisterPerusahaanData p WHERE p.kreator.id = :idKreator"),
-	@NamedQuery(name="RegisterPerusahaanData.findByNpwp", query="SELECT p FROM RegisterPerusahaanData p WHERE p.npwp = :npwp")
-})
 public class RegisterPerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
 
@@ -66,11 +56,11 @@ public class RegisterPerusahaanData implements Serializable {
 	
 	private String npwp;
 	
-	@OneToMany(mappedBy="perusahaanData", fetch = FetchType.LAZY)
-	private List<RegisterDokumenData> daftarRegisterDokumenData;	
+//	@OneToMany(mappedBy="perusahaanData", fetch = FetchType.LAZY)
+//	private List<RegisterDokumenData> daftarRegisterDokumenData;	
 
-	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
-	private List<OtoritasPerusahaanData> daftarAutorityPerusahaanData;
+//	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
+//	private List<OtoritasPerusahaanData> daftarAutorityPerusahaanData;
 	
 	public RegisterPerusahaanData() {
 	}
@@ -171,21 +161,21 @@ public class RegisterPerusahaanData implements Serializable {
 		this.npwp = npwp;
 	}
 
-	public List<RegisterDokumenData> getDaftarRegisterDokumenData() {
-		return daftarRegisterDokumenData;
-	}
-
-	public void setDaftarRegisterDokumenData(List<RegisterDokumenData> daftarRegisterDokumenData) {
-		this.daftarRegisterDokumenData = daftarRegisterDokumenData;
-	}
-
-	public List<OtoritasPerusahaanData> getDaftarAutorityPerusahaanData() {
-		return daftarAutorityPerusahaanData;
-	}
-
-	public void setDaftarAutorityPerusahaanData(List<OtoritasPerusahaanData> daftarAutorityPerusahaanData) {
-		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
-	}
+//	public List<RegisterDokumenData> getDaftarRegisterDokumenData() {
+//		return daftarRegisterDokumenData;
+//	}
+//
+//	public void setDaftarRegisterDokumenData(List<RegisterDokumenData> daftarRegisterDokumenData) {
+//		this.daftarRegisterDokumenData = daftarRegisterDokumenData;
+//	}
+//
+//	public List<OtoritasPerusahaanData> getDaftarAutorityPerusahaanData() {
+//		return daftarAutorityPerusahaanData;
+//	}
+//
+//	public void setDaftarAutorityPerusahaanData(List<OtoritasPerusahaanData> daftarAutorityPerusahaanData) {
+//		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 public class Perusahaan implements Serializable {
@@ -14,10 +13,9 @@ public class Perusahaan implements Serializable {
 	private final PelakuUsaha pelakuUsaha;
 	private final Alamat alamat;
 	private final Kontak kontak;
-	private final List<RegisterDokumen> daftarRegisterDokumen;
 	
 	public Perusahaan(String id, String nama, ModelPerizinan modelPerizinan, SkalaUsaha skalaUsaha,
-			PelakuUsaha pelakuUsaha, Alamat alamat, Kontak kontak, List<RegisterDokumen> daftarRegisterDokumen) {
+			PelakuUsaha pelakuUsaha, Alamat alamat, Kontak kontak) {
 		this.id = id;
 		this.nama = nama;
 		this.modelPerizinan = modelPerizinan;
@@ -25,7 +23,6 @@ public class Perusahaan implements Serializable {
 		this.pelakuUsaha = pelakuUsaha;
 		this.alamat = alamat;
 		this.kontak = kontak;
-		this.daftarRegisterDokumen = daftarRegisterDokumen;
 	}
 
 	public ModelPerizinan getModelPerizinan() {
@@ -60,10 +57,6 @@ public class Perusahaan implements Serializable {
 		return pelakuUsaha;
 	}
 	
-	public List<RegisterDokumen> getDaftarRegisterDokumen() {
-		return daftarRegisterDokumen;
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 91;

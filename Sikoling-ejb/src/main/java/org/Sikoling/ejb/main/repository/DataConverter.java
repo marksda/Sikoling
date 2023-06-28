@@ -527,7 +527,7 @@ public class DataConverter {
 			registerDokumen = new RegisterDokumen(
 					d.getId(), 
 					dokumen, 
-					convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
+					convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData()), 
 					d.getLokasiFile(), 
 					convertStatusDokumenDataToStatusDokumen(d.getStatusDokumen()),
 					d.getTanggalRegistrasi(), 
@@ -573,9 +573,7 @@ public class DataConverter {
 	public RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {
 		RegisterPerusahaan registerPerusahaan = null; 	
 		
-		if( d != null) {
-//			List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumenWithOutPerusahaan(d.getDaftarRegisterDokumenData());
-			
+		if( d != null) {			
 			Perusahaan perusahaan = new Perusahaan(
 					d.getNpwp(), 
 					d.getNama(), 
@@ -583,8 +581,7 @@ public class DataConverter {
 					convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData()), 
 					convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsaha()), 
 					convertAlamatDataToAlamat(d.getAlamatPerusahaanData()), 
-					convertKontakDataToKontak(d.getKontakPerusahaanData()), null
-//					daftarRegisterDokumen
+					convertKontakDataToKontak(d.getKontakPerusahaanData())
 					);
 			
 			registerPerusahaan = new RegisterPerusahaan(
@@ -594,46 +591,12 @@ public class DataConverter {
 					convertAutorisasiDataToAutority(d.getVerifikator()), 
 					perusahaan,
 					d.getStatusVerifikasi()
-//					d.getDaftarAutorityPerusahaanData().stream()
-//						.map(i -> convertAutorisasiDataToAutority(i.getAutority()))
-//						.collect(Collectors.toList())
 					);
 		}
 		
 		return registerPerusahaan;
 	}
-	
-	public RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(RegisterPerusahaanData d) {
-		RegisterPerusahaan registerPerusahaan = null; 		
-		
-		if( d != null) {
-			Perusahaan perusahaan = new Perusahaan(
-					d.getNpwp(), 
-					d.getNama(), 
-					convertModelPerizinanDataToModelPerizinan(d.getModelPerizinanData()), 
-					convertSkalaUsahaDataToSkalaUsaha(d.getSkalaUsahaData()), 
-					convertPelakuUsahaDataToPelakuUsaha(d.getPelakuUsaha()), 
-					convertAlamatDataToAlamat(d.getAlamatPerusahaanData()), 
-					convertKontakDataToKontak(d.getKontakPerusahaanData()), 
-					null
-					);
-			
-			registerPerusahaan = new RegisterPerusahaan(
-					d.getId(), 
-					d.getTanggalRegistrasi(), 
-					convertAutorisasiDataToAutority(d.getKreator()), 
-					convertAutorisasiDataToAutority(d.getVerifikator()), 
-					perusahaan,
-					d.getStatusVerifikasi()
-//					d.getDaftarAutorityPerusahaanData().stream()
-//					.map(i -> convertAutorisasiDataToAutority(i.getAutority()))
-//					.collect(Collectors.toList())
-					);
-		}
-		
-		return registerPerusahaan;
-	}
-	
+
 	public SkalaUsaha convertSkalaUsahaDataToSkalaUsaha(SkalaUsahaData d) {
 		SkalaUsaha skalaUsaha = null;
 		
@@ -737,12 +700,12 @@ public class DataConverter {
 				if(d.getPermohonanSuratArahanData() != null) {
 					registerPermohonan = new RegisterPermohonanArahan(
 							d.getId(), 
-							convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
+							d.getKategoriPermohonanData() != null ? convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()):null, 
 							d.getTanggalRegistrasi(), 
-							convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
-							convertAutorisasiDataToAutority(d.getAutorisasiData()), 
-							convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d.getStatusPengurusPermohonanData()),
-							convertPegawaiDataToPegawai(d.getPenanggungJawab()),
+							d.getPerusahaanData() != null ? convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData()):null, 
+							d.getAutorisasiData() != null ? convertAutorisasiDataToAutority(d.getAutorisasiData()):null, 
+							d.getStatusPengurusPermohonanData() != null ? convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d.getStatusPengurusPermohonanData()):null,
+							d.getPenanggungJawab() != null ? convertPegawaiDataToPegawai(d.getPenanggungJawab()):null,
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPengirimData()),
 							convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(d.getPosisiTahapPemberkasanPenerimaData()),
 							convertStatusFlowLogDataToStatusFlowLog(d.getStatusFlowData()),
@@ -757,7 +720,7 @@ public class DataConverter {
 							d.getId(), 
 							convertKategoriPermohonanDataToKategoriPermohonan(d.getKategoriPermohonanData()), 
 							d.getTanggalRegistrasi(), 
-							convertRegisterPerusahaanDataToRegisterPerusahaanWithOutRegisterDokumen(d.getPerusahaanData()), 
+							convertRegisterPerusahaanDataToRegisterPerusahaan(d.getPerusahaanData()), 
 							convertAutorisasiDataToAutority(d.getAutorisasiData()), 
 							convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(d.getStatusPengurusPermohonanData()), 
 							convertPegawaiDataToPegawai(d.getPenanggungJawab()), 
@@ -851,7 +814,6 @@ public class DataConverter {
 					);
 			
 			RegisterPerusahaanData registerPerusahaanData = d.getPerusahaan();
-			List<RegisterDokumen> daftarRegisterDokumen = convertDaftarRegisterDokumenDataToDaftarRegisterDokumenWithOutPerusahaan(registerPerusahaanData.getDaftarRegisterDokumenData());
 			Perusahaan perusahaan = new Perusahaan(
 					registerPerusahaanData.getNpwp(), 
 					registerPerusahaanData.getNama(), 
@@ -859,8 +821,7 @@ public class DataConverter {
 					convertSkalaUsahaDataToSkalaUsaha(registerPerusahaanData.getSkalaUsahaData()), 
 					convertPelakuUsahaDataToPelakuUsaha(registerPerusahaanData.getPelakuUsaha()), 
 					convertAlamatDataToAlamat(registerPerusahaanData.getAlamatPerusahaanData()), 
-					convertKontakDataToKontak(registerPerusahaanData.getKontakPerusahaanData()), 
-					daftarRegisterDokumen
+					convertKontakDataToKontak(registerPerusahaanData.getKontakPerusahaanData())
 					);
 			RegisterPerusahaan registerPerusahaan = new RegisterPerusahaan(
 					registerPerusahaanData.getId(), 
@@ -869,9 +830,6 @@ public class DataConverter {
 					convertAutorisasiDataToAutority(registerPerusahaanData.getVerifikator()), 
 					perusahaan,
 					registerPerusahaanData.getStatusVerifikasi()
-//					registerPerusahaanData.getDaftarAutorityPerusahaanData().stream()
-//						.map(i -> convertAutorisasiDataToAutority(i.getAutority()))
-//						.collect(Collectors.toList())
 					);
 			
 			autorityPerusahaan = new OtoritasPerusahaan(autority, registerPerusahaan);

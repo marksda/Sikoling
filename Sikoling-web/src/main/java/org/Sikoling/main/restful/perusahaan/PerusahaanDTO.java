@@ -1,14 +1,10 @@
 package org.Sikoling.main.restful.perusahaan;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import org.Sikoling.ejb.abstraction.entity.Perusahaan;
 import org.Sikoling.main.restful.alamat.AlamatDTO;
 import org.Sikoling.main.restful.alamat.KontakDTO;
-import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.modelperizinan.ModelPerizinanDTO;
 import org.Sikoling.main.restful.pelakuusaha.PelakuUsahaDTO;
 import org.Sikoling.main.restful.skalausaha.SkalaUsahaDTO;
@@ -23,7 +19,6 @@ public class PerusahaanDTO implements Serializable {
 	private PelakuUsahaDTO pelakuUsaha;
 	private AlamatDTO alamat;
 	private KontakDTO kontak;
-	private List<RegisterDokumenDTO> daftarRegisterDokumen;
 	
 	public PerusahaanDTO() {		
 	}
@@ -37,13 +32,6 @@ public class PerusahaanDTO implements Serializable {
 			this.pelakuUsaha = t.getPelakuUsaha() != null ? new PelakuUsahaDTO(t.getPelakuUsaha()) : null;
 			this.alamat = t.getAlamat() != null ? new AlamatDTO(t.getAlamat()) : null;
 			this.kontak = t.getKontak() != null ? new KontakDTO(t.getKontak()) : null;
-			this.daftarRegisterDokumen = t.getDaftarRegisterDokumen() != null? 
-									t.getDaftarRegisterDokumen().size() > 0 ?
-									t.getDaftarRegisterDokumen()
-									.stream()
-									.map(item -> new RegisterDokumenDTO(item))
-									.collect(Collectors.toList()) : null
-									: null;
 		}
 	}	
 	
@@ -103,14 +91,6 @@ public class PerusahaanDTO implements Serializable {
 		this.kontak = kontak;
 	}
 
-	public List<RegisterDokumenDTO> getDaftarRegisterDokumen() {
-		return daftarRegisterDokumen;
-	}
-
-	public void setDaftarRegisterDokumen(List<RegisterDokumenDTO> daftarRegisterDokumen) {
-		this.daftarRegisterDokumen = daftarRegisterDokumen;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -163,12 +143,7 @@ public class PerusahaanDTO implements Serializable {
 				skalaUsaha != null ? skalaUsaha.toSkalaUsaha() : null,
 						pelakuUsaha != null ? pelakuUsaha.toPelakuUsaha() : null,
 				alamat != null ? alamat.toAlamat() : null,
-				kontak != null ? kontak.toKontak() : null,
-				daftarRegisterDokumen != null ? 
-						daftarRegisterDokumen.stream()
-						.map(item -> item.toRegisterDokumen())
-						.collect(Collectors.toList())
-						: null
+				kontak != null ? kontak.toKontak() : null
 				);
 	}	
 }
