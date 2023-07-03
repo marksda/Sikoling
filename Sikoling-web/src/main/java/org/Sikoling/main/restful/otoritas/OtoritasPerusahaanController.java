@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasPerusahaanService;
+import org.Sikoling.main.restful.perusahaan.RegisterPerusahaanDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -64,12 +65,21 @@ public class OtoritasPerusahaanController {
 		return new OtoritasPerusahaanDTO(autorityPerusahaanService.updateId(idLamaAutority, idLamaRegisterPerusahaan, d.toOtoritasPerusahaan()));
 	}
 	
+	@Path("{idOtoritas}/{idRegisterPerusahaan}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public OtoritasPerusahaanDTO delete(OtoritasPerusahaanDTO d) throws IOException {
-		return new OtoritasPerusahaanDTO(autorityPerusahaanService.delete(d.toOtoritasPerusahaan()));
+	public OtoritasPerusahaanDTO delete(@PathParam("idOtoritas") String idOtoritas,	@PathParam("idRegisterPerusahaan") String idRegisterPerusahaan) throws IOException {
+		OtoritasPerusahaanDTO dt = new OtoritasPerusahaanDTO();
+		OtoritasDTO dtOtoritas = new OtoritasDTO();
+		dtOtoritas.setId(idOtoritas);
+		RegisterPerusahaanDTO dtRegPerusahaan = new RegisterPerusahaanDTO();
+		dtRegPerusahaan.setId(idRegisterPerusahaan);
+		dt.setOtoritas(dtOtoritas);
+		dt.setRegisterPerusahaan(dtRegPerusahaan);
+		
+		return new OtoritasPerusahaanDTO(autorityPerusahaanService.delete(dt.toOtoritasPerusahaan()));
 	}
 
 	@GET

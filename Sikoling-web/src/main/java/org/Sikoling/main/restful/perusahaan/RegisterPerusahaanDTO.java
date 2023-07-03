@@ -28,10 +28,6 @@ public class RegisterPerusahaanDTO implements Serializable {
 			this.verifikator = t.getVerifikator() != null ? new OtoritasDTO(t.getVerifikator()) : null;
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
 			this.statusVerifikasi = t.getStatusVerifikasi();
-//			this.pengakses = t.getPengakses() != null ?
-//					t.getPengakses().stream()
-//					.map(i -> new AuthorityDTO(i))
-//					.collect(Collectors.toList()):null;
 					
 		}
 	}
@@ -142,14 +138,10 @@ public class RegisterPerusahaanDTO implements Serializable {
 		return new RegisterPerusahaan(
 				id,
 				tanggalRegistrasi, 
-				kreator != null ? kreator.toOtoritas() : null, 
-				verifikator != null ? verifikator.toOtoritas() : null, 
-				perusahaan.toPerusahaan(),
+				kreator != null ? kreator.toOtoritas():null, 
+				verifikator != null ? verifikator.toOtoritas():null, 
+				perusahaan != null ? perusahaan.toPerusahaan():null,
 				statusVerifikasi
-//				pengakses != null?
-//						pengakses.stream()
-//						.map(i -> i.toAuthority())
-//						.collect(Collectors.toList()):null
 				);
 	}
 
