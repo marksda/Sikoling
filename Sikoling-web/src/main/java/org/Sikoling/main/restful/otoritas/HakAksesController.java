@@ -63,13 +63,16 @@ public class HakAksesController {
 		return new HakAksesDTO(hakAksesService.updateId(idLama, d.toHakAkses()));
 	}
 	
+	@Path("{idHakAkses}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public HakAksesDTO delete(HakAksesDTO d) throws IOException {
-		return new HakAksesDTO(hakAksesService.delete(d.toHakAkses()));
+	@RequiredRole({Role.ADMIN})
+	public HakAksesDTO delete(@PathParam("idHakAkses") String idHakAkses) throws IOException {
+		HakAksesDTO dt = new HakAksesDTO();
+		dt.setId(idHakAkses);
+		return new HakAksesDTO(hakAksesService.delete(dt.toHakAkses()));
 	}
 
 	@GET

@@ -64,13 +64,16 @@ public class PropinsiController {
 		return new PropinsiDTO(propinsiService.updateId(idLama, d.toPropinsi()));
 	}
 	
+	@Path("{idPropinsi}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PropinsiDTO delete(PropinsiDTO d) throws IOException {
-		return new PropinsiDTO(propinsiService.delete(d.toPropinsi()));
+	public PropinsiDTO delete(@PathParam("idPropinsi") String idPropinsi ) throws IOException {
+		PropinsiDTO dt = new PropinsiDTO();
+		dt.setId(idPropinsi);		
+		return new PropinsiDTO(propinsiService.delete(dt.toPropinsi()));
 	}
 	
 	@GET

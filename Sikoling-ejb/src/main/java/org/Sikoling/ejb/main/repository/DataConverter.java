@@ -1090,8 +1090,9 @@ public class DataConverter {
 		HakAksesData hakAksesData =  null;
 		
 		if(t != null) {
+			String id = t.getId();
 			hakAksesData = new HakAksesData();
-			hakAksesData.setId(t.getId());
+			hakAksesData.setId(id != null ? id:getGenerateIdHakAksesData());
 			hakAksesData.setNama(t.getNama());
 			hakAksesData.setKeterangan(t.getKeterangan());
 		}
@@ -1123,7 +1124,7 @@ public class DataConverter {
 			String id = t.getId();
 			Perusahaan perusahaan = t.getPerusahaan();
 			registerPerusahaanData = new RegisterPerusahaanData();
-			registerPerusahaanData.setId(id != null ? id : getGenerateIdRegisterPerusahaan());
+			registerPerusahaanData.setId(id != null ? id : getGenerateIdRegisterPerusahaanData());
 			if(perusahaan != null) {
 				registerPerusahaanData.setNama(perusahaan.getNama());
 				registerPerusahaanData.setAlamatPerusahaanData(
@@ -1603,7 +1604,7 @@ public class DataConverter {
 			RegisterPerusahaan registerPerusahaan = t.getRegisterPerusahaan();
 			RegisterPerusahaanData registerPerusahaanData = new RegisterPerusahaanData();
 			String id = registerPerusahaan.getId();
-			registerPerusahaanData.setId(id != null ? id : getGenerateIdRegisterPerusahaan());
+			registerPerusahaanData.setId(id != null ? id : getGenerateIdRegisterPerusahaanData());
 			registerPerusahaanData.setNama(registerPerusahaan.getPerusahaan().getNama());
 			registerPerusahaanData.setAlamatPerusahaanData(convertAlamatToAlamatData(registerPerusahaan.getPerusahaan().getAlamat()));
 			registerPerusahaanData.setModelPerizinanData(convertModelPerizinanToModelPerizinanData(registerPerusahaan.getPerusahaan().getModelPerizinan()));
@@ -1694,7 +1695,7 @@ public class DataConverter {
 	}
 	
 	/*----------id generator function---------------*/
-	private String getGenerateIdRegisterPerusahaan() {
+	private String getGenerateIdRegisterPerusahaanData() {
 		int tahun = LocalDate.now().getYear();
 		String hasil;
 		
@@ -1808,7 +1809,22 @@ public class DataConverter {
 		}		
 	}
 	
-	private String LPad(String str, Integer length, char car) {
+	private String getGenerateIdHakAksesData() {
+		String hasil;		
+		Query q = entityManager.createQuery("SELECT MAX(a.id) "
+				+ "FROM HakAksesData a ");
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 2, '0');
+			return hasil;
+		} catch (Exception e) {			
+			hasil = "01";			
+			return hasil;
+		}		
+	}
+	
+ 	private String LPad(String str, Integer length, char car) {
 		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
 	}
 	

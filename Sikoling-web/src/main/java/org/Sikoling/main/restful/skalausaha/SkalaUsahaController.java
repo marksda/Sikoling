@@ -64,13 +64,16 @@ public class SkalaUsahaController {
 		return new SkalaUsahaDTO(skalaUsahaService.updateId(idLama, d.toSkalaUsaha()));
 	}
 	
+	@Path("{idSkalaUsaha}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public SkalaUsahaDTO delete(SkalaUsahaDTO d) throws IOException {
-		return new SkalaUsahaDTO(skalaUsahaService.delete(d.toSkalaUsaha()));
+	public SkalaUsahaDTO delete(@PathParam("idSkalaUsaha") String idSkalaUsaha) throws IOException {
+		SkalaUsahaDTO dt = new SkalaUsahaDTO();
+		dt.setId(idSkalaUsaha);
+		return new SkalaUsahaDTO(skalaUsahaService.delete(dt.toSkalaUsaha()));
 	}
 	
 	@GET
