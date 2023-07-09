@@ -70,7 +70,7 @@ public class PropinsiController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PropinsiDTO delete(@PathParam("idPropinsi") String idPropinsi ) throws IOException {
+	public PropinsiDTO delete(@PathParam("idPropinsi") String idPropinsi) throws IOException {
 		PropinsiDTO dt = new PropinsiDTO();
 		dt.setId(idPropinsi);		
 		return new PropinsiDTO(propinsiService.delete(dt.toPropinsi()));

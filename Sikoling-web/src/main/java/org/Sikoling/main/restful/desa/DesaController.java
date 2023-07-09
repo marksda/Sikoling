@@ -63,13 +63,16 @@ public class DesaController {
 		return new DesaDTO(desaService.updateId(idLama, d.toDesa()));
 	}
 	
+	@Path("{idDesa}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DesaDTO delete(DesaDTO d) throws IOException {
-		return new DesaDTO(desaService.delete(d.toDesa()));
+	public DesaDTO delete(@PathParam("idDesa") String idDesa) throws IOException {
+		DesaDTO dt = new DesaDTO();
+		dt.setId(idDesa);
+		return new DesaDTO(desaService.delete(dt.toDesa()));
 	}
 	
 	@GET

@@ -64,13 +64,16 @@ public class KabupatenController {
 		return new KabupatenDTO(kabupatenService.updateId(idLama, d.toKabupaten()));
 	}
 	
+	@Path("{idKabupaten}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public KabupatenDTO delete(KabupatenDTO d) throws IOException {
-		return new KabupatenDTO(kabupatenService.delete(d.toKabupaten()));
+	public KabupatenDTO delete(@PathParam("idKabupaten") String idKabupaten) throws IOException {
+		KabupatenDTO dt = new KabupatenDTO();
+		dt.setId(idKabupaten);
+		return new KabupatenDTO(kabupatenService.delete(dt.toKabupaten()));
 	}
 	
 	@GET
