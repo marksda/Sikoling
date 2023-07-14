@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.person;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,8 @@ import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -36,11 +39,15 @@ public class PersonController {
 	private IPersonService personService;
 	
 	@POST
-    @Consumes({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PersonDTO save(PersonDTO personDTO) throws IOException {
+	public PersonDTO save(@FormDataParam("personData") String personData, 
+			@FormDataParam("imageKtp") File imageKtp) throws IOException {
+		Jsonb jsonb = JsonbBuilder.create();
+		PersonDTO personDTO = jsonb.fromJson(personData, PersonDTO.class);
+		
 		return new PersonDTO(personService.save(personDTO.toPerson()));
 	}
 	
