@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.UUID;
-
 import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 
 public class DiskStorageService implements IStorageService {
@@ -19,41 +17,35 @@ public class DiskStorageService implements IStorageService {
 	}
 
 	@Override
-	public String save(String fileName, InputStream inputStream, String subPath) throws IOException {
-		String fileKey = UUID.randomUUID().toString() + "-" + fileName;
-		Path pathLocation = Paths.get(
-					this.rootPath
-					.concat(File.separator)
-					.concat(subPath)
-				);		
-		if (!Files.exists(pathLocation)) {
-			Files.createDirectories(pathLocation);
-			pathLocation = Paths.get(
-					this.rootPath
-					.concat(File.separator)
-					.concat(subPath)
-					.concat(File.separator)
-					.concat(fileKey)
-				);
-			Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
-		}
-		else {
-			pathLocation = Paths.get(
-					this.rootPath
-					.concat(File.separator)
-					.concat(subPath)
-					.concat(File.separator)
-					.concat(fileKey)
-				);
-			Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
-		}
-		
-		
-//		File targetFile = new File("src/main/resources/targetFile.tmp");
-//
-//	    FileUtils.copyInputStreamToFile(initialStream, targetFile);
-		
-		return fileKey;
+	public boolean save(String fileKey, InputStream inputStream, String subPath) throws IOException {
+		try {
+			Path pathLocation = Paths.get(rootPath.concat(subPath));		
+			if (!Files.exists(pathLocation)) {
+				Files.createDirectories(pathLocation);
+				pathLocation = Paths.get(
+						this.rootPath
+						.concat(File.separator)
+						.concat(subPath)
+						.concat(File.separator)
+						.concat(fileKey)
+					);
+				Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
+			}
+			else {
+				pathLocation = Paths.get(
+						this.rootPath
+						.concat(File.separator)
+						.concat(subPath)
+						.concat(File.separator)
+						.concat(fileKey)
+					);
+				Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
+			}
+			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}		
 	}
 
 	@Override

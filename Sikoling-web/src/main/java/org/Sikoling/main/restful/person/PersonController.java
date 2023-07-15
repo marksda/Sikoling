@@ -1,10 +1,15 @@
 package org.Sikoling.main.restful.person;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
@@ -38,6 +43,9 @@ public class PersonController {
 	@Inject
 	private IPersonService personService;
 	
+	@Inject
+	private IStorageService storageService;	
+	
 	@POST
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
@@ -47,8 +55,28 @@ public class PersonController {
 			@FormDataParam("imageKtp") File imageKtp) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
 		PersonDTO personDTO = jsonb.fromJson(personData, PersonDTO.class);
+		String fileKey = UUID.randomUUID().toString() + "-" + personDTO.getNik();		
+		personDTO.setScanKTP("/identitas_personal/".concat(fileKey));		
+		Person person = personService.save(personDTO.toPerson());
 		
-		return new PersonDTO(personService.save(personDTO.toPerson()));
+		if(person != null) {			
+			try {
+				InputStream uploadedInputStream = new FileInputStream(imageKtp);
+				String subPathLocation = File.separator.concat("identitas_personal");
+				boolean statusSaveFile = storageService.save(fileKey, uploadedInputStream, subPathLocation);
+				if(statusSaveFile == true) {
+					return new PersonDTO(person);
+				}
+				else {
+					throw new IOException("gambar tidak bisa disimpan");
+				}
+			} catch (IOException e) {
+				throw new IOException("gambar tidak bisa disimpan");
+			}
+			
+		}
+		
+		throw new IOException("data sudah ada");
 	}
 	
 	@PUT

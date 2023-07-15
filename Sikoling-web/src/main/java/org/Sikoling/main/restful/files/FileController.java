@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -62,14 +63,14 @@ public class FileController {
 			FormDataMultiPart formParams ) throws IOException {
 		Map<String, List<FormDataBodyPart>> fields = formParams.getFields();
 		String fileKey = "";
-		String pathLocation = "";
+		String subPathLocation = "";
 		String urlLocatorFeedBack = "";
 		
 		switch (subPath) {
 			case "personal_identification": 
-				pathLocation = "personal_identification"
-        		.concat(File.separator)
-        		.concat(id);
+				subPathLocation = File.separator.concat("personal_identification")
+				        		.concat(File.separator)
+				        		.concat(id);
 				
 				Iterator<Map.Entry<String, List<FormDataBodyPart>>> itrPersonalIdentification = fields.entrySet().iterator();
 				
@@ -80,7 +81,8 @@ public class FileController {
 						FormDataContentDisposition fileDetail = i.getFormDataContentDisposition();
 						InputStream uploadedInputStream = i.getEntityAs(InputStream.class);
 						try {
-							fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, pathLocation);
+							fileKey = UUID.randomUUID().toString() + "-" + fileDetail.getFileName();
+							storageService.save(fileKey, uploadedInputStream, subPathLocation);
 							urlLocatorFeedBack = "files/personal_identification/"
 									.concat(id)
 									.concat("/")
@@ -92,9 +94,9 @@ public class FileController {
 				}
 				break;
 			default:
-				pathLocation = "other"
-        		.concat(File.separator)
-        		.concat(id);
+				subPathLocation = File.separator.concat("other")
+				        		.concat(File.separator)
+				        		.concat(id);
 				
 				Iterator<Map.Entry<String, List<FormDataBodyPart>>> itrOther = fields.entrySet().iterator();
 				
@@ -105,7 +107,8 @@ public class FileController {
 						FormDataContentDisposition fileDetail = i.getFormDataContentDisposition();
 						InputStream uploadedInputStream = i.getEntityAs(InputStream.class);
 						try {
-							fileKey = storageService.save(fileDetail.getFileName(), uploadedInputStream, pathLocation);
+							fileKey = UUID.randomUUID().toString() + "-" + fileDetail.getFileName();
+							storageService.save(fileKey, uploadedInputStream, subPathLocation);
 							urlLocatorFeedBack = "files/other/"
 									.concat(id)
 									.concat("/")
@@ -116,8 +119,7 @@ public class FileController {
 					}
 				}
 		}			
-			
-//		return new ImageDTO(uriInfo.getBaseUri() + pathLocation.replaceAll("\\", "/"), fileKey);
+
 		return new ImageDTO(uriInfo.getBaseUri() + urlLocatorFeedBack, fileKey);
 	}
 	
@@ -162,10 +164,11 @@ public class FileController {
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 		
-		String pathLocation = "dok"
-        		.concat(File.separator)
-        		.concat(npwp);
-		String fileKey = storageService.save(idRegDokumen.concat("-").concat(fileDetail.getFileName()), uploadedInputStream, pathLocation);
+		String subPathLocation = File.separator.concat("dok")
+				        		.concat(File.separator)
+				        		.concat(npwp);
+		String fileKey = UUID.randomUUID().toString() + "-" + idRegDokumen.concat("-").concat(fileDetail.getFileName());
+		storageService.save(fileKey, uploadedInputStream, subPathLocation);
 		String urlLocatorFeedBack = "sec/dok/"
 				.concat(npwp)
 				.concat("/")

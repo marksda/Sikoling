@@ -4,6 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public interface IStorageService {
-	String save(String fileName, InputStream inputStream, String subPath) throws IOException;
+	boolean save(String fileName, InputStream inputStream, String subPath) throws IOException;
     InputStream load(String subPath, String fileName) throws IOException;
 }
