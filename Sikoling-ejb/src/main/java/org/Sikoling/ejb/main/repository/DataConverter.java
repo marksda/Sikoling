@@ -953,8 +953,7 @@ public class DataConverter {
 			kecamatanData = new KecamatanData();
 			kecamatanData.setId(t.getId());
 			kecamatanData.setNama(t.getNama());
-			KabupatenData kabupatenData = t.getKabupaten() != null ?
-					convertKabupatenToKabupatenData(t.getKabupaten()):null;
+			KabupatenData kabupatenData = t.getKabupaten() != null ? convertKabupatenToKabupatenData(t.getKabupaten()):null;
 			kecamatanData.setKabupaten(kabupatenData);
 		}
 		

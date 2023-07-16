@@ -138,7 +138,7 @@ public class PersonRepositoryJPA implements IPersonRepository {
 		}
 				
 		TypedQuery<PersonData> q = null;		
-		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { //limit query result
+		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
 					.setFirstResult((queryParamFilters.getPageNumber()-1)*queryParamFilters.getPageSize());

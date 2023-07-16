@@ -40,6 +40,14 @@ public class KabupatenDTO implements Serializable {
 		this.nama = nama;
 	}
 
+	public PropinsiDTO getPropinsi() {
+		return propinsi;
+	}
+
+	public void setPropinsi(PropinsiDTO propinsi) {
+		this.propinsi = propinsi;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
