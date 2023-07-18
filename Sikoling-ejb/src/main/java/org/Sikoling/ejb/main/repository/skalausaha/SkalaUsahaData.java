@@ -11,8 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="master.tbl_kategori_skala_usaha")
 @NamedQueries({
-	@NamedQuery(name="SkalaUsahaData.findAll", query="SELECT s FROM SkalaUsahaData s"),
-	@NamedQuery(name="SkalaUsahaData.findByQueryNama", query="SELECT s FROM SkalaUsahaData s WHERE s.nama LIKE :nama")
+	@NamedQuery(name="SkalaUsahaData.updateId", query="UPDATE SkalaUsahaData SET id = :idBaru WHERE id = :idLama")
 })
 public class SkalaUsahaData implements Serializable {
 

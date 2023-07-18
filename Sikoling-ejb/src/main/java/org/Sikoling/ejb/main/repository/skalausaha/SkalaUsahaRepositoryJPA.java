@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -50,13 +51,22 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 
 	@Override
 	public SkalaUsaha updateId(String idLama, SkalaUsaha t) throws IOException {
-		SkalaUsahaData dataLama = entityManager.find(SkalaUsahaData.class, idLama);
-		if(dataLama != null) {
-			SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-			entityManager.remove(dataLama);	
-			SkalaUsahaData dataTermerge = entityManager.merge(skalaUsahaData);
-			entityManager.flush();
-			return dataConverter.convertSkalaUsahaDataToSkalaUsaha(dataTermerge);
+		Query query = entityManager.createNamedQuery("SkalaUsahaData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				SkalaUsahaData dataLama = entityManager.find(SkalaUsahaData.class, t.getId());
+				SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
+				dataLama.setNama(skalaUsahaData.getNama());
+				dataLama.setSingkatan(skalaUsahaData.getSingkatan());
+				entityManager.flush();
+				return dataConverter.convertSkalaUsahaDataToSkalaUsaha(dataLama);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}
+			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,13 +53,25 @@ public class PersonRepositoryJPA implements IPersonRepository {
 
 	@Override
 	public Person updateId(String idLama, Person t) throws IOException {
-		PersonData dataLama = entityManager.find(PersonData.class, idLama);
-		if(dataLama != null) {
-			PersonData personData = dataConverter.convertPersonToPersonData(t);
-			entityManager.remove(dataLama);	
-			PersonData dataTermerge = entityManager.merge(personData);
-			entityManager.flush();
-			return dataConverter.convertPersonDataToPerson(dataTermerge);
+		Query query = entityManager.createNamedQuery("PersonData.updateId");
+		query.setParameter("idBaru", t.getNik());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		
+		if(updateCount > 0) {
+			try {
+				PersonData dataLama = entityManager.find(PersonData.class, t.getNik());
+				PersonData personData = dataConverter.convertPersonToPersonData(t);
+				dataLama.setNama(personData.getNama());
+				dataLama.setAlamat(personData.getAlamat());
+				dataLama.setKontak(personData.getKontak());
+				dataLama.setScanKtp(personData.getScanKtp());
+				dataLama.setSex(personData.getSex());
+				entityManager.flush();
+				return dataConverter.convertPersonDataToPerson(dataLama);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

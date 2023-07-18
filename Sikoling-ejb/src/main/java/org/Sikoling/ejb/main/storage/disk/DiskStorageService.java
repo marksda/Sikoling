@@ -17,9 +17,9 @@ public class DiskStorageService implements IStorageService {
 	}
 
 	@Override
-	public boolean save(String fileKey, InputStream inputStream, String subPath) throws IOException {
+	public Boolean save(String fileKey, InputStream inputStream, String subPath) throws IOException {
 		try {
-			Path pathLocation = Paths.get(rootPath.concat(subPath));		
+			Path pathLocation = Paths.get(rootPath.concat(File.separator).concat(subPath));		
 			if (!Files.exists(pathLocation)) {
 				Files.createDirectories(pathLocation);
 				pathLocation = Paths.get(
@@ -59,6 +59,22 @@ public class DiskStorageService implements IStorageService {
 				);
 		
 		return Files.newInputStream(pathLocation);
+	}
+
+	
+	@Override
+	public Boolean delete(String fileName, String subPath) throws IOException {
+		try {
+			File file = new File(rootPath.concat(File.separator).concat(subPath).concat(File.separator).concat(fileName));
+			if(file.delete()) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 }

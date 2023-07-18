@@ -140,15 +140,23 @@ public class FileController {
 		return storageService.load(subPath, fileKey);
     }
 	
-	@Path("sec/dok/{npwp}/{fileKey}")
+//	@Path("sec/dok/{npwp}/{fileKey}")
+//    @GET
+//    @RequiredAuthorization
+//	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+//    public InputStream loadFileSecure(@PathParam("npwp") String npwp, @PathParam("fileKey") String fileKey) throws IOException {
+//		String subPath = "dok"
+//        		.concat(File.separator)
+//        		.concat(npwp);
+//		return storageService.load(subPath, fileKey);
+//    }
+	
+	@Path("{subPath}/{namaFile}")
     @GET
     @RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-    public InputStream loadFileSecure(@PathParam("npwp") String npwp, @PathParam("fileKey") String fileKey) throws IOException {
-		String subPath = "dok"
-        		.concat(File.separator)
-        		.concat(npwp);
-		return storageService.load(subPath, fileKey);
+    public InputStream loadFileSecure(@PathParam("subPath") String subPath, @PathParam("namaFile") String namaFile) throws IOException {
+		return storageService.load(subPath, namaFile);
     }
 	
 	@Path("sec/dok/{idRegPerusahaan}/{npwp}/{idRegDokumen}")
