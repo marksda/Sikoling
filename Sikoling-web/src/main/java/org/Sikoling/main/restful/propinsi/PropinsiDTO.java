@@ -20,10 +20,6 @@ public class PropinsiDTO implements Serializable {
 			this.nama = propinsi.getNama();
 		}		
 	}
-
-	public Propinsi toPropinsi() {
-        return new Propinsi(this.id, this.nama);
-    }
 	
 	public String getId() {
 		return id;
@@ -82,10 +78,12 @@ public class PropinsiDTO implements Serializable {
 	public String toString() {
 		if(id == null) {
 			return null;
-		}
-			
+		}			
 			
 		return "PropinsiDTO{" + "id=" + this.id + ", nama=" + this.nama + "}";	    
 	}
-	
+
+	public Propinsi toPropinsi() {
+        return new Propinsi(this.id, this.nama);
+    }
 }

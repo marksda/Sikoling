@@ -199,16 +199,30 @@ public class PersonController {
 	}
 	
 	@DELETE
-	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PersonDTO delete(PersonDTO d) throws IOException {
-		return new PersonDTO(personService.delete(d.toPerson()));
+	public PersonDTO delete(@Context UriInfo info) throws IOException {
+		MultivaluedMap<String, String> map = info.getQueryParameters();
+		String queryParamsStr = map.getFirst("dt");
+		Jsonb jsonb = JsonbBuilder.create();
+		PersonDTO personDTO = jsonb.fromJson(queryParamsStr, PersonDTO.class);
+		
+		String fileLama = null;
+		if(!personDTO.getScanKTP().equals("")) {
+			fileLama = personDTO.getScanKTP();
+			String[] hasilSplit = fileLama.split("/");
+			String subPathLocation = File.separator.concat("identitas_personal");
+			Boolean statusDeleteFile = storageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
+			if(statusDeleteFile == false) {
+				throw new IOException("gambar tidak bisa diupdate");
+			}
+		}		
+		
+		return new PersonDTO(personService.delete(personDTO.toPerson()));
 	}
 	
 	@GET
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})

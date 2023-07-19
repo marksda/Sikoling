@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IHakAksesRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,13 +53,17 @@ public class HakAksesRepositoryJPA implements IHakAksesRepository {
 
 	@Override
 	public HakAkses updateId(String idLama, HakAkses t) throws IOException {
-		HakAksesData dataLama = entityManager.find(HakAksesData.class, idLama);
-		if(dataLama != null) {
-			HakAksesData skalaUsahaData = dataConverter.convertHakAksesToHakAksesData(t);
-			entityManager.remove(dataLama);	
-			HakAksesData dataTermerge = entityManager.merge(skalaUsahaData);
+		Query query = entityManager.createNamedQuery("HakAksesData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			HakAksesData dataLama = entityManager.find(HakAksesData.class, t.getId());
+			HakAksesData hakAksesData = dataConverter.convertHakAksesToHakAksesData(t);
+			dataLama.setNama(hakAksesData.getNama());
+			dataLama.setKeterangan(hakAksesData.getKeterangan());
 			entityManager.flush();
-			return dataConverter.convertHakAksesDataToHakAkses(dataTermerge);
+			return dataConverter.convertHakAksesDataToHakAkses(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
