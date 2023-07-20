@@ -936,8 +936,9 @@ public class DataConverter {
 		KabupatenData kabupatenData = null;
 		
 		if(t != null) {
+			String id = t.getId();			
 			kabupatenData = new KabupatenData();
-			kabupatenData.setId(t.getId());
+			kabupatenData.setId(id != null ? id:getGenerateIdKabupatenData(t.getPropinsi().getId()));
 			kabupatenData.setNama(t.getNama());
 			PropinsiData propinsiData = t.getPropinsi() != null ? convertPropinsiToPropinsiData(t.getPropinsi()):null;
 			kabupatenData.setPropinsi(propinsiData);
@@ -1694,6 +1695,26 @@ public class DataConverter {
 	}
 	
 	/*----------id generator function---------------*/
+	private String getGenerateIdKabupatenData(String idPropinsi) {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(k.id) "
+				+ "FROM KabupatenData k "
+				+ "WHERE k.propinsi.id = :idPropinsi");
+		
+		q.setParameter("idPropinsi", idPropinsi);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 4, '0');
+			return hasil;
+		} catch (Exception e) {			
+			hasil = "0001";			
+			return hasil;
+		}		
+	}
+	
 	private String getGenerateIdRegisterPerusahaanData() {
 		int tahun = LocalDate.now().getYear();
 		String hasil;

@@ -8,10 +8,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="master.tbl_desa")
 @NamedQueries({
-@NamedQuery(name="DesaData.findAll", query="SELECT d FROM DesaData d"),
-@NamedQuery(name="DesaData.findByNama", query="SELECT d FROM DesaData d WHERE d.nama LIKE :nama"),
-@NamedQuery(name="DesaData.findByKecamatan", query="SELECT d FROM DesaData d WHERE d.kecamatan.id = :idKecamatan"),
-@NamedQuery(name="DesaData.findByKecamatanAndNama", query="SELECT d FROM DesaData d WHERE d.nama LIKE :nama AND d.kecamatan.id = :idKecamatan")})
+	@NamedQuery(name="DesaData.updateId", query="UPDATE DesaData SET id = :idBaru WHERE id = :idLama")
+})
 public class DesaData implements Serializable {
 	private static final long serialVersionUID = -5126550971303462658L;
 

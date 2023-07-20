@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,13 +53,17 @@ public class KecamatanRepositoryJPA implements IKecamatanRepository {
 
 	@Override
 	public Kecamatan updateId(String idLama, Kecamatan t) throws IOException {
-		KecamatanData dataLama = entityManager.find(KecamatanData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("KecamatanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			KecamatanData dataLama = entityManager.find(KecamatanData.class, t.getId());
 			KecamatanData kecamatanData = dataConverter.convertKecamatanToKecamatanData(t);
-			entityManager.remove(dataLama);	
-			KecamatanData dataTermerge = entityManager.merge(kecamatanData);
+			dataLama.setNama(kecamatanData.getNama());
+			dataLama.setKabupaten(kecamatanData.getKabupaten());
 			entityManager.flush();
-			return dataConverter.convertKecamatanDataToKecamatan(dataTermerge);
+			return dataConverter.convertKecamatanDataToKecamatan(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
@@ -101,6 +106,9 @@ public class KecamatanRepositoryJPA implements IKecamatanRepository {
 			case "kabupaten":
 				daftarPredicate.add(cb.equal(root.get("kabupaten").get("id"), filter.getValue()));
 				break;
+			case "propinsi":
+				daftarPredicate.add(cb.equal(root.get("kabupaten").get("propinsi").get("id"), filter.getValue()));
+				break;
 			default:
 				break;
 			}			
@@ -135,12 +143,20 @@ public class KecamatanRepositoryJPA implements IKecamatanRepository {
 					cq.orderBy(cb.desc(root.get("nama")));
 				}
 				break;
-			case "kabpaten":
+			case "kabupaten":
 				if(sort.getValue().equals("ASC")) {
 					cq.orderBy(cb.asc(root.get("kabupaten").get("nama")));
 				}
 				else {
 					cq.orderBy(cb.desc(root.get("kabupaten").get("nama")));
+				}
+				break;
+			case "propinsi":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("kabupaten").get("propinsi").get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("kabupaten").get("propinsi").get("nama")));
 				}
 				break;
 			default:
@@ -186,6 +202,9 @@ public class KecamatanRepositoryJPA implements IKecamatanRepository {
 				break;
 			case "kabupaten":
 				daftarPredicate.add(cb.equal(root.get("kabupaten").get("id"), filter.getValue()));
+				break;
+			case "propinsi":
+				daftarPredicate.add(cb.equal(root.get("kabupaten").get("propinsi").get("id"), filter.getValue()));
 				break;
 			default:
 				break;

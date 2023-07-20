@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="master.tbl_kabupaten")
+@NamedQueries({
+	@NamedQuery(name="KabupatenData.updateId", query="UPDATE KabupatenData SET id = :idBaru WHERE id = :idLama")
+})
 public class KabupatenData implements Serializable {
 	private static final long serialVersionUID = -7026002892763939209L;
 

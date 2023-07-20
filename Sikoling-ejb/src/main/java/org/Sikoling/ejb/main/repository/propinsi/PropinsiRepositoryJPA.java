@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.repository.IPropinsiRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -53,13 +54,16 @@ public class PropinsiRepositoryJPA implements IPropinsiRepository {
 
 	@Override
 	public Propinsi updateId(String idLama, Propinsi t) throws IOException {
-		PropinsiData dataLama = entityManager.find(PropinsiData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("PropinsiData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			PropinsiData dataLama = entityManager.find(PropinsiData.class, t.getId());
 			PropinsiData propinsiData = dataConverter.convertPropinsiToPropinsiData(t);
-			entityManager.remove(dataLama);	
-			PropinsiData dataTermerge = entityManager.merge(propinsiData);
+			dataLama.setNama(propinsiData.getNama());
 			entityManager.flush();
-			return dataConverter.convertPropinsiDataToPropinsi(dataTermerge);
+			return dataConverter.convertPropinsiDataToPropinsi(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,13 +52,17 @@ public class KabupatenRepositoryJPA implements IKabupatenRepository {
 	
 	@Override
 	public Kabupaten updateId(String idLama, Kabupaten t) throws IOException {
-		KabupatenData dataLama = entityManager.find(KabupatenData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("KabupatenData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			KabupatenData dataLama = entityManager.find(KabupatenData.class, t.getId());
 			KabupatenData kabupatenData = dataConverter.convertKabupatenToKabupatenData(t);
-			entityManager.remove(dataLama);	
-			KabupatenData dataTermerge = entityManager.merge(kabupatenData);
+			dataLama.setNama(kabupatenData.getNama());
+			dataLama.setPropinsi(kabupatenData.getPropinsi());
 			entityManager.flush();
-			return dataConverter.convertKabupatenDataToKabupaten(dataTermerge);
+			return dataConverter.convertKabupatenDataToKabupaten(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,13 +53,17 @@ public class DesaRepositoryJPA implements IDesaRepository {
 	
 	@Override
 	public Desa updateId(String idLama, Desa t) throws IOException {
-		DesaData dataLama = entityManager.find(DesaData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("DesaData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount >0 ) {
+			DesaData dataLama = entityManager.find(DesaData.class, t.getId());
 			DesaData desaData = dataConverter.convertDesaToDesaData(t);
-			entityManager.remove(dataLama);	
-			DesaData dataTermerge = entityManager.merge(desaData);
+			dataLama.setNama(desaData.getNama());
+			dataLama.setKecamatan(desaData.getKecamatan());
 			entityManager.flush();
-			return dataConverter.convertDesaDataToDesa(dataTermerge);
+			return dataConverter.convertDesaDataToDesa(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
