@@ -18,12 +18,11 @@ public class KecamatanData implements Serializable {
 	
 	private String nama;
 
-	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kabupaten", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private KabupatenData kabupaten;
 
-	public KecamatanData() {
-		
+	public KecamatanData() {		
 	}
 
 	public String getId() {

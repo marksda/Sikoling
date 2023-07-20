@@ -18,7 +18,7 @@ public class DesaData implements Serializable {
 	
 	private String nama;
 
-	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "kecamatan", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private KecamatanData kecamatan;
 

@@ -951,8 +951,9 @@ public class DataConverter {
 		KecamatanData kecamatanData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			kecamatanData = new KecamatanData();
-			kecamatanData.setId(t.getId());
+			kecamatanData.setId(id != null ? id:getGenerateIdKecamatanData(t.getKabupaten().getId()));
 			kecamatanData.setNama(t.getNama());
 			KabupatenData kabupatenData = t.getKabupaten() != null ? convertKabupatenToKabupatenData(t.getKabupaten()):null;
 			kecamatanData.setKabupaten(kabupatenData);
@@ -965,10 +966,11 @@ public class DataConverter {
 		DesaData desaData = null;
 		
 		if(t != null) {
-			KecamatanData kecamatanData = t.getKecamatan() != null ? convertKecamatanToKecamatanData(t.getKecamatan()):null;
+			String id = t.getId();
 			desaData = new DesaData();
-			desaData.setId(t.getId());
+			desaData.setId(id != null ? id:getGenerateIdDesaData(t.getKecamatan().getId()));
 			desaData.setNama(t.getNama());
+			KecamatanData kecamatanData = t.getKecamatan() != null ? convertKecamatanToKecamatanData(t.getKecamatan()):null;
 			desaData.setKecamatan(kecamatanData);			
 		}
 		
@@ -1711,6 +1713,46 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {			
 			hasil = "0001";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdKecamatanData(String idKabupaten) {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(k.id) "
+				+ "FROM KecamatanData k "
+				+ "WHERE k.kabupaten.id = :idKabupaten");
+		
+		q.setParameter("idKabupaten", idKabupaten);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 7, '0');
+			return hasil;
+		} catch (Exception e) {			
+			hasil = "0000001";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdDesaData(String idKecamatan) {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(d.id) "
+				+ "FROM DesaData d "
+				+ "WHERE d.kecamatan.id = :idKecamatan");
+		
+		q.setParameter("idKecamatan", idKecamatan);
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 10, '0');
+			return hasil;
+		} catch (Exception e) {			
+			hasil = "0000000001";			
 			return hasil;
 		}		
 	}

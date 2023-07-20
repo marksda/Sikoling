@@ -106,6 +106,12 @@ public class DesaRepositoryJPA implements IDesaRepository {
 			case "kecamatan":
 				daftarPredicate.add(cb.equal(root.get("kecamatan").get("id"), filter.getValue()));
 				break;
+			case "kabupaten":
+				daftarPredicate.add(cb.equal(root.get("kecamatan").get("kabupaten").get("id"), filter.getValue()));
+				break;
+			case "propinsi":
+				daftarPredicate.add(cb.equal(root.get("kecamatan").get("kabupaten").get("propinsi").get("id"), filter.getValue()));
+				break;
 			default:
 				break;
 			}			
@@ -146,6 +152,14 @@ public class DesaRepositoryJPA implements IDesaRepository {
 				}
 				else {
 					cq.orderBy(cb.desc(root.get("kecamatan").get("nama")));
+				}
+				break;
+			case "kabupaten":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("kecamatan").get("kabupaten").get("nama")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("kecamatan").get("kabupaten").get("nama")));
 				}
 				break;
 			default:
@@ -191,6 +205,12 @@ public class DesaRepositoryJPA implements IDesaRepository {
 				break;
 			case "kecamatan":
 				daftarPredicate.add(cb.equal(root.get("kecamatan").get("id"), filter.getValue()));
+				break;
+			case "kabupaten":
+				daftarPredicate.add(cb.equal(root.get("kecamatan").get("kabupaten").get("id"), filter.getValue()));
+				break;
+			case "propinsi":
+				daftarPredicate.add(cb.equal(root.get("kecamatan").get("kabupaten").get("propinsi").get("id"), filter.getValue()));
 				break;
 			default:
 				break;
