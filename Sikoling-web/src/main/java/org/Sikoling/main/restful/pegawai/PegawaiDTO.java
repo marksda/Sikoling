@@ -12,7 +12,7 @@ public class PegawaiDTO implements Serializable {
 
 	private static final long serialVersionUID = 4408097239880314226L;
 	private String id;
-	private RegisterPerusahaanDTO perusahaan;
+	private RegisterPerusahaanDTO registerPerusahaan;
 	private PersonDTO person;
 	private JabatanDTO jabatan;
 	
@@ -22,7 +22,7 @@ public class PegawaiDTO implements Serializable {
 	public PegawaiDTO(Pegawai t) {
 		if(t != null) {
 			this.id = t.getId();
-			this.perusahaan = t.getPerusahaan() != null ? new RegisterPerusahaanDTO(t.getPerusahaan()) : null;
+			this.registerPerusahaan = t.getRegisterPerusahaan() != null ? new RegisterPerusahaanDTO(t.getRegisterPerusahaan()) : null;
 			this.person = t.getPerson() != null ? new PersonDTO(t.getPerson()) : null;
 			this.jabatan = t.getJabatan() != null ? new JabatanDTO(t.getJabatan()) : null;
 		}
@@ -36,12 +36,12 @@ public class PegawaiDTO implements Serializable {
 		this.id = id;
 	}
 	
-	public RegisterPerusahaanDTO getPerusahaan() {
-		return perusahaan;
+	public RegisterPerusahaanDTO getRegisterPerusahaan() {
+		return registerPerusahaan;
 	}
 	
-	public void setPerusahaan(RegisterPerusahaanDTO perusahaan) {
-		this.perusahaan = perusahaan;
+	public void setRegisterPerusahaan(RegisterPerusahaanDTO registerPerusahaan) {
+		this.registerPerusahaan = registerPerusahaan;
 	}
 	
 	public PersonDTO getPerson() {
@@ -102,10 +102,10 @@ public class PegawaiDTO implements Serializable {
 				.concat("}");
 	}	
 
-	public Pegawai toPegawaiPerusahaan() {
+	public Pegawai toPegawai() {
 		return new Pegawai(
 				id, 
-				perusahaan != null ? perusahaan.toRegisterPerusahaan() : null, 
+				registerPerusahaan != null ? registerPerusahaan.toRegisterPerusahaan() : null, 
 				person != null ? person.toPerson() : null, 
 				jabatan != null ? jabatan.toJabatan() : null
 				);

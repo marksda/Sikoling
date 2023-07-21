@@ -218,7 +218,7 @@ public class RegisterPermohonanDTO implements Serializable {
 				statusPengurusPermohonan != null ?
 						statusPengurusPermohonan.toStatusPengurusPermohonan() : null,
 				penanggungJawabPermohonan != null ?
-						penanggungJawabPermohonan.toPegawaiPerusahaan() : null,
+						penanggungJawabPermohonan.toPegawai() : null,
 				pengirimBerkas != null ?
 						pengirimBerkas.toPosisiTahapPemberkasan() : null, 
 				penerimaBerkas != null ?

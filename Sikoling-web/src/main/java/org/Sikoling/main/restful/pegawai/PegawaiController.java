@@ -41,7 +41,7 @@ public class PegawaiController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PegawaiDTO save(PegawaiDTO d) throws IOException {		
-		return new PegawaiDTO(pegawaiPerusahaanService.save(d.toPegawaiPerusahaan()));
+		return new PegawaiDTO(pegawaiPerusahaanService.save(d.toPegawai()));
 	}
 	
 	@PUT
@@ -50,7 +50,7 @@ public class PegawaiController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PegawaiDTO update(PegawaiDTO d) {
-		return new PegawaiDTO(pegawaiPerusahaanService.update(d.toPegawaiPerusahaan()));
+		return new PegawaiDTO(pegawaiPerusahaanService.update(d.toPegawai()));
 	}
 	
 	@Path("id/{idLama}")
@@ -60,7 +60,7 @@ public class PegawaiController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PegawaiDTO updateId(@PathParam("idLama") String idLama, PegawaiDTO d) throws IOException {
-		return new PegawaiDTO(pegawaiPerusahaanService.updateId(idLama, d.toPegawaiPerusahaan()));
+		return new PegawaiDTO(pegawaiPerusahaanService.updateId(idLama, d.toPegawai()));
 	}
 	
 	@DELETE
@@ -69,7 +69,7 @@ public class PegawaiController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PegawaiDTO delete(PegawaiDTO d) throws IOException {
-		return new PegawaiDTO(pegawaiPerusahaanService.delete(d.toPegawaiPerusahaan()));
+		return new PegawaiDTO(pegawaiPerusahaanService.delete(d.toPegawai()));
 	}
 	
 	@GET

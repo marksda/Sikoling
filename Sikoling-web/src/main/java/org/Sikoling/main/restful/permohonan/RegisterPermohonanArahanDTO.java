@@ -110,7 +110,7 @@ public class RegisterPermohonanArahanDTO extends RegisterPermohonanDTO implement
 				this.getRegisterPerusahaan() != null ? this.getRegisterPerusahaan().toRegisterPerusahaan() : null,
 				this.getPengurusPermohonan() != null ? this.getPengurusPermohonan().toOtoritas() : null, 
 				this.getStatusPengurusPermohonan() != null ? this.getStatusPengurusPermohonan().toStatusPengurusPermohonan() : null, 
-				this.getPenanggungJawabPermohonan() != null ? this.getPenanggungJawabPermohonan().toPegawaiPerusahaan() : null, 
+				this.getPenanggungJawabPermohonan() != null ? this.getPenanggungJawabPermohonan().toPegawai() : null, 
 				this.getPengirimBerkas() != null ? this.getPengirimBerkas().toPosisiTahapPemberkasan() : null, 
 				this.getPenerimaBerkas() != null ? this.getPenerimaBerkas().toPosisiTahapPemberkasan() : null,	
 				this.getStatusFlowLog() != null ? this.getStatusFlowLog().toStatusFlowLog() : null, 

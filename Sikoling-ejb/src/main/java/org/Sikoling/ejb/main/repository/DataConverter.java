@@ -1162,9 +1162,9 @@ public class DataConverter {
 		
 		if(t != null) {
 			String id = t.getId();
-			pegawaiData.setId(id != null ? id:getGenerateIdPegawaiPerusahaan(t.getPerusahaan().getId(), t.getJabatan().getId(), t.getPerson().getNik()));
+			pegawaiData.setId(id != null ? id:getGenerateIdPegawaiPerusahaan(t.getRegisterPerusahaan().getId(), t.getJabatan().getId(), t.getPerson().getNik()));
 			pegawaiData.setPersonData(t.getPerson() != null ? convertPersonToPersonData(t.getPerson()):null);
-			pegawaiData.setRegisterPerusahaanData(t.getPerusahaan() != null ? convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()):null);
+			pegawaiData.setRegisterPerusahaanData(t.getRegisterPerusahaan() != null ? convertRegisterPerusahaanToRegisterPerusahaanData(t.getRegisterPerusahaan()):null);
 			pegawaiData.setJabatanData(t.getJabatan() != null ? convertJabatanToJabatanData(t.getJabatan()):null);			
 		}
 		

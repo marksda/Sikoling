@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenAktaPendirian;
-import org.Sikoling.main.restful.perusahaan.PegawaiDTO;
+import org.Sikoling.main.restful.pegawai.PegawaiDTO;
 
 public class AktaPendirianDTO extends DokumenDTO implements Serializable {
 
