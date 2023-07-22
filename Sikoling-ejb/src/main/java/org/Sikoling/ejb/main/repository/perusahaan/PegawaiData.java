@@ -11,10 +11,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_pegawai_perusahaan")
+@NamedQueries({
+	@NamedQuery(name="PegawaiData.updateId", query="UPDATE PegawaiData SET id = :idBaru WHERE id = :idLama")
+})
 public class PegawaiData implements Serializable {
 
 	private static final long serialVersionUID = -5313775851019211468L;

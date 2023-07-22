@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,15 +52,18 @@ public class JabatanRepositoryJPA implements IJabatanRepository {
 	}
 	
 	@Override
-	public Jabatan updateId(String id, Jabatan jabatan) throws IOException {
-		JabatanData dataLama = entityManager.find(JabatanData.class, jabatan.getId());
+	public Jabatan updateId(String idLama, Jabatan t) throws IOException {
+		Query query = entityManager.createNamedQuery("JabatanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
 		
-		if(dataLama != null) {
-			JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(jabatan);
-			entityManager.remove(dataLama);
-			JabatanData dataTermerge = entityManager.merge(jabatanData);
+		if(updateCount > 0) {
+			JabatanData dataLama = entityManager.find(JabatanData.class, t.getId());
+			JabatanData jabatanData = dataConverter.convertJabatanToJabatanData(t);
+			dataLama.setNama(jabatanData.getNama());
 			entityManager.flush();
-			return dataConverter.convertJabatanDataToJabatan(dataTermerge);
+			return dataConverter.convertJabatanDataToJabatan(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

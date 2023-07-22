@@ -63,12 +63,14 @@ public class JabatanController {
 		return new JabatanDTO(jabatanService.updateId(idLama, d.toJabatan()));
 	}
 	
+	@Path("{idJabatan}")
 	@DELETE
-	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public JabatanDTO delete(JabatanDTO d) throws IOException {
+	public JabatanDTO delete(@PathParam("idJabatan") String idJabatan) throws IOException {
+		JabatanDTO d = new JabatanDTO();
+		d.setId(idJabatan);
 		return new JabatanDTO(jabatanService.delete(d.toJabatan()));
 	}
 	

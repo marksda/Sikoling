@@ -7,8 +7,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="master.tbl_jabatan")
 @NamedQueries({
-	@NamedQuery(name="JabatanData.findAll", query="SELECT j FROM JabatanData j ORDER BY j.nama ASC"),
-	@NamedQuery(name="JabatanData.findByNama", query="SELECT j FROM JabatanData j WHERE j.nama LIKE :nama")
+	@NamedQuery(name="JabatanData.updateId", query="UPDATE JabatanData SET id = :idBaru WHERE id = :idLama")
 })
 public class JabatanData implements Serializable {
 	private static final long serialVersionUID = 3134858894526254188L;

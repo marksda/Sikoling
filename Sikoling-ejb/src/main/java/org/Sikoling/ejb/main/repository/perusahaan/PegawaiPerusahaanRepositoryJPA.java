@@ -97,7 +97,7 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 			case "nik":
 				daftarPredicate.add(cb.equal(root.get("personData").get("id"), filter.getValue()));
 				break;
-			case "nama":
+			case "pegawai":
 				daftarPredicate.add(cb.like(cb.lower(root.get("personData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
 			case "perusahaan":
@@ -129,7 +129,7 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 					cq.orderBy(cb.desc(root.get("id")));
 				}
 				break;
-			case "nama":
+			case "pegawai":
 				if(sort.getValue().equals("ASC")) {
 					cq.orderBy(cb.asc(root.get("personData").get("nama")));
 				}
@@ -186,7 +186,7 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 			case "nik":
 				daftarPredicate.add(cb.equal(root.get("personData").get("id"), filter.getValue()));
 				break;
-			case "nama":
+			case "pegawai":
 				daftarPredicate.add(cb.like(cb.lower(root.get("personData").get("nama")), "%"+filter.getValue().toLowerCase()+"%"));
 				break;
 			case "perusahaan":
