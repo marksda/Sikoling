@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,13 +52,18 @@ public class PegawaiPerusahaanRepositoryJPA implements IPegawaiPerusahaanReposit
 
 	@Override
 	public Pegawai updateId(String idLama, Pegawai t) throws IOException {
-		PegawaiData dataLama = entityManager.find(PegawaiData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("PegawaiData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			PegawaiData dataLama = entityManager.find(PegawaiData.class, t.getId());
 			PegawaiData pegawaiData = dataConverter.convertPegawaiToPegawaiData(t);
-			entityManager.remove(dataLama);	
-			PegawaiData dataTermerge = entityManager.merge(pegawaiData);
+			dataLama.setRegisterPerusahaanData(pegawaiData.getRegisterPerusahaanData());
+			dataLama.setPersonData(pegawaiData.getPersonData());
+			dataLama.setJabatanData(pegawaiData.getJabatanData());
 			entityManager.flush();
-			return dataConverter.convertPegawaiDataToPegawai(dataTermerge);
+			return dataConverter.convertPegawaiDataToPegawai(dataLama);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

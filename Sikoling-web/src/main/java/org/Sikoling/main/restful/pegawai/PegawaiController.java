@@ -63,12 +63,15 @@ public class PegawaiController {
 		return new PegawaiDTO(pegawaiPerusahaanService.updateId(idLama, d.toPegawai()));
 	}
 	
+	@Path("{idPegawai}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PegawaiDTO delete(PegawaiDTO d) throws IOException {
+	public PegawaiDTO delete(@PathParam("idPegawai") String idPegawai) throws IOException {
+		PegawaiDTO d = new PegawaiDTO();
+		d.setId(idPegawai);
 		return new PegawaiDTO(pegawaiPerusahaanService.delete(d.toPegawai()));
 	}
 	
