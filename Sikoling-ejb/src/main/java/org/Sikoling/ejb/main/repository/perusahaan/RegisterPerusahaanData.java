@@ -14,6 +14,9 @@ import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
 @Entity
 @Table(name="master.tbl_perusahaan")
+@NamedQueries({
+	@NamedQuery(name="RegisterPerusahaanData.updateId", query="UPDATE RegisterPerusahaanData SET id = :idBaru WHERE id = :idLama")
+})
 public class RegisterPerusahaanData implements Serializable {
 	private static final long serialVersionUID = 5667247303637293789L;
 

@@ -30,7 +30,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Stateless
 @LocalBean
 @Path("kategori_pelaku_usaha")
-public class KategoriPelakuUsaha {
+public class KategoriPelakuUsahaController {
 
 	@Inject
 	private IKategoriPelakuUsahaServices kategoriPelakuUsahaService;	
@@ -63,12 +63,16 @@ public class KategoriPelakuUsaha {
 		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.updateId(idLama, d.toKategoriPelakuUsaha()));
 	}
 	
+	@Path("{idKategoriPelakuUsaha}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public KategoriPelakuUsahaDTO delete(KategoriPelakuUsahaDTO d) throws IOException {
+	public KategoriPelakuUsahaDTO delete(@PathParam("idKategoriPelakuUsaha") String idKategoriPelakuUsaha) throws IOException {
+		KategoriPelakuUsahaDTO d = new KategoriPelakuUsahaDTO();
+		d.setId(idKategoriPelakuUsaha);
+		
 		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.delete(d.toKategoriPelakuUsaha()));
 	}
 	

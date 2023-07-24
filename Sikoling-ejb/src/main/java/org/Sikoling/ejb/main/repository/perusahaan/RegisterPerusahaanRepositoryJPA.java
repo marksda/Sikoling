@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,10 +53,23 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 	
 	@Override
 	public RegisterPerusahaan updateId(String idLama, RegisterPerusahaan t) throws IOException {
-		RegisterPerusahaanData dataLama = entityManager.find(RegisterPerusahaanData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("RegisterPerusahaanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
 			RegisterPerusahaanData registerPerusahaanData = dataConverter.convertRegisterPerusahaanToRegisterPerusahaanData(t);
-			entityManager.remove(dataLama);	
+//			RegisterPerusahaanData dataLama = entityManager.find(RegisterPerusahaanData.class, t.getId());
+//			dataLama.setAlamatPerusahaanData(null);
+//			dataLama.setKontakPerusahaanData(null);
+//			dataLama.setKreator(null);
+//			dataLama.setModelPerizinanData(null);
+//			dataLama.setNama(idLama);
+//			dataLama.setNpwp(idLama);
+//			dataLama.setPelakuUsaha(null);
+//			dataLama.setSkalaUsahaData(null);
+//			dataLama.setStatusVerifikasi(null);
+//			dataLama.setTanggalRegistrasi(null);
 			RegisterPerusahaanData dataTermerge = entityManager.merge(registerPerusahaanData);
 			entityManager.flush();
 			return dataConverter.convertRegisterPerusahaanDataToRegisterPerusahaan(dataTermerge);
@@ -103,6 +117,9 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				break;
 			case "npwp":
 				daftarPredicate.add(cb.equal(root.get("npwp"), filter.getValue()));
+				break;
+			case "statusVerifikasi":
+				daftarPredicate.add(cb.equal(root.get("statusVerifikasi"),  Boolean.valueOf(filter.getValue())));
 				break;
 			case "kreator":
 				daftarPredicate.add(cb.equal(root.get("kreator").get("id"), filter.getValue()));
@@ -158,6 +175,14 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				}
 				else {
 					cq.orderBy(cb.desc(root.get("npwp")));
+				}
+				break;
+			case "statusVerifikasi":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("statusVerifikasi")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("statusVerifikasi")));
 				}
 				break;
 			case "kreator":
@@ -222,6 +247,9 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				break;
 			case "npwp":
 				daftarPredicate.add(cb.equal(root.get("npwp"), filter.getValue()));
+				break;
+			case "statusVerifikasi":
+				daftarPredicate.add(cb.equal(root.get("statusVerifikasi"),  Boolean.valueOf(filter.getValue())));
 				break;
 			case "kreator":
 				daftarPredicate.add(cb.equal(root.get("kreator").get("id"), filter.getValue()));

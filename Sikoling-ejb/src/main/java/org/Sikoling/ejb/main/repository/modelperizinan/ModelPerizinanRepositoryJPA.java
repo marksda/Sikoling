@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -53,10 +54,12 @@ public class ModelPerizinanRepositoryJPA implements IModelPerizinanRepository {
 
 	@Override
 	public ModelPerizinan updateId(String idLama, ModelPerizinan t) throws IOException {
-		ModelPerizinanData dataLama = entityManager.find(ModelPerizinanData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("ModelPerizinanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
 			ModelPerizinanData modelPerizinanData = dataConverter.convertModelPerizinanToModelPerizinanData(t);
-			entityManager.remove(dataLama);	
 			ModelPerizinanData dataTermerge = entityManager.merge(modelPerizinanData);
 			entityManager.flush();
 			return dataConverter.convertModelPerizinanDataToModelPerizinan(dataTermerge);

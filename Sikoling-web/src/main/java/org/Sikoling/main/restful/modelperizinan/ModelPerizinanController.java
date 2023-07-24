@@ -9,7 +9,6 @@ import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -64,12 +63,15 @@ public class ModelPerizinanController {
 		return new ModelPerizinanDTO(modelPerizinanService.updateId(idLama, d.toModelPerizinan()));
 	}
 	
+	@Path("{idModelPerizinan}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public ModelPerizinanDTO delete(ModelPerizinanDTO d) throws IOException {
+	public ModelPerizinanDTO delete(@PathParam("idModelPerizinan") String idModelPerizinan) throws IOException {
+		ModelPerizinanDTO d = new ModelPerizinanDTO();
+		d.setId(idModelPerizinan);
 		return new ModelPerizinanDTO(modelPerizinanService.delete(d.toModelPerizinan()));
 	}
 	

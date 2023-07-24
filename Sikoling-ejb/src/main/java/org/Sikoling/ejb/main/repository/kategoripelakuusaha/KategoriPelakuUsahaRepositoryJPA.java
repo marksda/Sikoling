@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,13 +53,15 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 
 	@Override
 	public KategoriPelakuUsaha updateId(String idLama, KategoriPelakuUsaha t) throws IOException {
-		KategoriPelakuUsahaData dataLama = entityManager.find(KategoriPelakuUsahaData.class, idLama);
+		Query query = entityManager.createNamedQuery("KategoriPelakuUsahaData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
 		
-		if(dataLama != null) {
+		if(updateCount > 0) {
 			KategoriPelakuUsahaData kategoriPelakuUsahaData = dataConverter.convertKategoriPelakuUsahaToKategoriPelakuUsahaData(t);
-			entityManager.remove(dataLama);
-			entityManager.flush();
 			KategoriPelakuUsahaData dataTermerge = entityManager.merge(kategoriPelakuUsahaData);
+			entityManager.flush();
 			return dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(dataTermerge);
 		}
 		else {
@@ -169,8 +172,7 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 				.map(d -> dataConverter.convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(d))
 				.collect(Collectors.toList());
 	}
-	
-	
+		
 	@Override
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -208,6 +210,5 @@ public class KategoriPelakuUsahaRepositoryJPA implements IKategoriPelakuUsahaRep
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-
 		
 }

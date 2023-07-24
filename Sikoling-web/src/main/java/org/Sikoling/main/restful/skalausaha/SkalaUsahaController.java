@@ -70,9 +70,9 @@ public class SkalaUsahaController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public SkalaUsahaDTO delete(@PathParam("idSkalaUsaha") String idSkalaUsaha) throws IOException {
-		SkalaUsahaDTO dt = new SkalaUsahaDTO();
-		dt.setId(idSkalaUsaha);
-		return new SkalaUsahaDTO(skalaUsahaService.delete(dt.toSkalaUsaha()));
+		SkalaUsahaDTO d = new SkalaUsahaDTO();
+		d.setId(idSkalaUsaha);
+		return new SkalaUsahaDTO(skalaUsahaService.delete(d.toSkalaUsaha()));
 	}
 	
 	@GET
