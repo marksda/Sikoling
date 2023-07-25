@@ -97,7 +97,7 @@ public class KontakDTO implements Serializable {
 	}
 	
 	public Kontak toKontak() {
-		return new Kontak(telepone, null, email);
+		return new Kontak(telepone, fax, email);
 	}
 
 }

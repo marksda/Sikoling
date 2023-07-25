@@ -569,7 +569,7 @@ public class DataConverter {
 		
 		return daftarAuthority;
 	}
-	
+		
 	public RegisterPerusahaan convertRegisterPerusahaanDataToRegisterPerusahaan(RegisterPerusahaanData d) {
 		RegisterPerusahaan registerPerusahaan = null; 	
 		
@@ -1129,28 +1129,16 @@ public class DataConverter {
 			registerPerusahaanData.setId(id != null ? id : getGenerateIdRegisterPerusahaanData());
 			if(perusahaan != null) {
 				registerPerusahaanData.setNama(perusahaan.getNama());
-				registerPerusahaanData.setAlamatPerusahaanData(
-						perusahaan.getAlamat() != null ? convertAlamatToAlamatData(t.getPerusahaan().getAlamat()):null
-						);
-				registerPerusahaanData.setModelPerizinanData(
-						perusahaan.getModelPerizinan() != null ? convertModelPerizinanToModelPerizinanData(perusahaan.getModelPerizinan()):null
-						);
-				registerPerusahaanData.setSkalaUsahaData(
-						perusahaan.getSkalaUsaha() != null ? convertSkalaUsahaToSkalaUsahaData(perusahaan.getSkalaUsaha()):null
-						);
-				registerPerusahaanData.setPelakuUsaha(
-						perusahaan.getPelakuUsaha() != null ? convertPelakuUsahaToPelakuUsahaData(perusahaan.getPelakuUsaha()):null
-						);
-				registerPerusahaanData.setKontakPerusahaanData(
-						perusahaan.getKontak() != null ? convertKontakToKontakData(perusahaan.getKontak()):null
-						);
-				registerPerusahaanData.setNpwp(
-						perusahaan.getId() != null ? perusahaan.getId():null
-						);			
+				registerPerusahaanData.setAlamatPerusahaanData(perusahaan.getAlamat() != null ? convertAlamatToAlamatData(t.getPerusahaan().getAlamat()):null);
+				registerPerusahaanData.setModelPerizinanData(perusahaan.getModelPerizinan() != null ? convertModelPerizinanToModelPerizinanData(perusahaan.getModelPerizinan()):null);
+				registerPerusahaanData.setSkalaUsahaData(perusahaan.getSkalaUsaha() != null ? convertSkalaUsahaToSkalaUsahaData(perusahaan.getSkalaUsaha()):null);
+				registerPerusahaanData.setPelakuUsaha(perusahaan.getPelakuUsaha() != null ? convertPelakuUsahaToPelakuUsahaData(perusahaan.getPelakuUsaha()):null);
+				registerPerusahaanData.setKontakPerusahaanData(perusahaan.getKontak() != null ? convertKontakToKontakData(perusahaan.getKontak()):null);
+				registerPerusahaanData.setNpwp(perusahaan.getId() != null ? perusahaan.getId():null);			
 			}			
 			registerPerusahaanData.setStatusVerifikasi(t.getStatusVerifikasi());
-			registerPerusahaanData.setKreator(convertAuthorityToAutorisasiData(t.getKreator()));
-			registerPerusahaanData.setVerifikator(convertAuthorityToAutorisasiData(t.getVerifikator()));
+			registerPerusahaanData.setKreator(t.getKreator() != null ? convertAuthorityToAutorisasiData(t.getKreator()):null);
+			registerPerusahaanData.setVerifikator(t.getVerifikator() != null ? convertAuthorityToAutorisasiData(t.getVerifikator()):null);
 			registerPerusahaanData.setTanggalRegistrasi(t.getTanggalRegistrasi());
 		}
 		

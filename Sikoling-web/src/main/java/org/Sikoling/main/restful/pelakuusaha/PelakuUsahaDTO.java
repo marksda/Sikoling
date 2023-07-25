@@ -21,7 +21,7 @@ public class PelakuUsahaDTO implements Serializable {
 		this.id = t.getId();
 		this.nama = t.getNama();
 		this.singkatan = t.getSingkatan();
-		this.kategoriPelakuUsaha = new KategoriPelakuUsahaDTO(t.getKategoriPelakuUsaha());
+		this.kategoriPelakuUsaha = t.getKategoriPelakuUsaha() != null ? new KategoriPelakuUsahaDTO(t.getKategoriPelakuUsaha()):null;
 	}
 
 	public String getId() {
@@ -60,10 +60,6 @@ public class PelakuUsahaDTO implements Serializable {
 		this.kategoriPelakuUsaha = kategoriPelakuUsaha;
 	}
 
-	public PelakuUsaha toPelakuUsaha() {
-		return new PelakuUsaha(id, nama, singkatan, kategoriPelakuUsaha.toKategoriPelakuUsaha());
-	}
-	
 	public int hashCode() {
 		int hash = 131;
         hash = 17 * hash + Objects.hashCode(this.id);
@@ -101,5 +97,11 @@ public class PelakuUsahaDTO implements Serializable {
 		return "DetailPelakuUsahaDTO{" + "id=" + this.id + ", nama=" + this.nama + "}";	    
 	}
 
+	public PelakuUsaha toPelakuUsaha() {
+		return new PelakuUsaha(
+				id, nama, singkatan, 
+				kategoriPelakuUsaha != null ? kategoriPelakuUsaha.toKategoriPelakuUsaha():null
+				);
+	}
 	
 }

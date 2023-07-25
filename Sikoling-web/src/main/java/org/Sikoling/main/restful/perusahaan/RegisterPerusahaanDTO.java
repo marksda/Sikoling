@@ -15,8 +15,7 @@ public class RegisterPerusahaanDTO implements Serializable {
 	private OtoritasDTO verifikator;
 	private PerusahaanDTO perusahaan;
 	private Boolean statusVerifikasi;	
-//	private List<AuthorityDTO> pengakses;
-	
+
 	public RegisterPerusahaanDTO() {
 	}
 	
@@ -27,8 +26,7 @@ public class RegisterPerusahaanDTO implements Serializable {
 			this.kreator = t.getKreator() != null ? new OtoritasDTO(t.getKreator()) : null;
 			this.verifikator = t.getVerifikator() != null ? new OtoritasDTO(t.getVerifikator()) : null;
 			this.perusahaan = t.getPerusahaan() != null ? new PerusahaanDTO(t.getPerusahaan()) : null;
-			this.statusVerifikasi = t.getStatusVerifikasi();
-					
+			this.statusVerifikasi = t.getStatusVerifikasi();					
 		}
 	}
 
@@ -80,20 +78,10 @@ public class RegisterPerusahaanDTO implements Serializable {
 		return statusVerifikasi;
 	}
 
-	public void setStatusVerifikasi(Boolean statusVerifikasi) {
+	public void setStatusVerifikasi(Boolean statusVerifikasi) 	{
 		this.statusVerifikasi = statusVerifikasi;
 	}
 	
-//	public List<AuthorityDTO> getPengakses() {
-//		return pengakses;
-//	}
-//	
-//
-//	public void setPengakses(List<AuthorityDTO> pengakses) {
-//		this.pengakses = pengakses;
-//	}
-	
-
 	@Override
 	public int hashCode() {
 		int hash = 91;

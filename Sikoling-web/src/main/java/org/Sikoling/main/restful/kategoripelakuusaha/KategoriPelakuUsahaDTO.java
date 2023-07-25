@@ -20,8 +20,7 @@ public class KategoriPelakuUsahaDTO implements Serializable {
 		if(t != null) {
 			this.id = t.getId();
 			this.nama = t.getNama();
-			this.skalaUsaha = t.getSkalaUsaha() != null ?
-					new SkalaUsahaDTO(t.getSkalaUsaha()) : null;
+			this.skalaUsaha = t.getSkalaUsaha() != null ? new SkalaUsahaDTO(t.getSkalaUsaha()) : null;
 		}
 	}
 
@@ -51,14 +50,6 @@ public class KategoriPelakuUsahaDTO implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	
-	public KategoriPelakuUsaha toKategoriPelakuUsaha() {
-		return new KategoriPelakuUsaha(
-				this.id, 
-				this.nama,
-				this.skalaUsaha != null ? this.skalaUsaha.toSkalaUsaha() : null				
-				);
 	}
 	
 	public int hashCode() {
@@ -98,4 +89,12 @@ public class KategoriPelakuUsahaDTO implements Serializable {
 		return "JenisPelakuUsahaDTO{" + "id=" + this.id + ", nama=" + this.nama + "}";	    
 	}
 
+	public KategoriPelakuUsaha toKategoriPelakuUsaha() {
+		return new KategoriPelakuUsaha(
+				this.id, 
+				this.nama,
+				this.skalaUsaha != null ? this.skalaUsaha.toSkalaUsaha() : null				
+				);
+	}
+	
 }

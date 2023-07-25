@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
-import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.perusahaan.IRegisterPerusahaanService;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -46,22 +46,37 @@ public class RegisterPerusahaanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO save(PerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {		
-		Otoritas kreator = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
+	@RequiredRole({Role.PEMRAKARSA})
+	public RegisterPerusahaanDTO save(RegisterPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {	
+		LocalDate tanggalRegistrasi = LocalDate.now();
+		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
-		return new RegisterPerusahaanDTO(
-				registerPerusahaanService.save(
-						new RegisterPerusahaan(
-								null, 
-								LocalDate.now(), 
-								kreator, 
-								null, 
-								d.toPerusahaan(),
-								false
-								)
-						)
-				);
+		Otoritas otoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
+		d.setKreator(new OtoritasDTO(otoritas));
+		if(d.getStatusVerifikasi().booleanValue() == true) {			
+			d.setStatusVerifikasi(Boolean.FALSE);
+		}
+			
+		return new RegisterPerusahaanDTO(registerPerusahaanService.save(d.toRegisterPerusahaan()));
+	}
+	
+	@Path("adm")
+	@POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN})
+	public RegisterPerusahaanDTO saveAdm(RegisterPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {	
+		LocalDate tanggalRegistrasi = LocalDate.now();
+		d.setTanggalRegistrasi(tanggalRegistrasi);
+		
+		Otoritas otoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
+		d.setKreator(new OtoritasDTO(otoritas));
+		if(d.getStatusVerifikasi().booleanValue() == true) {			
+			d.setVerifikator(new OtoritasDTO(otoritas));
+		}
+			
+		return new RegisterPerusahaanDTO(registerPerusahaanService.save(d.toRegisterPerusahaan()));
 	}
 	
 	@PUT
@@ -69,11 +84,8 @@ public class RegisterPerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO update(PerusahaanDTO d) {
-		RegisterPerusahaanDTO registerPerusahaanDTO = new RegisterPerusahaanDTO();
-		registerPerusahaanDTO.setPerusahaan(d);
-		
-		return new RegisterPerusahaanDTO(registerPerusahaanService.update(registerPerusahaanDTO.toRegisterPerusahaan()));
+	public RegisterPerusahaanDTO update(RegisterPerusahaanDTO d) {		
+		return new RegisterPerusahaanDTO(registerPerusahaanService.update(d.toRegisterPerusahaan()));
 	}
 	
 	@Path("id/{idLama}")
@@ -86,12 +98,15 @@ public class RegisterPerusahaanController {
 		return new RegisterPerusahaanDTO(registerPerusahaanService.updateId(idLama, d.toRegisterPerusahaan()));
 	}
 	
-	@Path("{id}")
+	@Path("{idRegisterPerusahaan}")
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO delete(RegisterPerusahaanDTO d) throws IOException {
+	public RegisterPerusahaanDTO delete(@PathParam("idRegisterPerusahaan") String idRegisterPerusahaan) throws IOException {
+		RegisterPerusahaanDTO d = new RegisterPerusahaanDTO();
+		d.setId(idRegisterPerusahaan);
+		
 		return new RegisterPerusahaanDTO(registerPerusahaanService.delete(d.toRegisterPerusahaan()));
 	}
 		

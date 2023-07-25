@@ -3,7 +3,6 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 import java.io.IOException;
 import java.util.List;
 
-import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
