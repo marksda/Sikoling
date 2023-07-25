@@ -8,7 +8,7 @@ import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IDesaRepository;
 import org.Sikoling.ejb.abstraction.repository.IFlowLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IHakAksesRepository;
-import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IJabatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IJenisKelaminRepository;
@@ -46,8 +46,8 @@ import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.SkalaUsahaService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
-import org.Sikoling.ejb.abstraction.service.dokumen.MasterDokumenService;
-import org.Sikoling.ejb.abstraction.service.dokumen.IMasterDokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.DokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IKategoriDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IKbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
@@ -239,9 +239,9 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IMasterDokumenService getDokumenService(
-			@Infrastructure IMasterDokumenRepository dokumenRepository) {
-		return new MasterDokumenService(dokumenRepository);
+	public IDokumenService getDokumenService(
+			@Infrastructure IDokumenRepository dokumenRepository) {
+		return new DokumenService(dokumenRepository);
 	}
 	
 	@Produces

@@ -6,7 +6,7 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.Local;
@@ -16,10 +16,10 @@ import jakarta.inject.Inject;
 @Stateless
 @Local
 @Infrastructure
-public class MasterDokumenRepositoryEJB implements IMasterDokumenRepository {
+public class DokumenRepositoryEJB implements IDokumenRepository {
 
 	@Inject
-	private MasterDokumenRepositoryJPA dokumenPerusahaanRepository;
+	private DokumenRepositoryJPA dokumenPerusahaanRepository;
 
 	@Override
 	public Dokumen save(Dokumen t) throws IOException {

@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,10 +52,12 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	
 	@Override
 	public RegisterDokumen updateId(String idLama, RegisterDokumen t) throws IOException {
-		RegisterDokumenData dataLama = entityManager.find(RegisterDokumenData.class, idLama);
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("RegisterDokumenData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
 			RegisterDokumenData registerDokumenData = dataConverter.convertRegisterDokumenToRegisterDokumenData(t);
-			entityManager.remove(dataLama);	
 			RegisterDokumenData dataTermerge = entityManager.merge(registerDokumenData);
 			entityManager.flush();
 			return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(dataTermerge);

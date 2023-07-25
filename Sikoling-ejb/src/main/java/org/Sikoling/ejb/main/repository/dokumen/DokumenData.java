@@ -11,13 +11,11 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="master.tbl_dokumen_perusahaan")
+@Table(name="master.tbl_dokumen")
 @NamedQueries({
-	@NamedQuery(name="MasterDokumenData.findAll", query = "SELECT d FROM MasterDokumenData d"),
-	@NamedQuery(name="MasterDokumenData.findByNama", query = "SELECT d FROM MasterDokumenData d WHERE d.nama LIKE :nama"),
-	@NamedQuery(name="MasterDokumenData.findByKategori", query = "SELECT d FROM MasterDokumenData d WHERE d.kategoriDokumenData.id = :kategori")
+	@NamedQuery(name="DokumenData.updateId", query="UPDATE DokumenData SET id = :idBaru WHERE id = :idLama")
 })
-public class MasterDokumenData implements Serializable {
+public class DokumenData implements Serializable {
 
 	private static final long serialVersionUID = -3312507197298632070L;
 	
@@ -30,7 +28,7 @@ public class MasterDokumenData implements Serializable {
 	@ManyToOne(optional = false)
 	private KategoriDokumenData kategoriDokumenData;
 
-	public MasterDokumenData() {
+	public DokumenData() {
 	}
 
 	public String getId() {

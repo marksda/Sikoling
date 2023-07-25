@@ -57,7 +57,7 @@ import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.KbliData;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
-import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.DokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenNibOssData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterKbliData;
@@ -292,7 +292,7 @@ public class DataConverter {
 		return propinsi;		
 	}
 	
-	public Dokumen convertMasterDokumenDataToMasterDokumen(MasterDokumenData d) {
+	public Dokumen convertMasterDokumenDataToMasterDokumen(DokumenData d) {
 		Dokumen dokumen = null;
 		
 		if(d != null) {
@@ -1337,7 +1337,7 @@ public class DataConverter {
 					id != null ? id : getGenerateIdRegisterDokumen()
 					);
 			registerDokumenData.setPerusahaanData(
-					t.getPerusahaan() != null ? convertRegisterPerusahaanToRegisterPerusahaanData(t.getPerusahaan()):null
+					t.getRegisterPerusahaan() != null ? convertRegisterPerusahaanToRegisterPerusahaanData(t.getRegisterPerusahaan()):null
 					);	
 			registerDokumenData.setDokumenData(
 					dokumen != null ? convertMasterDokumenToMasterDokumenData(dokumen):null
@@ -1550,8 +1550,8 @@ public class DataConverter {
 		return flowLogData;
 	}
 		
-	public MasterDokumenData convertMasterDokumenToMasterDokumenData(Dokumen t) {
-		MasterDokumenData masterDokumenData = new MasterDokumenData();
+	public DokumenData convertMasterDokumenToMasterDokumenData(Dokumen t) {
+		DokumenData masterDokumenData = new DokumenData();
 		
 		if(t != null) {
 			masterDokumenData.setId(t.getId());

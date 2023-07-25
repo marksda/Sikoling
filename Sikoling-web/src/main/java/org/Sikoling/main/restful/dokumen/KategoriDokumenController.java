@@ -63,12 +63,16 @@ public class KategoriDokumenController {
 		return new KategoriDokumenDTO(kategoriDokumenService.updateId(idLama, d.toKategoriDokumen()));
 	}
 	
+	@Path("{idKategoriDokumen}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public KategoriDokumenDTO delete(KategoriDokumenDTO d) throws IOException {
+	public KategoriDokumenDTO delete(@PathParam("idKategoriDokumen") String idKategoriDokumen) throws IOException {
+		KategoriDokumenDTO d = new KategoriDokumenDTO();
+		d.setId(idKategoriDokumen);
+		
 		return new KategoriDokumenDTO(kategoriDokumenService.delete(d.toKategoriDokumen()));
 	}
 	

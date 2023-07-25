@@ -13,11 +13,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_register_dokumen")
+@NamedQueries({
+	@NamedQuery(name="RegisterDokumenData.updateId", query="UPDATE RegisterDokumenData SET id = :idBaru WHERE id = :idLama")
+})
 public class RegisterDokumenData implements Serializable {
 
 	private static final long serialVersionUID = 781878194764826140L;
@@ -31,7 +36,7 @@ public class RegisterDokumenData implements Serializable {
 	
 	@JoinColumn(name = "dokumen", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne
-	private MasterDokumenData dokumenData;
+	private DokumenData dokumenData;
 	
 	@Column(name="tanggal_registrasi", insertable = true, updatable = true)
 	private LocalDate tanggalRegistrasi;
@@ -127,11 +132,11 @@ public class RegisterDokumenData implements Serializable {
 		this.perusahaanData = perusahaanData;
 	}
 
-	public MasterDokumenData getDokumenData() {
+	public DokumenData getDokumenData() {
 		return dokumenData;
 	}
 
-	public void setDokumenData(MasterDokumenData dokumenData) {
+	public void setDokumenData(DokumenData dokumenData) {
 		this.dokumenData = dokumenData;
 	}
 

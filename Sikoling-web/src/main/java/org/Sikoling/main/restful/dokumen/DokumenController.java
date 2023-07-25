@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.Sikoling.ejb.abstraction.service.dokumen.IMasterDokumenService;
+import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -33,7 +33,7 @@ import jakarta.ws.rs.core.UriInfo;
 public class DokumenController {
 	
 	@Inject
-	private IMasterDokumenService dokumenService;
+	private IDokumenService dokumenService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -62,12 +62,16 @@ public class DokumenController {
 		return new DokumenDTO(dokumenService.updateId(idLama, d.toDokumen()));
 	}
 	
+	@Path("{idDokumen}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public DokumenDTO delete(DokumenDTO d) throws IOException {
+	public DokumenDTO delete(@PathParam("idDokumen") String idDokumen) throws IOException {
+		DokumenDTO d = new DokumenDTO();
+		d.setId(idDokumen);
+		
 		return new DokumenDTO(dokumenService.delete(d.toDokumen()));
 	}
 	

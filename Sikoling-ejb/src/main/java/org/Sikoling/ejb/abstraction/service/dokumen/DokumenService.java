@@ -6,13 +6,13 @@ import java.util.List;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 
-public class MasterDokumenService implements IMasterDokumenService {
+public class DokumenService implements IDokumenService {
 	
-	private final IMasterDokumenRepository dokumenRepository;
+	private final IDokumenRepository dokumenRepository;
 	
-	public MasterDokumenService(IMasterDokumenRepository dokumenRepository) {
+	public DokumenService(IDokumenRepository dokumenRepository) {
 		this.dokumenRepository = dokumenRepository;
 	}
 

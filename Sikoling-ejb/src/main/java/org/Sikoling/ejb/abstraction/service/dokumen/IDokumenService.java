@@ -7,7 +7,7 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 
-public interface IMasterDokumenService {
+public interface IDokumenService {
 	Dokumen save(Dokumen t) throws IOException;
 	Dokumen update(Dokumen t);
 	Dokumen updateId(String idLama, Dokumen t) throws IOException;

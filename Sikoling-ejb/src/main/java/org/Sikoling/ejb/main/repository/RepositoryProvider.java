@@ -4,7 +4,7 @@ import java.util.Properties;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
-import org.Sikoling.ejb.main.repository.dokumen.MasterDokumenRepositoryJPA;
+import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KbliRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenRepositoryJPA;
@@ -169,8 +169,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public MasterDokumenRepositoryJPA getDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
-		return new MasterDokumenRepositoryJPA(entityManager, dataConverter);
+	public DokumenRepositoryJPA getDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+		return new DokumenRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

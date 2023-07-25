@@ -10,21 +10,22 @@ import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.repository.IMasterDokumenRepository;
+import org.Sikoling.ejb.abstraction.repository.IDokumenRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
+public class DokumenRepositoryJPA implements IDokumenRepository {
 
 	private final EntityManager entityManager;	
 	private final DataConverter dataConverter;	
 	
-	public MasterDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
+	public DokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.dataConverter = dataConverter;
 	}
@@ -32,7 +33,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	@Override
 	public Dokumen save(Dokumen t) throws IOException {
 		try {
-			MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
+			DokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
 			entityManager.persist(detailDokumenPerusahaanData);
 			entityManager.flush();
 			return dataConverter.convertMasterDokumenDataToMasterDokumen(detailDokumenPerusahaanData);
@@ -44,19 +45,21 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	@Override
 	public Dokumen update(Dokumen t) {
-		MasterDokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
-		MasterDokumenData dataTermerge = entityManager.merge(detailDokumenPerusahaanData);
+		DokumenData detailDokumenPerusahaanData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
+		DokumenData dataTermerge = entityManager.merge(detailDokumenPerusahaanData);
 		entityManager.flush();
 		return dataConverter.convertMasterDokumenDataToMasterDokumen(dataTermerge);
 	}
 
 	@Override
 	public Dokumen updateId(String idLama, Dokumen t) throws IOException {
-		MasterDokumenData dataLama = entityManager.find(MasterDokumenData.class, t.getId());
-		if(dataLama != null) {			
-			MasterDokumenData masterDokumenData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
-			entityManager.remove(dataLama);
-			MasterDokumenData dataTermerge = entityManager.merge(masterDokumenData);
+		Query query = entityManager.createNamedQuery("DokumenData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {			
+			DokumenData masterDokumenData = dataConverter.convertMasterDokumenToMasterDokumenData(t);
+			DokumenData dataTermerge = entityManager.merge(masterDokumenData);
 			entityManager.flush();
 			
 			return dataConverter.convertMasterDokumenDataToMasterDokumen(dataTermerge);
@@ -68,7 +71,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 
 	@Override
 	public Dokumen delete(Dokumen t) throws IOException {
-		MasterDokumenData dokumenData = entityManager.find(MasterDokumenData.class, t.getId());
+		DokumenData dokumenData = entityManager.find(DokumenData.class, t.getId());
 		
 		if(dokumenData != null) {
 			entityManager.remove(dokumenData);
@@ -84,8 +87,8 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	@Override
 	public List<Dokumen> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<MasterDokumenData> cq = cb.createQuery(MasterDokumenData.class);
-		Root<MasterDokumenData> root = cq.from(MasterDokumenData.class);		
+		CriteriaQuery<DokumenData> cq = cb.createQuery(DokumenData.class);
+		Root<DokumenData> root = cq.from(DokumenData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
@@ -151,7 +154,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 			}			
 		}
 		
-		TypedQuery<MasterDokumenData> q = null;		
+		TypedQuery<DokumenData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
 			q = entityManager.createQuery(cq)
 					.setMaxResults(queryParamFilters.getPageSize())
@@ -171,7 +174,7 @@ public class MasterDokumenRepositoryJPA implements IMasterDokumenRepository {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<MasterDokumenData> root = cq.from(MasterDokumenData.class);		
+		Root<DokumenData> root = cq.from(DokumenData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();

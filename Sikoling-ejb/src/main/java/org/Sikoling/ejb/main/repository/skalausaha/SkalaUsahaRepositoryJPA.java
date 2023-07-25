@@ -57,10 +57,7 @@ public class SkalaUsahaRepositoryJPA implements ISkalaUsahaRepository {
 		int updateCount = query.executeUpdate();
 		if(updateCount > 0) {
 			try {
-//				SkalaUsahaData dataLama = entityManager.find(SkalaUsahaData.class, t.getId());
 				SkalaUsahaData skalaUsahaData = dataConverter.convertSkalaUsahaToSkalaUsahaData(t);
-//				dataLama.setNama(skalaUsahaData.getNama());
-//				dataLama.setSingkatan(skalaUsahaData.getSingkatan());
 				SkalaUsahaData dataTermerge = entityManager.merge(skalaUsahaData);
 				entityManager.flush();
 				return dataConverter.convertSkalaUsahaDataToSkalaUsaha(dataTermerge);

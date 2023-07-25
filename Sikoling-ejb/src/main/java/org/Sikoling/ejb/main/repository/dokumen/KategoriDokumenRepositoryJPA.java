@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,11 +52,12 @@ public class KategoriDokumenRepositoryJPA implements IKategoriDokumenRepository 
 
 	@Override
 	public KategoriDokumen updateId(String idLama, KategoriDokumen t) throws IOException {
-		KategoriDokumenData dataLama = entityManager.find(KategoriDokumenData.class, idLama);
-		
-		if(dataLama != null) {
+		Query query = entityManager.createNamedQuery("KategoriDokumenData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();		
+		if(updateCount > 0) {
 			KategoriDokumenData kategoriDokumenData = dataConverter.convertKategoriDokumenToKategoriDokumenData(t);
-			entityManager.remove(dataLama);	
 			KategoriDokumenData dataTermerge = entityManager.merge(kategoriDokumenData);
 			entityManager.flush();
 			return dataConverter.convertKategoriDokumenDataToKategoriDokumen(dataTermerge);

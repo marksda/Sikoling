@@ -77,12 +77,16 @@ public class RegisterDokumenController {
 		return new RegisterDokumenDTO(registerDokumenService.updateId(idLama, d.toRegisterDokumen()));
 	}
 
+	@Path("{idRegisterDokumen}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterDokumenDTO delete(RegisterDokumenDTO d) throws IOException {
+	public RegisterDokumenDTO delete(@PathParam("idRegisterDokumen") String idRegisterDokumen) throws IOException {
+		RegisterDokumenDTO d = new RegisterDokumenDTO();
+		d.setId(idRegisterDokumen);
+		
 		return new RegisterDokumenDTO(registerDokumenService.delete(d.toRegisterDokumen()));
 	}
 	

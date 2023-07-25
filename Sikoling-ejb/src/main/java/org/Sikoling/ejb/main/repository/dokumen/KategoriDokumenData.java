@@ -9,10 +9,9 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="master.tbl_kategori_dokumen_perusahaan")
+@Table(name="master.tbl_kategori_dokumen")
 @NamedQueries({
-	@NamedQuery(name="KategoriDokumenData.findAll", query = "SELECT d FROM KategoriDokumenData d"),
-	@NamedQuery(name="KategoriDokumenData.findByName", query = "SELECT d FROM KategoriDokumenData d WHERE d.nama LIKE :nama")
+	@NamedQuery(name="KategoriDokumenData.updateId", query="UPDATE KategoriDokumenData SET id = :idBaru WHERE id = :idLama")
 })
 public class KategoriDokumenData implements Serializable {
 
