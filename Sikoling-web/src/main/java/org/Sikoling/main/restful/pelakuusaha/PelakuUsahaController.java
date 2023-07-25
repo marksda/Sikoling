@@ -64,12 +64,16 @@ public class PelakuUsahaController {
 		return new PelakuUsahaDTO(pelakuUsahaServices.updateId(idLama, d.toPelakuUsaha()));
 	}
 	
+	@Path("{idPelakuUsaha}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PelakuUsahaDTO delete(PelakuUsahaDTO d) throws IOException {
+	public PelakuUsahaDTO delete(@PathParam("idPelakuUsaha") String idPelakuUsaha) throws IOException {
+		PelakuUsahaDTO d = new PelakuUsahaDTO();
+		d.setId(idPelakuUsaha);
+		
 		return new PelakuUsahaDTO(pelakuUsahaServices.delete(d.toPelakuUsaha()));
 	}
 	

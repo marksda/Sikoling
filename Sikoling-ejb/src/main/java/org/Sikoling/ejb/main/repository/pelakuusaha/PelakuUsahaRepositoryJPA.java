@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.repository.IPelakuUsahaRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -54,10 +55,12 @@ public class PelakuUsahaRepositoryJPA implements IPelakuUsahaRepository {
 
 	@Override
 	public PelakuUsaha updateId(String idLama, PelakuUsaha t) throws IOException {
-		PelakuUsahaData dataLama = entityManager.find(PelakuUsahaData.class, idLama);
-		if(dataLama != null) {
-			PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);
-			entityManager.remove(dataLama);	
+		Query query = entityManager.createNamedQuery("PelakuUsahaData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			PelakuUsahaData pelakuUsahaData = dataConverter.convertPelakuUsahaToPelakuUsahaData(t);			
 			PelakuUsahaData dataTermerge = entityManager.merge(pelakuUsahaData);
 			entityManager.flush();
 			return dataConverter.convertPelakuUsahaDataToPelakuUsaha(dataTermerge);
