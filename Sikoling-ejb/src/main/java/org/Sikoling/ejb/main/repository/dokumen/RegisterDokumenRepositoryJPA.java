@@ -106,8 +106,11 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			case "nama_perusahaan":
 				daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), filter.getValue().toLowerCase()+"%"));
 				break;
-			case "id_dokumen":
+			case "jenisDokumen":
 				daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
+				break;
+			case "statusVerified":
+				daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
 				break;
 			default:
 				break;
@@ -159,6 +162,14 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					cq.orderBy(cb.desc(root.get("tanggalRegistrasi")));
 				}
 				break;
+			case "statusVerified":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("statusVerified")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("statusVerified")));
+				}
+				break;
 			default:
 				break;
 			}			
@@ -206,8 +217,11 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			case "nama_perusahaan":
 				daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), filter.getValue().toLowerCase()+"%"));
 				break;
-			case "id_dokumen":
+			case "jenisDokumen":
 				daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
+				break;
+			case "statusVerified":
+				daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
 				break;
 			default:
 				break;
