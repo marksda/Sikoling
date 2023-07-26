@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
+import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
-import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
 import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;

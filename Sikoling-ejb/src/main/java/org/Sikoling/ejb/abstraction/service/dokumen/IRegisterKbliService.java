@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
+import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
 
 public interface IRegisterKbliService {
 	RegisterKbli save(RegisterKbli t) throws IOException;

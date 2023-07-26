@@ -10,18 +10,18 @@ public class DokumenNibOss extends Dokumen implements Serializable {
 	private static final long serialVersionUID = 5827527013544422359L;
 	private final String nomor;
 	private final LocalDate tanggal;
-	private final List<RegisterKbli> daftarRegisterKbli;	
+	private final List<Kbli> daftarKbli;	
 	
 	public DokumenNibOss(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
-			List<RegisterKbli> daftarRegisterKbli) {
+			List<Kbli> daftarKbli) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
-		this.daftarRegisterKbli = daftarRegisterKbli;
+		this.daftarKbli = daftarKbli;
 	}	
 	
-	public List<RegisterKbli> getDaftarRegisterKbli() {
-		return daftarRegisterKbli;
+	public List<Kbli> getDaftarKbli() {
+		return daftarKbli;
 	}
 
 	public static long getSerialversionuid() {

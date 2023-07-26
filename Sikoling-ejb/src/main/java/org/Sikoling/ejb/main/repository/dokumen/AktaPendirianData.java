@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.Sikoling.ejb.main.repository.perusahaan.PegawaiData;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
@@ -38,7 +39,7 @@ public class AktaPendirianData implements Serializable {
 	private PegawaiData penanggungJawabData;
 
 	@MapsId
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private RegisterDokumenData registerDokumenData;
 	
@@ -85,13 +86,13 @@ public class AktaPendirianData implements Serializable {
 		this.penanggungJawabData = penanggungJawabData;
 	}
 
-	public RegisterDokumenData getRegisterDokumenData() {
-		return registerDokumenData;
-	}
-
-	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
-		this.registerDokumenData = registerDokumenData;
-	}
+//	public RegisterDokumenData getRegisterDokumenData() {
+//		return registerDokumenData;
+//	}
+//
+//	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
+//		this.registerDokumenData = registerDokumenData;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

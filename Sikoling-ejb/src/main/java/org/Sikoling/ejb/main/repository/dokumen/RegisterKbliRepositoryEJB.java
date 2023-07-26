@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
-import org.Sikoling.ejb.abstraction.entity.dokumen.RegisterKbli;
+import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
 import org.Sikoling.ejb.abstraction.repository.IRegisterKbliRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 

@@ -21,7 +21,7 @@ public class RegisterDokumenDTO implements Serializable {
 	private String id;
 	private DokumenDTO dokumen;
 //	@JsonbTransient
-	private RegisterPerusahaanDTO perusahaan;
+	private RegisterPerusahaanDTO registerPerusahaan;
 	private String lokasiFile;
 	private StatusDokumenDTO statusDokumen;
 	private LocalDate tanggalRegistrasi;
@@ -57,7 +57,7 @@ public class RegisterDokumenDTO implements Serializable {
 				this.dokumen = null;
 			}
 			
-			this.perusahaan = t.getRegisterPerusahaan() != null ? new RegisterPerusahaanDTO(t.getRegisterPerusahaan()) : null;
+			this.registerPerusahaan = t.getRegisterPerusahaan() != null ? new RegisterPerusahaanDTO(t.getRegisterPerusahaan()) : null;
 			this.lokasiFile = t.getLokasiFile();
 			this.statusDokumen = t.getStatusDokumen() != null ? new StatusDokumenDTO(t.getStatusDokumen()) : null;
 			this.tanggalRegistrasi = t.getTanggalRegistrasi();
@@ -90,12 +90,12 @@ public class RegisterDokumenDTO implements Serializable {
 		this.dokumen = dokumen;
 	}
 
-	public RegisterPerusahaanDTO getPerusahaan() {
-		return perusahaan;
+	public RegisterPerusahaanDTO getRegisterPerusahaan() {
+		return registerPerusahaan;
 	}
 
-	public void setPerusahaan(RegisterPerusahaanDTO perusahaan) {
-		this.perusahaan = perusahaan;
+	public void setRegisterPerusahaan(RegisterPerusahaanDTO registerPerusahaan) {
+		this.registerPerusahaan = registerPerusahaan;
 	}
 
 	public String getLokasiFile() {
@@ -154,7 +154,7 @@ public class RegisterDokumenDTO implements Serializable {
             return false;
         }   
         
-        if (!this.perusahaan.getId().equals(other.getPerusahaan().getId())) {
+        if (!this.registerPerusahaan.getId().equals(other.getRegisterPerusahaan().getId())) {
             return false;
         }  
 
@@ -168,7 +168,7 @@ public class RegisterDokumenDTO implements Serializable {
 				.concat(", namaDokumen=")
 				.concat(dokumen.getNama())
 				.concat(", idRegisterPerusahaan=")
-				.concat(perusahaan.getId())
+				.concat(registerPerusahaan.getId())
 				.concat("}");	  
 	}
 
@@ -199,7 +199,7 @@ public class RegisterDokumenDTO implements Serializable {
 		return new RegisterDokumen(
 				id,
 				dokumen,
-				perusahaan != null ? perusahaan.toRegisterPerusahaan() : null,
+				registerPerusahaan != null ? registerPerusahaan.toRegisterPerusahaan() : null,
 				lokasiFile, 
 				statusDokumen != null ? statusDokumen.toStatusDokumen() : null,
 				tanggalRegistrasi, 

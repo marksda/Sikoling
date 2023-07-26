@@ -121,5 +121,4 @@ public class RegisterDokumenController {
 		return registerDokumenService.getJumlahData(queryParamFiltersDTO.toQueryParamFilters().getFilters());
 	}
 	
-
 }

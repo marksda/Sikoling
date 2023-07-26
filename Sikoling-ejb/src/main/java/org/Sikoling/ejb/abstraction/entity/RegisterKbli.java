@@ -1,7 +1,10 @@
-package org.Sikoling.ejb.abstraction.entity.dokumen;
+package org.Sikoling.ejb.abstraction.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
+import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 
 public class RegisterKbli implements Serializable {
 

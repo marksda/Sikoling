@@ -151,6 +151,14 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					cq.orderBy(cb.desc(root.get("dokumenData").get("nama")));
 				}
 				break;
+			case "tanggalRegistrasi":
+				if(sort.getValue().equals("ASC")) {
+					cq.orderBy(cb.asc(root.get("tanggalRegistrasi")));
+				}
+				else {
+					cq.orderBy(cb.desc(root.get("tanggalRegistrasi")));
+				}
+				break;
 			default:
 				break;
 			}			
@@ -168,7 +176,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		return q.getResultList()
 				.stream()
-				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(d))
+				.map(d -> dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(d))
 				.collect(Collectors.toList());
 	}
 	

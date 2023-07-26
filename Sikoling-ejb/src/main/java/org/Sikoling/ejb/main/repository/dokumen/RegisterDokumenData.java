@@ -61,10 +61,10 @@ public class RegisterDokumenData implements Serializable {
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
 	private LampiranSuratArahanData lampiranSuratArahanData;
 	
-	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)
 	private AktaPendirianData aktaPendirianData;
 	
-	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)
 	private RekomendasiUKLUPLData rekomendasiUKLUPLData;
 	
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)

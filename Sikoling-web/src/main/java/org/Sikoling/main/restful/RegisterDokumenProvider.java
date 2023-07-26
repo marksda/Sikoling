@@ -68,7 +68,7 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 		         }
 		         else if(key.equals("perusahaan")) {
 		        	 RegisterPerusahaanDTO perusahaanDTO = jsonb.fromJson(jsonObject.toString(), RegisterPerusahaanDTO.class);
-		        	 registerDokumenDTO.setPerusahaan(perusahaanDTO);
+		        	 registerDokumenDTO.setRegisterPerusahaan(perusahaanDTO);
 		         }
 		         
 		     }

@@ -20,8 +20,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="transaksi.tbl_dok_nib")
 @NamedQueries({
-	@NamedQuery(name="DokumenNibOssData.findAll", query="SELECT d FROM DokumenNibOssData d"),
-	@NamedQuery(name="DokumenNibOssData.findByIdRegistrasi", query="SELECT d FROM DokumenNibOssData d WHERE d.registerDokumenData.id = :idRegister")
+	@NamedQuery(name="DokumenNibOssData.updateId", query="UPDATE DokumenNibOssData SET nomor = :idBaru WHERE id = :idLama")
 })
 public class DokumenNibOssData implements Serializable {
 
@@ -34,11 +33,11 @@ public class DokumenNibOssData implements Serializable {
 	private LocalDate tanggalPenetapan;
 
 	@JoinColumn(name = "register_dokumen", referencedColumnName = "id", insertable = true, updatable = true)
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private RegisterDokumenData registerDokumenData;
 
 	@OneToMany(mappedBy = "nib", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	private List<RegisterKbliData> daftarKbli;
+	private List<RegisterKbliData> daftarRegisterKbli;
 	
 	public DokumenNibOssData() {
 	}
@@ -59,12 +58,12 @@ public class DokumenNibOssData implements Serializable {
 		this.tanggalPenetapan = tanggalPenetapan;
 	}
 	
-	public List<RegisterKbliData> getDaftarKbli() {
-		return daftarKbli;
+	public List<RegisterKbliData> getDaftarRegisterKbli() {
+		return daftarRegisterKbli;
 	}
 
-	public void setDaftarKbli(List<RegisterKbliData> daftarKbli) {
-		this.daftarKbli = daftarKbli;
+	public void setDaftarRegisterKbli(List<RegisterKbliData> daftarRegisterKbli) {
+		this.daftarRegisterKbli = daftarRegisterKbli;
 	}
 	
 	public RegisterDokumenData getRegisterDokumenData() {
