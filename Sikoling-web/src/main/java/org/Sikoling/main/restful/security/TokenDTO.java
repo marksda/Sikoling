@@ -12,7 +12,7 @@ public class TokenDTO {
     private String hakAkses;
     private String accessToken;
     private String refreshToken;
-    private String expiresIn;
+    private Long expiresIn;
     
     public TokenDTO() {    	
     }
@@ -75,11 +75,11 @@ public class TokenDTO {
 		this.refreshToken = refreshToken;
 	}
 
-	public String getExpiresIn() {
+	public Long getExpiresIn() {
 		return expiresIn;
 	}
 
-	public void setExpiresIn(String expiresIn) {
+	public void setExpiresIn(Long expiresIn) {
 		this.expiresIn = expiresIn;
 	}
 

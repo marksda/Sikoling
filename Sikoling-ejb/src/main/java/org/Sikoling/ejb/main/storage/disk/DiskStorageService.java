@@ -60,7 +60,6 @@ public class DiskStorageService implements IStorageService {
 		
 		return Files.newInputStream(pathLocation);
 	}
-
 	
 	@Override
 	public Boolean delete(String fileName, String subPath) throws IOException {

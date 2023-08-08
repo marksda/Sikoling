@@ -908,6 +908,7 @@ public class DataConverter {
 		return autority;
 	}
 	
+	
 	/*-----------Converter Object To ObjectData-----------------------------------------------*/
 	
 	public JabatanData convertJabatanToJabatanData(Jabatan t) {
@@ -1676,7 +1677,7 @@ public class DataConverter {
 		
 		if(t != null) {
 			userRepresentation = new UserRepresentation();
-			userRepresentation.setId(t.getCredential().getUserName());
+			userRepresentation.setId(t.getPerson().getNik());
 			userRepresentation.setEmail(t.getPerson().getKontak().getEmail());
 	        userRepresentation.setUsername(t.getCredential().getUserName());
 	        userRepresentation.setFirstName(t.getPerson().getNama());

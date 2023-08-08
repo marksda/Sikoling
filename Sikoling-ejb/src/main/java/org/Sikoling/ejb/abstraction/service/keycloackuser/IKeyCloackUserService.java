@@ -19,7 +19,7 @@ public interface IKeyCloackUserService {
 	List<User> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);
 	Boolean cekUserName(String nama);
-	ResponToken getToken(Credential userAuthenticator);
-	ResponToken refreshToken(String refreshToken);
+	ResponToken getToken(Credential userAuthenticator) throws IOException;
+	ResponToken refreshToken(String userName, String refreshToken) throws IOException;
 	SimpleResponse addRegistrasi(Credential userAuthenticator, Person person);
 }

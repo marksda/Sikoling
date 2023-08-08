@@ -38,9 +38,6 @@ import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanReposito
 import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
-import org.Sikoling.ejb.abstraction.service.security.IOpenIdConnectService;
-import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
-import org.Sikoling.ejb.abstraction.service.security.OpenIdConnectionService;
 import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
@@ -114,7 +111,6 @@ import org.Sikoling.ejb.main.storage.disk.DiskStorageService;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
-import jakarta.ws.rs.client.Client;
 
 @Stateless
 @LocalBean
@@ -209,8 +205,7 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public ISkalaUsahaService getSkalaUsahaService(
-			@Infrastructure ISkalaUsahaRepository skalaUsahaRepository) {
+	public ISkalaUsahaService getSkalaUsahaService(@Infrastructure ISkalaUsahaRepository skalaUsahaRepository) {
 		return new SkalaUsahaService(skalaUsahaRepository);
 	}
 		
@@ -316,13 +311,13 @@ public class RestfulProvider {
 		return new PegawaiPerusahaanService(pegawaiPerusahaanRepository);
 	}
 	
-	@Produces
-	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {
-		return new OpenIdConnectionService(
-				tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"),
-				properties.getProperty("SSO_CLIENT_ID"),
-				properties.getProperty("SSO_CLIENT_SECRET"));
-	}
+//	@Produces
+//	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {
+//		return new OpenIdConnectionService(
+//				tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"),
+//				properties.getProperty("SSO_CLIENT_ID"),
+//				properties.getProperty("SSO_CLIENT_SECRET"));
+//	}
 	
 	@Produces
 	public IStorageService getStorageService(Properties properties) {

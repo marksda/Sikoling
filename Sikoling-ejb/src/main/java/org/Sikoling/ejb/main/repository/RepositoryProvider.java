@@ -36,13 +36,16 @@ import org.Sikoling.ejb.main.repository.propinsi.PropinsiRepositoryJPA;
 import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.security.user.keycloack.KeyCloakUserJPA;
+import org.apache.http.client.HttpClient;
+import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.ws.rs.client.Client;
 
 @Stateless
 @LocalBean
@@ -112,15 +115,16 @@ public class RepositoryProvider {
 //	}
 	
 	@Produces
-	public KeyCloakUserJPA getKeyCloakUserRepository(EntityManager entityManager, Properties properties, 
-			Client client, ITokenValidationService tokenValidationService,  DataConverter dataConverter) {
-		Keycloak keycloak = Keycloak.getInstance(
-			properties.getProperty("SSO_AUTH_URL"), "master", properties.getProperty("SSO_AUTH_USER"), 
-			properties.getProperty("SSO_AUTH_PASSWORD"), "admin-cli"
-        );
-		
-		return new KeyCloakUserJPA(keycloak, properties.getProperty("SSO_REALM"), entityManager, 
-				properties.getProperty("SSO_TOKEN_URL"), client, tokenValidationService, dataConverter);
+	public KeyCloakUserJPA getKeyCloakUserRepository(EntityManager entityManager, Properties properties, HttpClient client, ITokenValidationService tokenValidationService,  DataConverter dataConverter) {
+		Keycloak keycloak = KeycloakBuilder.builder()
+			     .serverUrl(properties.getProperty("SSO_AUTH_URL"))
+			     .realm(properties.getProperty("SSO_REALM"))
+			     .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
+			     .clientId(properties.getProperty("SSO_CLIENT_ID"))
+			     .clientSecret(properties.getProperty("SSO_CLIENT_SECRET"))
+			     .build();
+
+		return new KeyCloakUserJPA(keycloak, entityManager, client, dataConverter, properties);
 	}
 	
 	@Produces

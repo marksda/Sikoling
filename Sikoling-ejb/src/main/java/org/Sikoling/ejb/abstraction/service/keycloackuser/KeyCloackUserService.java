@@ -56,7 +56,7 @@ public class KeyCloackUserService implements IKeyCloackUserService {
 	}
 
 	@Override
-	public ResponToken getToken(Credential u) {		
+	public ResponToken getToken(Credential u) throws IOException {		
 		return userRepository.getToken(u);
 	}
 	
@@ -66,8 +66,8 @@ public class KeyCloackUserService implements IKeyCloackUserService {
 	}
 	
 	@Override
-	public ResponToken refreshToken(String refreshToken) {
-		return userRepository.refreshToken(refreshToken);
+	public ResponToken refreshToken(String userName, String refreshToken) throws IOException {
+		return userRepository.refreshToken(userName, refreshToken);
 	}
 
 		

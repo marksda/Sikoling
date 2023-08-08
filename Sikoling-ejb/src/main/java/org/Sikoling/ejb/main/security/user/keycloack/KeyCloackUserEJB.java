@@ -61,13 +61,13 @@ public class KeyCloackUserEJB implements IKeyCloackUserRepository{
 	}
 
 	@Override
-	public ResponToken getToken(Credential userAuthenticator) {
+	public ResponToken getToken(Credential userAuthenticator) throws IOException {
 		return keyCloakUser.getToken(userAuthenticator);
 	}
 
 	@Override
-	public ResponToken refreshToken(String refreshToken) {
-		return keyCloakUser.refreshToken(refreshToken);
+	public ResponToken refreshToken(String userName, String refreshToken) throws IOException {
+		return keyCloakUser.refreshToken(userName, refreshToken);
 	}
 
 	@Override

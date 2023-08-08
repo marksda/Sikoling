@@ -9,10 +9,10 @@ public class Token {
     private final String hakAkses;
     private final String accessToken;
     private final String refreshToken;
-    private final String expiresIn;
+    private final Long expiresIn;
 
     public Token(String userId, String userName, String userEmail, String accessToken, String refreshToken,
-			String expiresIn, String hakAkses) {
+			Long expiresIn, String hakAkses) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
@@ -46,7 +46,7 @@ public class Token {
 		return refreshToken;
 	}
 
-	public String getExpiresIn() {
+	public Long getExpiresIn() {
 		return expiresIn;
 	}
 

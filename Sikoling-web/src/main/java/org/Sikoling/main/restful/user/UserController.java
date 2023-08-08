@@ -12,6 +12,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -50,16 +51,16 @@ public class UserController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public ResponTokenDTO getToken(CredentialDTO u) {
+	public ResponTokenDTO getToken(CredentialDTO u) throws IOException {
 		return new ResponTokenDTO(userService.getToken(u.toCredential()));
 	}
 	
-	@Path("refresh_token")
+	@Path("refresh_token/{userName}")
 	@POST
     @Consumes({MediaType.TEXT_PLAIN})
     @Produces({MediaType.APPLICATION_JSON})
-	public ResponTokenDTO getRefreshToken(String refreshToken) {
-		return new ResponTokenDTO(userService.refreshToken(refreshToken));
+	public ResponTokenDTO getRefreshToken(@PathParam("userName") String userName, String refreshToken) throws IOException {
+		return new ResponTokenDTO(userService.refreshToken(userName, refreshToken));
 	}
 	
 	@Path("registrasi")
