@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.security.user.keycloack;
+package org.Sikoling.ejb.main.repository.user;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -24,7 +24,6 @@ import org.Sikoling.ejb.main.repository.DataConverter;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.Sikoling.ejb.main.repository.user.UserData;
 import org.apache.http.client.HttpClient;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
@@ -33,6 +32,7 @@ import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.authorization.client.AuthorizationDeniedException;
 import org.keycloak.authorization.client.AuthzClient;
 import org.keycloak.authorization.client.Configuration;
+import org.keycloak.protocol.oidc.client.authentication.ClientIdAndSecretCredentialsProvider;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.authorization.AuthorizationRequest;
@@ -198,16 +198,24 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 
 	@Override
 	public ResponToken getToken(Credential t) throws IOException {
-		 Map<String, Object> clientCredential = new HashMap<String, Object>();
-		 clientCredential.put("grant_type", OAuth2Constants.CLIENT_CREDENTIALS);
-		 clientCredential.put("client_secret", properties.getProperty("SSO_CLIENT_SECRET"));
+//		 Map<String, Object> clientCredential = new HashMap<String, Object>();
+//		 clientCredential.put("grant_type", OAuth2Constants.CLIENT_CREDENTIALS);
+//		 clientCredential.put("client_secret", properties.getProperty("SSO_CLIENT_SECRET"));
+		ClientIdAndSecretCredentialsProvider clientIdAndSecretCredentialsProvider = new ClientIdAndSecretCredentialsProvider();
+		
 		 
-		 Configuration configuration = new Configuration(
-				properties.getProperty("SSO_AUTH_URL"), 
-				properties.getProperty("SSO_REALM"), 
-				properties.getProperty("SSO_CLIENT_ID"), 
-				clientCredential, 
-				client);
+		 Configuration configuration = new Configuration();
+//				properties.getProperty("SSO_AUTH_URL"), 
+//				properties.getProperty("SSO_REALM"), 
+//				properties.getProperty("SSO_CLIENT_ID"), 
+//				clientCredential, 
+//				client);
+		 configuration.setAuthServerUrl(properties.getProperty("SSO_AUTH_URL"));
+		 configuration.setRealm(properties.getProperty("SSO_REALM"));
+//		 configuration.setClientCredentialsProvider(new ClientIdAndSecretCredentialsProvider());
+//		 configuration.setClientKeyPassword(properties.getProperty("SSO_CLIENT_SECRET"));
+		 configuration.setHttpClient(client);
+		 
 		 
 		AuthzClient authzClient = AuthzClient.create(configuration);
 		AuthorizationRequest request = new AuthorizationRequest();
@@ -418,11 +426,19 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 		}
 
 		RealmResource realmResource = keycloak.realm("dlhk");
-		UserResource userResource = realmResource.users().get(id);		
-		
-		if(userResource != null) {
-			return "remote";
+		UserResource userResource = null;
+		if(id == null) {
+			List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(nama, false);
+			if(!daftarUser.isEmpty()) {
+				return "remote";
+			}
 		}
+		else {
+			userResource = realmResource.users().get(id);
+			if(userResource != null) {
+				return "remote";
+			}
+		}		
 		
 		return "none";
 	}
