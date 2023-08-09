@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.HakAkses;
@@ -24,21 +20,15 @@ import org.Sikoling.ejb.main.repository.DataConverter;
 import org.Sikoling.ejb.main.repository.hakakses.HakAksesData;
 import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
 import org.Sikoling.ejb.main.repository.person.PersonData;
-import org.apache.http.client.HttpClient;
-import org.keycloak.OAuth2Constants;
+import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UserResource;
-import org.keycloak.authorization.client.AuthorizationDeniedException;
-import org.keycloak.authorization.client.AuthzClient;
-import org.keycloak.authorization.client.Configuration;
-import org.keycloak.protocol.oidc.client.authentication.ClientIdAndSecretCredentialsProvider;
+import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.keycloak.representations.idm.authorization.AuthorizationRequest;
-import org.keycloak.representations.idm.authorization.AuthorizationResponse;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
 
 public class KeyCloakUserJPA implements IKeyCloackUserRepository {
@@ -46,15 +36,13 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	private final EntityManager entityManager;
 	private final DataConverter dataConverter;
 	private final Keycloak keycloak;
-	private final HttpClient client;
-	private final Properties properties;
+	private final KeycloakClient keycloakClient;
 
-	public KeyCloakUserJPA(Keycloak keycloak, EntityManager entityManager, HttpClient client, DataConverter dataConverter, Properties properties) {
+	public KeyCloakUserJPA(KeycloakClient keycloakClient, Keycloak keycloak, EntityManager entityManager, DataConverter dataConverter) {
 		this.entityManager = entityManager;
 		this.keycloak = keycloak;
-		this.client = client;
+		this.keycloakClient = keycloakClient;
 		this.dataConverter = dataConverter;
-		this.properties = properties;
 	}
 	
 	@Override
@@ -198,91 +186,57 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 
 	@Override
 	public ResponToken getToken(Credential t) throws IOException {
-//		 Map<String, Object> clientCredential = new HashMap<String, Object>();
-//		 clientCredential.put("grant_type", OAuth2Constants.CLIENT_CREDENTIALS);
-//		 clientCredential.put("client_secret", properties.getProperty("SSO_CLIENT_SECRET"));
-		ClientIdAndSecretCredentialsProvider clientIdAndSecretCredentialsProvider = new ClientIdAndSecretCredentialsProvider();
-		
-		 
-		 Configuration configuration = new Configuration();
-//				properties.getProperty("SSO_AUTH_URL"), 
-//				properties.getProperty("SSO_REALM"), 
-//				properties.getProperty("SSO_CLIENT_ID"), 
-//				clientCredential, 
-//				client);
-		 configuration.setAuthServerUrl(properties.getProperty("SSO_AUTH_URL"));
-		 configuration.setRealm(properties.getProperty("SSO_REALM"));
-//		 configuration.setClientCredentialsProvider(new ClientIdAndSecretCredentialsProvider());
-//		 configuration.setClientKeyPassword(properties.getProperty("SSO_CLIENT_SECRET"));
-		 configuration.setHttpClient(client);
-		 
-		 
-		AuthzClient authzClient = AuthzClient.create(configuration);
-		AuthorizationRequest request = new AuthorizationRequest();
-		try {
-			AuthorizationResponse response = authzClient.authorization(t.getUserName(), t.getPassword()).authorize(request);
-			if(response != null) {
-				OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
-						.setParameter("userName", t.getUserName()).getSingleResult();
-				Token token = new Token(
-						autorisasiData.getId(), 
-						autorisasiData.getUserName(), 
-						autorisasiData.getUserName(), 
-						response.getToken(), 
-						response.getRefreshToken(), 
-						response.getExpiresIn(), 
-						autorisasiData.getHakAkses().getNama()
-						);
-				
-				return new ResponToken("oke", token);
-			}
-	        
+		AccessTokenResponse accessTokenResponse = keycloakClient.getAccessTokenResponse(t.getUserName(), t.getPassword());
+		if(accessTokenResponse != null) {
+			OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
+					.setParameter("userName", t.getUserName()).getSingleResult();
+			Token token = new Token(
+					autorisasiData.getId(), 
+					autorisasiData.getUserName(), 
+					autorisasiData.getUserName(), 
+					accessTokenResponse.getToken(), 
+					accessTokenResponse.getRefreshToken(), 
+					accessTokenResponse.getExpiresIn(), 
+					autorisasiData.getHakAkses().getNama()
+					);
+			
+			return new ResponToken("oke", token);
+		}
+		else {
 			throw new IOException("token error");
 		}
-		catch (AuthorizationDeniedException e) {
-			throw new IOException("token error");
-		}        
 	}
 	
 	@Override
 	public ResponToken refreshToken(String userName, String refreshToken) throws IOException {
-		Map<String, Object> clientCredential = new HashMap<String, Object>();
-		 clientCredential.put("grant_type", OAuth2Constants.REFRESH_TOKEN);
-		 clientCredential.put("refresh_token",refreshToken);
-		 clientCredential.put("client_secret", properties.getProperty("SSO_CLIENT_SECRET"));
-		 
-		 Configuration configuration = new Configuration(
-				properties.getProperty("SSO_AUTH_URL"), 
-				properties.getProperty("SSO_REALM"), 
-				properties.getProperty("SSO_CLIENT_ID"), 
-				clientCredential, 
-				client);
-		 
-		AuthzClient authzClient = AuthzClient.create(configuration);
-		AuthorizationRequest request = new AuthorizationRequest();
 		try {
-			AuthorizationResponse response = authzClient.authorization().authorize(request);
-			if(response != null) {
-				OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
-						.setParameter("userName", userName).getSingleResult();
+			OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
+					.setParameter("userName", userName).getSingleResult();
+			AccessTokenResponse accessTokenResponse = keycloakClient.getAccessTokenResponseRefreshToken(refreshToken);
+			
+			if(accessTokenResponse != null) {
+				
 				Token token = new Token(
 						autorisasiData.getId(), 
 						autorisasiData.getUserName(), 
 						autorisasiData.getUserName(), 
-						response.getToken(), 
-						response.getRefreshToken(), 
-						response.getExpiresIn(), 
+						accessTokenResponse.getToken(), 
+						accessTokenResponse.getRefreshToken(), 
+						accessTokenResponse.getExpiresIn(), 
 						autorisasiData.getHakAkses().getNama()
 						);
 				
 				return new ResponToken("oke", token);
 			}
-	        
-			throw new IOException("token error");
+			else {
+				throw new IOException("refresh token tidak berlaku");
+			}
+		} catch (NoResultException e) {
+			throw new IOException("user tidak dikenali sistem");
 		}
-		catch (AuthorizationDeniedException e) {
-			throw new IOException("token error");
-		}
+		
+		
+		
 	}
 		
 	@Override
@@ -424,7 +378,7 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 		if(count > 0) {
 			return "local";
 		}
-
+		
 		RealmResource realmResource = keycloak.realm("dlhk");
 		UserResource userResource = null;
 		if(id == null) {
@@ -457,5 +411,5 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		return null;
 	}
-		
+	
 }
