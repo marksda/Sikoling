@@ -1,26 +1,18 @@
-package org.Sikoling.ejb.main.security;
+package org.Sikoling.ejb.main.security.tokenvalidation;
 
 import java.util.Map;
 
-import org.Sikoling.ejb.abstraction.repository.ITokenValidationRepository;
+import org.Sikoling.ejb.abstraction.repository.ITokenValidation;
 import org.Sikoling.ejb.abstraction.service.security.AuthorizationException;
-import org.Sikoling.ejb.main.Infrastructure;
-
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.BadJWTException;
 import com.nimbusds.jwt.proc.JWTProcessor;
 
-import jakarta.ejb.LocalBean;
-import jakarta.ejb.Stateless;
-
-@Stateless
-@LocalBean
-@Infrastructure
-public class TokenValidationJWK implements ITokenValidationRepository {
+public class TokenValidation implements ITokenValidation {
 	
 	private final JWTProcessor<SecurityContext> jwtProcessor;
 
-    public TokenValidationJWK(JWTProcessor<SecurityContext> jwtProcessor) {
+    public TokenValidation(JWTProcessor<SecurityContext> jwtProcessor) {
         this.jwtProcessor = jwtProcessor;
     }
     

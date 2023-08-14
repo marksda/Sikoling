@@ -4,8 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
-
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.RemoteJWKSet;
@@ -24,13 +22,13 @@ import jakarta.enterprise.inject.Produces;
 @LocalBean
 public class SecurityProvider {
 	
-	@Produces
-	public KeycloakClient getKeycloakClient(Properties properties) {
-		return new KeycloakClient(
-				properties.getProperty("SSO_AUTH_URL"), properties.getProperty("SSO_REALM"), 
-				properties.getProperty("SSO_CLIENT_ID"), properties.getProperty("SSO_CLIENT_SECRET")
-				);
-	}
+//	@Produces
+//	public KeycloakClient getKeycloakClient(Properties properties) {
+//		return new KeycloakClient(
+//				properties.getProperty("SSO_AUTH_URL"), properties.getProperty("SSO_REALM"), 
+//				properties.getProperty("SSO_CLIENT_ID"), properties.getProperty("SSO_CLIENT_SECRET")
+//				);
+//	}
 
 	@Produces
 	public JWTProcessor<SecurityContext> getJWTProcessor(Properties properties) throws MalformedURLException {		

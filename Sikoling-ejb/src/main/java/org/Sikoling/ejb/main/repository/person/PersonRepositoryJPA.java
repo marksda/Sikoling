@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IPersonRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 
+import jakarta.enterprise.inject.Model;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -21,6 +22,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+@Model
 public class PersonRepositoryJPA implements IPersonRepository {
 	
 	private final EntityManager entityManager;

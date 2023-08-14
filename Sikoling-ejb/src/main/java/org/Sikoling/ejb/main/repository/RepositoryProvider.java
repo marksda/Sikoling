@@ -36,9 +36,13 @@ import org.Sikoling.ejb.main.repository.sex.JenisKelaminRepositoryJPA;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.user.KeyCloakUserJPA;
 import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
+import org.Sikoling.ejb.main.security.tokenvalidation.TokenValidation;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+
+import com.nimbusds.jose.proc.SecurityContext;
+import com.nimbusds.jwt.proc.JWTProcessor;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -106,6 +110,19 @@ public class RepositoryProvider {
 	@Produces
 	public PenanggungJawabRepositoryJPA getPenanggungJawabRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		return new PenanggungJawabRepositoryJPA(entityManager, dataConverter);
+	}
+	
+	@Produces
+	public TokenValidation getTokenValidation(JWTProcessor<SecurityContext> jwtProcessor) {
+		return new TokenValidation(jwtProcessor);
+	}
+	
+	@Produces
+	public KeycloakClient getKeycloakClient(Properties properties) {
+		return new KeycloakClient(
+				properties.getProperty("SSO_AUTH_URL"), properties.getProperty("SSO_REALM"), 
+				properties.getProperty("SSO_CLIENT_ID"), properties.getProperty("SSO_CLIENT_SECRET")
+				);
 	}
 	
 	@Produces

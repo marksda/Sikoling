@@ -2,13 +2,13 @@ package org.Sikoling.ejb.abstraction.service.security;
 
 import java.util.Map;
 
-import org.Sikoling.ejb.abstraction.repository.ITokenValidationRepository;
+import org.Sikoling.ejb.abstraction.repository.ITokenValidation;
 
 public class TokenValidationService implements ITokenValidationService {
 	
-	private final ITokenValidationRepository tokenValidationRepository;
+	private final ITokenValidation tokenValidationRepository;
 
-	public TokenValidationService(ITokenValidationRepository tokenValidationRepository) {
+	public TokenValidationService(ITokenValidation tokenValidationRepository) {
 		this.tokenValidationRepository = tokenValidationRepository;
 	}
 
