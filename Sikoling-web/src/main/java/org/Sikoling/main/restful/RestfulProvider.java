@@ -284,8 +284,7 @@ public class RestfulProvider {
 	}
 	
 	@Produces
-	public IStatusFlowLogServices getStatusFlowLogServices(
-			@Infrastructure IStatusFlowLogRepository statusFlowLogRepository) {
+	public IStatusFlowLogServices getStatusFlowLogServices(@Infrastructure IStatusFlowLogRepository statusFlowLogRepository) {
 		return new StatusFlowLogServices(statusFlowLogRepository);
 	}
 	

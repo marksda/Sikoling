@@ -9,12 +9,12 @@ import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 import org.Sikoling.ejb.abstraction.repository.IKategoriLogRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
-import jakarta.ejb.LocalBean;
+import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 @Stateless
-@LocalBean
+@Local
 @Infrastructure
 public class KategoriLogRepositoryEJB implements IKategoriLogRepository {
 	

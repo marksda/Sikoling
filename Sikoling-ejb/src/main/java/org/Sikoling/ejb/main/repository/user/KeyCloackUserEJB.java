@@ -13,12 +13,12 @@ import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
-import jakarta.ejb.LocalBean;
+import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 @Stateless
-@LocalBean
+@Local
 @Infrastructure
 public class KeyCloackUserEJB implements IKeyCloackUserRepository{
 	

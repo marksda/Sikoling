@@ -9,12 +9,12 @@ import org.Sikoling.ejb.abstraction.entity.log.FlowLog;
 import org.Sikoling.ejb.abstraction.repository.IFlowLogRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
-import jakarta.ejb.LocalBean;
+import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 @Stateless
-@LocalBean
+@Local
 @Infrastructure
 public class FlowLogRepositoryEJB implements IFlowLogRepository {
 
