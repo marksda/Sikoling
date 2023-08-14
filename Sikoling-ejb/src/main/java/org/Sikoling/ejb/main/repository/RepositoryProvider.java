@@ -1,7 +1,6 @@
 package org.Sikoling.ejb.main.repository;
 
 import java.util.Properties;
-import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
@@ -110,7 +109,7 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public KeyCloakUserJPA getKeyCloakUserRepository(EntityManager entityManager, Properties properties, ITokenValidationService tokenValidationService,  DataConverter dataConverter, KeycloakClient keycloakClient) {
+	public KeyCloakUserJPA getKeyCloakUserRepository(EntityManager entityManager, Properties properties,  DataConverter dataConverter, KeycloakClient keycloakClient) {
 		Keycloak keycloak = KeycloakBuilder.builder()
 			     .serverUrl(properties.getProperty("SSO_AUTH_URL"))
 			     .realm(properties.getProperty("SSO_REALM"))

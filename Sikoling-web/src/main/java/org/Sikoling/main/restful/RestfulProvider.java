@@ -35,9 +35,12 @@ import org.Sikoling.ejb.abstraction.repository.IRegisterPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
+import org.Sikoling.ejb.abstraction.repository.ITokenValidationRepository;
 import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
+import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.abstraction.service.security.TokenValidationService;
 import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
@@ -168,6 +171,12 @@ public class RestfulProvider {
 	public IPersonService getPersonService(
 			@Infrastructure IPersonRepository personRepository) {
 		return new PersonService(personRepository);
+	}
+	
+	
+	@Produces
+	public ITokenValidationService getTokenValidationService(@Infrastructure ITokenValidationRepository tokenValidationRepository) {
+		return new TokenValidationService(tokenValidationRepository);
 	}
 	
 	@Produces

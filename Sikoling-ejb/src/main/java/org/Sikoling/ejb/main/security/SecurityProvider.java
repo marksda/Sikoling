@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
 import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
 
 import com.nimbusds.jose.JWSAlgorithm;
@@ -44,8 +43,8 @@ public class SecurityProvider {
         return jwtProcessor;		
 	}
 	
-	@Produces
-    public ITokenValidationService getTokenValidationService(JWTProcessor<SecurityContext> jwtProcessor) {
-        return new TokenValidationJWK(jwtProcessor);
-    }
+//	@Produces
+//    public ITokenValidationService getTokenValidationService(JWTProcessor<SecurityContext> jwtProcessor) {
+//        return new TokenValidationJWK(jwtProcessor);
+//    }
 }
