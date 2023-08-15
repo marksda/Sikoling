@@ -75,5 +75,4 @@ public class KeyCloackUserEJB implements IKeyCloackUserRepository{
 		return keyCloakUser.addRegistrasi(userAuthenticator, person);
 	}
 	
-	
 }

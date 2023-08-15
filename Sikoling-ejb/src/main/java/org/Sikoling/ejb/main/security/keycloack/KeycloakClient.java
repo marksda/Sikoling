@@ -1,24 +1,25 @@
 package org.Sikoling.ejb.main.security.keycloack;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import org.Sikoling.ejb.abstraction.security.ITokenKeycloak;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.AccessTokenResponse;
 
-import jakarta.json.Json;
-import jakarta.json.stream.JsonParser;
-import jakarta.json.stream.JsonParser.Event;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 public class KeycloakClient implements ITokenKeycloak {
 	private final String serverUrl;
@@ -56,57 +57,32 @@ public class KeycloakClient implements ITokenKeycloak {
 	@Override
 	public AccessTokenResponse getAccessTokenResponseRefreshToken(String refreshToken) {
 		AccessTokenResponse accessTokenResponse = null;
+		Response response = null;
 		String url = serverUrl + "/realms/" + realmId + "/protocol/openid-connect/token";
-		HttpPost post = new HttpPost(url);
+		final WebTarget refreshTokenUri = ClientBuilder.newClient().target(url);
+		Form formRefreshToken = new Form();
+		formRefreshToken.param("client_id", clientId);
+		formRefreshToken.param("grant_type", OAuth2Constants.REFRESH_TOKEN);
+		formRefreshToken.param("client_secret", clientSecret);
+		formRefreshToken.param("refresh_token", refreshToken);	
 		
-		ArrayList<NameValuePair> parameters;
-		parameters = new ArrayList<NameValuePair>();
-		parameters.add(new BasicNameValuePair("client_id", clientId));
-		parameters.add(new BasicNameValuePair("grant_type", OAuth2Constants.REFRESH_TOKEN));
-		parameters.add(new BasicNameValuePair("client_secret", clientSecret));
-		parameters.add(new BasicNameValuePair("refresh_token", refreshToken));
-		
-		CloseableHttpClient httpClient = null;
-		CloseableHttpResponse response = null;
 		try {
-			post.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
-			httpClient = HttpClients.createDefault();
-			response = httpClient.execute(post);
-			JsonParser jsonParser = Json.createParser(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+			response = refreshTokenUri.request(MediaType.APPLICATION_FORM_URLENCODED).post(Entity.form(formRefreshToken));
+			ObjectMapper mapper = new ObjectMapper();
+		    JsonFactory factory = mapper.getFactory();
+		    JsonParser parser = factory.createParser(new InputStreamReader((InputStream) response.getEntity()));
+		    JsonNode node = mapper.readTree(parser);
 			accessTokenResponse = new AccessTokenResponse();
-			Event event = null;
-			while (jsonParser.hasNext()) {
-				event = jsonParser.next();
-				if (event == JsonParser.Event.KEY_NAME ) {	
-					String key = jsonParser.getString();
-					switch (key) {
-					case "access_token":
-						event = jsonParser.next();
-						accessTokenResponse.setToken(jsonParser.getString());
-						break;
-					case "refresh_token":
-						event = jsonParser.next();
-						accessTokenResponse.setRefreshToken(jsonParser.getString());
-						break;
-					case "expires_in":
-						event = jsonParser.next();
-						accessTokenResponse.setExpiresIn(jsonParser.getLong());
-						break;
-					case "refresh_expires_in":
-						event = jsonParser.next();
-						accessTokenResponse.setRefreshExpiresIn(jsonParser.getLong());
-						break;
-					default:
-						break;
-					}
-				}
-			}
-			
+			accessTokenResponse.setToken(node.get("access_token").asText());
+			accessTokenResponse.setRefreshToken(node.get("refresh_token").asText());
+			accessTokenResponse.setExpiresIn(node.get("expires_in").asLong());
+			accessTokenResponse.setExpiresIn(node.get("refresh_expires_in").asLong());
+			response.close();
 			return accessTokenResponse;
 		} catch (Exception e) {
+			response.close();
 			return null;
-		}
-			
+		}			
 
 	}
 	
