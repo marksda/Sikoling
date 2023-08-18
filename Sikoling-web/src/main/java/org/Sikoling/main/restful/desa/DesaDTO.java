@@ -53,6 +53,7 @@ public class DesaDTO implements Serializable {
 		return serialVersionUID;
 	}
 	
+	@Override
 	public int hashCode() {
 		int hash = 19;
         hash = 73 * hash + Objects.hashCode(this.id);
