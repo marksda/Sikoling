@@ -2,6 +2,10 @@ package org.Sikoling.main.restful.onlyoffice;
 
 import java.io.IOException;
 
+import org.Sikoling.main.restful.security.RequiredAuthorization;
+import org.Sikoling.main.restful.security.RequiredRole;
+import org.Sikoling.main.restful.security.Role;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.json.Json;
@@ -21,9 +25,19 @@ public class OnlyofficeController {
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-	public JsonObject getResponseTracker(RequestBodyPostDTO u) throws IOException {
-		JsonObject jsonObject = Json.createObjectBuilder().add("error", 0).build();
-		return jsonObject;
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public JsonObject getResponseTracker(RequestBodyPostDTO d) throws IOException {
+		int valid = 0;
+		switch (d.getStatus()) {
+		case 0:
+			
+			break;
+		default:
+			valid = 0;
+			break;
+		}
+		return Json.createObjectBuilder().add("error", valid).build();
 	}
 	
 }
