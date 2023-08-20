@@ -37,6 +37,7 @@ import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.user.KeyCloakUserJPA;
 import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
 import org.Sikoling.ejb.main.security.tokenvalidation.TokenValidation;
+import org.Sikoling.ejb.main.storage.LocalStorageImpl;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -256,5 +257,10 @@ public class RepositoryProvider {
 	@Produces
 	public PosisiTahapPemberkasanRepositoryJPA getPosisiTahapPemberkasanRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		return new PosisiTahapPemberkasanRepositoryJPA(entityManager, dataConverter);
+	}
+	
+	@Produces
+	public LocalStorageImpl getLocalStorageImpl(Properties properties) {
+		return new LocalStorageImpl(properties.getProperty("STORAGE_PATH"));
 	}
 }

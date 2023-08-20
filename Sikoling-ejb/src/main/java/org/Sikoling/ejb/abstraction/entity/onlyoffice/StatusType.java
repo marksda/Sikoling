@@ -14,5 +14,5 @@ public enum StatusType {
 
     public int getCode() {
        return code;
-    }
+    }    
 }

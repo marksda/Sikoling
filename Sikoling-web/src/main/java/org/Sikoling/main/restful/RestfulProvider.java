@@ -1,7 +1,5 @@
 package org.Sikoling.main.restful;
 
-import java.util.Properties;
-
 import org.Sikoling.ejb.abstraction.repository.IOtoritasPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IAutorityRepository;
 import org.Sikoling.ejb.abstraction.repository.IBidangUsahaRepository;
@@ -37,6 +35,7 @@ import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.ITokenValidation;
 import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
+import org.Sikoling.ejb.abstraction.repository.ILocalStorageRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
@@ -45,6 +44,8 @@ import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.ISkalaUsahaService;
 import org.Sikoling.ejb.abstraction.service.skalausaha.SkalaUsahaService;
+import org.Sikoling.ejb.abstraction.service.storage.ILocalStorageService;
+import org.Sikoling.ejb.abstraction.service.storage.LocalStorageService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.dokumen.DokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
@@ -56,7 +57,6 @@ import org.Sikoling.ejb.abstraction.service.dokumen.KategoriDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.KbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterKbliService;
-import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.hakakses.HakAksesService;
 import org.Sikoling.ejb.abstraction.service.hakakses.IHakAksesService;
 import org.Sikoling.ejb.abstraction.service.jabatan.IJabatanService;
@@ -109,8 +109,6 @@ import org.Sikoling.ejb.abstraction.service.perusahaan.RegisterPerusahaanService
 import org.Sikoling.ejb.abstraction.service.produk.IProdukService;
 import org.Sikoling.ejb.abstraction.service.produk.ProdukService;
 import org.Sikoling.ejb.main.Infrastructure;
-import org.Sikoling.ejb.main.storage.disk.DiskStorageService;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
@@ -318,22 +316,14 @@ public class RestfulProvider {
 		return new PegawaiPerusahaanService(pegawaiPerusahaanRepository);
 	}
 	
-//	@Produces
-//	public IOpenIdConnectService getOpenIdConnectService(ITokenValidationService tokenValidationService, Client client, Properties properties) {
-//		return new OpenIdConnectionService(
-//				tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"),
-//				properties.getProperty("SSO_CLIENT_ID"),
-//				properties.getProperty("SSO_CLIENT_SECRET"));
-//	}
-	
-	@Produces
-	public IStorageService getStorageService(Properties properties) {
-		return new DiskStorageService(properties.getProperty("STORAGE_PATH"));
-	}
-	
 	@Produces
 	public IPosisiTahapPemberkasanService getPosisiTahapPemberkasanService(
 			@Infrastructure IPosisiTahapPemberkasanRepository posisiTahapPemberkasanRepository) {
 		return new PosisiTahapPemberkasanService(posisiTahapPemberkasanRepository);
+	}
+	
+	@Produces
+	public ILocalStorageService getLocalStorageService(@Infrastructure ILocalStorageRepository localStorageRepository) {
+		return new LocalStorageService(localStorageRepository);
 	}
 }

@@ -9,8 +9,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Person;
-import org.Sikoling.ejb.abstraction.service.file.IStorageService;
 import org.Sikoling.ejb.abstraction.service.person.IPersonService;
+import org.Sikoling.ejb.abstraction.service.storage.ILocalStorageService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
@@ -46,7 +46,7 @@ public class PersonController {
 	private IPersonService personService;
 	
 	@Inject
-	private IStorageService storageService;	
+	private ILocalStorageService localStorageService;	
 	
 	@POST
     @Consumes({MediaType.MULTIPART_FORM_DATA})
@@ -69,13 +69,8 @@ public class PersonController {
 			try {
 				InputStream uploadedInputStream = new FileInputStream(imageKtp);
 				String subPathLocation = File.separator.concat("identitas_personal");
-				boolean statusSaveFile = storageService.save(fileKey, uploadedInputStream, subPathLocation);
-				if(statusSaveFile == true) {
-					return new PersonDTO(person);
-				}
-				else {
-					throw new IOException("gambar tidak bisa disimpan");
-				}
+				localStorageService.upload(fileKey, uploadedInputStream, subPathLocation);
+				return new PersonDTO(person);
 			} catch (IOException e) {
 				throw new IOException("gambar tidak bisa disimpan");
 			}
@@ -115,20 +110,12 @@ public class PersonController {
 					String subPathLocation = File.separator.concat("identitas_personal");
 					if(personDTO.getScanKTP() != "") {
 						String[] hasilSplit = fileLama.split("/");
-						Boolean statusDeleteFile = storageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
-						if(statusDeleteFile == false) {
-							throw new IOException("gambar tidak bisa diupdate");
-						}
+						localStorageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
 					}
 					
 					InputStream uploadedInputStream = new FileInputStream(imageKtp);					
-					boolean statusSaveFile = storageService.save(fileKey, uploadedInputStream, subPathLocation);
-					if(statusSaveFile == true) {
-						return new PersonDTO(person);
-					}
-					else {
-						throw new IOException("gambar tidak bisa disimpan");
-					}
+					localStorageService.upload(fileKey, uploadedInputStream, subPathLocation);
+					return new PersonDTO(person);
 				} catch (IOException e) {
 					throw new IOException("gambar tidak bisa disimpan");
 				}
@@ -172,20 +159,12 @@ public class PersonController {
 					String subPathLocation = File.separator.concat("identitas_personal");
 					if(fileLama != null) {
 						String[] hasilSplit = fileLama.split("/");
-						Boolean statusDeleteFile = storageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
-						if(statusDeleteFile == false) {
-							throw new IOException("gambar tidak bisa diupdate");
-						}
+						localStorageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
 					}
 					
 					InputStream uploadedInputStream = new FileInputStream(imageKtp);					
-					boolean statusSaveFile = storageService.save(fileKey, uploadedInputStream, subPathLocation);
-					if(statusSaveFile == true) {
-						return new PersonDTO(person);
-					}
-					else {
-						throw new IOException("gambar tidak bisa disimpan");
-					}
+					localStorageService.upload(fileKey, uploadedInputStream, subPathLocation);
+					return new PersonDTO(person);
 				} catch (IOException e) {
 					throw new IOException("gambar tidak bisa disimpan");
 				}
@@ -213,10 +192,7 @@ public class PersonController {
 			fileLama = personDTO.getScanKTP();
 			String[] hasilSplit = fileLama.split("/");
 			String subPathLocation = File.separator.concat("identitas_personal");
-			Boolean statusDeleteFile = storageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
-			if(statusDeleteFile == false) {
-				throw new IOException("gambar tidak bisa diupdate");
-			}
+			localStorageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
 		}		
 		
 		return new PersonDTO(personService.delete(personDTO.toPerson()));

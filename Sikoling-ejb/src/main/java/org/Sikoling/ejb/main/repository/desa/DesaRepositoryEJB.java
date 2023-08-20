@@ -51,6 +51,4 @@ public class DesaRepositoryEJB implements IDesaRepository {
 		return desaRepository.updateId(idLama, t);
 	}
 
-	
-
 }
