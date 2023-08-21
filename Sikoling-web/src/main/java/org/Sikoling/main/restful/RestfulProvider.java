@@ -20,6 +20,7 @@ import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
 import org.Sikoling.ejb.abstraction.repository.IKecamatanRepository;
 import org.Sikoling.ejb.abstraction.repository.IModelPerizinanRepository;
+import org.Sikoling.ejb.abstraction.repository.IOnlyOfficeRepository;
 import org.Sikoling.ejb.abstraction.repository.IPegawaiPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
 import org.Sikoling.ejb.abstraction.repository.IPenanggungJawabRepository;
@@ -82,6 +83,8 @@ import org.Sikoling.ejb.abstraction.service.log.KategoriLogService;
 import org.Sikoling.ejb.abstraction.service.log.StatusFlowLogServices;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.IModelPerizinanService;
 import org.Sikoling.ejb.abstraction.service.modelperizinan.ModelPerizinanService;
+import org.Sikoling.ejb.abstraction.service.onlyoffice.IOnlyofficeService;
+import org.Sikoling.ejb.abstraction.service.onlyoffice.OnlyofficeService;
 import org.Sikoling.ejb.abstraction.service.otoritas.OtoritasService;
 import org.Sikoling.ejb.abstraction.service.otoritas.OtoritasPerusahaanService;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasPerusahaanService;
@@ -325,5 +328,10 @@ public class RestfulProvider {
 	@Produces
 	public ILocalStorageService getLocalStorageService(@Infrastructure ILocalStorageRepository localStorageRepository) {
 		return new LocalStorageService(localStorageRepository);
+	}
+	
+	@Produces
+	public IOnlyofficeService getOnlyofficeService(@Infrastructure IOnlyOfficeRepository onlyOfficeRepository) {
+		return new OnlyofficeService(onlyOfficeRepository);
 	}
 }

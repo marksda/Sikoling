@@ -38,6 +38,7 @@ import org.Sikoling.ejb.main.repository.user.KeyCloakUserJPA;
 import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
 import org.Sikoling.ejb.main.security.tokenvalidation.TokenValidation;
 import org.Sikoling.ejb.main.storage.LocalStorageImpl;
+import org.Sikoling.ejb.main.storage.OnlyOfficeImpl;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -263,4 +264,10 @@ public class RepositoryProvider {
 	public LocalStorageImpl getLocalStorageImpl(Properties properties) {
 		return new LocalStorageImpl(properties.getProperty("STORAGE_PATH"));
 	}
+	
+	@Produces
+	public OnlyOfficeImpl getOnlyOfficeImpl(Properties properties, LocalStorageImpl localStorageImpl) {
+		return new OnlyOfficeImpl(properties, localStorageImpl);
+	}
+	
 }
