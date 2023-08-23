@@ -7,8 +7,9 @@ import java.util.Properties;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.Action;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.ActionType;
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.RequestBodyPost;
-import org.Sikoling.ejb.abstraction.entity.onlyoffice.StatusType;
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.utils.StatusType;
 import org.Sikoling.ejb.abstraction.repository.IOnlyOfficeRepository;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -73,6 +74,12 @@ public class OnlyOfficeImpl implements IOnlyOfficeRepository {
 			response.close();
 			throw new Exception("error");
 		}
+	}
+
+	@Override
+	public FileModel getConfig(String namaFile, Properties properties) {
+		FileModel fileModel = new FileModel(properties, namaFile, null, null, null, null, null, null);
+		return fileModel;
 	}
 
 }

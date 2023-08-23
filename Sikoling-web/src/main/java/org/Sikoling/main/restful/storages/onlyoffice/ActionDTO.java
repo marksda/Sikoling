@@ -1,4 +1,4 @@
-package org.Sikoling.main.restful.onlyoffice;
+package org.Sikoling.main.restful.storages.onlyoffice;
 
 import java.io.Serializable;
 

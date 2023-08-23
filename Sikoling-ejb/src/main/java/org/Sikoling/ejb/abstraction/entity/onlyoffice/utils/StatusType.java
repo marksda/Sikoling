@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.entity.onlyoffice;
+package org.Sikoling.ejb.abstraction.entity.onlyoffice.utils;
 
 public enum StatusType {
 	EDITING(1),
