@@ -8,6 +8,7 @@ import java.util.Properties;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.Action;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.ActionType;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.OnlyofficeUser;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.RequestBodyPost;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.utils.StatusType;
 import org.Sikoling.ejb.abstraction.repository.IOnlyOfficeRepository;
@@ -77,8 +78,8 @@ public class OnlyOfficeImpl implements IOnlyOfficeRepository {
 	}
 
 	@Override
-	public FileModel getConfig(String namaFile, Properties properties) {
-		FileModel fileModel = new FileModel(properties, namaFile, null, null, null, null, null, null);
+	public FileModel getConfig(String fileNameParam, OnlyofficeUser onlyofficeUser) throws Exception {		
+		FileModel fileModel = new FileModel(properties, fileNameParam, null, null, null, null, null, null);
 		return fileModel;
 	}
 

@@ -1,10 +1,14 @@
 package org.Sikoling.ejb.abstraction.entity.onlyoffice;
 
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -25,20 +29,64 @@ public class FileModel implements Serializable {
     private final EditorConfig editorConfig;
     private final String token;
     
-	public FileModel(Properties properties, String fileNameParam, String lang, String actionData, User user, Boolean isEnableDirectUrl, String type, String mode) {
+	public FileModel(Properties properties, String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, String type, String mode) throws Exception {
 		String fileName = FileUtility.getFileName(fileNameParam);
+		String storageServerUrl = properties.getProperty("URL_RESTFUL_API").concat("/onlyoffice/download");
 		this.type = type != null ? type:"desktop";
 		this.mode = mode != null ? mode:"edit";
 		this.documentType = FileUtility.getFileType(fileNameParam).toString().toLowerCase();
 		this.document = new Document();
 		this.document.setTitle(fileName);
-		this.document.setUrl(properties.getProperty("URL_DOC_STORAGE").concat("/download").concat(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString())));
-//		this.document.setDirectUrl(isEnableDirectUrl ? DocumentManager.getDownloadUrl(fileName, false) : "");
+		this.document.setUrl(storageServerUrl.concat(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString())));
 		this.document.setFileType(FileUtility.getFileExtension(fileNameParam).replace(".", ""));
 		this.document.setKey(generateRevisionId(fileName));
 		this.document.setInfo(new Info());
 		this.document.getInfo().setFavorite(user.getFavorite());
-		this.document.setReferenceData(new ReferenceData(fileName, DocumentManager.curUserHostAddress(null), user));
+		this.document.setReferenceData(new ReferenceData(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString()), InetAddress.getLocalHost().getHostAddress(), user, storageServerUrl));
+		
+//		String templatesImageUrl = DocumentManager.getTemplateImageUrl(FileUtility.getFileType(fileName));
+        List<Map<String, String>> templates = new ArrayList<>();
+        String createUrl = properties.getProperty("URL_DOC_STORAGE").concat("/onlyoffice/create").concat(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString())); 
+
+        // add templates for the "Create New" from menu option
+        Map<String, String> templateForBlankDocument = new HashMap<>();
+        templateForBlankDocument.put("image", "");
+        templateForBlankDocument.put("title", "Blank");
+        templateForBlankDocument.put("url", createUrl);
+        templates.add(templateForBlankDocument);
+        Map<String, String> templateForDocumentWithSampleContent = new HashMap<>();
+//        templateForDocumentWithSampleContent.put("image", templatesImageUrl);
+        templateForDocumentWithSampleContent.put("title", "With sample content");
+        templateForDocumentWithSampleContent.put("url", createUrl + "&sample=true");
+        templates.add(templateForDocumentWithSampleContent);
+
+//        // set the editor config parameters
+//        editorConfig = new EditorConfig(actionData);
+//        editorConfig.setCallbackUrl(DocumentManager.getCallback(fileName));  // get callback url
+//
+//        HashMap<String, Object> coEditing = mode.equals("view") && user.getId().equals("uid-0")
+//                ? new HashMap<String, Object>()  {{
+//            put("mode", "strict");
+//            put("change", false);
+//        }} : null;
+//        editorConfig.setCoEditing(coEditing);
+//        if (lang != null) {
+//            editorConfig.setLang(lang);  // write language parameter to the config
+//        }
+//
+//        editorConfig.setCreateUrl(!user.getId().equals("uid-0") ? createUrl : null);
+//        editorConfig.setTemplates(user.getTemplates() ? templates : null);
+//
+//        // write user information to the config (id, name and group)
+//        editorConfig.getUser().setId(!user.getId().equals("uid-0") ? user.getId() : null);
+//        editorConfig.getUser().setName(user.getName());
+//        editorConfig.getUser().setGroup(user.getGroup());
+//
+//        // write the absolute URL to the file location
+//        editorConfig.getCustomization().getGoback()
+//                .setUrl(DocumentManager.getServerUrl(false) + "/IndexServlet");
+//
+//        changeType(mode, type, user, fileName);
 		
 		this.editorConfig = null;
 		this.token = null;
@@ -54,7 +102,7 @@ public class FileModel implements Serializable {
 	public class Document {
         private String title;
         private String url;
-//        private String directUrl;
+        private String directUrl;
         private String fileType;
         private String key;
         private Info info;
@@ -79,13 +127,13 @@ public class FileModel implements Serializable {
             this.url = urlParam;
         }
 
-//        public String getDirectUrl() {
-//            return directUrl;
-//        }
-//
-//        public void setDirectUrl(final String directUrlParam) {
-//            this.directUrl = directUrlParam;
-//        }
+        public String getDirectUrl() {
+            return directUrl;
+        }
+
+        public void setDirectUrl(final String directUrlParam) {
+            this.directUrl = directUrlParam;
+        }
 
         public String getFileType() {
             return fileType;
@@ -146,7 +194,7 @@ public class FileModel implements Serializable {
         //public Gson gson = new Gson();
 
         // defines what can be done with a document
-        public Permissions(final String modeParam, final String typeParam, final Boolean canEdit, final User user) {
+        public Permissions(final String modeParam, final String typeParam, final Boolean canEdit, final OnlyofficeUser user) {
             comment = !modeParam.equals("view") && !modeParam.equals("fillForms") && !modeParam.equals("embedded")
                     && !modeParam.equals("blockcontent");
             copy = !user.getDeniedPermissions().contains("сopy");
@@ -226,15 +274,12 @@ public class FileModel implements Serializable {
 	public class ReferenceData {
         private final String instanceId;
         private final Map<String, String> fileKey;
-        public ReferenceData(final String fileName, final String curUserHostAddress, final User user) {
-            instanceId = DocumentManager.getServerUrl(true);
+        
+        public ReferenceData(String fileName, String curUserHostAddress, OnlyofficeUser user, String storageServerUrl) {
+            instanceId = storageServerUrl;
             Map<String, String> fileKeyList = new HashMap<>();
-            if (!user.getId().equals("uid-0")) {
-                fileKeyList.put("fileName", fileName);
-                fileKeyList.put("userAddress", curUserHostAddress);
-            } else {
-                fileKeyList = null;
-            }
+            fileKeyList.put("fileName", fileName);
+            fileKeyList.put("userAddress", curUserHostAddress);            
             fileKey = fileKeyList;
         }
 
@@ -271,6 +316,243 @@ public class FileModel implements Serializable {
         private String getDate() {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd yyyy", Locale.US);
             return simpleDateFormat.format(new Date());
+        }
+    }
+	
+	public class EditorConfig {
+        private HashMap<String, Object> actionLink = null;
+        private String mode = "edit";
+        private String callbackUrl;
+        private HashMap<String, Object> coEditing = null;
+        private String lang = "en";
+        private String createUrl;
+        private List<Map<String, String>> templates;
+        private User user;
+        private Customization customization;
+        private Embedded embedded;
+
+        public EditorConfig(final String actionData) {
+            // get the action in the document that will be scrolled to (bookmark or comment)
+            if (actionData != null) {
+                Gson gson = new Gson();
+                actionLink = gson.fromJson(actionData, new TypeToken<HashMap<String, Object>>() { }.getType());
+            }
+            user = new User();
+            customization = new Customization();
+        }
+
+        public HashMap<String, Object> getActionLink() {
+            return actionLink;
+        }
+
+        public String getCallbackUrl() {
+            return callbackUrl;
+        }
+
+        public HashMap<String, Object> getCoEditing() {
+            return coEditing;
+        }
+
+        public String getLang() {
+            return lang;
+        }
+
+        public String getCreateUrl() {
+            return createUrl;
+        }
+
+        public List<Map<String, String>> getTemplates() {
+            return templates;
+        }
+
+        public Embedded getEmbedded() {
+            return embedded;
+        }
+
+        // set parameters for the embedded document
+        public void initDesktop(final String url) {
+            embedded = new Embedded();
+
+            // the absolute URL that will allow the document to be saved onto the user personal computer
+            embedded.setSaveUrl(url);
+
+            // the absolute URL to the document serving as a source file for the document embedded into the web page
+            embedded.setEmbedUrl(url);
+
+            // the absolute URL that will allow other users to share this document
+            embedded.setShareUrl(url);
+
+            // the place for the embedded viewer toolbar, can be either top or bottom
+            embedded.setToolbarDocked("top");
+        }
+
+        public String getMode() {
+            return mode;
+        }
+
+        public void setMode(final String modeParam) {
+            this.mode = modeParam;
+        }
+
+        public void setCallbackUrl(final String callbackUrlParam) {
+            this.callbackUrl = callbackUrlParam;
+        }
+
+        public void setCoEditing(final HashMap<String, Object> coEditingParam) {
+            this.coEditing = coEditingParam;
+        }
+
+        public void setLang(final String langParam) {
+            this.lang = langParam;
+        }
+
+        public void setCreateUrl(final String createUrlParam) {
+            this.createUrl = createUrlParam;
+        }
+
+        public void setTemplates(final List<Map<String, String>> templatesParam) {
+            this.templates = templatesParam;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(final User userParam) {
+            this.user = userParam;
+        }
+
+        public Customization getCustomization() {
+            return customization;
+        }
+
+        // default user parameters (id, name and group)
+        public class User {
+            private String id;
+            private String name;
+            private String group;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(final String idParam) {
+                this.id = idParam;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(final String nameParam) {
+                this.name = nameParam;
+            }
+
+            public String getGroup() {
+                return group;
+            }
+
+            public void setGroup(final String groupParam) {
+                this.group = groupParam;
+            }
+        }
+
+        // customization parameters
+        public class Customization {
+            private Goback goback;
+            private Boolean forcesave;
+            private Boolean submitForm;
+            private Boolean about;
+            private Boolean comments;
+            private Boolean feedback;
+
+            public void setSubmitForm(final Boolean submitFormParam) {
+                this.submitForm = submitFormParam;
+            }
+
+            public Customization() {
+                about = true;
+                comments = true;
+                feedback = true;
+                forcesave = false;
+                goback = new Goback();
+            }
+
+            public Goback getGoback() {
+                return goback;
+            }
+
+            public Boolean getForcesave() {
+                return forcesave;
+            }
+
+            public Boolean getSubmitForm() {
+                return submitForm;
+            }
+
+            public Boolean getAbout() {
+                return about;
+            }
+
+            public Boolean getComments() {
+                return comments;
+            }
+
+            public Boolean getFeedback() {
+                return feedback;
+            }
+
+            public class Goback {
+                private String url;
+
+                public String getUrl() {
+                    return url;
+                }
+
+                public void setUrl(final String urlParam) {
+                    this.url = urlParam;
+                }
+            }
+        }
+
+        // parameters for embedded document
+        public class Embedded {
+            private String saveUrl;
+            private String embedUrl;
+            private String shareUrl;
+            private String toolbarDocked;
+
+            public String getSaveUrl() {
+                return saveUrl;
+            }
+
+            public void setSaveUrl(final String saveUrlParam) {
+                this.saveUrl = saveUrlParam;
+            }
+
+            public String getEmbedUrl() {
+                return embedUrl;
+            }
+
+            public void setEmbedUrl(final String embedUrlParam) {
+                this.embedUrl = embedUrlParam;
+            }
+
+            public String getShareUrl() {
+                return shareUrl;
+            }
+
+            public void setShareUrl(final String shareUrlParam) {
+                this.shareUrl = shareUrlParam;
+            }
+
+            public String getToolbarDocked() {
+                return toolbarDocked;
+            }
+
+            public void setToolbarDocked(final String toolbarDockedParam) {
+                this.toolbarDocked = toolbarDockedParam;
+            }
         }
     }
 	
