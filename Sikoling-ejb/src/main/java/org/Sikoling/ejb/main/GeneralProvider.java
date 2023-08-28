@@ -8,8 +8,6 @@ import java.util.Properties;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.inject.Produces;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
 
 @Stateless
 @LocalBean
@@ -28,9 +26,10 @@ public class GeneralProvider {
 		return properties;
 	}
 	
-	@Produces
-    public Client getClient(){
-        return ClientBuilder.newClient();
-    }
+	
+//	@Produces
+//    public Client getClient(){
+//        return ClientBuilder.newClient();
+//    }
 	
 }  

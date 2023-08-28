@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.main.storage;
+package org.Sikoling.ejb.main.integrator.onlyoffice;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.OnlyofficeUser;
@@ -19,13 +19,13 @@ public class OnlyofficeEJB implements IOnlyOfficeRepository {
 	private OnlyOfficeImpl onlyOfficeImpl; 
 
 	@Override
-	public void commandRequest(RequestBodyPost requestBodyPost) throws Exception {
-		onlyOfficeImpl.commandRequest(requestBodyPost);
+	public void commandRequest(RequestBodyPost requestBodyPost, String fileNameParam, String userAddress) throws Exception {
+		onlyOfficeImpl.commandRequest(requestBodyPost, fileNameParam, userAddress);
 	}
 
 	@Override
-	public FileModel getConfig(String fileNameParam, OnlyofficeUser onlyofficeUser) throws Exception {
-		return onlyOfficeImpl.getConfig(fileNameParam, onlyofficeUser);
+	public FileModel getConfig(String namaFile, OnlyofficeUser onlyofficeUser) throws Exception {
+		return onlyOfficeImpl.getConfig(namaFile, onlyofficeUser);
 	}
 
 }

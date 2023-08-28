@@ -12,6 +12,6 @@ import jakarta.ws.rs.NameBinding;
 @NameBinding
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
-public @interface RequiredAuthorizationOnlyoffice {
+public @interface RequiredOnlyofficeAuthorization {
 
 }

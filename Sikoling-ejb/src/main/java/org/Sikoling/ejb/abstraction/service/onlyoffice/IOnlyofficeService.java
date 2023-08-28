@@ -5,6 +5,6 @@ import org.Sikoling.ejb.abstraction.entity.onlyoffice.OnlyofficeUser;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.RequestBodyPost;
 
 public interface IOnlyofficeService {
-	void commandRequest(RequestBodyPost requestBodyPost) throws Exception;
-	FileModel getConfig(String fileNameParam, OnlyofficeUser onlyofficeUser) throws Exception;
+	void commandRequest(RequestBodyPost requestBodyPost, String fileNameParam, String userAddress) throws Exception;
+	FileModel getConfig(String namaFile, OnlyofficeUser onlyofficeUser) throws Exception;
 }

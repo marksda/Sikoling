@@ -1,10 +1,6 @@
 package org.Sikoling.ejb.abstraction.entity.onlyoffice;
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.URLEncoder;
-import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
-
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.DocumentManager;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.FileUtility;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.utils.Constants;
 
-import com.nimbusds.jose.util.StandardCharset;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileModel implements Serializable {
 
@@ -29,24 +25,24 @@ public class FileModel implements Serializable {
     private final EditorConfig editorConfig;
     private final String token;
     
-	public FileModel(Properties properties, String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, String type, String mode) throws Exception {
+	public FileModel(String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, String type, String mode, DocumentManager documentManager) throws Exception {
+		fileNameParam = fileNameParam == null ? "" : fileNameParam.trim();
 		String fileName = FileUtility.getFileName(fileNameParam);
-		String storageServerUrl = properties.getProperty("URL_RESTFUL_API").concat("/onlyoffice/download");
 		this.type = type != null ? type:"desktop";
 		this.mode = mode != null ? mode:"edit";
-		this.documentType = FileUtility.getFileType(fileNameParam).toString().toLowerCase();
+		this.documentType = FileUtility.getFileType(fileName).toString().toLowerCase();
 		this.document = new Document();
 		this.document.setTitle(fileName);
-		this.document.setUrl(storageServerUrl.concat(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString())));
-		this.document.setFileType(FileUtility.getFileExtension(fileNameParam).replace(".", ""));
+		this.document.setUrl(documentManager.getDownloadUrl(fileNameParam, true));
+		this.document.setFileType(FileUtility.getFileExtension(fileName).replace(".", ""));
 		this.document.setKey(generateRevisionId(fileName));
 		this.document.setInfo(new Info());
 		this.document.getInfo().setFavorite(user.getFavorite());
-		this.document.setReferenceData(new ReferenceData(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString()), InetAddress.getLocalHost().getHostAddress(), user, storageServerUrl));
+		this.document.setReferenceData(new ReferenceData(fileName, documentManager.curUserHostAddress(null), user, documentManager.getServerUrl(true)));
 		
-//		String templatesImageUrl = DocumentManager.getTemplateImageUrl(FileUtility.getFileType(fileName));
+		String templatesImageUrl = documentManager.getTemplateImageUrl(FileUtility.getFileType(fileName));
         List<Map<String, String>> templates = new ArrayList<>();
-        String createUrl = properties.getProperty("URL_DOC_STORAGE").concat("/onlyoffice/create").concat(URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString())); 
+        String createUrl = documentManager.getCreateUrl(fileNameParam);
 
         // add templates for the "Create New" from menu option
         Map<String, String> templateForBlankDocument = new HashMap<>();
@@ -55,14 +51,14 @@ public class FileModel implements Serializable {
         templateForBlankDocument.put("url", createUrl);
         templates.add(templateForBlankDocument);
         Map<String, String> templateForDocumentWithSampleContent = new HashMap<>();
-//        templateForDocumentWithSampleContent.put("image", templatesImageUrl);
+        templateForDocumentWithSampleContent.put("image", templatesImageUrl);
         templateForDocumentWithSampleContent.put("title", "With sample content");
         templateForDocumentWithSampleContent.put("url", createUrl + "&sample=true");
         templates.add(templateForDocumentWithSampleContent);
 
-//        // set the editor config parameters
-//        editorConfig = new EditorConfig(actionData);
-//        editorConfig.setCallbackUrl(DocumentManager.getCallback(fileName));  // get callback url
+        // set the editor config parameters
+        this.editorConfig = new EditorConfig(actionData);
+        this.editorConfig.setCallbackUrl(documentManager.getCallback(fileNameParam));  // get callback url
 //
 //        HashMap<String, Object> coEditing = mode.equals("view") && user.getId().equals("uid-0")
 //                ? new HashMap<String, Object>()  {{
@@ -88,10 +84,37 @@ public class FileModel implements Serializable {
 //
 //        changeType(mode, type, user, fileName);
 		
-		this.editorConfig = null;
 		this.token = null;
 	}
-	
+			
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public String getDocumentType() {
+		return documentType;
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public EditorConfig getEditorConfig() {
+		return editorConfig;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
 	private String generateRevisionId(String expectedKey) {
        String formatKey = expectedKey.length() > Constants.MAX_KEY_LENGTH ? Integer.toString(expectedKey.hashCode()) : expectedKey;
        String key = formatKey.replace("[^0-9-.a-zA-Z_=]", "_");
@@ -331,11 +354,17 @@ public class FileModel implements Serializable {
         private Customization customization;
         private Embedded embedded;
 
-        public EditorConfig(final String actionData) {
+        public EditorConfig(String actionData) {
             // get the action in the document that will be scrolled to (bookmark or comment)
             if (actionData != null) {
-                Gson gson = new Gson();
-                actionLink = gson.fromJson(actionData, new TypeToken<HashMap<String, Object>>() { }.getType());
+            	try {
+	            	ObjectMapper mapper = new ObjectMapper();
+	            	this.actionLink = mapper.readValue(actionData.getBytes(), new TypeReference<HashMap<String, Object>>() {
+					});
+            	}
+            	catch (Exception e) {
+            		this.actionLink = null;
+				}
             }
             user = new User();
             customization = new Customization();
@@ -466,7 +495,7 @@ public class FileModel implements Serializable {
             private Boolean comments;
             private Boolean feedback;
 
-            public void setSubmitForm(final Boolean submitFormParam) {
+            public void setSubmitForm(Boolean submitFormParam) {
                 this.submitForm = submitFormParam;
             }
 
@@ -526,7 +555,7 @@ public class FileModel implements Serializable {
                 return saveUrl;
             }
 
-            public void setSaveUrl(final String saveUrlParam) {
+            public void setSaveUrl(String saveUrlParam) {
                 this.saveUrl = saveUrlParam;
             }
 
@@ -534,7 +563,7 @@ public class FileModel implements Serializable {
                 return embedUrl;
             }
 
-            public void setEmbedUrl(final String embedUrlParam) {
+            public void setEmbedUrl(String embedUrlParam) {
                 this.embedUrl = embedUrlParam;
             }
 
@@ -542,7 +571,7 @@ public class FileModel implements Serializable {
                 return shareUrl;
             }
 
-            public void setShareUrl(final String shareUrlParam) {
+            public void setShareUrl(String shareUrlParam) {
                 this.shareUrl = shareUrlParam;
             }
 
@@ -550,7 +579,7 @@ public class FileModel implements Serializable {
                 return toolbarDocked;
             }
 
-            public void setToolbarDocked(final String toolbarDockedParam) {
+            public void setToolbarDocked(String toolbarDockedParam) {
                 this.toolbarDocked = toolbarDockedParam;
             }
         }

@@ -19,13 +19,18 @@ public class LocalStorageService implements ILocalStorageService {
 	}
 
 	@Override
-	public InputStream download(String subPath, String fileName) throws IOException {
-		return localStorageRepository.download(subPath, fileName);
+	public InputStream download(String fileNameParam) throws IOException {
+		return localStorageRepository.download(fileNameParam);
 	}
 
 	@Override
 	public void delete(String fileName, String subPath) throws IOException {
 		localStorageRepository.delete(fileName, subPath);
+	}
+	
+	@Override
+	public void create(String fileKey, String subPath) throws IOException {
+		localStorageRepository.create(fileKey, subPath);		
 	}
 
 }

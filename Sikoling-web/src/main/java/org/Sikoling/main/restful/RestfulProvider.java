@@ -35,11 +35,14 @@ import org.Sikoling.ejb.abstraction.repository.ISkalaUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.ITokenValidation;
+import org.Sikoling.ejb.abstraction.security.IOnlyofficeTokenManager;
 import org.Sikoling.ejb.abstraction.repository.IKeyCloackUserRepository;
 import org.Sikoling.ejb.abstraction.repository.ILocalStorageRepository;
 import org.Sikoling.ejb.abstraction.service.propinsi.IPropinsiService;
 import org.Sikoling.ejb.abstraction.service.propinsi.PropinsiService;
+import org.Sikoling.ejb.abstraction.service.security.IOnlyofficeTokenManagerService;
 import org.Sikoling.ejb.abstraction.service.security.ITokenValidationService;
+import org.Sikoling.ejb.abstraction.service.security.OnlyofficeTokenManajerService;
 import org.Sikoling.ejb.abstraction.service.security.TokenValidationService;
 import org.Sikoling.ejb.abstraction.service.sex.IJenisKelaminService;
 import org.Sikoling.ejb.abstraction.service.sex.JenisKelaminService;
@@ -333,5 +336,10 @@ public class RestfulProvider {
 	@Produces
 	public IOnlyofficeService getOnlyofficeService(@Infrastructure IOnlyOfficeRepository onlyOfficeRepository) {
 		return new OnlyofficeService(onlyOfficeRepository);
+	}
+	
+	@Produces
+	public IOnlyofficeTokenManagerService getOnlyofficeTokenManagerService(@Infrastructure IOnlyofficeTokenManager onlyofficeTokenManager) {
+		return new OnlyofficeTokenManajerService(onlyofficeTokenManager);
 	}
 }

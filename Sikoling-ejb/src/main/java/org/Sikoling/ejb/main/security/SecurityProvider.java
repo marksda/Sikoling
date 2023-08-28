@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
+import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeTokenManager;
+
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.RemoteJWKSet;
@@ -22,14 +24,6 @@ import jakarta.enterprise.inject.Produces;
 @LocalBean
 public class SecurityProvider {
 	
-//	@Produces
-//	public KeycloakClient getKeycloakClient(Properties properties) {
-//		return new KeycloakClient(
-//				properties.getProperty("SSO_AUTH_URL"), properties.getProperty("SSO_REALM"), 
-//				properties.getProperty("SSO_CLIENT_ID"), properties.getProperty("SSO_CLIENT_SECRET")
-//				);
-//	}
-
 	@Produces
 	public JWTProcessor<SecurityContext> getJWTProcessor(Properties properties) throws MalformedURLException {		
 		ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<> ();
@@ -41,8 +35,9 @@ public class SecurityProvider {
         return jwtProcessor;		
 	}
 	
-//	@Produces
-//    public ITokenValidationService getTokenValidationService(JWTProcessor<SecurityContext> jwtProcessor) {
-//        return new TokenValidationJWK(jwtProcessor);
-//    }
+	@Produces
+    public OnlyOfficeTokenManager getTokenManager(Properties properties){
+        return new OnlyOfficeTokenManager(properties);
+    }
+
 }

@@ -14,13 +14,13 @@ public class OnlyofficeService implements IOnlyofficeService {
 	}
 
 	@Override
- 	public void commandRequest(RequestBodyPost requestBodyPost) throws Exception {
-		onlyOfficeRepository.commandRequest(requestBodyPost);
+ 	public void commandRequest(RequestBodyPost requestBodyPost, String fileNameParam, String userAddress) throws Exception {
+		onlyOfficeRepository.commandRequest(requestBodyPost, fileNameParam, userAddress);
 	}
 	
 	@Override
-	public FileModel getConfig(String fileNameParam, OnlyofficeUser onlyofficeUser) throws Exception {
-		return onlyOfficeRepository.getConfig(fileNameParam, onlyofficeUser);
+	public FileModel getConfig(String namaFile, OnlyofficeUser onlyofficeUser) throws Exception {
+		return onlyOfficeRepository.getConfig(namaFile, onlyofficeUser);
 	}
 
 }

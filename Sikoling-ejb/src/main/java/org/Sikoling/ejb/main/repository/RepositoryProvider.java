@@ -1,6 +1,8 @@
 package org.Sikoling.ejb.main.repository;
 
 import java.util.Properties;
+
+import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeImpl;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
@@ -38,7 +40,6 @@ import org.Sikoling.ejb.main.repository.user.KeyCloakUserJPA;
 import org.Sikoling.ejb.main.security.keycloack.KeycloakClient;
 import org.Sikoling.ejb.main.security.tokenvalidation.TokenValidation;
 import org.Sikoling.ejb.main.storage.LocalStorageImpl;
-import org.Sikoling.ejb.main.storage.OnlyOfficeImpl;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -266,8 +267,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public OnlyOfficeImpl getOnlyOfficeImpl(Properties properties, LocalStorageImpl localStorageImpl) {
-		return new OnlyOfficeImpl(properties, localStorageImpl);
+	public OnlyOfficeImpl getOnlyOfficeImpl(Properties properties) {
+		return new OnlyOfficeImpl(properties);
 	}
 	
 }

@@ -24,13 +24,19 @@ public class LocalStorageEJB implements ILocalStorageRepository {
 	}
 
 	@Override
-	public InputStream download(String subPath, String fileName) throws IOException {
-		return localStorageImpl.download(subPath, fileName);
+	public InputStream download(String fileNameParam) throws IOException {
+		return localStorageImpl.download(fileNameParam);
 	}
 
 	@Override
 	public void delete(String fileName, String subPath) throws IOException {
 		localStorageImpl.delete(fileName, subPath);
+	}
+
+	
+	@Override
+	public void create(String fileKey, String subPath) throws IOException {
+		localStorageImpl.create(fileKey, subPath);		
 	}
 
 }

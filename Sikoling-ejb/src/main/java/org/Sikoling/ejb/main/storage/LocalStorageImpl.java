@@ -20,43 +20,20 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 	@Override
 	public void upload(String fileKey, InputStream inputStream, String subPath) throws IOException {
 		try {
-			Path pathLocation = Paths.get(rootPath.concat(File.separator).concat(subPath));		
+			Path pathLocation = Paths.get(rootPath.concat(subPath));		
 			if (!Files.exists(pathLocation)) {
 				Files.createDirectories(pathLocation);
-				pathLocation = Paths.get(
-						this.rootPath
-						.concat(File.separator)
-						.concat(subPath)
-						.concat(File.separator)
-						.concat(fileKey)
-					);
-				Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
-			}
-			else {
-				pathLocation = Paths.get(
-						this.rootPath
-						.concat(File.separator)
-						.concat(subPath)
-						.concat(File.separator)
-						.concat(fileKey)
-					);
-				Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
-			}
+			}			
+			pathLocation = Paths.get(this.rootPath.concat(subPath).concat(File.separator).concat(fileKey));
+			Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			throw new IOException("upload file gagal");
 		}		
 	}
 
 	@Override
-	public InputStream download(String subPath, String fileName) throws IOException {
-		Path pathLocation = Paths.get(
-				this.rootPath
-				.concat(File.separator)
-				.concat(subPath)
-				.concat(File.separator)
-				.concat(fileName)
-			);
-	
+	public InputStream download(String fileNameParam) throws IOException {
+		Path pathLocation = Paths.get(this.rootPath.concat(fileNameParam));	
 		return Files.newInputStream(pathLocation);
 	}
 
@@ -68,6 +45,23 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 		} catch (Exception e) {
 			throw new IOException("Delete file gagal");
 		}
+	}
+	
+	@Override
+	public void create(String fileKey, String subPath) throws IOException {
+		try {
+			Path pathLocation = Paths.get(rootPath.concat(subPath));		
+			if (!Files.exists(pathLocation)) {
+				Files.createDirectories(pathLocation);				
+			}			
+			pathLocation = Paths.get(this.rootPath.concat(subPath).concat(File.separator).concat(fileKey));
+			File file = new File(subPath);
+			if(!file.createNewFile()) {
+				throw new IOException("nama file sudah dipakai");
+			}
+		} catch (Exception e) {
+			throw new IOException("create file gagal");
+		}		
 	}
 
 }

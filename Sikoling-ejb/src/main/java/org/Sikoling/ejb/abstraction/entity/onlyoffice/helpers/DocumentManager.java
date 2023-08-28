@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,8 +24,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileType;
+import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.ServiceConverter;
+import org.apache.commons.io.FilenameUtils;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -46,9 +50,11 @@ public class DocumentManager implements Serializable {
 
 	private static final long serialVersionUID = -7992490385103047337L;
 	private final Properties properties;
+	private final ServiceConverter serviceConverter;
 	
-	public DocumentManager(Properties properties) {
+	public DocumentManager(Properties properties, ServiceConverter serviceConverter) {
 		this.properties = properties;
+		this.serviceConverter = serviceConverter;
 	}
 	
 	public long getMaxFileSize() {
@@ -337,7 +343,7 @@ public class DocumentManager implements Serializable {
         for (File file : getStoredFiles(null)) {
             Map<String, Object> map = new LinkedHashMap<String, Object>();  // write all the parameters to the map
             map.put("version", getFileVersion(file.getName(), null));
-            map.put("id", ServiceConverter.generateRevisionId(curUserHostAddress(null) + "/" + file.getName() + "/"
+            map.put("id", serviceConverter.generateRevisionId(curUserHostAddress(null) + "/" + file.getName() + "/"
                             + Long.toString(new File(storagePath(file.getName(), null)).lastModified())));
             map.put("contentLength", new BigDecimal(String.valueOf((file.length() / Double.valueOf(KILOBYTE_SIZE))))
                     .setScale(2, RoundingMode.HALF_UP) + " KB");
@@ -379,52 +385,45 @@ public class DocumentManager implements Serializable {
     
     // get the server url
     public String getServerUrl(Boolean forDocumentServer) {
-        if (forDocumentServer && !properties.getProperty("STORAGE_SERVER").equals("")) {
-            return properties.getProperty("STORAGE_SERVER");
+        if (forDocumentServer && !properties.getProperty("STORAGE_SERVER_FOR_ONLYOFFICE").equals("")) {
+            return properties.getProperty("STORAGE_SERVER_FOR_ONLYOFFICE_INTERNAL");
         } else {
-            return null; //request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+            return properties.getProperty("STORAGE_SERVER_FOR_ANYONE");
         }
     }
     
     // get the callback url
-    public String getCallback(String fileName) {
+    public String getCallback(String fileNameParam) {
         String serverPath = getServerUrl(true);
         String hostAddress = curUserHostAddress(null);
         try {
-            String query = "?type=track&fileName="
-                    + URLEncoder.encode(fileName, java.nio.charset.StandardCharsets.UTF_8.toString())
-                    + "&userAddress=" + URLEncoder
-                    .encode(hostAddress, java.nio.charset.StandardCharsets.UTF_8.toString());
+            String query = "?fileNameParam="
+                    + URLEncoder.encode(fileNameParam, java.nio.charset.StandardCharsets.UTF_8.toString())
+                    + "&userAddress=" + URLEncoder.encode(hostAddress, java.nio.charset.StandardCharsets.UTF_8.toString());
 
-            return serverPath + "/IndexServlet" + query;
+            return serverPath + "/track" + query;
         } catch (UnsupportedEncodingException e) {
             return "";
         }
     }
     
     // get url to the created file
-    public String getCreateUrl(FileType fileType) {
+    public String getCreateUrl(String fileNameParam) {
         String serverPath = getServerUrl(false);
-        String fileExt = getInternalExtension(fileType).replace(".", "");
-        String query = "?fileExt=" + fileExt;
-
-        return serverPath + "/EditorServlet" + query;
+        String randomFileName =  UUID.randomUUID().toString() + "-cso." + FilenameUtils.getExtension(fileNameParam);
+        fileNameParam = FilenameUtils.getFullPath(randomFileName) + randomFileName;
+    	return serverPath + "/create?fileNameParam=" + fileNameParam;
     }
     
     // get url to download a file
-    public String getDownloadUrl(String fileName, Boolean forDocumentServer) {
+    public String getDownloadUrl(String fileNameParam, Boolean forDocumentServer) {
         String serverPath = getServerUrl(forDocumentServer);
-        String hostAddress = curUserHostAddress(null);
         try {
-            String userAddress = forDocumentServer ? "&userAddress=" + URLEncoder
-                    .encode(hostAddress, java.nio.charset.StandardCharsets.UTF_8.toString()) : "";
-            String query = "?type=download&fileName=" + URLEncoder
-                    .encode(fileName, java.nio.charset.StandardCharsets.UTF_8.toString()) + userAddress;
-
-            return serverPath + "/IndexServlet" + query;
-        } catch (UnsupportedEncodingException e) {
-            return "";
+        	return serverPath + "/download" + URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString());
         }
+        catch (UnsupportedEncodingException e) {
+        	return "";
+		}
     }
     
     // get url to download a file to History prev.*
@@ -467,8 +466,8 @@ public class DocumentManager implements Serializable {
     }
 
     // get image url for templates
-    public String getTemplateImageUrl(final FileType fileType) {
-        String path = getServerUrl(true) + "/css/img/";
+    public String getTemplateImageUrl(FileType fileType) {
+        String path = getServerUrl(true) + "/resources?fileNameParam=/css/img/";
         // for word file type
         if (fileType.equals(FileType.Word)) {
             return path + "file_docx.svg";
@@ -509,7 +508,7 @@ public class DocumentManager implements Serializable {
     }
     
     // read document token
-    public JWTClaimsSet readToken(String token) {
+    public Map<String, Object> readToken(String token) {
         try {
         	SignedJWT signedJWT = SignedJWT.parse(token);
         	JWSVerifier verifier = new MACVerifier(properties.getProperty("SECRET_KEY_DOC"));
@@ -518,28 +517,28 @@ public class DocumentManager implements Serializable {
             	return null;
             }
             
-            return signedJWT.getJWTClaimsSet();
+            return signedJWT.getJWTClaimsSet().toJSONObject();
         } catch (Exception exception) {
             return null;
         }
     }
     
     // check if the token is enabled
-    public Boolean tokenEnabled() {
-        String secret = properties.getProperty("SECRET_KEY_DOC");
-        return secret != null && !secret.isEmpty();
-    }
+//    public Boolean tokenEnabled() {
+//        String secret = properties.getProperty("SECRET_KEY_DOC");
+//        return secret != null && !secret.isEmpty();
+//    }
 
     // check if the token is enabled for request
-    public Boolean tokenUseForRequest() {
-        String tokenUseForRequest = getTokenUseForRequest();
-        return Boolean.parseBoolean(tokenUseForRequest) && !tokenUseForRequest.isEmpty();
-    }
+//    public Boolean tokenUseForRequest() {
+//        String tokenUseForRequest = getTokenUseForRequest();
+//        return Boolean.parseBoolean(tokenUseForRequest) && !tokenUseForRequest.isEmpty();
+//    }
     
     // get config request jwt
-    public String getTokenUseForRequest() {
-        return properties.getProperty("TOKEN_USE_FOR_REQUEST");
-    }
+//    public String getTokenUseForRequest() {
+//        return properties.getProperty("TOKEN_USE_FOR_REQUEST");
+//    }
     
     // get languages
     public Map<String, String> getLanguages() {
