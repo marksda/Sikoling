@@ -33,9 +33,7 @@ import org.apache.commons.io.FilenameUtils;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
-import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTClaimsSet.Builder;
 import com.nimbusds.jwt.SignedJWT;
@@ -137,8 +135,7 @@ public class DocumentManager implements Serializable {
             }
         }
         
-        String directory = !f.isAbsolute() ? serverPath + storagePath
-                + File.separator + hostAddress + File.separator : storagePath + File.separator;
+        String directory = !f.isAbsolute() ? serverPath.concat(storagePath).concat(File.separator).concat(hostAddress):storagePath;
 
         File file = new File(directory);
 
@@ -153,7 +150,7 @@ public class DocumentManager implements Serializable {
 	// get the storage path of the file
     public String storagePath(String fileName, String userAddress) {
         String directory = filesRootPath(userAddress);
-        return directory + FileUtility.getFileName(fileName);
+        return directory + fileName;
     }
     
  // get the path to history file
@@ -508,20 +505,20 @@ public class DocumentManager implements Serializable {
     }
     
     // read document token
-    public Map<String, Object> readToken(String token) {
-        try {
-        	SignedJWT signedJWT = SignedJWT.parse(token);
-        	JWSVerifier verifier = new MACVerifier(properties.getProperty("SECRET_KEY_DOC"));
-        	
-            if(!signedJWT.verify(verifier)) {
-            	return null;
-            }
-            
-            return signedJWT.getJWTClaimsSet().toJSONObject();
-        } catch (Exception exception) {
-            return null;
-        }
-    }
+//    public Map<String, Object> readToken(String token) {
+//        try {
+//        	SignedJWT signedJWT = SignedJWT.parse(token);
+//        	JWSVerifier verifier = new MACVerifier(properties.getProperty("SECRET_KEY_DOC"));
+//        	
+//            if(!signedJWT.verify(verifier)) {
+//            	return null;
+//            }
+//            
+//            return signedJWT.getJWTClaimsSet().toJSONObject();
+//        } catch (Exception exception) {
+//            return null;
+//        }
+//    }
     
     // check if the token is enabled
 //    public Boolean tokenEnabled() {

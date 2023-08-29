@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
+import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
 import org.Sikoling.ejb.abstraction.service.onlyoffice.IOnlyofficeService;
+import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.storage.ILocalStorageService;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredOnlyofficeAuthorization;
@@ -28,7 +31,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
@@ -41,8 +43,8 @@ public class OnlyofficeController {
 	@Inject
 	private IOnlyofficeService onlyofficeService;
 	
-//	@Inject
-//	private IOtoritasService authorityService;
+	@Inject
+	private IOtoritasService authorityService;
 	
 	@Inject
 	private ILocalStorageService localStorageService;
@@ -52,10 +54,8 @@ public class OnlyofficeController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public FileModel getConfigEditor(@Context SecurityContext securityContext, 
-			@QueryParam("fileNameParam") String fileNameParam) throws Exception {
-		return onlyofficeService.getConfig(fileNameParam, null);
-//		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+	public FileModel getConfigEditor(@Context SecurityContext securityContext, @QueryParam("fileNameParam") String fileNameParam) throws Exception {
+		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 //		Person person = pengurusPermohonan.getPerson();
 //		List<String> userDescription = new ArrayList<String>();
 //		OnlyofficeUser onlyofficeUser = null;
@@ -96,6 +96,8 @@ public class OnlyofficeController {
 //		}	
 //				
 //		onlyofficeService.getConfig(fileNameParam, onlyofficeUser);
+
+		return onlyofficeService.getConfig(fileNameParam, null);
 	}
 	
 	@Path("download")
@@ -161,11 +163,11 @@ public class OnlyofficeController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredOnlyofficeAuthorization
-	public JsonObject getResponseTracker(@QueryParam("fileNameParam") String fileNameParam, @QueryParam("userAddress") String userAddress,
-			RequestBodyPostDTO d, @Context HttpHeaders httpHeaders) throws IOException {
+	public JsonObject getResponseTracker(@QueryParam("fileNameParam") String fileNameParam, 
+			@QueryParam("userAddress") String userAddress, JsonObject d) throws IOException {
 		int error = 0;
 		try {
-			onlyofficeService.commandRequest(null, fileNameParam, userAddress);
+			onlyofficeService.commandRequest(d, fileNameParam, userAddress);
 		} catch (Exception e) {
 			error = 1;
 		}

@@ -2,13 +2,13 @@ package org.Sikoling.ejb.main.integrator.onlyoffice;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.OnlyofficeUser;
-import org.Sikoling.ejb.abstraction.entity.onlyoffice.RequestBodyPost;
 import org.Sikoling.ejb.abstraction.repository.IOnlyOfficeRepository;
 import org.Sikoling.ejb.main.Infrastructure;
 
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.json.JsonObject;
 
 @Stateless
 @Local
@@ -19,7 +19,7 @@ public class OnlyofficeEJB implements IOnlyOfficeRepository {
 	private OnlyOfficeImpl onlyOfficeImpl; 
 
 	@Override
-	public void commandRequest(RequestBodyPost requestBodyPost, String fileNameParam, String userAddress) throws Exception {
+	public void commandRequest(JsonObject requestBodyPost, String fileNameParam, String userAddress) throws Exception {
 		onlyOfficeImpl.commandRequest(requestBodyPost, fileNameParam, userAddress);
 	}
 

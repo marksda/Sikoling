@@ -58,8 +58,8 @@ public class ServiceConverter {
 	}
 	
 	// get the url of the converted file
-    public Map<String, String> getConvertedData(String documentUri, String fromExtension, 
-    		String toExtension, String documentRevisionId, String filePass, Boolean isAsync, String lang) throws Exception {
+    public Map<String, String> getConvertedData(String documentUri, String fromExtension,  String toExtension, 
+    		String documentRevisionId, String filePass, Boolean isAsync, String lang) throws Exception {
         // check if the fromExtension parameter is defined; if not, get it from the document url
         String fromExt = fromExtension == null || fromExtension.isEmpty() ? FileUtility.getFileExtension(documentUri) : fromExtension;
         // check if the file name parameter is defined; if not, get random uuid for this file

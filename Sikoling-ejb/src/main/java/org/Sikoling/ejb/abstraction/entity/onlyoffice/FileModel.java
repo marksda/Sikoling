@@ -18,12 +18,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FileModel implements Serializable {
 
 	private static final long serialVersionUID = -8999679392881024180L;
-	private final String type;
-	private final String mode;
-	private final String documentType;
-    private final Document document;
-    private final EditorConfig editorConfig;
-    private final String token;
+	private String type;
+	private String mode;
+	private String documentType;
+    private Document document;
+    private EditorConfig editorConfig;
+    private String token;
     
 	public FileModel(String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, String type, String mode, DocumentManager documentManager) throws Exception {
 		fileNameParam = fileNameParam == null ? "" : fileNameParam.trim();
@@ -40,8 +40,7 @@ public class FileModel implements Serializable {
 		this.document.getInfo().setFavorite(user.getFavorite());
 		this.document.setReferenceData(new ReferenceData(fileName, documentManager.curUserHostAddress(null), user, documentManager.getServerUrl(true)));
 		
-		String templatesImageUrl = documentManager.getTemplateImageUrl(FileUtility.getFileType(fileName));
-        List<Map<String, String>> templates = new ArrayList<>();
+		List<Map<String, String>> templates = new ArrayList<>();
         String createUrl = documentManager.getCreateUrl(fileNameParam);
 
         // add templates for the "Create New" from menu option
@@ -50,41 +49,37 @@ public class FileModel implements Serializable {
         templateForBlankDocument.put("title", "Blank");
         templateForBlankDocument.put("url", createUrl);
         templates.add(templateForBlankDocument);
-        Map<String, String> templateForDocumentWithSampleContent = new HashMap<>();
-        templateForDocumentWithSampleContent.put("image", templatesImageUrl);
-        templateForDocumentWithSampleContent.put("title", "With sample content");
-        templateForDocumentWithSampleContent.put("url", createUrl + "&sample=true");
-        templates.add(templateForDocumentWithSampleContent);
 
         // set the editor config parameters
         this.editorConfig = new EditorConfig(actionData);
         this.editorConfig.setCallbackUrl(documentManager.getCallback(fileNameParam));  // get callback url
-//
-//        HashMap<String, Object> coEditing = mode.equals("view") && user.getId().equals("uid-0")
-//                ? new HashMap<String, Object>()  {{
-//            put("mode", "strict");
-//            put("change", false);
-//        }} : null;
-//        editorConfig.setCoEditing(coEditing);
-//        if (lang != null) {
-//            editorConfig.setLang(lang);  // write language parameter to the config
-//        }
-//
-//        editorConfig.setCreateUrl(!user.getId().equals("uid-0") ? createUrl : null);
-//        editorConfig.setTemplates(user.getTemplates() ? templates : null);
-//
-//        // write user information to the config (id, name and group)
-//        editorConfig.getUser().setId(!user.getId().equals("uid-0") ? user.getId() : null);
-//        editorConfig.getUser().setName(user.getName());
-//        editorConfig.getUser().setGroup(user.getGroup());
-//
-//        // write the absolute URL to the file location
-//        editorConfig.getCustomization().getGoback()
-//                .setUrl(DocumentManager.getServerUrl(false) + "/IndexServlet");
-//
-//        changeType(mode, type, user, fileName);
+
+        HashMap<String, Object> coEditing;
+        if(mode.equals("view")) {
+        	coEditing = new HashMap<String, Object>();
+        	coEditing.put("mode", "strict");
+        	coEditing.put("change", false);
+        }
+        else {
+        	coEditing = null;
+        }
+        editorConfig.setCoEditing(coEditing);
+        
+        if (lang != null) {
+            editorConfig.setLang(lang);  // write language parameter to the config
+        }
+
+        editorConfig.setCreateUrl(user.getGroup().equals("Umum") ? null : createUrl);
+        editorConfig.setTemplates(user.getTemplates() ? templates : null);
+
+        // write user information to the config (id, name and group)
+        editorConfig.getUser().setId(user.getId());
+        editorConfig.getUser().setName(user.getName());
+        editorConfig.getUser().setGroup(user.getGroup());
+
+        changeType(mode, type, user, fileName, documentManager);
 		
-		this.token = null;
+//		this.token = null;
 	}
 			
 	public static long getSerialversionuid() {
@@ -114,6 +109,41 @@ public class FileModel implements Serializable {
 	public String getToken() {
 		return token;
 	}
+
+	// change the document type
+    public void changeType(String modeParam, String typeParam, OnlyofficeUser user, String fileName, DocumentManager documentManager) {
+        if (modeParam != null) {
+            mode = modeParam;
+        }
+        if (typeParam != null) {
+            type = typeParam;
+        }
+
+        // check if the file with such an extension can be edited
+        String fileExt = FileUtility.getFileExtension(document.getTitle());
+        Boolean canEdit = documentManager.getEditedExts().contains(fileExt);
+        // check if the Submit form button is displayed or not
+        editorConfig.getCustomization().setSubmitForm(false);
+
+        if ((!canEdit && mode.equals("edit") || mode.equals("fillForms"))
+                && documentManager.getFillExts().contains(fileExt)) {
+            canEdit = true;
+            mode = "fillForms";
+        }
+        // set the mode parameter: change it to view if the document can't be edited
+        editorConfig.setMode(canEdit && !mode.equals("view") ? "edit" : "view");
+
+        // set document permissions
+        document.setPermissions(new Permissions(mode, type, canEdit, user));
+
+        if (type.equals("embedded")) {
+            initDesktop(fileName, documentManager);  // set parameters for the embedded document
+        }
+    }
+    
+    public void initDesktop(String fileName, DocumentManager documentManager) {
+        editorConfig.initDesktop(documentManager.getDownloadUrl(fileName, false) + "&dmode=emb");
+    }
 
 	private String generateRevisionId(String expectedKey) {
        String formatKey = expectedKey.length() > Constants.MAX_KEY_LENGTH ? Integer.toString(expectedKey.hashCode()) : expectedKey;

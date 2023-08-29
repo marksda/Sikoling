@@ -2,8 +2,9 @@ package org.Sikoling.ejb.abstraction.service.onlyoffice;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.OnlyofficeUser;
-import org.Sikoling.ejb.abstraction.entity.onlyoffice.RequestBodyPost;
 import org.Sikoling.ejb.abstraction.repository.IOnlyOfficeRepository;
+
+import jakarta.json.JsonObject;
 
 public class OnlyofficeService implements IOnlyofficeService {
 	
@@ -14,7 +15,7 @@ public class OnlyofficeService implements IOnlyofficeService {
 	}
 
 	@Override
- 	public void commandRequest(RequestBodyPost requestBodyPost, String fileNameParam, String userAddress) throws Exception {
+ 	public void commandRequest(JsonObject requestBodyPost, String fileNameParam, String userAddress) throws Exception {
 		onlyOfficeRepository.commandRequest(requestBodyPost, fileNameParam, userAddress);
 	}
 	

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.Sikoling.ejb.abstraction.entity.onlyoffice.RequestBodyPost;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.DocumentManager;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.FileUtility;
 import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeTokenManager;
 
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -62,77 +63,160 @@ public class TrackManager {
 		return serviceConverter;
 	}
 		
-	// file force saving process
-    public void processForceSave(RequestBodyPost body,
-                                        String fileNameParam,
-                                        String userAddress) throws Exception {
-        if (body.getUrl() == null) {
-            throw new Exception("DownloadUrl is null");
-        }
-        String fileName = fileNameParam;
-        String downloadUri = body.getUrl();
-
-        String curExt = FileUtility.getFileExtension(fileName);  // get current file extension
-        String downloadExt = "." + body.getFiletype();  // get the extension of the downloaded file
-
-        Boolean newFileName = false;
-
-        // convert downloaded file to the file with the current extension if these extensions aren't equal
-        if (!curExt.equals(downloadExt)) {
-            try {
-                String newFileUri = serviceConverter
-                		.getConvertedData(
-	                		downloadUri, downloadExt, curExt,
-	                		serviceConverter.generateRevisionId(downloadUri), 
-	                		null, false, null)
-                		.get("fileUrl");  // convert file and get url to a new file
-                
-                if (newFileUri.isEmpty()) {
-                    newFileName = true;
-                } 
-                else {
-                    downloadUri = newFileUri;
+	// file saving process
+    public void processSave(JsonObject body, String fileName, String userAddress) throws Exception {
+    	try {
+    		String downloadUri = body.getString("url");
+    		String changesUri = body.getString("changesurl");
+    		String key = body.getString("key");
+            String newFileName = fileName;
+            String curExt = FileUtility.getFileExtension(fileName);  // get current file extension
+            String downloadExt = "." + body.getString("filetype");  // get the extension of the downloaded file
+            // convert downloaded file to the file with the current extension if these extensions aren't equal
+            if (!curExt.equals(downloadExt)) {
+                try {
+                    String newFileUri = serviceConverter.getConvertedData(
+    	                					downloadUri, downloadExt, curExt,
+    	                					serviceConverter.generateRevisionId(downloadUri),
+    	                					null, false, null
+    	                					)
+                    					.get("fileUrl");  // convert file and get url to a new file
+                    
+                    if (newFileUri.isEmpty()) {
+                        // get the correct file name if it already exists
+                        newFileName = documentManager.getCorrectName(FileUtility.getFileNameWithoutExtension(fileName) + downloadExt, userAddress);
+                    } else {
+                        downloadUri = newFileUri;
+                    }
+                } catch (Exception e) {
+                    newFileName = documentManager.getCorrectName(FileUtility.getFileNameWithoutExtension(fileName) + downloadExt, userAddress);
                 }
-            } catch (Exception e) {
-                newFileName = true;
             }
-        }
+            
+            byte[] byteArrayFile = getDownloadFile(downloadUri);  // download document file
+            String storagePath = documentManager.storagePath(newFileName, userAddress);  // get the file path
+            File histDir = new File(documentManager.historyDir(storagePath));  // get the path to the history direction
+            
+            if (!histDir.exists()) {
+                histDir.mkdirs();  // if the path doesn't exist, create it
+            }
+            // get the path to the file version
+            String versionDir = documentManager.versionDir(histDir.getAbsolutePath(), documentManager.getFileVersion(histDir.getAbsolutePath()));  
+            File ver = new File(versionDir);
+            File lastVersion = new File(documentManager.storagePath(fileName, userAddress));
+            Path toSave = Paths.get(storagePath);
+            
+            if (!ver.exists()) {
+                ver.mkdirs();
+            }
+            
+            // get the path to the previous file version and rename the last file version with it
+            lastVersion.renameTo(new File(versionDir + File.separator + "prev" + curExt));
 
-        byte[] byteArrayFile = getDownloadFile(downloadUri);  // download document file
-        String forcesavePath = "";
-        boolean isSubmitForm = body.getForcesavetype() == 3 ? true:false;  // SubmitForm
+            saveFile(byteArrayFile, toSave); // save document file
 
-        if (isSubmitForm) {  // if the form is submitted
-            // new file
-            if (newFileName) {
-                fileName = documentManager.getCorrectName(FileUtility.getFileNameWithoutExtension(fileName)
-                        + "-form" + downloadExt, userAddress);  // get the correct file name if it already exists
+            byte[] byteArrayChanges = getDownloadFile(changesUri);
+            saveFile(byteArrayChanges, Paths.get(versionDir + File.separator + "diff.zip"));
+            
+            String history = body.getString("changeshistory");
+            if (history == null && body.containsKey("history")) {
+                history = body.getJsonObject("history").toString();
+            }
+            
+            if (history != null && !history.isEmpty()) {
+                // write the history changes to the changes.json file
+                FileWriter fw = new FileWriter(new File(versionDir + File.separator + "changes.json"));
+                fw.write(history);
+                fw.close();
+            }
+            
+            // write the key value to the key.txt file
+            FileWriter fw = new FileWriter(new File(versionDir + File.separator + "key.txt"));
+            fw.write(key);
+            fw.close();
+            
+            // get the path to the forcesaved file version
+            String forcesavePath = documentManager.forcesavePath(newFileName, userAddress, false);
+            if (!forcesavePath.equals("")) {  // if the forcesaved file version exists
+                File forceSaveFile = new File(forcesavePath);
+                forceSaveFile.delete();  // remove it
+            }
+		} catch (Exception e) {
+			throw new Exception("Parsing json value error");
+		}
+    }
+
+	// file force saving process
+    public void processForceSave(JsonObject body, String fileNameParam, String userAddress) throws Exception {
+    	
+    	try {
+    		String fileName = fileNameParam;
+            String downloadUri = body.getString("url");
+            String curExt = FileUtility.getFileExtension(fileName);  // get current file extension
+            String downloadExt = "." + body.getString("filetype");  // get the extension of the downloaded file
+            Boolean newFileName = false;
+            
+            // convert downloaded file to the file with the current extension if these extensions aren't equal
+            if (!curExt.equals(downloadExt)) {
+                try {
+                    String newFileUri = serviceConverter
+                    		.getConvertedData(
+    	                		downloadUri, downloadExt, curExt,
+    	                		serviceConverter.generateRevisionId(downloadUri), 
+    	                		null, false, null)
+                    		.get("fileUrl");  // convert file and get url to a new file
+                    
+                    if (newFileUri.isEmpty()) {
+                        newFileName = true;
+                    } 
+                    else {
+                        downloadUri = newFileUri;
+                    }
+                } catch (Exception e) {
+                    newFileName = true;
+                }
+            }
+            
+            byte[] byteArrayFile = getDownloadFile(downloadUri);  // download document file
+            String forcesavePath = "";
+            boolean isSubmitForm = body.getInt("forcesavetype") == 3 ? true:false;  // SubmitForm
+            
+            if (isSubmitForm) {  // if the form is submitted
+                // new file
+                if (newFileName) {
+                    fileName = documentManager.getCorrectName(FileUtility.getFileNameWithoutExtension(fileName)
+                            + "-form" + downloadExt, userAddress);  // get the correct file name if it already exists
+                } else {
+                    fileName = documentManager.getCorrectName(FileUtility.getFileNameWithoutExtension(fileName)
+                            + "-form" + curExt, userAddress);
+                }
+                forcesavePath = documentManager.storagePath(fileName, userAddress);
             } else {
-                fileName = documentManager.getCorrectName(FileUtility.getFileNameWithoutExtension(fileName)
-                        + "-form" + curExt, userAddress);
+                if (newFileName) {
+                    fileName = documentManager.getCorrectName(FileUtility
+                            .getFileNameWithoutExtension(fileName) + downloadExt, userAddress);
+                }
+
+                // create forcesave path if it doesn't exist
+                forcesavePath = documentManager.forcesavePath(fileName, userAddress, false);
+                if (forcesavePath == "") {
+                    forcesavePath = documentManager.forcesavePath(fileName, userAddress, true);
+                }
             }
-            forcesavePath = documentManager.storagePath(fileName, userAddress);
-        } else {
-            if (newFileName) {
-                fileName = documentManager.getCorrectName(FileUtility
-                        .getFileNameWithoutExtension(fileName) + downloadExt, userAddress);
-            }
+            
+            saveFile(byteArrayFile, Paths.get(forcesavePath));
 
-            // create forcesave path if it doesn't exist
-            forcesavePath = documentManager.forcesavePath(fileName, userAddress, false);
-            if (forcesavePath == "") {
-                forcesavePath = documentManager.forcesavePath(fileName, userAddress, true);
-            }
-        }
+            if (isSubmitForm) {
+            	JsonArray actions = body.getJsonArray("actios");
+    			JsonObject action = actions.getJsonObject(0);
+                String user = action.getString("userid");   // get the user id
 
-        saveFile(byteArrayFile, Paths.get(forcesavePath));
-
-        if (isSubmitForm) {
-            String user = body.getActions().get(0).getUserid();   // get the user id
-
-            // create meta data for forcesaved file
-            documentManager.createMeta(fileName, user, "Filling Form", userAddress);
-        }
+                // create meta data for forcesaved file
+                documentManager.createMeta(fileName, user, "Filling Form", userAddress);
+            }            
+    	} catch (Exception e) {
+			throw new Exception("Parsing json value error");
+		}           
     }
     
     // create a new file if it does not exist
