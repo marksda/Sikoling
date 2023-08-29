@@ -5,10 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Person;
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.CommentGroups;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileModel;
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.OnlyofficeUser;
 import org.Sikoling.ejb.abstraction.service.onlyoffice.IOnlyofficeService;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.storage.ILocalStorageService;
@@ -56,48 +61,46 @@ public class OnlyofficeController {
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public FileModel getConfigEditor(@Context SecurityContext securityContext, @QueryParam("fileNameParam") String fileNameParam) throws Exception {
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-//		Person person = pengurusPermohonan.getPerson();
-//		List<String> userDescription = new ArrayList<String>();
-//		OnlyofficeUser onlyofficeUser = null;
-//		String idHakAkses = pengurusPermohonan.getHakAkses().getId();
-//		String namaHakAkses = pengurusPermohonan.getHakAkses().getNama();
-//		
-//		switch (idHakAkses) {
-//		case "01":
-//			userDescription.add("Belongs to group " + namaHakAkses);
-//			userDescription.add("Can review all the changes");
-//			userDescription.add("Can perform all actions with comments");
-//			userDescription.add("The file favorite state is undefined");
-//			userDescription.add("Can create files from templates using data from the editor");
-//			userDescription.add("Can see the information about all users");
-//			onlyofficeUser = new OnlyofficeUser(
-//					person.getNik(), person.getNama(), person.getKontak().getEmail(), namaHakAkses, 
-//					Arrays.asList(pengurusPermohonan.getHakAkses().getNama()), new CommentGroups(), null, new ArrayList<String>(), 
-//					userDescription, null, null
-//					);
-//			break;
-//		case "09":
-//			userDescription.add("Belongs to group " + namaHakAkses);
-//			userDescription.add("Can review changes made by group " + namaHakAkses + " users");
-//			userDescription.add("Can view, edit and remove comments left by Group" + namaHakAkses + "users");
-//			userDescription.add("The file favorite state is undefined");
-//			userDescription.add("Can't create files from templates using data from the editor");
-//			userDescription.add("Can see the information about all users");
-//			onlyofficeUser = new OnlyofficeUser(
-//					person.getNik(), person.getNama(), person.getKontak().getEmail(), namaHakAkses, 
-//					Arrays.asList(namaHakAkses), 
-//					new CommentGroups(Arrays.asList(namaHakAkses), Arrays.asList(namaHakAkses), Arrays.asList(namaHakAkses)), 
-//					null, Arrays.asList("create"), 
-//					userDescription, null, null
-//					);
-//			break;
-//		default:
-//			throw new Exception("Group error");
-//		}	
-//				
-//		onlyofficeService.getConfig(fileNameParam, onlyofficeUser);
+		Person person = pengurusPermohonan.getPerson();
+		List<String> userDescription = new ArrayList<String>();
+		OnlyofficeUser onlyofficeUser = null;
+		String idHakAkses = pengurusPermohonan.getHakAkses().getId();
+		String namaHakAkses = pengurusPermohonan.getHakAkses().getNama();
+		
+		switch (idHakAkses) {
+		case "01":
+			userDescription.add("Belongs to group " + namaHakAkses);
+			userDescription.add("Can review all the changes");
+			userDescription.add("Can perform all actions with comments");
+			userDescription.add("The file favorite state is undefined");
+			userDescription.add("Can create files from templates using data from the editor");
+			userDescription.add("Can see the information about all users");
+			onlyofficeUser = new OnlyofficeUser(
+					person.getNik(), person.getNama(), person.getKontak().getEmail(), namaHakAkses, 
+					Arrays.asList(pengurusPermohonan.getHakAkses().getNama()), new CommentGroups(), null, new ArrayList<String>(), 
+					userDescription, null, null
+					);
+			break;
+		case "09":
+			userDescription.add("Belongs to group " + namaHakAkses);
+			userDescription.add("Can review changes made by group " + namaHakAkses + " users");
+			userDescription.add("Can view, edit and remove comments left by Group" + namaHakAkses + "users");
+			userDescription.add("The file favorite state is undefined");
+			userDescription.add("Can't create files from templates using data from the editor");
+			userDescription.add("Can see the information about all users");
+			onlyofficeUser = new OnlyofficeUser(
+					person.getNik(), person.getNama(), person.getKontak().getEmail(), namaHakAkses, 
+					Arrays.asList(namaHakAkses), 
+					new CommentGroups(Arrays.asList(namaHakAkses), Arrays.asList(namaHakAkses), Arrays.asList(namaHakAkses)), 
+					null, Arrays.asList("create"), 
+					userDescription, null, null
+					);
+			break;
+		default:
+			throw new Exception("Group error");
+		}	
 
-		return onlyofficeService.getConfig(fileNameParam, null);
+		return onlyofficeService.getConfig(fileNameParam, onlyofficeUser);
 	}
 	
 	@Path("download")

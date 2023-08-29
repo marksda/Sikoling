@@ -2,6 +2,11 @@ package org.Sikoling.ejb.main.repository;
 
 import java.util.Properties;
 
+import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeImpl;
+import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeTokenManager;
+import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.DocumentManager;
+import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.ServiceConverter;
+import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.TrackManager;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
@@ -265,9 +270,25 @@ public class RepositoryProvider {
 		return new LocalStorageImpl(properties.getProperty("STORAGE_PATH"));
 	}
 	
-//	@Produces
-//	public OnlyOfficeImpl getOnlyOfficeImpl(Properties properties) {
-//		return new OnlyOfficeImpl(properties);
-//	}
+	@Produces
+	public ServiceConverter getServiceConverter(Properties properties, OnlyOfficeTokenManager tokenManager) {
+		return new ServiceConverter(properties, tokenManager);
+	}
+	
+	@Produces
+	public DocumentManager getDokuDocumentManager(Properties properties, ServiceConverter serviceConverter) {
+		return new DocumentManager(properties, serviceConverter);
+	}
+	
+	@Produces
+	public TrackManager getTrackManager(Properties properties, DocumentManager documentManager,
+			ServiceConverter serviceConverter, OnlyOfficeTokenManager tokenManager) {
+		return new TrackManager(properties, documentManager, serviceConverter, tokenManager);
+	}
+	
+	@Produces
+	public OnlyOfficeImpl getOnlyOfficeImpl(TrackManager trackManager) {
+		return new OnlyOfficeImpl(trackManager);
+	}
 	
 }

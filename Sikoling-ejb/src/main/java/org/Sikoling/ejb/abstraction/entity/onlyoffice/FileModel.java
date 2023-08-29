@@ -8,9 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.DocumentManager;
+
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.FileUtility;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.utils.Constants;
+import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.DocumentManager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

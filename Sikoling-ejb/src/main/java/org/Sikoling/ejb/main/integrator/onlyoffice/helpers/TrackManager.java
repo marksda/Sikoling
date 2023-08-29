@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.DocumentManager;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.FileUtility;
 import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeTokenManager;
 

@@ -1,4 +1,4 @@
-package org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers;
+package org.Sikoling.ejb.main.integrator.onlyoffice.helpers;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -27,7 +27,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.FileType;
-import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.ServiceConverter;
+import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.FileUtility;
 import org.apache.commons.io.FilenameUtils;
 
 import com.nimbusds.jose.JWSAlgorithm;
