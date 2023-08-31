@@ -21,7 +21,6 @@ public class FileModel implements Serializable {
 
 	private static final long serialVersionUID = -8999679392881024180L;
 	private String type;
-//	private String mode;
 	private String documentType;
     private Document document;
     private EditorConfig editorConfig;
@@ -111,10 +110,6 @@ public class FileModel implements Serializable {
 		return type;
 	}
 
-//	public String getMode() {
-//		return mode;
-//	}
-
 	public String getDocumentType() {
 		return documentType;
 	}
@@ -130,54 +125,6 @@ public class FileModel implements Serializable {
 	public String getToken() {
 		return token;
 	}
-
-	// change the document type
-//    public void changeType(String modeParam, String typeParam, OnlyofficeUser user, String fileName, DocumentManager documentManager) {
-//        if (modeParam != null) {
-//            mode = modeParam;
-//        }
-//        if (typeParam != null) {
-//            type = typeParam;
-//        }
-//
-//        // check if the file with such an extension can be edited
-//        String fileExt = FileUtility.getFileExtension(document.getTitle());
-//        Boolean canEdit = documentManager.getEditedExts().contains(fileExt);
-//        // check if the Submit form button is displayed or not
-//        editorConfig.getCustomization().setSubmitForm(false);
-//
-//        if ((!canEdit && mode.equals("edit") || mode.equals("fillForms"))
-//                && documentManager.getFillExts().contains(fileExt)) {
-//            canEdit = true;
-//            mode = "fillForms";
-//        }
-//        // set the mode parameter: change it to view if the document can't be edited
-//        editorConfig.setMode(canEdit && !mode.equals("view") ? "edit" : "view");
-//
-//        // set document permissions
-//        document.setPermissions(new Permissions(mode, type, canEdit, user));
-//
-//        if (type.equals("embedded")) {
-//            initDesktop(fileName, documentManager);  // set parameters for the embedded document
-//        }
-//    }
-    
-//    public void initDesktop(String fileName, DocumentManager documentManager) {
-//        editorConfig.initDesktop(documentManager.getDownloadUrl(fileName, false) + "&dmode=emb");
-//    }
-
-    // generate document token
-//    public void buildToken() {
-//        // write all the necessary document parameters to the map
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("type", type);
-//        map.put("documentType", documentType);
-//        map.put("document", document);
-//        map.put("editorConfig", editorConfig);
-//
-//        // and create token from them
-//        token = DocumentManager.createToken(map);
-//    }
     
 	private String generateRevisionId(String expectedKey) {
        String formatKey = expectedKey.length() > Constants.MAX_KEY_LENGTH ? Integer.toString(expectedKey.hashCode()) : expectedKey;

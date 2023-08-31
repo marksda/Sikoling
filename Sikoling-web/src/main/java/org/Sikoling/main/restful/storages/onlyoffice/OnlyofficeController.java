@@ -64,6 +64,7 @@ public class OnlyofficeController {
 		OnlyofficeUser onlyofficeUser = null;
 		String idHakAkses = pengurusPermohonan.getHakAkses().getId();
 		String namaHakAkses = pengurusPermohonan.getHakAkses().getNama();
+		String mode = "view";
 		
 		switch (idHakAkses) {
 		case "01":
@@ -78,6 +79,7 @@ public class OnlyofficeController {
 					Arrays.asList(pengurusPermohonan.getHakAkses().getNama()), new CommentGroups(), null, new ArrayList<String>(), 
 					userDescription, null, null
 					);
+			mode="edit";
 			break;
 		case "09":
 			userDescription.add("Belongs to group " + namaHakAkses);
@@ -98,7 +100,7 @@ public class OnlyofficeController {
 			throw new Exception("Group error");
 		}	
 
-		return onlyofficeService.getConfig(fileNameParam, "view", "100%", "100%", onlyofficeUser);
+		return onlyofficeService.getConfig(fileNameParam, mode, null, null, onlyofficeUser);
 	}
 	
 	@Path("download")
