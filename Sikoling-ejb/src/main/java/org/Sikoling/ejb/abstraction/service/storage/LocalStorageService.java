@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.abstraction.service.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,7 +20,7 @@ public class LocalStorageService implements ILocalStorageService {
 	}
 
 	@Override
-	public InputStream download(String fileNameParam) throws IOException {
+	public File download(String fileNameParam) throws IOException {
 		return localStorageRepository.download(fileNameParam);
 	}
 

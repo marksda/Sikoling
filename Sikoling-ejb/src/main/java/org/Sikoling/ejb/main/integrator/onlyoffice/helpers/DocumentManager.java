@@ -382,7 +382,7 @@ public class DocumentManager implements Serializable {
     
     // get the server url
     public String getServerUrl(Boolean forDocumentServer) {
-        if (forDocumentServer && !properties.getProperty("STORAGE_SERVER_FOR_ONLYOFFICE").equals("")) {
+        if (forDocumentServer && !properties.getProperty("STORAGE_SERVER_FOR_ONLYOFFICE_INTERNAL").equals("")) {
             return properties.getProperty("STORAGE_SERVER_FOR_ONLYOFFICE_INTERNAL");
         } else {
             return properties.getProperty("STORAGE_SERVER_FOR_ANYONE");
@@ -416,7 +416,7 @@ public class DocumentManager implements Serializable {
     public String getDownloadUrl(String fileNameParam, Boolean forDocumentServer) {
         String serverPath = getServerUrl(forDocumentServer);
         try {
-        	return serverPath + "/download" + URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString());
+        	return serverPath + "/download?fileNameParam=" + URLEncoder.encode(fileNameParam, StandardCharsets.UTF_8.toString());
         }
         catch (UnsupportedEncodingException e) {
         	return "";

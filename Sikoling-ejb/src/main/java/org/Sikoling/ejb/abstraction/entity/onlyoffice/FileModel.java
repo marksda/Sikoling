@@ -2,7 +2,6 @@ package org.Sikoling.ejb.abstraction.entity.onlyoffice;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,26 +10,33 @@ import java.util.Map;
 
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.helpers.FileUtility;
 import org.Sikoling.ejb.abstraction.entity.onlyoffice.utils.Constants;
+import org.Sikoling.ejb.main.integrator.onlyoffice.OnlyOfficeTokenManager;
 import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.DocumentManager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 public class FileModel implements Serializable {
 
 	private static final long serialVersionUID = -8999679392881024180L;
 	private String type;
-	private String mode;
+//	private String mode;
 	private String documentType;
     private Document document;
     private EditorConfig editorConfig;
+    private String height;
+    private String width;
     private String token;
     
-	public FileModel(String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, String type, String mode, DocumentManager documentManager) throws Exception {
+    
+	public FileModel(String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, 
+			String type, String mode, String height, String width, DocumentManager documentManager, OnlyOfficeTokenManager tokenManager) throws Exception {
 		fileNameParam = fileNameParam == null ? "" : fileNameParam.trim();
 		String fileName = FileUtility.getFileName(fileNameParam);
 		this.type = type != null ? type:"desktop";
-		this.mode = mode != null ? mode:"edit";
+		this.height = height != null ? height:"100%";
+		this.width = width != null ? width:"100%";
 		this.documentType = FileUtility.getFileType(fileName).toString().toLowerCase();
 		this.document = new Document();
 		this.document.setTitle(fileName);
@@ -39,21 +45,26 @@ public class FileModel implements Serializable {
 		this.document.setKey(generateRevisionId(fileName));
 		this.document.setInfo(new Info());
 		this.document.getInfo().setFavorite(user.getFavorite());
-		this.document.setReferenceData(new ReferenceData(fileName, documentManager.curUserHostAddress(null), user, documentManager.getServerUrl(true)));
+		this.document.setReferenceData(new ReferenceData(this.document.getKey(), documentManager.getServerUrl(true)));
 		
-		List<Map<String, String>> templates = new ArrayList<>();
+		Boolean canEdit = documentManager.getEditedExts().contains(FileUtility.getFileExtension(document.getTitle()));
+		Permissions permissions = new Permissions(mode, type, canEdit, user);
+		this.document.setPermissions(permissions);
+		
+		
+//		List<Map<String, String>> templates = new ArrayList<>();
         String createUrl = documentManager.getCreateUrl(fileNameParam);
-
         // add templates for the "Create New" from menu option
-        Map<String, String> templateForBlankDocument = new HashMap<>();
-        templateForBlankDocument.put("image", "");
-        templateForBlankDocument.put("title", "Blank");
-        templateForBlankDocument.put("url", createUrl);
-        templates.add(templateForBlankDocument);
+//        Map<String, String> templateForBlankDocument = new HashMap<>();
+//        templateForBlankDocument.put("image", "");
+//        templateForBlankDocument.put("title", "Blank");
+//        templateForBlankDocument.put("url", createUrl);
+//        templates.add(templateForBlankDocument);
 
         // set the editor config parameters
         this.editorConfig = new EditorConfig(actionData);
         this.editorConfig.setCallbackUrl(documentManager.getCallback(fileNameParam));  // get callback url
+        this.editorConfig.setMode(mode);
 
         HashMap<String, Object> coEditing;
         if(mode.equals("view")) {
@@ -64,23 +75,32 @@ public class FileModel implements Serializable {
         else {
         	coEditing = null;
         }
-        editorConfig.setCoEditing(coEditing);
+        this.editorConfig.setCoEditing(coEditing);
         
         if (lang != null) {
-            editorConfig.setLang(lang);  // write language parameter to the config
+        	this.editorConfig.setLang(lang);  // write language parameter to the config
         }
 
-        editorConfig.setCreateUrl(user.getGroup().equals("Umum") ? null : createUrl);
-        editorConfig.setTemplates(user.getTemplates() ? templates : null);
+        this.editorConfig.setCreateUrl(user.getGroup().equals("Umum") ? null : createUrl);
+//        this.editorConfig.setTemplates(user.getTemplates() ? templates : null);
 
         // write user information to the config (id, name and group)
-        editorConfig.getUser().setId(user.getId());
-        editorConfig.getUser().setName(user.getName());
-        editorConfig.getUser().setGroup(user.getGroup());
+        this.editorConfig.getUser().setId(user.getId());
+        this.editorConfig.getUser().setName(user.getName());
+        this.editorConfig.getUser().setGroup(user.getGroup());
 
-        changeType(mode, type, user, fileName, documentManager);
+//        changeType(mode, type, user, fileName, documentManager);
 		
-//		this.token = null;
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", this.type);
+//        params.put("mode", this.mode);
+        params.put("documentType", this.documentType);
+        params.put("document", this.document);
+        params.put("editorConfig", this.editorConfig);
+        params.put("height", this.height);
+        params.put("width", this.width);
+        
+		this.token = tokenManager.createToken(params);
 	}
 			
 	public static long getSerialversionuid() {
@@ -91,9 +111,9 @@ public class FileModel implements Serializable {
 		return type;
 	}
 
-	public String getMode() {
-		return mode;
-	}
+//	public String getMode() {
+//		return mode;
+//	}
 
 	public String getDocumentType() {
 		return documentType;
@@ -112,40 +132,53 @@ public class FileModel implements Serializable {
 	}
 
 	// change the document type
-    public void changeType(String modeParam, String typeParam, OnlyofficeUser user, String fileName, DocumentManager documentManager) {
-        if (modeParam != null) {
-            mode = modeParam;
-        }
-        if (typeParam != null) {
-            type = typeParam;
-        }
-
-        // check if the file with such an extension can be edited
-        String fileExt = FileUtility.getFileExtension(document.getTitle());
-        Boolean canEdit = documentManager.getEditedExts().contains(fileExt);
-        // check if the Submit form button is displayed or not
-        editorConfig.getCustomization().setSubmitForm(false);
-
-        if ((!canEdit && mode.equals("edit") || mode.equals("fillForms"))
-                && documentManager.getFillExts().contains(fileExt)) {
-            canEdit = true;
-            mode = "fillForms";
-        }
-        // set the mode parameter: change it to view if the document can't be edited
-        editorConfig.setMode(canEdit && !mode.equals("view") ? "edit" : "view");
-
-        // set document permissions
-        document.setPermissions(new Permissions(mode, type, canEdit, user));
-
-        if (type.equals("embedded")) {
-            initDesktop(fileName, documentManager);  // set parameters for the embedded document
-        }
-    }
+//    public void changeType(String modeParam, String typeParam, OnlyofficeUser user, String fileName, DocumentManager documentManager) {
+//        if (modeParam != null) {
+//            mode = modeParam;
+//        }
+//        if (typeParam != null) {
+//            type = typeParam;
+//        }
+//
+//        // check if the file with such an extension can be edited
+//        String fileExt = FileUtility.getFileExtension(document.getTitle());
+//        Boolean canEdit = documentManager.getEditedExts().contains(fileExt);
+//        // check if the Submit form button is displayed or not
+//        editorConfig.getCustomization().setSubmitForm(false);
+//
+//        if ((!canEdit && mode.equals("edit") || mode.equals("fillForms"))
+//                && documentManager.getFillExts().contains(fileExt)) {
+//            canEdit = true;
+//            mode = "fillForms";
+//        }
+//        // set the mode parameter: change it to view if the document can't be edited
+//        editorConfig.setMode(canEdit && !mode.equals("view") ? "edit" : "view");
+//
+//        // set document permissions
+//        document.setPermissions(new Permissions(mode, type, canEdit, user));
+//
+//        if (type.equals("embedded")) {
+//            initDesktop(fileName, documentManager);  // set parameters for the embedded document
+//        }
+//    }
     
-    public void initDesktop(String fileName, DocumentManager documentManager) {
-        editorConfig.initDesktop(documentManager.getDownloadUrl(fileName, false) + "&dmode=emb");
-    }
+//    public void initDesktop(String fileName, DocumentManager documentManager) {
+//        editorConfig.initDesktop(documentManager.getDownloadUrl(fileName, false) + "&dmode=emb");
+//    }
 
+    // generate document token
+//    public void buildToken() {
+//        // write all the necessary document parameters to the map
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("type", type);
+//        map.put("documentType", documentType);
+//        map.put("document", document);
+//        map.put("editorConfig", editorConfig);
+//
+//        // and create token from them
+//        token = DocumentManager.createToken(map);
+//    }
+    
 	private String generateRevisionId(String expectedKey) {
        String formatKey = expectedKey.length() > Constants.MAX_KEY_LENGTH ? Integer.toString(expectedKey.hashCode()) : expectedKey;
        String key = formatKey.replace("[^0-9-.a-zA-Z_=]", "_");
@@ -153,6 +186,42 @@ public class FileModel implements Serializable {
        return key.substring(0, Math.min(key.length(), Constants.MAX_KEY_LENGTH));  // the resulting key length is 20 or less
    }
     
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
+	public void setEditorConfig(EditorConfig editorConfig) {
+		this.editorConfig = editorConfig;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public class Document {
         private String title;
         private String url;
@@ -245,10 +314,9 @@ public class FileModel implements Serializable {
         private final CommentGroups commentGroups;
         private final List<String> userInfoGroups;
         private final Boolean protect;
-        //public Gson gson = new Gson();
 
         // defines what can be done with a document
-        public Permissions(final String modeParam, final String typeParam, final Boolean canEdit, final OnlyofficeUser user) {
+        public Permissions(String modeParam, String typeParam, Boolean canEdit, OnlyofficeUser user) {
             comment = !modeParam.equals("view") && !modeParam.equals("fillForms") && !modeParam.equals("embedded")
                     && !modeParam.equals("blockcontent");
             copy = !user.getDeniedPermissions().contains("сopy");
@@ -326,22 +394,19 @@ public class FileModel implements Serializable {
     }
 
 	public class ReferenceData {
-        private final String instanceId;
-        private final Map<String, String> fileKey;
+        private String instanceId;
+        private String fileKey;
         
-        public ReferenceData(String fileName, String curUserHostAddress, OnlyofficeUser user, String storageServerUrl) {
-            instanceId = storageServerUrl;
-            Map<String, String> fileKeyList = new HashMap<>();
-            fileKeyList.put("fileName", fileName);
-            fileKeyList.put("userAddress", curUserHostAddress);            
-            fileKey = fileKeyList;
+        public ReferenceData(String fileKey, String storageServerUrl) {
+            this.instanceId = storageServerUrl;
+            this.fileKey = fileKey;
         }
 
         public String getInstanceId() {
             return instanceId;
         }
 
-        public Map<String, String> getFileKey() {
+        public String getFileKey() {
             return fileKey;
         }
     }
@@ -521,19 +586,12 @@ public class FileModel implements Serializable {
         public class Customization {
             private Goback goback;
             private Boolean forcesave;
-            private Boolean submitForm;
-            private Boolean about;
             private Boolean comments;
             private Boolean feedback;
 
-            public void setSubmitForm(Boolean submitFormParam) {
-                this.submitForm = submitFormParam;
-            }
-
             public Customization() {
-                about = true;
-                comments = true;
-                feedback = true;
+                comments = false;
+                feedback = false;
                 forcesave = false;
                 goback = new Goback();
             }
@@ -544,14 +602,6 @@ public class FileModel implements Serializable {
 
             public Boolean getForcesave() {
                 return forcesave;
-            }
-
-            public Boolean getSubmitForm() {
-                return submitForm;
-            }
-
-            public Boolean getAbout() {
-                return about;
             }
 
             public Boolean getComments() {

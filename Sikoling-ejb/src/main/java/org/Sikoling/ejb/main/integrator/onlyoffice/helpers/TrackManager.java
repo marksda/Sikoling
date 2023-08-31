@@ -206,7 +206,7 @@ public class TrackManager {
             saveFile(byteArrayFile, Paths.get(forcesavePath));
 
             if (isSubmitForm) {
-            	JsonArray actions = body.getJsonArray("actios");
+            	JsonArray actions = body.getJsonArray("actions");
     			JsonObject action = actions.getJsonObject(0);
                 String user = action.getString("userid");   // get the user id
 

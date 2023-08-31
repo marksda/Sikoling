@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.main.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,7 +25,7 @@ public class LocalStorageEJB implements ILocalStorageRepository {
 	}
 
 	@Override
-	public InputStream download(String fileNameParam) throws IOException {
+	public File download(String fileNameParam) throws IOException {
 		return localStorageImpl.download(fileNameParam);
 	}
 

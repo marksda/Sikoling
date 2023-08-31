@@ -287,8 +287,8 @@ public class RepositoryProvider {
 	}
 	
 	@Produces
-	public OnlyOfficeImpl getOnlyOfficeImpl(TrackManager trackManager) {
-		return new OnlyOfficeImpl(trackManager);
+	public OnlyOfficeImpl getOnlyOfficeImpl(TrackManager trackManager, DocumentManager documentManager, OnlyOfficeTokenManager tokenManager) {
+		return new OnlyOfficeImpl(trackManager, documentManager, tokenManager);
 	}
 	
 }

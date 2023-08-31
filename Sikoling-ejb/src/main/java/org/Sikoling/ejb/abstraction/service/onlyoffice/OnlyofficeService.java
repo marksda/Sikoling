@@ -20,8 +20,8 @@ public class OnlyofficeService implements IOnlyofficeService {
 	}
 	
 	@Override
-	public FileModel getConfig(String namaFile, OnlyofficeUser onlyofficeUser) throws Exception {
-		return onlyOfficeRepository.getConfig(namaFile, onlyofficeUser);
+	public FileModel getConfig(String namaFile, String mode, String height, String width, OnlyofficeUser onlyofficeUser) throws Exception {
+		return onlyOfficeRepository.getConfig(namaFile, mode, height, width, onlyofficeUser);
 	}
 
 }

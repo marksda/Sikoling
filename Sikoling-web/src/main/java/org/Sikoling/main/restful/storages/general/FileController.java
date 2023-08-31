@@ -1,7 +1,6 @@
 package org.Sikoling.main.restful.storages.general;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -14,7 +13,6 @@ import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -86,29 +84,21 @@ public class FileController {
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public Response getDownload(@QueryParam("fileNameParam") String fileNameParam) throws IOException {
-		InputStream inputStream = null;
-		String fileType = null;
-		String fileSize = null;
-		String fileName = null;
 		try {
-			inputStream = localStorageService.download(fileNameParam);	
-			fileName = FilenameUtils.getName(fileNameParam);
-			File tempFile = File.createTempFile(FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName));
-			FileOutputStream out = new FileOutputStream(tempFile);
-			IOUtils.copy(inputStream, out);	
-		    fileType = Files.probeContentType(tempFile.toPath());
-		    fileSize = String.valueOf(tempFile.length());
-		    tempFile.delete();
+			File tempFile = localStorageService.download(fileNameParam);	
+			String fileName = FilenameUtils.getName(fileNameParam);
+			String fileType = Files.probeContentType(tempFile.toPath());
+		    String fileSize = String.valueOf(tempFile.length());
+		    
+		    return Response.status( Response.Status.OK )
+			        .header("Content-Length", fileSize)
+			        .header("Content-Type", fileType)
+			        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
+			        .entity(tempFile)
+			        .build();  
 		} catch (IOException e) {
-		    e.printStackTrace();
-		}	
-		
-		return Response.status( Response.Status.OK )
-		        .header("Content-Length", fileSize)
-		        .header("Content-Type", fileType)
-		        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
-		        .entity(inputStream)
-		        .build();   
+			throw new IOException("file tidak ada");
+		}		 
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.Sikoling.ejb.main.integrator.onlyoffice;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -13,7 +14,9 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.nimbusds.jwt.JWTClaimsSet.Builder;
+
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 
 public class OnlyOfficeTokenManager implements IOnlyofficeTokenManager {
 	private final Properties properties;
@@ -26,12 +29,22 @@ public class OnlyOfficeTokenManager implements IOnlyofficeTokenManager {
 	public String createToken(Map<String, Object> payloadClaims) {
 		try {
             JWSSigner signer = new MACSigner(properties.getProperty("SECRET_KEY_DOC"));
-            Builder claimsSetBuilder = new JWTClaimsSet.Builder();            
-            for(String key : payloadClaims.keySet()) {
-            	claimsSetBuilder.claim(key, payloadClaims.get(key));
-            }            
-            SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSetBuilder.build());
+            
+            //header JWS
+            Map<String, Object> params = new HashMap<>();
+            params.put("typ", "JWT");
+            JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.HS256)
+            		.customParams(params)
+                    .build();
+            
+            //payload jws
+            Jsonb jsonb = JsonbBuilder.create();
+            String jsonString = jsonb.toJson(payloadClaims);            
+            JWTClaimsSet jwtClaimsSet = JWTClaimsSet.parse(jsonString); 
+            
+            SignedJWT signedJWT = new SignedJWT(header, jwtClaimsSet);  //claimsSetBuilder.build()
             signedJWT.sign(signer);
+            
             return signedJWT.serialize();
         } catch (Exception e) {
             return null;

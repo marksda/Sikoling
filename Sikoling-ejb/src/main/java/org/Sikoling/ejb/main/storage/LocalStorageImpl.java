@@ -32,9 +32,17 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 	}
 
 	@Override
-	public InputStream download(String fileNameParam) throws IOException {
-		Path pathLocation = Paths.get(this.rootPath.concat(fileNameParam));	
-		return Files.newInputStream(pathLocation);
+	public File download(String fileNameParam) throws IOException {
+		File file=new File(this.rootPath.concat(fileNameParam));   
+		if(file.exists()) {
+			return file;
+		}
+		else {
+			throw new IOException("file tidak ada");
+		}
+		
+//		Path pathLocation = Paths.get(this.rootPath.concat(fileNameParam));	
+//		return Files.newInputStream(pathLocation.toAbsolutePath());
 	}
 
 	@Override

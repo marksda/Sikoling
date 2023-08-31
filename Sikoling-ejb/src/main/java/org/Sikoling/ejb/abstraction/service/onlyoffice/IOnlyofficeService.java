@@ -6,5 +6,5 @@ import jakarta.json.JsonObject;
 
 public interface IOnlyofficeService {
 	void commandRequest(JsonObject requestBodyPost, String fileNameParam, String userAddress) throws Exception;
-	FileModel getConfig(String namaFile, OnlyofficeUser onlyofficeUser) throws Exception;
+	FileModel getConfig(String namaFile, String mode, String height, String width, OnlyofficeUser onlyofficeUser) throws Exception;
 }

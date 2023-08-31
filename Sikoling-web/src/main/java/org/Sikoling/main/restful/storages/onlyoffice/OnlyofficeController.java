@@ -1,9 +1,7 @@
 package org.Sikoling.main.restful.storages.onlyoffice;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,13 +20,12 @@ import org.Sikoling.main.restful.security.RequiredOnlyofficeAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -57,6 +54,7 @@ public class OnlyofficeController {
 	@Path("config")
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
+	@JsonbProperty(nillable=true)
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public FileModel getConfigEditor(@Context SecurityContext securityContext, @QueryParam("fileNameParam") String fileNameParam) throws Exception {
@@ -100,65 +98,62 @@ public class OnlyofficeController {
 			throw new Exception("Group error");
 		}	
 
-		return onlyofficeService.getConfig(fileNameParam, onlyofficeUser);
+		return onlyofficeService.getConfig(fileNameParam, "view", "100%", "100%", onlyofficeUser);
 	}
 	
 	@Path("download")
 	@GET
 	@RequiredOnlyofficeAuthorization
 	public Response getDownload(@QueryParam("fileNameParam") String fileNameParam) throws IOException {
-		InputStream inputStream = null;
-		String fileType = null;
-		String fileSize = null;
-		String fileName = null;
+//		InputStream inputStream = null;
 		try {
-			inputStream = localStorageService.download(fileNameParam);	
-			fileName = FilenameUtils.getName(fileNameParam);
-			File tempFile = File.createTempFile(FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName));
-			FileOutputStream out = new FileOutputStream(tempFile);
-			IOUtils.copy(inputStream, out);	
-		    fileType = Files.probeContentType(tempFile.toPath());
-		    fileSize = String.valueOf(tempFile.length());
-		    tempFile.delete();
+			File tempFile = localStorageService.download(fileNameParam);	
+			String fileName = FilenameUtils.getName(fileNameParam);
+//			File tempFile = File.createTempFile(FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName));
+//			FileOutputStream out = new FileOutputStream(tempFile);
+//			IOUtils.copy(inputStream, out);	
+			String fileType = Files.probeContentType(tempFile.toPath());
+		    String fileSize = String.valueOf(tempFile.length());
+//		    tempFile.delete();
+		    return Response.status( Response.Status.OK )
+			        .header("Content-Length", fileSize)
+			        .header("Content-Type", fileType)
+			        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
+			        .entity(tempFile)
+			        .build();  
 		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		
-		return Response.status( Response.Status.OK )
-		        .header("Content-Length", fileSize)
-		        .header("Content-Type", fileType)
-		        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
-		        .entity(inputStream)
-		        .build();   
+			throw new IOException("file tidak ada");
+		}		 
 	}
 	
 	@Path("resources")
 	@GET
 	@RequiredOnlyofficeAuthorization
 	public Response getResources(@QueryParam("fileNameParam") String fileNameParam) throws IOException {
-		InputStream inputStream = null;
-		String fileType = null;
-		String fileSize = null;
-		String fileName = null;
+//		InputStream inputStream = null;
+//		String fileType = null;
+//		String fileSize = null;
+//		String fileName = null;
 		try {
-			inputStream = localStorageService.download(fileNameParam);	
-			fileName = FilenameUtils.getName(fileNameParam);
-			File tempFile = File.createTempFile(FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName));
-			FileOutputStream out = new FileOutputStream(tempFile);
-			IOUtils.copy(inputStream, out);	
-		    fileType = Files.probeContentType(tempFile.toPath());
-		    fileSize = String.valueOf(tempFile.length());
-		    tempFile.delete();
+			File tempFile = localStorageService.download(fileNameParam);	
+			String fileName = FilenameUtils.getName(fileNameParam);
+//			File tempFile = File.createTempFile(FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName));
+//			FileOutputStream out = new FileOutputStream(tempFile);
+//			IOUtils.copy(inputStream, out);	
+			String fileType = Files.probeContentType(tempFile.toPath());
+			String fileSize = String.valueOf(tempFile.length());
+//		    tempFile.delete();
+			return Response.status( Response.Status.OK )
+			        .header("Content-Length", fileSize)
+			        .header("Content-Type", fileType)
+			        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
+			        .entity(tempFile)
+			        .build();   
 		} catch (IOException e) {
-		    e.printStackTrace();
+			throw new IOException("file tidak ada");
 		}
 		
-		return Response.status( Response.Status.OK )
-		        .header("Content-Length", fileSize)
-		        .header("Content-Type", fileType)
-		        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
-		        .entity(inputStream)
-		        .build();   
+		
 	}
 
 	@Path("track")

@@ -24,8 +24,8 @@ public class OnlyofficeEJB implements IOnlyOfficeRepository {
 	}
 
 	@Override
-	public FileModel getConfig(String namaFile, OnlyofficeUser onlyofficeUser) throws Exception {
-		return onlyOfficeImpl.getConfig(namaFile, onlyofficeUser);
+	public FileModel getConfig(String namaFile, String mode, String height, String width, OnlyofficeUser onlyofficeUser) throws Exception {
+		return onlyOfficeImpl.getConfig(namaFile, mode, height, width, onlyofficeUser);
 	}
 
 }
