@@ -13,6 +13,8 @@ import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -31,6 +33,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.ext.ContextResolver;
 
 @Stateless
 @LocalBean
@@ -48,7 +51,13 @@ public class RegisterDokumenController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) throws IOException {		
+	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext,
+			 @Context ContextResolver<ObjectMapper> objectMapperResolver) throws IOException {	
+		
+		if(d == null) {
+			throw new IOException("format register dokumen salah");
+		}
+		
 		Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setUploader(new OtoritasDTO(kreator));
 		LocalDate tanggalRegistrasi = LocalDate.now();

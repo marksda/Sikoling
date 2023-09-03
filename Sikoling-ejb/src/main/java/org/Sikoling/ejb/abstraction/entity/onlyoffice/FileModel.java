@@ -26,8 +26,7 @@ public class FileModel implements Serializable {
     private EditorConfig editorConfig;
     private String height;
     private String width;
-    private String token;
-    
+    private String token;    
     
 	public FileModel(String fileNameParam, String lang, String actionData, OnlyofficeUser user, Boolean isEnableDirectUrl, 
 			String type, String mode, String height, String width, DocumentManager documentManager, OnlyOfficeTokenManager tokenManager) throws Exception {

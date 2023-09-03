@@ -20,7 +20,6 @@ public class RegisterDokumenDTO implements Serializable {
 	private static final long serialVersionUID = 1384518698621127848L;
 	private String id;
 	private DokumenDTO dokumen;
-//	@JsonbTransient
 	private RegisterPerusahaanDTO registerPerusahaan;
 	private String lokasiFile;
 	private StatusDokumenDTO statusDokumen;
@@ -206,6 +205,16 @@ public class RegisterDokumenDTO implements Serializable {
 				uploader != null ? uploader.toOtoritas() : null,
 				statusVerified != null ? statusVerified.booleanValue() : null						
 				);
+	}
+
+	
+	public StatusDokumenDTO getStatusDokumen() {
+		return statusDokumen;
+	}
+	
+
+	public void setStatusDokumen(StatusDokumenDTO statusDokumen) {
+		this.statusDokumen = statusDokumen;
 	}
 	
 }

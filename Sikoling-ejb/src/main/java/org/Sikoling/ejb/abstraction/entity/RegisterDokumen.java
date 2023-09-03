@@ -69,8 +69,7 @@ public class RegisterDokumen implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 17;
-		hash = 141 * hash + Objects.hashCode(dokumen.getId());
-		hash = 141 * hash + Objects.hashCode(registerPerusahaan.getId());
+		hash = 141 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
 
@@ -89,13 +88,14 @@ public class RegisterDokumen implements Serializable {
         }
         
         final RegisterDokumen other = (RegisterDokumen) obj;
-        if ( !this.dokumen.getId().equals(other.getDokumen().getId()) ) {
+        
+        if ( !this.id.equals(other.getId())) {
             return false;
         }
         
-        if ( !this.registerPerusahaan.getId().equals(other.getRegisterPerusahaan().getId()) ) {
+        if (!this.registerPerusahaan.getId().equals(other.getRegisterPerusahaan().getId())) {
             return false;
-        }
+        }  
         
         return true;
 	}
