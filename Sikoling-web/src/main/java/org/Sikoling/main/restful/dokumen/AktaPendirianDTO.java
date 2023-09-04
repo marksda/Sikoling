@@ -108,13 +108,13 @@ public class AktaPendirianDTO extends DokumenDTO implements Serializable {
 
 	public DokumenAktaPendirian toAktaPendirian() {
 		return new DokumenAktaPendirian(
-				namaNotaris, 
-				namaNotaris, 
-				null, 
+				this.getId(), 
+				this.getNama(), 
+				this.getKategoriDokumen() != null ? this.getKategoriDokumen().toKategoriDokumen():null, 
 				nomor, 
 				tanggal, 
 				namaNotaris, 
-				null
+				penanggungJawab != null ? penanggungJawab.toPegawai():null
 				);
 	}
 }

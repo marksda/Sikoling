@@ -1781,12 +1781,12 @@ public class DataConverter {
 		
 		try {
 			hasil = (String) q.getSingleResult();
-			hasil = hasil.substring(0, 6);
+			hasil = hasil.substring(0, 7);
 			Long idBaru = Long.valueOf(hasil)  + 1;
-			hasil = LPad(Long.toString(idBaru), 6, '0');
+			hasil = LPad(Long.toString(idBaru), 7, '0');
 			return hasil.concat(Integer.toString(tahun));
 		} catch (Exception e) {	
-			hasil = "000001";			
+			hasil = "0000001";			
 			return hasil.concat(Integer.toString(tahun));
 		}		
 	}
