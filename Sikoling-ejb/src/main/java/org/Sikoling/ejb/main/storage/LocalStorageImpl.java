@@ -40,15 +40,12 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 		else {
 			throw new IOException("file tidak ada");
 		}
-		
-//		Path pathLocation = Paths.get(this.rootPath.concat(fileNameParam));	
-//		return Files.newInputStream(pathLocation.toAbsolutePath());
 	}
 
 	@Override
 	public void delete(String fileName, String subPath) throws IOException {
 		try {
-			File file = new File(rootPath.concat(File.separator).concat(subPath).concat(File.separator).concat(fileName));
+			File file = new File(rootPath.concat(subPath).concat(File.separator).concat(fileName));
 			file.delete();
 		} catch (Exception e) {
 			throw new IOException("Delete file gagal");

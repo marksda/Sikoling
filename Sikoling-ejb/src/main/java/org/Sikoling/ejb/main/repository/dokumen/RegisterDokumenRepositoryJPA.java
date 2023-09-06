@@ -73,7 +73,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		if(registerDokumenData != null) {
 			entityManager.remove(registerDokumenData);	
 			entityManager.flush();
-			return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(registerDokumenData);
+			return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

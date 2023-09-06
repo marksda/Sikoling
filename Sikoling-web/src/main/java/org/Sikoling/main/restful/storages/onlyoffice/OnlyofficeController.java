@@ -107,16 +107,11 @@ public class OnlyofficeController {
 	@GET
 	@RequiredOnlyofficeAuthorization
 	public Response getDownload(@QueryParam("fileNameParam") String fileNameParam) throws IOException {
-//		InputStream inputStream = null;
 		try {
 			File tempFile = localStorageService.download(fileNameParam);	
 			String fileName = FilenameUtils.getName(fileNameParam);
-//			File tempFile = File.createTempFile(FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName));
-//			FileOutputStream out = new FileOutputStream(tempFile);
-//			IOUtils.copy(inputStream, out);	
 			String fileType = Files.probeContentType(tempFile.toPath());
 		    String fileSize = String.valueOf(tempFile.length());
-//		    tempFile.delete();
 		    return Response.status( Response.Status.OK )
 			        .header("Content-Length", fileSize)
 			        .header("Content-Type", fileType)

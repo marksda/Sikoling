@@ -8,11 +8,13 @@ import java.util.stream.Collectors;
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
+import org.Sikoling.ejb.abstraction.service.storage.ILocalStorageService;
 import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
+import org.apache.commons.io.FilenameUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ejb.LocalBean;
@@ -45,6 +47,9 @@ public class RegisterDokumenController {
 	
 	@Inject
 	private IOtoritasService authorityService;
+	
+	@Inject
+	private ILocalStorageService localStorageService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -91,12 +96,19 @@ public class RegisterDokumenController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMIN})
 	public RegisterDokumenDTO delete(@PathParam("idRegisterDokumen") String idRegisterDokumen) throws IOException {
 		RegisterDokumenDTO d = new RegisterDokumenDTO();
 		d.setId(idRegisterDokumen);
 		
-		return new RegisterDokumenDTO(registerDokumenService.delete(d.toRegisterDokumen()));
+		try {
+			RegisterDokumenDTO hasil = new RegisterDokumenDTO(registerDokumenService.delete(d.toRegisterDokumen()));
+			localStorageService.delete(FilenameUtils.getName(hasil.getLokasiFile()), FilenameUtils.getFullPathNoEndSeparator(hasil.getLokasiFile()));
+			return hasil;
+		}
+		catch (Exception e) {
+			throw new IOException("Delete error");
+		}		
 	}
 	
 	@GET
