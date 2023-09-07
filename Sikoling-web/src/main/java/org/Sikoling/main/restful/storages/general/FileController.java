@@ -7,8 +7,11 @@ import java.nio.file.Files;
 import java.util.UUID;
 
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
+import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.ejb.abstraction.service.storage.ILocalStorageService;
+import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
+import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
@@ -43,6 +46,9 @@ public class FileController {
 	@Inject
 	private IOtoritasService authorityService;
 	
+	@Inject
+	private IRegisterDokumenService registerDokumenService;
+	
 	@Path("upload")
 	@POST
     @Consumes({MediaType.MULTIPART_FORM_DATA})
@@ -56,6 +62,32 @@ public class FileController {
 			String fileKey = UUID.randomUUID().toString() + "-" + pengurusPermohonan.getPerson().getNik()+ "-" + FilenameUtils.getName(fileNameParam);
 			localStorageService.upload(fileKey, inputStream, FilenameUtils.getFullPathNoEndSeparator(fileNameParam));
 			return Json.createObjectBuilder().add("uri", FilenameUtils.getFullPath(fileNameParam).concat(fileKey)).build();
+		} catch (Exception e) {
+			throw new IOException("Upload error");
+		}
+	}
+	
+	@Path("replace")
+	@POST
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public JsonObject setReplaceFile(@QueryParam("fileNameParam") String fileNameParam, @Context SecurityContext securityContext, 
+			@FormDataParam("file") InputStream inputStream, @FormDataParam("idRegisterDokumen") String idRegisterDokumen) throws IOException {		
+		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		try {
+			String fileKey = UUID.randomUUID().toString() + "-" + pengurusPermohonan.getPerson().getNik()+ "-" + FilenameUtils.getName(fileNameParam);
+			RegisterDokumenDTO d = new RegisterDokumenDTO(registerDokumenService.getById(idRegisterDokumen));
+			String fileParamLama = d.getLokasiFile(); //jsonRegisterDokumen.getString("lokasiFile");
+			String lokasiPathLama = FilenameUtils.getFullPathNoEndSeparator(fileParamLama);
+			localStorageService.upload(fileKey, inputStream, lokasiPathLama);
+			localStorageService.delete(FilenameUtils.getName(fileParamLama), FilenameUtils.getFullPathNoEndSeparator(fileParamLama));
+			String fileParamBaru = FilenameUtils.getFullPath(fileParamLama).concat(fileKey);
+			d.setLokasiFile(fileParamBaru);
+			d.setUploader(new OtoritasDTO(pengurusPermohonan));
+			registerDokumenService.update(d.toRegisterDokumen());						
+			return Json.createObjectBuilder().add("uri", fileParamBaru).build();
 		} catch (Exception e) {
 			throw new IOException("Upload error");
 		}

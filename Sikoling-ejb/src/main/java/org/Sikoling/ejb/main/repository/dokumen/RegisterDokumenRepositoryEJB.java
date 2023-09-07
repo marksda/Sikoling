@@ -51,4 +51,10 @@ public class RegisterDokumenRepositoryEJB implements IRegisterDokumenRepository 
 		return RegisterDokumenRepository.updateId(idLama, t);
 	}
 
+	
+	@Override
+	public RegisterDokumen getById(String id) throws IOException {
+		return RegisterDokumenRepository.getById(id);
+	}
+
 }

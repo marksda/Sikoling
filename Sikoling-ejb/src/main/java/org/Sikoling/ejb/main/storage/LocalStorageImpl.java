@@ -84,7 +84,6 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 			throw new IOException("create file gagal");
 		}		
 	}
-
 	
 	@Override
 	public void moveDir(String directoryAsal, String directoryTujuan) throws IOException {

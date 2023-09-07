@@ -14,4 +14,5 @@ public interface IRegisterDokumenService {
 	RegisterDokumen delete(RegisterDokumen t) throws IOException; 
 	List<RegisterDokumen> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);
+	RegisterDokumen getById(String id) throws IOException;
 }

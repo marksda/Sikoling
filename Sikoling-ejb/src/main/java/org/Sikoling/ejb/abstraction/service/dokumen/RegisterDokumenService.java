@@ -45,5 +45,11 @@ public class RegisterDokumenService implements IRegisterDokumenService {
 	public Long getJumlahData(List<Filter> queryParamFilters) {
 		return registerDokumenRepository.getJumlahData(queryParamFilters);
 	}
+
+	
+	@Override
+	public RegisterDokumen getById(String id) throws IOException {
+		return registerDokumenRepository.getById(id);
+	}
 	
 }

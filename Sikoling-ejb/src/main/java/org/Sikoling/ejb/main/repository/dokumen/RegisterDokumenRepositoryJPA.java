@@ -236,5 +236,12 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		}
 		
 		return entityManager.createQuery(cq).getSingleResult();
+	}
+
+	
+	@Override
+	public RegisterDokumen getById(String id) throws IOException {
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, id);
+		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 	}	
 }
