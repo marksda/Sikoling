@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.Sikoling.ejb.abstraction.repository.ILocalStorageRepository;
+import org.apache.commons.io.FileUtils;
 
 public class LocalStorageImpl implements ILocalStorageRepository {
 	private final String rootPath;
@@ -53,6 +54,21 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 	}
 	
 	@Override
+	public void move(String fileNameParamAsal, String fileNameParamTujuan) throws IOException {
+		File file=new File(this.rootPath.concat(fileNameParamAsal));   
+		if(file.exists()) {
+			try {
+				Files.move(file.toPath(), Paths.get(this.rootPath.concat(fileNameParamTujuan)), StandardCopyOption.REPLACE_EXISTING);
+			} catch (Exception e) {
+				throw new IOException("file gagal dipindahkan");
+			}			
+		}
+		else {
+			throw new IOException("file tidak ada");
+		}
+	}
+	
+	@Override
 	public void create(String fileKey, String subPath) throws IOException {
 		try {
 			Path pathLocation = Paths.get(rootPath.concat(subPath));		
@@ -67,6 +83,20 @@ public class LocalStorageImpl implements ILocalStorageRepository {
 		} catch (Exception e) {
 			throw new IOException("create file gagal");
 		}		
+	}
+
+	
+	@Override
+	public void moveDir(String directoryAsal, String directoryTujuan) throws IOException {
+		File dirAsal = new File(this.rootPath.concat(directoryAsal));   
+		File dirTujuan = new File(this.rootPath.concat(directoryTujuan));   
+		if(dirAsal.exists()) {
+			try {
+				FileUtils.moveDirectory(dirAsal, dirTujuan);
+			} catch (Exception e) {
+				throw new IOException("dir gagal dipindahkan");
+			}			
+		}	
 	}
 
 }

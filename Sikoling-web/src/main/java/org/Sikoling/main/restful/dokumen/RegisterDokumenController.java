@@ -1,5 +1,6 @@
 package org.Sikoling.main.restful.dokumen;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -63,13 +64,27 @@ public class RegisterDokumenController {
 			throw new IOException("format register dokumen salah");
 		}
 		
-		Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setUploader(new OtoritasDTO(kreator));
-		LocalDate tanggalRegistrasi = LocalDate.now();
-		d.setTanggalRegistrasi(tanggalRegistrasi);
-		d.setStatusVerified(Boolean.FALSE);
-		
-		return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
+		try {
+			String source = d.getLokasiFile();
+			String pathBaru = FilenameUtils.getFullPathNoEndSeparator(source);
+			String destination= pathBaru.substring(0, pathBaru.lastIndexOf(File.separator)+1).concat(FilenameUtils.getName(source));			
+			localStorageService.move(source, destination);
+			
+			String dirHisSource = source.concat("-his");
+			String dirHisDestination = pathBaru.substring(0, pathBaru.lastIndexOf(File.separator));
+			localStorageService.moveDir(dirHisSource, dirHisDestination);					
+					
+			Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+			d.setUploader(new OtoritasDTO(kreator));
+			LocalDate tanggalRegistrasi = LocalDate.now();
+			d.setTanggalRegistrasi(tanggalRegistrasi);
+			d.setStatusVerified(Boolean.FALSE);
+			d.setLokasiFile(destination);
+			return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
+		}
+		catch (Exception e) {
+			throw new IOException("Delete error");
+		}	
 	}
 	
 	@PUT

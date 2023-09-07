@@ -9,4 +9,6 @@ public interface ILocalStorageService {
 	void create(String fileKey, String subPath) throws IOException;
 	File download(String fileNameParam) throws IOException;
 	void delete(String fileName, String subPath) throws IOException;
+	void move(String fileNameParamAsal, String fileNameParamTujuan) throws IOException;
+	void moveDir(String directoryAsal, String directoryTujuan) throws IOException;
 }

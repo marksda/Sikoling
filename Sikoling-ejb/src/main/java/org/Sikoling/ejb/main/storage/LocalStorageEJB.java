@@ -33,11 +33,20 @@ public class LocalStorageEJB implements ILocalStorageRepository {
 	public void delete(String fileName, String subPath) throws IOException {
 		localStorageImpl.delete(fileName, subPath);
 	}
-
 	
 	@Override
 	public void create(String fileKey, String subPath) throws IOException {
 		localStorageImpl.create(fileKey, subPath);		
+	}
+	
+	@Override
+	public void move(String fileNameParamAsal, String fileNameParamTujuan) throws IOException {
+		localStorageImpl.move(fileNameParamAsal, fileNameParamTujuan);
+	}
+
+	@Override
+	public void moveDir(String directoryAsal, String directoryTujuan) throws IOException {
+		localStorageImpl.moveDir(directoryAsal, directoryTujuan);
 	}
 
 }

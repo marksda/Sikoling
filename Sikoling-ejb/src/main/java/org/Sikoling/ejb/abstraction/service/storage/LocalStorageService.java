@@ -33,5 +33,16 @@ public class LocalStorageService implements ILocalStorageService {
 	public void create(String fileKey, String subPath) throws IOException {
 		localStorageRepository.create(fileKey, subPath);		
 	}
+	
+	@Override
+	public void move(String fileNameParamAsal, String fileNameParamTujuan) throws IOException {
+		localStorageRepository.move(fileNameParamAsal, fileNameParamTujuan);
+	}
+
+	
+	@Override
+	public void moveDir(String directoryAsal, String directoryTujuan) throws IOException {
+		localStorageRepository.moveDir(directoryAsal, directoryTujuan);
+	}
 
 }
