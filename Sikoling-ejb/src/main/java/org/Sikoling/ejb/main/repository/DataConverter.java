@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.Sikoling.ejb.abstraction.entity.Alamat;
 import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.OtoritasPerusahaan;
@@ -1212,9 +1214,6 @@ public class DataConverter {
 			aktaPendirianData.setTanggal(t.getTanggal());
 			aktaPendirianData.setNotaris(t.getNamaNotaris());
 			aktaPendirianData.setPenanggungJawabData(convertPegawaiToPegawaiData(t.getPenanggungJawab()));
-//			RegisterDokumenData registerDokumenData = new RegisterDokumenData();
-//			registerDokumenData.setId(idRegisterDokumen);
-//			aktaPendirianData.setRegisterDokumenData(registerDokumenData);
 		}
 		
 		return aktaPendirianData;
@@ -1300,14 +1299,16 @@ public class DataConverter {
 			dokumenNibOssData = new DokumenNibOssData();
 			dokumenNibOssData.setNomor(t.getNomor());
 			dokumenNibOssData.setTanggalPenetapan(t.getTanggal());
-			RegisterDokumen registerDokumen = new RegisterDokumen(
-					null, new Dokumen(t.getId(), t.getNama(), t.getKategoriDokumen()), null, null, null, null, null, null
-					);
-			dokumenNibOssData.setRegisterDokumenData(convertRegisterDokumenToRegisterDokumenData(registerDokumen));
 			
-//			dokumenNibOssData.setDaftarKbli(
-//					t.getDaftarKbli() != null ? convertDaftarRegisterKbliToDaftarRegisterKbliData(t.getDaftarKbli()):null
-//					);
+			List<RegisterKbliData> daftarRegisterKbliData = t.getDaftarKbli().stream().map((kbli) -> {
+						RegisterKbliData registerKbliData = new RegisterKbliData();
+						KbliData kbliData = convertKbliToKbliData(kbli);
+						registerKbliData.setKbli(kbliData);
+						return registerKbliData;
+					})
+					.collect(Collectors.toList());
+			
+			dokumenNibOssData.setDaftarRegisterKbli(daftarRegisterKbliData);
 		}
 		
 		return dokumenNibOssData;

@@ -89,47 +89,7 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 			return registerDokumenDTO;
 		} catch (Exception e) {
 			return null;
-		}	
-		
-//		RegisterDokumenDTO registerDokumenDTO = new RegisterDokumenDTO();
-//		Jsonb jsonb = JsonbBuilder.create();
-//		
-//		JsonParser jsonParser = Json.createParser(entityStream);
-//		
-//		while (jsonParser.hasNext()) {
-//		     Event event = jsonParser.next();
-//		     if (event == JsonParser.Event.KEY_NAME ) {			    	 
-//		         String key = jsonParser.getString();
-//		         event = jsonParser.next();
-//				 JsonObject jsonObject = jsonParser.getObject();
-//				 
-//		         if (key.equals("dokumen")) {
-//	     			 DokumenDTO d = null;
-//					 String id = jsonObject.getString("id");
-//					 switch (id) {
-//					 case "010301":
-//						d = jsonb.fromJson(jsonObject.toString(), DokumenNibOssDTO.class);
-//						registerDokumenDTO.setDokumen(d); 
-//						break;
-//					 case "010101":
-//							d = jsonb.fromJson(jsonObject.toString(), DokumenNibOssDTO.class);
-//							registerDokumenDTO.setDokumen(d); 
-//							break;
-//					 default:
-//						d = null;
-//						break;
-//					}
-//		         }
-//		         else if(key.equals("perusahaan")) {
-//		        	 RegisterPerusahaanDTO perusahaanDTO = jsonb.fromJson(jsonObject.toString(), RegisterPerusahaanDTO.class);
-//		        	 registerDokumenDTO.setRegisterPerusahaan(perusahaanDTO);
-//		         }
-//		         
-//		     }
-//		     
-//		 }		
-//		
-//		return registerDokumenDTO;
+		}
 	}
 
 }

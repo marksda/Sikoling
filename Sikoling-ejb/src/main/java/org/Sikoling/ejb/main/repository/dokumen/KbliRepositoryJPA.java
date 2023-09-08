@@ -63,8 +63,7 @@ public class KbliRepositoryJPA implements IKbliRepository {
 			throw new IOException("Data tidak ditemukan");
 		}		
 	}
-	
-	
+		
 	@Override
 	public Kbli delete(Kbli t) throws IOException {
 		KbliData kbliData = entityManager.find(KbliData.class, t.getKode());

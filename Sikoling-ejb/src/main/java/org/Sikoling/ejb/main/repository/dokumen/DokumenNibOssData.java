@@ -10,11 +10,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,11 +32,11 @@ public class DokumenNibOssData implements Serializable {
 	@Column(name = "tanggal")
 	private LocalDate tanggalPenetapan;
 
-	@JoinColumn(name = "register_dokumen", referencedColumnName = "id", insertable = true, updatable = true)
 	@OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
 	private RegisterDokumenData registerDokumenData;
 
-	@OneToMany(mappedBy = "nib", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "nib", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<RegisterKbliData> daftarRegisterKbli;
 	
 	public DokumenNibOssData() {
