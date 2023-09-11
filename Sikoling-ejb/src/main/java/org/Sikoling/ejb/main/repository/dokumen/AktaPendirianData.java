@@ -45,80 +45,65 @@ public class AktaPendirianData implements Serializable {
 	public AktaPendirianData() {
 	}
 	
-
 	public String getId() {
 		return id;
 	}
 	
-
 	public void setId(String id) {
 		this.id = id;
 	}
 	
-
 	public String getNomor() {
 		return nomor;
 	}
 	
-
 	public void setNomor(String nomor) {
 		this.nomor = nomor;
 	}
 	
-
 	public LocalDate getTanggal() {
 		return tanggal;
 	}
 	
-
 	public void setTanggal(LocalDate tanggal) {
 		this.tanggal = tanggal;
 	}
 	
-
 	public String getNotaris() {
 		return notaris;
 	}
 	
-
 	public void setNotaris(String notaris) {
 		this.notaris = notaris;
 	}
 	
-
 	public PegawaiData getPenanggungJawabData() {
 		return penanggungJawabData;
 	}
 	
-
 	public void setPenanggungJawabData(PegawaiData penanggungJawabData) {
 		this.penanggungJawabData = penanggungJawabData;
 	}
 	
-
 	public RegisterDokumenData getRegisterDokumenData() {
 		return registerDokumenData;
 	}
 	
-
 	public void setRegisterDokumenData(RegisterDokumenData registerDokumenData) {
 		this.registerDokumenData = registerDokumenData;
 	}
 	
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+		
 	@Override
 	public int hashCode() {
 		int hash = 71;
 		hash = 181 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
-	
-	
+		
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -141,7 +126,5 @@ public class AktaPendirianData implements Serializable {
         
         return true;
 	}
-	
-	
-	
+			
 }

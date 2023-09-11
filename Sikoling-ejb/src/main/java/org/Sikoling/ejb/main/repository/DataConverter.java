@@ -1304,6 +1304,9 @@ public class DataConverter {
 						RegisterKbliData registerKbliData = new RegisterKbliData();
 						KbliData kbliData = convertKbliToKbliData(kbli);
 						registerKbliData.setKbli(kbliData);
+						DokumenNibOssData tmpDokOssData = new DokumenNibOssData();
+						tmpDokOssData.setNomor(t.getId());
+						registerKbliData.setNib(tmpDokOssData);
 						return registerKbliData;
 					})
 					.collect(Collectors.toList());

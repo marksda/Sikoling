@@ -19,12 +19,12 @@ public class RegisterKbliData implements Serializable {
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "nib", referencedColumnName = "nomor", insertable = true, updatable = true)
+	@JoinColumn(name = "nib", referencedColumnName = "nomor")
 	private DokumenNibOssData nib;
 		
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "kbli", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name = "kbli", referencedColumnName = "id")
 	private KbliData kbli;
 	
 	public RegisterKbliData() {

@@ -17,7 +17,6 @@ import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
 import org.apache.commons.io.FilenameUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -36,7 +35,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.ext.ContextResolver;
 
 @Stateless
 @LocalBean
@@ -57,8 +55,7 @@ public class RegisterDokumenController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext,
-			 @Context ContextResolver<ObjectMapper> objectMapperResolver) throws IOException {	
+	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) throws IOException {	
 		
 		if(d == null) {
 			throw new IOException("format register dokumen salah");
