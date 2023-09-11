@@ -3,17 +3,16 @@ package org.Sikoling.ejb.abstraction.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 
 public class RegisterKbli implements Serializable {
 
 	private static final long serialVersionUID = 2998858268709853490L;
-	private final DokumenNibOss dokumenNibOss;
+	private final String nib;
 	private final Kbli kbli;
 	
-	public RegisterKbli(DokumenNibOss dokumenNibOss, Kbli kbli) {
-		this.dokumenNibOss = dokumenNibOss;
+	public RegisterKbli(String nib, Kbli kbli) {
+		this.nib = nib;
 		this.kbli = kbli;
 	}
 	
@@ -21,8 +20,8 @@ public class RegisterKbli implements Serializable {
 		return serialVersionUID;
 	}
 
-	public DokumenNibOss getDokumenNibOss() {
-		return dokumenNibOss;
+	public String getNib() {
+		return nib;
 	}
 
 	public Kbli getKbli() {
@@ -31,7 +30,7 @@ public class RegisterKbli implements Serializable {
 
 	public int hashCode() {
 		int hash = 17;
-		hash = 131 * hash + Objects.hashCode(dokumenNibOss.getId());
+		hash = 131 * hash + Objects.hashCode(nib);
         hash = 131 * hash + Objects.hashCode(kbli.getKode());
         return hash;
 	}
@@ -53,7 +52,7 @@ public class RegisterKbli implements Serializable {
         
         final RegisterKbli other = (RegisterKbli) obj;
         
-        if (!this.dokumenNibOss.getId().equalsIgnoreCase(other.getDokumenNibOss().getId())) {
+        if (!this.nib.equalsIgnoreCase(other.getNib())) {
             return false;
         }
         
@@ -67,7 +66,7 @@ public class RegisterKbli implements Serializable {
 	@Override
 	public String toString() {
 		return "RegisterKbli{ idNib=" 
-				.concat(this.dokumenNibOss.getId())
+				.concat(this.nib)
 				.concat(", idKbli=")
 				.concat(this.kbli.getKode())
 				.concat("}");	  

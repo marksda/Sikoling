@@ -15,39 +15,53 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaksi.tbl_dok_nib")
 @NamedQueries({
-	@NamedQuery(name="DokumenNibOssData.updateId", query="UPDATE DokumenNibOssData SET nomor = :idBaru WHERE id = :idLama")
+	@NamedQuery(name="DokumenNibOssData.updateId", query="UPDATE DokumenNibOssData SET nib = :idBaru WHERE id = :idLama")
 })
 public class DokumenNibOssData implements Serializable {
 
 	private static final long serialVersionUID = 8612019941448379437L;
 
 	@Id
-	private String nomor; 
+	@Column(name = "register_dokumen")
+	private String id; 
 	
 	@Column(name = "tanggal")
 	private LocalDate tanggalPenetapan;
+	
+	@Column(name = "nib")
+	private String nib; 
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "register_dokumen", referencedColumnName = "id")
+	@PrimaryKeyJoinColumn
 	private RegisterDokumenData registerDokumenData;
 
-	@OneToMany(mappedBy = "nib", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "nib")
 	private List<RegisterKbliData> daftarRegisterKbli;
 	
 	public DokumenNibOssData() {
 	}
-
-	public String getNomor() {
-		return nomor;
+	
+	public String getId() {
+		return id;
 	}
 
-	public void setNomor(String nomor) {
-		this.nomor = nomor;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNib() {
+		return nib;
+	}
+
+	public void setNib(String nomor) {
+		this.nib = nomor;
 	}
 
 	public LocalDate getTanggalPenetapan() {
@@ -81,7 +95,7 @@ public class DokumenNibOssData implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 713;
-        hash = 171 * hash + Objects.hashCode(nomor);
+        hash = 171 * hash + Objects.hashCode(nib);
         return hash;
 	}
 	
@@ -102,7 +116,7 @@ public class DokumenNibOssData implements Serializable {
         
         final DokumenNibOssData other = (DokumenNibOssData) obj;
         
-        if (!nomor.equalsIgnoreCase(other.getNomor())) {
+        if (!nib.equalsIgnoreCase(other.getNib())) {
             return false;
         }        
 
@@ -112,8 +126,9 @@ public class DokumenNibOssData implements Serializable {
 	@Override
 	public String toString() {
 		return "NibOssData{nomor="
-				.concat(nomor)
+				.concat(nib)
 				.concat("}");	  
 	}
 
+	
 }

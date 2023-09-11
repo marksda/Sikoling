@@ -327,9 +327,8 @@ public class DataConverter {
 		RegisterKbli registerKbli = null;
 		
 		if(d != null) {
-			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getNib().getRegisterDokumenData().getDokumenData());
 			registerKbli = new RegisterKbli(
-					convertDokumenNibOssDataToDokumenNibOss(dokumen, d.getNib()),
+					d.getNib(),
 					convertKbliDataToKbli(d.getKbli())
 					);
 		}
@@ -364,7 +363,7 @@ public class DataConverter {
 					dok.getId(), 
 					dok.getNama(), 
 					dok.getKategoriDokumen(),
-					d.getNomor(), 
+					d.getNib(), 
 					d.getTanggalPenetapan(), 
 					daftarKbli
 					);					
@@ -1252,9 +1251,7 @@ public class DataConverter {
 		
 		if(t != null) {
 			registerKbliData = new RegisterKbliData();
-			registerKbliData.setNib(
-					t.getDokumenNibOss() != null ? convertDokumenNibOssToDokumenNibOssData(t.getDokumenNibOss()):null
-					);
+			registerKbliData.setNib(t.getNib());
 			registerKbliData.setKbli(
 					t.getKbli() != null ? convertKbliToKbliData(t.getKbli()):null
 					);
@@ -1292,21 +1289,20 @@ public class DataConverter {
 		return daftarAutorisasiData;
 	}
 	
-	public DokumenNibOssData convertDokumenNibOssToDokumenNibOssData(DokumenNibOss t) {
+	public DokumenNibOssData convertDokumenNibOssToDokumenNibOssData(DokumenNibOss t, String idRegisterDokumen) {
 		DokumenNibOssData dokumenNibOssData = null;
 		
 		if(t != null) {
 			dokumenNibOssData = new DokumenNibOssData();
-			dokumenNibOssData.setNomor(t.getNomor());
+			dokumenNibOssData.setId(idRegisterDokumen);
+			dokumenNibOssData.setNib(t.getNomor());
 			dokumenNibOssData.setTanggalPenetapan(t.getTanggal());
 			
 			List<RegisterKbliData> daftarRegisterKbliData = t.getDaftarKbli().stream().map((kbli) -> {
 						RegisterKbliData registerKbliData = new RegisterKbliData();
+						registerKbliData.setNib(t.getNomor());
 						KbliData kbliData = convertKbliToKbliData(kbli);
-						registerKbliData.setKbli(kbliData);
-						DokumenNibOssData tmpDokOssData = new DokumenNibOssData();
-						tmpDokOssData.setNomor(t.getId());
-						registerKbliData.setNib(tmpDokOssData);
+						registerKbliData.setKbli(kbliData);					
 						return registerKbliData;
 					})
 					.collect(Collectors.toList());
@@ -1380,7 +1376,7 @@ public class DataConverter {
 				registerDokumenData.setRekomendasiDPLHData(convertRekomendasiDPLHToRekomendasiDPLHData((RekomendasiDPLH) dokumen, registerDokumenData.getId()));
 			}
 			else if(dokumen instanceof DokumenNibOss) {
-				registerDokumenData.setNibOssData(convertDokumenNibOssToDokumenNibOssData((DokumenNibOss) dokumen));
+				registerDokumenData.setNibOssData(convertDokumenNibOssToDokumenNibOssData((DokumenNibOss) dokumen, registerDokumenData.getId()));
 			}
 			
 		}

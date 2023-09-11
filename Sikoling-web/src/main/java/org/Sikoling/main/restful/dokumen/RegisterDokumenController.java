@@ -80,7 +80,7 @@ public class RegisterDokumenController {
 			return new RegisterDokumenDTO(registerDokumenService.save(d.toRegisterDokumen()));
 		}
 		catch (Exception e) {
-			throw new IOException("Delete error");
+			throw new IOException("Save error");
 		}	
 	}
 	

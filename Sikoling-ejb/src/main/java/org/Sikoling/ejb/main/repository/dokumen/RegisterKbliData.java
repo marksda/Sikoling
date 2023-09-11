@@ -18,23 +18,21 @@ public class RegisterKbliData implements Serializable {
 	private static final long serialVersionUID = -1341807963805050449L;
 	
 	@Id
-	@ManyToOne
-	@JoinColumn(name = "nib", referencedColumnName = "nomor")
-	private DokumenNibOssData nib;
+	private String nib;
 		
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "kbli", referencedColumnName = "id")
+	@JoinColumn(name = "kbli", referencedColumnName = "id", insertable = true, updatable = true)
 	private KbliData kbli;
 	
 	public RegisterKbliData() {
 	}
 
-	public DokumenNibOssData getNib() {
+	public String getNib() {
 		return nib;
 	}
 	
-	public void setNib(DokumenNibOssData nib) {
+	public void setNib(String nib) {
 		this.nib = nib;
 	}
 	
@@ -74,7 +72,7 @@ public class RegisterKbliData implements Serializable {
         
         final RegisterKbliData other = (RegisterKbliData) obj;
         
-        if (!nib.getNomor().equals(other.nib.getNomor()))  {
+        if (!nib.equals(other.getNib()))  {
             return false;
         }
         
@@ -88,7 +86,7 @@ public class RegisterKbliData implements Serializable {
 	@Override
 	public String toString() {
 		return "RegisterKbliData{nib="
-				.concat(nib.getNomor())
+				.concat(nib)
 				.concat(", kbi=")
 				.concat(kbli.getId())
 				.concat("}");	  

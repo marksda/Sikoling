@@ -8,7 +8,7 @@ import org.Sikoling.ejb.abstraction.entity.RegisterKbli;
 public class RegisterKbliDTO implements Serializable {
 
 	private static final long serialVersionUID = -4442022463611044537L;
-	private DokumenNibOssDTO dokumenNibOss;
+	private String nib;
 	private KbliDTO kbli;
 	
 	public RegisterKbliDTO() {
@@ -16,17 +16,17 @@ public class RegisterKbliDTO implements Serializable {
 	
 	public RegisterKbliDTO(RegisterKbli t) {
 		if(t!= null) {
-			this.dokumenNibOss = t.getDokumenNibOss() != null ? new DokumenNibOssDTO(t.getDokumenNibOss()):null;
+			this.nib = t.getNib();
 			this.kbli = t.getKbli() != null ? new KbliDTO(t.getKbli()):null;
 		}
 	}	
 	
-	public DokumenNibOssDTO getDokumenNibOssDTO() {
-		return dokumenNibOss;
+	public String getNib() {
+		return nib;
 	}
 
-	public void setDokumenNibOssDTO(DokumenNibOssDTO d) {
-		this.dokumenNibOss = d;
+	public void setNib(String nib) {
+		this.nib = nib;
 	}
 
 	public KbliDTO getKbli() {
@@ -44,7 +44,7 @@ public class RegisterKbliDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 137;
-		hash = 171 * hash + Objects.hashCode(this.dokumenNibOss.getNomor());
+		hash = 171 * hash + Objects.hashCode(this.nib);
         hash = 171 * hash + Objects.hashCode(this.kbli.getKode());
         return hash;
 	}
@@ -66,7 +66,7 @@ public class RegisterKbliDTO implements Serializable {
         
         final RegisterKbliDTO other = (RegisterKbliDTO) obj;
         
-        if ( !this.dokumenNibOss.getNomor().equalsIgnoreCase(other.dokumenNibOss.getNomor()) ) {
+        if ( !this.nib.equalsIgnoreCase(other.nib) ) {
             return false;
         }
         
@@ -80,7 +80,7 @@ public class RegisterKbliDTO implements Serializable {
 	@Override
 	public String toString() {
 		return "RegisterKbliDTO{nib="
-				.concat(dokumenNibOss.getNomor())
+				.concat(nib)
 				.concat(", kode_kbli = ")
 				.concat(kbli.getKode())
 				.concat("}");	  
@@ -88,7 +88,7 @@ public class RegisterKbliDTO implements Serializable {
 
 	public RegisterKbli toRegisterKbli() {
 		return new RegisterKbli(
-				this.dokumenNibOss != null ? this.dokumenNibOss.toDokumenNibOss():null, 
+				this.nib, 
 				this.kbli != null ? this.kbli.toKbli():null
 				);
 	}	

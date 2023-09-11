@@ -73,7 +73,7 @@ public class RegisterKbliRepositoryJPA implements IRegisterKbliRepository {
 	@Override
 	public RegisterKbli delete(RegisterKbli t) throws IOException {
 		RegisterKbliDataId id = new RegisterKbliDataId();
-		id.setNib(t.getDokumenNibOss().getNomor());
+		id.setNib(t.getNib());
 		id.setKbli(t.getKbli().getKode());
 		RegisterKbliData registerKbliData = entityManager.find(RegisterKbliData.class, id);
 		

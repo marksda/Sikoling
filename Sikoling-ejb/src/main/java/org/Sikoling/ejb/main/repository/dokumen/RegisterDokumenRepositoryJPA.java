@@ -36,6 +36,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 			RegisterDokumenData registerDokumenData = dataConverter.convertRegisterDokumenToRegisterDokumenData(t);
 			entityManager.persist(registerDokumenData);
 			entityManager.flush();
+			
 			return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 		} catch (Exception e) {
 			throw new IOException("data sudah ada");
@@ -237,7 +238,6 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
-
 	
 	@Override
 	public RegisterDokumen getById(String id) throws IOException {
