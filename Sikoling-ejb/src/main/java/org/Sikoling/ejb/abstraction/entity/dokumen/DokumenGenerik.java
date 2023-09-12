@@ -4,25 +4,18 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.Sikoling.ejb.abstraction.entity.Pegawai;
-
-public class DokumenAktaPendirian extends Dokumen implements Serializable {	
+public class DokumenGenerik extends Dokumen implements Serializable {
 	
-	private static final long serialVersionUID = -3186081818421591782L;	
+	private static final long serialVersionUID = 3850586104864070141L;
 	private final String nomor;
 	private final LocalDate tanggal;
-	private final String namaNotaris;
-	private final Pegawai penanggungJawab;
 	
-	public DokumenAktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
-			LocalDate tanggal, String namaNotaris, Pegawai penanggungJawab) {
+	public DokumenGenerik(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal) {
 		super(id, nama, kategoriDokumen);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
-		this.namaNotaris = namaNotaris;
-		this.penanggungJawab = penanggungJawab;
 	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -33,14 +26,6 @@ public class DokumenAktaPendirian extends Dokumen implements Serializable {
 
 	public LocalDate getTanggal() {
 		return tanggal;
-	}
-
-	public String getNamaNotaris() {
-		return namaNotaris;
-	}
-
-	public Pegawai getPenanggungJawab() {
-		return penanggungJawab;
 	}
 
 	@Override
@@ -75,7 +60,7 @@ public class DokumenAktaPendirian extends Dokumen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AktaPemrakarsa{"
+		return "DokumenGenerik{"
 				.concat("id=")
 				.concat(this.getId())
 				.concat(", nomor=")

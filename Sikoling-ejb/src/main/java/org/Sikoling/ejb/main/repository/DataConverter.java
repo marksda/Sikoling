@@ -33,6 +33,7 @@ import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.entity.SkalaUsaha;
 import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenAktaPendirian;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenGenerik;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
@@ -60,6 +61,7 @@ import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.KbliData;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenData;
+import org.Sikoling.ejb.main.repository.dokumen.DokumenGenerikData;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenNibOssData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterKbliData;
@@ -457,6 +459,22 @@ public class DataConverter {
 		return rekomendasiDPLH;
 	}
 	
+	public DokumenGenerik convertDokumenGenerikDataToDokumenGenerik(Dokumen dok, DokumenGenerikData d){
+		DokumenGenerik dokumenGenerik = null;
+		
+		if(d != null) {			
+			dokumenGenerik = new DokumenGenerik(
+					dok.getId(), 
+					dok.getNama(), 
+					dok.getKategoriDokumen(),
+					d.getNomor(), 
+					d.getTanggalPenetapan()
+					);					
+		}
+		
+		return dokumenGenerik;
+	}
+	
 	public RegisterDokumen convertRegisterDokumenDataToRegisterDokumenWithOutPerusahaan(RegisterDokumenData d) {
 		RegisterDokumen registerDokumen = null;
 		
@@ -486,6 +504,9 @@ public class DataConverter {
 			}
 			else if(rekomendasiDPLH != null) {
 				dokumen = rekomendasiDPLH;
+			}
+			else {
+				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
 			}
 			
 			registerDokumen = new RegisterDokumen(
@@ -525,6 +546,9 @@ public class DataConverter {
 			}
 			else if(d.getRekomendasiDPLHData() != null) {
 				dokumen = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
+			}
+			else {
+				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
 			}
 			
 			registerDokumen = new RegisterDokumen(
@@ -1328,7 +1352,20 @@ public class DataConverter {
 		
 		return daftarRegisterKbliData;
 	}	
+			
+	public DokumenGenerikData convertDokumenGenerikToDokumenGenerikData(DokumenGenerik t, String idRegisterDokumen) {
+		DokumenGenerikData dokumenGenerikData = null;
 		
+		if(t != null) {
+			dokumenGenerikData = new DokumenGenerikData();
+			dokumenGenerikData.setId(idRegisterDokumen);
+			dokumenGenerikData.setNomor(t.getNomor());
+			dokumenGenerikData.setTanggalPenetapan(t.getTanggal());
+		}
+		
+		return dokumenGenerikData;
+	}
+	
 	public RegisterDokumenData convertRegisterDokumenToRegisterDokumenData(RegisterDokumen t) {
 		RegisterDokumenData registerDokumenData = null;
 		
@@ -1377,6 +1414,9 @@ public class DataConverter {
 			}
 			else if(dokumen instanceof DokumenNibOss) {
 				registerDokumenData.setNibOssData(convertDokumenNibOssToDokumenNibOssData((DokumenNibOss) dokumen, registerDokumenData.getId()));
+			}
+			else {
+				registerDokumenData.setGenerikData(convertDokumenGenerikToDokumenGenerikData((DokumenGenerik) dokumen, registerDokumenData.getId()));
 			}
 			
 		}

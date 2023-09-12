@@ -2,31 +2,27 @@ package org.Sikoling.ejb.main.repository.dokumen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="transaksi.tbl_dok_nib")
+@Table(name="transaksi.tbl_dok_generik")
 @NamedQueries({
-	@NamedQuery(name="DokumenNibOssData.updateId", query="UPDATE DokumenNibOssData SET id = :idBaru WHERE id = :idLama")
+	@NamedQuery(name="DokumenGenerikData.updateId", query="UPDATE DokumenGenerikData SET id = :idBaru WHERE id = :idLama")
 })
-public class DokumenNibOssData implements Serializable {
+public class DokumenGenerikData implements Serializable {
 
-	private static final long serialVersionUID = 8612019941448379437L;
-
+	private static final long serialVersionUID = -7775947311949179865L;
+	
 	@Id
 	@Column(name = "register_dokumen")
 	private String id; 
@@ -34,34 +30,19 @@ public class DokumenNibOssData implements Serializable {
 	@Column(name = "tanggal")
 	private LocalDate tanggalPenetapan;
 	
-	@Column(name = "nib")
-	private String nib; 
+	@Column(name = "nomor")
+	private String nomor; 
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private RegisterDokumenData registerDokumenData;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	@JoinColumn(name = "nib", referencedColumnName = "nib")
-	private List<RegisterKbliData> daftarRegisterKbli;
-	
-	public DokumenNibOssData() {
-	}
-	
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getNib() {
-		return nib;
-	}
-
-	public void setNib(String nomor) {
-		this.nib = nomor;
 	}
 
 	public LocalDate getTanggalPenetapan() {
@@ -71,15 +52,15 @@ public class DokumenNibOssData implements Serializable {
 	public void setTanggalPenetapan(LocalDate tanggalPenetapan) {
 		this.tanggalPenetapan = tanggalPenetapan;
 	}
-	
-	public List<RegisterKbliData> getDaftarRegisterKbli() {
-		return daftarRegisterKbli;
+
+	public String getNomor() {
+		return nomor;
 	}
 
-	public void setDaftarRegisterKbli(List<RegisterKbliData> daftarRegisterKbli) {
-		this.daftarRegisterKbli = daftarRegisterKbli;
+	public void setNomor(String nomor) {
+		this.nomor = nomor;
 	}
-	
+
 	public RegisterDokumenData getRegisterDokumenData() {
 		return registerDokumenData;
 	}
@@ -95,7 +76,7 @@ public class DokumenNibOssData implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 713;
-        hash = 171 * hash + Objects.hashCode(nib);
+        hash = 171 * hash + Objects.hashCode(nomor);
         return hash;
 	}
 	
@@ -114,9 +95,9 @@ public class DokumenNibOssData implements Serializable {
             return false;
         }
         
-        final DokumenNibOssData other = (DokumenNibOssData) obj;
+        final DokumenGenerikData other = (DokumenGenerikData) obj;
         
-        if (!nib.equalsIgnoreCase(other.getNib())) {
+        if (!nomor.equalsIgnoreCase(other.getNomor())) {
             return false;
         }        
 
@@ -125,10 +106,10 @@ public class DokumenNibOssData implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "NibOssData{nomor="
-				.concat(nib)
+		return "DokumenGenerikData{nomor="
+				.concat(nomor)
 				.concat("}");	  
 	}
 
-	
+
 }

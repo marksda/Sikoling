@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 
 import org.Sikoling.main.restful.dokumen.AktaPendirianDTO;
+import org.Sikoling.main.restful.dokumen.DokumenGenerikDTO;
 import org.Sikoling.main.restful.dokumen.DokumenNibOssDTO;
 import org.Sikoling.main.restful.dokumen.RegisterDokumenDTO;
 import org.Sikoling.main.restful.dokumen.StatusDokumenDTO;
@@ -54,6 +55,7 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 				registerDokumenDTO.setDokumen(jsonb.fromJson(d.getJsonObject("dokumen").toString(), DokumenNibOssDTO.class));
 				break;
 			default:
+				registerDokumenDTO.setDokumen(jsonb.fromJson(d.getJsonObject("dokumen").toString(), DokumenGenerikDTO.class));
 				return null;
 			}
 			
