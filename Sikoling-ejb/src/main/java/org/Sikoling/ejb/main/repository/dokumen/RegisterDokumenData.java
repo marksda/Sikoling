@@ -72,21 +72,17 @@ public class RegisterDokumenData implements Serializable {
 		
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)	
 	private DokumenNibOssData nibOssData;
-
 	
 	public RegisterDokumenData() {
 	}
-			
-	
+				
 	public DokumenNibOssData getNibOssData() {
 		return nibOssData;
 	}
-
 	
 	public void setNibOssData(DokumenNibOssData nibOssData) {
 		this.nibOssData = nibOssData;
 	}
-
 	
 	public RekomendasiDPLHData getRekomendasiDPLHData() {
 		return rekomendasiDPLHData;

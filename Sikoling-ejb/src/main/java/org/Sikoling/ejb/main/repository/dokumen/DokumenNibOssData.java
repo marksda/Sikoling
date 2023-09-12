@@ -41,8 +41,8 @@ public class DokumenNibOssData implements Serializable {
 	@PrimaryKeyJoinColumn
 	private RegisterDokumenData registerDokumenData;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "nib")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "nib", referencedColumnName = "nib")
 	private List<RegisterKbliData> daftarRegisterKbli;
 	
 	public DokumenNibOssData() {
