@@ -25,6 +25,7 @@ import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -132,5 +133,18 @@ public class FileController {
 			throw new IOException("file tidak ada");
 		}		 
 	}
-
+	
+	@Path("delete")
+	@DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+	@RequiredAuthorization
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public JsonObject deleteFile(@QueryParam("fileNameParam") String fileNameParam) throws IOException {		
+		try {
+			localStorageService.delete(FilenameUtils.getName(fileNameParam), FilenameUtils.getFullPathNoEndSeparator(fileNameParam));
+			return Json.createObjectBuilder().add("hasil", "sukses").build();
+		} catch (Exception e) {
+			throw new IOException("Upload error");
+		}
+	}
 }
