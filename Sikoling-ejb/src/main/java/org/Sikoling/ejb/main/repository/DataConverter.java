@@ -480,32 +480,26 @@ public class DataConverter {
 		
 		if(d != null) {			
 			Dokumen dokumen = convertMasterDokumenDataToMasterDokumen(d.getDokumenData());	
-			SuratArahan suratArahan = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());				
-			DokumenNibOss nibOss = convertDokumenNibOssDataToDokumenNibOss(dokumen, d.getNibOssData());				
-			DokumenAktaPendirian aktaPendirian = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());			
-			LampiranSuratArahan lampiranSuratArahan = convertLampiranSuratArahanDataToLampiranSuratArahan(dokumen, d.getLampiranSuratArahanData());
-			RekomendasiUKLUPL rekomendasiUKLUPL = convertRekomendasiUKLUPLDataToRekomendasiUKLUPL(dokumen, d.getRekomendasiUKLUPLData());
-			RekomendasiDPLH rekomendasiDPLH = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
 						
-			if(suratArahan != null) {
-				dokumen = suratArahan;
+			if(d.getAktaPendirianData() != null) {
+				dokumen = convertAktaPendirianDataToAktaPendirian(dokumen, d.getAktaPendirianData());
 			}
-			else if(nibOss != null ) {
-				dokumen = nibOss;
+			else if(d.getNibOssData() != null ) {
+				dokumen = convertDokumenNibOssDataToDokumenNibOss(dokumen, d.getNibOssData());
 			}
-			else if(aktaPendirian != null) {
-				dokumen = aktaPendirian;
+			else if(d.getSuratArahanData() != null) {
+				dokumen = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());;
 			}
-			else if(lampiranSuratArahan != null) {
-				dokumen = lampiranSuratArahan;
+			else if(d.getLampiranSuratArahanData() != null) {
+				dokumen = convertLampiranSuratArahanDataToLampiranSuratArahan(dokumen, d.getLampiranSuratArahanData());
 			}
-			else if(rekomendasiUKLUPL != null) {
-				dokumen = rekomendasiUKLUPL;
+			else if(d.getRekomendasiUKLUPLData() != null) {
+				dokumen = convertRekomendasiUKLUPLDataToRekomendasiUKLUPL(dokumen, d.getRekomendasiUKLUPLData());
 			}
-			else if(rekomendasiDPLH != null) {
-				dokumen = rekomendasiDPLH;
+			else if(d.getRekomendasiDPLHData() != null) {
+				dokumen = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
 			}
-			else {
+			else if(d.getGenerikData() != null) {
 				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
 			}
 			
@@ -547,7 +541,7 @@ public class DataConverter {
 			else if(d.getRekomendasiDPLHData() != null) {
 				dokumen = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
 			}
-			else {
+			else if(d.getGenerikData() != null) {
 				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
 			}
 			
@@ -1415,7 +1409,7 @@ public class DataConverter {
 			else if(dokumen instanceof DokumenNibOss) {
 				registerDokumenData.setNibOssData(convertDokumenNibOssToDokumenNibOssData((DokumenNibOss) dokumen, registerDokumenData.getId()));
 			}
-			else {
+			else if(dokumen instanceof DokumenGenerik) {
 				registerDokumenData.setGenerikData(convertDokumenGenerikToDokumenGenerikData((DokumenGenerik) dokumen, registerDokumenData.getId()));
 			}
 			

@@ -24,7 +24,6 @@ public class DokumenGenerikData implements Serializable {
 	private static final long serialVersionUID = -7775947311949179865L;
 	
 	@Id
-	@Column(name = "register_dokumen")
 	private String id; 
 	
 	@Column(name = "tanggal")

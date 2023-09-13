@@ -56,7 +56,7 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 				break;
 			default:
 				registerDokumenDTO.setDokumen(jsonb.fromJson(d.getJsonObject("dokumen").toString(), DokumenGenerikDTO.class));
-				return null;
+				break;
 			}
 			
 			registerDokumenDTO.setId(d.getString("id", null));

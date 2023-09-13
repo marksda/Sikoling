@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenAktaPendirian;
+import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenGenerik;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
@@ -52,8 +53,8 @@ public class RegisterDokumenDTO implements Serializable {
 			else if(dokumen instanceof DokumenNibOss) {
 				this.dokumen = new DokumenNibOssDTO((DokumenNibOss) dokumen);
 			}
-			else {
-				this.dokumen = null;
+			else if(dokumen instanceof DokumenGenerik) {
+				this.dokumen = new DokumenGenerikDTO((DokumenGenerik) dokumen);
 			}
 			
 			this.registerPerusahaan = t.getRegisterPerusahaan() != null ? new RegisterPerusahaanDTO(t.getRegisterPerusahaan()) : null;
@@ -193,6 +194,9 @@ public class RegisterDokumenDTO implements Serializable {
 			else if(this.dokumen instanceof DokumenNibOssDTO) {
 				dokumen = ((DokumenNibOssDTO) this.dokumen).toDokumenNibOss();
 			}
+			else if(this.dokumen instanceof DokumenGenerikDTO) {
+				dokumen = ((DokumenGenerikDTO) this.dokumen).toDokumenGenerik();
+			}
 		}
 		
 		return new RegisterDokumen(
@@ -206,13 +210,11 @@ public class RegisterDokumenDTO implements Serializable {
 				statusVerified != null ? statusVerified.booleanValue() : null						
 				);
 	}
-
 	
 	public StatusDokumenDTO getStatusDokumen() {
 		return statusDokumen;
 	}
 	
-
 	public void setStatusDokumen(StatusDokumenDTO statusDokumen) {
 		this.statusDokumen = statusDokumen;
 	}
