@@ -55,12 +55,6 @@ public class RegisterDokumenData implements Serializable {
 	@Column(name = "is_validated", insertable = true, updatable = true)
 	private Boolean statusVerified;
 	
-	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
-	private SuratArahanData suratArahanData;
-	
-	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)
-	private LampiranSuratArahanData lampiranSuratArahanData;
-	
 	@OneToOne(mappedBy="registerDokumenData", cascade = CascadeType.ALL)
 	private AktaPendirianData aktaPendirianData;
 	
@@ -69,6 +63,12 @@ public class RegisterDokumenData implements Serializable {
 	
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)	
 	private DokumenGenerikData generikData;
+	
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.PERSIST)
+	private SuratArahanData suratArahanData;
+	
+	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)
+	private LampiranSuratArahanData lampiranSuratArahanData;
 	
 	@OneToOne(mappedBy = "registerDokumenData", cascade = CascadeType.ALL)
 	private RekomendasiUKLUPLData rekomendasiUKLUPLData;	

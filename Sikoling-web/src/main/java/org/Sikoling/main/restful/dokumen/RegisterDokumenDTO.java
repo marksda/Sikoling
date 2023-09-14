@@ -35,26 +35,27 @@ public class RegisterDokumenDTO implements Serializable {
 		if(t != null) {
 			this.id = t.getId();
 			Dokumen dokumen = t.getDokumen() != null ? t.getDokumen() : null;
-			if(dokumen instanceof SuratArahan) {
-				this.dokumen = new SuratArahanDTO((SuratArahan) dokumen);
-			}
-			else if(dokumen instanceof LampiranSuratArahan) {
-				this.dokumen = new LampiranSuratArahanDTO((LampiranSuratArahan) dokumen);
-			}
-			else if(dokumen instanceof DokumenAktaPendirian) {
+			
+			if(dokumen instanceof DokumenAktaPendirian) {
 				this.dokumen = new AktaPendirianDTO((DokumenAktaPendirian) dokumen);
-			}
-			else if(dokumen instanceof RekomendasiUKLUPL) {
-				this.dokumen = new RekomendasiUKLUPLDTO((RekomendasiUKLUPL) dokumen);
-			}
-			else if(dokumen instanceof RekomendasiDPLH) {
-				this.dokumen = new RekomendasiDPLHDTO((RekomendasiDPLH) dokumen);
 			}
 			else if(dokumen instanceof DokumenNibOss) {
 				this.dokumen = new DokumenNibOssDTO((DokumenNibOss) dokumen);
 			}
 			else if(dokumen instanceof DokumenGenerik) {
 				this.dokumen = new DokumenGenerikDTO((DokumenGenerik) dokumen);
+			}
+			else if(dokumen instanceof SuratArahan) {
+				this.dokumen = new SuratArahanDTO((SuratArahan) dokumen);
+			}
+			else if(dokumen instanceof LampiranSuratArahan) {
+				this.dokumen = new LampiranSuratArahanDTO((LampiranSuratArahan) dokumen);
+			}			
+			else if(dokumen instanceof RekomendasiUKLUPL) {
+				this.dokumen = new RekomendasiUKLUPLDTO((RekomendasiUKLUPL) dokumen);
+			}
+			else if(dokumen instanceof RekomendasiDPLH) {
+				this.dokumen = new RekomendasiDPLHDTO((RekomendasiDPLH) dokumen);
 			}
 			
 			this.registerPerusahaan = t.getRegisterPerusahaan() != null ? new RegisterPerusahaanDTO(t.getRegisterPerusahaan()) : null;
@@ -176,20 +177,8 @@ public class RegisterDokumenDTO implements Serializable {
 		Dokumen dokumen = null;
 		
 		if(this.dokumen != null) {
-			if(this.dokumen instanceof SuratArahanDTO) {
-				dokumen = ((SuratArahanDTO) this.dokumen).toSuratArahan();
-			}
-			else if(this.dokumen instanceof LampiranSuratArahanDTO) {
-				dokumen = ((LampiranSuratArahanDTO) this.dokumen).toLampiranSuratArahan();
-			}
-			else if(this.dokumen instanceof AktaPendirianDTO) {
+			if(this.dokumen instanceof AktaPendirianDTO) {
 				dokumen = ((AktaPendirianDTO) this.dokumen).toAktaPendirian();
-			}
-			else if(this.dokumen instanceof RekomendasiUKLUPLDTO) {
-				dokumen = ((RekomendasiUKLUPLDTO) this.dokumen).toRekomendasiUKLUPL();
-			}
-			else if(this.dokumen instanceof RekomendasiDPLHDTO) {
-				dokumen = ((RekomendasiDPLHDTO) this.dokumen).toRekomendasiDPLH();
 			}
 			else if(this.dokumen instanceof DokumenNibOssDTO) {
 				dokumen = ((DokumenNibOssDTO) this.dokumen).toDokumenNibOss();
@@ -197,6 +186,18 @@ public class RegisterDokumenDTO implements Serializable {
 			else if(this.dokumen instanceof DokumenGenerikDTO) {
 				dokumen = ((DokumenGenerikDTO) this.dokumen).toDokumenGenerik();
 			}
+			else if(this.dokumen instanceof SuratArahanDTO) {
+				dokumen = ((SuratArahanDTO) this.dokumen).toSuratArahan();
+			}
+			else if(this.dokumen instanceof LampiranSuratArahanDTO) {
+				dokumen = ((LampiranSuratArahanDTO) this.dokumen).toLampiranSuratArahan();
+			}
+			else if(this.dokumen instanceof RekomendasiUKLUPLDTO) {
+				dokumen = ((RekomendasiUKLUPLDTO) this.dokumen).toRekomendasiUKLUPL();
+			}
+			else if(this.dokumen instanceof RekomendasiDPLHDTO) {
+				dokumen = ((RekomendasiDPLHDTO) this.dokumen).toRekomendasiDPLH();
+			}			
 		}
 		
 		return new RegisterDokumen(

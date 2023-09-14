@@ -487,6 +487,9 @@ public class DataConverter {
 			else if(d.getNibOssData() != null ) {
 				dokumen = convertDokumenNibOssDataToDokumenNibOss(dokumen, d.getNibOssData());
 			}
+			else if(d.getGenerikData() != null) {
+				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
+			}
 			else if(d.getSuratArahanData() != null) {
 				dokumen = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());;
 			}
@@ -498,9 +501,6 @@ public class DataConverter {
 			}
 			else if(d.getRekomendasiDPLHData() != null) {
 				dokumen = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
-			}
-			else if(d.getGenerikData() != null) {
-				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
 			}
 			
 			registerDokumen = new RegisterDokumen(
@@ -529,6 +529,9 @@ public class DataConverter {
 			else if(d.getNibOssData() != null ) {
 				dokumen = convertDokumenNibOssDataToDokumenNibOss(dokumen, d.getNibOssData());
 			}
+			else if(d.getGenerikData() != null) {
+				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
+			}
 			else if(d.getSuratArahanData() != null) {
 				dokumen = convertSuratArahanDataToSuratArahan(dokumen, d.getSuratArahanData());;
 			}
@@ -540,9 +543,6 @@ public class DataConverter {
 			}
 			else if(d.getRekomendasiDPLHData() != null) {
 				dokumen = convertRekomendasiDPLHDataToRekomendasiDPLH(dokumen, d.getRekomendasiDPLHData());
-			}
-			else if(d.getGenerikData() != null) {
-				dokumen = convertDokumenGenerikDataToDokumenGenerik(dokumen, d.getGenerikData());
 			}
 			
 			registerDokumen = new RegisterDokumen(
@@ -1391,26 +1391,27 @@ public class DataConverter {
 					t.getStatusVerified() != null ? t.getStatusVerified():null
 					);
 			
-			if(dokumen instanceof SuratArahan) {
-				registerDokumenData.setSuratArahanData(convertSuratArahanToSuratArahanData((SuratArahan) dokumen, registerDokumenData.getId()));
-			}
-			else if(dokumen instanceof LampiranSuratArahan) {
-				registerDokumenData.setLampiranSuratArahanData(convertLampiranSuratArahanToLampiranSuratArahanData((LampiranSuratArahan) dokumen, registerDokumenData.getId()));
-			}
-			else if(dokumen instanceof DokumenAktaPendirian) {
+
+			if(dokumen instanceof DokumenAktaPendirian) {
 				registerDokumenData.setAktaPendirianData(convertAktaPendirianToAktaPendirianData((DokumenAktaPendirian) dokumen, registerDokumenData.getId()));
-			}
-			else if(dokumen instanceof RekomendasiUKLUPL) {
-				registerDokumenData.setRekomendasiUKLUPLData(convertRekomendasiUKLUPLToRekomendasiUKLUPLData((RekomendasiUKLUPL) dokumen, registerDokumenData.getId()));
-			}
-			else if(dokumen instanceof RekomendasiDPLH) {
-				registerDokumenData.setRekomendasiDPLHData(convertRekomendasiDPLHToRekomendasiDPLHData((RekomendasiDPLH) dokumen, registerDokumenData.getId()));
 			}
 			else if(dokumen instanceof DokumenNibOss) {
 				registerDokumenData.setNibOssData(convertDokumenNibOssToDokumenNibOssData((DokumenNibOss) dokumen, registerDokumenData.getId()));
 			}
 			else if(dokumen instanceof DokumenGenerik) {
 				registerDokumenData.setGenerikData(convertDokumenGenerikToDokumenGenerikData((DokumenGenerik) dokumen, registerDokumenData.getId()));
+			}
+			else if(dokumen instanceof SuratArahan) {
+				registerDokumenData.setSuratArahanData(convertSuratArahanToSuratArahanData((SuratArahan) dokumen, registerDokumenData.getId()));
+			}
+			else if(dokumen instanceof LampiranSuratArahan) {
+				registerDokumenData.setLampiranSuratArahanData(convertLampiranSuratArahanToLampiranSuratArahanData((LampiranSuratArahan) dokumen, registerDokumenData.getId()));
+			}
+			else if(dokumen instanceof RekomendasiUKLUPL) {
+				registerDokumenData.setRekomendasiUKLUPLData(convertRekomendasiUKLUPLToRekomendasiUKLUPLData((RekomendasiUKLUPL) dokumen, registerDokumenData.getId()));
+			}
+			else if(dokumen instanceof RekomendasiDPLH) {
+				registerDokumenData.setRekomendasiDPLHData(convertRekomendasiDPLHToRekomendasiDPLHData((RekomendasiDPLH) dokumen, registerDokumenData.getId()));
 			}
 			
 		}

@@ -82,7 +82,6 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 			}
 			
 			try {
-				registerDokumenDTO.setUploader(jsonb.fromJson(d.getJsonObject("uploader").toString(), OtoritasDTO.class));
 				registerDokumenDTO.setStatusVerified(d.getBoolean("statusVerified"));
 			} catch (Exception e) {
 				registerDokumenDTO.setStatusVerified(Boolean.FALSE);
