@@ -2,12 +2,16 @@ package org.Sikoling.ejb.main.repository.perusahaan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 import org.Sikoling.ejb.main.repository.alamat.AlamatData;
+import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenData;
 import org.Sikoling.ejb.main.repository.kontak.KontakData;
 import org.Sikoling.ejb.main.repository.modelperizinan.ModelPerizinanData;
 import org.Sikoling.ejb.main.repository.otoritas.OtoritasData;
+import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
 import org.Sikoling.ejb.main.repository.pelakuusaha.PelakuUsahaData;
 import org.Sikoling.ejb.main.repository.skalausaha.SkalaUsahaData;
 
@@ -59,11 +63,11 @@ public class RegisterPerusahaanData implements Serializable {
 	
 	private String npwp;
 	
-//	@OneToMany(mappedBy="perusahaanData", fetch = FetchType.LAZY)
-//	private List<RegisterDokumenData> daftarRegisterDokumenData;	
-
-//	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY)
-//	private List<OtoritasPerusahaanData> daftarAutorityPerusahaanData;
+	@OneToMany(mappedBy = "perusahaan", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<OtoritasPerusahaanData> daftarAutorityPerusahaanData;
+	
+	@OneToMany(mappedBy = "perusahaanData", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RegisterDokumenData> daftarRegisterDokumenData;
 	
 	public RegisterPerusahaanData() {
 	}
@@ -172,13 +176,13 @@ public class RegisterPerusahaanData implements Serializable {
 //		this.daftarRegisterDokumenData = daftarRegisterDokumenData;
 //	}
 //
-//	public List<OtoritasPerusahaanData> getDaftarAutorityPerusahaanData() {
-//		return daftarAutorityPerusahaanData;
-//	}
-//
-//	public void setDaftarAutorityPerusahaanData(List<OtoritasPerusahaanData> daftarAutorityPerusahaanData) {
-//		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
-//	}
+	public List<OtoritasPerusahaanData> getDaftarAutorityPerusahaanData() {
+		return daftarAutorityPerusahaanData;
+	}
+
+	public void setDaftarAutorityPerusahaanData(List<OtoritasPerusahaanData> daftarAutorityPerusahaanData) {
+		this.daftarAutorityPerusahaanData = daftarAutorityPerusahaanData;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
