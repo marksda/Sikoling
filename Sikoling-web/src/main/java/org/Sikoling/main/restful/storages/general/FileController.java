@@ -124,9 +124,11 @@ public class FileController {
 		    String fileSize = String.valueOf(tempFile.length());
 		    
 		    return Response.status( Response.Status.OK )
+		    		.header("Access-Control-Expose-Headers", "X-Suggested-Filename, Content-Disposition")
 			        .header("Content-Length", fileSize)
 			        .header("Content-Type", fileType)
 			        .header("Content-Disposition", "attachment; filename*=UTF-8\'\'" + fileName)
+			        .header("X-Suggested-Filename", fileName)
 			        .entity(tempFile)
 			        .build();  
 		} catch (IOException e) {
