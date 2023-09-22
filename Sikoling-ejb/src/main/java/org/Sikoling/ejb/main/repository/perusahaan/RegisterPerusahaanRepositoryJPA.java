@@ -255,7 +255,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				daftarPredicate.add(cb.equal(root.get("kreator").get("id"), filter.getValue()));
 				break;			
 			case "kepemilikan":
-				daftarPredicate.add(cb.equal(root.get("daftarPersonPerusahaanData").get("autority").get("id"), filter.getValue()));
+				daftarPredicate.add(cb.equal(root.get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
 				break;
 			default:
 				break;
