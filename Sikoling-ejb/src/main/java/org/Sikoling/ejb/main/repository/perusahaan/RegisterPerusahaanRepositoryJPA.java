@@ -113,7 +113,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
 				break;
 			case "nama":
-				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%" + filter.getValue().toLowerCase() + "%"));
 				break;
 			case "npwp":
 				daftarPredicate.add(cb.equal(root.get("npwp"), filter.getValue()));
@@ -243,7 +243,7 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 				daftarPredicate.add(cb.equal(root.get("tanggalRegistrasi"), filter.getValue()));
 				break;
 			case "nama":
-				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), filter.getValue().toLowerCase()+"%"));
+				daftarPredicate.add(cb.like(cb.lower(root.get("nama")), "%" + filter.getValue().toLowerCase() + "%"));
 				break;
 			case "npwp":
 				daftarPredicate.add(cb.equal(root.get("npwp"), filter.getValue()));

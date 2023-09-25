@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
@@ -32,8 +33,8 @@ public class RegisterDokumenService implements IRegisterDokumenService {
 	}
 
 	@Override
-	public RegisterDokumen delete(RegisterDokumen t) throws IOException {
-		return registerDokumenRepository.delete(t);
+	public RegisterDokumen delete(RegisterDokumen t, Otoritas userOtoritas) throws IOException {
+		return registerDokumenRepository.delete(t, userOtoritas);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
@@ -70,6 +71,25 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	}
 	
 	@Override
+	public RegisterDokumen delete(RegisterDokumen t, Otoritas userOtoritas) throws IOException {
+		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, t.getId());
+		
+		if(registerDokumenData != null) {
+			if(userOtoritas.getHakAkses().getId().equals("umum") && registerDokumenData.getStatusVerified().booleanValue() == true) {
+				throw new IOException("Hak akses error");
+			}
+			else {
+				entityManager.remove(registerDokumenData);	
+				entityManager.flush();
+				return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
+			}
+		}
+		else {
+			throw new IOException("Data tidak ditemukan");
+		}
+	}
+	
+	@Override
 	public RegisterDokumen delete(RegisterDokumen t) throws IOException {
 		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, t.getId());
 		if(registerDokumenData != null) {
@@ -80,7 +100,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		else {
 			throw new IOException("Data tidak ditemukan");
 		}
-	}
+	}	
 
 	@Override
 	public List<RegisterDokumen> getDaftarData(QueryParamFilters queryParamFilters) {
@@ -118,7 +138,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
 					break;
 				case "nama_perusahaan":
-					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), filter.getValue().toLowerCase()+"%"));
+					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
 					break;
 				case "jenisDokumen":
 					daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
@@ -221,7 +241,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
 					break;
 				case "nama_perusahaan":
-					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), filter.getValue().toLowerCase()+"%"));
+					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
 					break;
 				case "jenisDokumen":
 					daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
@@ -341,7 +361,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 						daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
 						break;
 					case "nama_perusahaan":
-						daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), filter.getValue().toLowerCase()+"%"));
+						daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
 						break;
 					case "jenisDokumen":
 						daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
@@ -386,7 +406,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 						daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
 						break;
 					case "nama_perusahaan":
-						daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), filter.getValue().toLowerCase()+"%"));
+						daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
 						break;
 					case "jenisDokumen":
 						daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
@@ -416,5 +436,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	public RegisterDokumen getById(String id) throws IOException {
 		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, id);
 		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
-	}	
+	}
+
+	
 }

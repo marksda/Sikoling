@@ -108,13 +108,14 @@ public class RegisterDokumenController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
-	public RegisterDokumenDTO delete(@PathParam("idRegisterDokumen") String idRegisterDokumen) throws IOException {
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	public RegisterDokumenDTO delete(@PathParam("idRegisterDokumen") String idRegisterDokumen, @Context SecurityContext securityContext) throws IOException {
+		Otoritas userOtoritas = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		RegisterDokumenDTO d = new RegisterDokumenDTO();
 		d.setId(idRegisterDokumen);
 		
 		try {
-			RegisterDokumenDTO hasil = new RegisterDokumenDTO(registerDokumenService.delete(d.toRegisterDokumen()));
+			RegisterDokumenDTO hasil = new RegisterDokumenDTO(registerDokumenService.delete(d.toRegisterDokumen(), userOtoritas));
 			localStorageService.delete(FilenameUtils.getName(hasil.getLokasiFile()), FilenameUtils.getFullPathNoEndSeparator(hasil.getLokasiFile()));
 			return hasil;
 		}
