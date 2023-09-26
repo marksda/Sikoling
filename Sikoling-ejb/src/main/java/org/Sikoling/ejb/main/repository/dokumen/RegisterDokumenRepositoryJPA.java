@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -75,14 +76,19 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, t.getId());
 		
 		if(registerDokumenData != null) {
-			if(userOtoritas.getHakAkses().getId().equals("umum") && registerDokumenData.getStatusVerified().booleanValue() == true) {
-				throw new IOException("Hak akses error");
+			switch (userOtoritas.getHakAkses().getId()) {
+			case "09":	//umum
+				if(registerDokumenData.getStatusVerified().booleanValue() == true) {
+					throw new IOException("Hak akses error");
+				}
+				break;
+			default:
+				break;
 			}
-			else {
-				entityManager.remove(registerDokumenData);	
-				entityManager.flush();
-				return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
-			}
+			
+			entityManager.remove(registerDokumenData);	
+			entityManager.flush();
+			return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

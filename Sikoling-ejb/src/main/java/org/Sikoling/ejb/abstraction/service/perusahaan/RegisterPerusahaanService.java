@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
@@ -32,8 +33,8 @@ public class RegisterPerusahaanService implements IRegisterPerusahaanService {
 	}
 	
 	@Override
-	public RegisterPerusahaan delete(RegisterPerusahaan t) throws IOException {
-		return registerPerusahaanRepository.delete(t);
+	public RegisterPerusahaan delete(RegisterPerusahaan t, Otoritas userOtoritas) throws IOException {
+		return registerPerusahaanRepository.delete(t, userOtoritas);
 	}
 
 	@Override

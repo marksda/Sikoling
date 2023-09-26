@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.Sikoling.ejb.abstraction.entity.Filter;
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.RegisterPerusahaan;
 import org.Sikoling.ejb.abstraction.repository.IRegisterPerusahaanRepository;
@@ -46,10 +47,15 @@ public class RegisterPerusahaanRepositoryEJB implements IRegisterPerusahaanRepos
 		return registerPerusahaanRepository.getJumlahData(queryParamFilters);
 	}
 
-
 	@Override
 	public RegisterPerusahaan updateId(String idLama, RegisterPerusahaan t) throws IOException {
 		return registerPerusahaanRepository.updateId(idLama, t);
+	}
+	
+
+	@Override
+	public RegisterPerusahaan delete(RegisterPerusahaan t, Otoritas userOtoritas) throws IOException {
+		return registerPerusahaanRepository.delete(t, userOtoritas);
 	}
 
 }

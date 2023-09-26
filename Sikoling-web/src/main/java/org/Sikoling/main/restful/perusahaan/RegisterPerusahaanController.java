@@ -40,40 +40,29 @@ public class RegisterPerusahaanController {
 	private IRegisterPerusahaanService registerPerusahaanService;
 	
 	@Inject
-	private IOtoritasService otoritasService;
+	private IOtoritasService authorityService;
 	
 	@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public RegisterPerusahaanDTO save(RegisterPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {	
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
-		Otoritas otoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
+		Otoritas otoritas = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setKreator(new OtoritasDTO(otoritas));
-		if(d.getStatusVerifikasi().booleanValue() == true) {			
-			d.setStatusVerifikasi(Boolean.FALSE);
-		}
-			
-		return new RegisterPerusahaanDTO(registerPerusahaanService.save(d.toRegisterPerusahaan()));
-	}
-	
-	@Path("adm")
-	@POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
-	public RegisterPerusahaanDTO saveAdm(RegisterPerusahaanDTO d, @Context SecurityContext securityContext) throws IOException {	
-		LocalDate tanggalRegistrasi = LocalDate.now();
-		d.setTanggalRegistrasi(tanggalRegistrasi);
 		
-		Otoritas otoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
-		d.setKreator(new OtoritasDTO(otoritas));
-		if(d.getStatusVerifikasi().booleanValue() == true) {			
-			d.setVerifikator(new OtoritasDTO(otoritas));
+		switch (otoritas.getHakAkses().getId()) {
+		case "09":	//umum
+			d.setStatusVerifikasi(Boolean.FALSE);
+			break;
+		default:
+			if(d.getStatusVerifikasi().booleanValue() == true) {			
+				d.setVerifikator(new OtoritasDTO(otoritas));
+			}
+			break;
 		}
 			
 		return new RegisterPerusahaanDTO(registerPerusahaanService.save(d.toRegisterPerusahaan()));
@@ -103,11 +92,12 @@ public class RegisterPerusahaanController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public RegisterPerusahaanDTO delete(@PathParam("idRegisterPerusahaan") String idRegisterPerusahaan) throws IOException {
+	public RegisterPerusahaanDTO delete(@PathParam("idRegisterPerusahaan") String idRegisterPerusahaan, @Context SecurityContext securityContext) throws IOException {
+		Otoritas userOtoritas = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		RegisterPerusahaanDTO d = new RegisterPerusahaanDTO();
 		d.setId(idRegisterPerusahaan);
 		
-		return new RegisterPerusahaanDTO(registerPerusahaanService.delete(d.toRegisterPerusahaan()));
+		return new RegisterPerusahaanDTO(registerPerusahaanService.delete(d.toRegisterPerusahaan(), userOtoritas));
 	}
 		
 	@GET
