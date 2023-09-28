@@ -68,7 +68,7 @@ public class SkalaUsahaController {
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMIN})
 	public SkalaUsahaDTO delete(@PathParam("idSkalaUsaha") String idSkalaUsaha) throws IOException {
 		SkalaUsahaDTO d = new SkalaUsahaDTO();
 		d.setId(idSkalaUsaha);

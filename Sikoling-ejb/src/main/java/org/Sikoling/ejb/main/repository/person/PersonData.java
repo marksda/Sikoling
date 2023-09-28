@@ -35,6 +35,9 @@ public class PersonData implements Serializable {
 	@Embedded
 	private KontakData kontak;
 	
+	@Column(name = "is_validated", insertable = true, updatable = true)
+	private Boolean statusVerified;
+	
 	public PersonData() {
 	}
 	
@@ -88,6 +91,16 @@ public class PersonData implements Serializable {
 
 	public void setAlamat(AlamatData alamat) {
 		this.alamat = alamat;
+	}
+	
+
+	public Boolean getStatusVerified() {
+		return statusVerified;
+	}
+	
+
+	public void setStatusVerified(Boolean statusVerified) {
+		this.statusVerified = statusVerified;
 	}
 	
 }

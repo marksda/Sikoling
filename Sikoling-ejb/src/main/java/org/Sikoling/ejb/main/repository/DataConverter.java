@@ -279,7 +279,8 @@ public class DataConverter {
 					convertJenisKelaminDataToJenisKelamin(d.getSex()), 
 					convertAlamatDataToAlamat(d.getAlamat()), 
 					d.getScanKtp(), 
-					convertKontakDataToKontak(d.getKontak())
+					convertKontakDataToKontak(d.getKontak()),
+					d.getStatusVerified()
 					);
 		}
 		
@@ -1050,6 +1051,7 @@ public class DataConverter {
 			personData.setScanKtp(t.getScanKTP());
 			personData.setSex(convertJenisKelaminToJenisKelaminData(t.getSex()));
 			personData.setKontak(convertKontakToKontakData(t.getKontak()));
+			personData.setStatusVerified(t.getStatusVerified());
 		}
 		
 		return personData;

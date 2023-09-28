@@ -12,9 +12,10 @@ public class Person implements Serializable {
 	private final Alamat alamat;
 	private final String scanKTP;
 	private final Kontak kontak;
+	private final Boolean statusVerified;
 	
 	public Person(String nik, String nama, JenisKelamin sex, Alamat alamat, String scanKTP,
-			Kontak kontak) {
+			Kontak kontak, Boolean statusVerified) {
 		super();
 		this.nik = nik;
 		this.nama = nama;
@@ -22,6 +23,7 @@ public class Person implements Serializable {
 		this.alamat = alamat;
 		this.scanKTP = scanKTP;
 		this.kontak = kontak;
+		this.statusVerified = statusVerified;
 	}
 
 	public static long getSerialversionuid() {
@@ -50,6 +52,10 @@ public class Person implements Serializable {
 
 	public Kontak getKontak() {
 		return kontak;
+	}
+
+	public Boolean getStatusVerified() {
+		return statusVerified;
 	}
 
 	public int hashCode() {

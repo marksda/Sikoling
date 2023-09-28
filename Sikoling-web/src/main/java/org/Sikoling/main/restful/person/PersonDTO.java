@@ -17,18 +17,20 @@ public class PersonDTO implements Serializable {
 	private AlamatDTO alamat;
 	private KontakDTO kontak;
 	private String scanKTP;
+	private Boolean statusVerified;
 	
 	public PersonDTO() {		
 	}
 	
-	public PersonDTO(Person person) {		
-		if(person != null) {
-			this.nik = person.getNik();
-			this.nama = person.getNama();
-			this.jenisKelamin = person.getSex() != null ? new JenisKelaminDTO(person.getSex()) : null;
-			this.alamat = person.getAlamat() != null ? new AlamatDTO(person.getAlamat()) : null;
-			this.kontak = person.getKontak() != null ? new KontakDTO(person.getKontak()) : null;
-			this.scanKTP = person.getScanKTP();
+	public PersonDTO(Person t) {		
+		if(t != null) {
+			this.nik = t.getNik();
+			this.nama = t.getNama();
+			this.jenisKelamin = t.getSex() != null ? new JenisKelaminDTO(t.getSex()) : null;
+			this.alamat = t.getAlamat() != null ? new AlamatDTO(t.getAlamat()) : null;
+			this.kontak = t.getKontak() != null ? new KontakDTO(t.getKontak()) : null;
+			this.scanKTP = t.getScanKTP();
+			this.statusVerified = t.getStatusVerified() != null ? t.getStatusVerified() : null;
 		}
 		else {
 			this.nik = null;
@@ -37,18 +39,19 @@ public class PersonDTO implements Serializable {
 			this.alamat = null;
 			this.kontak = null;
 			this.scanKTP = null;
+			this.statusVerified = Boolean.FALSE;
 		}
 	}
 	
-	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatDTO alamat, KontakDTO kontak,
-			String scanKTP) {
-		this.nik = nik;
-		this.nama = nama;
-		this.jenisKelamin = sex;
-		this.alamat = alamat;
-		this.kontak = kontak;
-		this.scanKTP = scanKTP;
-	}
+//	public PersonDTO(String nik, String nama, JenisKelaminDTO sex, AlamatDTO alamat, KontakDTO kontak,
+//			String scanKTP) {
+//		this.nik = nik;
+//		this.nama = nama;
+//		this.jenisKelamin = sex;
+//		this.alamat = alamat;
+//		this.kontak = kontak;
+//		this.scanKTP = scanKTP;
+//	}
 
 	public String getNik() {
 		return nik;
@@ -98,6 +101,18 @@ public class PersonDTO implements Serializable {
 		this.scanKTP = scanKTP;
 	}	
 
+	public Boolean getStatusVerified() {
+		return statusVerified;
+	}
+
+	public void setStatusVerified(Boolean statusVerified) {
+		this.statusVerified = statusVerified;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public int hashCode() {
 		int hash = 29;
         hash = 217 * hash + Objects.hashCode(this.nik);
@@ -145,7 +160,8 @@ public class PersonDTO implements Serializable {
 					jenisKelamin != null ? jenisKelamin.toJenisKelamin():null, 
 					alamat != null ? alamat.toAlamat():null, 
 					scanKTP, 
-					kontak != null ? kontak.toKontak():null
+					kontak != null ? kontak.toKontak():null,
+					statusVerified != null ? statusVerified.booleanValue() : null	
 					);
 		}
 		else {

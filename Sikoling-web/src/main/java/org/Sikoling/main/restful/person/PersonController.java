@@ -53,8 +53,8 @@ public class PersonController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PersonDTO save(@FormDataParam("personData") String personData, 
-			@FormDataParam("imageKtp") File imageKtp, @FormDataParam("imageKtp") FormDataContentDisposition contentDisposition) throws IOException {
+	public PersonDTO save(@FormDataParam("personData") String personData, @FormDataParam("imageKtp") File imageKtp, 
+			@FormDataParam("imageKtp") FormDataContentDisposition contentDisposition) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
 		PersonDTO personDTO = jsonb.fromJson(personData, PersonDTO.class);
 		String namaFile = contentDisposition.getFileName();
