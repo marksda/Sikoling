@@ -125,7 +125,7 @@ public class PersonController {
 			}			
 		}
 		
-		throw new IOException("data sudah ada");
+		throw new IOException("Gagal update data person");
 	}
 		
 	@Path("id/{idLama}")
