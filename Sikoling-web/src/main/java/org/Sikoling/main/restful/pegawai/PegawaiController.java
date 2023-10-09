@@ -70,7 +70,7 @@ public class PegawaiController {
 	@Path("add_direktur")
 	@POST
     @Consumes({MediaType.MULTIPART_FORM_DATA})
-    @Produces({MediaType.TEXT_PLAIN})
+    @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
 	public PegawaiDTO saveDirektur(@FormDataParam("personData") String personData, @FormDataParam("imageKtp") File imageKtp, 
@@ -142,7 +142,7 @@ public class PegawaiController {
 			}
 			else {
 				String fileLama = null;
-				if(personDTO.getScanKTP() != "") {
+				if(personDTO.getScanKTP() != null) {
 					fileLama = personDTO.getScanKTP();
 				}
 				String fileKey = null;
@@ -161,8 +161,10 @@ public class PegawaiController {
 						try {
 							String subPathLocation = File.separator.concat("identitas_personal");
 							if(personDTO.getScanKTP() != "") {
-								String[] hasilSplit = fileLama.split("/");
-								localStorageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
+								if(fileLama != null) {
+									String[] hasilSplit = fileLama.split("/");
+									localStorageService.delete(hasilSplit[hasilSplit.length -1], subPathLocation); 
+								}
 							}
 							
 							InputStream uploadedInputStream = new FileInputStream(imageKtp);					
