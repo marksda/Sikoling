@@ -73,8 +73,9 @@ public class PegawaiController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
-	public PegawaiDTO saveDirektur(@FormDataParam("personData") String personData, @FormDataParam("imageKtp") File imageKtp, 
-			@FormDataParam("imageKtp") FormDataContentDisposition contentDisposition, @FormDataParam("registerPerusahaanData") String registerPerusahaanData) throws IOException {	
+	public PegawaiDTO saveDirektur(@FormDataParam("personData") String personData,
+			@FormDataParam("imageKtp") File imageKtp, @FormDataParam("imageKtp") FormDataContentDisposition contentDisposition,
+			@FormDataParam("registerPerusahaanData") String registerPerusahaanData) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
 		
 		RegisterPerusahaanDTO registerPerusahaanDTO = jsonb.fromJson(registerPerusahaanData, RegisterPerusahaanDTO.class);

@@ -106,13 +106,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
 public class DataConverter {	
-	private final EntityManager entityManager;	
+	private final EntityManager entityManager;
 	
 	public DataConverter(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
-	/*-----------Converter ObjectData To Object-----------------------------------------------*/	
+	/*-----------Converter ObjectData To Object-----------------------------------------------*/
 	
 	public Alamat convertAlamatDataToAlamat(AlamatData d) {
 		Alamat alamat = null;
