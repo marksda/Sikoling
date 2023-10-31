@@ -11,18 +11,19 @@ public class Otoritas implements Serializable {
 	private final LocalDate tanggal;
 	private final Person person;
 	private final HakAkses hakAkses;
-	private final Boolean statusInternal;
+//	private final Boolean statusInternal;
 	private final Boolean isVerified;
 	private final String userName;
 	
-	public Otoritas(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
-			Boolean isVerified, String userName) {
+//	public Otoritas(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean statusInternal,
+//			Boolean isVerified, String userName) {
+	public Otoritas(String id, LocalDate tanggal, Person person, HakAkses hakAkses, Boolean isVerified, String userName) {
 		super();
 		this.id = id;
 		this.tanggal = tanggal;
 		this.person = person;
 		this.hakAkses = hakAkses;
-		this.statusInternal = statusInternal;
+//		this.statusInternal = statusInternal;
 		this.isVerified = isVerified;
 		this.userName = userName;
 	}
@@ -43,9 +44,9 @@ public class Otoritas implements Serializable {
 		return hakAkses;
 	}
 
-	public Boolean isStatusInternal() {
-		return statusInternal;
-	}
+//	public Boolean isStatusInternal() {
+//		return statusInternal;
+//	}
 
 	public Boolean isVerified() {
 		return isVerified;

@@ -44,8 +44,8 @@ public class OtoritasData implements Serializable {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private HakAksesData hakAkses;
 	
-	@Column(name="status_internal")
-	private Boolean statusInternal;
+//	@Column(name="status_internal")
+//	private Boolean statusInternal;
 	
 	@Column(name="is_verified")
 	private Boolean isVerified;
@@ -99,13 +99,13 @@ public class OtoritasData implements Serializable {
 		this.hakAkses = hakAkses;
 	}
 
-	public Boolean getStatusInternal() {
-		return statusInternal;
-	}
+//	public Boolean getStatusInternal() {
+//		return statusInternal;
+//	}
 
-	public void setStatusInternal(Boolean statusInternal) {
-		this.statusInternal = statusInternal;
-	}
+//	public void setStatusInternal(Boolean statusInternal) {
+//		this.statusInternal = statusInternal;
+//	}
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;

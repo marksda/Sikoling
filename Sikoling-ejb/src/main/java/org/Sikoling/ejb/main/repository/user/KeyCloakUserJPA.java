@@ -132,7 +132,6 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 								t.getPerson(), 
 								new HakAkses("09", null, null), 
 								false, 
-								false, 
 								t.getCredential().getUserName());
 						
 						OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
@@ -299,7 +298,6 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 								HakAksesData hakAksesData = new HakAksesData();
 								hakAksesData.setId("09");
 								autorisasiData.setHakAkses(hakAksesData);
-								autorisasiData.setStatusInternal(false);
 								autorisasiData.setIsVerified(false);
 								autorisasiData.setUserName(credential.getUserName());
 								
@@ -345,7 +343,6 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 						HakAksesData hakAksesData = new HakAksesData();
 						hakAksesData.setId("09");
 						autorisasiData.setHakAkses(hakAksesData);
-						autorisasiData.setStatusInternal(false);
 						autorisasiData.setIsVerified(false);
 						autorisasiData.setUserName(credential.getUserName());	
 

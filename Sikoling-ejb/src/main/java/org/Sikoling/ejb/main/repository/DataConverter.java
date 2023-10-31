@@ -139,7 +139,6 @@ public class DataConverter {
 					d.getTanggalRegistrasi(),
 					convertPersonDataToPerson(d.getPerson()), 
 					convertHakAksesDataToHakAkses(d.getHakAkses()), 
-					d.getStatusInternal(), 
 					d.getIsVerified(), 
 					d.getUserName()
 					);
@@ -830,7 +829,6 @@ public class DataConverter {
 					autorisasiData.getTanggalRegistrasi(),
 					convertPersonDataToPerson(autorisasiData.getPerson()), 
 					convertHakAksesDataToHakAkses(autorisasiData.getHakAkses()), 
-					autorisasiData.getStatusInternal(), 
 					autorisasiData.getIsVerified(), 
 					autorisasiData.getUserName()
 					);
@@ -1136,7 +1134,7 @@ public class DataConverter {
 			autorisasiData.setUserName(t.getUserName());
 			autorisasiData.setPerson(convertPersonToPersonData(t.getPerson()));
 			autorisasiData.setHakAkses(convertHakAksesToHakAksesData(t.getHakAkses()));
-			autorisasiData.setStatusInternal(t.isStatusInternal());
+//			autorisasiData.setStatusInternal(t.isStatusInternal());
 			autorisasiData.setIsVerified(t.isVerified());
 		}
 		
@@ -1626,7 +1624,7 @@ public class DataConverter {
 			autorisasiData.setUserName(autority.getUserName());
 			autorisasiData.setPerson(convertPersonToPersonData(autority.getPerson()));
 			autorisasiData.setHakAkses(convertHakAksesToHakAksesData(autority.getHakAkses()));
-			autorisasiData.setStatusInternal(autority.isStatusInternal());
+//			autorisasiData.setStatusInternal(autority.isStatusInternal());
 			autorisasiData.setIsVerified(autority.isVerified());			
 			autorityPerusahaanData.setAutority(autorisasiData);
 			
