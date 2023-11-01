@@ -2,12 +2,9 @@ package org.Sikoling.ejb.main.repository.user;
 
 import java.io.IOException;
 import java.security.MessageDigest;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.entity.Filter;
-import org.Sikoling.ejb.abstraction.entity.HakAkses;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
 import org.Sikoling.ejb.abstraction.entity.ResponToken;
@@ -124,25 +121,25 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 				if (response.getStatus() != 201) {					
 					throw new IOException("data autentikasi tidak bisa ditambahkan ke server identification provider");
 		        }
-				else {	
-					try {		
-						Otoritas autority = new Otoritas(
-								null, 
-								LocalDate.now(), 
-								t.getPerson(), 
-								new HakAkses("09", null, null), 
-								false, 
-								t.getCredential().getUserName());
-						
-						OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
-						entityManager.persist(autorisasiData);
-						entityManager.flush();
-						
-						return t;
-					} catch (Exception e) {
-						throw new IOException("malfunction");
-					}
-				}
+//				else {	
+//					try {		
+//						Otoritas autority = new Otoritas(
+//								null, 
+//								LocalDate.now(), 
+//								t.getPerson(), 
+//								new HakAkses("09", null, null), 
+//								false, 
+//								t.getCredential().getUserName());
+//						
+//						OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
+//						entityManager.persist(autorisasiData);
+//						entityManager.flush();
+//						
+//						return t;
+//					} catch (Exception e) {
+//						throw new IOException("malfunction");
+//					}
+//				}
 			default:
 				throw new IOException("malfunction");
 		}

@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.service.keycloackuser.IKeyCloackUserService;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
+import org.Sikoling.main.restful.user.CredentialDTO;
+import org.Sikoling.main.restful.user.UserDTO;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -35,13 +40,27 @@ public class OtoritasController {
 	@Inject
 	private IOtoritasService otoritasService;
 	
+	@Inject
+	private IKeyCloackUserService userService;
+	
 	@POST
-    @Consumes({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public OtoritasDTO save(OtoritasDTO d) throws IOException {
-		return new OtoritasDTO(otoritasService.save(d.toOtoritas()));
+	public OtoritasDTO save(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) throws IOException {
+		Jsonb jsonb = JsonbBuilder.create();
+		CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
+		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);		
+		otoritasDTO = new OtoritasDTO(otoritasService.save(otoritasDTO.toOtoritas()));
+		
+		UserDTO userDTO = new UserDTO();
+		userDTO.setCredential(credentialDTO);
+		userDTO.setPerson(otoritasDTO.getPerson());
+		
+		userService.save(userDTO.toUser());
+		
+		return otoritasDTO;
 	}
 	
 	@PUT
