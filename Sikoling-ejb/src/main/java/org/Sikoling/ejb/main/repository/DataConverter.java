@@ -1879,8 +1879,8 @@ public class DataConverter {
 		String hasil;
 		
 		Query q = entityManager.createQuery("SELECT MAX(a.id) "
-				+ "FROM AutorisasiData a "
-				+ "WHERE EXTRACT(YEAR FROM a.tanggal) = :tahun");
+				+ "FROM OtoritasData a "
+				+ "WHERE EXTRACT(YEAR FROM a.tanggalRegistrasi) = :tahun");
 		
 		q.setParameter("tahun", tahun);
 		
