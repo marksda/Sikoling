@@ -362,16 +362,16 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	}
 
 	private String cekModelAuthentication(String id, String nama) {
-		Integer count = 0;
-		
-		count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
-		.setParameter("nama", nama)
-		.getResultList()
-		.size();
-		
-		if(count > 0) {
-			return "local";
-		}
+//		Integer count = 0;
+//		
+//		count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+//		.setParameter("nama", nama)
+//		.getResultList()
+//		.size();
+//		
+//		if(count > 0) {
+//			return "local";
+//		}
 		
 		RealmResource realmResource = keycloak.realm("dlhk");
 		UserResource userResource = null;
