@@ -1,6 +1,7 @@
 package org.Sikoling.main.restful.otoritas;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,8 @@ public class OtoritasController {
 		Jsonb jsonb = JsonbBuilder.create();
 		CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
 		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);		
+		LocalDate tanggalRegistrasi = LocalDate.now();
+		otoritasDTO.setTanggal(tanggalRegistrasi);
 		otoritasDTO = new OtoritasDTO(otoritasService.save(otoritasDTO.toOtoritas()));
 		
 		UserDTO userDTO = new UserDTO();
