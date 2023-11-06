@@ -154,10 +154,10 @@ public class OtoritasRepositoryJPA implements IAutorityRepository {
 				break;
 			case "tanggal":
 				if(sort.getValue().equals("ASC")) {
-					cq.orderBy(cb.asc(root.get("id")));
+					cq.orderBy(cb.asc(root.get("tanggalRegistrasi")));
 				}
 				else {
-					cq.orderBy(cb.desc(root.get("id")));
+					cq.orderBy(cb.desc(root.get("tanggalRegistrasi")));
 				}
 				break;
 			case "user_name":

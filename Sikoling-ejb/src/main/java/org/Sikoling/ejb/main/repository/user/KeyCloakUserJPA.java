@@ -81,6 +81,8 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 						credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
 						credentialRepresentation.setValue(t.getCredential().getPassword());					
 						userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));	
+						userRepresentation.setEmailVerified(true);
+						userRepresentation.setEnabled(true);
 						
 						response = realmResource.users().create(userRepresentation);
 						
@@ -100,10 +102,10 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 								throw new IOException("malfunction");
 							}
 						}
-					}	
+					}						
 				} catch (Exception e) {
 					throw new IOException("sandi tidak sesuai");
-				}
+				}				
 			}
 			case "remote":
 				throw new IOException("data sudah ada");
@@ -114,7 +116,9 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 			 	credentialRepresentation.setTemporary(false);
 				credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
 				credentialRepresentation.setValue(t.getCredential().getPassword());
-				userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));		
+				userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));
+				userRepresentation.setEmailVerified(true);
+				userRepresentation.setEnabled(true);
 				
 				response = realmResource.users().create(userRepresentation);
 				
@@ -140,6 +144,8 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 //						throw new IOException("malfunction");
 //					}
 //				}
+				
+				return t;
 			default:
 				throw new IOException("malfunction");
 		}
@@ -373,22 +379,31 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 //			return "local";
 //		}
 		
+//		RealmResource realmResource = keycloak.realm("dlhk");
+//		UserResource userResource = null;
+//		if(id == null) {
+//			List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(nama, false);
+//			if(!daftarUser.isEmpty()) {
+//				return "remote";
+//			}
+//		}
+//		else {
+//			userResource = realmResource.users().get(id);
+//			if(userResource != null) {
+//				return "remote";
+//			}
+//		}		
+			
 		RealmResource realmResource = keycloak.realm("dlhk");
-		UserResource userResource = null;
-		if(id == null) {
-			List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(nama, false);
-			if(!daftarUser.isEmpty()) {
-				return "remote";
-			}
+		List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(nama, false);
+		
+		if(daftarUser.isEmpty()) {
+			return "none";
 		}
 		else {
-			userResource = realmResource.users().get(id);
-			if(userResource != null) {
-				return "remote";
-			}
-		}		
+			return "remote";
+		}
 		
-		return "none";
 	}
 
 	@Override
