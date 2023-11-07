@@ -67,12 +67,13 @@ public class OtoritasController {
 	}
 	
 	@PUT
-    @Consumes({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public OtoritasDTO update(OtoritasDTO d) {
-		return new OtoritasDTO(otoritasService.update(d.toOtoritas()));
+	public OtoritasDTO update(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) {
+//		return new OtoritasDTO(otoritasService.update(d.toOtoritas()));
+		return null;
 	}
 	
 	@Path("id/{idLama}")
