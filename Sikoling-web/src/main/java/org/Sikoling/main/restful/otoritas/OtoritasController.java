@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.Sikoling.ejb.abstraction.entity.Otoritas;
 import org.Sikoling.ejb.abstraction.service.keycloackuser.IKeyCloackUserService;
 import org.Sikoling.ejb.abstraction.service.otoritas.IOtoritasService;
 import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
@@ -57,11 +58,15 @@ public class OtoritasController {
 		otoritasDTO.setTanggal(tanggalRegistrasi);
 		otoritasDTO = new OtoritasDTO(otoritasService.save(otoritasDTO.toOtoritas()));
 		
-		UserDTO userDTO = new UserDTO();
-		userDTO.setCredential(credentialDTO);
-		userDTO.setPerson(otoritasDTO.getPerson());
-		
-		userService.save(userDTO.toUser());
+		try {
+			UserDTO userDTO = new UserDTO();
+			userDTO.setCredential(credentialDTO);
+			userDTO.setPerson(otoritasDTO.getPerson());			
+			userService.save(userDTO.toUser());
+		} catch (Exception e) {
+			otoritasService.delete(otoritasDTO.toOtoritas());
+			throw new IOException("Error registering to Server identification");
+		}		
 		
 		return otoritasDTO;
 	}
@@ -71,9 +76,29 @@ public class OtoritasController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMIN})
-	public OtoritasDTO update(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) {
-//		return new OtoritasDTO(otoritasService.update(d.toOtoritas()));
-		return null;
+	public OtoritasDTO update(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) throws IOException {
+		Jsonb jsonb = JsonbBuilder.create();
+		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);			
+		Otoritas otoritas = otoritasService.update(otoritasDTO.toOtoritas());
+		
+		try {
+			if(credentialData == null) {
+				UserDTO userDTO = new UserDTO();
+				userDTO.setPerson(otoritasDTO.getPerson());
+				userService.update(userDTO.toUser());
+			}
+			else {
+				CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
+				UserDTO userDTO = new UserDTO();
+				userDTO.setCredential(credentialDTO);
+				userDTO.setPerson(otoritasDTO.getPerson());
+				userService.update(userDTO.toUser());
+			}
+			return new OtoritasDTO(otoritas);
+		} catch (Exception e) {
+			otoritasService.delete(otoritasDTO.toOtoritas());
+			throw new IOException("Error registering to Server identification");
+		}
 	}
 	
 	@Path("id/{idLama}")

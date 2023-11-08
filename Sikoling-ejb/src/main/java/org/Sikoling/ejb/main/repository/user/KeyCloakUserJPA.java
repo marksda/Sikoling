@@ -125,25 +125,6 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 				if (response.getStatus() != 201) {					
 					throw new IOException("data autentikasi tidak bisa ditambahkan ke server identification provider");
 		        }
-//				else {	
-//					try {		
-//						Otoritas autority = new Otoritas(
-//								null, 
-//								LocalDate.now(), 
-//								t.getPerson(), 
-//								new HakAkses("09", null, null), 
-//								false, 
-//								t.getCredential().getUserName());
-//						
-//						OtoritasData autorisasiData = dataConverter.convertAuthorityToAutorisasiData(autority);
-//						entityManager.persist(autorisasiData);
-//						entityManager.flush();
-//						
-//						return t;
-//					} catch (Exception e) {
-//						throw new IOException("malfunction");
-//					}
-//				}
 				
 				return t;
 			default:
