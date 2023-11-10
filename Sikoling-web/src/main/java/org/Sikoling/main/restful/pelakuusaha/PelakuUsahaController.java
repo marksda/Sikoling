@@ -40,7 +40,7 @@ public class PelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public PelakuUsahaDTO save(PelakuUsahaDTO d) throws IOException {
 		return new PelakuUsahaDTO(pelakuUsahaServices.save(d.toPelakuUsaha()));
     }
@@ -49,7 +49,7 @@ public class PelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PelakuUsahaDTO update(PelakuUsahaDTO d) {		
 		return new PelakuUsahaDTO(pelakuUsahaServices.update(d.toPelakuUsaha()));
 	}
@@ -59,7 +59,7 @@ public class PelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PelakuUsahaDTO updateId(@PathParam("idLama") String idLama, PelakuUsahaDTO d) throws IOException {
 		return new PelakuUsahaDTO(pelakuUsahaServices.updateId(idLama, d.toPelakuUsaha()));
 	}
@@ -69,7 +69,7 @@ public class PelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PelakuUsahaDTO delete(@PathParam("idPelakuUsaha") String idPelakuUsaha) throws IOException {
 		PelakuUsahaDTO d = new PelakuUsahaDTO();
 		d.setId(idPelakuUsaha);
@@ -81,7 +81,7 @@ public class PelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<PelakuUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -98,7 +98,7 @@ public class PelakuUsahaController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

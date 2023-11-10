@@ -39,7 +39,7 @@ public class JabatanController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JabatanDTO save(JabatanDTO jabatanDTO) throws IOException {
 		return new JabatanDTO(jabatanService.save(jabatanDTO.toJabatan()));
 	}
@@ -48,7 +48,7 @@ public class JabatanController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JabatanDTO update(JabatanDTO jabatanDTO) {
 		return new JabatanDTO(jabatanService.update(jabatanDTO.toJabatan()));
 	}
@@ -58,7 +58,7 @@ public class JabatanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JabatanDTO updateId(@PathParam("idLama") String idLama, JabatanDTO d) throws IOException {
 		return new JabatanDTO(jabatanService.updateId(idLama, d.toJabatan()));
 	}
@@ -67,7 +67,7 @@ public class JabatanController {
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JabatanDTO delete(@PathParam("idJabatan") String idJabatan) throws IOException {
 		JabatanDTO d = new JabatanDTO();
 		d.setId(idJabatan);
@@ -78,7 +78,7 @@ public class JabatanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<JabatanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -95,7 +95,7 @@ public class JabatanController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

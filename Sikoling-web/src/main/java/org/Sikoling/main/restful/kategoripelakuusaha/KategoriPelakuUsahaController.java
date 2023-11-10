@@ -39,7 +39,7 @@ public class KategoriPelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public KategoriPelakuUsahaDTO save(KategoriPelakuUsahaDTO d) throws IOException {
         return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.save(d.toKategoriPelakuUsaha()));
     }
@@ -48,7 +48,7 @@ public class KategoriPelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPelakuUsahaDTO update(KategoriPelakuUsahaDTO d) {
 		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.update(d.toKategoriPelakuUsaha()));
 	}
@@ -58,7 +58,7 @@ public class KategoriPelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPelakuUsahaDTO updateKategoriId(@PathParam("idLama") String idLama, KategoriPelakuUsahaDTO d) throws IOException {
 		return new KategoriPelakuUsahaDTO(kategoriPelakuUsahaService.updateId(idLama, d.toKategoriPelakuUsaha()));
 	}
@@ -68,7 +68,7 @@ public class KategoriPelakuUsahaController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPelakuUsahaDTO delete(@PathParam("idKategoriPelakuUsaha") String idKategoriPelakuUsaha) throws IOException {
 		KategoriPelakuUsahaDTO d = new KategoriPelakuUsahaDTO();
 		d.setId(idKategoriPelakuUsaha);
@@ -80,7 +80,7 @@ public class KategoriPelakuUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KategoriPelakuUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -97,7 +97,7 @@ public class KategoriPelakuUsahaController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

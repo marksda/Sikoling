@@ -32,6 +32,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.core.UriInfo;
 
 @Stateless
@@ -49,7 +50,7 @@ public class OtoritasController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public OtoritasDTO save(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
 		CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
@@ -75,30 +76,63 @@ public class OtoritasController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
-	public OtoritasDTO update(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	public OtoritasDTO update(@Context SecurityContext securityContext, @FormDataParam("credentialData") String credentialData, 
+			@FormDataParam("otoritasData") String otoritasData) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
-		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);			
-		Otoritas otoritas = otoritasService.update(otoritasDTO.toOtoritas());
+		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);		
 		
-		try {
-			if(credentialData == null) {
-				UserDTO userDTO = new UserDTO();
-				userDTO.setPerson(otoritasDTO.getPerson());
-				userService.update(userDTO.toUser());
+		Otoritas userOtoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
+		switch (userOtoritas.getHakAkses().getNama()) {
+		case "Umum":
+			if((userOtoritas.isVerified() == true) || (userOtoritas.getId() != otoritasDTO.getId())) {
+				throw new IOException("Error Illegal access");
 			}
 			else {
-				CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
-				UserDTO userDTO = new UserDTO();
-				userDTO.setCredential(credentialDTO);
-				userDTO.setPerson(otoritasDTO.getPerson());
-				userService.update(userDTO.toUser());
+				Otoritas otoritas = otoritasService.update(otoritasDTO.toOtoritas());
+				try {
+					if(credentialData == null) {
+						UserDTO userDTO = new UserDTO();
+						userDTO.setPerson(otoritasDTO.getPerson());
+						userService.update(userDTO.toUser());
+					}
+					else {
+						CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
+						UserDTO userDTO = new UserDTO();
+						userDTO.setCredential(credentialDTO);
+						userDTO.setPerson(otoritasDTO.getPerson());
+						userService.update(userDTO.toUser());
+					}
+					return new OtoritasDTO(otoritas);
+				} catch (Exception e) {
+					otoritasService.delete(otoritasDTO.toOtoritas());
+					throw new IOException("Error registering to Server identification");
+				}				
+			}			
+		case "Administrator":
+			Otoritas otoritas = otoritasService.update(otoritasDTO.toOtoritas());
+			try {
+				if(credentialData == null) {
+					UserDTO userDTO = new UserDTO();
+					userDTO.setPerson(otoritasDTO.getPerson());
+					userService.update(userDTO.toUser());
+				}
+				else {
+					CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
+					UserDTO userDTO = new UserDTO();
+					userDTO.setCredential(credentialDTO);
+					userDTO.setPerson(otoritasDTO.getPerson());
+					userService.update(userDTO.toUser());
+				}
+				return new OtoritasDTO(otoritas);
+			} catch (Exception e) {
+				otoritasService.delete(otoritasDTO.toOtoritas());
+				throw new IOException("Error registering to Server identification");
 			}
-			return new OtoritasDTO(otoritas);
-		} catch (Exception e) {
-			otoritasService.delete(otoritasDTO.toOtoritas());
-			throw new IOException("Error registering to Server identification");
-		}
+		default:
+			throw new IOException("Error illegal access");
+		}	
+		
 	}
 	
 	@Path("id/{idLama}")
@@ -106,7 +140,7 @@ public class OtoritasController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public OtoritasDTO updateId(@PathParam("idLama") String idLama, OtoritasDTO d) throws IOException {
 		return new OtoritasDTO(otoritasService.updateId(idLama, d.toOtoritas()));
 	}
@@ -115,7 +149,7 @@ public class OtoritasController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public OtoritasDTO delete(OtoritasDTO d) throws IOException {
 		return new OtoritasDTO(otoritasService.delete(d.toOtoritas()));
 	}
@@ -124,7 +158,7 @@ public class OtoritasController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<OtoritasDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -137,11 +171,12 @@ public class OtoritasController {
 				.collect(Collectors.toList());
 	}
 	
+	
 	@Path("count")
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

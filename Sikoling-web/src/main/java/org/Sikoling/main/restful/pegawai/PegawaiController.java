@@ -62,7 +62,7 @@ public class PegawaiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PegawaiDTO save(PegawaiDTO d) throws IOException {		
 		return new PegawaiDTO(pegawaiPerusahaanService.save(d.toPegawai()));
 	}
@@ -72,7 +72,7 @@ public class PegawaiController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PegawaiDTO saveDirektur(@FormDataParam("personData") String personData,
 			@FormDataParam("imageKtp") File imageKtp, @FormDataParam("imageKtp") FormDataContentDisposition contentDisposition,
 			@FormDataParam("registerPerusahaanData") String registerPerusahaanData) throws IOException {
@@ -191,7 +191,7 @@ public class PegawaiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PegawaiDTO update(PegawaiDTO d) {
 		return new PegawaiDTO(pegawaiPerusahaanService.update(d.toPegawai()));
 	}
@@ -201,7 +201,7 @@ public class PegawaiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PegawaiDTO updateId(@PathParam("idLama") String idLama, PegawaiDTO d) throws IOException {
 		return new PegawaiDTO(pegawaiPerusahaanService.updateId(idLama, d.toPegawai()));
 	}
@@ -211,7 +211,7 @@ public class PegawaiController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PegawaiDTO delete(@PathParam("idPegawai") String idPegawai) throws IOException {
 		PegawaiDTO d = new PegawaiDTO();
 		d.setId(idPegawai);
@@ -222,7 +222,7 @@ public class PegawaiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<PegawaiDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -239,7 +239,7 @@ public class PegawaiController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

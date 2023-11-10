@@ -52,7 +52,7 @@ public class PersonController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PersonDTO save(@FormDataParam("personData") String personData, @FormDataParam("imageKtp") File imageKtp, 
 			@FormDataParam("imageKtp") FormDataContentDisposition contentDisposition) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
@@ -84,7 +84,7 @@ public class PersonController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PersonDTO update(@FormDataParam("personData") String personData, 
 			@FormDataParam("imageKtp") File imageKtp, @FormDataParam("imageKtp") FormDataContentDisposition contentDisposition) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
@@ -133,7 +133,7 @@ public class PersonController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PersonDTO updateId(@PathParam("idLama") String idLama, @FormDataParam("personData") String personData, 
 			@FormDataParam("imageKtp") File imageKtp, @FormDataParam("imageKtp") FormDataContentDisposition contentDisposition) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
@@ -180,7 +180,7 @@ public class PersonController {
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PersonDTO delete(@Context UriInfo info) throws IOException {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("dt");
@@ -201,7 +201,7 @@ public class PersonController {
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<PersonDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -218,7 +218,7 @@ public class PersonController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getCountDaftarPerusahaan(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

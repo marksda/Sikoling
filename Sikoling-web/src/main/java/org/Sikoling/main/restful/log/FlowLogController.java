@@ -47,7 +47,7 @@ public class FlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public FlowLogDTO save(FlowLogDTO d, @Context SecurityContext securityContext) throws IOException {
 		Otoritas pengakses = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		d.setPengakses(new OtoritasDTO(pengakses));		
@@ -59,7 +59,7 @@ public class FlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public FlowLogDTO update(FlowLogDTO d) {
 		return new FlowLogDTO(flowLogService.update(d.toFlowLog()));
 	}
@@ -69,7 +69,7 @@ public class FlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public FlowLogDTO updateId(@PathParam("idLama") String idLama, FlowLogDTO d) throws IOException {
 		return new FlowLogDTO(flowLogService.updateId(idLama, d.toFlowLog()));
 	}
@@ -78,7 +78,7 @@ public class FlowLogController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public FlowLogDTO delete(FlowLogDTO d) throws IOException {
 		return new FlowLogDTO(flowLogService.delete(d.toFlowLog()));
 	}
@@ -86,7 +86,7 @@ public class FlowLogController {
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<FlowLogDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -111,7 +111,7 @@ public class FlowLogController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

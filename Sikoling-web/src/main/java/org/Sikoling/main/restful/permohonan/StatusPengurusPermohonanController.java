@@ -39,7 +39,7 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public StatusPengurusPermohonanDTO save(StatusPengurusPermohonanDTO d) throws IOException {
         return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.save(d.toStatusPengurusPermohonan()));
     }
@@ -48,7 +48,7 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public StatusPengurusPermohonanDTO update(StatusPengurusPermohonanDTO d) {		
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.update(d.toStatusPengurusPermohonan()));
 	}
@@ -57,7 +57,7 @@ public class StatusPengurusPermohonanController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public StatusPengurusPermohonanDTO delete(StatusPengurusPermohonanDTO d) throws IOException {
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.delete(d.toStatusPengurusPermohonan()));
 	}
@@ -67,7 +67,7 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public StatusPengurusPermohonanDTO updateById(@PathParam("idLama") String idLama, StatusPengurusPermohonanDTO d) throws IOException {
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.updateId(idLama, d.toStatusPengurusPermohonan()));
 	}	
@@ -76,7 +76,7 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<StatusPengurusPermohonanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -93,7 +93,7 @@ public class StatusPengurusPermohonanController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

@@ -39,7 +39,7 @@ public class JenisKelaminController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JenisKelaminDTO save(JenisKelaminDTO jenisKelaminDTO) throws IOException {
 		return new JenisKelaminDTO(jenisKelaminService.save(jenisKelaminDTO.toJenisKelamin()));
 	}
@@ -48,7 +48,7 @@ public class JenisKelaminController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JenisKelaminDTO update(JenisKelaminDTO d) {		
 		return new JenisKelaminDTO(jenisKelaminService.update(d.toJenisKelamin()));
 	}
@@ -58,7 +58,7 @@ public class JenisKelaminController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JenisKelaminDTO updateId(@PathParam("idLama") String idLama, JenisKelaminDTO d) throws IOException {
 		return new JenisKelaminDTO(jenisKelaminService.updateId(idLama, d.toJenisKelamin()));
 	}
@@ -68,7 +68,7 @@ public class JenisKelaminController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JenisKelaminDTO delete(@PathParam("idSex") String idSex) throws IOException {
 		JenisKelaminDTO dt = new JenisKelaminDTO();
 		dt.setId(idSex);
@@ -79,7 +79,7 @@ public class JenisKelaminController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<JenisKelaminDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -96,7 +96,7 @@ public class JenisKelaminController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

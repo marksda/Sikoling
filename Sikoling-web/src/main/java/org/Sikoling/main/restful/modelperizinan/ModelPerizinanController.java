@@ -39,7 +39,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public ModelPerizinanDTO save(ModelPerizinanDTO d) throws IOException {
 		return new ModelPerizinanDTO(modelPerizinanService.save(d.toModelPerizinan()));
     }
@@ -48,7 +48,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public ModelPerizinanDTO update(ModelPerizinanDTO d) {		
 		return new ModelPerizinanDTO(modelPerizinanService.update(d.toModelPerizinan()));
 	}
@@ -58,7 +58,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public ModelPerizinanDTO updateId(@PathParam("idLama") String idLama, ModelPerizinanDTO d) throws IOException {
 		return new ModelPerizinanDTO(modelPerizinanService.updateId(idLama, d.toModelPerizinan()));
 	}
@@ -68,7 +68,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public ModelPerizinanDTO delete(@PathParam("idModelPerizinan") String idModelPerizinan) throws IOException {
 		ModelPerizinanDTO d = new ModelPerizinanDTO();
 		d.setId(idModelPerizinan);
@@ -79,7 +79,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<ModelPerizinanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -96,7 +96,7 @@ public class ModelPerizinanController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

@@ -40,7 +40,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public KategoriPermohonanDTO save(KategoriPermohonanDTO d) throws IOException {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.save(d.toKategoriPermohonan()));
     }
@@ -49,7 +49,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPermohonanDTO update(KategoriPermohonanDTO d) {		
 		return new KategoriPermohonanDTO(kategoriPermohonanService.update(d.toKategoriPermohonan()));
 	}
@@ -59,7 +59,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPermohonanDTO updateId(@PathParam("idLama") String idLama, KategoriPermohonanDTO d) throws IOException {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.updateId(idLama, d.toKategoriPermohonan()));
 	}
@@ -68,7 +68,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPermohonanDTO delete(KategoriPermohonanDTO d) throws IOException {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.delete(d.toKategoriPermohonan()));
 	}
@@ -77,7 +77,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KategoriPermohonanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -94,7 +94,7 @@ public class KategoriPermohonanController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

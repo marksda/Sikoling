@@ -39,7 +39,7 @@ public class HakAksesController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public HakAksesDTO save(HakAksesDTO d) throws IOException {
 		return new HakAksesDTO(hakAksesService.save(d.toHakAkses()));
 	}
@@ -48,7 +48,7 @@ public class HakAksesController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public HakAksesDTO update(HakAksesDTO d) {
 		return new HakAksesDTO(hakAksesService.update(d.toHakAkses()));
 	}
@@ -58,7 +58,7 @@ public class HakAksesController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public HakAksesDTO updateId(@PathParam("idLama") String idLama, HakAksesDTO d) throws IOException {
 		return new HakAksesDTO(hakAksesService.updateId(idLama, d.toHakAkses()));
 	}
@@ -68,7 +68,7 @@ public class HakAksesController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public HakAksesDTO delete(@PathParam("idHakAkses") String idHakAkses) throws IOException {
 		HakAksesDTO dt = new HakAksesDTO();
 		dt.setId(idHakAkses);
@@ -79,7 +79,7 @@ public class HakAksesController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<HakAksesDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -96,7 +96,7 @@ public class HakAksesController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

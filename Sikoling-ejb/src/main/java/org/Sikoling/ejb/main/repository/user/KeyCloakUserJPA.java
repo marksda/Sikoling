@@ -135,9 +135,11 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	@Override
 	public User update(User t) {	
 		RealmResource realmResource = keycloak.realm("dlhk");
-		UserResource userResource = realmResource.users().get(t.getPerson().getNik());		
-		UserRepresentation userRepresentation = dataConverter.convertUserToUserRepresentationKeyCloack(t);
-		userResource.update(userRepresentation);	
+		List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(t.getCredential().getUserName(), false);
+//		RealmResource realmResource = keycloak.realm("dlhk");
+//		UserResource userResource = realmResource.users().get(t.getPerson().getNik());		
+//		UserRepresentation userRepresentation = dataConverter.convertUserToUserRepresentationKeyCloack(t);
+//		userResource.update(userRepresentation);	
 		
         return t;
 	}

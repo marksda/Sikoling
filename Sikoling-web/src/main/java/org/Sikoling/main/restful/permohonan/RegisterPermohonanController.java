@@ -54,7 +54,7 @@ public class RegisterPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterPermohonanDTO save(RegisterPermohonanDTO d, @Context SecurityContext securityContext) throws IOException {
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		OtoritasDTO pengurusPermohonanDto = new OtoritasDTO(pengurusPermohonan);
@@ -104,7 +104,7 @@ public class RegisterPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterPermohonanDTO update(RegisterPermohonanDTO d) {		
 		return new RegisterPermohonanDTO(registerPermohonanService.update(d.toRegisterPermohonan()));
 	}
@@ -114,7 +114,7 @@ public class RegisterPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterPermohonanDTO updateId(@PathParam("idLama") String idLama, RegisterPermohonanDTO d) throws IOException {
 		return new RegisterPermohonanDTO(registerPermohonanService.updateId(idLama, d.toRegisterPermohonan()));
 	}
@@ -123,7 +123,7 @@ public class RegisterPermohonanController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterPermohonanDTO delete(RegisterPermohonanDTO d) throws IOException {
 		return new RegisterPermohonanDTO(registerPermohonanService.delete(d.toRegisterPermohonan()));
 	}
@@ -131,7 +131,7 @@ public class RegisterPermohonanController {
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<RegisterPermohonanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -148,7 +148,7 @@ public class RegisterPermohonanController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

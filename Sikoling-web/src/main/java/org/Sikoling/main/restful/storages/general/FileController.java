@@ -55,7 +55,7 @@ public class FileController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JsonObject setUploadFile(@QueryParam("fileNameParam") String fileNameParam, @Context SecurityContext securityContext, 
 			@FormDataParam("file") InputStream inputStream, @FormDataParam("file") FormDataContentDisposition contentDisposition) throws IOException {		
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
@@ -73,7 +73,7 @@ public class FileController {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JsonObject setReplaceFile(@QueryParam("fileNameParam") String fileNameParam, @Context SecurityContext securityContext, 
 			@FormDataParam("file") InputStream inputStream, @FormDataParam("idRegisterDokumen") String idRegisterDokumen) throws IOException {		
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
@@ -98,7 +98,7 @@ public class FileController {
 	@GET
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JsonObject setCreate(@QueryParam("fileNameParam") String fileNameParam, 
 			@QueryParam("sample") String sample, @Context SecurityContext securityContext) throws IOException {		
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
@@ -115,7 +115,7 @@ public class FileController {
 	@Path("download")
 	@GET
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Response getDownload(@QueryParam("fileNameParam") String fileNameParam) throws IOException {
 		try {
 			File tempFile = localStorageService.download(fileNameParam);	
@@ -140,7 +140,7 @@ public class FileController {
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public JsonObject deleteFile(@QueryParam("fileNameParam") String fileNameParam) throws IOException {		
 		try {
 			localStorageService.delete(FilenameUtils.getName(fileNameParam), FilenameUtils.getFullPathNoEndSeparator(fileNameParam));

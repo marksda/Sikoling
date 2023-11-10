@@ -45,7 +45,7 @@ public class RegisterDokumenController {
 	private IRegisterDokumenService registerDokumenService;
 	
 	@Inject
-	private IOtoritasService authorityService;
+	private IOtoritasService otoritasService;
 	
 	@Inject
 	private ILocalStorageService localStorageService;
@@ -54,7 +54,7 @@ public class RegisterDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterDokumenDTO save(RegisterDokumenDTO d, @Context SecurityContext securityContext) throws IOException {	
 		
 		if(d == null) {
@@ -71,7 +71,7 @@ public class RegisterDokumenController {
 			String dirHisDestination = pathBaru.substring(0, pathBaru.lastIndexOf(File.separator));
 			localStorageService.moveDir(dirHisSource, dirHisDestination);					
 					
-			Otoritas kreator = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+			Otoritas kreator = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
 			d.setUploader(new OtoritasDTO(kreator));
 			LocalDate tanggalRegistrasi = LocalDate.now();
 			d.setTanggalRegistrasi(tanggalRegistrasi);
@@ -88,7 +88,7 @@ public class RegisterDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterDokumenDTO update(RegisterDokumenDTO d) {
 		return new RegisterDokumenDTO(registerDokumenService.update(d.toRegisterDokumen()));
 	}
@@ -98,7 +98,7 @@ public class RegisterDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterDokumenDTO updateId(@PathParam("idLama") String idLama, RegisterDokumenDTO d) throws IOException {
 		return new RegisterDokumenDTO(registerDokumenService.updateId(idLama, d.toRegisterDokumen()));
 	}
@@ -108,9 +108,9 @@ public class RegisterDokumenController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterDokumenDTO delete(@PathParam("idRegisterDokumen") String idRegisterDokumen, @Context SecurityContext securityContext) throws IOException {
-		Otoritas userOtoritas = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
+		Otoritas userOtoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
 		RegisterDokumenDTO d = new RegisterDokumenDTO();
 		d.setId(idRegisterDokumen);
 		
@@ -128,7 +128,7 @@ public class RegisterDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<RegisterDokumenDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -145,7 +145,7 @@ public class RegisterDokumenController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

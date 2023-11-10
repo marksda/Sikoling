@@ -40,7 +40,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public StatusFlowLogDTO save(StatusFlowLogDTO d) throws IOException {
 		return new StatusFlowLogDTO(statusFlowLogServices.save(d.toStatusFlowLog()));
     }
@@ -49,7 +49,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public StatusFlowLogDTO update(StatusFlowLogDTO d) {		
 		return new StatusFlowLogDTO(statusFlowLogServices.update(d.toStatusFlowLog()));
 	}
@@ -59,7 +59,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public StatusFlowLogDTO updateId(@PathParam("idLama") String idLama, StatusFlowLogDTO d) throws IOException {
 		return new StatusFlowLogDTO(statusFlowLogServices.updateId(idLama, d.toStatusFlowLog()));
 	}
@@ -68,7 +68,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public StatusFlowLogDTO delete(StatusFlowLogDTO d) throws IOException {
 		return new StatusFlowLogDTO(statusFlowLogServices.delete(d.toStatusFlowLog()));
 	}
@@ -77,7 +77,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<StatusFlowLogDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -94,7 +94,7 @@ public class StatusFlowLogController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

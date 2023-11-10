@@ -39,7 +39,7 @@ public class BidangUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public BidangUsahaDTO save(BidangUsahaDTO d) throws IOException {
 		return new BidangUsahaDTO(bidangUsahaService.save(d.toBidangUsaha()));
 	}
@@ -48,7 +48,7 @@ public class BidangUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public BidangUsahaDTO update(BidangUsahaDTO d) {
 		return new BidangUsahaDTO(bidangUsahaService.update(d.toBidangUsaha()));
 	}
@@ -58,7 +58,7 @@ public class BidangUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public BidangUsahaDTO updateId(@PathParam("idLama") String idLama, BidangUsahaDTO d) throws IOException {
 		return new BidangUsahaDTO(bidangUsahaService.updateId(idLama, d.toBidangUsaha()));
 	}
@@ -67,7 +67,7 @@ public class BidangUsahaController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public BidangUsahaDTO delete(BidangUsahaDTO d) throws IOException {
 		return new BidangUsahaDTO(bidangUsahaService.delete(d.toBidangUsaha()));
 	}
@@ -76,7 +76,7 @@ public class BidangUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<BidangUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -93,7 +93,7 @@ public class BidangUsahaController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

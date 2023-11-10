@@ -39,7 +39,7 @@ public class RegisterKbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterKbliDTO save(RegisterKbliDTO t) throws IOException {
 		return new RegisterKbliDTO(registerKbliService.save(t.toRegisterKbli()));
 	}
@@ -48,7 +48,7 @@ public class RegisterKbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterKbliDTO update(RegisterKbliDTO t) {
 		return new RegisterKbliDTO(registerKbliService.update(t.toRegisterKbli()));
 	}
@@ -58,7 +58,7 @@ public class RegisterKbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterKbliDTO updateId(@PathParam("idNibLama") String idNibLama, 
 			@PathParam("idKbliLama") String idKbliLama, RegisterKbliDTO d) throws IOException {
 		return new RegisterKbliDTO(registerKbliService.updateId(idNibLama, idKbliLama, d.toRegisterKbli()));
@@ -68,7 +68,7 @@ public class RegisterKbliController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public RegisterKbliDTO delete(RegisterKbliDTO d) throws IOException {
 		return new RegisterKbliDTO(registerKbliService.delete(d.toRegisterKbli()));
 	}
@@ -77,7 +77,7 @@ public class RegisterKbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<RegisterKbliDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -94,7 +94,7 @@ public class RegisterKbliController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

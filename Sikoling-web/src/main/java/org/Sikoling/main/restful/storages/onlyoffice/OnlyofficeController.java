@@ -56,7 +56,7 @@ public class OnlyofficeController {
     @Produces({MediaType.APPLICATION_JSON})
 	@JsonbProperty(nillable=true)
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public FileModel getConfigEditor(@Context SecurityContext securityContext, @QueryParam("fileNameParam") String fileNameParam) throws Exception {
 		Otoritas pengurusPermohonan = authorityService.getByUserName(securityContext.getUserPrincipal().getName());
 		Person person = pengurusPermohonan.getPerson();

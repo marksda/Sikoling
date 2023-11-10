@@ -40,7 +40,7 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public PenanggungJawabDTO save(PenanggungJawabDTO d) throws IOException {
 		return new PenanggungJawabDTO(penanggungJawabService.save(d.toPenanggungJawab()));
     }
@@ -49,7 +49,7 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PenanggungJawabDTO update(PenanggungJawabDTO d) {		
 		return new PenanggungJawabDTO(penanggungJawabService.update(d.toPenanggungJawab()));
 	}
@@ -59,7 +59,7 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PenanggungJawabDTO updateId(@PathParam("idLama") String idLama, PenanggungJawabDTO d) throws IOException {
 		return new PenanggungJawabDTO(penanggungJawabService.updateId(idLama, d.toPenanggungJawab()));
 	}
@@ -68,7 +68,7 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PenanggungJawabDTO delete(PenanggungJawabDTO d) throws IOException {
 		return new PenanggungJawabDTO(penanggungJawabService.delete(d.toPenanggungJawab()));
 	}
@@ -77,7 +77,7 @@ public class PenanggungJawabController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<PenanggungJawabDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -94,7 +94,7 @@ public class PenanggungJawabController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

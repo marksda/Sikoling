@@ -39,7 +39,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public KategoriFlowLogDTO save(KategoriFlowLogDTO d) throws IOException {
 		return new KategoriFlowLogDTO(kategoriLogService.save(d.toKategoriFlowLog()));
     }
@@ -48,7 +48,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriFlowLogDTO update(KategoriFlowLogDTO d) {		
 		return new KategoriFlowLogDTO(kategoriLogService.update(d.toKategoriFlowLog()));
 	}
@@ -58,7 +58,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriFlowLogDTO updateId(@PathParam("idLama") String idLama, KategoriFlowLogDTO d) throws IOException {
 		return new KategoriFlowLogDTO(kategoriLogService.updateId(idLama, d.toKategoriFlowLog()));
 	}
@@ -67,7 +67,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriFlowLogDTO delete(KategoriFlowLogDTO d) throws IOException {
 		return new KategoriFlowLogDTO(kategoriLogService.delete(d.toKategoriFlowLog()));
 	}
@@ -76,7 +76,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KategoriFlowLogDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -93,7 +93,7 @@ public class KategoriFlowLogController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

@@ -39,7 +39,7 @@ public class KategoriDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriDokumenDTO save(KategoriDokumenDTO d) throws IOException {
 		return new KategoriDokumenDTO(kategoriDokumenService.save(d.toKategoriDokumen()));
 	}
@@ -48,7 +48,7 @@ public class KategoriDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriDokumenDTO update(KategoriDokumenDTO d) {
 		return new KategoriDokumenDTO(kategoriDokumenService.update(d.toKategoriDokumen()));
 	}
@@ -58,7 +58,7 @@ public class KategoriDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriDokumenDTO updateId(@PathParam("idLama") String idLama, KategoriDokumenDTO d) throws IOException {
 		return new KategoriDokumenDTO(kategoriDokumenService.updateId(idLama, d.toKategoriDokumen()));
 	}
@@ -68,7 +68,7 @@ public class KategoriDokumenController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriDokumenDTO delete(@PathParam("idKategoriDokumen") String idKategoriDokumen) throws IOException {
 		KategoriDokumenDTO d = new KategoriDokumenDTO();
 		d.setId(idKategoriDokumen);
@@ -80,7 +80,7 @@ public class KategoriDokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KategoriDokumenDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -97,7 +97,7 @@ public class KategoriDokumenController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

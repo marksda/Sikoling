@@ -113,15 +113,15 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     private void checkPermissions(List<Role> allowedRoles, Map<String, Object> claims) throws Exception {
     	Otoritas authority = authorityService.getByUserName(claims.get("email").toString());		
     	boolean grandPermission = false;
-    	String hakAkses = "ADMIN";
-    	if(authority.getHakAkses().getId().equals("09")) {
-    		hakAkses = "PEMRAKARSA";
-    	}
+//    	String hakAkses = "ADMIN";
+//    	if(authority.getHakAkses().getId().equals("09")) {
+//    		hakAkses = "PEMRAKARSA";
+//    	}
     	
     	Iterator<Role> iterator = allowedRoles.iterator();    	
     	while(iterator.hasNext()) {    		
     		Role role = iterator.next();
-    		if(hakAkses.equalsIgnoreCase(role.toString())) {
+    		if(authority.getHakAkses().getNama().equalsIgnoreCase(role.toString())) {
     			grandPermission = true;
     			break;
     		}    		

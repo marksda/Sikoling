@@ -40,7 +40,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public SkalaUsahaDTO save(SkalaUsahaDTO d) throws IOException {
 		return new SkalaUsahaDTO(skalaUsahaService.save(d.toSkalaUsaha()));
     }
@@ -49,7 +49,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public SkalaUsahaDTO update(SkalaUsahaDTO d) {		
 		return new SkalaUsahaDTO(skalaUsahaService.update(d.toSkalaUsaha()));
 	}
@@ -59,7 +59,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public SkalaUsahaDTO updateId(@PathParam("idLama") String idLama, SkalaUsahaDTO d) throws IOException {
 		return new SkalaUsahaDTO(skalaUsahaService.updateId(idLama, d.toSkalaUsaha()));
 	}
@@ -68,7 +68,7 @@ public class SkalaUsahaController {
 	@DELETE
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public SkalaUsahaDTO delete(@PathParam("idSkalaUsaha") String idSkalaUsaha) throws IOException {
 		SkalaUsahaDTO d = new SkalaUsahaDTO();
 		d.setId(idSkalaUsaha);
@@ -79,7 +79,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<SkalaUsahaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -96,7 +96,7 @@ public class SkalaUsahaController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

@@ -40,7 +40,7 @@ public class KategoriPermohonanSuratArahanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public KategoriPermohonanSuratArahanDTO save(KategoriPermohonanSuratArahanDTO d) throws IOException {
 		return new KategoriPermohonanSuratArahanDTO(kategoriPermohonanSuratArahanService.save(d.toKategoriPermohonanSuratArahan()));
     }
@@ -49,7 +49,7 @@ public class KategoriPermohonanSuratArahanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPermohonanSuratArahanDTO update(KategoriPermohonanSuratArahanDTO d) {		
 		return new KategoriPermohonanSuratArahanDTO(kategoriPermohonanSuratArahanService.update(d.toKategoriPermohonanSuratArahan()));
 	}
@@ -59,7 +59,7 @@ public class KategoriPermohonanSuratArahanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPermohonanSuratArahanDTO updateId(@PathParam("idLama") String idLama, KategoriPermohonanSuratArahanDTO d) throws IOException {
 		return new KategoriPermohonanSuratArahanDTO(kategoriPermohonanSuratArahanService.updateId(idLama, d.toKategoriPermohonanSuratArahan()));
 	}
@@ -68,7 +68,7 @@ public class KategoriPermohonanSuratArahanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriPermohonanSuratArahanDTO delete(KategoriPermohonanSuratArahanDTO d) throws IOException {
 		return new KategoriPermohonanSuratArahanDTO(kategoriPermohonanSuratArahanService.delete(d.toKategoriPermohonanSuratArahan()));
 	}
@@ -77,7 +77,7 @@ public class KategoriPermohonanSuratArahanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KategoriPermohonanSuratArahanDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -94,7 +94,7 @@ public class KategoriPermohonanSuratArahanController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

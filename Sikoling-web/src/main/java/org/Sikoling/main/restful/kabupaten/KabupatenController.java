@@ -40,7 +40,7 @@ public class KabupatenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KabupatenDTO save(KabupatenDTO d) throws IOException {
 		return new KabupatenDTO(kabupatenService.save(d.toKabupaten()));
 	}
@@ -49,7 +49,7 @@ public class KabupatenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KabupatenDTO update(KabupatenDTO d) {
 		return new KabupatenDTO(kabupatenService.update(d.toKabupaten()));
 	}
@@ -59,7 +59,7 @@ public class KabupatenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KabupatenDTO updateId(@PathParam("idLama") String idLama, KabupatenDTO d) throws IOException {
 		return new KabupatenDTO(kabupatenService.updateId(idLama, d.toKabupaten()));
 	}
@@ -69,7 +69,7 @@ public class KabupatenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KabupatenDTO delete(@PathParam("idKabupaten") String idKabupaten) throws IOException {
 		KabupatenDTO dt = new KabupatenDTO();
 		dt.setId(idKabupaten);
@@ -80,7 +80,7 @@ public class KabupatenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KabupatenDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -97,7 +97,7 @@ public class KabupatenController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

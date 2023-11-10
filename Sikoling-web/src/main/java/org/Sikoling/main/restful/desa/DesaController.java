@@ -39,7 +39,7 @@ public class DesaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DesaDTO save(DesaDTO d) throws IOException {
 		return new DesaDTO(desaService.save(d.toDesa()));
 	}
@@ -48,7 +48,7 @@ public class DesaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DesaDTO update(DesaDTO d) {
 		return new DesaDTO(desaService.update(d.toDesa()));
 	}
@@ -58,7 +58,7 @@ public class DesaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DesaDTO updateId(@PathParam("idLama") String idLama, DesaDTO d) throws IOException {
 		return new DesaDTO(desaService.updateId(idLama, d.toDesa()));
 	}
@@ -68,7 +68,7 @@ public class DesaController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public DesaDTO delete(@PathParam("idDesa") String idDesa) throws IOException {
 		DesaDTO dt = new DesaDTO();
 		dt.setId(idDesa);
@@ -79,7 +79,7 @@ public class DesaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<DesaDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -96,7 +96,7 @@ public class DesaController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

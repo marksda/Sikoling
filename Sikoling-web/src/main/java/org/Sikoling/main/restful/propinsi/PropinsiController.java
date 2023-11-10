@@ -40,7 +40,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public PropinsiDTO save(PropinsiDTO propinsiDTO) throws IOException {
         return new PropinsiDTO(propinsiService.save(propinsiDTO.toPropinsi()));
     }
@@ -49,7 +49,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
     public PropinsiDTO update(PropinsiDTO propinsi) {
         return new PropinsiDTO(propinsiService.update(propinsi.toPropinsi()));
     }
@@ -59,7 +59,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PropinsiDTO updateId(@PathParam("idLama") String idLama, PropinsiDTO d) throws IOException {
 		return new PropinsiDTO(propinsiService.updateId(idLama, d.toPropinsi()));
 	}
@@ -69,7 +69,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public PropinsiDTO delete(@PathParam("idPropinsi") String idPropinsi) throws IOException {
 		PropinsiDTO dt = new PropinsiDTO();
 		dt.setId(idPropinsi);		
@@ -80,7 +80,7 @@ public class PropinsiController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<PropinsiDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -97,7 +97,7 @@ public class PropinsiController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");

@@ -39,7 +39,7 @@ public class KategoriProdukController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriProdukDTO save(KategoriProdukDTO d) throws IOException {
 		return new KategoriProdukDTO(kategoriProdukService.save(d.toKategoriProduk()));
 	}
@@ -48,7 +48,7 @@ public class KategoriProdukController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriProdukDTO update(KategoriProdukDTO d) {
 		return new KategoriProdukDTO(kategoriProdukService.update(d.toKategoriProduk()));
 	}
@@ -58,7 +58,7 @@ public class KategoriProdukController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriProdukDTO updateId(@PathParam("idLama") String idLama, KategoriProdukDTO d) throws IOException {
 		return new KategoriProdukDTO(kategoriProdukService.updateId(idLama, d.toKategoriProduk()));
 	}
@@ -67,7 +67,7 @@ public class KategoriProdukController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public KategoriProdukDTO delete(KategoriProdukDTO d) throws IOException {
 		return new KategoriProdukDTO(kategoriProdukService.delete(d.toKategoriProduk()));
 	}
@@ -76,7 +76,7 @@ public class KategoriProdukController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public List<KategoriProdukDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -93,7 +93,7 @@ public class KategoriProdukController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMIN, Role.PEMRAKARSA})
+	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
