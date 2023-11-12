@@ -51,12 +51,21 @@ public class OtoritasController {
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public OtoritasDTO save(@FormDataParam("credentialData") String credentialData, @FormDataParam("otoritasData") String otoritasData) throws IOException {
+	public OtoritasDTO save(@Context SecurityContext securityContext,
+			@FormDataParam("credentialData") String credentialData, 
+			@FormDataParam("otoritasData") String otoritasData) throws IOException {
 		Jsonb jsonb = JsonbBuilder.create();
 		CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
 		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);		
 		LocalDate tanggalRegistrasi = LocalDate.now();
 		otoritasDTO.setTanggal(tanggalRegistrasi);
+		
+		Otoritas userOtoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
+		
+		if(!userOtoritas.getHakAkses().getNama().equals("Administrator")) {
+			otoritasDTO.setIsVerified(Boolean.FALSE);
+		}
+		
 		otoritasDTO = new OtoritasDTO(otoritasService.save(otoritasDTO.toOtoritas()));
 		
 		try {
@@ -83,33 +92,8 @@ public class OtoritasController {
 		OtoritasDTO otoritasDTO = jsonb.fromJson(otoritasData, OtoritasDTO.class);		
 		
 		Otoritas userOtoritas = otoritasService.getByUserName(securityContext.getUserPrincipal().getName());
-		switch (userOtoritas.getHakAkses().getNama()) {
-		case "Umum":
-			if((userOtoritas.isVerified() == true) || (userOtoritas.getId() != otoritasDTO.getId())) {
-				throw new IOException("Error Illegal access");
-			}
-			else {
-				Otoritas otoritas = otoritasService.update(otoritasDTO.toOtoritas());
-				try {
-					if(credentialData == null) {
-						UserDTO userDTO = new UserDTO();
-						userDTO.setPerson(otoritasDTO.getPerson());
-						userService.update(userDTO.toUser());
-					}
-					else {
-						CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
-						UserDTO userDTO = new UserDTO();
-						userDTO.setCredential(credentialDTO);
-						userDTO.setPerson(otoritasDTO.getPerson());
-						userService.update(userDTO.toUser());
-					}
-					return new OtoritasDTO(otoritas);
-				} catch (Exception e) {
-					otoritasService.delete(otoritasDTO.toOtoritas());
-					throw new IOException("Error registering to Server identification");
-				}				
-			}			
-		case "Administrator":
+		
+		if(userOtoritas.getHakAkses().getNama().equals("Administrator")) {
 			Otoritas otoritas = otoritasService.update(otoritasDTO.toOtoritas());
 			try {
 				if(credentialData == null) {
@@ -129,10 +113,26 @@ public class OtoritasController {
 				otoritasService.delete(otoritasDTO.toOtoritas());
 				throw new IOException("Error registering to Server identification");
 			}
-		default:
-			throw new IOException("Error illegal access");
-		}	
-		
+		}
+		else {	//hanya bisa merubah password
+			if(userOtoritas.getId() != otoritasDTO.getId()) {
+				throw new IOException("Error Illegal access");
+			}
+			else {
+				try {
+					if(credentialData != null) {
+						CredentialDTO credentialDTO = jsonb.fromJson(credentialData, CredentialDTO.class);
+						UserDTO userDTO = new UserDTO();
+						userDTO.setCredential(credentialDTO);
+						userDTO.setPerson(otoritasDTO.getPerson());
+						userService.update(userDTO.toUser());
+					}
+					return otoritasDTO;
+				} catch (Exception e) {
+					throw new IOException("Error registering to Server identification");
+				}				
+			}			
+		}		
 	}
 	
 	@Path("id/{idLama}")
@@ -169,9 +169,8 @@ public class OtoritasController {
 				.stream()
 				.map(t -> new OtoritasDTO(t))
 				.collect(Collectors.toList());
-	}
-	
-	
+	}	
+		
 	@Path("count")
 	@GET
     @Produces({MediaType.TEXT_PLAIN})

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 import org.Sikoling.ejb.abstraction.entity.Filter;
 import org.Sikoling.ejb.abstraction.entity.Person;
 import org.Sikoling.ejb.abstraction.entity.QueryParamFilters;
@@ -134,14 +136,25 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 
 	@Override
 	public User update(User t) {	
+		CredentialRepresentation credentialRepresentation = null;
 		RealmResource realmResource = keycloak.realm("dlhk");
-		List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(t.getCredential().getUserName(), false);
-//		RealmResource realmResource = keycloak.realm("dlhk");
-//		UserResource userResource = realmResource.users().get(t.getPerson().getNik());		
-//		UserRepresentation userRepresentation = dataConverter.convertUserToUserRepresentationKeyCloack(t);
-//		userResource.update(userRepresentation);	
+		Optional<UserRepresentation> user = realmResource.users().search(t.getCredential().getUserName()).stream()
+	            .filter(u -> u.getUsername().equals(t.getCredential().getUserName())).findFirst();
 		
-        return t;
+		if(user.isPresent()) {
+			UserRepresentation userRepresentation = user.get();
+			UserResource userResource = realmResource.users().get(userRepresentation.getId());
+			credentialRepresentation = new CredentialRepresentation();
+		 	credentialRepresentation.setTemporary(false);
+			credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+			credentialRepresentation.setValue(t.getCredential().getPassword());
+			userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));
+	        userResource.update(userRepresentation);
+			return t;
+		}
+		else {
+			return null;			
+		}
 	}
 		
 	@Override
@@ -350,41 +363,26 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 		return hasil;
 	}
 
-	private String cekModelAuthentication(String id, String nama) {
-//		Integer count = 0;
-//		
-//		count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
-//		.setParameter("nama", nama)
-//		.getResultList()
-//		.size();
-//		
-//		if(count > 0) {
-//			return "local";
-//		}
+	private String cekModelAuthentication(String id, String nama) {			
+		RealmResource realmResource = keycloak.realm("dlhk");		
+		Optional<UserRepresentation> user = realmResource.users().search(nama).stream()
+	            .filter(u -> u.getUsername().equals(nama)).findFirst();
 		
-//		RealmResource realmResource = keycloak.realm("dlhk");
-//		UserResource userResource = null;
-//		if(id == null) {
-//			List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(nama, false);
-//			if(!daftarUser.isEmpty()) {
-//				return "remote";
-//			}
-//		}
-//		else {
-//			userResource = realmResource.users().get(id);
-//			if(userResource != null) {
-//				return "remote";
-//			}
-//		}		
-			
-		RealmResource realmResource = keycloak.realm("dlhk");
-		List<UserRepresentation> daftarUser = realmResource.users().searchByEmail(nama, false);
-		
-		if(daftarUser.isEmpty()) {
-			return "none";
+		if(user.isPresent()) {
+			return "remote";
 		}
 		else {
-			return "remote";
+			int count = entityManager.createNamedQuery("UserData.findByQueryNama", UserData.class)
+			.setParameter("nama", nama)
+			.getResultList()
+			.size();
+			
+			if(count > 0) {
+				return "local";
+			}
+			else {
+				return "none";
+			}
 		}
 		
 	}
