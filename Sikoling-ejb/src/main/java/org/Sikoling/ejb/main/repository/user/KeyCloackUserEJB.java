@@ -74,5 +74,11 @@ public class KeyCloackUserEJB implements IKeyCloackUserRepository{
 	public SimpleResponse addRegistrasi(Credential userAuthenticator, Person person) {
 		return keyCloakUser.addRegistrasi(userAuthenticator, person);
 	}
+
+	
+	@Override
+	public void deleteSession(String sessionId) {
+		keyCloakUser.deleteSession(sessionId);		
+	}
 	
 }

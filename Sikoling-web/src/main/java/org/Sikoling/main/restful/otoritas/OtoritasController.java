@@ -147,7 +147,6 @@ public class OtoritasController {
 	
 	@Path("{idOtoritas}")
 	@DELETE
-	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMINISTRATOR})

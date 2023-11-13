@@ -70,5 +70,11 @@ public class KeyCloackUserService implements IKeyCloackUserService {
 		return userRepository.refreshToken(userName, refreshToken);
 	}
 
+	
+	@Override
+	public void deleteSession(String sessionId) {
+		userRepository.deleteSession(sessionId);		
+	}
+
 		
 }

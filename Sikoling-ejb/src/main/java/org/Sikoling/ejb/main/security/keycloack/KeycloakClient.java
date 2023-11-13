@@ -41,7 +41,7 @@ public class KeycloakClient implements ITokenKeycloak {
 
 	@Override
 	public String getAccessTokenString(String username, String password) {
-		return getAccessTokenString(newKeycloakBuilderWithPasswordCredentials(OAuth2Constants.PASSWORD, username, password).build());
+		return getAccessTokenString(newKeycloakBuilderWithPasswordCredentials(username, password, OAuth2Constants.PASSWORD).build());
 	}
 	
 	@Override

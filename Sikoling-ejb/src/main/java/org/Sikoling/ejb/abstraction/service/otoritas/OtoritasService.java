@@ -51,7 +51,6 @@ public class OtoritasService implements IOtoritasService {
 		return authorityRepository.getByUserName(userName);
 	}
 	
-
 	@Override
 	public Otoritas getById(String idOtoritas) {
 		return authorityRepository.getById(idOtoritas);

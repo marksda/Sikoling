@@ -10,9 +10,10 @@ public class Token {
     private final String accessToken;
     private final String refreshToken;
     private final Long expiresIn;
+    private final String sessionId;
 
     public Token(String userId, String userName, String userEmail, String accessToken, String refreshToken,
-			Long expiresIn, String hakAkses) {
+			Long expiresIn, String hakAkses, String sessionId) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
@@ -20,6 +21,7 @@ public class Token {
 		this.refreshToken = refreshToken;
 		this.expiresIn = expiresIn;
 		this.hakAkses = hakAkses;
+		this.sessionId = sessionId;
 	}
 
 	public String getHakAkses() {
@@ -49,6 +51,11 @@ public class Token {
 	public Long getExpiresIn() {
 		return expiresIn;
 	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+	
 
 	@Override
     public int hashCode() {

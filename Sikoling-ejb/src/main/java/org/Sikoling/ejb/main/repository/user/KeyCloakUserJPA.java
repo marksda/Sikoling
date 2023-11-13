@@ -2,6 +2,7 @@ package org.Sikoling.ejb.main.repository.user;
 
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,10 @@ import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
@@ -181,6 +186,12 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	}
 	
 	@Override
+	public void deleteSession(String sessionId) {
+		RealmResource realmResource = keycloak.realm("dlhk");
+		realmResource.deleteSession(sessionId);
+	}
+	
+	@Override
 	public Boolean cekUserName(String nama) {		
 		if(cekModelAuthentication(null, nama) == "none") {
 			return false;
@@ -193,20 +204,28 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	@Override
 	public ResponToken getToken(Credential t) throws IOException {
 		AccessTokenResponse accessTokenResponse = keycloakClient.getAccessTokenResponse(t.getUserName(), t.getPassword());
+		
 		if(accessTokenResponse != null) {
 			OtoritasData autorisasiData = entityManager.createNamedQuery("OtoritasData.findByUserName", OtoritasData.class)
 					.setParameter("userName", t.getUserName()).getSingleResult();
-			Token token = new Token(
-					autorisasiData.getId(), 
-					autorisasiData.getUserName(), 
-					autorisasiData.getUserName(), 
-					accessTokenResponse.getToken(), 
-					accessTokenResponse.getRefreshToken(), 
-					accessTokenResponse.getExpiresIn(), 
-					autorisasiData.getHakAkses().getNama()
-					);
-			
-			return new ResponToken("oke", token);
+			try {
+				SignedJWT signedJWT = SignedJWT.parse(accessTokenResponse.getToken());
+				JWTClaimsSet claim = signedJWT.getJWTClaimsSet();
+				Token token = new Token(
+						autorisasiData.getId(), 
+						autorisasiData.getUserName(), 
+						autorisasiData.getUserName(), 
+						accessTokenResponse.getToken(), 
+						accessTokenResponse.getRefreshToken(), 
+						accessTokenResponse.getExpiresIn(), 
+						autorisasiData.getHakAkses().getNama(),
+						claim.getClaim("sid").toString()
+						);
+				
+				return new ResponToken("oke", token);
+			} catch (ParseException e) {
+				throw new IOException("token error");
+			}
 		}
 		else {
 			throw new IOException("token error");
@@ -220,19 +239,26 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 					.setParameter("userName", userName).getSingleResult();
 			AccessTokenResponse accessTokenResponse = keycloakClient.getAccessTokenResponseRefreshToken(refreshToken);
 			
+			
 			if(accessTokenResponse != null) {
-				
-				Token token = new Token(
-						autorisasiData.getId(), 
-						autorisasiData.getUserName(), 
-						autorisasiData.getUserName(), 
-						accessTokenResponse.getToken(), 
-						accessTokenResponse.getRefreshToken(), 
-						accessTokenResponse.getExpiresIn(), 
-						autorisasiData.getHakAkses().getNama()
-						);
-				
-				return new ResponToken("oke", token);
+				try {
+					SignedJWT signedJWT = SignedJWT.parse(accessTokenResponse.getToken());
+					JWTClaimsSet claim = signedJWT.getJWTClaimsSet();
+					Token token = new Token(
+							autorisasiData.getId(), 
+							autorisasiData.getUserName(), 
+							autorisasiData.getUserName(), 
+							accessTokenResponse.getToken(), 
+							accessTokenResponse.getRefreshToken(), 
+							accessTokenResponse.getExpiresIn(), 
+							autorisasiData.getHakAkses().getNama(),
+							claim.getClaim("sid").toString()
+							);
+					
+					return new ResponToken("oke", token);
+				} catch (ParseException e) {
+					throw new IOException("token error");
+				}
 			}
 			else {
 				throw new IOException("refresh token tidak berlaku");

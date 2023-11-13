@@ -13,4 +13,5 @@ public interface IKeyCloackUserRepository extends IRepository<User> {
 	ResponToken getToken(Credential userAuthenticator) throws IOException;
 	ResponToken refreshToken(String userName, String refreshToken) throws IOException;
 	SimpleResponse addRegistrasi(Credential userAuthenticator, Person person);	
+	void deleteSession(String sessionId);
 }

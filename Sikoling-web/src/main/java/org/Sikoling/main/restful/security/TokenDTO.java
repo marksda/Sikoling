@@ -13,6 +13,7 @@ public class TokenDTO {
     private String accessToken;
     private String refreshToken;
     private Long expiresIn;
+    private String sessionId;
     
     public TokenDTO() {    	
     }
@@ -25,6 +26,7 @@ public class TokenDTO {
         this.refreshToken = token.getRefreshToken();
         this.expiresIn = token.getExpiresIn();
         this.hakAkses = token.getHakAkses();
+        this.sessionId = token.getSessionId();
     }
     
 	public String getUserId() {
@@ -82,6 +84,16 @@ public class TokenDTO {
 	public void setExpiresIn(Long expiresIn) {
 		this.expiresIn = expiresIn;
 	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+	
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	
 
 	@Override
     public int hashCode() {
