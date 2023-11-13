@@ -148,8 +148,9 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 		 	credentialRepresentation.setTemporary(false);
 			credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
 			credentialRepresentation.setValue(t.getCredential().getPassword());
-			userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));
-	        userResource.update(userRepresentation);
+			userResource.resetPassword(credentialRepresentation);
+//			userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));
+//	        userResource.update(userRepresentation);
 			return t;
 		}
 		else {
@@ -158,18 +159,25 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 	}
 		
 	@Override
-	public User updateSandi(String sandiLama, User t) throws IOException {
-		
+	public User updateSandi(User t) throws IOException {		
 		RealmResource realmResource = keycloak.realm("dlhk");
-		UserResource userResource = realmResource.users().get(t.getPerson().getNik());	
 		CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
-		credentialRepresentation = new CredentialRepresentation();
-	 	credentialRepresentation.setTemporary(false);
-		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
-		credentialRepresentation.setValue(t.getCredential().getPassword());
-		userResource.resetPassword(credentialRepresentation);
-
-		return t;
+		Optional<UserRepresentation> user = realmResource.users().search(t.getCredential().getUserName()).stream()
+	            .filter(u -> u.getUsername().equals(t.getCredential().getUserName())).findFirst();
+		
+		if(user.isPresent()) {
+			UserRepresentation userRepresentation = user.get();
+			UserResource userResource = realmResource.users().get(userRepresentation.getId());
+			credentialRepresentation = new CredentialRepresentation();
+		 	credentialRepresentation.setTemporary(false);
+			credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+			credentialRepresentation.setValue(t.getCredential().getPassword());
+			userResource.resetPassword(credentialRepresentation);
+			return t;
+		}
+		else {
+			return null;			
+		}
 	}
 	
 	@Override
@@ -389,7 +397,18 @@ public class KeyCloakUserJPA implements IKeyCloackUserRepository {
 
 	@Override
 	public User delete(User t) throws IOException {
-		return null;
+		RealmResource realmResource = keycloak.realm("dlhk");
+		Optional<UserRepresentation> user = realmResource.users().search(t.getCredential().getUserName()).stream()
+	            .filter(u -> u.getUsername().equals(t.getCredential().getUserName())).findFirst();
+		
+		if(user.isPresent()) {
+			UserRepresentation userRepresentation = user.get();
+			realmResource.users().delete(userRepresentation.getId());
+			return t;
+		}
+		else {
+			throw new IOException("Error: user tidak ditemukan di server identification");
+		}		
 	}
 	
 	@Override

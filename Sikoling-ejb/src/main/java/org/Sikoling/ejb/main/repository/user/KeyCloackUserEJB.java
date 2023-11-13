@@ -51,8 +51,8 @@ public class KeyCloackUserEJB implements IKeyCloackUserRepository{
 	}
 
 	@Override
-	public User updateSandi(String sandiLama, User t) throws IOException {
-		return keyCloakUser.updateSandi(sandiLama, t);
+	public User updateSandi(User t) throws IOException {
+		return keyCloakUser.updateSandi(t);
 	}
 
 	@Override

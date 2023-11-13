@@ -13,6 +13,7 @@ public interface IOtoritasService {
 	Otoritas updateId(String idLama, Otoritas t) throws IOException;
 	Otoritas delete(Otoritas t) throws IOException;
 	Otoritas getByUserName(String userName);
+	Otoritas getById(String idOtoritas);
 	List<Otoritas> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);	
 }

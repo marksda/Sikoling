@@ -14,7 +14,7 @@ import org.Sikoling.ejb.abstraction.entity.SimpleResponse;
 public interface IKeyCloackUserService {
 	User save(User t) throws IOException;
 	User update(User t);
-	User updateSandi(String idLama, User t) throws IOException;
+	User updateSandi(User t) throws IOException;
 	User delete(User t) throws IOException;
 	List<User> getDaftarData(QueryParamFilters queryParamFilters);
 	Long getJumlahData(List<Filter> queryParamFilters);

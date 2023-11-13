@@ -89,6 +89,12 @@ public class OtoritasRepositoryJPA implements IAutorityRepository {
 	}
 	
 	@Override
+	public Otoritas getById(String idOtoritas) {
+		OtoritasData autorisasiData = entityManager.find(OtoritasData.class, idOtoritas);
+		return autorisasiData != null ? dataConverter.convertAutorisasiDataToAutority(autorisasiData):null;				
+	}
+	
+	@Override
 	public List<Otoritas> getDaftarData(QueryParamFilters queryParamFilters) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<OtoritasData> cq = cb.createQuery(OtoritasData.class);

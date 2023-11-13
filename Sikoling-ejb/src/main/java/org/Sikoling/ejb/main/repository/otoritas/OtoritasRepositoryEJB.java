@@ -55,5 +55,11 @@ public class OtoritasRepositoryEJB implements IAutorityRepository {
 	public Otoritas getByUserName(String userName) {
 		return autorisasiRepository.getByUserName(userName);
 	}
+
+	
+	@Override
+	public Otoritas getById(String idOtoritas) {
+		return autorisasiRepository.getById(idOtoritas);
+	}
 	
 }

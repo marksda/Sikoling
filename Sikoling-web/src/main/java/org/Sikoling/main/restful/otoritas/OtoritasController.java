@@ -125,7 +125,7 @@ public class OtoritasController {
 						UserDTO userDTO = new UserDTO();
 						userDTO.setCredential(credentialDTO);
 						userDTO.setPerson(otoritasDTO.getPerson());
-						userService.update(userDTO.toUser());
+						userService.updateSandi(userDTO.toUser());
 					}
 					return otoritasDTO;
 				} catch (Exception e) {
@@ -145,13 +145,24 @@ public class OtoritasController {
 		return new OtoritasDTO(otoritasService.updateId(idLama, d.toOtoritas()));
 	}
 	
+	@Path("{idOtoritas}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
 	@RequiredRole({Role.ADMINISTRATOR})
-	public OtoritasDTO delete(OtoritasDTO d) throws IOException {
-		return new OtoritasDTO(otoritasService.delete(d.toOtoritas()));
+	public OtoritasDTO delete(@PathParam("idOtoritas") String idOtoritas) throws IOException {
+		OtoritasDTO d = new OtoritasDTO(otoritasService.getById(idOtoritas));		
+		otoritasService.delete(d.toOtoritas());
+		
+		CredentialDTO credentialDTO = new CredentialDTO();
+		credentialDTO.setUserName(d.getUserName());
+		UserDTO userDTO = new UserDTO();
+		userDTO.setCredential(credentialDTO);
+		userDTO.setPerson(d.getPerson());
+		userService.delete(userDTO.toUser());
+		
+		return d;
 	}
 		
 	@GET

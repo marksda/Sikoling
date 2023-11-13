@@ -31,8 +31,8 @@ public class KeyCloackUserService implements IKeyCloackUserService {
 	}
 
 	@Override
-	public User updateSandi(String idLama, User t) throws IOException {
-		return userRepository.updateSandi(idLama, t);
+	public User updateSandi(User t) throws IOException {
+		return userRepository.updateSandi(t);
 	}	
 
 	@Override
