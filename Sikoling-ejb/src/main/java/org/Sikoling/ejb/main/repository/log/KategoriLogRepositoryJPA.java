@@ -12,7 +12,9 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.log.KategoriFlowLog;
 import org.Sikoling.ejb.abstraction.repository.IKategoriLogRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
+
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,14 +53,21 @@ public class KategoriLogRepositoryJPA implements IKategoriLogRepository {
 	}
 
 	@Override
-	public KategoriFlowLog updateId(String idLama, KategoriFlowLog t) throws IOException {
-		KategoriLogData dataLama = entityManager.find(KategoriLogData.class, idLama);
-		if(dataLama != null) {
-			KategoriLogData skalaUsahaData = dataConverter.convertKategoriFlowLogToKategoriFlowLogData(t);
-			entityManager.remove(dataLama);	
-			KategoriLogData dataTermerge = entityManager.merge(skalaUsahaData);
-			entityManager.flush();
-			return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(dataTermerge);
+	public KategoriFlowLog updateId(String idLama, KategoriFlowLog t) throws IOException {		
+		Query query = entityManager.createNamedQuery("KategoriLogData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				KategoriLogData kategoriLogData = dataConverter.convertKategoriFlowLogToKategoriFlowLogData(t);
+				KategoriLogData dataTermerge = entityManager.merge(kategoriLogData);
+				entityManager.flush();
+				return dataConverter.convertKategoriFlowLogDataToKategoriFlowLog(dataTermerge);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}
+			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
@@ -77,7 +86,6 @@ public class KategoriLogRepositoryJPA implements IKategoriLogRepository {
 			throw new IOException("Data tidak ditemukan");
 		}
 	}
-
 
 	@Override
 	public List<KategoriFlowLog> getDaftarData(QueryParamFilters queryParamFilters) {

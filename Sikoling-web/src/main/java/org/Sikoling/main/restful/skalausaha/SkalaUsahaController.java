@@ -40,7 +40,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public SkalaUsahaDTO save(SkalaUsahaDTO d) throws IOException {
 		return new SkalaUsahaDTO(skalaUsahaService.save(d.toSkalaUsaha()));
     }
@@ -49,7 +49,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public SkalaUsahaDTO update(SkalaUsahaDTO d) {		
 		return new SkalaUsahaDTO(skalaUsahaService.update(d.toSkalaUsaha()));
 	}
@@ -59,7 +59,7 @@ public class SkalaUsahaController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public SkalaUsahaDTO updateId(@PathParam("idLama") String idLama, SkalaUsahaDTO d) throws IOException {
 		return new SkalaUsahaDTO(skalaUsahaService.updateId(idLama, d.toSkalaUsaha()));
 	}

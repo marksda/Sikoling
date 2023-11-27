@@ -39,7 +39,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public KategoriFlowLogDTO save(KategoriFlowLogDTO d) throws IOException {
 		return new KategoriFlowLogDTO(kategoriLogService.save(d.toKategoriFlowLog()));
     }
@@ -48,7 +48,7 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public KategoriFlowLogDTO update(KategoriFlowLogDTO d) {		
 		return new KategoriFlowLogDTO(kategoriLogService.update(d.toKategoriFlowLog()));
 	}
@@ -58,17 +58,20 @@ public class KategoriFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public KategoriFlowLogDTO updateId(@PathParam("idLama") String idLama, KategoriFlowLogDTO d) throws IOException {
 		return new KategoriFlowLogDTO(kategoriLogService.updateId(idLama, d.toKategoriFlowLog()));
 	}
 	
+	@Path("{idKategoriFlowLog}")
 	@DELETE
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public KategoriFlowLogDTO delete(KategoriFlowLogDTO d) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR})
+	public KategoriFlowLogDTO delete(@PathParam("idKategoriFlowLog") String idKategoriFlowLog) throws IOException {
+		KategoriFlowLogDTO d = new KategoriFlowLogDTO();
+		d.setId(idKategoriFlowLog);
+		
 		return new KategoriFlowLogDTO(kategoriLogService.delete(d.toKategoriFlowLog()));
 	}
 	

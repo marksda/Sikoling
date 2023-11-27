@@ -4,10 +4,15 @@ import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="master.tbl_kategori_log")
+@NamedQueries({
+	@NamedQuery(name="KategoriLogData.updateId", query="UPDATE KategoriLogData SET id = :idBaru WHERE id = :idLama")
+})
 public class KategoriLogData implements Serializable {
 
 	private static final long serialVersionUID = -6741872398673596100L;

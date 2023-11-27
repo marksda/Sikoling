@@ -1549,7 +1549,8 @@ public class DataConverter {
 		
 		if(t != null) {			
 			kategoriLogData = new KategoriLogData();
-			kategoriLogData.setId(t.getId());
+			String id = t.getId();
+			kategoriLogData.setId(id != null ? id:getGenerateIdKategoriFlowLog());
 			kategoriLogData.setNama(t.getNama());
 		}
 		
@@ -1853,6 +1854,22 @@ public class DataConverter {
 		String hasil;
 		
 		Query q = entityManager.createQuery("SELECT MAX(sfd.id) FROM StatusFlowLogData sfd");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = Long.toString(idBaru);
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "0";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdKategoriFlowLog() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(kfd.id) FROM KategoriLogData kfd");
 		
 		try {
 			hasil = (String) q.getSingleResult();
