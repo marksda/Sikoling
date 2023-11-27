@@ -5,10 +5,15 @@ import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="master.tbl_status_flow_jenis_log")
+@NamedQueries({
+	@NamedQuery(name="StatusFlowLogData.updateId", query="UPDATE StatusFlowLogData SET id = :idBaru WHERE id = :idLama")
+})
 public class StatusFlowLogData implements Serializable {
 
 	private static final long serialVersionUID = -2041190065241750462L;

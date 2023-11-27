@@ -1473,7 +1473,8 @@ public class DataConverter {
 		
 		if(t != null) {
 			statusFlowData = new StatusFlowLogData();
-			statusFlowData.setId(t.getId());
+			String id = t.getId();
+			statusFlowData.setId(id != null ? id:getGenerateIdStatusFlowLog());
 			statusFlowData.setKeterangan(t.getNama());
 		}
 		
@@ -1847,6 +1848,22 @@ public class DataConverter {
 			return hasil.concat(Integer.toString(tahun));
 		}		
 	}
+	
+	private String getGenerateIdStatusFlowLog() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(sfd.id) FROM StatusFlowLogData sfd");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = Long.toString(idBaru);
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "0";			
+			return hasil;
+		}		
+	}		
 	
 	private String getGenerateIdPegawaiPerusahaan(String idRegisterPerusahaan, String idJabatan, String nik) {
 		return idRegisterPerusahaan.concat(idJabatan).concat(nik);

@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.log.StatusFlowLog;
 import org.Sikoling.ejb.abstraction.repository.IStatusFlowLogRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -47,19 +48,25 @@ public class StatusFlowLogRepositoryJPA implements IStatusFlowLogRepository {
 	public StatusFlowLog update(StatusFlowLog t) {
 		StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
 		statusFlowLogData = entityManager.merge(statusFlowLogData);
-		
+		entityManager.flush();
 		return dataConverter.convertStatusFlowLogDataToStatusFlowLog(statusFlowLogData);
 	}
 
 	@Override
-	public StatusFlowLog updateId(String idLama, StatusFlowLog t) throws IOException {
-		StatusFlowLogData dataLama = entityManager.find(StatusFlowLogData.class, idLama);
-		if(dataLama != null) {
-			StatusFlowLogData skalaUsahaData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
-			entityManager.remove(dataLama);	
-			StatusFlowLogData dataTermerge = entityManager.merge(skalaUsahaData);
-			entityManager.flush();
-			return dataConverter.convertStatusFlowLogDataToStatusFlowLog(dataTermerge);
+	public StatusFlowLog updateId(String idLama, StatusFlowLog t) throws IOException {		
+		Query query = entityManager.createNamedQuery("StatusFlowLogData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				StatusFlowLogData statusFlowLogData = dataConverter.convertStatusFlowLogToStatusFlowData(t);
+				StatusFlowLogData dataTermerge = entityManager.merge(statusFlowLogData);
+				entityManager.flush();
+				return dataConverter.convertStatusFlowLogDataToStatusFlowLog(dataTermerge);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

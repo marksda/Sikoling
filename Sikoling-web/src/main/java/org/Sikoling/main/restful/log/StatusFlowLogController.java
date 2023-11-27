@@ -9,7 +9,6 @@ import org.Sikoling.main.restful.queryparams.QueryParamFiltersDTO;
 import org.Sikoling.main.restful.security.RequiredAuthorization;
 import org.Sikoling.main.restful.security.RequiredRole;
 import org.Sikoling.main.restful.security.Role;
-
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -40,7 +39,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public StatusFlowLogDTO save(StatusFlowLogDTO d) throws IOException {
 		return new StatusFlowLogDTO(statusFlowLogServices.save(d.toStatusFlowLog()));
     }
@@ -49,7 +48,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public StatusFlowLogDTO update(StatusFlowLogDTO d) {		
 		return new StatusFlowLogDTO(statusFlowLogServices.update(d.toStatusFlowLog()));
 	}
@@ -59,17 +58,21 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public StatusFlowLogDTO updateId(@PathParam("idLama") String idLama, StatusFlowLogDTO d) throws IOException {
 		return new StatusFlowLogDTO(statusFlowLogServices.updateId(idLama, d.toStatusFlowLog()));
 	}
 	
+	@Path("{idStatusFlowLog}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public StatusFlowLogDTO delete(StatusFlowLogDTO d) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR})
+	public StatusFlowLogDTO delete(@PathParam("idStatusFlowLog") String idStatusFlowLog) throws IOException {
+		StatusFlowLogDTO d = new StatusFlowLogDTO();
+		d.setId(idStatusFlowLog);
+		
 		return new StatusFlowLogDTO(statusFlowLogServices.delete(d.toStatusFlowLog()));
 	}
 	
@@ -77,7 +80,7 @@ public class StatusFlowLogController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public List<StatusFlowLogDTO> getDaftarData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
@@ -94,7 +97,7 @@ public class StatusFlowLogController {
 	@GET
     @Produces({MediaType.TEXT_PLAIN})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public Long getJumlahData(@Context UriInfo info) {
 		MultivaluedMap<String, String> map = info.getQueryParameters();
 		String queryParamsStr = map.getFirst("filters");
