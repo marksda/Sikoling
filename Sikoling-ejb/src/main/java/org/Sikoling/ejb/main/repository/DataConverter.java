@@ -1073,8 +1073,9 @@ public class DataConverter {
 		SkalaUsahaData skalaUsahaData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			skalaUsahaData = new SkalaUsahaData();
-			skalaUsahaData.setId(t.getId());
+			skalaUsahaData.setId(id != null ? id : getGenerateIdSkalaUsaha());
 			skalaUsahaData.setNama(t.getNama());
 			skalaUsahaData.setSingkatan(t.getSingkatan());
 		}
@@ -1935,6 +1936,21 @@ public class DataConverter {
 		String hasil;		
 		Query q = entityManager.createQuery("SELECT MAX(a.id) "
 				+ "FROM HakAksesData a ");
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 2, '0');
+			return hasil;
+		} catch (Exception e) {			
+			hasil = "01";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdSkalaUsaha() {
+		String hasil;		
+		Query q = entityManager.createQuery("SELECT MAX(a.id) "
+				+ "FROM SkalaUsahaData a ");
 		try {
 			hasil = (String) q.getSingleResult();
 			Long idBaru = Long.valueOf(hasil)  + 1;
