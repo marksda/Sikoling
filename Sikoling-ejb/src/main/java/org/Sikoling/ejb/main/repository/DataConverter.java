@@ -1087,8 +1087,9 @@ public class DataConverter {
 		KategoriPelakuUsahaData kategoriPelakuUsahaData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			kategoriPelakuUsahaData = new KategoriPelakuUsahaData();
-			kategoriPelakuUsahaData.setId(t.getId());
+			kategoriPelakuUsahaData.setId(id != null ? id : getGenerateIdKategoriPelakuUsaha(t.getSkalaUsaha().getId()));
 			kategoriPelakuUsahaData.setNama(t.getNama());
 			SkalaUsahaData skalaUsahaData = new SkalaUsahaData();
 			skalaUsahaData.setId(t.getSkalaUsaha().getId());			
@@ -1974,6 +1975,25 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {	
 			hasil = "0";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdKategoriPelakuUsaha(String idSkalaUsaha) {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM KategoriPelakuUsahaData m "
+				+ "WHERE m.id like '" + idSkalaUsaha + "%'");
+		
+//		q.setParameter("id", idSkalaUsaha + "%");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 4, '0');
+			return hasil;
+		} catch (Exception e) {	
+			hasil = idSkalaUsaha + "01";			
 			return hasil;
 		}		
 	}

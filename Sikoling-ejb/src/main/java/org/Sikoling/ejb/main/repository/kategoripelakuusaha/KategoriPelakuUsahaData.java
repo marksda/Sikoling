@@ -26,7 +26,7 @@ public class KategoriPelakuUsahaData implements Serializable {
 	
 	private String nama;
 	
-	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="skala_usaha", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private SkalaUsahaData skalaUsaha;
 
