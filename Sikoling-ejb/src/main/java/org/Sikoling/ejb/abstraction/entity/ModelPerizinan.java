@@ -11,7 +11,6 @@ public class ModelPerizinan implements Serializable {
 	private final String singkatan;
 	
 	public ModelPerizinan(String id, String nama, String singkatan) {
-		super();
 		this.id = id;
 		this.nama = nama;
 		this.singkatan = singkatan;

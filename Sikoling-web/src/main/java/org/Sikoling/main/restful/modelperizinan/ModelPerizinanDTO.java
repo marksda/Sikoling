@@ -15,11 +15,11 @@ public class ModelPerizinanDTO implements Serializable {
 	public ModelPerizinanDTO() {
 	}
 	
-	public ModelPerizinanDTO(ModelPerizinan modelPerizinan) {
-		if(modelPerizinan != null) {
-			this.id = modelPerizinan.getId();
-			this.nama = modelPerizinan.getNama();
-			this.singkatan = modelPerizinan.getSingkatan();
+	public ModelPerizinanDTO(ModelPerizinan t) {
+		if(t != null) {
+			this.id = t.getId();
+			this.nama = t.getNama();
+			this.singkatan = t.getSingkatan();
 		}		
 	}
 

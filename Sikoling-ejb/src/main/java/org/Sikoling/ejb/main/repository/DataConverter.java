@@ -1059,8 +1059,9 @@ public class DataConverter {
 		ModelPerizinanData modelPerizinanData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			modelPerizinanData = new ModelPerizinanData();
-			modelPerizinanData.setId(t.getId());
+			modelPerizinanData.setId(id != null ? id : getGenerateIdModelPerizinan());
 			modelPerizinanData.setNama(t.getNama());
 			modelPerizinanData.setSingkatan(t.getSingkatan());
 		}
@@ -1941,6 +1942,22 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {			
 			hasil = "01";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdModelPerizinan() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM ModelPerizinanData m");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = Long.toString(idBaru);
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "0";			
 			return hasil;
 		}		
 	}

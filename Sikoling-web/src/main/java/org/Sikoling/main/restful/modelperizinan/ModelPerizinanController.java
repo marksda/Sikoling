@@ -39,7 +39,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public ModelPerizinanDTO save(ModelPerizinanDTO d) throws IOException {
 		return new ModelPerizinanDTO(modelPerizinanService.save(d.toModelPerizinan()));
     }
@@ -48,7 +48,7 @@ public class ModelPerizinanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public ModelPerizinanDTO update(ModelPerizinanDTO d) {		
 		return new ModelPerizinanDTO(modelPerizinanService.update(d.toModelPerizinan()));
 	}
@@ -65,10 +65,9 @@ public class ModelPerizinanController {
 	
 	@Path("{idModelPerizinan}")
 	@DELETE
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public ModelPerizinanDTO delete(@PathParam("idModelPerizinan") String idModelPerizinan) throws IOException {
 		ModelPerizinanDTO d = new ModelPerizinanDTO();
 		d.setId(idModelPerizinan);

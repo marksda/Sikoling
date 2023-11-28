@@ -33,7 +33,7 @@ public class ModelPerizinanService implements IModelPerizinanService {
 
 	@Override
 	public ModelPerizinan delete(ModelPerizinan t) throws IOException {
-		return null;
+		return modelPerizinanRepository.delete(t);
 	}
 
 	@Override
