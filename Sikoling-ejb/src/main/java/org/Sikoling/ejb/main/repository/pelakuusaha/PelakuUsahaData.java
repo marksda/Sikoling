@@ -28,7 +28,7 @@ public class PelakuUsahaData implements Serializable {
 	
 	private String singkatan;
 	
-	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name="kategori_pelaku_usaha", referencedColumnName = "id", insertable = true, updatable = true)
 	@ManyToOne(optional = false)
 	private KategoriPelakuUsahaData kategoriPelakuUsaha;
 
