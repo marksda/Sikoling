@@ -39,7 +39,7 @@ public class JabatanController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public JabatanDTO save(JabatanDTO jabatanDTO) throws IOException {
 		return new JabatanDTO(jabatanService.save(jabatanDTO.toJabatan()));
 	}
@@ -48,7 +48,7 @@ public class JabatanController {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public JabatanDTO update(JabatanDTO jabatanDTO) {
 		return new JabatanDTO(jabatanService.update(jabatanDTO.toJabatan()));
 	}
@@ -58,7 +58,7 @@ public class JabatanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public JabatanDTO updateId(@PathParam("idLama") String idLama, JabatanDTO d) throws IOException {
 		return new JabatanDTO(jabatanService.updateId(idLama, d.toJabatan()));
 	}

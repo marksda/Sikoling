@@ -933,8 +933,9 @@ public class DataConverter {
 		JabatanData jabatanData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			jabatanData = new JabatanData();
-			jabatanData.setId(t.getId());
+			jabatanData.setId(id != null ? id : getGenerateIdJabatan());
 			jabatanData.setNama(t.getNama());
 		}
 		
@@ -2010,6 +2011,22 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {	
 			hasil = idKategoriPelakuUsaha + "01";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdJabatan() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM JabatanData m");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 3, '0');
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "001";			
 			return hasil;
 		}		
 	}
