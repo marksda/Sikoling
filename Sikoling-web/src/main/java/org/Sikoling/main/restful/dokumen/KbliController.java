@@ -39,7 +39,7 @@ public class KbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public KbliDTO save(KbliDTO t) throws IOException {
 		return new KbliDTO(kbliService.save(t.toKbli()));
 	}
@@ -48,27 +48,30 @@ public class KbliController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public KbliDTO update(KbliDTO t) {
 		return new KbliDTO(kbliService.update(t.toKbli()));
 	}
 	
-	@Path("id/{idLama}")
+	@Path("id/{kodeLama}")
 	@PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public KbliDTO updatId(@PathParam("idLama") String idLama, KbliDTO d) throws IOException {
-		return new KbliDTO(kbliService.updateId(idLama, d.toKbli()));
+	@RequiredRole({Role.ADMINISTRATOR})
+	public KbliDTO updatId(@PathParam("kodeLama") String kodeLama, KbliDTO d) throws IOException {
+		return new KbliDTO(kbliService.updateId(kodeLama, d.toKbli()));
 	}
 	
+	@Path("{kodeKbli}")
 	@DELETE
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public KbliDTO delete(KbliDTO d) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR})
+	public KbliDTO delete(@PathParam("kodeKbli") String kodeKbli) throws IOException {
+		KbliDTO d = new KbliDTO();
+		d.setKode(kodeKbli);
 		return new KbliDTO(kbliService.delete(d.toKbli()));
 	}
 	

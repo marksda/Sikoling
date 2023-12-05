@@ -13,6 +13,7 @@ import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -49,19 +50,25 @@ public class KbliRepositoryJPA implements IKbliRepository {
 	}
 
 	@Override
-	public Kbli updateId(String idLama, Kbli t) throws IOException {
-		KbliData dataLama = entityManager.find(KbliData.class, t.getKode());
-		
-		if(dataLama != null) {
-			KbliData kbli2020Data = dataConverter.convertKbliToKbliData(t);
-			entityManager.remove(dataLama);	
-			KbliData dataTermerge = entityManager.merge(kbli2020Data);
-			entityManager.flush();
-			return dataConverter.convertKbliDataToKbli(dataTermerge);
+	public Kbli updateId(String idLama, Kbli t) throws IOException {		
+		Query query = entityManager.createNamedQuery("KbliData.updateId");
+		query.setParameter("idBaru", t.getKode());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				KbliData kbliData = dataConverter.convertKbliToKbliData(t);
+				KbliData dataTermerge = entityManager.merge(kbliData);
+				entityManager.flush();
+				return dataConverter.convertKbliDataToKbli(dataTermerge);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}
+			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");
-		}		
+		}
 	}
 		
 	@Override
@@ -200,4 +207,5 @@ public class KbliRepositoryJPA implements IKbliRepository {
 		
 		return entityManager.createQuery(cq).getSingleResult();
 	}
+	
 }
