@@ -39,7 +39,7 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public StatusPengurusPermohonanDTO save(StatusPengurusPermohonanDTO d) throws IOException {
         return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.save(d.toStatusPengurusPermohonan()));
     }
@@ -48,17 +48,20 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public StatusPengurusPermohonanDTO update(StatusPengurusPermohonanDTO d) {		
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.update(d.toStatusPengurusPermohonan()));
 	}
 	
+	@Path("{idStatusPengurusPermohonan}")
 	@DELETE
-	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public StatusPengurusPermohonanDTO delete(StatusPengurusPermohonanDTO d) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR})
+	public StatusPengurusPermohonanDTO delete(@PathParam("idStatusPengurusPermohonan") String idStatusPengurusPermohonan) throws IOException {
+		StatusPengurusPermohonanDTO d = new StatusPengurusPermohonanDTO();
+		d.setId(idStatusPengurusPermohonan);
+		
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.delete(d.toStatusPengurusPermohonan()));
 	}
 
@@ -67,7 +70,7 @@ public class StatusPengurusPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public StatusPengurusPermohonanDTO updateById(@PathParam("idLama") String idLama, StatusPengurusPermohonanDTO d) throws IOException {
 		return new StatusPengurusPermohonanDTO(statusPengurusPermohonanService.updateId(idLama, d.toStatusPengurusPermohonan()));
 	}	

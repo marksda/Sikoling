@@ -40,7 +40,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public KategoriPermohonanDTO save(KategoriPermohonanDTO d) throws IOException {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.save(d.toKategoriPermohonan()));
     }
@@ -49,7 +49,7 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public KategoriPermohonanDTO update(KategoriPermohonanDTO d) {		
 		return new KategoriPermohonanDTO(kategoriPermohonanService.update(d.toKategoriPermohonan()));
 	}
@@ -59,17 +59,20 @@ public class KategoriPermohonanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public KategoriPermohonanDTO updateId(@PathParam("idLama") String idLama, KategoriPermohonanDTO d) throws IOException {
 		return new KategoriPermohonanDTO(kategoriPermohonanService.updateId(idLama, d.toKategoriPermohonan()));
 	}
 	
+	@Path("{idKategoriPermohonan}")
 	@DELETE
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public KategoriPermohonanDTO delete(KategoriPermohonanDTO d) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR})
+	public KategoriPermohonanDTO delete(@PathParam("idKategoriPermohonan") String idKategoriPermohonan) throws IOException {
+		KategoriPermohonanDTO d = new KategoriPermohonanDTO();
+		d.setId(idKategoriPermohonan);
+		
 		return new KategoriPermohonanDTO(kategoriPermohonanService.delete(d.toKategoriPermohonan()));
 	}
 	

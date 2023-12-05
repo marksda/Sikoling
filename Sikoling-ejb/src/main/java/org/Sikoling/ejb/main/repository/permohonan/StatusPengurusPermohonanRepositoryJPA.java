@@ -12,8 +12,8 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.permohonan.StatuswaliPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IStatusPengurusPermohonanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,14 +51,21 @@ public class StatusPengurusPermohonanRepositoryJPA implements IStatusPengurusPer
 	}
 
 	@Override
-	public StatuswaliPermohonan updateId(String idLama, StatuswaliPermohonan t) throws IOException {
-		StatusPengurusPermohonanData dataLama = entityManager.find(StatusPengurusPermohonanData.class, idLama);
-		if(dataLama != null) {
-			StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
-			entityManager.remove(dataLama);	
-			StatusPengurusPermohonanData dataTermerge = entityManager.merge(statusPengurusPermohonanData);
-			entityManager.flush();
-			return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(dataTermerge);
+	public StatuswaliPermohonan updateId(String idLama, StatuswaliPermohonan t) throws IOException {		
+		Query query = entityManager.createNamedQuery("StatusPengurusPermohonanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				StatusPengurusPermohonanData statusPengurusPermohonanData = dataConverter.convertStatusPengurusPermohonanToStatusPengurusPermohonanData(t);
+				StatusPengurusPermohonanData dataTermerge = entityManager.merge(statusPengurusPermohonanData);
+				entityManager.flush();
+				return dataConverter.convertStatusPengurusPermohonanDataToStatusPengurusPermohonan(dataTermerge);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}
+			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

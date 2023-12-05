@@ -12,8 +12,8 @@ import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.entity.permohonan.KategoriPermohonan;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -52,14 +52,20 @@ public class KategoriPermohonanRepositoryJPA implements IKategoriPermohonanRepos
 	}
 
 	@Override
-	public KategoriPermohonan updateId(String idLama, KategoriPermohonan t) throws IOException {
-		KategoriPermohonanData dataLama = entityManager.find(KategoriPermohonanData.class, idLama);
-		if(dataLama != null) {
-			KategoriPermohonanData kategoriPermohonanData = dataConverter.convertKategoriPermohonanToKategoriPermohonanData(t);
-			entityManager.remove(dataLama);	
-			KategoriPermohonanData dataTermerge = entityManager.merge(kategoriPermohonanData);
-			entityManager.flush();
-			return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(dataTermerge);
+	public KategoriPermohonan updateId(String idLama, KategoriPermohonan t) throws IOException {		
+		Query query = entityManager.createNamedQuery("KategoriPermohonanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				KategoriPermohonanData kategoriPermohonanData = dataConverter.convertKategoriPermohonanToKategoriPermohonanData(t);
+				KategoriPermohonanData dataTermerge = entityManager.merge(kategoriPermohonanData);
+				entityManager.flush();
+				return dataConverter.convertKategoriPermohonanDataToKategoriPermohonan(dataTermerge);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

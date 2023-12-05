@@ -1428,8 +1428,9 @@ public class DataConverter {
 		KategoriPermohonanData kategoriPermohonanData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			kategoriPermohonanData = new KategoriPermohonanData();
-			kategoriPermohonanData.setId(t.getId());
+			kategoriPermohonanData.setId(id != null ? id : getGenerateIdKategoriPermohonanData());
 			kategoriPermohonanData.setNama(t.getNama());
 		}
 		
@@ -1440,8 +1441,9 @@ public class DataConverter {
 		StatusPengurusPermohonanData statusPengurusPermohonanData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			statusPengurusPermohonanData = new StatusPengurusPermohonanData();
-			statusPengurusPermohonanData.setId(t.getId());
+			statusPengurusPermohonanData.setId(id != null ? id : getGenerateIdStatusWaliPermohonan());
 			statusPengurusPermohonanData.setNama(t.getNama());
 		}
 		
@@ -2027,6 +2029,38 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {	
 			hasil = "001";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdKategoriPermohonanData() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM KategoriPermohonanData m");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 2, '0');
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "01";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdStatusWaliPermohonan() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM StatusPengurusPermohonanData m");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 2, '0');
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "01";			
 			return hasil;
 		}		
 	}
