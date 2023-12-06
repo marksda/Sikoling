@@ -40,7 +40,7 @@ public class PosisiTahapPemberkasanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
     public PosisiTahapPemberkasanDTO save(PosisiTahapPemberkasanDTO d) throws IOException {
 		return new PosisiTahapPemberkasanDTO(posisiTahapPemberkasanService.save(d.toPosisiTahapPemberkasan()));
     }
@@ -49,7 +49,7 @@ public class PosisiTahapPemberkasanController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public PosisiTahapPemberkasanDTO update(PosisiTahapPemberkasanDTO d) {		
 		return new PosisiTahapPemberkasanDTO(posisiTahapPemberkasanService.update(d.toPosisiTahapPemberkasan()));
 	}
@@ -64,12 +64,16 @@ public class PosisiTahapPemberkasanController {
 		return new PosisiTahapPemberkasanDTO(posisiTahapPemberkasanService.updateId(idLama, d.toPosisiTahapPemberkasan()));
 	}
 	
+	@Path("{idPosisiTahapPemberkasan}")
 	@DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
-	public PosisiTahapPemberkasanDTO delete(PosisiTahapPemberkasanDTO d) throws IOException {
+	@RequiredRole({Role.ADMINISTRATOR})
+	public PosisiTahapPemberkasanDTO delete(@PathParam("idPosisiTahapPemberkasan") String idPosisiTahapPemberkasan) throws IOException {
+		PosisiTahapPemberkasanDTO d = new PosisiTahapPemberkasanDTO();
+		d.setId(idPosisiTahapPemberkasan);
+		
 		return new PosisiTahapPemberkasanDTO(posisiTahapPemberkasanService.delete(d.toPosisiTahapPemberkasan()));
 	}
 	

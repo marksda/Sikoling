@@ -14,6 +14,7 @@ import org.Sikoling.ejb.abstraction.repository.IPosisiTahapPemberkasanRepository
 import org.Sikoling.ejb.main.repository.DataConverter;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -51,14 +52,21 @@ public class PosisiTahapPemberkasanRepositoryJPA implements IPosisiTahapPemberka
 	}
 
 	@Override
-	public PosisiTahapPemberkasan updateId(String idLama, PosisiTahapPemberkasan t) throws IOException {
-		PosisiTahapPemberkasanData dataLama = entityManager.find(PosisiTahapPemberkasanData.class, idLama);
-		if(dataLama != null) {
-			PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t);
-			entityManager.remove(dataLama);	
-			PosisiTahapPemberkasanData dataTermerge = entityManager.merge(posisiTahapPemberkasanData);
-			entityManager.flush();
-			return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(dataTermerge);
+	public PosisiTahapPemberkasan updateId(String idLama, PosisiTahapPemberkasan t) throws IOException {		
+		Query query = entityManager.createNamedQuery("PosisiTahapPemberkasanData.updateId");
+		query.setParameter("idBaru", t.getId());
+		query.setParameter("idLama", idLama);
+		int updateCount = query.executeUpdate();
+		if(updateCount > 0) {
+			try {
+				PosisiTahapPemberkasanData posisiTahapPemberkasanData = dataConverter.convertStatusTahapPemberkasanToStatusTahapPemberkasanData(t);
+				PosisiTahapPemberkasanData dataTermerge = entityManager.merge(posisiTahapPemberkasanData);
+				entityManager.flush();
+				return dataConverter.convertStatusTahapPemberkasanDataToStatusTahapPemberkasan(dataTermerge);
+			} catch (Exception e) {
+				throw new IOException("data id sudah ada");
+			}
+			
 		}
 		else {
 			throw new IOException("Data tidak ditemukan");

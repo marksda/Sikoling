@@ -1454,8 +1454,9 @@ public class DataConverter {
 		PosisiTahapPemberkasanData posisiTahapPemberkasanData = null;
 		
 		if(t != null) {
+			String id = t.getId();
 			posisiTahapPemberkasanData = new PosisiTahapPemberkasanData();
-			posisiTahapPemberkasanData.setId(t.getId());
+			posisiTahapPemberkasanData.setId(id != null ? id : getGenerateIdPosisiTahapPemberkasan());
 			posisiTahapPemberkasanData.setNama(t.getNama());
 			posisiTahapPemberkasanData.setKeterangan(t.getKeterangan());
 		}
@@ -2061,6 +2062,22 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {	
 			hasil = "01";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdPosisiTahapPemberkasan() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM PosisiTahapPemberkasanData m");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = Long.toString(idBaru);
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "0";			
 			return hasil;
 		}		
 	}
