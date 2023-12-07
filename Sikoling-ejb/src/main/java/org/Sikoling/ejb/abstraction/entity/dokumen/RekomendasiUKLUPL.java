@@ -12,9 +12,8 @@ public class RekomendasiUKLUPL extends Dokumen implements Serializable {
 	private final LocalDate tanggal;
 	private final String perihal;
 	
-	public RekomendasiUKLUPL(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
-			String perihal) {
-		super(id, nama, kategoriDokumen);
+	public RekomendasiUKLUPL(String id, String nama, String nomor, LocalDate tanggal, String perihal) {
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.perihal = perihal;

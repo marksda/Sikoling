@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -23,10 +21,6 @@ public class DokumenData implements Serializable {
 	private String id;
 	
 	private String nama;
-	
-	@JoinColumn(name = "kategori", referencedColumnName = "id", insertable = true, updatable = false)
-	@ManyToOne(optional = false)
-	private KategoriDokumenData kategoriDokumenData;
 
 	public DokumenData() {
 	}
@@ -45,14 +39,6 @@ public class DokumenData implements Serializable {
 
 	public void setNama(String nama) {
 		this.nama = nama;
-	}
-
-	public KategoriDokumenData getKategoriDokumenData() {
-		return kategoriDokumenData;
-	}
-
-	public void setKategoriDokumenData(KategoriDokumenData kategoriDokumenData) {
-		this.kategoriDokumenData = kategoriDokumenData;
 	}
 
 	public static long getSerialversionuid() {

@@ -12,9 +12,8 @@ public class DokumenNibOss extends Dokumen implements Serializable {
 	private final LocalDate tanggal;
 	private final List<Kbli> daftarKbli;	
 	
-	public DokumenNibOss(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
-			List<Kbli> daftarKbli) {
-		super(id, nama, kategoriDokumen);
+	public DokumenNibOss(String id, String nama, String nomor, LocalDate tanggal, List<Kbli> daftarKbli) {
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.daftarKbli = daftarKbli;

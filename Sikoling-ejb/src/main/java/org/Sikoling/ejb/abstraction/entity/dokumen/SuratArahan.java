@@ -11,9 +11,8 @@ public class SuratArahan extends Dokumen implements Serializable {
 	private final String perihalSurat;
 	private final String uraianKegiatan;	
 	
-	public SuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, 
-			String noSurat, LocalDate tanggalSurat, String perihalSurat, String uraianKegiatan) {
-		super(id, nama, kategoriDokumen);
+	public SuratArahan(String id, String nama, String noSurat, LocalDate tanggalSurat, String perihalSurat, String uraianKegiatan) {
+		super(id, nama);
 		this.noSurat = noSurat;
 		this.tanggalSurat = tanggalSurat;
 		this.perihalSurat = perihalSurat;

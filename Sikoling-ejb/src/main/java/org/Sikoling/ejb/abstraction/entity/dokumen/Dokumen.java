@@ -7,13 +7,11 @@ public class Dokumen implements Serializable {
 	
 	private static final long serialVersionUID = -1869365745189974891L;
 	private final String id;
-	private final String nama;	
-	private final KategoriDokumen kategoriDokumen;
+	private final String nama;
 	
-	public Dokumen(String id, String nama, KategoriDokumen kategoriDokumen) {
+	public Dokumen(String id, String nama) {
 		this.id = id;
 		this.nama = nama;
-		this.kategoriDokumen = kategoriDokumen;
 	}
 
 	public static long getSerialversionuid() {
@@ -26,10 +24,6 @@ public class Dokumen implements Serializable {
 
 	public String getNama() {
 		return nama;
-	}
-
-	public KategoriDokumen getKategoriDokumen() {
-		return kategoriDokumen;
 	}
 
 	public int hashCode() {

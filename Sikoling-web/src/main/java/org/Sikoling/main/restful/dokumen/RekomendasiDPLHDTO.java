@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.RekomendasiDPLH;
 
 public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
@@ -21,8 +20,7 @@ public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
 	public RekomendasiDPLHDTO(RekomendasiDPLH t) {
 		super(t != null ? new Dokumen(
 				t.getId(), 
-				t.getNama(), 
-				null
+				t.getNama()
 				) : null);
 
 		if(t != null) {
@@ -101,18 +99,11 @@ public class RekomendasiDPLHDTO extends DokumenDTO implements Serializable {
 				.concat(this.getNoSurat())
 				.concat("}");	  
 	}
-
 	
 	public RekomendasiDPLH toRekomendasiDPLH() {
-		KategoriDokumenDTO kategoriDokumenDTO = this.getKategoriDokumen();
 		return new RekomendasiDPLH(
 				this.getId(), 
-				this.getNama(), 
-				kategoriDokumenDTO != null ? new KategoriDokumen(
-						kategoriDokumenDTO.getId(), 
-						kategoriDokumenDTO.getNama(), 
-						kategoriDokumenDTO.getParent()
-						) : null, 
+				this.getNama(),
 				noSurat, 
 				tanggalSurat, 
 				perihalSurat

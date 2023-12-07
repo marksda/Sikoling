@@ -12,9 +12,8 @@ public class SkMentriHukumDanHam extends Dokumen implements Serializable {
 	private final Long modalDasar;
 	private final Long modalDitempatkan;
 	
-	public SkMentriHukumDanHam(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
-			Long modalDasar, Long modalDitempatkan) {
-		super(id, nama, kategoriDokumen);
+	public SkMentriHukumDanHam(String id, String nama, String nomor, LocalDate tanggal, Long modalDasar, Long modalDitempatkan) {
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.modalDasar = modalDasar;

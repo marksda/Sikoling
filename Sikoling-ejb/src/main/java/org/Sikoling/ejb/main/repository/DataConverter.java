@@ -300,8 +300,7 @@ public class DataConverter {
 		Dokumen dokumen = null;
 		
 		if(d != null) {
-			KategoriDokumen kategoriDokumen = convertKategoriDokumenDataToKategoriDokumen(d.getKategoriDokumenData());
-			dokumen = new Dokumen(d.getId(), d.getNama(), kategoriDokumen);
+			dokumen = new Dokumen(d.getId(), d.getNama());
 		}
 		
 		return dokumen;
@@ -314,7 +313,6 @@ public class DataConverter {
 			suratArahan = new SuratArahan(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(), 
 					d.getNoSurat(), 
 					d.getTanggalSurat(), 
 					d.getPerihalSurat(), 
@@ -364,7 +362,6 @@ public class DataConverter {
 			dokumenNibOss = new DokumenNibOss(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(),
 					d.getNib(), 
 					d.getTanggalPenetapan(), 
 					daftarKbli
@@ -397,7 +394,6 @@ public class DataConverter {
 			aktaPendirian = new DokumenAktaPendirian(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(),
 					d.getNomor(), 
 					d.getTanggal(), 
 					d.getNotaris(), 
@@ -416,7 +412,6 @@ public class DataConverter {
 			lampiranSuratArahan = new LampiranSuratArahan(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(), 
 					d.getNoSurat(), 
 					d.getTanggalSurat()
 					);					
@@ -432,7 +427,6 @@ public class DataConverter {
 			rekomendasiUKLUPL = new RekomendasiUKLUPL(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(), 
 					d.getNoSurat(), 
 					d.getTanggalSurat(),
 					d.getPerihalSurat()
@@ -449,7 +443,6 @@ public class DataConverter {
 			rekomendasiDPLH = new RekomendasiDPLH(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(), 
 					d.getNoSurat(), 
 					d.getTanggalSurat(),
 					d.getPerihalSurat()
@@ -466,7 +459,6 @@ public class DataConverter {
 			dokumenGenerik = new DokumenGenerik(
 					dok.getId(), 
 					dok.getNama(), 
-					dok.getKategoriDokumen(),
 					d.getNomor(), 
 					d.getTanggalPenetapan()
 					);					
@@ -1601,11 +1593,9 @@ public class DataConverter {
 		DokumenData masterDokumenData = new DokumenData();
 		
 		if(t != null) {
-			masterDokumenData.setId(t.getId());
+			String id = t.getId();
+			masterDokumenData.setId(id != null ? id : getGenerateIdDokumen());
 			masterDokumenData.setNama(t.getNama());
-			masterDokumenData.setKategoriDokumenData(
-					t.getKategoriDokumen() != null ? convertKategoriDokumenToKategoriDokumenData(t.getKategoriDokumen()):null
-					);
 		}
 		
 		return masterDokumenData;
@@ -2078,6 +2068,22 @@ public class DataConverter {
 			return hasil;
 		} catch (Exception e) {	
 			hasil = "0";			
+			return hasil;
+		}		
+	}
+	
+	private String getGenerateIdDokumen() {
+		String hasil;
+		
+		Query q = entityManager.createQuery("SELECT MAX(m.id) FROM DokumenData m");
+		
+		try {
+			hasil = (String) q.getSingleResult();
+			Long idBaru = Long.valueOf(hasil)  + 1;
+			hasil = LPad(Long.toString(idBaru), 2, '0');
+			return hasil;
+		} catch (Exception e) {	
+			hasil = "01";			
 			return hasil;
 		}		
 	}

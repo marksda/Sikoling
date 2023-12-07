@@ -10,9 +10,8 @@ public class LampiranSuratArahan extends Dokumen implements Serializable {
 	private final String noSuratArahan;
 	private final LocalDate tanggalSuratArahan;
 	
-	public LampiranSuratArahan(String id, String nama, KategoriDokumen kategoriDokumen, String noSuratArahan,
-			LocalDate tanggalSuratArahan) {
-		super(id, nama, kategoriDokumen);
+	public LampiranSuratArahan(String id, String nama, String noSuratArahan, LocalDate tanggalSuratArahan) {
+		super(id, nama);
 		this.noSuratArahan = noSuratArahan;
 		this.tanggalSuratArahan = tanggalSuratArahan;
 	}

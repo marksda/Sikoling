@@ -9,7 +9,6 @@ public class DokumenDTO implements Serializable {
 	private static final long serialVersionUID = -2378592503272433605L;
 	private String id;
 	private String nama;
-	private KategoriDokumenDTO kategoriDokumen;
 	
 	public DokumenDTO() {
 	}
@@ -18,7 +17,6 @@ public class DokumenDTO implements Serializable {
 		if(dokumen != null) {
 			this.id = dokumen.getId();
 			this.nama = dokumen.getNama();
-			this.kategoriDokumen = dokumen.getKategoriDokumen() != null ? new KategoriDokumenDTO(dokumen.getKategoriDokumen()) : null;	
 		}
 	}
 	
@@ -36,14 +34,6 @@ public class DokumenDTO implements Serializable {
 	
 	public void setNama(String nama) {
 		this.nama = nama;
-	}
-			
-	public KategoriDokumenDTO getKategoriDokumen() {
-		return kategoriDokumen;
-	}
-
-	public void setKategoriDokumen(KategoriDokumenDTO kategoriDokumen) {
-		this.kategoriDokumen = kategoriDokumen;
 	}
 
 	public static long getSerialversionuid() {
@@ -92,8 +82,7 @@ public class DokumenDTO implements Serializable {
 	public Dokumen toDokumen() {
 		return new Dokumen(
 				id, 
-				nama, 
-				kategoriDokumen != null ? kategoriDokumen.toKategoriDokumen() : null
+				nama
 				);
 	}
 

@@ -23,9 +23,6 @@ public class DokumenNibOssDTO extends DokumenDTO implements Serializable {
 		if(t != null) {
 			this.setId(t.getId());
 			this.setNama(t.getNama());
-			KategoriDokumenDTO kategoriDokumenDTO = t.getKategoriDokumen() != null ?
-					new KategoriDokumenDTO(t.getKategoriDokumen()) : null;
-			this.setKategoriDokumen(kategoriDokumenDTO);
 			this.nomor = t.getNomor();
 			this.tanggal = t.getTanggal();
 			this.daftarKbli = t.getDaftarKbli() != null ? 
@@ -108,8 +105,6 @@ public class DokumenNibOssDTO extends DokumenDTO implements Serializable {
 		return new DokumenNibOss(
 				this.getId(), 
 				this.getNama(), 
-				this.getKategoriDokumen() != null ? 
-						this.getKategoriDokumen().toKategoriDokumen() : null, 
 				this.nomor, 
 				this.tanggal,
 				this.daftarKbli != null ? 

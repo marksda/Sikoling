@@ -14,9 +14,8 @@ public class DokumenAktaPendirian extends Dokumen implements Serializable {
 	private final String namaNotaris;
 	private final Pegawai penanggungJawab;
 	
-	public DokumenAktaPendirian(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
-			LocalDate tanggal, String namaNotaris, Pegawai penanggungJawab) {
-		super(id, nama, kategoriDokumen);
+	public DokumenAktaPendirian(String id, String nama, String nomor, LocalDate tanggal, String namaNotaris, Pegawai penanggungJawab) {
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.namaNotaris = namaNotaris;

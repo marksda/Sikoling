@@ -10,8 +10,8 @@ public class DokumenGenerik extends Dokumen implements Serializable {
 	private final String nomor;
 	private final LocalDate tanggal;
 	
-	public DokumenGenerik(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal) {
-		super(id, nama, kategoriDokumen);
+	public DokumenGenerik(String id, String nama, String nomor, LocalDate tanggal) {
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 	}

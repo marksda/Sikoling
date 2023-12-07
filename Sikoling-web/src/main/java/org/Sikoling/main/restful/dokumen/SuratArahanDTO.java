@@ -20,8 +20,7 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
 	public SuratArahanDTO(SuratArahan t) {
 		super(t != null ? new Dokumen(
 				t.getId(), 
-				t.getNama(), 
-				null
+				t.getNama()
 				) : null
 			);
 		if(t != null) {
@@ -111,12 +110,9 @@ public class SuratArahanDTO extends DokumenDTO implements Serializable {
 	}
 
 	public SuratArahan toSuratArahan() {
-		KategoriDokumenDTO kategoriDokumenDTO = this.getKategoriDokumen();
 		return new SuratArahan(
 				this.getId(), 
 				this.getNama(), 
-				kategoriDokumenDTO != null ? 
-						kategoriDokumenDTO.toKategoriDokumen() : null, 
 				this.noSurat, 
 				this.tanggalSurat, 
 				this.perihalSurat, 

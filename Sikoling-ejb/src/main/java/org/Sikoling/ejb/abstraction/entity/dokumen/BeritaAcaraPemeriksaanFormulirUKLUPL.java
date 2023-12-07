@@ -10,9 +10,9 @@ public class BeritaAcaraPemeriksaanFormulirUKLUPL extends Dokumen implements Ser
 	private final String nomor;
 	private final LocalDate tanggal;
 
-	public BeritaAcaraPemeriksaanFormulirUKLUPL(String id, String nama, KategoriDokumen kategoriDokumen, String nomor,
+	public BeritaAcaraPemeriksaanFormulirUKLUPL(String id, String nama, String nomor,
 			LocalDate tanggal) {
-		super(id, nama, kategoriDokumen);
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 	}

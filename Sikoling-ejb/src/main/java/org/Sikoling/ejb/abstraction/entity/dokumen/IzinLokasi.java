@@ -13,9 +13,9 @@ public class IzinLokasi extends Dokumen implements Serializable {
 	private final LocalDate tanggal;
 	private final Alamat lokasiKegiatan;	
 	
-	public IzinLokasi(String id, String nama, KategoriDokumen kategoriDokumen, String nomor, LocalDate tanggal,
+	public IzinLokasi(String id, String nama, String nomor, LocalDate tanggal,
 			Alamat lokasiKegiatan) {
-		super(id, nama, kategoriDokumen);
+		super(id, nama);
 		this.nomor = nomor;
 		this.tanggal = tanggal;
 		this.lokasiKegiatan = lokasiKegiatan;
