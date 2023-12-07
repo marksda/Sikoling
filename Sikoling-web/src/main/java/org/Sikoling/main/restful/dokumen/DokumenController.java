@@ -39,7 +39,7 @@ public class DokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DokumenDTO save(DokumenDTO d) throws IOException {
 		return new DokumenDTO(dokumenService.save(d.toDokumen()));
 	}
@@ -48,7 +48,7 @@ public class DokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DokumenDTO update(DokumenDTO d) {
 		return new DokumenDTO(dokumenService.update(d.toDokumen()));
 	}
@@ -58,16 +58,16 @@ public class DokumenController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DokumenDTO updateId(@PathParam("idLama") String idLama, DokumenDTO d) throws IOException {
 		return new DokumenDTO(dokumenService.updateId(idLama, d.toDokumen()));
 	}
 	
 	@Path("{idDokumen}")
 	@DELETE
-	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
 	@RequiredAuthorization
-	@RequiredRole({Role.ADMINISTRATOR, Role.UMUM})
+	@RequiredRole({Role.ADMINISTRATOR})
 	public DokumenDTO delete(@PathParam("idDokumen") String idDokumen) throws IOException {
 		DokumenDTO d = new DokumenDTO();
 		d.setId(idDokumen);

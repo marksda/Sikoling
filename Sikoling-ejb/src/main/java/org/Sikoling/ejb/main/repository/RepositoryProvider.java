@@ -10,7 +10,6 @@ import org.Sikoling.ejb.main.integrator.onlyoffice.helpers.TrackManager;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.desa.DesaRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenRepositoryJPA;
-import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.KbliRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterDokumenRepositoryJPA;
 import org.Sikoling.ejb.main.repository.dokumen.RegisterKbliRepositoryJPA;
@@ -183,11 +182,6 @@ public class RepositoryProvider {
 	@Produces
 	public SkalaUsahaRepositoryJPA getSkalaUsahaRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
 		return new SkalaUsahaRepositoryJPA(entityManager, dataConverter);
-	}
-	
-	@Produces
-	public KategoriDokumenRepositoryJPA getKategoriDokumenRepositoryJPA(EntityManager entityManager, DataConverter dataConverter) {
-		return new KategoriDokumenRepositoryJPA(entityManager, dataConverter);
 	}
 	
 	@Produces

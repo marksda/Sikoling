@@ -14,7 +14,6 @@ import org.Sikoling.ejb.abstraction.repository.IKategoriPelakuUsahaRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriPermohonanSuratArahahanRepository;
 import org.Sikoling.ejb.abstraction.repository.IKabupatenRepository;
-import org.Sikoling.ejb.abstraction.repository.IKategoriDokumenRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriLogRepository;
 import org.Sikoling.ejb.abstraction.repository.IKategoriProdukRepository;
 import org.Sikoling.ejb.abstraction.repository.IKbliRepository;
@@ -53,11 +52,9 @@ import org.Sikoling.ejb.abstraction.service.storage.LocalStorageService;
 import org.Sikoling.ejb.abstraction.service.desa.IDesaService;
 import org.Sikoling.ejb.abstraction.service.dokumen.DokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IDokumenService;
-import org.Sikoling.ejb.abstraction.service.dokumen.IKategoriDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IKbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.IRegisterKbliService;
-import org.Sikoling.ejb.abstraction.service.dokumen.KategoriDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.KbliService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterDokumenService;
 import org.Sikoling.ejb.abstraction.service.dokumen.RegisterKbliService;
@@ -237,12 +234,6 @@ public class RestfulProvider {
 	public IRegisterKbliService getRegisterKbliService(
 			@Infrastructure IRegisterKbliRepository registerKbliRepository) {
 		return new RegisterKbliService(registerKbliRepository);
-	}
-		
-	@Produces
-	public IKategoriDokumenService getKategoriDokumenService(
-			@Infrastructure IKategoriDokumenRepository kategoriDokumenRepository) {
-		return new KategoriDokumenService(kategoriDokumenRepository);
 	}
 	
 	@Produces

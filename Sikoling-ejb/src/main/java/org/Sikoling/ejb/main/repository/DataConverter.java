@@ -35,7 +35,6 @@ import org.Sikoling.ejb.abstraction.entity.User;
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenAktaPendirian;
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenGenerik;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Dokumen;
-import org.Sikoling.ejb.abstraction.entity.dokumen.KategoriDokumen;
 import org.Sikoling.ejb.abstraction.entity.dokumen.Kbli;
 import org.Sikoling.ejb.abstraction.entity.dokumen.LampiranSuratArahan;
 import org.Sikoling.ejb.abstraction.entity.dokumen.DokumenNibOss;
@@ -57,7 +56,6 @@ import org.Sikoling.ejb.main.repository.alamat.AlamatData;
 import org.Sikoling.ejb.main.repository.bidangusaha.BidangUsahaData;
 import org.Sikoling.ejb.main.repository.desa.DesaData;
 import org.Sikoling.ejb.main.repository.dokumen.AktaPendirianData;
-import org.Sikoling.ejb.main.repository.dokumen.KategoriDokumenData;
 import org.Sikoling.ejb.main.repository.dokumen.KbliData;
 import org.Sikoling.ejb.main.repository.dokumen.LampiranSuratArahanData;
 import org.Sikoling.ejb.main.repository.dokumen.DokumenData;
@@ -183,16 +181,6 @@ public class DataConverter {
 		}
 		
 		return kabupaten;		
-	}
-
-	public KategoriDokumen convertKategoriDokumenDataToKategoriDokumen(KategoriDokumenData d) {
-		KategoriDokumen kategoriDokumen = null;
-		
-		if(d != null) {
-			kategoriDokumen = new KategoriDokumen(d.getId(), d.getNama(), d.getParent());
-		}
-		
-		return kategoriDokumen;
 	}
 	
 	public KategoriPelakuUsaha convertKategoriPelakuUsahaDataToKategoriPelakuUsaha(KategoriPelakuUsahaData d) {
@@ -1599,18 +1587,6 @@ public class DataConverter {
 		}
 		
 		return masterDokumenData;
-	}
-	
-	public KategoriDokumenData convertKategoriDokumenToKategoriDokumenData(KategoriDokumen t) {
-		KategoriDokumenData kategoriDokumenData = new KategoriDokumenData();
-		
-		if(t != null) {
-			kategoriDokumenData.setId(t.getId());
-			kategoriDokumenData.setNama(t.getNama());			
-			kategoriDokumenData.setParent(t.getParent());
-		}
-		
-		return kategoriDokumenData;
 	}
 	
 	public OtoritasPerusahaanData convertAutorityPerusahaanToAutorityPerusahaanData(OtoritasPerusahaan t) {
