@@ -48,10 +48,10 @@ public class RegisterDokumenProvider implements MessageBodyReader<RegisterDokume
 			registerDokumenDTO = new RegisterDokumenDTO();
 			
 			switch (idDokumen) {
-			case "010101":
+			case "01":
 					registerDokumenDTO.setDokumen(jsonb.fromJson(d.getJsonObject("dokumen").toString(), AktaPendirianDTO.class));
 				break;
-			case "010301":
+			case "11":
 				registerDokumenDTO.setDokumen(jsonb.fromJson(d.getJsonObject("dokumen").toString(), DokumenNibOssDTO.class));
 				break;
 			default:
