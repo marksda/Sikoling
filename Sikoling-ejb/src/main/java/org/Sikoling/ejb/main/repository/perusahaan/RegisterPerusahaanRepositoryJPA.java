@@ -124,7 +124,6 @@ public class RegisterPerusahaanRepositoryJPA implements IRegisterPerusahaanRepos
 			throw new IOException("Data tidak ditemukan");
 		}
 	}
-
 	
 	@Override
 	public List<RegisterPerusahaan> getDaftarData(QueryParamFilters queryParamFilters) {

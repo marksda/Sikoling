@@ -13,8 +13,6 @@ import org.Sikoling.ejb.abstraction.entity.RegisterDokumen;
 import org.Sikoling.ejb.abstraction.entity.SortOrder;
 import org.Sikoling.ejb.abstraction.repository.IRegisterDokumenRepository;
 import org.Sikoling.ejb.main.repository.DataConverter;
-import org.Sikoling.ejb.main.repository.otoritas.OtoritasPerusahaanData;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -109,165 +107,55 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	}	
 
 	@Override
-	public List<RegisterDokumen> getDaftarData(QueryParamFilters queryParamFilters) {
-		boolean direct = true;
-		String idUser = null;
-		for (Filter f : queryParamFilters.getFilters()) {
-	        if (f.getFieldName().equals("kepemilikan_perusahaan")) {
-	        	direct = false;
-	        	idUser = f.getValue();
-	        	break;
-	        }
-	    }
-		
+	public List<RegisterDokumen> getDaftarData(QueryParamFilters queryParamFilters) {		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<RegisterDokumenData> cq = cb.createQuery(RegisterDokumenData.class);
 		Root<RegisterDokumenData> root = cq.from(RegisterDokumenData.class);		
 		
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.getFilters().iterator();
-		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();				
-		
-		if(direct == true) {			
+		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();	
 			
-			while (iterFilter.hasNext()) {
-				Filter filter = (Filter) iterFilter.next();
-				
-				switch (filter.getFieldName()) {
-				case "id":
-					daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
-					break;
-				case "id_perusahaan":
-					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("id"), filter.getValue()));
-					break;
-				case "npwp_perusahaan":
-					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
-					break;
-				case "nama_perusahaan":
-					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
-					break;
-				case "jenisDokumen":
-					daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
-					break;
-				case "statusVerified":
-					daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
-					break;
-				default:
-					break;
-				}			
-			}
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
 			
-			if(daftarPredicate.isEmpty()) {
-				cq.select(root);
-			}
-			else {
-				cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
-			}
-			
-			// sort clause
-			Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
-					
-			while (iterSort.hasNext()) {
-				SortOrder sort = (SortOrder) iterSort.next();
-				switch (sort.getFieldName()) {
-				case "id":
-					if(sort.getValue().equals("ASC")) {
-						cq.orderBy(cb.asc(root.get("id")));
-					}
-					else {
-						cq.orderBy(cb.desc(root.get("id")));
-					}
-					break;
-				case "nama_perusahaan":
-					if(sort.getValue().equals("ASC")) {
-						cq.orderBy(cb.asc(root.get("perusahaanData").get("nama")));
-					}
-					else {
-						cq.orderBy(cb.desc(root.get("perusahaanData").get("nama")));
-					}
-					break;
-				case "nama_dokumen":
-					if(sort.getValue().equals("ASC")) {
-						cq.orderBy(cb.asc(root.get("dokumenData").get("nama")));
-					}
-					else {
-						cq.orderBy(cb.desc(root.get("dokumenData").get("nama")));
-					}
-					break;
-				case "tanggalRegistrasi":
-					if(sort.getValue().equals("ASC")) {
-						cq.orderBy(cb.asc(root.get("tanggalRegistrasi")));
-					}
-					else {
-						cq.orderBy(cb.desc(root.get("tanggalRegistrasi")));
-					}
-					break;
-				case "statusVerified":
-					if(sort.getValue().equals("ASC")) {
-						cq.orderBy(cb.asc(root.get("statusVerified")));
-					}
-					else {
-						cq.orderBy(cb.desc(root.get("statusVerified")));
-					}
-					break;
-				default:
-					break;
-				}			
-			}
+			switch (filter.getFieldName()) {
+			case "id":
+				daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+				break;
+			case "id_perusahaan":
+				daftarPredicate.add(cb.equal(root.get("perusahaanData").get("id"), filter.getValue()));
+				break;
+			case "npwp_perusahaan":
+				daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
+				break;
+			case "nama_perusahaan":
+				daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
+				break;
+			case "jenisDokumen":
+				daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
+				break;
+			case "statusVerified":
+				daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
+				break;
+			case "kepemilikan":
+				daftarPredicate.add(cb.equal(root.get("perusahaanData").get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
+				break;
+			default:
+				break;
+			}			
 		}
-		else {			
-			Query qKepemilikanPerusahaan = entityManager.createNamedQuery("OtoritasPerusahaanData.findByPemilik");
-			qKepemilikanPerusahaan.setParameter("idAutorisasi", idUser);
-			@SuppressWarnings("unchecked")
-			List<OtoritasPerusahaanData> h = (List<OtoritasPerusahaanData>) qKepemilikanPerusahaan.getResultList();
 			
-			int i = 0;
-			Predicate predicateForKepemilikan = null;
-			for (OtoritasPerusahaanData o : h) {	
-				if(i == 0) {
-					predicateForKepemilikan = cb.equal(root.get("perusahaanData").get("id"), o.getPerusahaan().getId());
-				}
-				else {
-					predicateForKepemilikan = cb.or(predicateForKepemilikan, cb.equal(root.get("perusahaanData").get("id"), o.getPerusahaan().getId()));
-				}
-				i++;
-		    }
-			
-			while (iterFilter.hasNext()) {
-				Filter filter = (Filter) iterFilter.next();
-				
-				switch (filter.getFieldName()) {
-				case "id":
-					daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
-					break;
-				case "id_perusahaan":
-					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("id"), filter.getValue()));
-					break;
-				case "npwp_perusahaan":
-					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
-					break;
-				case "nama_perusahaan":
-					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
-					break;
-				case "jenisDokumen":
-					daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
-					break;
-				case "statusVerified":
-					daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
-					break;
-				default:
-					break;
-				}			
-			}
-			
-			
-			daftarPredicate.add(predicateForKepemilikan);
+		if(daftarPredicate.isEmpty()) {
+			cq.select(root);
+		}
+		else {
 			cq.select(root).where(cb.and(daftarPredicate.toArray(new Predicate[0])));
 		}
-		
+			
 		// sort clause
 		Iterator<SortOrder> iterSort = queryParamFilters.getSortOrders().iterator();
-				
+					
 		while (iterSort.hasNext()) {
 			SortOrder sort = (SortOrder) iterSort.next();
 			switch (sort.getFieldName()) {
@@ -314,7 +202,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 				default:
 					break;
 			}			
-		}
+		}		
 		
 		TypedQuery<RegisterDokumenData> q = null;		
 		if( queryParamFilters.getPageSize() != null && queryParamFilters.getPageSize() > 0) { 
@@ -333,17 +221,7 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 	}
 	
 	@Override
-	public Long getJumlahData(List<Filter> queryParamFilters) {
-		boolean direct = true;
-		String idUser = null;
-		for (Filter f : queryParamFilters) {
-	        if (f.getFieldName().equals("kepemilikan_perusahaan")) {
-	        	direct = false;
-	        	idUser = f.getValue();
-	        	break;
-	        }
-	    }
-		
+	public Long getJumlahData(List<Filter> queryParamFilters) {		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<RegisterDokumenData> root = cq.from(RegisterDokumenData.class);		
@@ -351,81 +229,35 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		// where clause
 		Iterator<Filter> iterFilter = queryParamFilters.iterator();
 		ArrayList<Predicate> daftarPredicate = new ArrayList<Predicate>();
-		
-		if(direct == true) {		
-			while (iterFilter.hasNext()) {
-				Filter filter = (Filter) iterFilter.next();
-				
-				switch (filter.getFieldName()) {
-					case "id":
-						daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
-						break;
-					case "id_perusahaan":
-						daftarPredicate.add(cb.equal(root.get("perusahaanData").get("id"), filter.getValue()));
-						break;
-					case "npwp_perusahaan":
-						daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
-						break;
-					case "nama_perusahaan":
-						daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
-						break;
-					case "jenisDokumen":
-						daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
-						break;
-					case "statusVerified":
-						daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
-						break;
-					default:
-						break;
-				}			
-			}
-		}
-		else {
-			Query qKepemilikanPerusahaan = entityManager.createNamedQuery("OtoritasPerusahaanData.findByPemilik");
-			qKepemilikanPerusahaan.setParameter("idAutorisasi", idUser);
-			@SuppressWarnings("unchecked")
-			List<OtoritasPerusahaanData> h = (List<OtoritasPerusahaanData>) qKepemilikanPerusahaan.getResultList();
+
+		while (iterFilter.hasNext()) {
+			Filter filter = (Filter) iterFilter.next();
 			
-			int i = 0;
-			Predicate predicateForKepemilikan = null;
-			for (OtoritasPerusahaanData o : h) {	
-				if(i == 0) {
-					predicateForKepemilikan = cb.equal(root.get("perusahaanData").get("id"), o.getPerusahaan().getId());
-				}
-				else {
-					predicateForKepemilikan = cb.or(predicateForKepemilikan, cb.equal(root.get("perusahaanData").get("id"), o.getPerusahaan().getId()));
-				}
-				i++;
-		    }
-			
-			while (iterFilter.hasNext()) {
-				Filter filter = (Filter) iterFilter.next();
-				
-				switch (filter.getFieldName()) {
-					case "id":
-						daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
-						break;
-					case "id_perusahaan":
-						daftarPredicate.add(cb.equal(root.get("perusahaanData").get("id"), filter.getValue()));
-						break;
-					case "npwp_perusahaan":
-						daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
-						break;
-					case "nama_perusahaan":
-						daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
-						break;
-					case "jenisDokumen":
-						daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
-						break;
-					case "statusVerified":
-						daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
-						break;
-					default:
-						break;
-				}			
-			}
-			
-			daftarPredicate.add(predicateForKepemilikan);
+			switch (filter.getFieldName()) {
+				case "id":
+					daftarPredicate.add(cb.equal(root.get("id"), filter.getValue()));
+					break;
+				case "id_perusahaan":
+					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("id"), filter.getValue()));
+					break;
+				case "npwp_perusahaan":
+					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("npwp"), filter.getValue()));
+					break;
+				case "nama_perusahaan":
+					daftarPredicate.add(cb.like(cb.lower(root.get("perusahaanData").get("nama")), "%" + filter.getValue().toLowerCase()+"%"));
+					break;
+				case "jenisDokumen":
+					daftarPredicate.add(cb.equal(root.get("dokumenData").get("id"), filter.getValue()));
+					break;
+				case "statusVerified":
+					daftarPredicate.add(cb.equal(root.get("statusVerified"), filter.getValue()));
+					break;
+				case "kepemilikan":
+					daftarPredicate.add(cb.equal(root.get("perusahaanData").get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
+					break;
+				default:
+					break;
+			}			
 		}
 		
 		if(daftarPredicate.isEmpty()) {
