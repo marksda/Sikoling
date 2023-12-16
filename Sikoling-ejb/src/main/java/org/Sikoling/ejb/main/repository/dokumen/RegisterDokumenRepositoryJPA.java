@@ -275,6 +275,5 @@ public class RegisterDokumenRepositoryJPA implements IRegisterDokumenRepository 
 		RegisterDokumenData registerDokumenData = entityManager.find(RegisterDokumenData.class, id);
 		return dataConverter.convertRegisterDokumenDataToRegisterDokumenWithPerusahaan(registerDokumenData);
 	}
-
 	
 }
