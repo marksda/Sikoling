@@ -88,7 +88,7 @@ public class RegisterPermohonanController {
 			flowLogPermohonanDTO.setStatusFlowLog(statusFlowLogDTO);
 			flowLogPermohonanDTO.setKeterangan("Berkas permohonan berhasil dimasukkan");
 			flowLogPermohonanDTO.setPengakses(pengurusPermohonanDto);
-			flowLogPermohonanDTO.setRegisterPermohonan(
+			flowLogPermohonanDTO.setData(
 					new RegisterPermohonanArahanDTO(registerPermohonanArahan)
 					);			
 			flowLogService.save(flowLogPermohonanDTO.toFlowLogPermohonan());

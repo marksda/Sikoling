@@ -4,16 +4,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.Sikoling.ejb.abstraction.entity.log.FlowLogPermohonan;
-import org.Sikoling.ejb.abstraction.entity.permohonan.RegisterPermohonan;
 import org.Sikoling.main.restful.otoritas.OtoritasDTO;
 import org.Sikoling.main.restful.permohonan.PosisiTahapPemberkasanDTO;
-import org.Sikoling.main.restful.permohonan.RegisterPermohonanArahanDTO;
 import org.Sikoling.main.restful.permohonan.RegisterPermohonanDTO;
 
 public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 
 	private static final long serialVersionUID = 6037871086119389158L;
-	private RegisterPermohonanDTO registerPermohonan;
+	private RegisterPermohonanDTO data;
 	
 	public FlowLogPermohonanDTO() {
 	}
@@ -43,17 +41,17 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 			OtoritasDTO pengakses = t.getPengakses() != null ?
 					new OtoritasDTO(t.getPengakses()) : null;
 			this.setPengakses(pengakses);
-			this.registerPermohonan = t.getRegisterPermohonan() != null ?
+			this.data = t.getRegisterPermohonan() != null ?
 					new RegisterPermohonanDTO(t.getRegisterPermohonan()) : null;
 		}
 	}
 	
-	public RegisterPermohonanDTO getRegisterPermohonan() {
-		return registerPermohonan;
+	public RegisterPermohonanDTO getData() {
+		return data;
 	}
 	
-	public void setRegisterPermohonan(RegisterPermohonanDTO registerPermohonan) {
-		this.registerPermohonan = registerPermohonan;
+	public void setData(RegisterPermohonanDTO registerPermohonan) {
+		this.data = registerPermohonan;
 	}
 	
 	public static long getSerialversionuid() {
@@ -98,17 +96,17 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 				.concat(", tanggal=")
 				.concat(this.getTanggal().toString())
 				.concat(", noSurat=")
-				.concat(this.getRegisterPermohonan().getId())
+				.concat(this.getData().getId())
 				.concat("}");	  
 	}
 
 	public FlowLogPermohonan toFlowLogPermohonan() {
-		RegisterPermohonan registerPermohonan = null;
+//		RegisterPermohonan registerPermohonan = null;
 		
-		if(this.registerPermohonan instanceof RegisterPermohonanArahanDTO) {
-			RegisterPermohonanArahanDTO s = (RegisterPermohonanArahanDTO) this.registerPermohonan;
-			registerPermohonan = s.toRegisterPermohonanArahan();
-		}
+//		if(this.data instanceof RegisterPermohonanArahanDTO) {
+//			RegisterPermohonanArahanDTO s = (RegisterPermohonanArahanDTO) this.data;
+//			registerPermohonan = s.toRegisterPermohonanArahan();
+//		}
 		
 		return new FlowLogPermohonan(
 				this.getId(), 
@@ -124,7 +122,7 @@ public class FlowLogPermohonanDTO extends FlowLogDTO implements Serializable {
 				this.getKeterangan(), 
 				this.getPengakses() != null ?
 						this.getPengakses().toOtoritas() : null, 
-				this.registerPermohonan != null ? registerPermohonan : null
+				this.data != null ? data.toRegisterPermohonan() : null
 				);
 	}
 }

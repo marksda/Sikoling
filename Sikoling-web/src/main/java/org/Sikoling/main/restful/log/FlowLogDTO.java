@@ -150,19 +150,29 @@ public class FlowLogDTO implements Serializable {
 	}
 
 	public FlowLog toFlowLog() {
-		return new FlowLog(
-				id, 
-				tanggal, 
-				kategoriFlowLog != null ? kategoriFlowLog.toKategoriFlowLog() : null, 
-				pengirimBerkas != null ?
-						pengirimBerkas.toPosisiTahapPemberkasan() : null, 
-				penerimaBerkas != null ?
-						penerimaBerkas.toPosisiTahapPemberkasan() : null,	
-				statusFlowLog != null ?
-						statusFlowLog.toStatusFlowLog() : null,
-				keterangan, 
-				pengakses != null ? pengakses.toOtoritas() : null
-				);
+		FlowLog flowLog = null;
+		switch (this.kategoriFlowLog.getId()) {
+		case "1":
+			FlowLogPermohonanDTO flowLogPermohonanDTO = (FlowLogPermohonanDTO) this;
+			flowLog = flowLogPermohonanDTO.toFlowLogPermohonan();
+			break;
+		default:
+			flowLog = new FlowLog(
+					id, 
+					tanggal, 
+					kategoriFlowLog != null ? kategoriFlowLog.toKategoriFlowLog() : null, 
+					pengirimBerkas != null ?
+							pengirimBerkas.toPosisiTahapPemberkasan() : null, 
+					penerimaBerkas != null ?
+							penerimaBerkas.toPosisiTahapPemberkasan() : null,	
+					statusFlowLog != null ?
+							statusFlowLog.toStatusFlowLog() : null,
+					keterangan, 
+					pengakses != null ? pengakses.toOtoritas() : null
+					);
+			break;
+		}
+		return flowLog; 
 	}
 
 }

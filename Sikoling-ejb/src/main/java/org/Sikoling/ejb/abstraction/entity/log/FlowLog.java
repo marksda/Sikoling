@@ -17,9 +17,7 @@ public class FlowLog implements Serializable {
 	private final PosisiTahapPemberkasan penerimaBerkas;
 	private final StatusFlowLog statusFlowLog;
 	private final String keterangan;
-	private final Otoritas pengakses;
-	
-	
+	private final Otoritas pengakses;	
 
 	public FlowLog(String id, LocalDate tanggal, KategoriFlowLog kategoriFlowLog, PosisiTahapPemberkasan pengirimBerkas,
 			PosisiTahapPemberkasan penerimaBerkas, StatusFlowLog statusFlowLog, String keterangan,
@@ -60,18 +58,15 @@ public class FlowLog implements Serializable {
 	
 	public PosisiTahapPemberkasan getPengirimBerkas() {
 		return pengirimBerkas;
-	}
-	
+	}	
 
 	public PosisiTahapPemberkasan getPenerimaBerkas() {
 		return penerimaBerkas;
-	}
-	
+	}	
 
 	public StatusFlowLog getStatusFlowLog() {
 		return statusFlowLog;
-	}
-	
+	}	
 
 	@Override
 	public int hashCode() {
@@ -112,7 +107,6 @@ public class FlowLog implements Serializable {
 				.concat("tanggal=")
 				.concat(this.tanggal.toString())
 				.concat("}");
-	}	
-
+	}
 
 }

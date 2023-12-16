@@ -116,6 +116,9 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 			case "pengakses":
 				daftarPredicate.add(cb.equal(root.get("autorisasiData").get("id"), filter.getValue()));
 				break;
+			case "kepemilikan_flow_log_permohonan":
+				daftarPredicate.add(cb.equal(root.get("flowLogPermohonanData").get("registerPermohonan").get("perusahaanData").get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
+				break;
 			default:
 				break;
 			}			
@@ -256,6 +259,9 @@ public class FlowLogRepositoryJPA implements IFlowLogRepository {
 				break;
 			case "pengakses":
 				daftarPredicate.add(cb.equal(root.get("autorisasiData").get("id"), filter.getValue()));
+				break;
+			case "kepemilikan_flow_log_permohonan":
+				daftarPredicate.add(cb.equal(root.get("flowLogPermohonanData").get("registerPermohonan").get("autorisasiData").get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
 				break;
 			default:
 				break;
