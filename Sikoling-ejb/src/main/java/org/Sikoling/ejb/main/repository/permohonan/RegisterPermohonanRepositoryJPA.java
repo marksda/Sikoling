@@ -122,6 +122,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 			case "status_flow":
 				daftarPredicate.add(cb.equal(root.get("statusFlowData").get("id"), filter.getValue()));
 				break;
+			case "kepemilikan":
+				daftarPredicate.add(cb.equal(root.get("perusahaanData").get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
+				break;
 			default:
 				break;
 			}			
@@ -284,6 +287,9 @@ public class RegisterPermohonanRepositoryJPA implements IRegisterPermohonanRepos
 				break;
 			case "status_flow":
 				daftarPredicate.add(cb.equal(root.get("statusFlowData").get("id"), filter.getValue()));
+				break;
+			case "kepemilikan":
+				daftarPredicate.add(cb.equal(root.get("perusahaanData").get("daftarAutorityPerusahaanData").get("autority").get("id"), filter.getValue()));
 				break;
 			default:
 				break;
